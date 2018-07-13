@@ -63,10 +63,27 @@ if [[ "$CMD" == "install" ]]; then
        git submodule update;
        git submodule foreach git checkout origin master;
 			 ./sf symlink'
+elif [[ "$CMD" == "restart-backend" ]]; then
+ RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;
+      sudo rm -rf $ROOT_PATH/flask/postgres_data;
+      docker-compose up --force-recreate'
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='docker-compose up'
 elif [[ "$CMD" == "symlink" ]]; then
   RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/sf sf && chmod +x sf && chmod +x '"$(pwd)"'/sf'
+elif [[ "$CMD" == "reset-all-db" ]]; then
+  RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "rm -rf /opt/services/flaskapp/src/static/object_store_data/*";
+       docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback science_feedback -c \"TRUNCATE \\\"user\\\",review RESTART IDENTITY CASCADE;\""'
+elif [[ "$CMD" == "test-backend" ]]; then
+  if [[ $# == 0 ]]; then
+    confirm "Warning: your database will be wiped. Is this OK ?"
+     "$ROOT_PATH"/sf -e $ENV reset-all-db
+     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest tests/*"'
+  else
+     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest '"$*"'"'
+  fi
+else
+	RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/sf.py '"$CMD $*"'"'
 fi
 
 
