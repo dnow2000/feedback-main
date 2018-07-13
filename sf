@@ -66,7 +66,7 @@ if [[ "$CMD" == "install" ]]; then
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='docker-compose up'
 elif [[ "$CMD" == "symlink" ]]; then
-  RUN='cd /usr/local/bin && ln -sf '"$(pwd)"'/sf sf && chmod +x sf && chmod +x '"$(pwd)"'/sf'
+  RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/sf sf && chmod +x sf && chmod +x '"$(pwd)"'/sf'
 fi
 
 
