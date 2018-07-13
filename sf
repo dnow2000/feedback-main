@@ -74,6 +74,8 @@ elif [[ "$CMD" == "restart-backend" ]]; then
       docker-compose up --force-recreate'
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='docker-compose up'
+elif [[ "$CMD" == "start-reval" ]]; then
+	RUN='cd $ROOT_PATH/reval && yarn start'
 elif [[ "$CMD" == "symlink" ]]; then
   RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/sf sf && chmod +x sf && chmod +x '"$(pwd)"'/sf'
 elif [[ "$CMD" == "reset-all-db" ]]; then
