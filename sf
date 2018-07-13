@@ -63,6 +63,11 @@ if [[ "$CMD" == "install" ]]; then
        git submodule update;
        git submodule foreach git checkout origin master;
 			 ./sf symlink'
+elif [[ "$CMD" == "psql" ]]; then
+	COLUMNS=${COLUMNS:-''};
+	RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback science_feedback $*"'
+elif [[ "$CMD" == "python" ]]; then
+	RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/interact.py '"$CMD $*"'"'
 elif [[ "$CMD" == "restart-backend" ]]; then
  RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;
       sudo rm -rf $ROOT_PATH/flask/postgres_data;
