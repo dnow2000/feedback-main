@@ -1,0 +1,53 @@
+version: '3.2'
+
+services:
+  postgres:
+    image: postgres:10.1
+    volumes:
+      - "./flask/postgres_data:/var/lib/postgresql/data"
+    env_file:
+      - env_file
+    networks:
+      - db_nw
+
+  flask:
+    build: dockerfiles/flask
+    volumes:
+      - ./flask:/opt/services/flaskapp/src
+      - type: bind
+        source: ./flask/ftp_mirrors
+        target: /opt/services/flaskapp/src/ftp_mirrors
+        read_only: true
+    environment:
+      - ENV=${ENV:-development}
+      - EXPORT_TOKEN=$EXPORT_TOKEN
+    env_file:
+      - env_file
+    networks:
+      - db_nw
+      - web_nw
+    depends_on:
+      - postgres
+
+  nginx:
+    build: dockerfiles/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./dockerfiles/nginx/conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/letsencrypt
+      - ./certs-data:/data/letsencrypt
+    networks:
+      - web_nw
+    depends_on:
+      - flask
+
+networks:
+  db_nw:
+    driver: bridge
+  web_nw:
+    driver: bridge
+
+volumes:
+  postgres_data:
