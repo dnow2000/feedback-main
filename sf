@@ -1,0 +1,85 @@
+#!/bin/bash
+
+set -o nounset
+
+PRG="$BASH_SOURCE"
+
+while [ -h "$PRG" ] ; do
+	ls=`ls -ld "$PRG"`
+	link=`expr "$ls" : '.*-> \(.*\)$'`
+	if expr "$link" : '/.*' > /dev/null; then
+		PRG="$link"
+	else
+		PRG=`dirname "$PRG"`"/$link"
+	fi
+done
+
+ROOT_PATH=$(realpath $(dirname "$PRG"))
+
+function confirm {
+ read -p "$1 (y/n) : " -n 1 -r
+ echo
+ if [[ ! $REPLY =~ ^[Yy]$ ]]
+ then
+   exit
+ fi
+}
+
+function ensure_remote {
+  if [[ "$ENV" == "development" ]]; then
+    echo "$1"
+    exit 3
+  fi
+}
+
+if [[ $# -gt 2 ]] && [[ "$1" == "-e" ]]; then
+  ENV=$2
+  shift 2
+else
+  ENV=${ENV:-'development'}
+fi
+
+API_HOST='localhost:80'
+if [[ "$ENV" == "production" ]]; then
+	API_HOST=api.sciencefeedback.eu
+elif [[ "$ENV" == "staging" ]]; then
+	API_HOST=api-staging.sciencefeedback.eu
+fi
+
+if [[ "$1" == "" ]]; then
+  echo "Usage : sf <command> [arguments]"
+  exit
+fi
+
+CMD="$1"
+shift
+
+echo $CMD
+
+
+if [[ "$CMD" == "install" ]]; then
+  RUN='cd $ROOT_PATH;
+       git submodule init;
+       git submodule update;
+       git submodule foreach git checkout origin master;
+			 ./sf symlink'
+elif [[ "$CMD" == "start-backend" ]]; then
+  RUN='docker-compose up'
+elif [[ "$CMD" == "symlink" ]]; then
+  RUN='cd /usr/local/bin && ln -sf '"$(pwd)"'/sf sf && chmod +x sf && chmod +x '"$(pwd)"'/sf'
+fi
+
+
+if [[ $PWD == "/home/deploy/science-feedback-main" ]]; then
+	echo $RUN
+  eval $RUN
+else
+	if [[ "$ENV" == "production" ]]; then
+	  echo "$RUN" | ssh deploy@api-staging.sciencefeedback.eu bash
+	elif [[ "$ENV" == "staging" ]]; then
+	  echo "$RUN" | ssh deploy@api.sciencefeedback.eu bash
+	else
+		echo $RUN
+	  eval $RUN
+	fi
+fi
