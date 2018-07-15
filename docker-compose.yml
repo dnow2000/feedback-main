@@ -20,7 +20,7 @@ services:
         read_only: true
     environment:
       - ENV=${ENV:-development}
-      - EXPORT_TOKEN=$EXPORT_TOKEN
+      - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
     env_file:
       - env_file
     networks:
