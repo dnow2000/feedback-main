@@ -119,9 +119,9 @@ elif [[ "$CMD" == "rebuild-backend" ]]; then
 elif [[ "$CMD" == "restart-backend" ]]; then
  RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;
       sudo rm -rf $ROOT_PATH/flask/postgres_data;
-      docker-compose up --force-recreate'
+      cd $ROOT_PATH && docker-compose up --force-recreate'
 elif [[ "$CMD" == "start-backend" ]]; then
-  RUN='docker-compose up'
+  RUN='cd $ROOT_PATH && docker-compose up'
 elif [[ "$CMD" == "start-reval" ]]; then
 	RUN='cd $ROOT_PATH/reval && yarn start'
 elif [[ "$CMD" == "symlink" ]]; then
