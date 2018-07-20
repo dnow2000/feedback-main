@@ -129,6 +129,8 @@ elif [[ "$CMD" == "symlink" ]]; then
 elif [[ "$CMD" == "reset-all-db" ]]; then
   RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "rm -rf /opt/services/flaskapp/src/static/object_store_data/*";
        docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback science_feedback -c \"TRUNCATE \\\"user\\\",review RESTART IDENTITY CASCADE;\""'
+elif [[ "$CMD" == "reset-all-storage" ]]; then
+	RUN='sudo rm -rf $ROOT_PATH/api/static/object_store_data;'
 elif [[ "$CMD" == "test-backend" ]]; then
   if [[ $# == 0 ]]; then
     confirm "Warning: your database will be wiped. Is this OK ?"
