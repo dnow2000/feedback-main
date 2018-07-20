@@ -107,7 +107,8 @@ elif [[ "$CMD" == "install" ]]; then
        git submodule init;
        git submodule update;
        git submodule foreach git checkout origin master;
-			 ./sf symlink'
+			 ./sf symlink;
+			 cd $ROOT_PATH/reval && yarn'
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
 	RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback science_feedback $*"'
