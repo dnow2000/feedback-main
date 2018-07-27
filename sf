@@ -41,9 +41,9 @@ fi
 
 API_HOST='localhost:80'
 if [[ "$ENV" == "production" ]]; then
-	API_HOST=api.sciencefeedback.eu
+	API_HOST=api.scifeedback.org
 elif [[ "$ENV" == "staging" ]]; then
-	API_HOST=api-staging.sciencefeedback.eu
+	API_HOST=api-staging.scifeedback.org
 fi
 
 if [[ "$1" == "" ]]; then
@@ -120,6 +120,10 @@ elif [[ "$CMD" == "restart-backend" ]]; then
  RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;
       sudo rm -rf $ROOT_PATH/flask/postgres_data;
       cd $ROOT_PATH && docker-compose up --force-recreate'
+elif [[ "$CMD" == "shared" ]]; then
+	RUN='cd $ROOT_PATH/shared && yarn run compile;
+			 cd $ROOT_PATH/reval/node_modules && ln -sf ../../shared pass-culture-shared;
+			'
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='cd $ROOT_PATH && docker-compose up'
 elif [[ "$CMD" == "start-reval" ]]; then
@@ -149,9 +153,9 @@ if [[ $PWD == "/home/deploy/science-feedback-main" ]]; then
   eval $RUN
 else
 	if [[ "$ENV" == "production" ]]; then
-	  echo "$RUN" | ssh deploy@api-staging.sciencefeedback.eu bash
+	  echo "$RUN" | ssh deploy@api-staging.scifeedback.org bash
 	elif [[ "$ENV" == "staging" ]]; then
-	  echo "$RUN" | ssh deploy@api.sciencefeedback.eu bash
+	  echo "$RUN" | ssh deploy@api.scifeedback.org bash
 	else
 		echo $RUN
 	  eval $RUN
