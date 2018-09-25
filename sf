@@ -41,9 +41,11 @@ fi
 
 API_HOST='localhost:80'
 if [[ "$ENV" == "production" ]]; then
-	API_HOST=api.scifeedback.org
+	API_HOST=backend.sciencefeedback.co
 elif [[ "$ENV" == "staging" ]]; then
-	API_HOST=api-staging.scifeedback.org
+	API_HOST=backend-staging.sciencefeedback.co
+elif [[ "$ENV" == "testing" ]]; then
+	API_HOST=backend-testing.sciencefeedback.co
 fi
 
 if [[ "$1" == "" ]]; then
@@ -56,64 +58,124 @@ shift
 
 echo $CMD
 
-if [[ "$CMD" == "deploy-reval" ]]; then
-  ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"sf -e staging "$CMD"\"."
-	APP_PATH=$ROOT_PATH/reval
-  cd $APP_PATH
+if [[ "$ENV" == "production" ]]; then
+	SCALINGO_APP=sciencefeedback-backend
+elif [[ "$ENV" == "staging" ]]; then
+	SCALINGO_APP=sciencefeedback-backend-staging
+elif [[ "$ENV" == "testing" ]]; then
+	SCALINGO_APP=sciencefeedback-backend-testing
+fi
 
-  NODE_ENV="$ENV" yarn build || exit
-
-  # Add generic redirects for netlify which work with everything routed to
-  # index.htm and relative paths to main.js and main.css for phonegap
-  JSPATH=`grep -o '\./static/js/main\.[a-z0-9]*\.js' build/index.html`
-  JSHASH=`echo "$JSPATH" | cut -d\. -f 3`
-  CSSPATH=`grep -o '\./static/css/main\.[a-z0-9]*\.css' build/index.html`
-  CSSHASH=`echo "$CSSPATH" | cut -d\. -f 3`
-
-  echo "/:path1/main.$JSHASH.js /$JSPATH 301" > build/_redirects
-  echo "/:path1/:path2/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/:path4/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/:path4/:path5/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/:path4/:path5/:path6/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-
-  echo "/:path1/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/:path4/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/:path4/:path5/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-  echo "/:path1/:path2/:path3/:path4/:path5/:path6/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-
-  cat "public/_redirects" >> build/_redirects
-
-  GIT_VERSION=`git log -n 1 --pretty=format:%h`
-  git diff-index HEAD --quiet --exit-code
-  if [[ "$?" -gt "0" ]]; then
-    GIT_VERSION="$GIT_VERSION*"
+if [[ "$CMD" == "alembic" ]]; then
+  RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src && PYTHONPATH=. alembic '"$*"'"'
+elif [[ "$CMD" == "deploy-backend" ]]; then
+  cd "$ROOT_PATH/api"
+  if [[ ! "$ENV" == 'production' ]] && [[ ! "$ENV" == 'staging' ]]; then
+     echo "Can only deploy-backend in staging and production"
+     exit
   fi
-  sed -i -e "s/##VERSION##/"$GIT_VERSION"/" build/$JSPATH;
+  commit_to_deploy=`git log -n 1 --pretty=format:%H`
+  current_branch=$(git symbolic-ref -q HEAD)
+  current_branch=${current_branch##refs/heads/}
+  function exit_restoring_branch
+    {
+    git checkout "$current_branch"
+    exit
+    }
+  git fetch
+  git checkout master
+  git pull || exit_restoring_branch
+  git checkout staging
+  git pull || exit_restoring_branch
+  git checkout production
+  git pull || exit_restoring_branch
+  if [[ `git tag -l --points-at $commit_to_deploy | wc -l` == 0 ]]; then
+    echo "ERROR: Can only deploy tagged commits"
+    exit_restoring_branch
+  fi
+  if [[ "$ENV" == "production" ]]; then
+    staging_commit=`git log -n 1 --pretty=format:%H staging`
+    if [[ "$staging_commit" -ne "$commit_to_deploy" ]]; then
+      echo "ERROR: Can only deploy in production commits that are also deployed in staging"
+      exit_restoring_branch
+    fi
+  fi
+  git checkout $ENV
+  git merge $commit_to_deploy
+  git push origin $ENV
+  exit_restoring_branch
+elif [[ "$CMD" == "deploy-reval" ]]; then
+	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"sf -e staging "$CMD"\"."
 
-  netlify deploy -e "$ENV"
+	(set -a; source "$ROOT_PATH/shared/config/run_envs/$ENV" && yarn build) || exit
 
-  delivery_date=`( date --version 2>/dev/null | grep -q GNU\  && date +'%F_%H-%M-%S%N' ) || ( which gdate &>/dev/null && gdate +'%F_%H-%M-%S%N' ) || ( which python &> /dev/null && python -c 'import datetime; print datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S%f")' ) || ( date +'%F_%H-%M-%S' )`
-  delivery_date=${delivery_date:0:21}
-  tagname="deployed-$ENV-$delivery_date"
-  git tag $tagname
-  git push origin $tagname
+	# Add generic redirects for netlify which work with everything routed to
+	# index.htm and relative paths to main.js and main.css for phonegap
+	JSPATH=`grep -o '\./static/js/main\.[a-z0-9]*\.js' build/index.html`
+	JSHASH=`echo "$JSPATH" | cut -d\. -f 3`
+	CSSPATH=`grep -o '\./static/css/main\.[a-z0-9]*\.css' build/index.html`
+	CSSHASH=`echo "$CSSPATH" | cut -d\. -f 3`
 
-  exit
+	echo "/:path1/main.$JSHASH.js /$JSPATH 301" > build/_redirects
+	echo "/:path1/:path2/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/:path4/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/:path4/:path5/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/:path4/:path5/:path6/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
+
+	echo "/:path1/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/:path4/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/:path4/:path5/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
+	echo "/:path1/:path2/:path3/:path4/:path5/:path6/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
+
+	cat "public/_redirects" >> build/_redirects
+
+	GIT_VERSION=`git log -n 1 --pretty=format:%h`
+	git diff-index HEAD --quiet --exit-code
+	if [[ "$?" -gt "0" ]]; then
+		GIT_VERSION="$GIT_VERSION*"
+	fi
+	sed -i -e "s/##VERSION##/"$GIT_VERSION"/" build/$JSPATH;
+
+	netlify deploy -e "$ENV"
+
+	delivery_date=`( date --version 2>/dev/null | grep -q GNU\  && date +'%F_%H-%M-%S%N' ) || ( which gdate &>/dev/null && gdate +'%F_%H-%M-%S%N' ) || ( which python &> /dev/null && python -c 'import datetime; print datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S%f")' ) || ( date +'%F_%H-%M-%S' )`
+	delivery_date=${delivery_date:0:21}
+	tagname="deployed-$ENV-$delivery_date"
+	git tag $tagname
+	git push origin $tagname
+
+	exit
 elif [[ "$CMD" == "install" ]]; then
   RUN='cd $ROOT_PATH;
        git submodule init;
        git submodule update;
-       git submodule foreach git checkout origin master;
+       git submodule foreach git checkout master;
 			 ./sf symlink;
 			 cd $ROOT_PATH/reval && yarn'
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
-	RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback science_feedback $*"'
+	if [[ "$ENV" == "production" ]]; then
+		scalingo -a sciencefeedback-backend pgsql-console
+		exit
+	elif [[ "$ENV" == "staging" ]]; then
+		scalingo -a sciencefeedback-backend-staging pgsql-console
+		exit
+	elif [[ "$ENV" == "testing" ]]; then
+		scalingo -a sciencefeedback-backend-testing pgsql-console
+		exit
+	else
+		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback science_feedback $*"'
+	fi
 elif [[ "$CMD" == "python" ]]; then
-	RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/interact.py '"$CMD $*"'"'
+	if [[ "$ENV" == "development" ]]; then
+		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/interact.py '"$CMD $*"'"'
+	else
+		scalingo -a "$SCALINGO_APP" run "python -i scripts/interact.py"
+		exit
+	fi
 elif [[ "$CMD" == "rebuild-backend" ]]; then
   RUN='docker-compose build --no-cache;'
 elif [[ "$CMD" == "restart-backend" ]]; then
@@ -124,6 +186,13 @@ elif [[ "$CMD" == "shared" ]]; then
 	RUN='cd $ROOT_PATH/shared && yarn run compile;
 			 cd $ROOT_PATH/reval/node_modules && ln -sf ../../shared pass-culture-shared;
 			'
+elif [[ "$CMD" == "shell" ]]; then
+	if [[ "$ENV" == "development" ]]; then
+		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. bash '"$CMD $*"'"'
+	else
+		scalingo -a "$SCALINGO_APP" run "bash"
+		exit
+	fi
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='cd $ROOT_PATH && docker-compose up'
 elif [[ "$CMD" == "start-reval" ]]; then
@@ -134,7 +203,7 @@ elif [[ "$CMD" == "reset-all-db" ]]; then
   RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "rm -rf /opt/services/flaskapp/src/static/object_store_data/*";
        docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback science_feedback -c \"TRUNCATE \\\"user\\\",review,article,role RESTART IDENTITY CASCADE;\""'
 elif [[ "$CMD" == "reset-all-storage" ]]; then
-	RUN='sudo rm -rf $ROOT_PATH/api/static/object_store_data;'
+	RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;'
 elif [[ "$CMD" == "test-backend" ]]; then
   if [[ $# == 0 ]]; then
     confirm "Warning: your database will be wiped. Is this OK ?"
@@ -153,9 +222,9 @@ if [[ $PWD == "/home/deploy/science-feedback-main" ]]; then
   eval $RUN
 else
 	if [[ "$ENV" == "production" ]]; then
-	  echo "$RUN" | ssh deploy@api-staging.scifeedback.org bash
+	  echo "$RUN" | ssh deploy@backend-staging.sciencefeedback.co bash
 	elif [[ "$ENV" == "staging" ]]; then
-	  echo "$RUN" | ssh deploy@api.scifeedback.org bash
+	  echo "$RUN" | ssh deploy@backend.sciencefeedback.co bash
 	else
 		echo $RUN
 	  eval $RUN

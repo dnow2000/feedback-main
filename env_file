@@ -1,4 +1,4 @@
 POSTGRES_USER=science_feedback
 POSTGRES_PASSWORD=sf
 POSTGRES_DB=science_feedback
-DATABASE_URL=postgresql://science_feedback:sf@postgres/science_feedback
+SCALINGO_POSTGRESQL_URL=postgresql://science_feedback:sf@postgres/science_feedback
