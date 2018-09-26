@@ -68,6 +68,13 @@ fi
 
 if [[ "$CMD" == "alembic" ]]; then
   RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src && PYTHONPATH=. alembic '"$*"'"'
+elif [[ "$CMD" == "bash" ]]; then
+	if [[ "$ENV" == "development" ]]; then
+		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. bash '"$CMD $*"'"'
+	else
+		scalingo -a "$SCALINGO_APP" run "bash"
+		exit
+	fi
 elif [[ "$CMD" == "deploy-backend" ]]; then
   cd "$ROOT_PATH/api"
   if [[ ! "$ENV" == 'production' ]] && [[ ! "$ENV" == 'staging' ]]; then
@@ -186,13 +193,6 @@ elif [[ "$CMD" == "shared" ]]; then
 	RUN='cd $ROOT_PATH/shared && yarn run compile;
 			 cd $ROOT_PATH/reval/node_modules && ln -sf ../../shared pass-culture-shared;
 			'
-elif [[ "$CMD" == "shell" ]]; then
-	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. bash '"$CMD $*"'"'
-	else
-		scalingo -a "$SCALINGO_APP" run "bash"
-		exit
-	fi
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='cd $ROOT_PATH && docker-compose up'
 elif [[ "$CMD" == "start-reval" ]]; then
