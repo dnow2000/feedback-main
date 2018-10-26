@@ -114,7 +114,10 @@ elif [[ "$CMD" == "deploy-backend" ]]; then
 elif [[ "$CMD" == "deploy-reval" ]]; then
 	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"sf -e staging "$CMD"\"."
 
-	(set -a; source "$ROOT_PATH/shared/config/run_envs/$ENV" && yarn build) || exit
+	APP_PATH=$ROOT_PATH/reval
+	cd $APP_PATH
+
+	(set -a; source "$APP_PATH/node_modules/pass-culture-shared/config/run_envs/$ENV" && yarn build) || exit
 
 	# Add generic redirects for netlify which work with everything routed to
 	# index.htm and relative paths to main.js and main.css for phonegap
@@ -213,7 +216,7 @@ elif [[ "$CMD" == "test-backend" ]]; then
      RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest '"$*"'"'
   fi
 else
-	RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/sf.py '"$CMD $*"'"'
+	RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
 fi
 
 
