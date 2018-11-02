@@ -2,6 +2,8 @@
 
 set -o nounset
 
+COMMAND_NAME="sf"
+
 PRG="$BASH_SOURCE"
 
 while [ -h "$PRG" ] ; do
@@ -49,7 +51,7 @@ elif [[ "$ENV" == "testing" ]]; then
 fi
 
 if [[ "$1" == "" ]]; then
-  echo "Usage : sf <command> [arguments]"
+  echo "Usage : $COMMAND_NAME <command> [arguments]"
   exit
 fi
 
@@ -112,7 +114,7 @@ elif [[ "$CMD" == "deploy-backend" ]]; then
   git push origin $ENV
   exit_restoring_branch
 elif [[ "$CMD" == "deploy-reval" ]]; then
-	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"sf -e staging "$CMD"\"."
+	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"$COMMAND_NAME -e staging "$CMD"\"."
 
 	APP_PATH=$ROOT_PATH/reval
 	cd $APP_PATH
@@ -163,8 +165,10 @@ elif [[ "$CMD" == "install" ]]; then
        git submodule init;
        git submodule update;
        git submodule foreach git checkout master;
-			 ./sf symlink;
-			 cd $ROOT_PATH/reval && yarn'
+			 ./$COMMAND_NAME symlink;
+			 cd $ROOT_PATH/reval;
+			 yarn;
+			 chmod 577 ./node_modules/testcafe/bin/testcafe.js'
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "production" ]]; then
@@ -201,7 +205,7 @@ elif [[ "$CMD" == "start-backend" ]]; then
 elif [[ "$CMD" == "start-reval" ]]; then
 	RUN='cd $ROOT_PATH/reval && yarn start'
 elif [[ "$CMD" == "symlink" ]]; then
-  RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/sf sf && chmod +x sf && chmod +x '"$(pwd)"'/sf'
+  RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME'
 elif [[ "$CMD" == "reset-all-db" ]]; then
   RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "rm -rf /opt/services/flaskapp/src/static/object_store_data/*";
        docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback science_feedback -c \"TRUNCATE \\\"user\\\",review,article,role RESTART IDENTITY CASCADE;\""'
@@ -210,15 +214,25 @@ elif [[ "$CMD" == "reset-all-storage" ]]; then
 elif [[ "$CMD" == "test-backend" ]]; then
   if [[ $# == 0 ]]; then
     confirm "Warning: your database will be wiped. Is this OK ?"
-     "$ROOT_PATH"/sf -e $ENV reset-all-db
+     "$ROOT_PATH"/$COMMAND_NAME -e $ENV reset-all-db
      RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest tests/*"'
   else
      RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest '"$*"'"'
   fi
+elif [[ "$CMD" == "test-cafe-reval" ]]; then
+	APP_PATH=$ROOT_PATH/reval
+	SANDBOX_NAME="ci"
+	if [[ $# == 0 ]]; then
+		confirm "Warning: your database will be wiped. Is this OK ?"
+	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV reset-all-db
+		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
+		RUN='cd $APP_PATH && ./scripts/manager.js testcafe '
+	else
+  	RUN='cd $APP_PATH && ./scripts/manager.js testcafe '"$*"
+	fi
 else
 	RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
 fi
-
 
 if [[ $PWD == "/home/deploy/science-feedback-main" ]]; then
 	echo $RUN
