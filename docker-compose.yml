@@ -6,9 +6,9 @@ services:
     volumes:
       - "./flask/postgres_data:/var/lib/postgresql/data"
     environment:
-      - POSTGRES_DB=science-feedback
-      - POSTGRES_PASSWORD=science-feedback-password
-      - POSTGRES_USER=science-feedback-user
+      - POSTGRES_DB=science_feedback
+      - POSTGRES_PASSWORD=science_feedback_password
+      - POSTGRES_USER=science_feedback_user
     networks:
       - db_nw
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
@@ -23,7 +23,7 @@ services:
         read_only: true
     environment:
       - ENV=${ENV:-development}
-      - POSTGRES_URL=postgresql://science-feedback-user:science-feedback-password@postgres/science-feedback
+      - POSTGRES_URL=postgresql://science_feedback_user:science_feedback_password@postgres/science_feedback
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
     networks:
       - db_nw
