@@ -5,8 +5,10 @@ services:
     image: postgres:10.1
     volumes:
       - "./flask/postgres_data:/var/lib/postgresql/data"
-    env_file:
-      - env_file
+    environment:
+      - POSTGRES_DB=science-feedback
+      - POSTGRES_PASSWORD=science-feedback-password
+      - POSTGRES_USER=science-feedback-user
     networks:
       - db_nw
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
@@ -19,10 +21,9 @@ services:
         source: ./flask/ftp_mirrors
         target: /opt/services/flaskapp/src/ftp_mirrors
         read_only: true
-    env_file:
-      - env_file
     environment:
       - ENV=${ENV:-development}
+      - POSTGRES_URL=postgresql://science-feedback-user:science-feedback-password@postgres/science-feedback
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
     networks:
       - db_nw

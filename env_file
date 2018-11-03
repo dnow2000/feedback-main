@@ -1,4 +1,0 @@
-POSTGRES_DB=science_feedback
-POSTGRES_PASSWORD=sf
-POSTGRES_USER=science_feedback
-POSTGRES_URL=postgresql://science_feedback:sf@postgres/science_feedback
