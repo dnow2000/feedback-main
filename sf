@@ -181,7 +181,7 @@ elif [[ "$CMD" == "psql" ]]; then
 		scalingo -a sciencefeedback-backend-testing pgsql-console
 		exit
 	else
-		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback science_feedback $*"'
+		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback_user science_feedback $*"'
 	fi
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "development" ]]; then
@@ -208,7 +208,7 @@ elif [[ "$CMD" == "symlink" ]]; then
   RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME'
 elif [[ "$CMD" == "reset-all-db" ]]; then
   RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "rm -rf /opt/services/flaskapp/src/static/object_store_data/*";
-       docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback science_feedback -c \"TRUNCATE \\\"user\\\",review,article,role RESTART IDENTITY CASCADE;\""'
+       docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback_user science_feedback -c \"TRUNCATE \\\"user\\\",review,article,role RESTART IDENTITY CASCADE;\""'
 elif [[ "$CMD" == "reset-all-storage" ]]; then
 	RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;'
 elif [[ "$CMD" == "test-backend" ]]; then
