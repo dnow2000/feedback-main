@@ -185,9 +185,9 @@ elif [[ "$CMD" == "psql" ]]; then
 	fi
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/interact.py '"$CMD $*"'"'
+		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else
-		scalingo -a "$SCALINGO_APP" run "python -i scripts/interact.py"
+		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
 		exit
 	fi
 elif [[ "$CMD" == "rebuild-backend" ]]; then
