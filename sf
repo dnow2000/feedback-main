@@ -2,7 +2,11 @@
 
 set -o nounset
 
+DB_NAME="science_feedback"
+APP_NAME="sciencefeedback"
 COMMAND_NAME="sf"
+EXTENSION="co"
+COLLECTIONS="\\\"user\\\",review,article,role"
 
 PRG="$BASH_SOURCE"
 
@@ -43,11 +47,11 @@ fi
 
 API_HOST='localhost:80'
 if [[ "$ENV" == "production" ]]; then
-	API_HOST=backend.sciencefeedback.co
+	API_HOST=backend.$APP_NAME.co
 elif [[ "$ENV" == "staging" ]]; then
-	API_HOST=backend-staging.sciencefeedback.co
+	API_HOST=backend-staging.$APP_NAME.co
 elif [[ "$ENV" == "testing" ]]; then
-	API_HOST=backend-testing.sciencefeedback.co
+	API_HOST=backend-testing.$APP_NAME.co
 fi
 
 if [[ "$1" == "" ]]; then
@@ -61,11 +65,9 @@ shift
 echo $CMD
 
 if [[ "$ENV" == "production" ]]; then
-	SCALINGO_APP=sciencefeedback-backend
-elif [[ "$ENV" == "staging" ]]; then
-	SCALINGO_APP=sciencefeedback-backend-staging
-elif [[ "$ENV" == "testing" ]]; then
-	SCALINGO_APP=sciencefeedback-backend-testing
+	SCALINGO_APP=$APP_NAME-backend
+elif [[ ! "$ENV" == "development" ]]; then
+	SCALINGO_APP=$APP_NAME-backend-$ENV
 fi
 
 if [[ "$CMD" == "alembic" ]]; then
@@ -172,16 +174,16 @@ elif [[ "$CMD" == "install" ]]; then
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "production" ]]; then
-		scalingo -a sciencefeedback-backend pgsql-console
+		scalingo -a $APP_NAME-backend pgsql-console
 		exit
 	elif [[ "$ENV" == "staging" ]]; then
-		scalingo -a sciencefeedback-backend-staging pgsql-console
+		scalingo -a $APP_NAME-backend-staging pgsql-console
 		exit
 	elif [[ "$ENV" == "testing" ]]; then
-		scalingo -a sciencefeedback-backend-testing pgsql-console
+		scalingo -a $APP_NAME-backend-testing pgsql-console
 		exit
 	else
-		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U science_feedback_user science_feedback $*"'
+		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U $DB_NAME_user $DB_NAME $*"'
 	fi
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "development" ]]; then
@@ -208,7 +210,7 @@ elif [[ "$CMD" == "symlink" ]]; then
   RUN='cd /usr/local/bin && sudo ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME'
 elif [[ "$CMD" == "reset-all-db" ]]; then
   RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "rm -rf /opt/services/flaskapp/src/static/object_store_data/*";
-       docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U science_feedback_user science_feedback -c \"TRUNCATE \\\"user\\\",review,article,role RESTART IDENTITY CASCADE;\""'
+       docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "psql -U $DB_NAME_user $DB_NAME -c \"TRUNCATE $COLLECTIONS RESTART IDENTITY CASCADE;\""'
 elif [[ "$CMD" == "reset-all-storage" ]]; then
 	RUN='sudo rm -rf $ROOT_PATH/flask/static/object_store_data;'
 elif [[ "$CMD" == "test-backend" ]]; then
@@ -239,9 +241,9 @@ if [[ $PWD == "/home/deploy/science-feedback-main" ]]; then
   eval $RUN
 else
 	if [[ "$ENV" == "production" ]]; then
-	  echo "$RUN" | ssh deploy@backend-staging.sciencefeedback.co bash
+	  echo "$RUN" | ssh deploy@backend-staging.$APP_NAME.$EXTENSION bash
 	elif [[ "$ENV" == "staging" ]]; then
-	  echo "$RUN" | ssh deploy@backend.sciencefeedback.co bash
+	  echo "$RUN" | ssh deploy@backend.$APP_NAME.$EXTENSION bash
 	else
 		echo $RUN
 	  eval $RUN
