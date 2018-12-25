@@ -182,7 +182,7 @@ elif [[ "$CMD" == "psql" ]]; then
 		scalingo -a $APP_NAME-backend-testing pgsql-console
 		exit
 	else
-		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U $DB_NAME_user $DB_NAME $*"'
+		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
 	fi
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "development" ]]; then
