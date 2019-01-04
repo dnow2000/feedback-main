@@ -45,13 +45,12 @@ else
   ENV=${ENV:-'development'}
 fi
 
-API_HOST='localhost:80'
-if [[ "$ENV" == "production" ]]; then
-	API_HOST=backend.$APP_NAME.co
+if [[ "$ENV" == "development" ]]; then
+	API_HOST='localhost:80'
+elif [[ "$ENV" == "production" ]]; then
+	API_HOST=backend.$APP_NAME.$EXTENSION
 elif [[ "$ENV" == "staging" ]]; then
-	API_HOST=backend-staging.$APP_NAME.co
-elif [[ "$ENV" == "testing" ]]; then
-	API_HOST=backend-testing.$APP_NAME.co
+	API_HOST=backend-$ENV.$APP_NAME.$EXTENSION
 fi
 
 if [[ "$1" == "" ]]; then
