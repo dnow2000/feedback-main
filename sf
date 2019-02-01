@@ -159,16 +159,13 @@ elif [[ "$CMD" == "deploy-reval" ]]; then
 	tagname="deployed-$ENV-$delivery_date"
 	git tag $tagname
 	git push origin $tagname
-
 	exit
 elif [[ "$CMD" == "install" ]]; then
   RUN='cd $ROOT_PATH;
        git submodule init;
        git submodule update;
        git submodule foreach git checkout master;
-			 cd $ROOT_PATH/reval;
-			 yarn;
-			 chmod 577 ./node_modules/testcafe/bin/testcafe.js'
+			 cd $ROOT_PATH/reval && yarn;'
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "production" ]]; then
