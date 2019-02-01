@@ -1,6 +1,0 @@
-[submodule "flask"]
-	path = flask
-	url = https://github.com/science-feedback/science-feedback-flask.git
-[submodule "reval"]
-	path = reval
-	url = https://github.com/science-feedback/science-feedback-reval.git
