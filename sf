@@ -160,12 +160,15 @@ elif [[ "$CMD" == "deploy-reval" ]]; then
 	git tag $tagname
 	git push origin $tagname
 	exit
+
 elif [[ "$CMD" == "install" ]]; then
   RUN='cd $ROOT_PATH;
        git submodule init;
        git submodule update;
        git submodule foreach git checkout master;
-			 cd $ROOT_PATH/reval && yarn;'
+			 cd $ROOT_PATH/reval;
+			 yarn;'
+
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "production" ]]; then
