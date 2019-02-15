@@ -252,7 +252,11 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
+  withLogin({
+    failRedirect: ({ location }) =>
+      `/signin?from=${encodeURIComponent(`${location.pathname}${location.search}`)}`, 
+    isRequired: true
+  }),
   withRoles({ createRoleTypes: ['reviewer'], editRoleTypes: ['reviewer'] }),
   withRouter,
   connect(mapStateToProps)

@@ -11404,9 +11404,9 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-with-login@0.0.9:
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/with-login/-/with-login-0.0.9.tgz#a3759ffc9329ae3b19fa4978750abe36b0f7a825"
+with-login@0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/with-login/-/with-login-0.0.10.tgz#c8700cb7a713904931eaf697beac9557b63d190d"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"

@@ -2,9 +2,9 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
+import withQueryRouter from 'with-query-router'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
@@ -26,11 +26,14 @@ class Signin extends Component {
   }
 
   handleRequestSuccess = formResolver => () => {
-    const { history } = this.props
+    const { history, query } = this.props
+    const queryParams = query.parse()
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
       formResolver()
-      const nextUrl = `/articles`
+      const nextUrl = queryParams.from
+        ? decodeURIComponent(queryParams.from)
+        : '/articles'
       history.push(nextUrl)
     })
   }
@@ -39,6 +42,8 @@ class Signin extends Component {
     const method = 'POST'
     const path = 'users/signin'
     const { dispatch } = this.props
+
+
     this.setState({ isFormLoading: true })
     // NOTE: we need to promise the request callbacks
     // in order to inject their payloads into the form
@@ -103,9 +108,10 @@ class Signin extends Component {
 Signin.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired
 }
 
 export default compose(
-  withRouter,
+  withQueryRouter,
   connect()
 )(Signin)

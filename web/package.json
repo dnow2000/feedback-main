@@ -55,7 +55,7 @@
     "reselect": "^3.0.1",
     "testcafe": "^0.23.0",
     "whatwg-fetch": "2.0.3",
-    "with-login": "0.0.9",
+    "with-login": "0.0.10",
     "with-query-router": "0.0.6"
   },
   "devDependencies": {
