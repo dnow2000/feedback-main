@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import withLogin, { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-login'
 
 import ArticleItem from '../Articles/ArticleItem'
 import FormFields from './FormFields'
@@ -19,7 +19,7 @@ import {
   parseSubmitErrors,
   selectNewOrEditEntityContextFromLocation,
 } from '../../form/utils'
-import { withRoles } from '../../hocs'
+import { withLoginRedirectToSignin, withRoles } from '../../hocs'
 import {
   selectArticleById,
   selectEditorRoleByUserId,
@@ -235,8 +235,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
-  withRoles({ editRoleTypes: ['editor'], createRoleTypes: ['editor'] }),
+  withLoginRedirectToSignin,
+  withRoles({ createRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
   withRouter,
   connect(mapStateToProps)
 )(Article)

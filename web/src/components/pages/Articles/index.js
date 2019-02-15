@@ -7,10 +7,11 @@ import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
-import withLogin, { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-login'
 import withQueryRouter from 'with-query-router'
 
 import ArticleItem from './ArticleItem'
+import { withLoginRedirectToSignin } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { TextField } from '../../form/fields'
@@ -225,7 +226,7 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
+  withLoginRedirectToSignin,
   withQueryRouter,
   connect(mapStateToProps)
 )(Articles)

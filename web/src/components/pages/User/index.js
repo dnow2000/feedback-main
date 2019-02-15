@@ -6,6 +6,7 @@ import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
 import RolesManager from './RolesManager'
+import { withLoginRedirectToSignin, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import UserItem from '../Users/UserItem'
@@ -67,6 +68,8 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
+  withLoginRedirectToSignin,
+  withRoles({ createRoleTypes: ['master'], editRoleTypes: ['master'] }),
   withRouter,
   connect(mapStateToProps)
 )(User)

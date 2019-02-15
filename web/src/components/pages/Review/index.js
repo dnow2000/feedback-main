@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import withLogin, { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-login'
 
 import FormFooter from './FormFooter'
 import FormFields from './FormFields'
@@ -15,7 +15,7 @@ import {
   selectNewOrEditEntityContextFromLocation,
   selectSearchFromLocation,
 } from '../../form/utils'
-import { withRoles } from '../../hocs'
+import { withLoginRedirectToSignin, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import {
@@ -252,11 +252,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLogin({
-    failRedirect: ({ location }) =>
-      `/signin?from=${encodeURIComponent(`${location.pathname}${location.search}`)}`, 
-    isRequired: true
-  }),
+  withLoginRedirectToSignin,
   withRoles({ createRoleTypes: ['reviewer'], editRoleTypes: ['reviewer'] }),
   withRouter,
   connect(mapStateToProps)

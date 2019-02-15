@@ -3,10 +3,10 @@ import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import withLogin from 'with-login'
 import withQueryRouter from 'with-query-router'
 
 import VerdictItem from './VerdictItem'
+import { withLoginRedirectToSignin } from '../../hocs'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
 import { selectVerdictsByArticleId } from '../../../selectors'
@@ -87,7 +87,7 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
+  withLoginRedirectToSignin,
   withQueryRouter,
   connect(mapStateToProps)
 )(Verdicts)

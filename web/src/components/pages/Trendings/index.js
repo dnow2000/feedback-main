@@ -5,12 +5,11 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
-import withLogin from 'with-login'
 import withQueryRouter from 'with-query-router'
 
 import TrendingItem from './TrendingItem'
 import { trendingMaxDates, trendingThemes } from './utils'
-import { withRoles } from '../../hocs/withRoles'
+import { withLoginRedirectToSignin, withRoles } from '../../hocs/'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { selectTrendings } from '../../../selectors'
@@ -180,7 +179,7 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
+  withLoginRedirectToSignin,
   withRoles({ accessRoleTypes: ['editor'] }),
   withQueryRouter,
   connect(mapStateToProps)

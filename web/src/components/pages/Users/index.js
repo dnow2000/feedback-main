@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
 import { compose } from 'redux'
-import withLogin from 'with-login'
 
 import UsersExploration from './UsersExploration'
-import { withRoles } from '../../hocs'
+import { withLoginRedirectToSignin, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 
@@ -19,6 +18,6 @@ const Users = () => (
 )
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
+  withLoginRedirectToSignin,
   withRoles({ createRoleTypes: ['master'], editRoleTypes: ['master'] })
 )(Users)

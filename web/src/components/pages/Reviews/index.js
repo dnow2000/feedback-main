@@ -1,9 +1,8 @@
 import React, { Fragment } from 'react'
 import { compose } from 'redux'
-import withLogin from 'with-login'
 
 import ReviewsExploration from './ReviewsExploration'
-import { withRoles } from '../../hocs'
+import { withLoginRedirectToSignin, withRoles } from '../../hocs'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
 
@@ -26,6 +25,6 @@ const Reviews = () => (
 )
 
 export default compose(
-  withLogin({ failRedirect: '/signin', isRequired: true }),
+  withLoginRedirectToSignin,
   withRoles({ accessRoleTypes: ['editor'] }),
 )(Reviews)
