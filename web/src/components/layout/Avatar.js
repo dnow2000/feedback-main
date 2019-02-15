@@ -1,7 +1,7 @@
-import { selectCurrentUser } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
+import { selectCurrentUser } from 'with-login'
 
 import { Icon } from './Icon'
 import { THUMBS_URL } from '../../utils/config'

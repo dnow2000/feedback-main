@@ -1,10 +1,10 @@
-import { requestData } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { requestData } from 'redux-saga-data'
 
 import Avatar from '../../layout/Avatar'
 import { selectTagsByUserId } from '../../../selectors'

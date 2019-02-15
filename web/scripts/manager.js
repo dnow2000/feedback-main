@@ -13,15 +13,30 @@ if (fs.existsSync(fileDir)) {
 program
   .version('0.1.0')
 
-  .option('testcafe', 'testcafe')
+  .option('symlink', 'symlink')
+  .option('-d, --dir [type]', 'Module dir')
+  .option('-n, --name [type]', 'Module name')
 
+  .option('unsymlink', 'unsymlink')
+  .option('-n, --name [type]', 'Module name')
+  .option('-v, --version [type]', 'Module version')
+
+  .option('testcafe', 'testcafe')
   .option('-b, --browser [type]', 'Define browser', 'chrome:headless')
   .option('-d, --debug', 'Debug', false)
   .option('-f, --file [type]', 'Define file', '')
 
   .parse(process.argv)
 
-const { testcafe } = program
+const { symlink, testcafe, unsymlink } = program
+
+if (symlink) {
+  const { dir, name } = program
+  const modulePath = path.join(dir, name)
+  const command = `cd node_modules && rm -rf ${name} && ln -sf ${modulePath} ${name} && cd ${modulePath} && yarn run watch`
+  childProcess.execSync(command, { stdio: [0, 1, 2] })
+}
+
 if (testcafe) {
   const { debug, file } = program
   let { browser } = program
@@ -29,5 +44,11 @@ if (testcafe) {
     browser = 'chrome'
   }
   const command = `NODE_ENV=development ./node_modules/testcafe/bin/testcafe.js ${browser} ${debug ? '-d' : ''} testcafe/${file}`
+  childProcess.execSync(command, { stdio: [0, 1, 2] })
+}
+
+if (unsymlink) {
+  const { name, version } = program
+  const command = `cd node_modules && rm -rf ${name} && cd ../ && rm yarn.lock && yarn install ${name}@${version}`
   childProcess.execSync(command, { stdio: [0, 1, 2] })
 }

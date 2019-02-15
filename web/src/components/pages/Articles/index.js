@@ -1,20 +1,16 @@
 import classnames from 'classnames'
-import {
-  assignData,
-  requestData,
-  selectCurrentUser,
-  withLogin,
-} from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
-import { LoadingInfiniteScroll } from 'react-loading-infinite-scroller'
+import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
+import { assignData, requestData } from 'redux-saga-data'
+import withLogin, { selectCurrentUser } from 'with-login'
+import withQueryRouter from 'with-query-router'
 
 import ArticleItem from './ArticleItem'
-import { withQueryRouter } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { TextField } from '../../form/fields'

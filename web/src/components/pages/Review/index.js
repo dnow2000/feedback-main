@@ -1,10 +1,11 @@
-import { requestData, selectCurrentUser, withLogin } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { requestData } from 'redux-saga-data'
+import withLogin, { selectCurrentUser } from 'with-login'
 
 import FormFooter from './FormFooter'
 import FormFields from './FormFields'

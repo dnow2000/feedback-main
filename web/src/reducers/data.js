@@ -1,9 +1,9 @@
-import { createData } from 'pass-culture-shared'
+import { createData } from 'redux-saga-data'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 const dataPersistConfig = {
-  key: 'web-data',
+  key: 'science-feedback-web-data',
   storage,
   whitelist: [],
 }

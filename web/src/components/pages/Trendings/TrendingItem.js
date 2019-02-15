@@ -1,10 +1,11 @@
 import classnames from 'classnames'
-import { requestData, selectCurrentUser } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Transition from 'react-transition-group/Transition'
 import { compose } from 'redux'
+import { requestData } from 'redux-saga-data'
+import { selectCurrentUser } from 'with-login'
 
 import { selectEditorRoleByUserId } from '../../../selectors'
 

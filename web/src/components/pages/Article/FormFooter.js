@@ -1,10 +1,10 @@
 import classnames from 'classnames'
-import { selectCurrentUser } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectCurrentUser } from 'with-login'
 
 import { selectNewOrEditEntityContextFromLocation } from '../../form/utils'
 import {

@@ -1,17 +1,14 @@
-import {
-  assignData,
-  requestData,
-  selectCurrentUser,
-} from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
+import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { assignData, requestData } from 'redux-saga-data'
+import withQueryRouter from 'with-query-router'
+import { selectCurrentUser } from 'with-login'
 
 import UserItem from './UserItem'
-import { withQueryRouter } from '../../hocs'
-import LoadingInfiniteScroll from '../../layout/LoadingInfiniteScroll'
 import { TextField } from '../../form/fields'
 import {
   selectEligibleVerdictUsersByVerdictId

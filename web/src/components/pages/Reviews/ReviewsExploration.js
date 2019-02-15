@@ -1,17 +1,14 @@
-import {
-  assignData,
-  requestData
-} from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
+import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { Form } from 'react-final-form'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { assignData, requestData } from 'redux-saga-data'
+import withQueryRouter from 'with-query-router'
 
 import ReviewItem from './ReviewItem'
 import { TextField } from '../../form/fields'
-import { withQueryRouter } from '../../hocs'
-import LoadingInfiniteScroll from '../../layout/LoadingInfiniteScroll'
 import { selectReviewsByArticleId } from '../../../selectors'
 import { itemReviewNormalizer } from '../../../utils/normalizers'
 

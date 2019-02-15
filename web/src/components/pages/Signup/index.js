@@ -12,7 +12,7 @@ import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { parseSubmitErrors } from '../../form/utils'
 
-class Signin extends Component {
+class Signup extends Component {
   constructor(props) {
     super(props)
     this.state = { isFormLoading: false }
@@ -30,14 +30,14 @@ class Signin extends Component {
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
       formResolver()
-      const nextUrl = `/articles`
+      const nextUrl = `/home`
       history.push(nextUrl)
     })
   }
 
   onFormSubmit = formValues => {
     const method = 'POST'
-    const path = 'users/signin'
+    const path = 'users'
     const { dispatch } = this.props
     this.setState({ isFormLoading: true })
     // NOTE: we need to promise the request callbacks
@@ -100,7 +100,7 @@ class Signin extends Component {
   }
 }
 
-Signin.propTypes = {
+Signup.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 }
@@ -108,4 +108,4 @@ Signin.propTypes = {
 export default compose(
   withRouter,
   connect()
-)(Signin)
+)(Signup)

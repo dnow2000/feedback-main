@@ -1,9 +1,9 @@
-import { showModal } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { showModal } from 'redux-react-modals'
 
 import VerdictUserItem from './VerdictUserItem'
 import UsersExploration from '../Users/UsersExploration'
@@ -16,7 +16,7 @@ class ReviewersManager extends Component {
       dispatch,
     } = this.props
 
-    dispatch(showModal(<UsersExploration isModal withAddButton />))
+    dispatch(showModal("main", <UsersExploration isModal withAddButton />))
   }
 
   render () {

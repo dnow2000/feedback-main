@@ -1,4 +1,3 @@
-import { requestData, selectCurrentUser } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import { stringify } from 'query-string'
 import React, { Component } from 'react'
@@ -6,6 +5,8 @@ import Dotdotdot from 'react-dotdotdot'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { requestData } from 'redux-saga-data'
+import { selectCurrentUser } from 'with-login'
 
 import Avatar from '../../layout/Avatar'
 import {

@@ -2,12 +2,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-
-import Modal from './Modal'
+import { Modal } from 'redux-react-modals'
 
 const Main = ({ children, name, Tag }) => (
   <Tag className={`main ${name}-main`}>
-    <Modal />
+    <Modal name="main" />
     {children}
   </Tag>
 )

@@ -1,8 +1,8 @@
 import classnames from 'classnames'
-import { requestData } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { requestData } from 'redux-saga-data'
 
 import { imagePlugin } from './plugins'
 import { THUMBS_URL } from '../../../../utils/config'

@@ -1,9 +1,10 @@
-import { requestData, selectCurrentUser } from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { requestData } from 'redux-saga-data'
+import { selectCurrentUser } from 'with-login'
 
 import Authors from '../../layout/Authors'
 import Extract from '../../layout/Extract'

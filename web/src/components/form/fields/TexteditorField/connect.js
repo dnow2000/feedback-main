@@ -1,4 +1,4 @@
-import { requestData } from 'pass-culture-shared'
+import { requestData } from 'redux-saga-data'
 
 export function mapDispatchToProps (dispatch) {
   return {

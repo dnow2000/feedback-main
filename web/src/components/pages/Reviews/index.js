@@ -1,6 +1,6 @@
-import { withLogin } from 'pass-culture-shared'
 import React, { Fragment } from 'react'
 import { compose } from 'redux'
+import withLogin from 'with-login'
 
 import ReviewsExploration from './ReviewsExploration'
 import { withRoles } from '../../hocs'

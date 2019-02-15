@@ -1,19 +1,17 @@
 import classnames from 'classnames'
-import {
-  assignData,
-  requestData,
-  withLogin,
-} from 'pass-culture-shared'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
+import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { assignData, requestData } from 'redux-saga-data'
+import withLogin from 'with-login'
+import withQueryRouter from 'with-query-router'
 
 import TrendingItem from './TrendingItem'
 import { trendingMaxDates, trendingThemes } from './utils'
-import { withRoles, withQueryRouter } from '../../hocs'
+import { withRoles } from '../../hocs/withRoles'
 import Header from '../../layout/Header'
-import LoadingInfiniteScroll from '../../layout/LoadingInfiniteScroll'
 import Main from '../../layout/Main'
 import { selectTrendings } from '../../../selectors'
 

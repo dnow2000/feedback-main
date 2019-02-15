@@ -1,5 +1,5 @@
-import { selectCurrentUser } from 'pass-culture-shared'
 import createCachedSelector from 're-reselect'
+import { selectCurrentUser } from 'with-login'
 
 function mapArgsToCacheKey(state, types) {
   return (types || []).join(',')
