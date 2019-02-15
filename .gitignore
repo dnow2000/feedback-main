@@ -1,3 +1,6 @@
 .DS_Store
 *.secret
 shared
+
+docker_data
+docker_data_git

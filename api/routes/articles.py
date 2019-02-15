@@ -12,7 +12,7 @@ from repository.articles import get_articles_query_with_keywords, \
                                 resolve_content_with_url
 from validation.articles import check_article_is_not_yet_saved
 from validation.roles import check_has_role
-from utils.config import FLASK_ROOT_PATH
+from utils.config import API_ROOT_PATH
 from utils.includes import ARTICLE_INCLUDES
 from utils.rest import expect_json_data,\
                        handle_rest_get_list, \
@@ -77,7 +77,7 @@ def create_article():
     p = subprocess.Popen('PYTHONPATH="." python scripts/manager.py screenshotmachine'
                          + ' --url ' + str(article.url) + ' --id ' + str(article.id),
                          shell=True,
-                         cwd=FLASK_ROOT_PATH)
+                         cwd=API_ROOT_PATH)
 
     return jsonify(article.asdict(includes=ARTICLE_INCLUDES)), 201
 

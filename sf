@@ -2,11 +2,57 @@
 
 set -o nounset
 
-DB_NAME="science_feedback"
-APP_NAME="sciencefeedback"
-COMMAND_NAME="sf"
-EXTENSION="co"
-COLLECTIONS="\\\"user\\\",review,article,role"
+# =============================================
+#  Global config of the application
+# =============================================
+
+export DB_NAME="science_feedback"
+export APP_NAME="sciencefeedback"
+export COMMAND_NAME="sf"
+export TLD="co"
+
+# =============================================
+#  Helper that describes all functionalities
+# =============================================
+
+if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]]; then
+    echo "$(basename "$0") [-h] [-e env -b backend c] -- program to deal with the ecosystem
+where:
+    -h  show this help text
+    -e  specify environment to target (default: development)
+    -b  specify backend to connect with local app (default: localhost)
+    -t  specify version you want to deploy (create tag with this name)
+    -c  command that you want to run"
+    exit 0
+fi
+
+# =============================================
+# Get script parameters
+# =============================================
+
+if [[ $# -gt 2 ]] && [[ "$1" == "-e" ]]; then
+  ENV=$2
+  shift 2
+else
+  ENV=${ENV:-'development'}
+fi
+
+CMD="$1"
+shift
+
+# =============================================
+# Set variables for env
+# =============================================
+
+if [[ "$ENV" == "production" ]]; then
+	SCALINGO_APP=$APP_NAME-backend
+elif [[ ! "$ENV" == "development" ]]; then
+	SCALINGO_APP=$APP_NAME-backend-$ENV
+fi
+
+# =============================================
+# Utilities functions
+# =============================================
 
 PRG="$BASH_SOURCE"
 
@@ -38,39 +84,19 @@ function ensure_remote {
   fi
 }
 
-if [[ $# -gt 2 ]] && [[ "$1" == "-e" ]]; then
-  ENV=$2
-  shift 2
-else
-  ENV=${ENV:-'development'}
-fi
+export GIT_TAG=`cd "$ROOT_PATH/api" && git describe --tags --abbrev=0`
 
-if [[ "$ENV" == "development" ]]; then
-	API_HOST='localhost:80'
-elif [[ "$ENV" == "production" ]]; then
-	API_HOST=backend.$APP_NAME.$EXTENSION
-elif [[ "$ENV" == "staging" ]]; then
-	API_HOST=backend-$ENV.$APP_NAME.$EXTENSION
-fi
+# =============================================
+# Local commands : use Docker
+# =============================================
 
-if [[ "$1" == "" ]]; then
-  echo "Usage : $COMMAND_NAME <command> [arguments]"
-  exit
-fi
-
-CMD="$1"
-shift
-
-echo $CMD
-
-if [[ "$ENV" == "production" ]]; then
-	SCALINGO_APP=$APP_NAME-backend
-elif [[ ! "$ENV" == "development" ]]; then
-	SCALINGO_APP=$APP_NAME-backend-$ENV
-fi
-
+# Run alembic migration
+# Need to specify what alembic command you want to execute
+# Example: ./$COMMAND_NAME alembic upgrade HEAD
 if [[ "$CMD" == "alembic" ]]; then
   RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src && PYTHONPATH=. alembic '"$*"'"'
+
+# Connect to API container
 elif [[ "$CMD" == "bash" ]]; then
 	if [[ "$ENV" == "development" ]]; then
 		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. bash '"$CMD $*"'"'
@@ -78,6 +104,68 @@ elif [[ "$CMD" == "bash" ]]; then
 		scalingo -a "$SCALINGO_APP" run "bash"
 		exit
 	fi
+
+# Clear all data in postgresql database
+elif [[ "$CMD" == "clean-all-database" ]]; then
+  RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/clean.py'
+
+# Clear all assets in static
+elif [[ "$CMD" == "clean-all-storage" ]]; then
+	RUN='rm -rf $ROOT_PATH/api/static/object_store_data;'
+
+# Kill ALL docker containersy/
+elif [[ "$CMD" == "kill-all-containers" ]]; then
+  confirm "Warning: all your docker containers are going to be killed ?"
+  RUN='docker kill $(docker ps -q)'
+
+# Force docker-compose to build the docker images
+elif [[ "$CMD" == "rebuild-backend" ]]; then
+  RUN='docker-compose build --no-cache;'
+
+# Start API server with database and nginx server
+elif [[ "$CMD" == "start-backend" ]]; then
+  RUN='cd $ROOT_PATH && docker-compose up'
+
+# Restart API after removing the database and files
+elif [[ "$CMD" == "restart-backend" ]]; then
+ RUN='sudo rm -rf $ROOT_PATH/api/static/object_store_data;
+      sudo rm -rf $ROOT_PATH/docker_data/postgres;
+      cd $ROOT_PATH && docker-compose up --force-recreate'
+
+# Start web frontend localy
+elif [[ "$CMD" == "start-web" ]]; then
+	RUN='cd $ROOT_PATH/web && yarn start'
+
+# Run tests for API
+# Need start-backend to be successful and delete all data
+elif [[ "$CMD" == "test-backend" ]]; then
+  if [[ $# == 0 ]]; then
+    confirm "Warning: your database will be wiped. Is this OK ?"
+     "$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
+     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v tests"'
+  else
+     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v '"$*"'"'
+  fi
+
+# Run tests for end to end
+# Need start-backend AND start-web in two other processes
+elif [[ "$CMD" == "test-cafe-web" ]]; then
+	APP_PATH=$ROOT_PATH/web
+	SANDBOX_NAME="ci"
+	if [[ $# == 0 ]]; then
+		confirm "Warning: your database will be wiped. Is this OK ?"
+	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
+		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
+		RUN='cd $APP_PATH && ./scripts/manager.js testcafe '
+	else
+  	RUN='cd $APP_PATH && ./scripts/manager.js testcafe '"$*"
+	fi
+
+# =============================================
+# Deploy commands
+# =============================================
+
+# Deploy current version of backend
 elif [[ "$CMD" == "deploy-backend" ]]; then
   cd "$ROOT_PATH/flask"
   if [[ ! "$ENV" == 'production' ]] && [[ ! "$ENV" == 'staging' ]]; then
@@ -92,6 +180,9 @@ elif [[ "$CMD" == "deploy-backend" ]]; then
     git checkout "$current_branch"
     exit
     }
+
+	scalingo -a $SCALINGO_APP env-set GIT_TAG=$GIT_TAG
+
   git fetch
   git checkout master
   git pull || exit_restoring_branch
@@ -114,6 +205,7 @@ elif [[ "$CMD" == "deploy-backend" ]]; then
   git merge $commit_to_deploy
   git push origin $ENV
   exit_restoring_branch
+
 elif [[ "$CMD" == "deploy-web" ]]; then
 	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"$COMMAND_NAME -e staging "$CMD"\"."
 
@@ -161,28 +253,34 @@ elif [[ "$CMD" == "deploy-web" ]]; then
 	git push origin $tagname
 	exit
 
+# =============================================
+# Initialization commands
+# =============================================
+
+# Install new local environment
 elif [[ "$CMD" == "install" ]]; then
-  RUN='cd $ROOT_PATH;
-       git submodule init;
-       git submodule update;
-       git submodule foreach git checkout master;
-			 cd $ROOT_PATH/web;
+  RUN='cd $ROOT_PATH/web;
 			 yarn;'
 
+# Create symlink to use "pc" command (admin rights may be needed)
+elif [[ "$CMD" == "symlink" ]]; then
+	RUN='cd /usr/local/bin && ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME'
+
+# =============================================
+# Administration commands
+# =============================================
+
+# Connect to Postgresql database in command line
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
-	if [[ "$ENV" == "production" ]]; then
-		scalingo -a $APP_NAME-backend pgsql-console
-		exit
-	elif [[ "$ENV" == "staging" ]]; then
-		scalingo -a $APP_NAME-backend-staging pgsql-console
-		exit
-	elif [[ "$ENV" == "testing" ]]; then
-		scalingo -a $APP_NAME-backend-testing pgsql-console
-		exit
+	if [[ "$ENV" == "development" ]]; then
+    RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
 	else
-		RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
-	fi
+		scalingo -a $SCALINGO_APP pgsql-console
+		exit
+  fi
+
+# Open a python prompt in the specified environment
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "development" ]]; then
 		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
@@ -190,57 +288,24 @@ elif [[ "$CMD" == "python" ]]; then
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
 		exit
 	fi
-elif [[ "$CMD" == "rebuild-backend" ]]; then
-  RUN='docker-compose build --no-cache;'
-elif [[ "$CMD" == "restart-backend" ]]; then
- RUN='rm -rf $ROOT_PATH/flask/static/object_store_data;
-      rm -rf $ROOT_PATH/flask/postgres_data;
-      cd $ROOT_PATH && docker-compose up --force-recreate'
-elif [[ "$CMD" == "shared" ]]; then
-	RUN='cd $ROOT_PATH/shared && yarn run compile;
-			 cd $ROOT_PATH/web/node_modules && ln -sf ../../shared pass-culture-shared;
-			'
-elif [[ "$CMD" == "start-backend" ]]; then
-  RUN='cd $ROOT_PATH && docker-compose up'
-elif [[ "$CMD" == "start-web" ]]; then
-	RUN='cd $ROOT_PATH/web && yarn start'
-elif [[ "$CMD" == "clean-all-database" ]]; then
-  RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/clean.py'
-elif [[ "$CMD" == "clean-all-storage" ]]; then
-	RUN='rm -rf $ROOT_PATH/flask/static/object_store_data;'
-elif [[ "$CMD" == "test-backend" ]]; then
-  if [[ $# == 0 ]]; then
-    confirm "Warning: your database will be wiped. Is this OK ?"
-     "$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
-     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v tests"'
-  else
-     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v '"$*"'"'
-  fi
-elif [[ "$CMD" == "test-cafe-web" ]]; then
-	APP_PATH=$ROOT_PATH/web
-	SANDBOX_NAME="ci"
-	if [[ $# == 0 ]]; then
-		confirm "Warning: your database will be wiped. Is this OK ?"
-	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
-		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
-		RUN='cd $APP_PATH && ./scripts/manager.js testcafe '
-	else
-  	RUN='cd $APP_PATH && ./scripts/manager.js testcafe '"$*"
-	fi
+
+# =============================================
+# Python Scripts commands
+# =============================================
+
+# Run python scripts from api/scripts
 else
-	RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
+  if [[ "$ENV" == "development" ]]; then
+    RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
+  else
+    scalingo -a "$SCALINGO_APP" run 'python scripts/manager.py '"$CMD $*"''
+    exit
+  fi
 fi
 
-if [[ $PWD == "/home/deploy/science-feedback-main" ]]; then
-	echo $RUN
-  eval $RUN
-else
-	if [[ "$ENV" == "production" ]]; then
-	  echo "$RUN" | ssh deploy@backend-staging.$APP_NAME.$EXTENSION bash
-	elif [[ "$ENV" == "staging" ]]; then
-	  echo "$RUN" | ssh deploy@backend.$APP_NAME.$EXTENSION bash
-	else
-		echo $RUN
-	  eval $RUN
-	fi
-fi
+# =============================================
+# Execute command
+# =============================================
+
+echo $RUN
+eval $RUN
