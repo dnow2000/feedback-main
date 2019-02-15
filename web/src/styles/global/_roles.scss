@@ -1,0 +1,25 @@
+.button {
+  &.admin {
+    background-color: $black;
+
+    &:hover {
+      background-color: $black-ter;
+    }
+  }
+
+  &.editor {
+    background-color: $blue;
+
+    &:hover {
+      background-color: $blue-dark;
+    }
+  }
+
+  &.reviewer {
+    background-color: $orange;
+
+    &:hover {
+      background-color: $orange-dark;
+    }
+  }
+}

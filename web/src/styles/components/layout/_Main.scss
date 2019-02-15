@@ -1,0 +1,32 @@
+.main {
+  margin-left: auto;
+  margin-right: auto;
+  min-height: 100vh;
+  padding-bottom: 24px;
+  padding-top: $header-height;
+  width: 75%;
+
+  .section {
+    margin-bottom: 32px;
+
+    &.fullheight {
+      min-height: 100vh;
+    }
+
+    .title {
+      @extend .fs22;
+
+      color: $grey-darker;
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      @extend .fs18;
+
+      color: $grey;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+  }
+}

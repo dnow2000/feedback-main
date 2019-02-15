@@ -1,0 +1,37 @@
+Generic single-database configuration.
+
+#Init database migration
+
+1. Get the sql dump in the alembic/versions/sql, rename the <date>.sql into schema_init.sql
+
+```
+  cd scalingo
+  sh backup_dump.sh -a <scalingo_app_name> -b dumps_prod -d <scalingo_postgres_url> -p <password> -u <user>
+```
+
+2. Remove in the schema_init.sql
+
+   - SET search_path = public, pg_catalog;
+   - all the ; Owner by
+   - all the public.
+   - everything related to activity and alembic version
+
+3. Deploy to scalingo (being sure you just remove and read the addon Postgres to make it new)
+
+
+#Develop migration
+
+1. Being updated with the migration
+```
+sf alembic stamp head
+```
+
+2. Create a boilerplate migration file
+```
+sf alembic revision
+```
+
+3. Once the migration file is ready
+```
+sf alembic upgrade <id>
+```

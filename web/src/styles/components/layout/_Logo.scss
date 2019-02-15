@@ -1,0 +1,11 @@
+a.logo {
+  font-weight: $weight-light;
+  font-style: italic;
+  color: $white;
+  img {
+    margin: 0.25em;
+    max-height: 2.25em;
+    height: 2.25em;
+    vertical-align: middle;
+  }
+}

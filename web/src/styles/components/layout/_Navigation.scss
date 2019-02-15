@@ -1,0 +1,86 @@
+.navigation {
+  display: none;
+  z-index: 3001; // needed to go above the fixed CTA button on home page
+  position: fixed;
+  top: 25px;
+  left: 60%;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  user-select: none;
+
+  &.showing {
+    display: block;
+    opacity: 1;
+    animation: fade-in 0.5s cubic-bezier(0.25, 0.15, 0.3, 1.1) backwards;
+
+    &:active,
+    &:focus {
+      outline: none !important;
+    }
+  }
+
+  .list {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    color: black;
+    max-width: 400px;
+    position: absolute;
+    right: 3px;
+    top: 50px;
+    z-index: 100;
+    width: calc(100% - 1rem);
+    // arrow
+    // before for an outline in grey, so arrow doesn't disappear on white background;
+    // after for real (white) arrow
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      pointer-events: none;
+    }
+
+    &::before {
+      right: 24px;
+      border: 11px solid transparent;
+      border-bottom-color: $grey-light;
+    }
+
+    &::after {
+      right: 1.6rem;
+      border: 10px solid transparent;
+      border-bottom-color: white;
+    }
+
+    .item {
+      border-bottom: 1px solid $grey-light;
+      position: relative;
+      width: 100%; // needed when used with Button
+
+      .link {
+        color: $grey;
+        display: block;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: transform 250ms ease-out;
+
+        &:hover,
+        &:focus {
+          transform: translateX(6px);
+        }
+
+        &.current {
+          cursor: inherit;
+          color: $primary;
+        }
+      }
+
+      &:last-child {
+        border: 0;
+      }
+    }
+  }
+}

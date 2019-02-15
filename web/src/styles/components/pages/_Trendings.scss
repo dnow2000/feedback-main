@@ -1,0 +1,22 @@
+.trendings-main {
+  .mini-tabutton {
+    display: inline-block;
+    font-size: 15px;
+    background-color: white;
+    padding: 5px 12px;
+    margin: 10px 5px;
+    cursor: pointer;
+  }
+
+  .selected-tab {
+    background-color: lightblue !important;
+  }
+
+  .tabutton {
+    font-size: 25px;
+    background-color: white;
+    padding: 5px 15px;
+    margin: 10px;
+    cursor: pointer;
+  }
+}

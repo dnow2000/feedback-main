@@ -1,0 +1,31 @@
+.rating {
+  @extend .p6;
+
+  background-color: $black;
+  border-radius: 50%;
+  color: white;
+  height: 30px;
+  width: 30px;
+
+  &.value--2 {
+    background-color: $brown;
+  }
+
+  &.value--1 {
+    background-color: $red;
+  }
+
+  &.value-0 {
+    background-color: white;
+    color: $black;
+  }
+
+  &.value-1 {
+    background-color: $green;
+  }
+
+  &.value-2 {
+    background-color: $green;
+  }
+
+}

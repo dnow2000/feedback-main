@@ -1,0 +1,109 @@
+/*
+ * Hamburgers
+ * @description Tasty CSS-animated hamburgers
+ * @author Jonathan Suh @jonsuh
+ * @site https://jonsuh.com/hamburgers
+ * @link https://github.com/jonsuh/hamburgers
+ */
+
+$l-height: 23px;
+$l-bar-height: 2px;
+$l-vert-gutter: ($l-height - ($l-bar-height * 3)) / 2;
+
+.hamburger {
+  background-color: $primary;
+  border-color: white;
+  border-radius: 100%;
+  fill: white;
+  height: 3rem;
+  padding: 0.5rem;
+  text-align: center;
+  vertical-align: middle;
+  width: 3rem;
+
+  .link {
+    display: inline-block;
+    cursor: pointer;
+    transition-property: opacity, filter;
+    transition-duration: 0.15s;
+    transition-timing-function: linear;
+    position: relative;
+  }
+
+  .link-box {
+    width: $l-height;
+    height: $l-height;
+    display: inline-block;
+    position: relative;
+
+    .link-inner {
+      top: 50%;
+      margin-top: -$l-vert-gutter / 2;
+    }
+  }
+
+
+  .link-inner,
+  .link-inner::before,
+  .link-inner::after {
+    width: 100%;
+    height: $l-bar-height;
+    background-color: white;
+    border-radius: 5px;
+    position: absolute;
+    transition-property: transform;
+    transition-duration: 0.15s;
+    transition-timing-function: ease;
+  }
+
+  .link-inner::before,
+  .link-inner::after {
+    content: "";
+    display: block;
+  }
+
+  .link-inner::before {
+     top: -$l-vert-gutter;
+  }
+
+  .link-inner::after {
+     bottom: -$l-vert-gutter;
+  }
+
+
+  /*
+  slider from:
+  https://github.com/jonsuh/hamburgers/blob/master/dist/hamburgers.css
+  [APAPTED]
+  */
+  .link-inner {
+    top: $l-vert-gutter;
+  }
+  .link-inner::before {
+    top: $l-vert-gutter;
+    transition-property: transform, opacity;
+    transition-timing-function: ease;
+    transition-duration: 0.2s;
+  }
+
+  .link-inner::after {
+    top: $l-vert-gutter * 2;
+  }
+
+  .link {
+    &.active {
+      .link-inner {
+        transform: translate3d(0, $l-vert-gutter, 0) rotate(45deg);
+      }
+
+      .link-inner::before {
+        transform: rotate(-45deg) translate3d(-0.35741em, #{-$l-bar-height * 2}, 0);
+        opacity: 0;
+      }
+
+      .link-inner::after {
+        transform: translate3d(0, #{-$l-vert-gutter * 2}, 0) rotate(-90deg);
+      }
+    }
+  }
+}

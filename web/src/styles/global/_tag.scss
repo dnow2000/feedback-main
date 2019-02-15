@@ -1,0 +1,14 @@
+.tag {
+  @extend .px8;
+
+  background-color: $primary;
+  border-radius: 18px;
+  color: white;
+  font-weight: 500;
+  height: 16px;
+  max-width: 100px;
+
+  &:not(:last-child) {
+    margin-right: 4px;
+  }
+}

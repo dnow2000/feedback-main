@@ -114,10 +114,10 @@ elif [[ "$CMD" == "deploy-backend" ]]; then
   git merge $commit_to_deploy
   git push origin $ENV
   exit_restoring_branch
-elif [[ "$CMD" == "deploy-reval" ]]; then
+elif [[ "$CMD" == "deploy-web" ]]; then
 	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"$COMMAND_NAME -e staging "$CMD"\"."
 
-	APP_PATH=$ROOT_PATH/reval
+	APP_PATH=$ROOT_PATH/web
 	cd $APP_PATH
 
 	(set -a; source "$APP_PATH/config/run_envs/$ENV" && yarn build) || exit
@@ -166,7 +166,7 @@ elif [[ "$CMD" == "install" ]]; then
        git submodule init;
        git submodule update;
        git submodule foreach git checkout master;
-			 cd $ROOT_PATH/reval;
+			 cd $ROOT_PATH/web;
 			 yarn;'
 
 elif [[ "$CMD" == "psql" ]]; then
@@ -198,12 +198,12 @@ elif [[ "$CMD" == "restart-backend" ]]; then
       cd $ROOT_PATH && docker-compose up --force-recreate'
 elif [[ "$CMD" == "shared" ]]; then
 	RUN='cd $ROOT_PATH/shared && yarn run compile;
-			 cd $ROOT_PATH/reval/node_modules && ln -sf ../../shared pass-culture-shared;
+			 cd $ROOT_PATH/web/node_modules && ln -sf ../../shared pass-culture-shared;
 			'
 elif [[ "$CMD" == "start-backend" ]]; then
   RUN='cd $ROOT_PATH && docker-compose up'
-elif [[ "$CMD" == "start-reval" ]]; then
-	RUN='cd $ROOT_PATH/reval && yarn start'
+elif [[ "$CMD" == "start-web" ]]; then
+	RUN='cd $ROOT_PATH/web && yarn start'
 elif [[ "$CMD" == "clean-all-database" ]]; then
   RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/clean.py'
 elif [[ "$CMD" == "clean-all-storage" ]]; then
@@ -216,8 +216,8 @@ elif [[ "$CMD" == "test-backend" ]]; then
   else
      RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v '"$*"'"'
   fi
-elif [[ "$CMD" == "test-cafe-reval" ]]; then
-	APP_PATH=$ROOT_PATH/reval
+elif [[ "$CMD" == "test-cafe-web" ]]; then
+	APP_PATH=$ROOT_PATH/web
 	SANDBOX_NAME="ci"
 	if [[ $# == 0 ]]; then
 		confirm "Warning: your database will be wiped. Is this OK ?"

@@ -1,0 +1,9 @@
+.extract {
+  @extend .fs12;
+  @extend .is-italic;
+  @extend .m22;
+
+  color: $grey;
+  font-weight: 500;
+  max-height: 100px;
+}

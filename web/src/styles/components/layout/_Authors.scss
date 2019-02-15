@@ -1,0 +1,7 @@
+.authors {
+  @extend .fs12;
+
+  color: $grey-darker;
+  font-weight: 600;
+  max-height: 50px;
+}

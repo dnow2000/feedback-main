@@ -1,0 +1,47 @@
+.home-main {
+
+  width: 100%;
+
+  .section {
+
+    text-align: center;
+    @media(min-width: $tablet) {
+      text-align: left;
+    }
+
+    .col-1of2 {
+      &:first-of-type {
+        padding-left: 120px;
+        padding-right: 16px;
+      }
+      &:last-of-type {
+        padding-left: 16px;
+        padding-right: 120px;
+      }
+    }
+
+    .bubble {
+      display: none;
+      height: 400px;
+
+      &.bubble-left {
+        left: 2.5rem;
+      }
+
+      &.bubble-right {
+        right: 2.5rem;
+        @media(min-width: $desktop) {
+          right: 5rem;
+        }
+        @media(min-width: $widescreen) {
+          right: 10rem;
+        }
+      }
+
+      @media(min-width: $tablet) {
+        display: inherit;
+      }
+
+    }
+  }
+}
