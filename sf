@@ -6,9 +6,10 @@ set -o nounset
 #  Global config of the application
 # =============================================
 
-export DB_NAME="science_feedback"
 export APP_NAME="sciencefeedback"
+export DB_NAME="science_feedback"
 export COMMAND_NAME="sf"
+export ORGANIZATION_NAME="science-feedback"
 export TLD="co"
 
 # =============================================

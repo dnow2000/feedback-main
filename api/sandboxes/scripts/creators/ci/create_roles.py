@@ -14,8 +14,6 @@ def create_roles():
 
     for user in User.query.all():
 
-        print(user, user.asdict())
-
         user_type = re.match(
             r'{} Test (.*) (.*)'.format(COMMAND_NAME.upper()),
             user.publicName
