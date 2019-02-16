@@ -2,7 +2,7 @@
 version: 2
 jobs: # a collection of steps
   build: # runs not using Workflows must have a `build` job as entry point
-    working_directory: ~/api
+    working_directory: ~/science-feedback-api-ci
     docker:
       - image: circleci/python:3.7.0 # ...with this image as the primary container; this is where all `steps` will run
         environment:
@@ -19,6 +19,7 @@ jobs: # a collection of steps
       - run: # install and activate virtual environment with pip
           name: Install requirements
           command: |
+            cd api
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
@@ -30,17 +31,19 @@ jobs: # a collection of steps
       - run:
           name: Running flask
           command: |
+            cd api
             . venv/bin/activate
             python app.py
           background: true
       - run: # run tests
           name: Running tests
           command: |
+            cd api
             . venv/bin/activate
             pytest tests
 
   check-dependencies:
-    working_directory: ~/science-feedback-flask-ci/api # directory where steps will run
+    working_directory: ~/science-feedback-api-ci # directory where steps will run
     docker: # run the steps with Docker
       - image: circleci/python:3.7.0
     steps: # a collection of executable commands
@@ -50,6 +53,7 @@ jobs: # a collection of steps
       - run: # install and activate virtual environment with pip
           name: Install requirements
           command: |
+            cd api
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
@@ -57,6 +61,7 @@ jobs: # a collection of steps
       - run:
           name: Check outdated dependencies
           command:
+            cd api
             ./scripts/check-pip-dependencies.sh
 
 workflows:
