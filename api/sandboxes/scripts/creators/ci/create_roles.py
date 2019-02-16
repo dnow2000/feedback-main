@@ -4,6 +4,7 @@ from models.role import RoleType
 from models.user import User
 from models.manager import Manager
 from tests.utils import create_role
+from utils.config import COMMAND_NAME
 from utils.logger import logger
 
 def create_roles():
@@ -15,7 +16,10 @@ def create_roles():
 
         print(user, user.asdict())
 
-        user_type = re.match(r'SF Test (.*) (.*)', user.publicName).group(1)
+        user_type = re.match(
+            r'{} Test (.*) (.*)'.format(COMMAND_NAME.upper()),
+            user.publicName
+        ).group(1)
 
         if user_type not in ['user', 'master']:
             roles_by_name['{} {}'.format(user.email, user_type)] = create_role(
