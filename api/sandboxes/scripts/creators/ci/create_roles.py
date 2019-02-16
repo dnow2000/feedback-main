@@ -12,6 +12,9 @@ def create_roles():
     roles_by_name = {}
 
     for user in User.query.all():
+
+        print(user, user.asdict())
+
         user_type = re.match(r'SF Test (.*) (.*)', user.publicName).group(1)
 
         if user_type not in ['user', 'master']:
