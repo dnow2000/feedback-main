@@ -167,7 +167,7 @@ elif [[ "$CMD" == "test-cafe-web" ]]; then
 
 # Deploy current version of backend
 elif [[ "$CMD" == "deploy-backend" ]]; then
-  cd "$ROOT_PATH/flask"
+  cd "$ROOT_PATH"
   if [[ ! "$ENV" == 'production' ]] && [[ ! "$ENV" == 'staging' ]]; then
      echo "Can only deploy-backend in staging and production"
      exit
