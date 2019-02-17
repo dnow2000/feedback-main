@@ -1,3 +1,5 @@
+from utils.config import IS_DEV
+
 import routes.articles
 import routes.evaluations
 import routes.images
@@ -14,3 +16,6 @@ import routes.health_check
 import routes.storage
 
 import routes.error_handlers
+
+if IS_DEV:
+    import routes.sandboxes

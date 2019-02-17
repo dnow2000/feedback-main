@@ -9,7 +9,7 @@ import { selectCurrentRolesByTypes } from '../../selectors'
 
 export const withRoles = (config = {
   accessRoleTypes: [],
-  createRoleTypes: [],
+  createUserRoleTypes: [],
   editRoleTypes: []
 }) => WrappedComponent => {
 
@@ -33,7 +33,7 @@ export const withRoles = (config = {
         editRoles,
         history,
         location,
-        createRoles
+        createUserRoles
       } = this.props
       const {
         isEditEntity,
@@ -47,7 +47,7 @@ export const withRoles = (config = {
       }
 
       if (isNewEntity) {
-        if (createRoles.length) {
+        if (createUserRoles.length) {
           this.setState({ canRenderChildren: true })
           return
         }
@@ -98,11 +98,11 @@ export const withRoles = (config = {
 
   function mapStateToProps (state) {
     const accessRoles = selectCurrentRolesByTypes(state, config.accessRoles)
-    const createRoles = selectCurrentRolesByTypes(state, config.createRoleTypes)
+    const createUserRoles = selectCurrentRolesByTypes(state, config.createUserRoleTypes)
     const editRoles = selectCurrentRolesByTypes(state, config.editRoleTypes)
     return {
       accessRoles,
-      createRoles,
+      createUserRoles,
       editRoles
     }
   }

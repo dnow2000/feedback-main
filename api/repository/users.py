@@ -37,3 +37,7 @@ def filter_users_with_roles(query, roles):
     roles_filter = and_(*[User.roles.any(Role.type == role) for role in roles])
     query = query.filter(roles_filter)
     return query
+
+def keep_users_with_no_role(query):
+    query = query.filter(~User.roles.any())
+    return query

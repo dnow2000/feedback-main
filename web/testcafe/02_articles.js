@@ -4,10 +4,10 @@ import {
   seeArticleButton,
   seeCurrentUserReviewButton
 } from './utils/articles'
-import { createRole } from './utils/signin'
+import { createUserRole } from './utils/signin'
 
 fixture.skip("User Articles")
-  .beforeEach(t => t.useRole(createRole('user')))
+  .beforeEach(t => t.useRole(createUserRole('user')))
 
 test('You cannot create an article when you are a simple user', async t => {
   await t.expect(createArticleButton.exists)
@@ -26,7 +26,7 @@ test(
 
 
 fixture.skip("Admin Articles")
-  .beforeEach(t => t.useRole(createRole('admin')))
+  .beforeEach(t => t.useRole(createUserRole('admin')))
 
 test('You cannot create an article when you are an admin', async t => {
   await t.expect(createArticleButton.exists)
@@ -45,7 +45,7 @@ test('You cannot create/see a review (made by you) when you are an admin', async
 
 
 fixture.skip("Editor Articles")
-  .beforeEach(t => t.useRole(createRole('editor')))
+  .beforeEach(t => t.useRole(createUserRole('editor')))
 
 test('Go to create an article when you are an editor', async t => {
   await t.click(createArticleButton)
@@ -71,7 +71,7 @@ test('You cannot create/see a review (made by you) when you are an editor', asyn
 
 
 fixture("Reviewer Articles")
-  .beforeEach(t => t.useRole(createRole('review')))
+  .beforeEach(t => t.useRole(createUserRole('review')))
 
 test('You cannot create an article when you are a reviewer', async t => {
   await t.expect(createArticleButton.exists)

@@ -236,7 +236,7 @@ function mapStateToProps(state, ownProps) {
 
 export default compose(
   withLoginRedirectToSignin,
-  withRoles({ createRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
+  withRoles({ createUserRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
   withRouter,
   connect(mapStateToProps)
 )(Article)

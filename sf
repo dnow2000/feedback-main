@@ -157,7 +157,7 @@ elif [[ "$CMD" == "test-cafe-web" ]]; then
 		confirm "Warning: your database will be wiped. Is this OK ?"
 	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
 		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
-		RUN='cd $APP_PATH && ./scripts/manager.js testcafe '
+		RUN='cd $APP_PATH && ./scripts/manager.js testcafe -b chrome:headless'
 	else
   	RUN='cd $APP_PATH && ./scripts/manager.js testcafe '"$*"
 	fi

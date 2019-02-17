@@ -38,12 +38,9 @@ if (symlink) {
 }
 
 if (testcafe) {
-  const { debug, file } = program
-  let { browser } = program
-  if (debug) {
-    browser = 'chrome'
-  }
-  const command = `NODE_ENV=development ./node_modules/testcafe/bin/testcafe.js ${browser} ${debug ? '-d' : ''} testcafe/${file}`
+  const { browser, debug, file } = program
+  const debugOption = debug ? '-d' : ''
+  const command = `NODE_ENV=development ./node_modules/.bin/testcafe ${browser} ${debugOption} testcafe/${file}`
   childProcess.execSync(command, { stdio: [0, 1, 2] })
 }
 
