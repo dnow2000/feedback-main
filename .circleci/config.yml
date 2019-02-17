@@ -50,7 +50,7 @@ jobs: # a collection of steps
       - run:
           name: Init env
           command: |
-            git clone https://github.com/$ORGANIZATION_NAME-main.git
+            git clone https://github.com/$ORGANIZATION_NAME/$ORGANIZATION_NAME-main.git
             cd $ORGANIZATION_NAME-main
             curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
             curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
