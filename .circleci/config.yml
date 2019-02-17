@@ -1,7 +1,7 @@
 # Python CircleCI 2.0 configuration file
 version: 2
 jobs: # a collection of steps
-  build: # runs not using Workflows must have a `build` job as entry point
+  build-api: # runs not using Workflows must have a `build` job as entry point
     working_directory: "~/api-ci"
     docker:
       - image: circleci/python:3.7.0 # ...with this image as the primary container; this is where all `steps` will run
@@ -42,7 +42,7 @@ jobs: # a collection of steps
             . venv/bin/activate
             pytest tests
 
-  end-to-end:
+  build-web:
     machine:
       image: circleci/classic:latest
     working_directory: ~/
