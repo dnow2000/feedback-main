@@ -1,0 +1,16 @@
+{
+  "name": "Science Feedback",
+  "description": "Serveur API de Science Feedback",
+  "repository": "https://github.com/science-feedback/science-feedback-main",
+  "addons": ["postgresql:free"],
+  "formation": {
+    "web": {
+      "amount": 1,
+      "size": "S"
+    },
+    "clock": {
+      "amount": 0,
+      "size": "S"
+    }
+  }
+}
