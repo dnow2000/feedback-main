@@ -89,7 +89,7 @@ test.before(signinAndNavigateToAs('editor')('/reviews/AE?edit'))
 
 
 
-fixture("Reviewer Review")
+fixture.skip("Reviewer Review")
 
 test.before(signinAndCreateCurrentUserReviewAs('reviewer'))(
   'Create a review when you are a reviewer', async t => {
