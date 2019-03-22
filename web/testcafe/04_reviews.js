@@ -1,9 +1,9 @@
 import {
   createCurrentUserReviewButton,
   signinAndSeeReviewsAs
-} from './utils/reviews'
+} from './helpers/reviews'
 
-fixture("User Reviews")
+fixture.skip("User Reviews")
   .beforeEach(signinAndSeeReviewsAs('user'))
 
 test('You cannot create your own review when you are a user', async t => {

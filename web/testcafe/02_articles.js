@@ -3,8 +3,8 @@ import {
   createCurrentUserReviewButton,
   seeArticleButton,
   seeCurrentUserReviewButton
-} from './utils/articles'
-import { createUserRole } from './utils/signin'
+} from './helpers/articles'
+import { createUserRole } from './helpers/signin'
 
 fixture.skip("User Articles")
   .beforeEach(t => t.useRole(createUserRole('user')))
@@ -70,7 +70,7 @@ test('You cannot create/see a review (made by you) when you are an editor', asyn
 
 
 
-fixture("Reviewer Articles")
+fixture.skip("Reviewer Articles")
   .beforeEach(t => t.useRole(createUserRole('review')))
 
 test('You cannot create an article when you are a reviewer', async t => {

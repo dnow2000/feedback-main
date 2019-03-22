@@ -6,15 +6,15 @@ import {
   summaryArticleTextarea,
   titleArticleInput,
   urlArticleInput
-} from './utils/article'
+} from './helpers/article'
 import {
   signinAndCreateArticleAs,
   signinAndSeeArticleAs,
   signinAndSeeCurrentUserReviewedArticleAs,
-} from './utils/articles'
-import { signinAndNavigateToAs } from './utils/signin'
+} from './helpers/articles'
+import { signinAndNavigateToAs } from './helpers/signin'
 
-fixture("User Article").beforeEach(signinAndSeeArticleAs('user'))
+fixture.skip("User Article").beforeEach(signinAndSeeArticleAs('user'))
 
 test('You cannot edit an article when you are a simple user', async t => {
     await t.expect(editArticleButton.exists)
@@ -44,7 +44,7 @@ test.before(signinAndNavigateToAs('user')('/articles/AE?edit'))
 
 
 
-fixture("Admin Article").beforeEach(signinAndSeeArticleAs('admin'))
+fixture.skip("Admin Article").beforeEach(signinAndSeeArticleAs('admin'))
 
 test('You cannot edit an article when you are an admin', async t => {
   await t.expect(editArticleButton.exists)
@@ -73,7 +73,7 @@ test.before(signinAndNavigateToAs('admin')('/articles/AE?edit'))
   })
 
 
-fixture("Editor Article")
+fixture.skip("Editor Article")
 
 test.before(signinAndCreateArticleAs('editor'))(
   'Create an article when you are an editor', async t => {
@@ -112,7 +112,7 @@ test.before(signinAndSeeArticleAs('editor'))(
   })
 
 
-fixture("Reviewer Article")
+fixture.skip("Reviewer Article")
 
 test.before(signinAndSeeArticleAs('reviewer'))(
   'You cannot edit an article when you are a reviewer', async t => {
