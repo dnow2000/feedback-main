@@ -19,7 +19,7 @@ def create_users():
         for role_index in range(USERS_BY_TYPE_COUNT):
             users_by_name['{} {}'.format(user_type, role_index)] = create_user(
                 email="{}test.{}.{}@{}".format(COMMAND_NAME, user_type, role_index, EMAIL_HOST),
-                password="{}test.{}.{}".format(COMMAND_NAME, user_type.capitalize(), role_index),
+                password="{}test0.{}.{}".format(COMMAND_NAME, user_type.capitalize(), role_index),
                 public_name="{} Test {} {}".format(COMMAND_NAME.upper(), user_type, role_index)
             )
 
