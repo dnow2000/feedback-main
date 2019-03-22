@@ -27,7 +27,7 @@ const Home = () => (
           </p>
           <br />
           <p className={subtitleClassName}>
-            ScienceFeedback is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
+            Science Feedback is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
           </p>
         </div>
         <div className="col-1of2 center">
