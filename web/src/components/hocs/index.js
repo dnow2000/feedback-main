@@ -1,2 +1,2 @@
-export * from './withLoginRedirectToSignin'
+export * from './with-login'
 export * from './withRoles'

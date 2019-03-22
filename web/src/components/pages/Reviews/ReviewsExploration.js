@@ -44,11 +44,12 @@ class ReviewsExploration extends Component {
     const { dispatch, location } = this.props
     const { search } = location
 
-    const path = `reviews${search}`
+    const apiPath = `/reviews${search}`
 
     this.setState({ isLoading: true }, () => {
       dispatch(
-        requestData('GET', path, {
+        requestData({
+          apiPath,
           handleFail: () => {
             this.setState({
               hasMore: false,
@@ -56,8 +57,9 @@ class ReviewsExploration extends Component {
             })
           },
           handleSuccess: (state, action) => {
+            const { payload: { data } } = action
             this.setState({
-              hasMore: action.data && action.data.length > 0,
+              hasMore: data && data.length > 0,
               isLoading: false
             })
           },

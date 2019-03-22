@@ -11,7 +11,7 @@ import { selectCurrentUser } from 'with-login'
 import withQueryRouter from 'with-query-router'
 
 import ArticleItem from './ArticleItem'
-import { withLoginRedirectToSignin } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated} from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { TextField } from '../../form/fields'
@@ -49,11 +49,12 @@ class Articles extends Component {
     const { dispatch, location } = this.props
     const { search } = location
 
-    const path = `articles${search}`
+    const apiPath = `/articles${search}`
 
     this.setState({ isLoading: true }, () => {
       dispatch(
-        requestData('GET', path, {
+        requestData({
+          apiPath,
           handleFail: () => {
             this.setState({
               hasMore: false,
@@ -61,8 +62,9 @@ class Articles extends Component {
             })
           },
           handleSuccess: (state, action) => {
+            const { payload: { data } } = action
             this.setState({
-              hasMore: action.data && action.data.length > 0,
+              hasMore: data && data.length > 0,
               isLoading: false
             })
           },
@@ -226,7 +228,7 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withQueryRouter,
   connect(mapStateToProps)
 )(Articles)

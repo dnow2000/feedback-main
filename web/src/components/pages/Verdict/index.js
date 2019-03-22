@@ -16,7 +16,7 @@ import {
   selectNewOrEditEntityContextFromLocation,
   selectSearchFromLocation,
 } from '../../form/utils'
-import { withLoginRedirectToSignin, withRoles } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import {
@@ -52,12 +52,13 @@ class Verdict extends Component {
     )
     const { isNewEntity } = newOrEditEntityContext || {}
 
-    dispatch(requestData('GET', 'evaluations'))
-    dispatch(requestData('GET', 'tags'))
+    dispatch(requestData({ apiPath: '/evaluations' }))
+    dispatch(requestData({ apiPath: '/tags' }))
 
     if (!isNewEntity) {
       dispatch(
-        requestData('GET', `verdicts/${verdictId}`, {
+        requestData({
+          apiPath: `/verdicts/${verdictId}`,
           isMergingDatum: true,
           normalizer: verdictNormalizer,
         })
@@ -70,48 +71,52 @@ class Verdict extends Component {
     }
 
     dispatch(
-      requestData('GET', `articles/${articleId}`, {
+      requestData({
+        apiPath: `/articles/${articleId}`,
         normalizer: articleNormalizer,
       })
     )
   }
 
   handleRequestFail = formResolver => (state, action) => {
+    const { payload } = action
     // we return API errors back to the form
     const nextState = { isFormLoading: false }
-    const errors = parseSubmitErrors(action.errors)
+    const errors = parseSubmitErrors(payload.errors)
     this.setState(nextState, () => formResolver(errors))
   }
 
   handleRequestSuccess = formResolver => (state, action) => {
+    const { payload: { datum } } = action
     const { history } = this.props
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
+      const verdictId = datum.id
       formResolver()
-      const nextUrl = `/verdicts/${action.data.id}`
+      const nextUrl = `/verdicts/${verdictId}`
       history.push(nextUrl)
     })
   }
 
   onFormSubmit = formValues => {
-    const { location, currentUserVerdictPatch } = this.props
+    const { dispatch, location, currentUserVerdictPatch } = this.props
     const { id } = currentUserVerdictPatch || {}
     const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
       location
     )
     const { method } = newOrEditEntityContext || {}
-    const path = `verdicts/${id || ''}`
-    const { dispatch } = this.props
+    const apiPath = `/verdicts/${id || ''}`
     this.setState({ isFormLoading: true })
     // NOTE: we need to promise the request callbacks
     // in order to inject their payloads into the form
     const formSubmitPromise = new Promise(resolve => {
-      const config = {
+      dispatch(requestData({
+        apiPath,
         body: { ...formValues },
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
-      }
-      dispatch(requestData(method, path, config))
+        method
+      }))
     })
     return formSubmitPromise
   }
@@ -243,7 +248,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withRoles({ createUserRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
   withRouter,
   connect(mapStateToProps)

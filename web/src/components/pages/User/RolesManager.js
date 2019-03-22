@@ -14,7 +14,7 @@ class RolesManager extends Component {
 
   handleRequestData = () => {
     const { dispatch } = this.props
-    dispatch(requestData('GET', 'roleTypes'))
+    dispatch(requestData({ apiPath: '/roleTypes' }))
   }
 
   onRoleChange = () => {

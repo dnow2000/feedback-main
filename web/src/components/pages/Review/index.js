@@ -15,7 +15,7 @@ import {
   selectNewOrEditEntityContextFromLocation,
   selectSearchFromLocation,
 } from '../../form/utils'
-import { withLoginRedirectToSignin, withRoles } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import {
@@ -52,12 +52,13 @@ class Review extends Component {
     )
     const { isNewEntity } = newOrEditEntityContext || {}
 
-    dispatch(requestData('GET', 'evaluations'))
-    dispatch(requestData('GET', 'tags?scopes=review'))
+    dispatch(requestData({ apiPath: '/evaluations' }))
+    dispatch(requestData({ apiPath: '/tags?scopes=review' }))
 
     if (!isNewEntity) {
       dispatch(
-        requestData('GET', `reviews/${reviewId}`, {
+        requestData({
+          apiPath: `/reviews/${reviewId}`,
           normalizer: reviewNormalizer,
         })
       )
@@ -69,7 +70,8 @@ class Review extends Component {
     }
 
     dispatch(
-      requestData('GET', `articles/${articleId}`, {
+      requestData({
+        apiPath: `/articles/${articleId}`,
         normalizer: articleNormalizer,
       })
     )
@@ -77,40 +79,45 @@ class Review extends Component {
 
   handleRequestFail = formResolver => (state, action) => {
     // we return API errors back to the form
+    const { payload } = action
     const nextState = { isFormLoading: false }
-    const errors = parseSubmitErrors(action.errors)
+    const errors = parseSubmitErrors(payload.errors)
     this.setState(nextState, () => formResolver(errors))
   }
 
   handleRequestSuccess = formResolver => (state, action) => {
+    const { payload: { datum } } = action
     const { history } = this.props
+    const reviewId = datum.id
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
       formResolver()
-      const nextUrl = `/reviews/${action.data.id}`
+      const nextUrl = `/reviews/${reviewId}`
       history.push(nextUrl)
     })
   }
 
   onFormSubmit = formValues => {
-    const { location, currentUserReviewPatch } = this.props
+    const { dispatch, location, currentUserReviewPatch } = this.props
     const { id } = currentUserReviewPatch || {}
     const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
       location
     )
     const { method } = newOrEditEntityContext || {}
-    const path = `reviews/${id || ''}`
-    const { dispatch } = this.props
     this.setState({ isFormLoading: true })
+
+    const apiPath = `/reviews/${id || ''}`
+
     // NOTE: we need to promise the request callbacks
     // in order to inject their payloads into the form
     const formSubmitPromise = new Promise(resolve => {
-      const config = {
+      dispatch(requestData({
+        apiPath,
         body: { ...formValues },
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
-      }
-      dispatch(requestData(method, path, config))
+        method
+      }))
     })
     return formSubmitPromise
   }
@@ -252,7 +259,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withRoles({ createUserRoleTypes: ['reviewer'], editRoleTypes: ['reviewer'] }),
   withRouter,
   connect(mapStateToProps)

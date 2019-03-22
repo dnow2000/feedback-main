@@ -11,15 +11,13 @@ export function mapDispatchToProps (dispatch) {
       this.setState({ isLoading: true })
 
       dispatch(
-        requestData(
-          'POST',
-          'images',
-          {
-            body,
-            handleFail,
-            handleSuccess
-          }
-        )
+        requestData({
+          apiPath: '/images',
+          body,
+          handleFail,
+          handleSuccess,
+          method: 'POST'
+        })
       )
     }
   }

@@ -6,7 +6,7 @@ import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
 import RolesManager from './RolesManager'
-import { withLoginRedirectToSignin, withRoles } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import UserItem from '../Users/UserItem'
@@ -21,8 +21,9 @@ class User extends Component {
   handleRequestData = () => {
     const { dispatch, match: { params: { userId } } } = this.props
     dispatch(
-      requestData('GET', `users/${userId}`, {
-        normalizer: userNormalizer,
+      requestData({
+        apiPath: `/users/${userId}`,
+        normalizer: userNormalizer
       })
     )
   }
@@ -68,7 +69,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withRoles({ createUserRoleTypes: ['master'], editRoleTypes: ['master'] }),
   withRouter,
   connect(mapStateToProps)

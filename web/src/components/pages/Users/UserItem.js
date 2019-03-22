@@ -15,11 +15,13 @@ class UserItem extends Component {
     const { dispatch, match, user } = this.props
     const { params: { verdictId } } = match
     const { id: userId } = user
-    dispatch(requestData('POST', 'verdictUsers', {
+    dispatch(requestData({
+      apiPath: '/verdictUsers',
       body: {
         userId,
         verdictId
-      }
+      },
+      method: 'POST'
     }))
   }
 

@@ -43,11 +43,11 @@ class TrendingItem extends Component {
       isReviewable: trendingExtraData && trendingExtraData.isReviewable
     })
 
-    dispatch(requestData('POST', '/articles', {
+    dispatch(requestData({
+      apiPath: '/articles',
       body,
-      handleSuccess: () => this.setState({
-        isDismissed: true
-      })
+      handleSuccess: () => this.setState({ isDismissed: true }),
+      method: 'POST',
     }))
   }
 

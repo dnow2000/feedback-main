@@ -6,7 +6,7 @@ import { requestData } from 'redux-saga-data'
 import withQueryRouter from 'with-query-router'
 
 import VerdictItem from './VerdictItem'
-import { withLoginRedirectToSignin } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated} from '../../hocs'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
 import { selectVerdictsByArticleId } from '../../../selectors'
@@ -27,12 +27,13 @@ class Verdicts extends Component {
     const queryParams = query.parse()
     const { articleId } = queryParams
 
-    let path = 'verdicts'
+    let apiPath = '/verdicts'
     if (articleId) {
-      path = `${path}?articleId=${articleId}`
+      apiPath = `${apiPath}?articleId=${articleId}`
     }
 
-    dispatch(requestData('GET', path, {
+    dispatch(requestData({
+      apiPath,
       handleFail,
       handleSuccess,
       normalizer: verdictNormalizer
@@ -87,7 +88,7 @@ function mapStateToProps (state, ownProps) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withQueryRouter,
   connect(mapStateToProps)
 )(Verdicts)

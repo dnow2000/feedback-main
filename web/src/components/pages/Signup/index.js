@@ -8,6 +8,7 @@ import { requestData } from 'redux-saga-data'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
+import { withRedirectToArticlesWhenAlreadyAuthenticated } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { parseSubmitErrors } from '../../form/utils'
@@ -20,8 +21,9 @@ class Signup extends Component {
 
   handleRequestFail = formResolver => (state, action) => {
     // we return API errors back to the form
+    const { payload } = action
     const nextState = { isFormLoading: false }
-    const errors = parseSubmitErrors(action.errors)
+    const errors = parseSubmitErrors(payload.errors)
     this.setState(nextState, () => formResolver(errors))
   }
 
@@ -36,20 +38,23 @@ class Signup extends Component {
   }
 
   onFormSubmit = formValues => {
-    const method = 'POST'
-    const path = 'users'
     const { dispatch } = this.props
+
+    const apiPath = '/users'
+    const method = 'POST'
+
     this.setState({ isFormLoading: true })
     // NOTE: we need to promise the request callbacks
     // in order to inject their payloads into the form
     const formSubmitPromise = new Promise(resolve => {
-      const config = {
+      dispatch(requestData({
+        apiPath,
         body: { ...formValues },
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
+        method,
         resolve: userFromRequest => Object.assign({ isCurrent: true }, userFromRequest)
-      }
-      dispatch(requestData(method, path, config))
+      }))
     })
     return formSubmitPromise
   }
@@ -106,6 +111,7 @@ Signup.propTypes = {
 }
 
 export default compose(
+  withRedirectToArticlesWhenAlreadyAuthenticated,
   withRouter,
   connect()
 )(Signup)

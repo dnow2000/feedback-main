@@ -9,7 +9,7 @@ import withQueryRouter from 'with-query-router'
 
 import TrendingItem from './TrendingItem'
 import { trendingMaxDates, trendingThemes } from './utils'
-import { withLoginRedirectToSignin, withRoles } from '../../hocs/'
+import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs/'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { selectTrendings } from '../../../selectors'
@@ -47,11 +47,12 @@ class Trendings extends Component {
     const { dispatch, location } = this.props
     const { search } = location
 
-    const path = `trendings${search}`
+    const apiPath = `/trendings${search}`
 
     this.setState({ isLoading: true }, () => {
       dispatch(
-        requestData('GET', path, {
+        requestData({
+          apiPath,
           getDatumIdValue: datum => datum.buzzsumoId,
           handleFail: () => {
             this.setState({
@@ -60,8 +61,9 @@ class Trendings extends Component {
             })
           },
           handleSuccess: (state, action) => {
+            const { payload: { data } } = action
             this.setState({
-              hasMore: action.data && action.data.length > 0,
+              hasMore: data && data.length > 0,
               isLoading: false
             })
           }
@@ -179,7 +181,7 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withRoles({ accessRoleTypes: ['editor'] }),
   withQueryRouter,
   connect(mapStateToProps)

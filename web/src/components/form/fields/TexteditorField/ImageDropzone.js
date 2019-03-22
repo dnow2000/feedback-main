@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ReactDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
-import { requestData } from 'redux-saga-data' 
+import { requestData } from 'redux-saga-data'
 
 import { imagePlugin } from './plugins'
 import { THUMBS_URL } from '../../../../utils/config'
@@ -18,9 +18,10 @@ export class RawImageDropzone extends Component {
   }
 
   handleUploadSuccess = (state, action) => {
+    const { payload: { datum } } = action
     const { getEditorState, setEditorState } = this.props
 
-    const imageId = action.data.id
+    const imageId = datum.id
     const src = `${THUMBS_URL}/images/${imageId}`
 
     this.setState({ isLoading: false }, () => {
@@ -43,15 +44,13 @@ export class RawImageDropzone extends Component {
     this.setState({ isLoading: true })
 
     dispatch(
-      requestData(
-        'POST',
-        'images',
-        {
-          body,
-          handleFail: () => this.setState({ isLoading: false }),
-          handleSuccess: this.handleUploadSuccess
-        }
-      )
+      requestData({
+        apiPath: '/images',
+        body,
+        handleFail: () => this.setState({ isLoading: false }),
+        handleSuccess: this.handleUploadSuccess,
+        method: 'POST'
+      })
     )
   }
 

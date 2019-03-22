@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { compose } from 'redux'
 
 import UsersExploration from './UsersExploration'
-import { withLoginRedirectToSignin, withRoles } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 
@@ -18,6 +18,6 @@ const Users = () => (
 )
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withRoles({ createUserRoleTypes: ['master'], editRoleTypes: ['master'] })
 )(Users)

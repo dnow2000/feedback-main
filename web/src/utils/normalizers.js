@@ -1,42 +1,44 @@
 export const userNormalizer = {
   isMergingDatum: true,
-  key: 'users',
-  userTags: {
-    key: 'userTags',
-    normalizer: {
-      tag: 'tags'
+  normalizer: {
+    userTags: {
+      normalizer: {
+        tag: 'tags'
+      },
+      stateKey: 'userTags'
     }
-  }
+  },
+  stateKey: 'users'
 }
 
 export const articleNormalizer = {
   articleTags: {
-    key: 'articleTags',
     normalizer: {
       tag: 'tags'
-    }
+    },
+    stateKey: 'articleTags',
   },
   reviews: {
-    key: 'reviews',
     normalizer: {
       user: userNormalizer
-    }
+    },
+    stateKey: 'reviews',
   },
   verdicts: {
-    key: 'verdicts',
     normalizer: {
       user: userNormalizer
-    }
+    },
+    stateKey: 'verdicts',
   }
 }
 
 export const itemReviewNormalizer = {
   evaluation: 'evaluations',
   reviewTags: {
-    key: 'reviewTags',
     normalizer: {
       tag: 'tags'
-    }
+    },
+    stateKey: 'reviewTags'
   },
   user: userNormalizer,
 }
@@ -44,10 +46,10 @@ export const itemReviewNormalizer = {
 export const reviewNormalizer = {
   article: 'articles',
   verdicts: {
-    key: 'verdicts',
     normalizer: {
       verdictUsers: 'verdictUsers'
-    }
+    },
+    stateKey: 'verdicts',
   },
   ...itemReviewNormalizer
 }
@@ -55,23 +57,23 @@ export const reviewNormalizer = {
 export const verdictNormalizer = {
   article: 'articles',
   reviews: {
-    key: 'reviews',
     normalizer: {
       evaluation: 'evaluations',
       user: 'users'
-    }
+    },
+    stateKey: 'reviews',
   },
   user: userNormalizer,
   verdictTags: {
-    key: 'verdictTags',
     normalizer: {
       tag: 'tags'
-    }
+    },
+    stateKey: 'verdictTags',
   },
   verdictUsers: {
-    key: 'verdictUsers',
     normalizer: {
       user: 'users'
-    }
+    },
+    stateKey: 'verdictUsers'
   }
 }

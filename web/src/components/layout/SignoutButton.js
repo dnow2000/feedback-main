@@ -23,7 +23,13 @@ class SignoutButton extends Component {
   }
 
   handleSuccess = () => {
-    const { dispatch, handleSuccess, handleSuccessRedirect, history, noResetData } = this.props
+    const {
+      dispatch,
+      handleSuccess,
+      handleSuccessRedirect,
+      history,
+      noResetData
+    } = this.props
     if (handleSuccess) {
       handleSuccess(this.props)
       return
@@ -42,13 +48,14 @@ class SignoutButton extends Component {
   onSignoutClick = () => {
     const { dispatch } = this.props
     dispatch(
-      requestData('GET', 'users/signout', {
+      requestData({
+        apiPath: '/users/signout',
         handleFail: this.handleFail,
         handleSuccess: this.handleSuccess,
         name: 'signout',
       })
     )
-    dispatch(closeModal())
+    dispatch(closeModal("main"))
   }
 
   render() {
@@ -70,6 +77,7 @@ SignoutButton.defaultProps = {
   handleFailRedirect: null,
   handleSuccess: null,
   handleSuccessRedirect: null,
+  noResetData: null
 }
 
 SignoutButton.propTypes = {
@@ -81,7 +89,8 @@ SignoutButton.propTypes = {
   handleFailRedirect: PropTypes.func,
   handleSuccess: PropTypes.func,
   handleSuccessRedirect: PropTypes.func,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  noResetData: PropTypes.bool
 }
 
 export default compose(withRouter, connect())(SignoutButton)

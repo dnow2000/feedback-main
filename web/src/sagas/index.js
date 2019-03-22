@@ -6,7 +6,7 @@ import { API_URL } from '../utils/config'
 
 function* rootSaga() {
   yield all([
-    watchDataActions({ url: API_URL }),
+    watchDataActions({ rootUrl: API_URL }),
     watchModalActions()
   ])
 }

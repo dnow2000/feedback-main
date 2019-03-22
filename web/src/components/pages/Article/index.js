@@ -19,7 +19,7 @@ import {
   parseSubmitErrors,
   selectNewOrEditEntityContextFromLocation,
 } from '../../form/utils'
-import { withLoginRedirectToSignin, withRoles } from '../../hocs'
+import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import {
   selectArticleById,
   selectEditorRoleByUserId,
@@ -54,7 +54,8 @@ class Article extends Component {
     }
 
     dispatch(
-      requestData('GET', `articles/${articleId}`, {
+      requestData({
+        apiPath: `/articles/${articleId}`,
         normalizer: articleNormalizer,
       })
     )
@@ -62,40 +63,44 @@ class Article extends Component {
 
   handleRequestFail = formResolver => (state, action) => {
     // we return API errors back to the form
+    const { payload } = action
     const nextState = { isFormLoading: false }
-    const errors = parseSubmitErrors(action.errors)
+    const errors = parseSubmitErrors(payload.errors)
     this.setState(nextState, () => formResolver(errors))
   }
 
   handleRequestSuccess = formResolver => (state, action) => {
+    const { payload: { datum } } = action
     const { history } = this.props
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
       formResolver()
-      const nextUrl = `/articles/${action.data.id}`
+      const nextUrl = `/articles/${datum.id}`
       history.push(nextUrl)
     })
   }
 
   onFormSubmit = formValues => {
-    const { article, location } = this.props
+    const { article, dispatch, location } = this.props
     const { id } = (article || {})
     const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
       location
     )
     const { method } = newOrEditEntityContext || {}
-    const path = `articles/${id || ''}`
-    const { dispatch } = this.props
+
+    const apiPath = `/articles/${id || ''}`
     this.setState({ isFormLoading: true })
     // NOTE: we need to promise the request callbacks
     // in order to inject their payloads into the form
+
     const formSubmitPromise = new Promise(resolve => {
-      const config = {
+      dispatch(requestData({
+        apiPath,
         body: { ...formValues },
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
-      }
-      dispatch(requestData(method, path, config))
+        method
+      }))
     })
     return formSubmitPromise
   }
@@ -235,7 +240,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withLoginRedirectToSignin,
+  withRedirectToSigninWhenNotAuthenticated,
   withRoles({ createUserRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
   withRouter,
   connect(mapStateToProps)

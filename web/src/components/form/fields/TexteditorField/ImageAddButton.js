@@ -18,9 +18,9 @@ export class RawImageAddButton extends Component {
   }
 
   handleUploadSuccess = (state, action) => {
+    const { payload: { datum } } = action
     const { getEditorState, setEditorState } = this.props
-
-    const imageId = action.data.id
+    const imageId = datum.id
     const src = `${THUMBS_URL}/images/${imageId}`
 
     this.setState({ isLoading: false }, () => {
@@ -43,15 +43,13 @@ export class RawImageAddButton extends Component {
     this.setState({ isLoading: true })
 
     dispatch(
-      requestData(
-        'POST',
-        'images',
-        {
-          body,
-          handleFail: () => this.setState({ isLoading: false }),
-          handleSuccess: this.handleUploadSuccess
-        }
-      )
+      requestData({
+        apiPath: '/images',
+        body,
+        handleFail: () => this.setState({ isLoading: false }),
+        handleSuccess: this.handleUploadSuccess,
+        method: 'POST'
+      })
     )
   }
 

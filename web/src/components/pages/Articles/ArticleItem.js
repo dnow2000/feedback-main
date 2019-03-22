@@ -22,7 +22,10 @@ class ArticleItem extends Component {
   onDeleteClick = () => {
     const { article, dispatch } = this.props
     const { id } = article
-    dispatch(requestData('DELETE', `articles/${id}`))
+    dispatch(requestData({
+      apiPath: `/articles/${id}`,
+      method: 'DELETE'
+    }))
   }
 
   render () {
