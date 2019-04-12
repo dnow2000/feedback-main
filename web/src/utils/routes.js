@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom'
 import ArticleContainer from '../components/pages/Article/ArticleContainer'
 import ArticlesContainer from '../components/pages/Articles/ArticlesContainer'
 import Home from '../components/pages/Home'
-import Review from '../components/pages/Review'
+import ReviewContainer from '../components/pages/Review/ReviewContainer'
 import Reviews from '../components/pages/Reviews'
 import User from '../components/pages/User'
 import Users from '../components/pages/Users'
@@ -41,7 +41,7 @@ const routes = [
   {
     exact: true,
     path: '/reviews/:reviewId',
-    render: () => <Review />,
+    render: () => <ReviewContainer />,
     title: 'Review',
   },
   {

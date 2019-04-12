@@ -5,8 +5,8 @@ import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-saga-data'
 
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
-import FormFields from './FormFields/FormFieldsContainer'
-import FormFooter from './FormFooter/FormFooterContainer'
+import FormFieldsContainer from './FormFields/FormFieldsContainer'
+import FormFooterContainer from './FormFooter/FormFooterContainer'
 import Footer from '../../layout/Footer'
 import { Icon } from '../../layout/Icon'
 import Main from '../../layout/Main'
@@ -88,6 +88,7 @@ class Article extends Component {
     const { id } = (article || {})
     const { isFormLoading } = this.state
     const { isCreatedEntity } = query.context()
+
     return (
       <Fragment>
         <Header />
@@ -160,8 +161,8 @@ class Article extends Component {
                     noValidate
                     onSubmit={handleSubmit}
                   >
-                    <FormFields validating={validating} />
-                    <FormFooter canSubmit={canSubmit} isLoading={isFormLoading} />
+                    <FormFieldsContainer validating={validating} />
+                    <FormFooterContainer canSubmit={canSubmit} isLoading={isFormLoading} />
                   </form>
                 )
               }}

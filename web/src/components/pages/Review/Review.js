@@ -2,25 +2,14 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
-import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-react-login'
-import withQueryRouter from 'with-query-router'
 
-import FormFooter from './FormFooter'
-import FormFields from './FormFields'
+import FormFooterContainer from './FormFooter/FormFooterContainer'
+import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
-import {
-  selectArticleById,
-  getArticleIdByMatchAndQuery,
-  selectCurrentUserReviewPatchByArticleId,
-  selectVerdictsByArticleIdAndByUserId
-} from '../../../selectors'
 import { articleNormalizer, reviewNormalizer } from '../../../utils/normalizers'
 
 class Review extends Component {
@@ -36,7 +25,7 @@ class Review extends Component {
   }
 
   componentDidUpdate() {
-    this.handleRedirectToEditUrlWhenIdWhileWeAreInNewUrl()
+    this.handleRedirectToModificationUrlWhenIdWhileWeAreInNewUrl()
   }
 
   handleRequestData = () => {
@@ -112,12 +101,12 @@ class Review extends Component {
     return formSubmitPromise
   }
 
-  handleRedirectToEditUrlWhenIdWhileWeAreInNewUrl() {
+  handleRedirectToModificationUrlWhenIdWhileWeAreInNewUrl() {
     const { currentUserReviewPatch, history, query } = this.props
     const { id } = currentUserReviewPatch || {}
     const { isCreatedEntity } = query.context()
     if (isCreatedEntity && id) {
-      history.push(`/reviews/${id}?edit`)
+      history.push(`/reviews/${id}?modification`)
     }
   }
 
@@ -137,14 +126,14 @@ class Review extends Component {
         <Main name="review">
           <section className="section hero">
             <h1 className="title">
-              {isCreatedEntity ? 'Create your review' : 'See the review'}
+              {isCreatedEntity ? 'Write your review' : 'See the review'}
             </h1>
           </section>
 
           {article && (
             <section className="section">
               <h2 className="subtitle flex-columns items-center">
-                REVIEWED ARTICLE
+                ARTICLE TO REVIEW
               </h2>
               <ArticleItemContainer article={article} noControl />
             </section>
@@ -180,8 +169,8 @@ class Review extends Component {
                     noValidate
                     onSubmit={handleSubmit}
                   >
-                    <FormFields />
-                    <FormFooter canSubmit={canSubmit} />
+                    <FormFieldsContainer />
+                    <FormFooterContainer canSubmit={canSubmit} />
                   </form>
                 )
               }}
@@ -221,31 +210,9 @@ Review.propTypes = {
   currentUserReviewPatch: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired,
   verdicts: PropTypes.array
 }
 
-function mapStateToProps(state, ownProps) {
-  const articleId = getArticleIdByMatchAndQuery(
-    state,
-    ownProps.match,
-    ownProps.location
-  )
-  const currentUserReviewPatch = selectCurrentUserReviewPatchByArticleId(state, articleId)
-  const currentUser = selectCurrentUser(state)
-  const { id: userId } = (currentUser || {})
-  return {
-    article: selectArticleById(state, articleId),
-    currentUserReviewPatch,
-    verdicts: selectVerdictsByArticleIdAndByUserId(state, articleId, userId)
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationUserRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
-  withQueryRouter,
-  connect(mapStateToProps)
-)(Review)
+export default Review

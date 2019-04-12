@@ -1,22 +1,16 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import withQueryRouter from 'with-query-router'
 
 import {
-  HiddenField,
   CheckboxesField,
+  HiddenField,
   SelectField,
   TexteditorField
-} from '../../form/fields'
-import {
-  selectEvaluationsByType,
-  selectTagsByScopes
-} from '../../../selectors'
+} from '../../../form/fields'
 import {
   selectOptionsFromNameAndEntitiesAndPlaceholder,
-} from '../../form/utils'
+} from '../../../form/utils'
+
 
 const SELECT_EVALUATIONS_NAME = 'evaluationId'
 const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
@@ -94,18 +88,8 @@ FormFields.defaultProps = {
 
 FormFields.propTypes = {
   evaluations: PropTypes.array,
+  query: PropTypes.object.isRequired,
   tags: PropTypes.array,
-  query: PropTypes.object.isRequired
 }
 
-function mapStateToProps(state) {
-  return {
-    evaluations: selectEvaluationsByType(state, 'article'),
-    tags: selectTagsByScopes(state, ['review'])
-  }
-}
-
-export default compose(
-  withQueryRouter,
-  connect(mapStateToProps)
-)(FormFields)
+export default FormFields

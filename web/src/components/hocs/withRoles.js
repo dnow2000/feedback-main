@@ -29,9 +29,9 @@ export const withRoles = (config = {
     renderWhenCreationOrModificationRoles = () => {
       const {
         accessRoles,
+        creationRoles,
         modificationRoles,
         history,
-        creationRoles,
         query
       } = this.props
       const {
