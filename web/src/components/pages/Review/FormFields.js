@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import withQueryRouter from 'with-query-router'
 
 import {
   HiddenField,
@@ -15,7 +15,6 @@ import {
   selectTagsByScopes
 } from '../../../selectors'
 import {
-  selectNewOrEditEntityContextFromLocation,
   selectOptionsFromNameAndEntitiesAndPlaceholder,
 } from '../../form/utils'
 
@@ -25,7 +24,7 @@ const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
 const CHECKBOXES_TAGS_NAME = 'tagIds'
 const CHECKBOXES_TAGS_PLACEHOLDER = ''
 
-const FormFields = ({ evaluations, location, tags }) => {
+const FormFields = ({ evaluations, query, tags }) => {
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     SELECT_EVALUATIONS_NAME,
     evaluations,
@@ -38,11 +37,7 @@ const FormFields = ({ evaluations, location, tags }) => {
     CHECKBOXES_TAGS_PLACEHOLDER,
     'text'
   )
-
-  const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-    location
-  )
-  const { readOnly } = newOrEditEntityContext || {}
+  const { readOnly } = query.context()
 
   return (
     <div className="section">
@@ -99,8 +94,8 @@ FormFields.defaultProps = {
 
 FormFields.propTypes = {
   evaluations: PropTypes.array,
-  location: PropTypes.object.isRequired,
-  tags: PropTypes.array
+  tags: PropTypes.array,
+  query: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state) {
@@ -111,6 +106,6 @@ function mapStateToProps(state) {
 }
 
 export default compose(
-  withRouter,
+  withQueryRouter,
   connect(mapStateToProps)
 )(FormFields)

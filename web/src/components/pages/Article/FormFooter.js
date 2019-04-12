@@ -2,11 +2,11 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-login'
+import withQueryRouter from 'with-query-router'
 
-import { selectNewOrEditEntityContextFromLocation } from '../../form/utils'
 import {
   selectEditorRoleByUserId,
   selectReviewerRoleByUserId,
@@ -18,17 +18,14 @@ const FormFooter = ({
   canReview,
   canSubmit,
   isLoading,
-  location,
   match,
+  query,
   review
 }) => {
   const {
     params: { articleId },
   } = match
-  const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-    location
-  )
-  const { isNewEntity, readOnly } = newOrEditEntityContext || {}
+  const { isCreatedEntity, readOnly } = query.context()
   const { id: reviewId } = review || {}
 
   return (
@@ -47,7 +44,7 @@ const FormFooter = ({
             <NavLink
               className="button is-secondary"
               id="cancel-article"
-              to={isNewEntity ? '/articles' : `/articles/${articleId}`}
+              to={isCreatedEntity ? '/articles' : `/articles/${articleId}`}
             >
               Cancel
             </NavLink>
@@ -70,7 +67,7 @@ const FormFooter = ({
           Save Article
         </button>
       )}
-      {canReview && !isNewEntity && (
+      {canReview && !isCreatedEntity && (
         <NavLink
           className="button is-primary"
           id={`${reviewId ? "see" : "create"}-own-review`}
@@ -100,8 +97,8 @@ FormFooter.propTypes = {
   canReview: PropTypes.bool,
   canSubmit: PropTypes.bool,
   isLoading: PropTypes.bool,
-  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
   review: PropTypes.object
 }
 
@@ -126,6 +123,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withRouter,
+  withQueryRouter(),
   connect(mapStateToProps)
 )(FormFooter)

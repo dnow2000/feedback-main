@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
+import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
@@ -11,7 +12,6 @@ import FormFooter from './FormFooter'
 import { withRedirectToArticlesWhenAlreadyAuthenticated } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
-import { parseSubmitErrors } from '../../form/utils'
 
 class Signin extends Component {
   constructor(props) {
@@ -116,6 +116,6 @@ Signin.propTypes = {
 
 export default compose(
   withRedirectToArticlesWhenAlreadyAuthenticated,
-  withQueryRouter,
+  withQueryRouter(),
   connect()
 )(Signin)

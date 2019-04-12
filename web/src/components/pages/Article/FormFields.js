@@ -5,6 +5,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import withQueryRouter from 'with-query-router'
 
 import {
   CheckboxField,
@@ -12,21 +13,14 @@ import {
   TextareaField,
   TextField,
 } from '../../form/fields'
-import {
-  selectNewOrEditEntityContextFromLocation,
-} from '../../form/utils'
 import { createValidateScrapField } from '../../form/validators'
 
 const validateScrapField = createValidateScrapField()
 const SELECT_EVALUATIONS_NAME = 'evaluationId'
 const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
 
-const FormFields = ({ location, validating }) => {
-
-  const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-    location
-  )
-  const { isEditEntity, readOnly } = newOrEditEntityContext || {}
+const FormFields = ({ query, validating }) => {
+  const { isModifiedEntity, readOnly } = query.context()
 
   return (
     <div className="section">
@@ -34,7 +28,7 @@ const FormFields = ({ location, validating }) => {
         <TextField
           label="url"
           name="url"
-          readOnly={readOnly || isEditEntity}
+          readOnly={readOnly || isModifiedEntity}
           renderValue={() => (
             <button
               className={classnames("button is-loading is-transparent", {
@@ -102,11 +96,11 @@ FormFields.defaultProps = {
 }
 
 FormFields.propTypes = {
-  location: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
   validating: PropTypes.bool
 }
 
 export default compose(
-  withRouter,
+  withQueryRouter(),
   connect()
 )(FormFields)

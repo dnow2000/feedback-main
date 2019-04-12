@@ -6603,6 +6603,10 @@ lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
 
+lodash.invert@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/lodash.invert/-/lodash.invert-4.3.0.tgz#8ffe20d4b616f56bea8f1aa0c6ebd80dcf742aee"
+
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -8950,9 +8954,9 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
 
-react-loading-infinite-scroller@1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/react-loading-infinite-scroller/-/react-loading-infinite-scroller-1.1.3.tgz#324c6860d48826f409c372479b943a10d84b18a1"
+react-loading-infinite-scroller@1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-loading-infinite-scroller/-/react-loading-infinite-scroller-1.2.0.tgz#35a8d01c75b5223b41bec0208c0dcfd76008eae1"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"
@@ -8962,7 +8966,7 @@ react-loading-infinite-scroller@1.1.3:
     react-infinite-scroller "^1.2.4"
     react-router-dom "^4.3.1"
     redux "^4.0.0"
-    with-query-router "^1.1.0"
+    with-query-router "3.0.0"
 
 react-redux@^5.0.3, react-redux@^5.0.7:
   version "5.1.1"
@@ -11480,28 +11484,13 @@ with-login@2.4.0:
     reselect "^3.0.1"
     uuid "^3.3.2"
 
-with-query-router@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/with-query-router/-/with-query-router-0.0.6.tgz#1289c8adc9632ec848cb825cadc7104cc23d4d02"
+with-query-router@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/with-query-router/-/with-query-router-3.0.0.tgz#57f98fb04036c7727f3e05cb90a398478fb50272"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"
-    lodash.uniq "^4.5.0"
-    prop-types "^15.6.2"
-    query-string "^6.2.0"
-    re-reselect "^2.1.0"
-    react "^16.5.2"
-    react-dom "^16.5.2"
-    react-router-dom "^4.3.1"
-    redux "^4.0.0"
-    reselect "^3.0.1"
-
-with-query-router@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/with-query-router/-/with-query-router-1.1.0.tgz#c268e23d6466a6b5195a9c66b700934691d55982"
-  dependencies:
-    classnames "2.2.5"
-    eslint "^5.8.0"
+    lodash.invert "^4.3.0"
     lodash.uniq "^4.5.0"
     prop-types "^15.6.2"
     query-string "^5.1.1"

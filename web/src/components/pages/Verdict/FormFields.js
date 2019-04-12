@@ -15,7 +15,6 @@ import {
   selectTagsByScopes
 } from '../../../selectors'
 import {
-  selectNewOrEditEntityContextFromLocation,
   selectOptionsFromNameAndEntitiesAndPlaceholder,
 } from '../../form/utils'
 
@@ -25,7 +24,7 @@ const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
 const CHECKBOXES_TAGS_NAME = 'tagIds'
 const CHECKBOXES_TAGS_PLACEHOLDER = ''
 
-const FormFields = ({ evaluations, location, tags }) => {
+const FormFields = ({ evaluations, query, tags }) => {
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     SELECT_EVALUATIONS_NAME,
     evaluations,
@@ -39,10 +38,7 @@ const FormFields = ({ evaluations, location, tags }) => {
     'text'
   )
 
-  const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-    location
-  )
-  const { readOnly } = newOrEditEntityContext || {}
+  const { readOnly } = query.context()
 
   return (
     <div className="section">
@@ -99,8 +95,8 @@ FormFields.defaultProps = {
 
 FormFields.propTypes = {
   evaluations: PropTypes.array,
-  location: PropTypes.object.isRequired,
-  tags: PropTypes.array
+  tags: PropTypes.array,
+  query: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {

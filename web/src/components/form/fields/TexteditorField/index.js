@@ -5,11 +5,12 @@ import { convertToRaw } from 'draft-js'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Field } from 'react-final-form'
+import { composeValidators } from 'react-final-form-utils'
 
 import Texteditor from './Texteditor'
 import { FieldError } from '../../layout'
 import { createValidateRequiredField } from '../../validators'
-import { composeValidators, config } from '../../utils'
+import { config } from '../../utils'
 
 const validateRequiredField = createValidateRequiredField(config.DEFAULT_REQUIRED_ERROR)
 

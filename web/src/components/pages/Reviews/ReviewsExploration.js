@@ -171,6 +171,6 @@ function mapStateToProps(state, ownProps) {
 }
 
 export default compose(
-  withQueryRouter,
+  withQueryRouter(),
   connect(mapStateToProps)
 )(ReviewsExploration)

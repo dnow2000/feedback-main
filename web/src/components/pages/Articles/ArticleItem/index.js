@@ -6,17 +6,17 @@ import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 import { selectCurrentUser } from 'with-login'
 
-import Authors from '../../layout/Authors'
-import Extract from '../../layout/Extract'
-import Tag from '../../layout/Tag'
+import Authors from '../../../layout/Authors'
+import Extract from '../../../layout/Extract'
+import Tag from '../../../layout/Tag'
 import {
   selectCurrentUserReviewByArticleId,
   selectCurrentUserVerdictByArticleId,
   selectEditorRoleByUserId,
   selectReviewerRoleByUserId,
   selectReviewsByArticleId
-} from '../../../selectors'
-import { ROOT_PATH, THUMBS_URL } from '../../../utils/config'
+} from '../../../../selectors'
+import { ROOT_PATH, THUMBS_URL } from '../../../../utils/config'
 
 class ArticleItem extends Component {
   onDeleteClick = () => {
@@ -171,7 +171,7 @@ class ArticleItem extends Component {
                 to={
                   currentUserReviewId
                     ? `/reviews/${currentUserReviewId}`
-                    : `/reviews/new?articleId=${id}`
+                    : `/reviews/creation?articleId=${id}`
                 }
               >
                 {currentUserReviewId ? 'See' : 'Create'} your review

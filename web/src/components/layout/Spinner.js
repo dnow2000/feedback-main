@@ -17,7 +17,9 @@ class Spinner extends Component {
   }
 
   componentWillUnmount() {
-    window.clearInterval(this.timer)
+    if (this.timer) {
+      window.clearInterval(this.timer)
+    }
   }
 
   startDots = () => {

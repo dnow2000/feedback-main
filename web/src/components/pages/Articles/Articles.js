@@ -3,22 +3,14 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-login'
-import withQueryRouter from 'with-query-router'
 
 import ArticleItem from './ArticleItem'
-import { withRedirectToSigninWhenNotAuthenticated} from '../../hocs'
+
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import { TextField } from '../../form/fields'
-import {
-  selectArticles,
-  selectEditorRoleByUserId,
-} from '../../../selectors'
 import { articleNormalizer } from '../../../utils/normalizers'
 
 class Articles extends Component {
@@ -140,7 +132,8 @@ class Articles extends Component {
                   type="button"
                 >
                   {boolString === 'false' && "Not "}reviewable
-                </button>))}
+                </button>
+              ))}
 
               {canCreateArticle && (
                 <NavLink
@@ -213,22 +206,4 @@ Articles.propTypes = {
   query: PropTypes.object.isRequired
 }
 
-function mapStateToProps(state) {
-  const currentUser = selectCurrentUser(state)
-  const { id: currentUserId } = currentUser || {}
-
-  const editorRole = selectEditorRoleByUserId(state, currentUserId)
-
-  const canCreateArticle = typeof editorRole !== 'undefined'
-
-  return {
-    articles: selectArticles(state),
-    canCreateArticle,
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withQueryRouter,
-  connect(mapStateToProps)
-)(Articles)
+export default Articles

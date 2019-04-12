@@ -1,16 +1,15 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import withQueryRouter from 'with-query-router'
 
-import { selectNewOrEditEntityContextFromLocation } from '../form/utils'
 import { selectCurrentRolesByTypes } from '../../selectors'
 
 export const withRoles = (config = {
   accessRoleTypes: [],
-  createUserRoleTypes: [],
-  editRoleTypes: []
+  creationUserRoleTypes: [],
+  modificationRoleTypes: []
 }) => WrappedComponent => {
 
   class _withRoles extends PureComponent {
@@ -20,49 +19,49 @@ export const withRoles = (config = {
     }
 
     componentDidMount = () => {
-      this.renderWhenNewOrEditRoles()
+      this.renderWhenCreationOrModificationRoles()
     }
 
     componentDidUpdate = () => {
-      this.renderWhenNewOrEditRoles()
+      this.renderWhenCreationOrModificationRoles()
     }
 
-    renderWhenNewOrEditRoles = () => {
+    renderWhenCreationOrModificationRoles = () => {
       const {
         accessRoles,
-        editRoles,
+        modificationRoles,
         history,
-        location,
-        createUserRoles
+        creationRoles,
+        query
       } = this.props
       const {
-        isEditEntity,
-        isNewEntity,
+        isModifiedEntity,
+        isCreationEntity,
         originLocationString
-      } = selectNewOrEditEntityContextFromLocation(location)
+      } = query.context()
       const { canRenderChildren } = this.state
 
       if (canRenderChildren) {
         return
       }
 
-      if (isNewEntity) {
-        if (createUserRoles.length) {
+      if (isCreationEntity) {
+        if (creationRoles.length) {
           this.setState({ canRenderChildren: true })
           return
         }
         history.push(originLocationString)
       }
 
-      if (isEditEntity) {
-        if (editRoles.length) {
+      if (isModifiedEntity) {
+        if (modificationRoles.length) {
           this.setState({ canRenderChildren: true })
           return
         }
         history.push(originLocationString)
       }
 
-      if (!isNewEntity && !isEditEntity) {
+      if (!isCreationEntity && !isModifiedEntity) {
 
         if (accessRoles) {
           if (accessRoles.length) {
@@ -87,28 +86,34 @@ export const withRoles = (config = {
   }
 
   _withRoles.defaultProps = {
+    accessRoles: [],
+    creationRoles: [],
     currentUser: null,
+    modificationRoles: []
   }
 
   _withRoles.propTypes = {
+    accessRoles: PropTypes.arrayOf(PropTypes.shape()),
+    creationRoles: PropTypes.arrayOf(PropTypes.shape()),
     currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
     history: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
+    modificationRoles: PropTypes.arrayOf(PropTypes.shape()),
+    query: PropTypes.object.isRequired
   }
 
   function mapStateToProps (state) {
     const accessRoles = selectCurrentRolesByTypes(state, config.accessRoles)
-    const createUserRoles = selectCurrentRolesByTypes(state, config.createUserRoleTypes)
-    const editRoles = selectCurrentRolesByTypes(state, config.editRoleTypes)
+    const creationRoles = selectCurrentRolesByTypes(state, config.creationRoleTypes)
+    const modificationRoles = selectCurrentRolesByTypes(state, config.modificationRoleTypes)
     return {
       accessRoles,
-      createUserRoles,
-      editRoles
+      creationRoles,
+      modificationRoles
     }
   }
 
   return compose(
-    withRouter,
+    withQueryRouter(),
     connect(mapStateToProps)
   )(_withRoles)
 }

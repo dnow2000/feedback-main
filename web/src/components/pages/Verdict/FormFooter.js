@@ -1,18 +1,14 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import withQueryRouter from 'with-query-router'
 
-import { selectNewOrEditEntityContextFromLocation } from '../../form/utils'
-
-const FormFooter = ({ canSubmit, location, match, isLoading }) => {
+const FormFooter = ({ canSubmit, isLoading, match, query }) => {
   const {
     params: { verdictId },
   } = match
-  const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-    location
-  )
-  const { isNewEntity, readOnly } = newOrEditEntityContext || {}
+  const { isCreatedEntity, readOnly } = query.context()
 
   return (
     <div className="control level">
@@ -28,7 +24,7 @@ const FormFooter = ({ canSubmit, location, match, isLoading }) => {
         <NavLink
           className="button is-secondary"
           id="cancel-verdict"
-          to={isNewEntity ? '/articles' : `/verdicts/${verdictId}`}
+          to={isCreatedEntity ? '/articles' : `/verdicts/${verdictId}`}
         >
           Cancel
         </NavLink>
@@ -46,7 +42,7 @@ const FormFooter = ({ canSubmit, location, match, isLoading }) => {
           id="submit-verdict"
           type="submit"
         >
-          {isNewEntity ? 'Start Verdict' : 'Submit'}
+          {isCreatedEntity ? 'Start Verdict' : 'Submit'}
         </button>
       )}
     </div>
@@ -61,8 +57,8 @@ FormFooter.defaultProps = {
 FormFooter.propTypes = {
   canSubmit: PropTypes.bool,
   isLoading: PropTypes.bool,
-  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
 }
 
-export default withRouter(FormFooter)
+export default withQueryRouter()(FormFooter)

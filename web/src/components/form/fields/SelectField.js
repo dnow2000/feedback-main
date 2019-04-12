@@ -4,10 +4,11 @@ import classnames from 'classnames'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
+import { composeValidators } from 'react-final-form-utils'
 
 import { FieldError } from '../layout'
 import { createValidateRequiredField } from '../validators'
-import { composeValidators, config } from '../utils'
+import { config } from '../utils'
 
 const validateRequiredField = createValidateRequiredField(config.DEFAULT_REQUIRED_ERROR)
 

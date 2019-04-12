@@ -12,7 +12,7 @@ import {
 } from '../../../selectors'
 
 const VerdictItem = ({ article, verdict, reviews, user }) => {
-  const { id: articleId, title, url } = article || {}
+  const { title, url } = article || {}
   const { comment, id, rating } = verdict
   const { publicName } = user || {}
 

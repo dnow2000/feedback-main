@@ -1,2 +1,2 @@
-export * from './withRedirectToProductsWhenAlreadyAuthenticated'
+export * from './withRedirectToArticlesWhenAlreadyAuthenticated'
 export * from './withRedirectToSigninWhenNotAuthenticated'

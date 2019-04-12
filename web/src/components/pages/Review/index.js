@@ -1,26 +1,23 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
+import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 import { selectCurrentUser } from 'with-login'
+import withQueryRouter from 'with-query-router'
 
 import FormFooter from './FormFooter'
 import FormFields from './FormFields'
 import ArticleItem from '../Articles/ArticleItem'
-import {
-  parseSubmitErrors,
-  selectNewOrEditEntityContextFromLocation,
-  selectSearchFromLocation,
-} from '../../form/utils'
 import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import {
   selectArticleById,
-  selectArticleIdByMatchAndLocation,
+  getArticleIdByMatchAndQuery,
   selectCurrentUserReviewPatchByArticleId,
   selectVerdictsByArticleIdAndByUserId
 } from '../../../selectors'
@@ -43,19 +40,15 @@ class Review extends Component {
   }
 
   handleRequestData = () => {
-    const { dispatch, location, match } = this.props
+    const { dispatch, match, query } = this.props
     const { params: { reviewId } } = match
-    const search = selectSearchFromLocation(location)
-    const { articleId } = search || {}
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
+    const { articleId } = query.parse()
+    const { isCreatedEntity } = query.context()
 
     dispatch(requestData({ apiPath: '/evaluations' }))
     dispatch(requestData({ apiPath: '/tags?scopes=review' }))
 
-    if (!isNewEntity) {
+    if (!isCreatedEntity) {
       dispatch(
         requestData({
           apiPath: `/reviews/${reviewId}`,
@@ -98,12 +91,9 @@ class Review extends Component {
   }
 
   onFormSubmit = formValues => {
-    const { dispatch, location, currentUserReviewPatch } = this.props
+    const { currentUserReviewPatch, dispatch, query } = this.props
     const { id } = currentUserReviewPatch || {}
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { method } = newOrEditEntityContext || {}
+    const { method } = query.context()
     this.setState({ isFormLoading: true })
 
     const apiPath = `/reviews/${id || ''}`
@@ -123,13 +113,10 @@ class Review extends Component {
   }
 
   handleRedirectToEditUrlWhenIdWhileWeAreInNewUrl() {
-    const { history, location, currentUserReviewPatch } = this.props
+    const { currentUserReviewPatch, history, query } = this.props
     const { id } = currentUserReviewPatch || {}
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
-    if (isNewEntity && id) {
+    const { isCreatedEntity } = query.context()
+    if (isCreatedEntity && id) {
       history.push(`/reviews/${id}?edit`)
     }
   }
@@ -138,14 +125,11 @@ class Review extends Component {
     const {
       article,
       currentUserReviewPatch,
-      location,
+      query,
       verdicts
     } = this.props
     const { isFormLoading } = this.state
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
+    const { isCreatedEntity } = query.context()
 
     return (
       <Fragment>
@@ -153,7 +137,7 @@ class Review extends Component {
         <Main name="review">
           <section className="section hero">
             <h1 className="title">
-              {isNewEntity ? 'Create your review' : 'See the review'}
+              {isCreatedEntity ? 'Create your review' : 'See the review'}
             </h1>
           </section>
 
@@ -239,11 +223,12 @@ Review.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired,
   verdicts: PropTypes.array
 }
 
 function mapStateToProps(state, ownProps) {
-  const articleId = selectArticleIdByMatchAndLocation(
+  const articleId = getArticleIdByMatchAndQuery(
     state,
     ownProps.match,
     ownProps.location
@@ -260,7 +245,7 @@ function mapStateToProps(state, ownProps) {
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ createUserRoleTypes: ['reviewer'], editRoleTypes: ['reviewer'] }),
-  withRouter,
+  withRoles({ creationUserRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
+  withQueryRouter,
   connect(mapStateToProps)
 )(Review)

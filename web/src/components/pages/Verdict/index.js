@@ -1,27 +1,22 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
+import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
-
 import FormFooter from './FormFooter'
 import FormFields from './FormFields'
 import ReviewersManager from './ReviewersManager'
 import ArticleItem from '../Articles/ArticleItem'
-import {
-  parseSubmitErrors,
-  selectNewOrEditEntityContextFromLocation,
-  selectSearchFromLocation,
-} from '../../form/utils'
 import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 import {
   selectArticleById,
-  selectArticleIdByMatchAndLocation,
+  getArticleIdByMatchAndQuery,
   selectCurrentUserVerdictPatchByArticleId,
 } from '../../../selectors'
 import { articleNormalizer, verdictNormalizer } from '../../../utils/normalizers'
@@ -43,19 +38,16 @@ class Verdict extends Component {
   }
 
   handleRequestData = () => {
-    const { dispatch, location, match } = this.props
+    const { dispatch, match, query } = this.props
     const { params: { verdictId } } = match
-    const search = selectSearchFromLocation(location)
-    const { articleId } = search || {}
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
+    const queryParams = query.parse()
+    const { articleId } = queryParams || {}
+    const { isCreatedEntity } = query.context()
 
     dispatch(requestData({ apiPath: '/evaluations' }))
     dispatch(requestData({ apiPath: '/tags' }))
 
-    if (!isNewEntity) {
+    if (!isCreatedEntity) {
       dispatch(
         requestData({
           apiPath: `/verdicts/${verdictId}`,
@@ -99,12 +91,9 @@ class Verdict extends Component {
   }
 
   onFormSubmit = formValues => {
-    const { dispatch, location, currentUserVerdictPatch } = this.props
+    const { currentUserVerdictPatch, dispatch, query } = this.props
     const { id } = currentUserVerdictPatch || {}
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { method } = newOrEditEntityContext || {}
+    const { method } = query.context()
     const apiPath = `/verdicts/${id || ''}`
     this.setState({ isFormLoading: true })
     // NOTE: we need to promise the request callbacks
@@ -122,25 +111,19 @@ class Verdict extends Component {
   }
 
   handleRedirectToEditUrlWhenIdWhileWeAreInNewUrl() {
-    const { history, location, currentUserVerdictPatch } = this.props
+    const { currentUserVerdictPatch, history, query } = this.props
     const { id } = currentUserVerdictPatch || {}
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
-    if (isNewEntity && id) {
+    const { isCreatedEntity } = query.context()
+    if (isCreatedEntity && id) {
       history.push(`/verdicts/${id}?edit`)
     }
   }
 
   render() {
-    const { article, currentUserVerdictPatch, location } = this.props
+    const { article, currentUserVerdictPatch, query } = this.props
     const { id: articleId } = (article || {})
     const { isFormLoading } = this.state
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
+    const { isCreatedEntity } = query.context()
 
     return (
       <Fragment>
@@ -148,7 +131,7 @@ class Verdict extends Component {
         <Main name="verdict">
           <section className="section hero">
             <h1 className="title">
-              {isNewEntity ? 'Create your verdict' : 'See the verdict'}
+              {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
             </h1>
           </section>
 
@@ -167,16 +150,17 @@ class Verdict extends Component {
             </section>
           )}
 
-          {!isNewEntity && (
+          {!isCreatedEntity && (
             <section className="section">
               <h2 className="subtitle flex-columns items-center">
                 REVIEWERS
               </h2>
               <ReviewersManager />
-            </section>)}
+            </section>
+          )}
 
           <section className="section">
-            {!isNewEntity && (
+            {!isCreatedEntity && (
               <h2 className="subtitle flex-columns items-center">
                 VERDICT DETAILS
               </h2>
@@ -191,7 +175,7 @@ class Verdict extends Component {
                 hasValidationErrors,
                 pristine,
               }) => {
-                const canSubmit = isNewEntity ||
+                const canSubmit = isCreatedEntity ||
                   ((!pristine &&
                     !hasSubmitErrors &&
                     !hasValidationErrors &&
@@ -207,7 +191,7 @@ class Verdict extends Component {
                     noValidate
                     onSubmit={handleSubmit}
                   >
-                    {!isNewEntity && <FormFields />}
+                    {!isCreatedEntity && <FormFields />}
                     <FormFooter canSubmit={canSubmit} />
                   </form>
                 )
@@ -230,12 +214,12 @@ Verdict.propTypes = {
   currentUserVerdictPatch: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state, ownProps) {
-  const articleId = selectArticleIdByMatchAndLocation(
+  const articleId = getArticleIdByMatchAndQuery(
     state,
     ownProps.match,
     ownProps.location
@@ -249,7 +233,7 @@ function mapStateToProps(state, ownProps) {
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ createUserRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
+  withRoles({ creationUserRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
   withRouter,
   connect(mapStateToProps)
 )(Verdict)

@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
+import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 import { selectCurrentUser } from 'with-login'
+import withQueryRouter from 'with-query-router'
 
 import ArticleItem from '../Articles/ArticleItem'
 import FormFields from './FormFields'
@@ -15,10 +17,6 @@ import { Icon } from '../../layout/Icon'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
 import { scrapDecorator } from '../../form/decorators'
-import {
-  parseSubmitErrors,
-  selectNewOrEditEntityContextFromLocation,
-} from '../../form/utils'
 import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import {
   selectArticleById,
@@ -42,14 +40,11 @@ class Article extends Component {
   }
 
   handleRequestData = () => {
-    const { dispatch, location, match } = this.props
+    const { dispatch, match, query } = this.props
     const { params: { articleId } } = match
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { isNewEntity } = newOrEditEntityContext || {}
+    const { isCreatedEntity } = query.context()
 
-    if (isNewEntity) {
+    if (isCreatedEntity) {
       return
     }
 
@@ -81,12 +76,9 @@ class Article extends Component {
   }
 
   onFormSubmit = formValues => {
-    const { article, dispatch, location } = this.props
+    const { article, dispatch, query } = this.props
     const { id } = (article || {})
-    const newOrEditEntityContext = selectNewOrEditEntityContextFromLocation(
-      location
-    )
-    const { method } = newOrEditEntityContext || {}
+    const { method } = query.context()
 
     const apiPath = `/articles/${id || ''}`
     this.setState({ isFormLoading: true })
@@ -106,21 +98,19 @@ class Article extends Component {
   }
 
   render() {
-    const { article, canCreateArticle, location } = this.props
+    const { article, canCreateArticle, query } = this.props
     const { id } = (article || {})
     const { isFormLoading } = this.state
-    const { isNewEntity } = selectNewOrEditEntityContextFromLocation(
-      location
-    )
+    const { isCreatedEntity } = query.context()
     return (
       <Fragment>
         <Header />
         <Main name="article">
           <section className="section hero is-relative">
             <h1 className="title">
-              {isNewEntity ? 'New Article' : 'Article'}
+              {isCreatedEntity ? 'New Article' : 'Article'}
             </h1>
-            {!isNewEntity && (
+            {!isCreatedEntity && (
               <div className="is-absolute b12 r8">
                 {canCreateArticle && (
                   <NavLink
@@ -207,8 +197,8 @@ Article.propTypes = {
   canCreateArticle: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
+  query: PropTypes.object.isRequired
 }
 
 function mapStateToProps(state, ownProps) {
@@ -241,7 +231,7 @@ function mapStateToProps(state, ownProps) {
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ createUserRoleTypes: ['editor'], editRoleTypes: ['editor'] }),
-  withRouter,
+  withRoles({ creationUserRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
+  withQueryRouter,
   connect(mapStateToProps)
 )(Article)

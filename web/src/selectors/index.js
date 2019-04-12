@@ -1,6 +1,7 @@
+export * from './getArticleIdByMatchAndQuery'
+
 export * from './selectAdminRoleByUserId'
 export * from './selectArticleById'
-export * from './selectArticleIdByMatchAndLocation'
 export * from './selectArticles'
 export * from './selectCurrentRolesByTypes'
 export * from './selectCurrentUserReviewByArticleId'

@@ -183,6 +183,6 @@ function mapStateToProps(state) {
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
   withRoles({ accessRoleTypes: ['editor'] }),
-  withQueryRouter,
+  withQueryRouter(),
   connect(mapStateToProps)
 )(Trendings)
