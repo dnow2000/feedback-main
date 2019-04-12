@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-import Article from '../components/pages/Article'
+import ArticleContainer from '../components/pages/Article/ArticleContainer'
 import ArticlesContainer from '../components/pages/Articles/ArticlesContainer'
 import Home from '../components/pages/Home'
 import Review from '../components/pages/Review'
@@ -23,7 +23,7 @@ const routes = [
   {
     exact: true,
     path: '/articles/:articleId',
-    render: () => <Article />,
+    render: () => <ArticleContainer />,
     title: 'Article',
   },
   {

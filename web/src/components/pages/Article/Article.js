@@ -2,29 +2,16 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-react-login'
-import withQueryRouter from 'with-query-router'
 
-import ArticleItem from '../Articles/ArticleItem'
-import FormFields from './FormFields'
-import FormFooter from './FormFooter'
+import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
+import FormFields from './FormFields/FormFieldsContainer'
+import FormFooter from './FormFooter/FormFooterContainer'
 import Footer from '../../layout/Footer'
 import { Icon } from '../../layout/Icon'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
 import { scrapDecorator } from '../../form/decorators'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
-import {
-  selectArticleById,
-  selectEditorRoleByUserId,
-  selectCurrentUserReviewByArticleId,
-  selectReviewerRoleByUserId,
-  selectReviewsByArticleIdAndVerdictId,
-  selectVerdictsByArticleId,
-} from '../../../selectors'
 import { articleNormalizer } from '../../../utils/normalizers'
 
 class Article extends Component {
@@ -126,7 +113,7 @@ class Article extends Component {
 
           {id && (
             <section className="section">
-              <ArticleItem article={article} />
+              <ArticleItemContainer article={article} />
             </section>
           )}
 
@@ -201,37 +188,4 @@ Article.propTypes = {
   query: PropTypes.object.isRequired
 }
 
-function mapStateToProps(state, ownProps) {
-  const currentUser = selectCurrentUser(state)
-  const { id: currentUserId } = (currentUser || {})
-  const { match } = ownProps
-  const { params: { articleId } } = match
-
-  const editorRole = selectEditorRoleByUserId(state, currentUserId)
-  const reviewerRole = selectReviewerRoleByUserId(state, currentUserId)
-
-  const canCreateArticle = typeof editorRole !== 'undefined'
-  const canReview = typeof reviewerRole !== 'undefined'
-
-  return {
-    article: selectArticleById(state, articleId),
-    canCreateArticle,
-    canReview,
-    currentUser,
-    reviewerRole,
-    userReview: selectCurrentUserReviewByArticleId(state, articleId),
-    verdicts: selectVerdictsByArticleId(state, articleId),
-    withoutVerdictReviews: selectReviewsByArticleIdAndVerdictId(
-      state,
-      articleId,
-      null
-    ),
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationUserRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
-  withQueryRouter(),
-  connect(mapStateToProps)
-)(Article)
+export default Article

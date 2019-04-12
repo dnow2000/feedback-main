@@ -6,7 +6,7 @@ import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { requestData } from 'redux-saga-data'
 
-import ArticleItem from './ArticleItem'
+import ArticleItemContainer from './ArticleItem/ArticleItemContainer'
 
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
@@ -182,7 +182,7 @@ class Articles extends Component {
               {
                 articles.map(article => (
                   <div className="mb16" key={article.id}>
-                    <ArticleItem article={article} />
+                    <ArticleItemContainer article={article} />
                   </div>
                 ))
               }

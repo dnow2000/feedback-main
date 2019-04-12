@@ -11,7 +11,7 @@ import withQueryRouter from 'with-query-router'
 
 import FormFooter from './FormFooter'
 import FormFields from './FormFields'
-import ArticleItem from '../Articles/ArticleItem'
+import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
 import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
@@ -146,7 +146,7 @@ class Review extends Component {
               <h2 className="subtitle flex-columns items-center">
                 REVIEWED ARTICLE
               </h2>
-              <ArticleItem article={article} noControl />
+              <ArticleItemContainer article={article} noControl />
             </section>
           )}
 

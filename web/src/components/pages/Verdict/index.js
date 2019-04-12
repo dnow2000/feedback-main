@@ -10,7 +10,7 @@ import { requestData } from 'redux-saga-data'
 import FormFooter from './FormFooter'
 import FormFields from './FormFields'
 import ReviewersManager from './ReviewersManager'
-import ArticleItem from '../Articles/ArticleItem'
+import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
 import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
@@ -146,7 +146,7 @@ class Verdict extends Component {
                   See article
                 </NavLink>
               </h2>
-              <ArticleItem article={article} noControl />
+              <ArticleItemContainer article={article} noControl />
             </section>
           )}
 

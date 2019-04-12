@@ -1,21 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
+import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-react-login'
 
 import Authors from '../../../layout/Authors'
 import Extract from '../../../layout/Extract'
 import Tag from '../../../layout/Tag'
-import {
-  selectCurrentUserReviewByArticleId,
-  selectCurrentUserVerdictByArticleId,
-  selectEditorRoleByUserId,
-  selectReviewerRoleByUserId,
-  selectReviewsByArticleId
-} from '../../../../selectors'
 import { ROOT_PATH, THUMBS_URL } from '../../../../utils/config'
 
 class ArticleItem extends Component {
@@ -76,7 +66,8 @@ class ArticleItem extends Component {
             {facebookShares && (
               <span className="mr8">
                 - Facebook: <strong>{facebookShares}</strong>
-              </span>)}
+              </span>
+            )}
             {twitterShares && (
               <span>
                 - Twitter: <strong>{twitterShares}</strong>
@@ -141,7 +132,7 @@ class ArticleItem extends Component {
                     : `/verdicts/new?articleId=${id}`
                 }
               >
-                {currentUserVerdictId ? 'See' : 'Create'} your verdict
+                {currentUserVerdictId ? 'See' : 'Write'} your verdict
               </NavLink>
             )}
             {showSeeAllReviews && (
@@ -174,7 +165,7 @@ class ArticleItem extends Component {
                     : `/reviews/creation?articleId=${id}`
                 }
               >
-                {currentUserReviewId ? 'See' : 'Create'} your review
+                {currentUserReviewId ? 'See' : 'Write'} your review
               </NavLink>
             )}
           </nav>
@@ -208,39 +199,4 @@ ArticleItem.propTypes = {
   showSeeAllReviews: PropTypes.bool
 }
 
-function mapStateToProps(state, ownProps) {
-  const { article } = ownProps
-  const { id: articleId } = article || {}
-  const currentUser = selectCurrentUser(state)
-  const { id: currentUserId } = currentUser || {}
-
-  const editorRole = selectEditorRoleByUserId(state, currentUserId)
-  const reviewerRole = selectReviewerRoleByUserId(state, currentUserId)
-
-  const canDelete = typeof editorRole !== 'undefined'
-  const canReview = typeof reviewerRole !== 'undefined'
-  const canVerdict = typeof editorRole !== 'undefined'
-
-  const currentUserReview = selectCurrentUserReviewByArticleId(state, articleId)
-
-  const reviews = selectReviewsByArticleId(state, articleId)
-  const hasReviews = reviews && reviews.length > 0
-  const showSeeAllReviews = typeof editorRole !== 'undefined' && hasReviews
-
-  const currentUserVerdict = selectCurrentUserVerdictByArticleId(state, articleId)
-
-  return {
-    canDelete,
-    canReview,
-    canVerdict,
-    currentUserReview,
-    currentUserVerdict,
-    hasReviews,
-    showSeeAllReviews
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(ArticleItem)
+export default ArticleItem

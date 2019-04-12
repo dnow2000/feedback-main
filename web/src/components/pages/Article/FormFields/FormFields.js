@@ -1,23 +1,15 @@
-/* eslint-disable */
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
-import withQueryRouter from 'with-query-router'
 
 import {
   CheckboxField,
-  SelectField,
   TextareaField,
   TextField,
-} from '../../form/fields'
-import { createValidateScrapField } from '../../form/validators'
+} from '../../../form/fields'
+import { createValidateScrapField } from '../../../form/validators'
 
 const validateScrapField = createValidateScrapField()
-const SELECT_EVALUATIONS_NAME = 'evaluationId'
-const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
 
 const FormFields = ({ query, validating }) => {
   const { isModifiedEntity, readOnly } = query.context()
@@ -91,7 +83,6 @@ const FormFields = ({ query, validating }) => {
 }
 
 FormFields.defaultProps = {
-  isReadOnly: false,
   validating: false
 }
 
@@ -100,7 +91,4 @@ FormFields.propTypes = {
   validating: PropTypes.bool
 }
 
-export default compose(
-  withQueryRouter(),
-  connect()
-)(FormFields)
+export default FormFields

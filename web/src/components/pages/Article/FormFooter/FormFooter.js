@@ -1,17 +1,7 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { compose } from 'redux'
-import { selectCurrentUser } from 'with-react-login'
-import withQueryRouter from 'with-query-router'
-
-import {
-  selectEditorRoleByUserId,
-  selectReviewerRoleByUserId,
-  selectCurrentUserReviewByArticleId
-} from '../../../selectors'
 
 const FormFooter = ({
   canEdit,
@@ -102,27 +92,4 @@ FormFooter.propTypes = {
   review: PropTypes.object
 }
 
-function mapStateToProps(state, ownProps) {
-  const {
-    match: { params: { articleId } },
-  } = ownProps
-  const currentUser = selectCurrentUser(state)
-  const { id: currentUserId } = currentUser || {}
-
-  const editorRole = selectEditorRoleByUserId(state, currentUserId)
-  const reviewerRole = selectReviewerRoleByUserId(state, currentUserId)
-
-  const canReview = typeof reviewerRole !== 'undefined'
-  const canEdit = typeof editorRole !== 'undefined'
-
-  return {
-    canEdit,
-    canReview,
-    review: selectCurrentUserReviewByArticleId(state, articleId)
-  }
-}
-
-export default compose(
-  withQueryRouter(),
-  connect(mapStateToProps)
-)(FormFooter)
+export default FormFooter

@@ -55,13 +55,14 @@ const Navigation = ({ currentRoles, dispatch, isActive, location, currentUser })
       role="button"
       tabIndex="0"
     >
-      <nav
+      <div
         className="list px12 py10"
         onClick={e => {
           e.nativeEvent.stopImmediatePropagation() // Prevent click bubbling and closing modal
           e.stopPropagation()
         }}
         onKeyDown={null}
+        role="button"
         tabIndex="0"
       >
         {links &&
@@ -98,7 +99,7 @@ const Navigation = ({ currentRoles, dispatch, isActive, location, currentUser })
             </SignoutButton>
           </div>
         )}
-      </nav>
+      </div>
     </div>
   )
 }
