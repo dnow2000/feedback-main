@@ -8,7 +8,7 @@ import { selectCurrentRolesByTypes } from '../../selectors'
 
 export const withRoles = (config = {
   accessRoleTypes: [],
-  creationUserRoleTypes: [],
+  creationRoleTypes: [],
   modificationRoleTypes: []
 }) => WrappedComponent => {
 
@@ -36,7 +36,7 @@ export const withRoles = (config = {
       } = this.props
       const {
         isModifiedEntity,
-        isCreationEntity,
+        isCreatedEntity,
         originLocationString
       } = query.context()
       const { canRenderChildren } = this.state
@@ -45,7 +45,7 @@ export const withRoles = (config = {
         return
       }
 
-      if (isCreationEntity) {
+      if (isCreatedEntity) {
         if (creationRoles.length) {
           this.setState({ canRenderChildren: true })
           return
@@ -61,7 +61,7 @@ export const withRoles = (config = {
         history.push(originLocationString)
       }
 
-      if (!isCreationEntity && !isModifiedEntity) {
+      if (!isCreatedEntity && !isModifiedEntity) {
 
         if (accessRoles) {
           if (accessRoles.length) {

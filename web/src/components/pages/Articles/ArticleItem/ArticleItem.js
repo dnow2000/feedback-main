@@ -59,8 +59,8 @@ class ArticleItem extends Component {
         <div className="content pb8 pt24 pl24 pr24">
           <div className="flex-columns items-center flex-wrap mb12">
             {totalShares && (
-              <span className="total-shares mr8">
-                {totalShares}
+              <span className="mr8">
+                - Total social media share: <strong>{totalShares}</strong>
               </span>
             )}
             {facebookShares && (
@@ -129,7 +129,7 @@ class ArticleItem extends Component {
                 to={
                   currentUserVerdictId
                     ? `/verdicts/${currentUserVerdictId}`
-                    : `/verdicts/new?articleId=${id}`
+                    : `/verdicts/creation?articleId=${id}`
                 }
               >
                 {currentUserVerdictId ? 'See' : 'Write'} your verdict

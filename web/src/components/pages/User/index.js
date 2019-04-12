@@ -70,7 +70,7 @@ function mapStateToProps(state, ownProps) {
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationUserRoleTypes: ['master'], modificationRoleTypes: ['master'] }),
+  withRoles({ creationRoleTypes: ['master'], modificationRoleTypes: ['master'] }),
   withRouter,
   connect(mapStateToProps)
 )(User)

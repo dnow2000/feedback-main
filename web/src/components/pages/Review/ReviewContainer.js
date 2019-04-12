@@ -8,6 +8,6 @@ import mapStateToProps from './mapStateToProps'
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationUserRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
+  withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
   connect(mapStateToProps)
 )(Review)

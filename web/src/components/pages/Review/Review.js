@@ -25,7 +25,7 @@ class Review extends Component {
   }
 
   componentDidUpdate() {
-    this.handleRedirectToModificationUrlWhenIdWhileWeAreInNewUrl()
+    // this.handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl()
   }
 
   handleRequestData = () => {
@@ -101,7 +101,7 @@ class Review extends Component {
     return formSubmitPromise
   }
 
-  handleRedirectToModificationUrlWhenIdWhileWeAreInNewUrl() {
+  handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
     const { currentUserReviewPatch, history, query } = this.props
     const { id } = currentUserReviewPatch || {}
     const { isCreatedEntity } = query.context()

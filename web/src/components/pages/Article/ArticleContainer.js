@@ -7,6 +7,6 @@ import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationUserRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
+  withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
   connect(mapStateToProps)
 )(Article)

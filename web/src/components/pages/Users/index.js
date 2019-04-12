@@ -19,5 +19,5 @@ const Users = () => (
 
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationUserRoleTypes: ['master'], modificationRoleTypes: ['master'] })
+  withRoles({ creationRoleTypes: ['master'], modificationRoleTypes: ['master'] })
 )(Users)
