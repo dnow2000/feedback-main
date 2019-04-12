@@ -4382,6 +4382,20 @@ fbjs@^0.8.15:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
+fetch-normalize-data@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.1.0.tgz#25c6e1689f422052c71733295910bafc3c3a990a"
+  dependencies:
+    eslint "^5.8.0"
+    lodash.uniqby "^4.7.0"
+
+fetch-normalize-data@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.0.0.tgz#31f35b8d2d379ead22a58ff53534e13a41a47b73"
+  dependencies:
+    eslint "^5.8.0"
+    lodash.uniqby "^4.7.0"
+
 figgy-pudding@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/figgy-pudding/-/figgy-pudding-3.5.1.tgz#862470112901c727a0e495a80744bd5baa1d6790"
@@ -7367,13 +7381,6 @@ normalize-url@^3.0.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/normalize-url/-/normalize-url-3.3.0.tgz#b2e1c4dc4f7c6d57743df733a4f5978d18650559"
 
-normalized-data-state@0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/normalized-data-state/-/normalized-data-state-0.2.0.tgz#4d923eb7af0e337bc8eab48637a497697db8c2a0"
-  dependencies:
-    eslint "^5.8.0"
-    lodash.uniqby "^4.7.0"
-
 npm-bundled@^1.0.1:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/npm-bundled/-/npm-bundled-1.0.6.tgz#e7ba9aadcef962bb61248f91721cd932b3fe6bdd"
@@ -9203,13 +9210,12 @@ redux-react-modals@0.0.11:
     react-router-dom "^4.3.1"
     redux "^4.0.0"
 
-redux-saga-data@1.8.0, redux-saga-data@^1.8.0:
-  version "1.8.0"
-  resolved "https://registry.yarnpkg.com/redux-saga-data/-/redux-saga-data-1.8.0.tgz#282fb029cf2cb811124e11a4426a0016f597694d"
+redux-saga-data@2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/redux-saga-data/-/redux-saga-data-2.3.0.tgz#23530f3c2a1062fbd873798e29b89866b9e7ecdf"
   dependencies:
     eslint "^5.8.0"
-    lodash.uniqby "^4.7.0"
-    normalized-data-state "0.2.0"
+    fetch-normalize-data "1.1.0"
     prop-types "^15.6.2"
     redux "^4.0.0"
     redux-saga "^0.15.3"
@@ -11467,12 +11473,13 @@ wide-align@^1.1.0:
   dependencies:
     string-width "^1.0.2 || 2"
 
-with-login@2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/with-login/-/with-login-2.4.0.tgz#e13ea624a2caacff366e021670a95fc491cbb366"
+with-login@3.5.1:
+  version "3.5.1"
+  resolved "https://registry.yarnpkg.com/with-login/-/with-login-3.5.1.tgz#7cb30076fa71b64eda45408d9252f4dfb60cacb5"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"
+    fetch-normalize-data "1.1.0"
     lodash.uniq "^4.5.0"
     prop-types "^15.6.2"
     react "^16.5.2"
@@ -11480,7 +11487,6 @@ with-login@2.4.0:
     react-redux "^5.0.7"
     react-router-dom "^4.3.1"
     redux "^4.0.0"
-    redux-saga-data "^1.8.0"
     reselect "^3.0.1"
     uuid "^3.3.2"
 

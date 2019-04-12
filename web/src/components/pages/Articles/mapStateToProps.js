@@ -10,7 +10,7 @@ function mapStateToProps(state, ownProps) {
   const editorRole = selectEditorRoleByUserId(state, currentUserId)
 
   const canCreateArticle = typeof editorRole !== 'undefined'
-
+  
   return {
     articles: selectArticles(state),
     canCreateArticle,

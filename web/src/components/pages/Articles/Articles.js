@@ -1,10 +1,11 @@
 import classnames from 'classnames'
+import { assignData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { NavLink } from 'react-router-dom'
-import { assignData, requestData } from 'redux-saga-data'
+import { requestData } from 'redux-saga-data'
 
 import ArticleItem from './ArticleItem'
 
@@ -43,27 +44,27 @@ class Articles extends Component {
 
     const apiPath = `/articles${search}`
 
-    this.setState({ isLoading: true }, () => {
-      dispatch(
-        requestData({
-          apiPath,
-          handleFail: () => {
-            this.setState({
-              hasMore: false,
-              isLoading: false
-            })
-          },
-          handleSuccess: (state, action) => {
-            const { payload: { data } } = action
-            this.setState({
-              hasMore: data && data.length > 0,
-              isLoading: false
-            })
-          },
-          normalizer: articleNormalizer,
-        })
-      )
-    })
+    this.setState({ isLoading: true })
+
+    dispatch(
+      requestData({
+        apiPath,
+        handleFail: () => {
+          this.setState({
+            hasMore: false,
+            isLoading: false
+          })
+        },
+        handleSuccess: (state, action) => {
+          const { payload: { data } } = action
+          this.setState({
+            hasMore: data && data.length > 0,
+            isLoading: false
+          })
+        },
+        normalizer: articleNormalizer,
+      })
+    )
   }
 
   onKeywordsSubmit = values => {

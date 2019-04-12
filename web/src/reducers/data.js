@@ -1,4 +1,4 @@
-import { createData } from 'redux-saga-data'
+import { createDataReducer } from 'redux-saga-data'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
@@ -8,7 +8,7 @@ const dataPersistConfig = {
   whitelist: [],
 }
 
-const dataReducer = createData({
+const dataReducer = createDataReducer({
   articleTags: [],
   articles: [],
   evaluations: [],

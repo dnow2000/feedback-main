@@ -19,6 +19,7 @@
     "draft-js-resizeable-plugin": "^2.0.8",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
+    "fetch-normalize-data": "^1.0.0",
     "final-form": "^4.9.1",
     "final-form-calculate": "^1.2.1",
     "la-sass-vy": "0.0.3",
@@ -52,11 +53,11 @@
     "redux-persist": "^5.10.0",
     "redux-react-modals": "0.0.11",
     "redux-saga": "^0.15.3",
-    "redux-saga-data": "1.8.0",
+    "redux-saga-data": "2.3.0",
     "reselect": "^3.0.1",
     "testcafe": "^0.23.0",
     "whatwg-fetch": "2.0.3",
-    "with-login": "2.4.0",
+    "with-login": "3.5.1",
     "with-query-router": "3.0.0"
   },
   "devDependencies": {
