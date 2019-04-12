@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
-import withLogin from 'with-login'
+import withLogin from 'with-react-login'
 
 export const withRedirectToArticlesWhenAlreadyAuthenticated = compose(
   connect(),

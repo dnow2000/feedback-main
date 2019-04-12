@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import Transition from 'react-transition-group/Transition'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-react-login'
 
 import { selectEditorRoleByUserId } from '../../../selectors'
 

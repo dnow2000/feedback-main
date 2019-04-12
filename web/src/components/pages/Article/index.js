@@ -3,10 +3,9 @@ import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-react-login'
 import withQueryRouter from 'with-query-router'
 
 import ArticleItem from '../Articles/ArticleItem'
@@ -113,12 +112,13 @@ class Article extends Component {
             {!isCreatedEntity && (
               <div className="is-absolute b12 r8">
                 {canCreateArticle && (
-                  <NavLink
+                  <button
                     className="button is-primary"
-                    to="/articles/new"
+                    onClick={() => query.changeToCreation()}
+                    type="button"
                   >
                     New article
-                  </NavLink>
+                  </button>
                 )}
               </div>
             )}
@@ -232,6 +232,6 @@ function mapStateToProps(state, ownProps) {
 export default compose(
   withRedirectToSigninWhenNotAuthenticated,
   withRoles({ creationUserRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
-  withQueryRouter,
+  withQueryRouter(),
   connect(mapStateToProps)
 )(Article)

@@ -4,7 +4,7 @@ import React, { Fragment } from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
-import { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-react-login'
 import withQueryRouter from 'with-query-router'
 
 import {

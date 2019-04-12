@@ -4,7 +4,6 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
 import ArticleItem from './ArticleItem'
@@ -137,13 +136,14 @@ class Articles extends Component {
               ))}
 
               {canCreateArticle && (
-                <NavLink
+                <button
                   className="button is-primary"
                   id="create-article"
-                  to="/articles/new"
+                  onClick={() => query.changeToCreation()}
+                  type="button"
                 >
                   New article
-                </NavLink>
+                </button>
               )}
             </div>
           </section>

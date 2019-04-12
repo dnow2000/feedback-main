@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-react-login'
 import withQueryRouter from 'with-query-router'
 
 import FormFooter from './FormFooter'

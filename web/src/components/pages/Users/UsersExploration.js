@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
 import withQueryRouter from 'with-query-router'
-import { selectCurrentUser } from 'with-login'
+import { selectCurrentUser } from 'with-react-login'
 
 import UserItem from './UserItem'
 import { TextField } from '../../form/fields'
