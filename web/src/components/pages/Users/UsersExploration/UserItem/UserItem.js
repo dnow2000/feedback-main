@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
-import Avatar from '../../layout/Avatar'
-import { selectTagsByUserId } from '../../../selectors'
+import Avatar from '../../../../layout/Avatar'
 
 class UserItem extends Component {
 
@@ -91,15 +87,4 @@ UserItem.propTypes = {
   withAddButton: PropTypes.bool,
 }
 
-function mapStateToProps (state, ownProps) {
-  const { user } = ownProps
-  const { id: userId } = (user || {})
-  return {
-    tags: selectTagsByUserId(state, userId)
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(UserItem)
+export default UserItem

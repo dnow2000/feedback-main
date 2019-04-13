@@ -1,16 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
-import RolesManager from './RolesManager'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
+import RolesManagerContainer from './RolesManager/RolesManagerContainer'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
-import UserItem from '../Users/UserItem'
-import { selectUserById } from '../../../selectors'
+import UserItemContainer from '../Users/UsersExploration/UserItem/UserItemContainer'
 import { userNormalizer } from '../../../utils/normalizers'
 
 class User extends Component {
@@ -40,10 +35,10 @@ class User extends Component {
             </h1>
           </section>
           <section>
-            <UserItem user={user} />
+            <UserItemContainer user={user} />
           </section>
           <section>
-            <RolesManager />
+            <RolesManagerContainer />
           </section>
         </Main>
       </Fragment>
@@ -61,16 +56,4 @@ User.propTypes = {
   user: PropTypes.object
 }
 
-function mapStateToProps(state, ownProps) {
-  const { match: { params: { userId } } } = ownProps
-  return {
-    user: selectUserById(state, userId)
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationRoleTypes: ['master'], modificationRoleTypes: ['master'] }),
-  withRouter,
-  connect(mapStateToProps)
-)(User)
+export default User

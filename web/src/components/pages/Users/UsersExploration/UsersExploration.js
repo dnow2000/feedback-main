@@ -2,18 +2,11 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
-import withQueryRouter from 'with-query-router'
-import { selectCurrentUser } from 'with-react-login'
 
-import UserItem from './UserItem'
-import { TextField } from '../../form/fields'
-import {
-  selectEligibleVerdictUsersByVerdictId
-} from '../../../selectors'
-import { userNormalizer } from '../../../utils/normalizers'
+import UserItemContainer from './UserItem/UserItemContainer'
+import { TextField } from '../../../form/fields'
+import { userNormalizer } from '../../../../utils/normalizers'
 
 function getScrollParent () {
   return document.querySelector('.modal-dialog')
@@ -144,7 +137,7 @@ class UsersExploration extends Component {
           {
             users.map(user => (
               <div className="mb16" key={user.id}>
-                <UserItem
+                <UserItemContainer
                   user={user}
                   withAddButton={withAddButton}
                 />
@@ -174,15 +167,4 @@ UsersExploration.propTypes = {
   withAddButton: PropTypes.bool,
 }
 
-function mapStateToProps(state, ownProps) {
-  const { match: { params: { verdictId } } } = ownProps
-  return {
-    currentUser: selectCurrentUser(state),
-    users: selectEligibleVerdictUsersByVerdictId(state, verdictId),
-  }
-}
-
-export default compose(
-  withQueryRouter(),
-  connect(mapStateToProps)
-)(UsersExploration)
+export default UsersExploration

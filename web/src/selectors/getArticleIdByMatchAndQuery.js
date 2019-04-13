@@ -11,7 +11,7 @@ export const getArticleIdByMatchAndQuery = createCachedSelector(
   state => state.data.articles,
   (state, match) => selectReviewById(state, match.params.reviewId),
   (state, match) => selectVerdictById(state, match.params.verdictId),
-  (state, match, query) => query.articleId,
+  (state, match, query) => query.parse().articleId,
   (articles, review, verdict, articleId) =>
     (review && review.articleId) ||
     (verdict && verdict.articleId) ||

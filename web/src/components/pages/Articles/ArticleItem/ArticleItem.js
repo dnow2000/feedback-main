@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
+import { Icon } from '../../../layout/Icon'
 import Authors from '../../../layout/Authors'
 import Extract from '../../../layout/Extract'
 import Tag from '../../../layout/Tag'
@@ -85,18 +86,23 @@ class ArticleItem extends Component {
               </a>
             </div>
             <div className="col-tablet-75">
-              <a
-                className="title mb16 fs22"
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <strong>
-                  {title}
-                </strong>
-              </a>
+              <div className="title mb16 fs22 is-bold">
+                {title}
+              </div>
+              <div className="fs14">
+                <span className="mr6">
+                  You can read the full article here
+                </span>
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Icon className="icon" svg="external-link" />
+                </a>
+              </div>
               <div className="infos flex-columns items-center py12">
-                <div className="authors mr24">
+                <div className="mr24">
                   <Authors text={authors} />
                 </div>
                 {theme && (

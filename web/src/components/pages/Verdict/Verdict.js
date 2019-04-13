@@ -2,23 +2,15 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
-import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
+import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
-import FormFooter from './FormFooter'
-import FormFields from './FormFields'
-import ReviewersManager from './ReviewersManager'
+import FormFooterContainer from './FormFooter/FormFooterContainer'
+import FormFieldsContainer from './FormFields/FormFieldsContainer'
+import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
-import {
-  selectArticleById,
-  getArticleIdByMatchAndQuery,
-  selectCurrentUserVerdictPatchByArticleId,
-} from '../../../selectors'
 import { articleNormalizer, verdictNormalizer } from '../../../utils/normalizers'
 
 class Verdict extends Component {
@@ -155,7 +147,7 @@ class Verdict extends Component {
               <h2 className="subtitle flex-columns items-center">
                 REVIEWERS
               </h2>
-              <ReviewersManager />
+              <ReviewersManagerContainer />
             </section>
           )}
 
@@ -191,8 +183,8 @@ class Verdict extends Component {
                     noValidate
                     onSubmit={handleSubmit}
                   >
-                    {!isCreatedEntity && <FormFields />}
-                    <FormFooter canSubmit={canSubmit} />
+                    {!isCreatedEntity && <FormFieldsContainer />}
+                    <FormFooterContainer canSubmit={canSubmit} />
                   </form>
                 )
               }}
@@ -218,22 +210,4 @@ Verdict.propTypes = {
   query: PropTypes.object.isRequired
 }
 
-function mapStateToProps(state, ownProps) {
-  const articleId = getArticleIdByMatchAndQuery(
-    state,
-    ownProps.match,
-    ownProps.location
-  )
-  const currentUserVerdictPatch = selectCurrentUserVerdictPatchByArticleId(state, articleId)
-  return {
-    article: selectArticleById(state, articleId),
-    currentUserVerdictPatch,
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
-  withRouter,
-  connect(mapStateToProps)
-)(Verdict)
+export default Verdict

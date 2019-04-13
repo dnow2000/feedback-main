@@ -2,7 +2,6 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import withQueryRouter from 'with-query-router'
 
 const FormFooter = ({ canSubmit, isLoading, match, query }) => {
   const {
@@ -61,4 +60,4 @@ FormFooter.propTypes = {
   query: PropTypes.object.isRequired,
 }
 
-export default withQueryRouter()(FormFooter)
+export default FormFooter

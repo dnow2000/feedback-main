@@ -2,19 +2,10 @@ import PropTypes from 'prop-types'
 import { stringify } from 'query-string'
 import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
-import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
+import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-react-login'
 
-import Avatar from '../../layout/Avatar'
-import {
-  selectEvaluationById,
-  selectReviewByArticleIdAndUserId,
-  selectTagsByUserId,
-  selectVerdictById
-} from '../../../selectors'
+import Avatar from '../../../layout/Avatar'
 
 class VerdictUserItem extends Component {
 
@@ -145,26 +136,4 @@ VerdictUserItem.propTypes = {
   verdict: PropTypes.object
 }
 
-function mapStateToProps (state, ownProps) {
-  const { match: { params: { verdictId } } } = ownProps
-  const { id: userId } = ownProps.user
-
-  const verdict = selectVerdictById(state, verdictId)
-  const { articleId } = verdict
-
-  const review = selectReviewByArticleIdAndUserId(state, articleId, userId)
-  const { evaluationId } = (review || {})
-
-  return {
-    currentUser: selectCurrentUser(state),
-    evaluation: selectEvaluationById(state, evaluationId),
-    review,
-    tags: selectTagsByUserId(state, userId),
-    verdict
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(VerdictUserItem)
+export default VerdictUserItem

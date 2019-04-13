@@ -121,8 +121,8 @@ export class TextEditor extends Component {
               <ControlBar
                 getEditorState={() => editorState}
                 setEditorState={this.onChange}
-              />)
-            }
+              />
+            )}
             <Editor
               editorState={editorState}
               onChange={this.onChange}

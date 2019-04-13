@@ -1,8 +1,8 @@
 import { selectCurrentUser } from 'with-react-login'
 
 import {
-  selectArticleById,
   getArticleIdByMatchAndQuery,
+  selectArticleById,
   selectCurrentUserReviewPatchByArticleId,
   selectVerdictsByArticleIdAndByUserId
 } from '../../../selectors'
@@ -11,8 +11,9 @@ function mapStateToProps(state, ownProps) {
   const articleId = getArticleIdByMatchAndQuery(
     state,
     ownProps.match,
-    ownProps.location
+    ownProps.query
   )
+  console.log('articleId', articleId)
   const currentUserReviewPatch = selectCurrentUserReviewPatchByArticleId(state, articleId)
   const currentUser = selectCurrentUser(state)
   const { id: userId } = (currentUser || {})

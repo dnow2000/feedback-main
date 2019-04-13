@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { showModal } from 'redux-react-modals'
 
-import VerdictUserItem from './VerdictUserItem'
-import UsersExploration from '../Users/UsersExploration'
-import { selectUsersByVerdictId } from '../../../selectors'
+import VerdictUserItemContainer from '../VerdictUserItem/VerdictUserItemContainer'
+import UsersExplorationContainer from '../../Users/UsersExploration/UsersExplorationContainer'
 
 class ReviewersManager extends Component {
 
@@ -16,7 +12,7 @@ class ReviewersManager extends Component {
       dispatch,
     } = this.props
 
-    dispatch(showModal("main", <UsersExploration isModal withAddButton />))
+    dispatch(showModal("main", <UsersExplorationContainer isModal withAddButton />))
   }
 
   render () {
@@ -30,7 +26,7 @@ class ReviewersManager extends Component {
       <div>
         {
           verdictUsers && verdictUsers.map(verdictUser => (
-            <VerdictUserItem
+            <VerdictUserItemContainer
               key={verdictUser.id}
               user={verdictUser}
             />
@@ -61,14 +57,4 @@ ReviewersManager.propTypes = {
   verdictUsers: PropTypes.array
 }
 
-function mapStateToProps (state, ownProps) {
-  const { match: { params: { verdictId } } } = ownProps
-  return {
-    verdictUsers: selectUsersByVerdictId(state, verdictId)
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(ReviewersManager)
+export default ReviewersManager

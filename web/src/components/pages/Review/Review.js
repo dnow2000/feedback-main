@@ -120,6 +120,8 @@ class Review extends Component {
     const { isFormLoading } = this.state
     const { isCreatedEntity } = query.context()
 
+    console.log('article', article)
+
     return (
       <Fragment>
         <Header />

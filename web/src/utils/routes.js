@@ -6,9 +6,9 @@ import ArticlesContainer from '../components/pages/Articles/ArticlesContainer'
 import Home from '../components/pages/Home'
 import ReviewContainer from '../components/pages/Review/ReviewContainer'
 import Reviews from '../components/pages/Reviews'
-import User from '../components/pages/User'
-import Users from '../components/pages/Users'
-import Verdict from '../components/pages/Verdict'
+import UserContainer from '../components/pages/User/UserContainer'
+import UsersContainer from '../components/pages/Users/UsersContainer'
+import VerdictContainer from '../components/pages/Verdict/VerdictContainer'
 import Verdicts from '../components/pages/Verdicts'
 import Signin from '../components/pages/Signin'
 import Signup from '../components/pages/Signup'
@@ -53,19 +53,19 @@ const routes = [
   {
     exact: true,
     path: '/users/:userId',
-    render: () => <User />,
+    render: () => <UserContainer />,
     title: "User",
   },
   {
     exact: true,
     path: '/users',
-    render: () => <Users />,
+    render: () => <UsersContainer />,
     title: "Users",
   },
   {
     exact: true,
     path: '/verdicts/:verdictId',
-    render: () => <Verdict />,
+    render: () => <VerdictContainer />,
     title: "Verdict",
   },
   {

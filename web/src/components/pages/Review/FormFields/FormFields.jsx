@@ -4,7 +4,7 @@ import React from 'react'
 import {
   CheckboxesField,
   HiddenField,
-  SelectField,
+  RadiosField,
   TexteditorField
 } from '../../../form/fields'
 import {
@@ -12,23 +12,27 @@ import {
 } from '../../../form/utils'
 
 
-const SELECT_EVALUATIONS_NAME = 'evaluationId'
-const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
+const EVALUATIONS_NAME = 'evaluationId'
+const EVALUATIONS_PLACEHOLDER = ''
 
-const CHECKBOXES_TAGS_NAME = 'tagIds'
-const CHECKBOXES_TAGS_PLACEHOLDER = ''
+const TAGS_NAME = 'tagIds'
+const TAGS_PLACEHOLDER = ''
 
 const FormFields = ({ evaluations, query, tags }) => {
+  console.log('evaluations', evaluations, 'tags', tags)
+
+
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
-    SELECT_EVALUATIONS_NAME,
+    EVALUATIONS_NAME,
     evaluations,
-    SELECT_EVALUATIONS_PLACEHOLDER
+    EVALUATIONS_PLACEHOLDER,
+    'label'
   )
 
   const tagOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
-    CHECKBOXES_TAGS_NAME,
+    TAGS_NAME,
     tags,
-    CHECKBOXES_TAGS_PLACEHOLDER,
+    TAGS_PLACEHOLDER,
     'text'
   )
   const { readOnly } = query.context()
@@ -52,12 +56,11 @@ const FormFields = ({ evaluations, query, tags }) => {
 
       <div className="field-group">
         <h3 className="field-group-title">
-          RATE THE SCIENTIFIC CREDIBILITY
+          SCIENTIFIC CREDIBILITY RATING
         </h3>
-        <SelectField
-          name={SELECT_EVALUATIONS_NAME}
+        <RadiosField
+          name={EVALUATIONS_NAME}
           options={evaluationOptions}
-          placeholder={SELECT_EVALUATIONS_PLACEHOLDER}
           readOnly={readOnly}
           required
         />
@@ -69,7 +72,7 @@ const FormFields = ({ evaluations, query, tags }) => {
           HOW WOULD QUALIFY THIS ARTICLE
         </h3>
         <CheckboxesField
-          name={CHECKBOXES_TAGS_NAME}
+          name={TAGS_NAME}
           options={tagOptions}
           readOnly={readOnly}
         />

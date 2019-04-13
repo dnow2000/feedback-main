@@ -1,11 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-
-import { selectRoleByUserIdAndType } from '../../../selectors'
 
 class RolesManager extends Component {
   componentDidMount () {
@@ -55,25 +50,4 @@ RolesManager.propTypes = {
   roleTypes: PropTypes.array
 }
 
-function mapStateToProps (state, ownProps) {
-  const { data: { roleTypes } } = state
-  const { match: { params: { userId } } } = ownProps
-
-  if (!roleTypes) {
-    return { roleTypes }
-  }
-
-  const rolesByType = {}
-  roleTypes.forEach(roleType => {
-    rolesByType[roleType] = selectRoleByUserIdAndType(userId, roleType)})
-
-  return {
-    roleTypes,
-    ...rolesByType
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(RolesManager)
+export default RolesManager
