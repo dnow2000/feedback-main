@@ -75,7 +75,7 @@
     "prettier": "yarn run eslint ./src --fix",
     "start": "react-app-rewired start",
     "test": "react-app-rewired test",
-    "testcafe": "testcafe 'chrome:headless' testcafe"
+    "test:cafe": "testcafe 'chrome:headless' testcafe"
   },
   "eslintConfig": {
     "extends": "react-app"
