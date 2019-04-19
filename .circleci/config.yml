@@ -82,7 +82,7 @@ jobs: # a collection of steps
             export PATH=${PATH:44}
             export NVM_BIN=/usr/bin/nodejs
             export PATH=$NVM_BIN:$PATH
-            cd web
+            cd webapp
             yarn install
             yarn start
           background: true
@@ -99,7 +99,7 @@ jobs: # a collection of steps
             export PATH=${PATH:44}
             export NVM_BIN=/usr/bin/nodejs
             export PATH=$NVM_BIN:$PATH
-            cd web
+            cd webapp
             dockerize -wait http://localhost/health -timeout 5m -wait-retry-interval 5s
             yarn test:cafe
 

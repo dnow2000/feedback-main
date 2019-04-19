@@ -3,7 +3,7 @@ import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
 const dataPersistConfig = {
-  key: 'science-feedback-web-data',
+  key: 'science-feedback-webapp-data',
   storage,
   whitelist: [],
 }

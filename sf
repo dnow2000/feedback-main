@@ -134,8 +134,8 @@ elif [[ "$CMD" == "restart-backend" ]]; then
       cd $ROOT_PATH && docker-compose up --force-recreate'
 
 # Start web frontend localy
-elif [[ "$CMD" == "start-web" ]]; then
-	RUN='cd $ROOT_PATH/web && yarn start'
+elif [[ "$CMD" == "start-webapp" ]]; then
+	RUN='cd $ROOT_PATH/webapp && yarn start'
 
 # Run tests for API
 # Need start-backend to be successful and delete all data
@@ -149,9 +149,9 @@ elif [[ "$CMD" == "test-backend" ]]; then
   fi
 
 # Run tests for end to end
-# Need start-backend AND start-web in two other processes
-elif [[ "$CMD" == "test-cafe-web" ]]; then
-	APP_PATH=$ROOT_PATH/web
+# Need start-backend AND start-webapp in two other processes
+elif [[ "$CMD" == "test-cafe-webapp" ]]; then
+	APP_PATH=$ROOT_PATH/webapp
 	SANDBOX_NAME="ci"
 	if [[ $# == 0 ]]; then
 		confirm "Warning: your database will be wiped. Is this OK ?"
@@ -207,10 +207,10 @@ elif [[ "$CMD" == "deploy-backend" ]]; then
   git push origin $ENV
   exit_restoring_branch
 
-elif [[ "$CMD" == "deploy-web" ]]; then
+elif [[ "$CMD" == "deploy-webapp" ]]; then
 	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"$COMMAND_NAME -e staging "$CMD"\"."
 
-	APP_PATH=$ROOT_PATH/web
+	APP_PATH=$ROOT_PATH/webapp
 	cd $APP_PATH
 
 	(set -a; source "$APP_PATH/config/run_envs/$ENV" && yarn build) || exit
@@ -260,7 +260,7 @@ elif [[ "$CMD" == "deploy-web" ]]; then
 
 # Install new local environment
 elif [[ "$CMD" == "install" ]]; then
-  RUN='cd $ROOT_PATH/web;
+  RUN='cd $ROOT_PATH/webapp;
 			 yarn;'
 
 # Create symlink to use "pc" command (admin rights may be needed)
