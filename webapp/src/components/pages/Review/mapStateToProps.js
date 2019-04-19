@@ -13,7 +13,7 @@ function mapStateToProps(state, ownProps) {
     ownProps.match,
     ownProps.query
   )
-  console.log('articleId', articleId)
+  
   const currentUserReviewPatch = selectCurrentUserReviewPatchByArticleId(state, articleId)
   const currentUser = selectCurrentUser(state)
   const { id: userId } = (currentUser || {})

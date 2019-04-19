@@ -23,7 +23,8 @@ def save_tags(review, tag_ids):
             review_tag.review = review
             review_tag.tag = tag
         review_tags.append(review_tag)
-    Manager.check_and_save(*review_tags)
+    if review_tags:
+        Manager.check_and_save(*review_tags)
 
 def filter_reviews_with_article_id(query, article_id):
     query = query.filter_by(articleId=dehumanize(article_id))

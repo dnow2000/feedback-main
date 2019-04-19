@@ -1,0 +1,47 @@
+.review-main {
+  .radio {
+    height: 32px;
+
+    span {
+      @extend .p4;
+
+      border-radius: 16px;
+    }
+
+    &.radio-\+2-Very-High {
+      span {
+        background-color: #006666;
+      }
+    }
+
+    &.radio-\+1-High {
+      span {
+        background-color: #009949;
+      }
+    }
+
+    &.radio-0-Neutral {
+      span {
+        background-color: #F7981D;
+      }
+    }
+
+    &.radio-\-1-Low {
+      span {
+        background-color: #CC0000;
+      }
+    }
+
+    &.radio-\-2-Very-Low {
+      span {
+        background-color: #990000;
+      }
+    }
+
+    &.radio-99 {
+      span {
+        background-color: #BABABA;
+      }
+    }
+  }
+}

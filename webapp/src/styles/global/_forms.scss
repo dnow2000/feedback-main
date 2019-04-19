@@ -65,7 +65,11 @@
 }
 
 .checkbox-field,
-.checkboxes-field {
+.checkboxes-field,
+.radio-field,
+.radios-field {
+  @extend .p12;
+
   .field-inner {
     color: black;
     padding-left: 4px;

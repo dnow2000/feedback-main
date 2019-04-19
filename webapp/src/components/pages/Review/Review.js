@@ -25,7 +25,7 @@ class Review extends Component {
   }
 
   componentDidUpdate() {
-    // this.handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl()
+    this.handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl()
   }
 
   handleRequestData = () => {
@@ -119,8 +119,6 @@ class Review extends Component {
     } = this.props
     const { isFormLoading } = this.state
     const { isCreatedEntity } = query.context()
-
-    console.log('article', article)
 
     return (
       <Fragment>

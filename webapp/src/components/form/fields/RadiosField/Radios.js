@@ -1,4 +1,3 @@
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -46,20 +45,26 @@ class Radios extends Component {
     const { value: stateValue } = this.state
 
     return (
-      <div className={classnames('flex-columns wrap-3', className)}>
-        {options && options.map(({ label, value }) => (
-          <span className="" key={value}>
+      <div className={className}>
+        {options && options.map(({ label, title, value }) => (
+          <div
+            className={`radio radio-${label.replace(/\s/g,"-")} flex-columns items-center`}
+            key={value}
+            title={title}
+          >
             <input
-              className="mr8"
               checked={stateValue === value}
+              className="mr8"
               disabled={disabled || readOnly}
               onChange={this.onRadioClick}
               readOnly={readOnly}
               type="radio"
               value={value}
             />
-            {label}
-          </span>
+            <span>
+              {label}
+            </span>
+          </div>
         ))}
       </div>
     )

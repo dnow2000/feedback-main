@@ -19,14 +19,14 @@ const TAGS_NAME = 'tagIds'
 const TAGS_PLACEHOLDER = ''
 
 const FormFields = ({ evaluations, query, tags }) => {
-  console.log('evaluations', evaluations, 'tags', tags)
-
 
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     EVALUATIONS_NAME,
     evaluations,
     EVALUATIONS_PLACEHOLDER,
-    'label'
+    'label',
+    'id',
+    'info'
   )
 
   const tagOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
