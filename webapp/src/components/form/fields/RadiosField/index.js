@@ -6,7 +6,7 @@ import { Field } from 'react-final-form'
 import Radios from './Radios'
 import { FieldError } from '../../layout'
 
-const defaultValues = []
+const defaultValue = null
 
 export class RadiosField extends Component {
   onChange = input => nextRadiosState => {
@@ -37,7 +37,7 @@ export class RadiosField extends Component {
               <div className="field-inner">
                 <Radios
                   className="field-radios"
-                  defaultValues={input.value || defaultValues}
+                  defaultValue={input.value || defaultValue}
                   disabled={disabled}
                   input={input}
                   onChange={this.onChange(input)}

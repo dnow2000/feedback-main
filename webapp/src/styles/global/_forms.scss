@@ -79,6 +79,17 @@
   }
 }
 
+.radio-field,
+.radios-field {
+  .radio {
+    &.checked {
+      input[type="radio"][readonly] {
+        opacity: 1;
+      }
+    }
+  }
+}
+
 .field-select {
   @extend .no-outline;
   @extend .no-background;

@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
@@ -46,26 +47,32 @@ class Radios extends Component {
 
     return (
       <div className={className}>
-        {options && options.map(({ label, title, value }) => (
-          <div
-            className={`radio radio-${label.replace(/\s/g,"-")} flex-columns items-center`}
-            key={value}
-            title={title}
-          >
-            <input
-              checked={stateValue === value}
-              className="mr8"
-              disabled={disabled || readOnly}
-              onChange={this.onRadioClick}
-              readOnly={readOnly}
-              type="radio"
-              value={value}
-            />
-            <span>
-              {label}
-            </span>
-          </div>
-        ))}
+        {options && options.map(({ label, title, value }) => {
+          const checked = stateValue === value
+          return (
+            <div
+              className={classnames(
+                `radio radio-${label.replace(/\s/g,"-")} flex-columns items-center`,
+                { checked }
+              )}
+              key={value}
+              title={title}
+            >
+              <input
+                checked={checked}
+                className="mr8"
+                disabled={disabled || readOnly}
+                onChange={this.onRadioClick}
+                readOnly={readOnly}
+                type="radio"
+                value={value}
+              />
+              <span>
+                {label}
+              </span>
+            </div>
+          )}
+        )}
       </div>
     )
   }

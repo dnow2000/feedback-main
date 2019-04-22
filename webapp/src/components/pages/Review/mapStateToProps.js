@@ -1,9 +1,9 @@
 import { selectCurrentUser } from 'with-react-login'
 
+import selectFormInitialValuesByArticleId from './selectFormInitialValuesByArticleId'
 import {
   getArticleIdByMatchAndQuery,
   selectArticleById,
-  selectCurrentUserReviewPatchByArticleId,
   selectVerdictsByArticleIdAndByUserId
 } from '../../../selectors'
 
@@ -13,13 +13,13 @@ function mapStateToProps(state, ownProps) {
     ownProps.match,
     ownProps.query
   )
-  
-  const currentUserReviewPatch = selectCurrentUserReviewPatchByArticleId(state, articleId)
+
+  const formInitialValues = selectFormInitialValuesByArticleId(state, articleId)
   const currentUser = selectCurrentUser(state)
   const { id: userId } = (currentUser || {})
   return {
     article: selectArticleById(state, articleId),
-    currentUserReviewPatch,
+    formInitialValues,
     verdicts: selectVerdictsByArticleIdAndByUserId(state, articleId, userId)
   }
 }

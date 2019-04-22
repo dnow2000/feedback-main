@@ -7,18 +7,18 @@ const FormFooter = ({ canSubmit, isLoading, match, query }) => {
   const {
     params: { reviewId },
   } = match
-  const { isCreatedEntity, readOnly } = query.context()
-
+  const { isCreatedEntity, readOnly } = query.context({ id:reviewId })
   return (
     <div className="control level">
       {readOnly ? (
-        <NavLink
+        <button
           className="button is-primary"
-          id="edit-review"
-          to={`/reviews/${reviewId}?edit`}
+          id="modification-review"
+          onClick={() => query.changeToModification()}
+          type="button"
         >
-          Edit Review
-        </NavLink>
+          Modify Review
+        </button>
       ) : (
         <NavLink
           className="button is-secondary"

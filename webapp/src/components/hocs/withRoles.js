@@ -31,16 +31,14 @@ export const withRoles = (config = {
         accessRoles,
         creationRoles,
         modificationRoles,
-        history,
         query
       } = this.props
       const {
-        isModifiedEntity,
         isCreatedEntity,
-        originLocationString
+        isModifiedEntity
       } = query.context()
       const { canRenderChildren } = this.state
-
+      
       if (canRenderChildren) {
         return
       }
@@ -50,7 +48,7 @@ export const withRoles = (config = {
           this.setState({ canRenderChildren: true })
           return
         }
-        history.push(originLocationString)
+        query.changeToReadOnly()
       }
 
       if (isModifiedEntity) {
@@ -58,7 +56,7 @@ export const withRoles = (config = {
           this.setState({ canRenderChildren: true })
           return
         }
-        history.push(originLocationString)
+        query.changeToReadOnly()
       }
 
       if (!isCreatedEntity && !isModifiedEntity) {
@@ -68,7 +66,7 @@ export const withRoles = (config = {
             this.setState({ canRenderChildren: true })
             return
           }
-          history.push(originLocationString)
+          query.changeToReadOnly()
         }
 
         this.setState({ canRenderChildren: true })

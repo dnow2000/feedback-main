@@ -1,13 +1,13 @@
 import createCachedSelector from 're-reselect'
 
-import { selectCurrentUserReviewByArticleId } from './selectCurrentUserReviewByArticleId'
-import { selectCurrentUserTagsByArticleId } from './selectCurrentUserTagsByArticleId'
+import { selectCurrentUserReviewByArticleId } from '../../../selectors/selectCurrentUserReviewByArticleId'
+import { selectCurrentUserTagsByArticleId } from '../../../selectors/selectCurrentUserTagsByArticleId'
 
 function mapArgsToCacheKey(state, userId, articleId) {
   return `${userId || ''}/${articleId || ''}`
 }
 
-export const selectCurrentUserReviewPatchByArticleId = createCachedSelector(
+export const selectFormInitialValuesByArticleId = createCachedSelector(
   selectCurrentUserReviewByArticleId,
   (state, articleId) => articleId,
   selectCurrentUserTagsByArticleId,
@@ -15,13 +15,13 @@ export const selectCurrentUserReviewPatchByArticleId = createCachedSelector(
 
     const tagIds = tags && tags.map(tag => tag.id)
 
-    const currentUserReviewPatch = Object.assign({
+    const formInitialValues = Object.assign({
       articleId,
       tagIds
     }, review)
 
-    return currentUserReviewPatch
+    return formInitialValues
   }
 )(mapArgsToCacheKey)
 
-export default selectCurrentUserReviewPatchByArticleId
+export default selectFormInitialValuesByArticleId

@@ -717,6 +717,12 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
+"@babel/runtime@^7.4.3":
+  version "7.4.3"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.4.3.tgz#79888e452034223ad9609187a0ad1fe0d2ad4bdc"
+  dependencies:
+    regenerator-runtime "^0.13.2"
+
 "@babel/template@^7.1.0", "@babel/template@^7.2.2", "@babel/template@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.4.0.tgz#12474e9c077bae585c5d835a95c0b0b790c25c8b"
@@ -8647,7 +8653,7 @@ prop-types-extra@^1.1.0:
     react-is "^16.3.2"
     warning "^3.0.0"
 
-prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.4, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   dependencies:
@@ -8957,6 +8963,10 @@ react-is@^16.3.2, react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1:
   version "16.8.5"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.5.tgz#c54ac229dd66b5afe0de5acbe47647c3da692ff8"
 
+react-is@^16.8.6:
+  version "16.8.6"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.6.tgz#5bbc1e2d29141c9fbdfed456343fe2bc430a6a16"
+
 react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
@@ -8986,6 +8996,17 @@ react-redux@^5.0.3, react-redux@^5.0.7:
     prop-types "^15.6.1"
     react-is "^16.6.0"
     react-lifecycles-compat "^3.0.0"
+
+react-redux@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/react-redux/-/react-redux-7.0.2.tgz#34b280a3482aaf60e7d4a504b1295165cbe6b86a"
+  dependencies:
+    "@babel/runtime" "^7.4.3"
+    hoist-non-react-statics "^3.3.0"
+    invariant "^2.2.4"
+    loose-envify "^1.4.0"
+    prop-types "^15.7.2"
+    react-is "^16.8.6"
 
 react-router-dom@^4.0.0, react-router-dom@^4.3.1:
   version "4.3.1"
@@ -9234,7 +9255,7 @@ redux@^3.6.0:
     loose-envify "^1.1.0"
     symbol-observable "^1.0.3"
 
-redux@^4.0.0:
+redux@^4.0.0, redux@^4.0.1:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.0.1.tgz#436cae6cc40fbe4727689d7c8fae44808f1bfef5"
   dependencies:
@@ -11490,9 +11511,9 @@ with-query-router@3.0.0:
     redux "^4.0.0"
     reselect "^3.0.1"
 
-with-react-login@1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/with-react-login/-/with-react-login-1.0.2.tgz#920f90dfb54d643066605eb6d3d24d5f0452a5fc"
+with-react-login@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/with-react-login/-/with-react-login-1.1.1.tgz#9e045885b2eff3e67d5f2ac06b02e87e2fd99d9e"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"
@@ -11504,6 +11525,15 @@ with-react-login@1.0.2:
     react-router-dom "^4.3.1"
     reselect "^3.0.1"
     uuid "^3.3.2"
+
+with-react-redux-login@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.0.1.tgz#883d25e7f8451c7be0e9927c5cac3f8be6416fc4"
+  dependencies:
+    eslint "^5.8.0"
+    react-redux "^7.0.2"
+    redux "^4.0.1"
+    with-react-login "1.1.1"
 
 wordwrap@~0.0.2:
   version "0.0.3"

@@ -3,8 +3,8 @@ import createCachedSelector from 're-reselect'
 import { selectReviewById } from './selectReviewById'
 import { selectVerdictById } from './selectVerdictById'
 
-function mapArgsToCacheKey(state, match, location) {
-  return location.pathname + location.search
+function mapArgsToCacheKey(state, match, query) {
+  return `${match.params.reviewId || ''}/${match.params.verdictId || ''}/${query.parse().articleId || ''}`
 }
 
 export const getArticleIdByMatchAndQuery = createCachedSelector(

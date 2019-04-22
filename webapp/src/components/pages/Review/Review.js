@@ -60,7 +60,6 @@ class Review extends Component {
   }
 
   handleRequestFail = formResolver => (state, action) => {
-    // we return API errors back to the form
     const { payload } = action
     const nextState = { isFormLoading: false }
     const errors = parseSubmitErrors(payload.errors)
@@ -80,15 +79,13 @@ class Review extends Component {
   }
 
   onFormSubmit = formValues => {
-    const { currentUserReviewPatch, dispatch, query } = this.props
-    const { id } = currentUserReviewPatch || {}
+    const { formInitialValues, dispatch, query } = this.props
+    const { id } = formInitialValues || {}
     const { method } = query.context()
     this.setState({ isFormLoading: true })
 
     const apiPath = `/reviews/${id || ''}`
 
-    // NOTE: we need to promise the request callbacks
-    // in order to inject their payloads into the form
     const formSubmitPromise = new Promise(resolve => {
       dispatch(requestData({
         apiPath,
@@ -102,8 +99,8 @@ class Review extends Component {
   }
 
   handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
-    const { currentUserReviewPatch, history, query } = this.props
-    const { id } = currentUserReviewPatch || {}
+    const { formInitialValues, history, query } = this.props
+    const { id } = formInitialValues || {}
     const { isCreatedEntity } = query.context()
     if (isCreatedEntity && id) {
       history.push(`/reviews/${id}?modification`)
@@ -113,7 +110,7 @@ class Review extends Component {
   render() {
     const {
       article,
-      currentUserReviewPatch,
+      formInitialValues,
       query,
       verdicts
     } = this.props
@@ -144,7 +141,7 @@ class Review extends Component {
               REVIEW DETAILS
             </h2>
             <Form
-              initialValues={currentUserReviewPatch}
+              initialValues={formInitialValues}
               onSubmit={this.onFormSubmit}
               render={({
                 dirtySinceLastSubmit,
@@ -201,14 +198,14 @@ class Review extends Component {
 
 Review.defaultProps = {
   article: null,
-  currentUserReviewPatch: null,
+  formInitialValues: null,
   verdicts: null
 }
 
 Review.propTypes = {
   article: PropTypes.object,
-  currentUserReviewPatch: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
+  formInitialValues: PropTypes.object,
   history: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired,
