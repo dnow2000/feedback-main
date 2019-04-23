@@ -7,13 +7,13 @@ from sandboxes.scripts.utils.tags import ALL_TAGS
 def create_tags():
     logger.info('create_tags')
 
-    tags_by_name = {}
+    tags_by_text = {}
 
     for tag in ALL_TAGS:
-        tags_by_name[tag] = create_tag(tag)
+        tags_by_text[tag['text']] = create_tag(tag['text'], info=tag.get('info'))
 
-    Manager.check_and_save(*tags_by_name.values())
+    Manager.check_and_save(*tags_by_text.values())
 
-    logger.info('created {} tags'.format(len(tags_by_name)))
+    logger.info('created {} tags'.format(len(tags_by_text)))
 
-    return tags_by_name
+    return tags_by_text

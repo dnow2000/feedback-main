@@ -14,7 +14,7 @@ def create_scopes():
     scopes_by_name = {}
 
     for article_tag in ARTICLE_TAGS:
-        tag = Tag.query.filter_by(text=article_tag).one()
+        tag = Tag.query.filter_by(text=article_tag['text']).one()
         scopes_by_name["article {}".format(article_tag)] = create_scope(
             tag,
             scope_type="article"
@@ -22,7 +22,7 @@ def create_scopes():
         )
 
     for review_verdict_tag in REVIEW_VERDICT_TAGS:
-        tag = Tag.query.filter_by(text=review_verdict_tag).one()
+        tag = Tag.query.filter_by(text=review_verdict_tag['text']).one()
         scopes_by_name["review {}".format(review_verdict_tag)] = create_scope(
             tag,
             scope_type="review"
@@ -34,7 +34,7 @@ def create_scopes():
         )
 
     for user_tag in USER_TAGS:
-        tag = Tag.query.filter_by(text=user_tag).one()
+        tag = Tag.query.filter_by(text=user_tag['text']).one()
         scopes_by_name["review {}".format(user_tag)] = create_scope(
             tag,
             scope_type="user"

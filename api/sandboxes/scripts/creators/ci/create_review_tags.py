@@ -29,7 +29,7 @@ def create_review_tags():
         article=article,
         user=user
     ).one()
-    tag = Tag.query.filter_by(text="imprecise").one()
+    tag = Tag.query.filter_by(text="imprecise / unclear").one()
     review_tags_by_name["Daily Mail inflates disagreement / reviewer 0 / imprecise"] = create_review_tag(
         review=review,
         tag=tag
@@ -41,7 +41,7 @@ def create_review_tags():
         article=article,
         user=user
     ).one()
-    tag = Tag.query.filter_by(text="imprecise").one()
+    tag = Tag.query.filter_by(text="imprecise / unclear").one()
     review_tags_by_name["Daily Mail inflates disagreement / reviewer 1 / imprecise"] = create_review_tag(
         review=review,
         tag=tag

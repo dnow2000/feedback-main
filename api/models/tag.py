@@ -6,3 +6,5 @@ from models.manager import Manager
 
 class Tag(Manager, Model):
     text = Column(Text, unique=True)
+
+    info = Column(Text, nullable=True)

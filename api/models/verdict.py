@@ -41,7 +41,6 @@ class Verdict(Manager,
             verdictUser.user.id
             for verdictUser in self.verdictUsers
         ]
-        print('verdict_user_ids', verdict_user_ids)
         reviews = Review.query.filter(
             (Review.articleId == self.articleId) &\
             (Review.userId.in_(verdict_user_ids))
