@@ -174,22 +174,24 @@ class Review extends Component {
             />
           </section>
 
-          <section className="section">
-            <h2 className="subtitle">
-              SEE ATTACHED VERDICTS
-            </h2>
-            {
-              verdicts.map(verdict => (
-                <NavLink
-                  className="button is-secondary"
-                  key={verdict.id}
-                  to={`/verdicts/${verdict.id}`}
-                >
-                  {verdict.id}
-                </NavLink>
-              ))
-            }
-          </section>
+          {verdicts && verdicts.length > 0 && (
+            <section className="section">
+              <h2 className="subtitle">
+                SEE ATTACHED VERDICTS
+              </h2>
+              {
+                verdicts.map(verdict => (
+                  <NavLink
+                    className="button is-secondary"
+                    key={verdict.id}
+                    to={`/verdicts/${verdict.id}`}
+                  >
+                    {verdict.id}
+                  </NavLink>
+                ))
+              }
+            </section>
+          )}
         </Main>
       </Fragment>
     )

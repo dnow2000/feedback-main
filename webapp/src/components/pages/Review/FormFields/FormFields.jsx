@@ -33,7 +33,9 @@ const FormFields = ({ evaluations, query, tags }) => {
     TAGS_NAME,
     tags,
     TAGS_PLACEHOLDER,
-    'text'
+    'text',
+    'id',
+    'info'
   )
   const { readOnly } = query.context()
 
@@ -68,7 +70,7 @@ const FormFields = ({ evaluations, query, tags }) => {
           CREDIBILITY CRITERIA
         </h3>
         <h4 className="field-group-sub-title">
-          Pick all the keywords that apply
+          Pick all the keywords that apply :
         </h4>
         <RadiosField
           name={EVALUATIONS_NAME}
