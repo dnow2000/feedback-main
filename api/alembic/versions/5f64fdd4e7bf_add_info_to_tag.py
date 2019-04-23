@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('tag', sa.Column('text', sa.Text))
+    op.add_column('tag', sa.Column('info', sa.Text))
 
 
 def downgrade():
