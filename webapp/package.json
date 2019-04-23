@@ -1,6 +1,6 @@
 {
   "name": "science-feedback-webapp",
-  "version": "0.1.6",
+  "version": "1.5.3",
   "private": true,
   "dependencies": {
     "bulma": "^0.7.2",
