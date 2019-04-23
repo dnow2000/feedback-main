@@ -26,6 +26,14 @@
     color: $blue-light;
     font-weight: 400;
   }
+
+  .field-group-sub-title {
+    @extend .fs12;
+    @extend .mb8;
+
+    color: $blue-light;
+    font-weight: 400;
+  }
 }
 
 .form-footer {
@@ -140,6 +148,8 @@
 
 .textarea-field,
 .texteditor-field {
+  @extend .mb36;
+
   .field-inner {
     width: 100%;
   }
@@ -177,6 +187,19 @@
   }
 
   .field-texteditor {
+    .control-bar {
+      @extend .is-absolute;
+      @extend .r8;
+      @extend .b-54;
+      @extend .flex-columns;
+      @extend .items-center;
+      @extend .fs12;
+      @extend .mb16;
+
+      color: $blue-light;
+      font-weight: 400;
+    }
+
     .texteditor {
       &:focus {
         outline: 0;
@@ -255,7 +278,11 @@
 
 .field-errors {
   color: $red;
-  min-height: 24px;
+  // min-height: 24px;
+
+  &:empty::before {
+    content: "\200b"; // unicode zero width space character
+  }
 
   &.field-error-message + .field-error-message {
     // si on a plusieurs erreurs pour un seul champ

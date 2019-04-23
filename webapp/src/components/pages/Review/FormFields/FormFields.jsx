@@ -46,7 +46,7 @@ const FormFields = ({ evaluations, query, tags }) => {
         <h3 className="field-group-title">
           COMMENT <span className="field-asterisk">*</span>
         </h3>
-        <h4>
+        <h4 className="field-group-sub-title">
           Your overall assessment of the article in a few sentences.
           Explain why the article is of low/high credibility,
           what is incorrect, missing, misleading, inaccurate,
@@ -60,9 +60,6 @@ const FormFields = ({ evaluations, query, tags }) => {
           readOnly={readOnly}
           required
         />
-        <div>
-          (Select a piece of text to add bold, italics or a hypertext link)
-        </div>
         <div className='field-sep' />
       </div>
 
@@ -70,7 +67,7 @@ const FormFields = ({ evaluations, query, tags }) => {
         <h3 className="field-group-title">
           CREDIBILITY CRITERIA
         </h3>
-        <h4>
+        <h4 className="field-group-sub-title">
           Pick all the keywords that apply
         </h4>
         <RadiosField
