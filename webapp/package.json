@@ -19,7 +19,7 @@
     "draft-js-resizeable-plugin": "^2.0.8",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^3.3.0",
-    "fetch-normalize-data": "^1.0.0",
+    "fetch-normalize-data": "^1.1.0",
     "final-form": "^4.9.1",
     "final-form-calculate": "^1.2.1",
     "la-sass-vy": "0.0.3",

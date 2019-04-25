@@ -1,8 +1,9 @@
+import { assignData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { assignData, requestData } from 'redux-saga-data'
+import { requestData } from 'redux-saga-data'
 
 import UserItemContainer from './UserItem/UserItemContainer'
 import { TextField } from '../../../form/fields'
