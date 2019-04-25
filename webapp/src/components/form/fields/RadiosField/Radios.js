@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 class Radios extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
-      value: null
+      value: props.defaultValue
     }
   }
 

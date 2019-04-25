@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 
 class Checkboxes extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
-      values: []
+      values: props.defaultValues || []
     }
   }
 
