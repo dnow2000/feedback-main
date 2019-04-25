@@ -1,13 +1,8 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
 import Transition from 'react-transition-group/Transition'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import { selectCurrentUser } from 'with-react-login'
-
-import { selectEditorRoleByUserId } from '../../../selectors'
 
 const duration = 500;
 const defaultStyle = {
@@ -162,19 +157,4 @@ TrendingItem.propTypes = {
   trending: PropTypes.object,
 }
 
-function mapStateToProps(state) {
-  const currentUser = selectCurrentUser(state)
-  const { id: currentUserId } = currentUser || {}
-
-  const editorRole = selectEditorRoleByUserId(state, currentUserId)
-
-  const canVerdict = typeof editorRole !== 'undefined'
-
-  return {
-    canVerdict,
-  }
-}
-
-export default compose(
-  connect(mapStateToProps)
-)(TrendingItem)
+export default TrendingItem

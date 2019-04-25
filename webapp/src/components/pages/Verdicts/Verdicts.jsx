@@ -1,15 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import withQueryRouter from 'with-query-router'
 
-import VerdictItem from './VerdictItem'
-import { withRedirectToSigninWhenNotAuthenticated} from '../../hocs'
+import VerdictItemContainer from './VerdictItem/VerdictItemContainer'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
-import { selectVerdictsByArticleId } from '../../../selectors'
 import { verdictNormalizer } from '../../../utils/normalizers'
 
 class Verdicts extends Component {
@@ -57,7 +52,7 @@ class Verdicts extends Component {
           <section className="section">
             {
               verdicts.map(verdict =>
-                <VerdictItem key={verdict.id} verdict={verdict} />)
+                <VerdictItemContainer key={verdict.id} verdict={verdict} />)
             }
           </section>
         </Main>
@@ -76,19 +71,4 @@ Verdicts.propTypes = {
   verdicts: PropTypes.array
 }
 
-function mapStateToProps (state, ownProps) {
-  const { query } = ownProps
-  const queryParams = query.parse()
-  const { articleId } = queryParams
-  return {
-    verdicts: articleId
-      ? selectVerdictsByArticleId(state, articleId)
-      : state.data.verdicts
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withQueryRouter(),
-  connect(mapStateToProps)
-)(Verdicts)
+export default Verdicts

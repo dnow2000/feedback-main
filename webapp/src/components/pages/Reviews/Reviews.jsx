@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react'
-import { compose } from 'redux'
 
-import ReviewsExploration from './ReviewsExploration'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
+import ReviewsExplorationContainer from './ReviewsExploration/ReviewsExplorationContainer'
 import Main from '../../layout/Main'
 import Header from '../../layout/Header'
 
@@ -18,13 +16,10 @@ const Reviews = () => (
       </section>
 
       <section className="section hero">
-        <ReviewsExploration />
+        <ReviewsExplorationContainer />
       </section>
     </Main>
   </Fragment>
 )
 
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ accessRoleTypes: ['editor'] }),
-)(Reviews)
+export default Reviews

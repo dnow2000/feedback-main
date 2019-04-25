@@ -3,16 +3,16 @@ import { Redirect } from 'react-router-dom'
 
 import ArticleContainer from '../components/pages/Article/ArticleContainer'
 import ArticlesContainer from '../components/pages/Articles/ArticlesContainer'
-import Home from '../components/pages/Home'
+import HomeContainer from '../components/pages/Home/HomeContainer'
 import ReviewContainer from '../components/pages/Review/ReviewContainer'
-import Reviews from '../components/pages/Reviews'
+import ReviewsContainer from '../components/pages/Reviews/ReviewsContainer'
 import UserContainer from '../components/pages/User/UserContainer'
 import UsersContainer from '../components/pages/Users/UsersContainer'
 import VerdictContainer from '../components/pages/Verdict/VerdictContainer'
-import Verdicts from '../components/pages/Verdicts'
-import Signin from '../components/pages/Signin'
-import Signup from '../components/pages/Signup'
-import Trendings from '../components/pages/Trendings'
+import VerdictsContainer from '../components/pages/Verdicts/VerdictsContainer'
+import SigninContainer from '../components/pages/Signin/SigninContainer'
+import SignupContainer from '../components/pages/Signup/SignupContainer'
+import TrendingsContainer from '../components/pages/Trendings/TrendingsContainer'
 
 const routes = [
   {
@@ -35,7 +35,7 @@ const routes = [
   {
     exact: true,
     path: '/home',
-    render: () => <Home />,
+    render: () => <HomeContainer />,
     title: 'Home',
   },
   {
@@ -47,7 +47,7 @@ const routes = [
   {
     exact: true,
     path: '/reviews',
-    render: () => <Reviews />,
+    render: () => <ReviewsContainer />,
     title: 'Reviews',
   },
   {
@@ -71,25 +71,25 @@ const routes = [
   {
     exact: true,
     path: '/verdicts',
-    render: () => <Verdicts />,
+    render: () => <VerdictsContainer />,
     title: "Verdicts",
   },
   {
     exact: true,
     path: '/signin',
-    render: () => <Signin />,
+    render: () => <SigninContainer />,
     title: 'Signin',
   },
   {
     exact: true,
     path: '/signup',
-    render: () => <Signup />,
+    render: () => <SignupContainer />,
     title: 'Signup',
   },
   {
     exact: true,
     path: '/trendings',
-    render: () => <Trendings />,
+    render: () => <TrendingsContainer />,
     title: 'Trendings',
   },
 ]

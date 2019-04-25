@@ -2,17 +2,12 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
-import withQueryRouter from 'with-query-router'
 
-import TrendingItem from './TrendingItem'
+import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
 import { trendingMaxDates, trendingThemes } from './utils'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs/'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
-import { selectTrendings } from '../../../selectors'
 
 class Trendings extends Component {
   constructor (props) {
@@ -151,7 +146,7 @@ class Trendings extends Component {
               {
                 trendings.map(trending => (
                   <div className="mb16" key={trending.id}>
-                    <TrendingItem trending={trending} />
+                    <TrendingItemContainer trending={trending} />
                   </div>
                 ))
               }
@@ -174,15 +169,4 @@ Trendings.propTypes = {
   trendings: PropTypes.array
 }
 
-function mapStateToProps(state) {
-  return {
-    trendings: selectTrendings(state)
-  }
-}
-
-export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
-  withRoles({ accessRoleTypes: ['editor'] }),
-  withQueryRouter(),
-  connect(mapStateToProps)
-)(Trendings)
+export default Trendings

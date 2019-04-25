@@ -2,15 +2,11 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { Form } from 'react-final-form'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { assignData, requestData } from 'redux-saga-data'
-import withQueryRouter from 'with-query-router'
 
-import ReviewItem from './ReviewItem'
-import { TextField } from '../../form/fields'
-import { selectReviewsByArticleId } from '../../../selectors'
-import { itemReviewNormalizer } from '../../../utils/normalizers'
+import ReviewItemContainer from './ReviewItem/ReviewItemContainer'
+import { TextField } from '../../../form/fields'
+import { itemReviewNormalizer } from '../../../../utils/normalizers'
 
 function getScrollParent () {
   return document.querySelector('.modal-dialog')
@@ -136,7 +132,7 @@ class ReviewsExploration extends Component {
           {
             reviews.map(review => (
               <div className="mb16" key={review.id}>
-                <ReviewItem review={review} />
+                <ReviewItemContainer review={review} />
               </div>
             ))
           }
@@ -161,16 +157,4 @@ ReviewsExploration.propTypes = {
   reviews: PropTypes.array,
 }
 
-function mapStateToProps(state, ownProps) {
-  const { query } = ownProps
-  const queryParams = query.parse()
-  const { articleId } = queryParams
-  return {
-    reviews: selectReviewsByArticleId(state, articleId),
-  }
-}
-
-export default compose(
-  withQueryRouter(),
-  connect(mapStateToProps)
-)(ReviewsExploration)
+export default ReviewsExploration

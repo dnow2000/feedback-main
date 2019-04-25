@@ -1,13 +1,11 @@
 import classnames from "classnames"
 import React, { Fragment } from "react"
-import { connect } from "react-redux"
-import { compose } from "redux"
 
-import { Icon } from '../layout/Icon'
-import Header from '../layout/Header'
-import Main from "../layout/Main"
-import Stream from "../layout/Stream"
-import { ROOT_PATH } from "../../utils/config"
+import { Icon } from '../../layout/Icon'
+import Header from '../../layout/Header'
+import Main from "../../layout/Main"
+import Stream from "../../layout/Stream"
+import { ROOT_PATH } from "../../../utils/config"
 
 const sectionClassName = "section fullheight flex-center items-center is-index-middle is-relative"
 const titleClassName = "title has-text-grey has-text-weight-normal is-size-1"
@@ -156,10 +154,4 @@ const Home = () => (
   </Fragment>
 )
 
-function mapStateToProps(state) {
-  return { reviews: state.data.reviews }
-}
-
-export default compose(
-  connect(mapStateToProps)
-)(Home)
+export default Home

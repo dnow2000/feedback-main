@@ -1,17 +1,11 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
 
-import Avatar from '../../layout/Avatar'
-import Extract from '../../layout/Extract'
-import Rating from '../../layout/Rating'
-import Tag from '../../layout/Tag'
-import {
-  selectArticleById,
-  selectEvaluationById,
-  selectTagsByReviewId,
-  selectUserById,
-} from '../../../selectors'
+import Avatar from '../../../../layout/Avatar'
+import Extract from '../../../../layout/Extract'
+import Rating from '../../../../layout/Rating'
+import Tag from '../../../../layout/Tag'
+
 
 const ReviewItem = ({ review, tags, user }) => {
   const { comment, id, rating } = review
@@ -69,16 +63,4 @@ ReviewItem.propTypes = {
   user: PropTypes.object,
 }
 
-function mapStateToProps(state, ownProps) {
-  const { review } =  ownProps
-  const { articleId, id, evaluationId, userId } = review
-
-  return {
-    article: selectArticleById(state, articleId),
-    evaluation: selectEvaluationById(state, evaluationId),
-    tags: selectTagsByReviewId(state, id),
-    user: selectUserById(state, userId),
-  }
-}
-
-export default connect(mapStateToProps)(ReviewItem)
+export default ReviewItem

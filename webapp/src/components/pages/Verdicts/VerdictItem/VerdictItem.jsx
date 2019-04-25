@@ -1,15 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import Dotdotdot from 'react-dotdotdot'
-import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
-import ReviewItem from '../Reviews/ReviewItem'
-import {
-  selectArticleById,
-  selectReviewsByArticleIdAndVerdictId,
-  selectUserById,
-} from '../../../selectors'
+import ReviewItemContainer from '../../Reviews/ReviewsExploration/ReviewItem/ReviewItemContainer'
 
 const VerdictItem = ({ article, verdict, reviews, user }) => {
   const { title, url } = article || {}
@@ -50,7 +44,7 @@ Reviews
             </p>
             {reviews.map(review => (
               <div className="box" key={review.id}>
-                <ReviewItem review={review} />
+                <ReviewItemContainer review={review} />
               </div>
             ))}
           </div>
@@ -91,18 +85,4 @@ VerdictItem.propTypes = {
   verdict: PropTypes.object,
 }
 
-function mapStateToProps(state, ownProps) {
-  const { verdict } = ownProps
-  const { articleId, id, userId } = verdict || {}
-  return {
-    article: selectArticleById(state, articleId),
-    reviews: selectReviewsByArticleIdAndVerdictId(
-      state,
-      articleId,
-      id
-    ),
-    user: selectUserById(state, userId),
-  }
-}
-
-export default connect(mapStateToProps)(VerdictItem)
+export default VerdictItem

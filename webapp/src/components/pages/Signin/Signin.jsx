@@ -2,14 +2,10 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
-import { connect } from 'react-redux'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
-import withQueryRouter from 'with-query-router'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
-import { withRedirectToArticlesWhenAlreadyAuthenticated } from '../../hocs'
 import Header from '../../layout/Header'
 import Main from '../../layout/Main'
 
@@ -114,8 +110,4 @@ Signin.propTypes = {
   query: PropTypes.object.isRequired
 }
 
-export default compose(
-  withRedirectToArticlesWhenAlreadyAuthenticated,
-  withQueryRouter(),
-  connect()
-)(Signin)
+export default Signin
