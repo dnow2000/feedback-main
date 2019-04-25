@@ -1,4 +1,4 @@
-import { selectCurrentUser } from 'with-react-login'
+import { selectCurrentUser } from 'with-react-redux-login'
 
 import {
   selectCurrentUserReviewByArticleId,

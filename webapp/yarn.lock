@@ -4417,7 +4417,7 @@ fbjs@^0.8.15:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetch-normalize-data@1.1.0, fetch-normalize-data@^1.0.0:
+fetch-normalize-data@1.1.0, fetch-normalize-data@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.1.0.tgz#25c6e1689f422052c71733295910bafc3c3a990a"
   dependencies:
@@ -11556,9 +11556,9 @@ with-react-login@1.1.1:
     reselect "^3.0.1"
     uuid "^3.3.2"
 
-with-react-redux-login@1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.2.0.tgz#955dafa6476f17679c12b9a1ac286ab974f08e6a"
+with-react-redux-login@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.2.2.tgz#71edf22d87395fb0f2c897f04b097feb96821354"
   dependencies:
     eslint "^5.8.0"
     react-redux "^5.0.3"

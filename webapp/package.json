@@ -58,7 +58,7 @@
     "testcafe": "1.1.2",
     "whatwg-fetch": "2.0.3",
     "with-query-router": "3.0.0",
-    "with-react-redux-login": "1.2.0"
+    "with-react-redux-login": "1.2.2"
   },
   "devDependencies": {
     "node-sass": "^4.9.4",

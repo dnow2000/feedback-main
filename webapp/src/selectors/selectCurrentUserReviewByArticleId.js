@@ -1,5 +1,5 @@
 import createCachedSelector from 're-reselect'
-import { selectCurrentUser } from 'with-react-login'
+import { selectCurrentUser } from 'with-react-redux-login'
 
 function mapArgsToCacheKey(state, userId, articleId) {
   return `${userId || ''}/${articleId || ''}`

@@ -4,7 +4,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink, withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import { selectCurrentUser } from 'with-react-login'
+import { selectCurrentUser } from 'with-react-redux-login'
 
 import SignoutButton from './SignoutButton'
 import { closeNavigation } from '../../reducers/navigation'
