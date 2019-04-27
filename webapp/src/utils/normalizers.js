@@ -34,12 +34,14 @@ export const articleNormalizer = {
 
 export const itemReviewNormalizer = {
   evaluation: 'evaluations',
+  /*
   reviewTags: {
     normalizer: {
       tag: 'tags'
     },
     stateKey: 'reviewTags'
   },
+  */
   user: userNormalizer,
 }
 

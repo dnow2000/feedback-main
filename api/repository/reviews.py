@@ -5,7 +5,7 @@ from models.review import Review
 from models.review_tag import ReviewTag
 from models.tag import Tag
 from models.user import User
-from utils.human_ids import dehumanize
+from utils.human_ids import dehumanize, humanize
 
 review_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     Review,
@@ -13,10 +13,16 @@ review_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     User
 )
 
-def save_tags(review, tag_ids):
+def save_tags(review, humanized_tag_ids):
+    tag_ids = [dehumanize(humanized_tag_id) for humanized_tag_id in humanized_tag_ids]
+
+    for reviewTag in review.reviewTags:
+        if reviewTag.tag.id not in tag_ids:
+            Manager.delete(reviewTag)
+
     review_tags = []
     for tag_id in tag_ids:
-        tag = Tag.query.get(dehumanize(tag_id))
+        tag = Tag.query.get(tag_id)
         review_tag = ReviewTag.query.filter_by(tag=tag, review=review).first()
         if review_tag is None:
             review_tag = ReviewTag()
