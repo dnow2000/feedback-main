@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-saga-data'
 
-import Avatar from '../../../../layout/Avatar'
+import AvatarContainer from '../../../../layout/Avatar/AvatarContainer'
 
 class UserItem extends Component {
 
@@ -39,7 +39,7 @@ class UserItem extends Component {
               className="anchor flex-columns items-center mr12"
               href={`/users/${id}`}
             >
-              <Avatar user={user} />
+              <AvatarContainer user={user} />
               <div className="mb4 text-left">
                 {publicName}
               </div>

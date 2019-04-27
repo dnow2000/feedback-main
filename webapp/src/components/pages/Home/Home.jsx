@@ -2,8 +2,8 @@ import classnames from "classnames"
 import React, { Fragment } from "react"
 
 import { Icon } from '../../layout/Icon'
-import Header from '../../layout/Header'
-import Main from "../../layout/Main"
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import Stream from "../../layout/Stream"
 import { ROOT_PATH } from "../../../utils/config"
 
@@ -14,8 +14,8 @@ const bubbleClassName = "bubble is-absolute is-index-bottom"
 
 const Home = () => (
   <Fragment>
-    <Header />
-    <Main name="home">
+    <HeaderContainer />
+    <MainContainer name="home">
       <section className={sectionClassName}>
         <div className="col-1of2">
           <p className={titleClassName}>
@@ -150,7 +150,7 @@ const Home = () => (
         </div>
       </section>
 
-    </Main>
+    </MainContainer>
   </Fragment>
 )
 

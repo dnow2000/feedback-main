@@ -6,8 +6,8 @@ import { requestData } from 'redux-saga-data'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 
 class Signin extends Component {
   constructor(props) {
@@ -63,8 +63,8 @@ class Signin extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="sign-in">
+        <HeaderContainer />
+        <MainContainer name="sign-in">
           <section className="section fullheight flex-center items-center">
             <Form
               onSubmit={this.onFormSubmit}
@@ -98,7 +98,7 @@ class Signin extends Component {
               }}
             />
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

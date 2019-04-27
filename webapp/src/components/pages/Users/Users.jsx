@@ -1,17 +1,17 @@
 import React, { Fragment } from 'react'
 
 import UsersExplorationContainer from './UsersExploration/UsersExplorationContainer'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 
 const Users = () => (
   <Fragment>
-    <Header />
-    <Main name="users">
+    <HeaderContainer />
+    <MainContainer name="users">
       <section>
         <UsersExplorationContainer />
       </section>
-    </Main>
+    </MainContainer>
   </Fragment>
 )
 

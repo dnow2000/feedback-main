@@ -7,9 +7,8 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { requestData } from 'redux-saga-data'
 
 import ArticleItemContainer from './ArticleItem/ArticleItemContainer'
-
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import { TextField } from '../../form/fields'
 import { articleNormalizer } from '../../../utils/normalizers'
 
@@ -113,8 +112,8 @@ class Articles extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="articles">
+        <HeaderContainer />
+        <MainContainer name="articles">
           <section className="section hero is-relative">
             <h1 className="title">
               Articles
@@ -188,7 +187,7 @@ class Articles extends Component {
               }
             </LoadingInfiniteScroll>
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

@@ -9,8 +9,8 @@ import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import FormFooterContainer from './FormFooter/FormFooterContainer'
 import Footer from '../../layout/Footer'
 import { Icon } from '../../layout/Icon'
-import Main from '../../layout/Main'
-import Header from '../../layout/Header'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import { scrapDecorator } from '../../form/decorators'
 import { articleNormalizer } from '../../../utils/normalizers'
 
@@ -91,8 +91,8 @@ class Article extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="article">
+        <HeaderContainer />
+        <MainContainer name="article">
           <section className="section hero is-relative">
             <h1 className="title">
               {isCreatedEntity ? 'New Article' : 'Article'}
@@ -168,7 +168,7 @@ class Article extends Component {
               }}
             />
           </section>
-        </Main>
+        </MainContainer>
         <Footer />
       </Fragment>
     )

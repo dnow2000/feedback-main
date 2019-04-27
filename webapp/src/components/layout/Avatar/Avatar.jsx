@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
-import { selectCurrentUser } from 'with-react-redux-login'
 
-import { Icon } from './Icon'
-import { THUMBS_URL } from '../../utils/config'
+import { Icon } from '../Icon'
+import { THUMBS_URL } from '../../../utils/config'
 
 const Avatar = ({ className, user, whiteHeader }) => {
   if (user) {
@@ -33,10 +31,4 @@ Avatar.propTypes = {
   whiteHeader: PropTypes.bool,
 }
 
-function mapStateToProps(state, ownProps) {
-  return {
-    user: ownProps.user || selectCurrentUser(state),
-  }
-}
-
-export default connect(mapStateToProps)(Avatar)
+export default Avatar

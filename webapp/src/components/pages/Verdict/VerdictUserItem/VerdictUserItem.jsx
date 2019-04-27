@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
-import Avatar from '../../../layout/Avatar'
+import AvatarContainer from '../../../layout/Avatar/AvatarContainer'
 
 class VerdictUserItem extends Component {
 
@@ -64,7 +64,7 @@ class VerdictUserItem extends Component {
         <div className="content p24">
           <div className="flex-columns items-center">
             <div className="col-25 mr12">
-              <Avatar user={user} />
+              <AvatarContainer user={user} />
             </div>
             <div className="center">
               <div className="mb4 text-left">

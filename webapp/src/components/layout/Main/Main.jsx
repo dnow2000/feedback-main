@@ -1,7 +1,5 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { Modal } from 'redux-react-modals'
 
 const Main = ({ children, name, Tag }) => (
@@ -21,4 +19,4 @@ Main.propTypes = {
   name: PropTypes.string.isRequired,
 }
 
-export default compose(withRouter)(Main)
+export default Main

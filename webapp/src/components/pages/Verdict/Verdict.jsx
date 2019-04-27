@@ -9,8 +9,8 @@ import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import { articleNormalizer, verdictNormalizer } from '../../../utils/normalizers'
 
 class Verdict extends Component {
@@ -119,8 +119,8 @@ class Verdict extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="verdict">
+        <HeaderContainer />
+        <MainContainer name="verdict">
           <section className="section hero">
             <h1 className="title">
               {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
@@ -190,7 +190,7 @@ class Verdict extends Component {
               }}
             />
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

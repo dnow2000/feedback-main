@@ -1,14 +1,10 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
-import { selectCurrentUser } from 'with-react-redux-login'
+import { NavLink } from 'react-router-dom'
 
-import SignoutButton from './SignoutButton'
-import { closeNavigation } from '../../reducers/navigation'
-import { selectCurrentRolesByTypes } from '../../selectors'
+import SignoutButtonContainer from '../SignoutButton/SignoutButtonContainer'
+import { closeNavigation } from '../../../reducers/navigation'
 
 const links = [
   {
@@ -90,13 +86,13 @@ const Navigation = ({ currentRoles, dispatch, isActive, location, currentUser })
             )))}
         {currentUser && (
           <div className="item">
-            <SignoutButton
+            <SignoutButtonContainer
               className="block py12 link"
               handleSuccessRedirect={() => '/signin'}
               Tag="a"
             >
-            Logout
-            </SignoutButton>
+              Logout
+            </SignoutButtonContainer>
           </div>
         )}
       </div>
@@ -118,15 +114,4 @@ Navigation.propTypes = {
   location: PropTypes.object.isRequired,
 }
 
-function mapStateToProps(state) {
-  return {
-    currentRoles: selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']),
-    currentUser: selectCurrentUser(state),
-    isActive: state.navigation.isActive,
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(Navigation)
+export default Navigation

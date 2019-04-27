@@ -1,12 +1,11 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 
 import { closeNavigation,
   showNavigation
-} from '../../reducers/navigation'
+} from '../../../reducers/navigation'
 
 const Hamburger = ({
   className,
@@ -49,10 +48,4 @@ Hamburger.propTypes = {
   isNavigationActive: PropTypes.bool
 }
 
-function mapStateToProps (state) {
-  return {
-    isNavigationActive: state.navigation.isActive
-  }
-}
-
-export default connect(mapStateToProps)(Hamburger)
+export default Hamburger

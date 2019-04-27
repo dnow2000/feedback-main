@@ -8,8 +8,8 @@ import { requestData } from 'redux-saga-data'
 import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import { articleNormalizer, reviewNormalizer } from '../../../utils/normalizers'
 
 class Review extends Component {
@@ -119,8 +119,8 @@ class Review extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="review">
+        <HeaderContainer />
+        <MainContainer name="review">
           <section className="section hero">
             <h1 className="title">
               {isCreatedEntity ? 'Write your review' : 'See the review'}
@@ -192,7 +192,7 @@ class Review extends Component {
               }
             </section>
           )}
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

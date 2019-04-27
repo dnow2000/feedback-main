@@ -10,8 +10,8 @@ import { requestData } from 'redux-saga-data'
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
 import { withRedirectToArticlesWhenAlreadyAuthenticated } from '../../hocs'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 
 class Signup extends Component {
   constructor(props) {
@@ -64,8 +64,8 @@ class Signup extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="sign-in">
+        <HeaderContainer />
+        <MainContainer name="sign-in">
           <section className="section fullheight flex-center items-center">
             <Form
               onSubmit={this.onFormSubmit}
@@ -99,7 +99,7 @@ class Signup extends Component {
               }}
             />
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

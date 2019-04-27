@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react'
 import { requestData } from 'redux-saga-data'
 
 import RolesManagerContainer from './RolesManager/RolesManagerContainer'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import UserItemContainer from '../Users/UsersExploration/UserItem/UserItemContainer'
 import { userNormalizer } from '../../../utils/normalizers'
 
@@ -27,8 +27,8 @@ class User extends Component {
     const { user } = this.props
     return (
       <Fragment>
-        <Header />
-        <Main name="review">
+        <HeaderContainer />
+        <MainContainer name="review">
           <section className="section hero">
             <h1 className="title">
               Profile
@@ -40,7 +40,7 @@ class User extends Component {
           <section>
             <RolesManagerContainer />
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

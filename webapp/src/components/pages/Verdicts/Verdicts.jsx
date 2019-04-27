@@ -3,8 +3,8 @@ import React, { Component, Fragment } from 'react'
 import { requestData } from 'redux-saga-data'
 
 import VerdictItemContainer from './VerdictItem/VerdictItemContainer'
-import Main from '../../layout/Main'
-import Header from '../../layout/Header'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 import { verdictNormalizer } from '../../../utils/normalizers'
 
 class Verdicts extends Component {
@@ -41,8 +41,8 @@ class Verdicts extends Component {
     } = this.props
     return (
       <Fragment>
-        <Header />
-        <Main name='home'>
+        <HeaderContainer />
+        <MainContainer name='home'>
           <section className='section hero'>
             <h1 className='main-title'>
               VERDICTS
@@ -55,7 +55,7 @@ class Verdicts extends Component {
                 <VerdictItemContainer key={verdict.id} verdict={verdict} />)
             }
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

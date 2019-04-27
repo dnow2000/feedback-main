@@ -1,14 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
-import { connect } from 'react-redux'
-import { NavLink, withRouter } from 'react-router-dom'
-import { compose } from 'redux'
-import { selectCurrentUser } from 'with-react-redux-login'
+import { NavLink } from 'react-router-dom'
 
-import Avatar from './Avatar'
-import Hamburger from './Hamburger'
-import Logo from './Logo'
-import Navigation from './Navigation'
+import AvatarContainer from '../Avatar/AvatarContainer'
+import HamburgerContainer from '../Hamburger/HamburgerContainer'
+import Logo from '../Logo'
+import NavigationContainer from '../Navigation/NavigationContainer'
 
 const signPathnames = ['/signin', '/signup']
 
@@ -21,10 +18,10 @@ const Header = ({ currentUser, location, whiteHeader }) => {
         <div className="mr12">
           <Logo />
         </div>
-        <Avatar whiteHeader={whiteHeader} />
+        <AvatarContainer whiteHeader={whiteHeader} />
         <div className="flex-auto" />
         {currentUser && !isSignPathname ? (
-          <Hamburger />
+          <HamburgerContainer />
         ) : (
           !isSignPathname && (
             <NavLink className="button is-primary" to="/signin">
@@ -33,7 +30,7 @@ const Header = ({ currentUser, location, whiteHeader }) => {
           )
         )}
       </header>
-      <Navigation />
+      <NavigationContainer />
     </Fragment>
   )
 }
@@ -49,13 +46,4 @@ Header.propTypes = {
   whiteHeader: PropTypes.bool,
 }
 
-function mapStateToProps(state) {
-  return {
-    currentUser: selectCurrentUser(state),
-  }
-}
-
-export default compose(
-  withRouter,
-  connect(mapStateToProps)
-)(Header)
+export default Header

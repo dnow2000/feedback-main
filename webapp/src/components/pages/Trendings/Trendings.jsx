@@ -7,8 +7,8 @@ import { requestData } from 'redux-saga-data'
 
 import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
 import { trendingMaxDates, trendingThemes } from './utils'
-import Header from '../../layout/Header'
-import Main from '../../layout/Main'
+import HeaderContainer from '../../layout/Header/HeaderContainer'
+import MainContainer from '../../layout/Main/MainContainer'
 
 class Trendings extends Component {
   constructor (props) {
@@ -96,8 +96,8 @@ class Trendings extends Component {
 
     return (
       <Fragment>
-        <Header />
-        <Main name="trendings">
+        <HeaderContainer />
+        <MainContainer name="trendings">
           <section className="section hero">
             <h1 className="title">
               Trendings
@@ -153,7 +153,7 @@ class Trendings extends Component {
               }
             </LoadingInfiniteScroll>
           </section>
-        </Main>
+        </MainContainer>
       </Fragment>
     )
   }

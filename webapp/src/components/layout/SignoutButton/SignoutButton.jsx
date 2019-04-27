@@ -1,11 +1,10 @@
+import { resetData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { closeModal } from 'redux-react-modals'
-import { requestData, resetData } from 'redux-saga-data'
+import { requestData } from 'redux-saga-data'
 
+import { closeNavigation } from '../../../reducers/navigation'
 
 class SignoutButton extends Component {
 
@@ -30,6 +29,7 @@ class SignoutButton extends Component {
       history,
       noResetData
     } = this.props
+
     if (handleSuccess) {
       handleSuccess(this.props)
       return
@@ -38,6 +38,8 @@ class SignoutButton extends Component {
     if (!noResetData) {
       dispatch(resetData())
     }
+
+    dispatch(closeNavigation())
 
     const redirect = handleSuccessRedirect && handleSuccessRedirect()
     if (redirect) {
@@ -93,4 +95,4 @@ SignoutButton.propTypes = {
   noResetData: PropTypes.bool
 }
 
-export default compose(withRouter, connect())(SignoutButton)
+export default SignoutButton
