@@ -102,11 +102,11 @@ export class TexteditorField extends Component {
                   >
                     <Texteditor
                       className="field-texteditor"
-                      initialRawString={input.value}
                       maxLength={maxLength}
                       onChange={this.onChange(input)}
                       placeholder={readOnly ? '' : placeholder}
                       readOnly={readOnly}
+                      value={input.value}
                     />
                   </div>
                 </span>

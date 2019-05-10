@@ -33,44 +33,46 @@ export const SelectField = ({
     <Field
       name={name}
       validate={composeValidators(validate, requiredValidate)}
-      render={({ input, meta }) => (
-        <div className={classnames(className || "field select-field", { readonly: readOnly })}>
-          <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
-            {label && (
-              <span>
-                <span>{label}</span>
-                {required && !readOnly && <span className="field-asterisk">*</span>}
-              </span>
-            )}
-          </label>
-          <div className="field-control">
-            <div className="field-value flex-columns items-center">
-              <div className="field-inner">
-                <select
-                  {...input}
-                  className="field-select is-block"
-                  disabled={disabled || readOnly}
-                  id={name}
-                  placeholder={placeholder}
-                  readOnly={readOnly}
-                  required={!!required} // cast to boolean
-                >
-                  {options.filter(o => o).map(option => (
-                    <option
-                      id={option.value}
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+      render={({ input, meta }) => {
+        return (
+          <div className={classnames(className || "field select-field", { readonly: readOnly })}>
+            <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
+              {label && (
+                <span>
+                  <span>{label}</span>
+                  {required && !readOnly && <span className="field-asterisk">*</span>}
+                </span>
+              )}
+            </label>
+            <div className="field-control">
+              <div className="field-value flex-columns items-center">
+                <div className="field-inner">
+                  <select
+                    {...input}
+                    className="field-select is-block"
+                    disabled={disabled || readOnly}
+                    id={name}
+                    placeholder={placeholder}
+                    readOnly={readOnly}
+                    required={!!required}
+                  >
+                    {options.filter(o => o).map(option => (
+                      <option
+                        id={option.value}
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
             </div>
+            <FieldError meta={meta} />
           </div>
-          <FieldError meta={meta} />
-        </div>
-      )}
+        )}
+      }
     />
   )
 }

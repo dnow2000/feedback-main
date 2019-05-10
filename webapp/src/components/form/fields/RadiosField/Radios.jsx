@@ -6,34 +6,31 @@ class Radios extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      value: props.defaultValue
+      value: props.value || props.defaultValue
     }
   }
 
   componentDidUpdate (prevProps) {
-    const { defaultValue } = this.props
-    if (!prevProps.defaultValue && defaultValue) {
-      this.resetState()
+    const { value } = this.props
+    const hasValueChanged = prevProps.value !== value
+    if (hasValueChanged) {
+      this.handleSetValue(value)
     }
+  }
+
+  handleSetValue = (value, callback) => {
+    this.setState({ value }, callback)
   }
 
   onRadioClick = event => {
     const { onChange } = this.props
     const { target: { value } } = event
 
-    this.setState(
-      { value },
-      () => {
-        if (onChange) {
-          onChange(value)
-        }
+    this.handleSetValue(value, () => {
+      if (onChange) {
+        onChange(value)
       }
-    )
-  }
-
-  resetState = () => {
-    const { defaultValue } = this.props
-    this.setState({ value: defaultValue })
+    })
   }
 
   render () {
@@ -41,7 +38,8 @@ class Radios extends Component {
       className,
       disabled,
       options,
-      readOnly
+      readOnly,
+      ...inputProps
     } = this.props
     const { value: stateValue } = this.state
 
@@ -59,13 +57,15 @@ class Radios extends Component {
               title={title}
             >
               <input
+                {...inputProps}
                 checked={checked}
                 className="mr8"
+                defaultValue={undefined}
                 disabled={disabled || readOnly}
-                onChange={this.onRadioClick}
                 readOnly={readOnly}
                 type="radio"
                 value={value}
+                onChange={this.onRadioClick}
               />
               <span>
                 {label}
@@ -80,10 +80,11 @@ class Radios extends Component {
 
 Radios.defaultProps = {
   className: null,
-  defaultValue: null,
+  defaultValue: undefined,
   disabled: false,
   onChange: null,
   readOnly: false,
+  value: null
 }
 
 Radios.propTypes = {
@@ -93,6 +94,7 @@ Radios.propTypes = {
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   readOnly: PropTypes.bool,
+  value: PropTypes.oneOf(PropTypes.string, PropTypes.number)
 }
 
 export default Radios

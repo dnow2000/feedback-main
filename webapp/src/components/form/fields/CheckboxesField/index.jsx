@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 import { Field } from 'react-final-form'
 
 import Checkboxes from './Checkboxes'
@@ -8,52 +8,42 @@ import { FieldError } from '../../layout'
 
 const defaultValues = []
 
-export class CheckboxesField extends Component {
-  onChange = input => nextCheckboxesState => {
-    if (input && input.onChange) {
-      input.onChange(nextCheckboxesState)
-    }
-  }
-
-  render () {
-    const {
-      className,
-      disabled,
-      name,
-      options,
-      readOnly
-    } = this.props
-    return (
-      <Field
-        name={name}
-        render={({ input, meta }) => (
-          <div
-            className={classnames(
-              className || "field checkboxes-field",
-              { readonly: readOnly })
-            }
-          >
-            <div className="field-control">
-              <div className="field-inner">
-                <Checkboxes
-                  className="field-checkboxes"
-                  defaultValues={input.value || defaultValues}
-                  disabled={disabled}
-                  input={input}
-                  onChange={this.onChange(input)}
-                  options={options}
-                  readOnly={readOnly}
-                />
-              </div>
-            </div>
-            <FieldError meta={meta} />
+export const CheckboxesField = ({
+  className,
+  disabled,
+  name,
+  options,
+  readOnly,
+  ...inputProps
+}) => (
+  <Field
+    name={name}
+    render={({ input, meta }) => (
+      <div
+        className={classnames(
+          className || "field checkboxes-field",
+          { readonly: readOnly })
+        }
+      >
+        <div className="field-control">
+          <div className="field-inner">
+            <Checkboxes
+              {...inputProps}
+              className="field-checkboxes"
+              disabled={disabled}
+              input={input}
+              options={options}
+              readOnly={readOnly}
+              {...input}
+            />
           </div>
-        )
-      }
-      />
+        </div>
+        <FieldError meta={meta} />
+      </div>
     )
   }
-}
+  />
+)
 
 CheckboxesField.defaultProps = {
   className: null,

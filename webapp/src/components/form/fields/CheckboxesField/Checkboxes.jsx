@@ -6,18 +6,20 @@ class Checkboxes extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      values: props.defaultValues || []
+      values: props.value || props.defaultValue || []
     }
   }
 
   componentDidUpdate (prevProps) {
-    const { defaultValues } = this.props
-    if (
-      (!prevProps.defaultValues || !prevProps.defaultValues.length) &&
-      (defaultValues && defaultValues.length)
-    ) {
-      this.resetState()
+    const { value } = this.props
+    const hasValueChanged = prevProps.value !== value
+    if (hasValueChanged) {
+      this.handleSetValue(value)
     }
+  }
+
+  handleSetValue = (value, callback) => {
+    this.setState({ values: value }, callback)
   }
 
   onCheckboxClick = value => () => {
@@ -31,19 +33,11 @@ class Checkboxes extends Component {
       nextValues = nextValues.concat([value])
     }
 
-    this.setState(
-      { values: nextValues },
-      () => {
-        if (onChange) {
-          onChange(nextValues)
-        }
+    this.handleSetValue(nextValues, () => {
+      if (onChange) {
+        onChange(nextValues)
       }
-    )
-  }
-
-  resetState = () => {
-    const { defaultValues } = this.props
-    this.setState({ values: defaultValues })
+    })
   }
 
   render () {
@@ -84,19 +78,21 @@ class Checkboxes extends Component {
 
 Checkboxes.defaultProps = {
   className: null,
-  defaultValues: null,
+  defaultValue: undefined,
   disabled: false,
   onChange: null,
   readOnly: false,
+  value: []
 }
 
 Checkboxes.propTypes = {
   className: PropTypes.string,
-  defaultValues: PropTypes.array,
+  defaultValue: PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.number)),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   readOnly: PropTypes.bool,
+  value: PropTypes.oneOf(PropTypes.string, PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.number)))
 }
 
 export default Checkboxes

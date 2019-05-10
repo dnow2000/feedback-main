@@ -20,22 +20,47 @@ import ImageDropzone from './ImageDropzone'
 export class TextEditor extends Component {
   constructor (props) {
     super(props)
-    const { initialRawString } = props
+    const { value } = props
 
-    const editorState = initialRawString
+    const editorState = value
       ? EditorState.createWithContent(
-          convertFromRaw(JSON.parse(initialRawString))
+          convertFromRaw(JSON.parse(value))
         )
       : EditorState.createEmpty()
 
-    this.state = { editorState }
+    this.state = {
+      editorState,
+      initialValue: value
+    }
   }
 
   componentDidUpdate (prevProps) {
-    const { initialRawString } = this.props
-    if (!prevProps.initialRawString && initialRawString) {
-      this.shouldResetEditorFromInitialRawString()
+    const { value } = this.props
+    const { initialValue } = this.state
+
+    if (!prevProps.value && value) {
+      this.handleResetEditorState(value)
+      this.handleSetInitialValue(value)
+      return
     }
+
+    const shouldResetInitialValue =
+      (prevProps.value !== initialValue) &&
+      (value === initialValue)
+    if (shouldResetInitialValue) {
+      this.handleResetEditorState(value)
+    }
+  }
+
+  handleResetEditorState = rawString => {
+    const raw = JSON.parse(rawString)
+    const contentState = convertFromRaw(raw)
+    const nextEditorState = EditorState.createWithContent(contentState)
+    this.onChange(nextEditorState)
+  }
+
+  handleSetInitialValue = initialValue => {
+    this.setState({ initialValue })
   }
 
   onChange = editorState => {
@@ -67,22 +92,6 @@ export class TextEditor extends Component {
     }
 
     return false
-  }
-
-  shouldResetEditorFromInitialRawString = () => {
-    const { initialRawString } = this.props
-    const { editorState } = this.state
-    const initialRaw = JSON.parse(initialRawString)
-    const initialFirstBlock = initialRaw.blocks[0]
-    const initialFirstBlockKey = initialFirstBlock.key
-    const initialContentState = convertFromRaw(initialRaw)
-    const initialEditorState = EditorState.createWithContent(initialContentState)
-    const currentState = editorState.getCurrentContent()
-    const currentMatchingBlockWithInitial = currentState.getBlockForKey(initialFirstBlockKey)
-    const isRawFromDifferentInitialRaw = typeof currentMatchingBlockWithInitial === "undefined"
-    if (isRawFromDifferentInitialRaw) {
-      this.onChange(initialEditorState)
-    }
   }
 
   onEditorClick = () => {
@@ -161,7 +170,8 @@ TextEditor.defaultProps = {
   maxLength: null,
   onChange: null,
   placeholder: null,
-  readOnly: true
+  readOnly: true,
+  value: null
 }
 
 TextEditor.propTypes = {
@@ -170,7 +180,8 @@ TextEditor.propTypes = {
   maxLength: PropTypes.number,
   onChange: PropTypes.func,
   placeholder: PropTypes.string,
-  readOnly: PropTypes.bool
+  readOnly: PropTypes.bool,
+  value: PropTypes.string,
 }
 
 export default TextEditor
