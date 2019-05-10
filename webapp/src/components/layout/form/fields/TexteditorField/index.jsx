@@ -64,7 +64,7 @@ export class TexteditorField extends Component {
     return (
       <Field
         name={name}
-        validate={composeValidators(validate, getRequiredValidate)}
+        validate={composeValidators(validate, getRequiredValidate(required))}
         render={({ input, meta }) => (
           <div className={classnames("field texteditor-field", className, { readonly: readOnly })}>
             <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
