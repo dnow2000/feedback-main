@@ -1,4 +1,4 @@
-import { isPassword } from '../strings'
+import { isPassword } from 'react-final-form-utils'
 
 export const createValidatePasswordField = error => value => {
   if (isPassword(value)) return undefined

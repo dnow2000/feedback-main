@@ -9,7 +9,7 @@ import {
 } from '../../../layout/form/fields'
 import {
   selectOptionsFromNameAndEntitiesAndPlaceholder,
-} from '../../../form/utils'
+} from '../../../layout/form/utils'
 
 const SELECT_EVALUATIONS_NAME = 'evaluationId'
 const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'
