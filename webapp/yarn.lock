@@ -8949,16 +8949,22 @@ react-error-overlay@^5.1.0:
   version "5.1.5"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.5.tgz#884530fd055476c764eaa8ab13b8ecf1f57bbf2c"
 
-react-final-form-utils@^0.0.2:
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/react-final-form-utils/-/react-final-form-utils-0.0.2.tgz#02ce660843e836518d78fb775c82eb391c823019"
+react-final-form-utils@1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-final-form-utils/-/react-final-form-utils-1.2.2.tgz#1a43d55444a7324ff8d46407cd53be1507f27353"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"
+    final-form-calculate "^1.2.1"
+    moment "^2.18.1"
+    moment-locale-fr "^1.0.0"
+    moment-timezone "^0.5.21"
     prop-types "^15.6.2"
+    re-reselect "^2.1.0"
     react "^16.5.2"
     react-dom "^16.5.2"
     react-router-dom "^4.3.1"
+    reselect "^3.0.1"
 
 react-final-form@^3.6.5:
   version "3.7.0"
@@ -11527,6 +11533,23 @@ wide-align@^1.1.0:
 with-query-router@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/with-query-router/-/with-query-router-3.0.0.tgz#57f98fb04036c7727f3e05cb90a398478fb50272"
+  dependencies:
+    classnames "2.2.5"
+    eslint "^5.8.0"
+    lodash.invert "^4.3.0"
+    lodash.uniq "^4.5.0"
+    prop-types "^15.6.2"
+    query-string "^5.1.1"
+    re-reselect "^2.1.0"
+    react "^16.5.2"
+    react-dom "^16.5.2"
+    react-router-dom "^4.3.1"
+    redux "^4.0.0"
+    reselect "^3.0.1"
+
+with-query-router@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/with-query-router/-/with-query-router-3.1.0.tgz#0234e21b491abcebd4683187c0c07f892bc387bb"
   dependencies:
     classnames "2.2.5"
     eslint "^5.8.0"

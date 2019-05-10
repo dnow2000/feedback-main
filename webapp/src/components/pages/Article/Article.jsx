@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
-import { parseSubmitErrors } from 'react-final-form-utils'
+import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-saga-data'
 
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
@@ -130,29 +130,10 @@ class Article extends Component {
               initialValues={article || false}
               key={id}
               onSubmit={this.onFormSubmit}
-              render={({
-                dirtySinceLastSubmit,
-                handleSubmit,
-                hasSubmitErrors,
-                hasValidationErrors,
-                pristine,
-                validating,
-              }) => {
-                const canSubmit =
-                  !validating &&
-                  (
-                    (
-                      !pristine
-                      && !hasSubmitErrors
-                      && !hasValidationErrors
-                      && !isFormLoading
-                    ) ||
-                    (
-                      !hasValidationErrors
-                      && hasSubmitErrors
-                      && dirtySinceLastSubmit
-                    )
-                  )
+              render={formProps => {
+                const { form, handleSubmit, validating }= formProps
+                const canSubmit = getCanSubmit(
+                  Object.assign({ isLoading: isFormLoading }, formProps))
                 return (
                   <form
                     autoComplete="off"
@@ -162,7 +143,11 @@ class Article extends Component {
                     onSubmit={handleSubmit}
                   >
                     <FormFieldsContainer validating={validating} />
-                    <FormFooterContainer canSubmit={canSubmit} isLoading={isFormLoading} />
+                    <FormFooterContainer
+                      canSubmit={canSubmit}
+                      form={form}
+                      isLoading={isFormLoading}
+                    />
                   </form>
                 )
               }}

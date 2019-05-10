@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
-import { parseSubmitErrors } from 'react-final-form-utils'
+import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
@@ -160,21 +160,12 @@ class Verdict extends Component {
             <Form
               initialValues={currentUserVerdictPatch}
               onSubmit={this.onFormSubmit}
-              render={({
-                dirtySinceLastSubmit,
-                handleSubmit,
-                hasSubmitErrors,
-                hasValidationErrors,
-                pristine,
-              }) => {
-                const canSubmit = isCreatedEntity ||
-                  ((!pristine &&
-                    !hasSubmitErrors &&
-                    !hasValidationErrors &&
-                    !isFormLoading) ||
-                  (!hasValidationErrors &&
-                    hasSubmitErrors &&
-                    dirtySinceLastSubmit))
+              render={formProps => {
+                const canSubmit = !isFormLoading && (
+                  isCreatedEntity ||
+                  getCanSubmit(formProps)
+                )
+                const { form, handleSubmit } = formProps
                 return (
                   <form
                     autoComplete="off"
@@ -184,7 +175,10 @@ class Verdict extends Component {
                     onSubmit={handleSubmit}
                   >
                     {!isCreatedEntity && <FormFieldsContainer />}
-                    <FormFooterContainer canSubmit={canSubmit} />
+                    <FormFooterContainer
+                      canSubmit={canSubmit}
+                      form={form}
+                    />
                   </form>
                 )
               }}
@@ -202,12 +196,12 @@ Verdict.defaultProps = {
 }
 
 Verdict.propTypes = {
-  article: PropTypes.object,
-  currentUserVerdictPatch: PropTypes.object,
+  article: PropTypes.shape(),
+  currentUserVerdictPatch: PropTypes.shape(),
   dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired
+  history: PropTypes.shape().isRequired,
+  match: PropTypes.shape().isRequired,
+  query: PropTypes.shape().isRequired
 }
 
 export default Verdict

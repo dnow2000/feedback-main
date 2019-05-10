@@ -3,7 +3,14 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const FormFooter = ({ canSubmit, isLoading, match, query }) => {
+const FormFooter = ({
+  canSubmit,
+  form,
+  history,
+  isLoading,
+  match,
+  query
+}) => {
   const {
     params: { verdictId },
   } = match
@@ -23,7 +30,11 @@ const FormFooter = ({ canSubmit, isLoading, match, query }) => {
         <NavLink
           className="button is-secondary"
           id="cancel-verdict"
-          to={isCreatedEntity ? '/articles' : `/verdicts/${verdictId}`}
+          to={() => {
+            form.reset()
+            const next = isCreatedEntity ? '/articles' : `/verdicts/${verdictId}`
+            history.push(next)
+          }}
         >
           Cancel
         </NavLink>
@@ -55,9 +66,11 @@ FormFooter.defaultProps = {
 
 FormFooter.propTypes = {
   canSubmit: PropTypes.bool,
+  form: PropTypes.shape().isRequired,
+  history: PropTypes.shape().isRequired,
   isLoading: PropTypes.bool,
-  match: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
+  match: PropTypes.shape().isRequired,
+  query: PropTypes.shape().isRequired,
 }
 
 export default FormFooter

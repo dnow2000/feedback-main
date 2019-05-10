@@ -7,6 +7,7 @@ const FormFooter = ({
   canEdit,
   canReview,
   canSubmit,
+  form,
   isLoading,
   match,
   query,
@@ -23,21 +24,28 @@ const FormFooter = ({
       {canEdit && (
         <Fragment>
           {readOnly ? (
-            <NavLink
+            <button
               className="button is-primary"
               id="edit-article"
-              to={`/articles/${articleId}?edit`}
+              onClick={() => {
+                query.changeToModification()
+              }}
+              type="button"
             >
               Edit Article
-            </NavLink>
+            </button>
           ) : (
-            <NavLink
+            <button
               className="button is-secondary"
               id="cancel-article"
-              to={isCreatedEntity ? '/articles' : `/articles/${articleId}`}
+              onClick={() => {
+                form.reset()
+                query.changeToReadOnly()
+              }}
+              type="button"
             >
               Cancel
-            </NavLink>
+            </button>
           )}
         </Fragment>
       )}
@@ -86,9 +94,10 @@ FormFooter.propTypes = {
   canEdit: PropTypes.bool,
   canReview: PropTypes.bool,
   canSubmit: PropTypes.bool,
+  form: PropTypes.shape().isRequired,
   isLoading: PropTypes.bool,
-  match: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
+  match: PropTypes.shape().isRequired,
+  query: PropTypes.shape().isRequired,
   review: PropTypes.object
 }
 

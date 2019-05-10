@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
-import { parseSubmitErrors } from 'react-final-form-utils'
+import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
@@ -111,6 +111,7 @@ class Review extends Component {
     const {
       article,
       formInitialValues,
+      history,
       query,
       verdicts
     } = this.props
@@ -143,21 +144,10 @@ class Review extends Component {
             <Form
               initialValues={formInitialValues}
               onSubmit={this.onFormSubmit}
-              render={({
-                dirtySinceLastSubmit,
-                handleSubmit,
-                hasSubmitErrors,
-                hasValidationErrors,
-                pristine,
-              }) => {
-                const canSubmit =
-                  (!pristine &&
-                    !hasSubmitErrors &&
-                    !hasValidationErrors &&
-                    !isFormLoading) ||
-                  (!hasValidationErrors &&
-                    hasSubmitErrors &&
-                    dirtySinceLastSubmit)
+              render={formProps => {
+                const { form, handleSubmit } = formProps
+                const canSubmit = getCanSubmit(Object.assign(
+                  { isLoading: isFormLoading }, formProps))
                 return (
                   <form
                     autoComplete="off"
@@ -167,7 +157,11 @@ class Review extends Component {
                     onSubmit={handleSubmit}
                   >
                     <FormFieldsContainer />
-                    <FormFooterContainer canSubmit={canSubmit} />
+                    <FormFooterContainer
+                      canSubmit={canSubmit}
+                      form={form}
+                      history={history}
+                    />
                   </form>
                 )
               }}
