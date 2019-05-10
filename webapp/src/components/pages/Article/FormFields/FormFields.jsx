@@ -6,7 +6,7 @@ import {
   CheckboxField,
   TextareaField,
   TextField,
-} from '../../../form/fields'
+} from '../../../layout/form/fields'
 import { createValidateScrapField } from '../../../form/validators'
 
 const validateScrapField = createValidateScrapField()

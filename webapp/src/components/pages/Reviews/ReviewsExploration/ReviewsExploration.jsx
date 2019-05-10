@@ -6,7 +6,7 @@ import { Form } from 'react-final-form'
 import { requestData } from 'redux-saga-data'
 
 import ReviewItemContainer from './ReviewItem/ReviewItemContainer'
-import { TextField } from '../../../form/fields'
+import { TextField } from '../../../layout/form/fields'
 import { itemReviewNormalizer } from '../../../../utils/normalizers'
 
 function getScrollParent () {

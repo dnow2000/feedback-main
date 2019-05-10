@@ -1,7 +1,7 @@
 /* eslint
   react/jsx-one-expression-per-line: 0 */
 import React from 'react'
-import { EmailField, PasswordField } from '../../form/fields'
+import { EmailField, PasswordField } from '../../layout/form/fields'
 
 const FormFields = () => (
   <div className="field-group">

@@ -6,7 +6,7 @@ import {
   CheckboxesField,
   SelectField,
   TexteditorField
-} from '../../../form/fields'
+} from '../../../layout/form/fields'
 import {
   selectOptionsFromNameAndEntitiesAndPlaceholder,
 } from '../../../form/utils'

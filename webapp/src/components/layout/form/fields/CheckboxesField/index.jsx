@@ -6,8 +6,6 @@ import { Field } from 'react-final-form'
 import Checkboxes from './Checkboxes'
 import { FieldError } from '../../layout'
 
-const defaultValues = []
-
 export const CheckboxesField = ({
   className,
   disabled,

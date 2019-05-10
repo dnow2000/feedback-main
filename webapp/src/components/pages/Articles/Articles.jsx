@@ -9,7 +9,7 @@ import { requestData } from 'redux-saga-data'
 import ArticleItemContainer from './ArticleItem/ArticleItemContainer'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
-import { TextField } from '../../form/fields'
+import { TextField } from '../../layout/form/fields'
 import { articleNormalizer } from '../../../utils/normalizers'
 
 class Articles extends Component {

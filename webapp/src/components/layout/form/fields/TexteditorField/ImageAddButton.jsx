@@ -1,15 +1,15 @@
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
-import ReactDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import { requestData } from 'redux-saga-data'
 
 import { imagePlugin } from './plugins'
-import { THUMBS_URL } from '../../../../utils/config'
+import { THUMBS_URL } from '../../../../../utils/config'
 
 const { addImage } = imagePlugin
 
-export class RawImageDropzone extends Component {
+export class RawImageAddButton extends Component {
   constructor () {
     super()
     this.state = {
@@ -20,7 +20,6 @@ export class RawImageDropzone extends Component {
   handleUploadSuccess = (state, action) => {
     const { payload: { datum } } = action
     const { getEditorState, setEditorState } = this.props
-
     const imageId = datum.id
     const src = `${THUMBS_URL}/images/${imageId}`
 
@@ -32,10 +31,10 @@ export class RawImageDropzone extends Component {
 
   }
 
-  handleUploadImage = files => {
+  onUploadClick = event => {
     const { dispatch } = this.props
 
-    const image = files[0]
+    const image = event.target.files[0]
 
     const body = new FormData()
 
@@ -55,40 +54,35 @@ export class RawImageDropzone extends Component {
   }
 
   render () {
-    const { render } = this.props
     const { isLoading } = this.state
-
-    const reactDropzoneProps = {...this.props}
-    delete reactDropzoneProps.children
-    delete reactDropzoneProps.dispatch
-    delete reactDropzoneProps.editorState
-    delete reactDropzoneProps.render
-    delete reactDropzoneProps.setEditorState
-
-    const renderProps = {
-      handleUploadImage: this.handleUploadImage,
-      isLoading
-    }
-
     return (
-      <ReactDropzone
-        {...reactDropzoneProps}
-        onDrop={this.handleUploadImage}
+      <label
+        className={classnames(
+          "button is-primary is-outlined", {
+          'loading': isLoading
+        })}
+        htmlFor="image-add-button"
       >
-        {reactDropzoneRenderProps =>
-          render({ ...renderProps, ...reactDropzoneRenderProps })}
-      </ReactDropzone>
+        Add Image{' '}
+        <input
+          id="image-add-button"
+          hidden
+          onChange={this.onUploadClick}
+          ref={element => { this.input = element }}
+          type="file"
+        />
+      </label>
     )
   }
 }
 
-RawImageDropzone.propTypes = {
+
+RawImageAddButton.propTypes = {
   dispatch: PropTypes.func.isRequired,
   getEditorState: PropTypes.func.isRequired,
-  render: PropTypes.func.isRequired,
-  setEditorState: PropTypes.func.isRequired,
+  setEditorState: PropTypes.func.isRequired
 }
 
-const ImageAddButton = connect()(RawImageDropzone)
+const ImageAddButton = connect()(RawImageAddButton)
 
 export default ImageAddButton

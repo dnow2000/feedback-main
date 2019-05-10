@@ -1,5 +1,6 @@
-import { isEmpty } from '../strings'
-import { API_URL } from '../../../utils/config'
+import { isEmpty } from 'react-final-form-utils'
+
+import { API_URL } from '../../../../utils/config'
 
 export async function getScrap(url) {
 
