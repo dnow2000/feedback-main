@@ -8,10 +8,7 @@ import PropTypes from 'prop-types'
 import { composeValidators } from 'react-final-form-utils'
 
 import { FieldError } from '../layout'
-import { createValidateRequiredField } from '../validators'
-import { config } from '../utils'
-
-const validateRequiredField = createValidateRequiredField(config.DEFAULT_REQUIRED_ERROR)
+import getRequiredValidate from '../utils/getRequiredValidate'
 
 export const TextareaField = ({
   autoComplete,
@@ -25,66 +22,58 @@ export const TextareaField = ({
   required,
   rows,
   validate,
-}) => {
+}) => (
+  <Field
+    name={name}
+    validate={composeValidators(validate, getRequiredValidate(required))}
+    render={({ input, meta }) => {
 
-  const requiredValidate =
-    required && typeof required === 'function'
-      ? required
-      : (required && validateRequiredField) || undefined
+      const valueLength = input.value.length
+      const value =
+        valueLength > maxLength - 1
+          ? input.value.slice(0, maxLength - 1)
+          : input.value
 
-  return (
-    <Field
-      name={name}
-      validate={composeValidators(validate, requiredValidate)}
-      render={({ input, meta }) => {
-
-        const valueLength = input.value.length
-        const value =
-          valueLength > maxLength - 1
-            ? input.value.slice(0, maxLength - 1)
-            : input.value
-
-        return (
-          <div className={classnames("field textarea-field", className, { readonly: readOnly })}>
-            <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
-              {label && (
-                <span>
-                  <span>{label}</span>
-                  {required && !readOnly && <span className="field-asterisk">*</span>}
-                  {!readOnly && (
-                    <span className="fs12">
-                      {' '}
-                      ({valueLength} / {maxLength}){' '}
-                    </span>
-                  )}
-                </span>
-              )}
-            </label>
-            <div className="field-control">
-              <div className="field-value flex-columns items-center">
-                <span className="field-inner">
-                  <Textarea
-                    {...input}
-                    autoComplete={autoComplete ? 'on' : 'off'}
-                    className="field-textarea"
-                    disabled={disabled || readOnly}
-                    id={name}
-                    placeholder={readOnly ? '' : placeholder}
-                    readOnly={readOnly}
-                    rows={rows}
-                    required={!!required} // cast to boolean
-                    value={value}
-                  />
-                </span>
-              </div>
+      return (
+        <div className={classnames("field textarea-field", className, { readonly: readOnly })}>
+          <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
+            {label && (
+              <span>
+                <span>{label}</span>
+                {required && !readOnly && <span className="field-asterisk">*</span>}
+                {!readOnly && (
+                  <span className="fs12">
+                    {' '}
+                    ({valueLength} / {maxLength}){' '}
+                  </span>
+                )}
+              </span>
+            )}
+          </label>
+          <div className="field-control">
+            <div className="field-value flex-columns items-center">
+              <span className="field-inner">
+                <Textarea
+                  {...input}
+                  autoComplete={autoComplete ? 'on' : 'off'}
+                  className="field-textarea"
+                  disabled={disabled || readOnly}
+                  id={name}
+                  placeholder={readOnly ? '' : placeholder}
+                  readOnly={readOnly}
+                  rows={rows}
+                  required={!!required} // cast to boolean
+                  value={value}
+                />
+              </span>
             </div>
-            <FieldError meta={meta} />
           </div>
-        )
-      }}
-    />
-  )
-}
+          <FieldError meta={meta} />
+        </div>
+      )
+    }}
+  />
+)
 
 TextareaField.defaultProps = {
   autoComplete: false,

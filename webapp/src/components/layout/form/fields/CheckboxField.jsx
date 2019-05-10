@@ -21,10 +21,12 @@ export const CheckboxField = ({
   required,
   type,
   validate,
+  ...inputProps
 }) => (
   <Field
     name={name}
     validate={validate}
+    type={type}
     render={({ input, meta }) => (
       <div
         className={classnames("field checkbox-field",
@@ -43,6 +45,7 @@ export const CheckboxField = ({
           <div className="field-value flex-columns items-center">
             <div className="field-inner flex-columns items-center">
               <input
+                {...inputProps}
                 {...input}
                 autoComplete={autoComplete ? 'on' : 'off'}
                 className={`field-input field-${type}`}

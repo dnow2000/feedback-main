@@ -10,11 +10,7 @@ import {
 } from 'react-final-form-utils'
 
 import { FieldError } from '../layout'
-import { createValidateRequiredField } from '../validators'
-import { config } from '../utils'
-
-const validateRequiredField = createValidateRequiredField(config.DEFAULT_REQUIRED_ERROR)
-
+import getRequiredValidate from '../utils/getRequiredValidate'
 
 export const TextField = ({
   autoComplete,
@@ -30,56 +26,48 @@ export const TextField = ({
   required,
   type,
   validate,
-}) => {
-
-  const requiredValidate =
-    required && typeof required === 'function'
-      ? required
-      : (required && validateRequiredField) || undefined
-
-  return (
-    <Field
-      name={name}
-      validate={composeValidators(validate, requiredValidate)}
-      parse={createParseNumberValue(type)}
-      render={({ input, meta }) => (
-        <div
-          className={classnames("field text-field",
-            className, { readonly: readOnly })}
-          id={id}
-        >
-          <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
-            {label && (
-              <span>
-                <span>{label}</span>
-                {required && !readOnly && <span className="field-asterisk">*</span>}
-              </span>
-            )}
-          </label>
-          <div className="field-control">
-            <div className="field-value flex-columns items-center">
-              <div className="field-inner flex-columns items-center">
-                <input
-                  {...input}
-                  autoComplete={autoComplete ? 'on' : 'off'}
-                  className={`field-input field-${type}`}
-                  disabled={disabled || readOnly}
-                  placeholder={readOnly ? '' : placeholder}
-                  readOnly={readOnly}
-                  required={!!required} // cast to boolean
-                  type={type}
-                />
-                {renderInner()}
-              </div>
-              {renderValue()}
+}) => (
+  <Field
+    name={name}
+    validate={composeValidators(validate, getRequiredValidate(required))}
+    parse={createParseNumberValue(type)}
+    render={({ input, meta }) => (
+      <div
+        className={classnames("field text-field",
+          className, { readonly: readOnly })}
+        id={id}
+      >
+        <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
+          {label && (
+            <span>
+              <span>{label}</span>
+              {required && !readOnly && <span className="field-asterisk">*</span>}
+            </span>
+          )}
+        </label>
+        <div className="field-control">
+          <div className="field-value flex-columns items-center">
+            <div className="field-inner flex-columns items-center">
+              <input
+                {...input}
+                autoComplete={autoComplete ? 'on' : 'off'}
+                className={`field-input field-${type}`}
+                disabled={disabled || readOnly}
+                placeholder={readOnly ? '' : placeholder}
+                readOnly={readOnly}
+                required={!!required} // cast to boolean
+                type={type}
+              />
+              {renderInner()}
             </div>
-            <FieldError meta={meta} />
+            {renderValue()}
           </div>
+          <FieldError meta={meta} />
         </div>
-      )}
-    />
-  )
-}
+      </div>
+    )}
+  />
+)
 
 TextField.defaultProps = {
   autoComplete: false,

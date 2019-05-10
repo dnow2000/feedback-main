@@ -9,10 +9,7 @@ import { composeValidators } from 'react-final-form-utils'
 
 import Texteditor from './Texteditor'
 import { FieldError } from '../../layout'
-import { createValidateRequiredField } from '../../validators'
-import { config } from '../../utils'
-
-const validateRequiredField = createValidateRequiredField(config.DEFAULT_REQUIRED_ERROR)
+import getRequiredValidate from '../../utils/getRequiredValidate'
 
 export class TexteditorField extends Component {
   constructor () {
@@ -64,15 +61,10 @@ export class TexteditorField extends Component {
     } = this.props
     const { valueLength } = this.state
 
-    const requiredValidate =
-      required && typeof required === 'function'
-        ? required
-        : (required && validateRequiredField) || undefined
-
     return (
       <Field
         name={name}
-        validate={composeValidators(validate, requiredValidate)}
+        validate={composeValidators(validate, getRequiredValidate)}
         render={({ input, meta }) => (
           <div className={classnames("field texteditor-field", className, { readonly: readOnly })}>
             <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>

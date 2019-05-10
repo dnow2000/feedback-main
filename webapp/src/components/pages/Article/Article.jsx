@@ -11,7 +11,7 @@ import Footer from '../../layout/Footer'
 import { Icon } from '../../layout/Icon'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
-import { scrapDecorator } from '../../form/decorators'
+import scrapDecorator from './decorators/scrapDecorator'
 import { articleNormalizer } from '../../../utils/normalizers'
 
 class Article extends Component {

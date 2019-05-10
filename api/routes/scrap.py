@@ -1,4 +1,3 @@
-""" scrap """
 from newspaper.article import ArticleException
 from flask import current_app as app, jsonify, request
 

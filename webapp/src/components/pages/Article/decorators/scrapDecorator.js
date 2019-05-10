@@ -1,16 +1,16 @@
 import createDecorator from 'final-form-calculate'
 
-import { getScrap } from '../utils/getScrap'
+import getScrap from '../utils/getScrap'
 
-export const scrapDecorator = createDecorator(
+const scrapDecorator = createDecorator(
   {
     field: 'url',
-    updates: async url  => {
+    updates: async (url, urlKey, formValues)  => {
       const scrap = await getScrap(url)
       if (!scrap) {
         return {}
       }
-      return scrap.values
+      return Object.assign({}, scrap.values, formValues)
     }
   }
 )

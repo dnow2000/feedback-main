@@ -7,7 +7,7 @@ import {
   TextareaField,
   TextField,
 } from '../../../layout/form/fields'
-import { createValidateScrapField } from '../../../form/validators'
+import createValidateScrapField from './validators/createValidateScrapField'
 
 const validateScrapField = createValidateScrapField()
 
@@ -53,7 +53,6 @@ const FormFields = ({ query, validating }) => {
           label="Is this article reviewable ?"
           name="isReviewable"
           readOnly={readOnly}
-          type="checkbox"
         />
         <div className="flex-columns flex-wrap">
           <TextField

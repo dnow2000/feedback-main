@@ -7,10 +7,7 @@ import { Field } from 'react-final-form'
 import { composeValidators } from 'react-final-form-utils'
 
 import { FieldError } from '../layout'
-import { createValidateRequiredField } from '../validators'
-import { config } from '../utils'
-
-const validateRequiredField = createValidateRequiredField(config.DEFAULT_REQUIRED_ERROR)
+import getRequiredValidate from '../utils/getRequiredValidate'
 
 export const SelectField = ({
   className,
@@ -22,60 +19,50 @@ export const SelectField = ({
   readOnly,
   required,
   validate
-}) => {
-
-  const requiredValidate =
-    required && typeof required === 'function'
-      ? required
-      : (required && validateRequiredField) || undefined
-
-  return (
-    <Field
-      name={name}
-      validate={composeValidators(validate, requiredValidate)}
-      render={({ input, meta }) => {
-        return (
-          <div className={classnames(className || "field select-field", { readonly: readOnly })}>
-            <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
-              {label && (
-                <span>
-                  <span>{label}</span>
-                  {required && !readOnly && <span className="field-asterisk">*</span>}
-                </span>
-              )}
-            </label>
-            <div className="field-control">
-              <div className="field-value flex-columns items-center">
-                <div className="field-inner">
-                  <select
-                    {...input}
-                    className="field-select is-block"
-                    disabled={disabled || readOnly}
-                    id={name}
-                    placeholder={placeholder}
-                    readOnly={readOnly}
-                    required={!!required}
+}) => (
+  <Field
+    name={name}
+    validate={composeValidators(validate, getRequiredValidate(required))}
+    render={({ input, meta }) => (
+      <div className={classnames(className || "field select-field", { readonly: readOnly })}>
+        <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
+          {label && (
+            <span>
+              <span>{label}</span>
+              {required && !readOnly && <span className="field-asterisk">*</span>}
+            </span>
+          )}
+        </label>
+        <div className="field-control">
+          <div className="field-value flex-columns items-center">
+            <div className="field-inner">
+              <select
+                {...input}
+                className="field-select is-block"
+                disabled={disabled || readOnly}
+                id={name}
+                placeholder={placeholder}
+                readOnly={readOnly}
+                required={!!required}
+              >
+                {options.filter(o => o).map(option => (
+                  <option
+                    id={option.value}
+                    key={option.value}
+                    value={option.value}
                   >
-                    {options.filter(o => o).map(option => (
-                      <option
-                        id={option.value}
-                        key={option.value}
-                        value={option.value}
-                      >
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
             </div>
-            <FieldError meta={meta} />
           </div>
-        )}
-      }
-    />
-  )
-}
+        </div>
+        <FieldError meta={meta} />
+      </div>
+    )}
+  />
+)
 
 SelectField.defaultProps = {
   className: '',
