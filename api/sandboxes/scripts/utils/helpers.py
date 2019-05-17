@@ -25,6 +25,6 @@ def get_password_from_email(email):
     return minimal_password
 
 def get_user_helper(user):
-    return dict(user.asdict(), **{
+    return dict(user.as_dict(), **{
         "password": get_password_from_email(user.email)
     })

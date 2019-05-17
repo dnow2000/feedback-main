@@ -52,7 +52,7 @@ def list_articles():
 @login_or_api_key_required
 def get_article(article_id):
     article = load_or_404(Article, article_id)
-    return jsonify(article.asdict(includes=ARTICLE_INCLUDES)), 200
+    return jsonify(article.as_dict(includes=ARTICLE_INCLUDES)), 200
 
 @app.route('/articles', methods=['POST'])
 @login_or_api_key_required
@@ -79,7 +79,7 @@ def create_article():
                          shell=True,
                          cwd=API_ROOT_PATH)
 
-    return jsonify(article.asdict(includes=ARTICLE_INCLUDES)), 201
+    return jsonify(article.as_dict(includes=ARTICLE_INCLUDES)), 201
 
 @app.route('/articles/<article_id>', methods=['PATCH'])
 @login_or_api_key_required
@@ -93,7 +93,7 @@ def edit_article(article_id):
 
     Manager.check_and_save(article)
 
-    return jsonify(article.asdict(includes=ARTICLE_INCLUDES)), 201
+    return jsonify(article.as_dict(includes=ARTICLE_INCLUDES)), 201
 
 @app.route('/articles/<article_id>', methods=['DELETE'])
 @login_or_api_key_required
@@ -106,4 +106,4 @@ def soft_delete_article(article_id):
 
     Manager.check_and_save(article)
 
-    return jsonify(article.asdict()), 201
+    return jsonify(article.as_dict()), 201

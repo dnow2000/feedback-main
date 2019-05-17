@@ -10,7 +10,7 @@ from utils.login_manager import stamp_session, discard_session
 @app.route("/users/current", methods=["GET"])
 @login_required
 def get_profile():
-    user = current_user.asdict(includes=USER_INCLUDES)
+    user = current_user.as_dict(includes=USER_INCLUDES)
     return jsonify(user)
 
 
@@ -22,7 +22,7 @@ def signin():
     user = get_user_with_credentials(identifier, password)
     login_user(user, remember=True)
     stamp_session(user)
-    return jsonify(user.asdict(includes=USER_INCLUDES)), 200
+    return jsonify(user.as_dict(includes=USER_INCLUDES)), 200
 
 @app.route("/users/signout", methods=["GET"])
 @login_required
@@ -38,4 +38,4 @@ def signup():
     new_user.id = None
     Manager.check_and_save(new_user)
     login_user(new_user)
-    return jsonify(new_user.asdict(includes=USER_INCLUDES)), 201
+    return jsonify(new_user.as_dict(includes=USER_INCLUDES)), 201

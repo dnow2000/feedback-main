@@ -26,7 +26,7 @@ def resolve_content_with_url(url, **kwargs):
                          )\
                          .first()
         if article:
-            return article.asdict()
+            return article.as_dict()
 
     newspaper_content = get_newspaper_content(url, **kwargs)
     if newspaper_content is None:

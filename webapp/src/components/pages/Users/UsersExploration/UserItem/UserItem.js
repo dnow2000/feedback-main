@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-saga-data'
 
-import RolesManager from './RolesManager/RolesManager'
+import RolesManagerContainer from './RolesManager/RolesManagerContainer'
 import AvatarContainer from '../../../../layout/Avatar/AvatarContainer'
 
 class UserItem extends Component {
@@ -71,7 +71,7 @@ class UserItem extends Component {
           </div>
         </div>
         <nav className="control flex-wrap flex-start items-center p12">
-          {adminRole && <RolesManager user={user} />}
+          {adminRole && <RolesManagerContainer user={user} />}
         </nav>
       </article>
     )

@@ -18,4 +18,4 @@ def list_tags():
 
     tags = query.all()
 
-    return jsonify([tag.asdict(includes=TAG_INCLUDES) for tag in tags])
+    return jsonify([tag.as_dict(includes=TAG_INCLUDES) for tag in tags])

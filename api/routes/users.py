@@ -48,7 +48,7 @@ def get_user(user_id):
     check_has_role(current_user, 'admin')
 
     user = load_or_404(User, user_id)
-    return jsonify(user.asdict(includes=USER_INCLUDES)), 200
+    return jsonify(user.as_dict(includes=USER_INCLUDES)), 200
 
 
 @app.route('/users/current', methods=['PATCH'])
@@ -57,4 +57,4 @@ def get_user(user_id):
 def patch_profile():
     current_user.populateFromDict(request.json)
     Manager.check_and_save(current_user)
-    return jsonify(current_user.asdict(includes=USER_INCLUDES)), 200
+    return jsonify(current_user.as_dict(includes=USER_INCLUDES)), 200

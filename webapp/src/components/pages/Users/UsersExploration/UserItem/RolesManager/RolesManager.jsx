@@ -1,23 +1,36 @@
 import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
+import React, { Component, Fragment } from 'react'
 
 import RoleButtonContainer from './RoleButton/RoleButtonContainer'
 
-const roleTypes = ['admin', 'editor', 'guest', 'reviewer']
+class RolesManager extends Component {
+  componentDidMount () {
+    const { requestGetRoleTypes, roleTypes } = this.props
+    if (roleTypes.length > 0) {
+      return
+    }
+    requestGetRoleTypes()
+  }
 
-const RolesManager = ({ user }) => (
-  <Fragment>
-    {roleTypes.map(roleType => (
-      <RoleButtonContainer
-        key={roleType}
-        roleType={roleType}
-        user={user}
-      />
-    ))}
-  </Fragment>
-)
+  render() {
+    const { roleTypes, user } = this.props
+    return (
+      <Fragment>
+        {roleTypes.map(roleType => (
+          <RoleButtonContainer
+            key={roleType.id}
+            roleType={roleType}
+            user={user}
+          />
+        ))}
+      </Fragment>
+    )
+  }
+}
 
 RolesManager.propTypes = {
+  requestGetRoleTypes: PropTypes.func.isRequired,
+  roleTypes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   user: PropTypes.shape().isRequired
 }
 

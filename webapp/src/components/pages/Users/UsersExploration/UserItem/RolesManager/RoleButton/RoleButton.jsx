@@ -8,10 +8,10 @@ const RoleButton = ({ toggleRole, role, roleType }) => (
       checked: role,
       "not-checked": !role
     })}
-    onClick={toggleRole}
+    onClick={toggleRole(role)}
     type="button"
   >
-    {roleType}
+    {roleType.value}
   </button>
 )
 
@@ -21,7 +21,7 @@ RoleButton.defaultProps = {
 
 RoleButton.propTypes = {
   role: PropTypes.shape(),
-  roleType: PropTypes.string.isRequired,
+  roleType: PropTypes.shape().isRequired,
   toggleRole: PropTypes.func.isRequired
 }
 

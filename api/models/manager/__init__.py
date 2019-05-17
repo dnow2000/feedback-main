@@ -1,15 +1,15 @@
 from pprint import pprint
-from sqlalchemy import BigInteger,\
+from sqlalchemy import BigInteger, \
                        Column
 
-from models.manager.asdict import Asdict
+from models.manager.as_dict import as_dict
 from models.manager.populate import Populate
 from models.manager.save import Save
 from utils.human_ids import humanize
 
 class Manager(
         Save,
-        Asdict,
+        as_dict,
         Populate
 ):
     id = Column(BigInteger,

@@ -80,7 +80,7 @@ def handle_rest_get_list(modelClass, query=None,
         query = pagination.items
 
     # DICTIFY
-    elements = [o.asdict(includes=includes, resolve=resolve) for o in query]
+    elements = [o.as_dict(includes=includes, resolve=resolve) for o in query]
     # PRINT
     if print_elements:
         print(elements)

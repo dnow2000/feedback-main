@@ -41,7 +41,7 @@ def list_reviews():
 @login_or_api_key_required
 def get_review(review_id):
     review = load_or_404(Review, review_id)
-    return jsonify(review.asdict(includes=REVIEW_INCLUDES))
+    return jsonify(review.as_dict(includes=REVIEW_INCLUDES))
 
 @app.route('/reviews', methods=['POST'])
 @login_or_api_key_required
@@ -58,7 +58,7 @@ def create_review():
 
     save_tags(review, request.json.get('tagIds', []))
 
-    return jsonify(review.asdict(includes=REVIEW_INCLUDES)), 201
+    return jsonify(review.as_dict(includes=REVIEW_INCLUDES)), 201
 
 @app.route('/reviews/<review_id>', methods=['PATCH'])
 @login_or_api_key_required
@@ -74,4 +74,4 @@ def edit_review(review_id):
 
     save_tags(review, request.json.get('tagIds', []))
 
-    return jsonify(review.asdict(includes=REVIEW_INCLUDES)), 201
+    return jsonify(review.as_dict(includes=REVIEW_INCLUDES)), 201

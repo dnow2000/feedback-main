@@ -11,6 +11,6 @@ from utils.rest import login_or_api_key_required
 def list_evaluations():
     evaluations = Evaluation.query.all()
     return jsonify([
-        evaluation.asdict(includes=REVIEW_INCLUDES)
+        evaluation.as_dict(includes=REVIEW_INCLUDES)
         for evaluation in evaluations
     ])

@@ -9,7 +9,7 @@ from models.utils.db import Model
 from models.manager import Manager
 
 class RoleType(enum.Enum):
-    def asdict(self):
+    def as_dict(self):
         dict_value = {
             'value': str(self.value),
         }

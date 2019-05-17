@@ -87,12 +87,20 @@ Checkboxes.defaultProps = {
 
 Checkboxes.propTypes = {
   className: PropTypes.string,
-  defaultValue: PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.number)),
+  defaultValue: PropTypes.arrayOf(
+    PropTypes.oneOf([PropTypes.string, PropTypes.number])),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   readOnly: PropTypes.bool,
-  value: PropTypes.oneOf(PropTypes.string, PropTypes.arrayOf(PropTypes.oneOf(PropTypes.string, PropTypes.number)))
+  value: PropTypes.oneOf(
+    [
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.oneOf(
+        [PropTypes.string, PropTypes.number]
+      ))
+    ]
+  )
 }
 
 export default Checkboxes

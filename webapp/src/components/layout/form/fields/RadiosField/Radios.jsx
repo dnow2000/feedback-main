@@ -89,12 +89,12 @@ Radios.defaultProps = {
 
 Radios.propTypes = {
   className: PropTypes.string,
-  defaultValue: PropTypes.oneOf(PropTypes.string, PropTypes.number),
+  defaultValue: PropTypes.oneOf([PropTypes.string, PropTypes.number]),
   disabled: PropTypes.bool,
   onChange: PropTypes.func,
   options: PropTypes.array.isRequired,
   readOnly: PropTypes.bool,
-  value: PropTypes.oneOf(PropTypes.string, PropTypes.number)
+  value: PropTypes.oneOf([PropTypes.string, PropTypes.number])
 }
 
 export default Radios

@@ -19,4 +19,4 @@ def create_verdict_user():
     verdict_user = VerdictUser()
     verdict_user.populateFromDict(request.json)
     Manager.check_and_save(verdict_user)
-    return jsonify(verdict_user.asdict()), 201
+    return jsonify(verdict_user.as_dict()), 201

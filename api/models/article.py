@@ -38,8 +38,8 @@ class Article(Manager,
 
     url = Column(String(220), nullable=False, unique=True)
 
-    def asdict(self, **options):
-        article = Manager.asdict(self, **options)
+    def as_dict(self, **options):
+        article = Manager.as_dict(self, **options)
 
         # REMOVE OTHER REVIEWERS REVIEWS
         # TODO: This will never enable to see all reviews. Remove.

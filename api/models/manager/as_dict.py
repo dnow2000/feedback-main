@@ -5,8 +5,8 @@ from models.manager.relationships import Relationships
 from models.utils.serialize import serialize
 from utils.human_ids import dehumanize, humanize
 
-class Asdict(Relationships):
-    def asdict(self, **options):
+class as_dict(Relationships):
+    def as_dict(self, **options):
         result = OrderedDict()
         for key in self.__mapper__.c.keys():
 
@@ -71,7 +71,7 @@ class Asdict(Relationships):
                         final_value = [x for x in final_value if not x.is_soft_deleted()]
 
                         result[key] = [
-                            attr.asdict(
+                            attr.as_dict(
                                 cut=options and options.get('cut'),
                                 includes=includes
                             )
@@ -82,8 +82,8 @@ class Asdict(Relationships):
                                 resolve(v, options.get('filters', {}))
                                 for v in result[key]
                             ]
-                    elif isinstance(value, Asdict):
-                        result[key] = value.asdict(
+                    elif isinstance(value, as_dict):
+                        result[key] = value.as_dict(
                             includes=includes,
                             cut=options and options.get('cut'),
                         )

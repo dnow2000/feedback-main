@@ -4,6 +4,7 @@ from flask import current_app as app, jsonify, request
 from models.manager import Manager
 from models.role import Role, RoleType
 from models.user import User
+from models.utils.db import db
 from utils.rest import load_or_404, login_or_api_key_required
 from validation import check_has_role
 
@@ -13,7 +14,7 @@ from validation import check_has_role
 def list_roles():
     check_has_role(current_user, 'admin')
 
-    role_types = [role_type.asdict() for role_type in RoleType]
+    role_types = [role_type.as_dict() for role_type in RoleType]
 
     return jsonify(role_types), 200
 
@@ -34,12 +35,12 @@ def post_role():
 
 @app.route('/roles/<role_id>', methods=['DELETE'])
 @login_or_api_key_required
-def delete_role():
+def delete_role(role_id):
     check_has_role(current_user, 'admin')
 
     role = load_or_404(Role, role_id)
 
-    Manager.delete(role_id)
+    Manager.delete(role)
 
     db.session.commit()
 

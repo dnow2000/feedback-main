@@ -14,6 +14,7 @@ const dataReducer = createDataReducer({
   evaluations: [],
   reviewTags: [],
   reviews: [],
+  roleTypes: [],
   roles: [],
   tags: [],
   trendings: [],

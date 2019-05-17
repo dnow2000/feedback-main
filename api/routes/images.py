@@ -26,4 +26,4 @@ def create_image():
 
     image.save_thumb(thumb, 0)
 
-    return jsonify(image.asdict()), 201
+    return jsonify(image.as_dict()), 201
