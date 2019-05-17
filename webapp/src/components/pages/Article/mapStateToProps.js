@@ -2,9 +2,8 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import {
   selectArticleById,
-  selectEditorRoleByUserId,
   selectCurrentUserReviewByArticleId,
-  selectReviewerRoleByUserId,
+  selectRoleByUserIdAndType,
   selectReviewsByArticleIdAndVerdictId,
   selectVerdictsByArticleId,
 } from '../../../selectors'
@@ -15,8 +14,8 @@ function mapStateToProps(state, ownProps) {
   const { match } = ownProps
   const { params: { articleId } } = match
 
-  const editorRole = selectEditorRoleByUserId(state, currentUserId)
-  const reviewerRole = selectReviewerRoleByUserId(state, currentUserId)
+  const editorRole = selectRoleByUserIdAndType(state, currentUserId, 'editor')
+  const reviewerRole = selectRoleByUserIdAndType(state, currentUserId, 'reviewer')
 
   const canCreateArticle = typeof editorRole !== 'undefined'
   const canReview = typeof reviewerRole !== 'undefined'

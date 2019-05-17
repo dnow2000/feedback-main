@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-saga-data'
 
+import RolesManager from './RolesManager/RolesManager'
 import AvatarContainer from '../../../../layout/Avatar/AvatarContainer'
 
 class UserItem extends Component {
@@ -23,6 +24,7 @@ class UserItem extends Component {
 
   render () {
     const {
+      adminRole,
       user,
       tags,
       withAddButton
@@ -68,22 +70,27 @@ class UserItem extends Component {
             )}
           </div>
         </div>
+        <nav className="control flex-wrap flex-start items-center p12">
+          {adminRole && <RolesManager user={user} />}
+        </nav>
       </article>
     )
   }
 }
 
 UserItem.defaultProps = {
+  adminRole: null,
   tags: null,
   user: null,
   withAddButton: false
 }
 
 UserItem.propTypes = {
+  adminRole: PropTypes.shape(),
   dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
+  match: PropTypes.shape().isRequired,
   tags: PropTypes.array,
-  user: PropTypes.object,
+  user: PropTypes.shape(),
   withAddButton: PropTypes.bool,
 }
 

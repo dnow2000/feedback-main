@@ -1,5 +1,7 @@
 import withLogin from 'with-react-redux-login'
 
+import { userNormalizer } from '../../../utils/normalizers'
+
 export const withRedirectToSigninWhenNotAuthenticated =
   withLogin({
     failRedirect: ({ location }) => {
@@ -7,7 +9,8 @@ export const withRedirectToSigninWhenNotAuthenticated =
       const fromUrl = encodeURIComponent(`${pathname}${search}`)
       return `/signin?from=${fromUrl}`
     },
-    isRequired: true
+    isRequired: true,
+    normalizer: userNormalizer 
   })
 
 export default withRedirectToSigninWhenNotAuthenticated

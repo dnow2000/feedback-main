@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import visibleFor from './visibleFor'
 import SignoutButtonContainer from '../SignoutButton/SignoutButtonContainer'
+
 import { closeNavigation } from '../../../reducers/navigation'
 
 const links = [
@@ -21,23 +23,23 @@ const links = [
     disabled: true,
     label: 'Reviews',
     path: '/reviews',
-    visible: currentRoles => currentRoles.map(cr => cr.type).includes('reviewer')
+    visible: visibleFor(['reviewer'])
   },
   {
     label: 'Trendings',
     path: '/trendings',
-    visible: currentRoles => currentRoles.map(cr => cr.type).includes('editor')
+    visible: visibleFor(['editor'])
   },
   {
     label: 'Users',
     path: '/users',
-    visible: currentRoles => currentRoles.map(cr => cr.type).includes('admin')
+    visible: visibleFor(['admin'])
   },
   {
     disabled: true,
     label: 'Verdicts',
     path: '/verdicts',
-    visible: currentRoles => currentRoles.map(cr => cr.type).includes('editor')
+    visible: visibleFor(['editor'])
   },
 ]
 

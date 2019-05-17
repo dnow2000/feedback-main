@@ -1,10 +1,17 @@
 export const userNormalizer = {
+  roles: 'roles',
   userTags: {
     normalizer: {
       tag: 'tags'
     },
     stateKey: 'userTags'
   }
+}
+
+export const userConfig = {
+  isMergingDatum: true,
+  normalizer: userNormalizer,
+  stateKey: "users"
 }
 
 export const articleNormalizer = {
@@ -16,13 +23,13 @@ export const articleNormalizer = {
   },
   reviews: {
     normalizer: {
-      user: userNormalizer
+      user: userConfig,
     },
     stateKey: 'reviews',
   },
   verdicts: {
     normalizer: {
-      user: userNormalizer
+      user: userConfig,
     },
     stateKey: 'verdicts',
   }
@@ -38,14 +45,19 @@ export const itemReviewNormalizer = {
     stateKey: 'reviewTags'
   },
   */
-  user: userNormalizer,
+  user: userConfig,
 }
 
 export const reviewNormalizer = {
   article: 'articles',
   verdicts: {
     normalizer: {
-      verdictUsers: 'verdictUsers'
+      verdictUsers: {
+        normalizer: {
+          user: userConfig
+        },
+        stateKey: 'verdictUsers'
+      }
     },
     stateKey: 'verdicts',
   },
@@ -61,7 +73,7 @@ export const verdictNormalizer = {
     },
     stateKey: 'reviews',
   },
-  user: userNormalizer,
+  user: userConfig,
   verdictTags: {
     normalizer: {
       tag: 'tags'
@@ -70,7 +82,7 @@ export const verdictNormalizer = {
   },
   verdictUsers: {
     normalizer: {
-      user: 'users'
+      user: userConfig
     },
     stateKey: 'verdictUsers'
   }

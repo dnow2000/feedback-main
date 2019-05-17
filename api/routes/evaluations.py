@@ -1,4 +1,3 @@
-""" evaluations """
 from flask import current_app as app, jsonify
 
 from models import Evaluation

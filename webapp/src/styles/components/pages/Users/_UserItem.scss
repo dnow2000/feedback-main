@@ -1,11 +1,24 @@
 .user-item {
-
   min-width: 400px;
-
-  .content {
-  }
 
   .control {
     border-top: 1px solid $grey-light;
+
+    button {
+      &.not-checked {
+        color: $primary;
+      }
+
+      &.checked {
+        background-color: $primary;
+        color: white;
+
+        &[disabled] {
+          &[readonly] {
+            opacity: 1;
+          }
+        }
+      }
+    }
   }
 }
