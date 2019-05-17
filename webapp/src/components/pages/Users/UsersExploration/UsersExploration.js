@@ -130,10 +130,10 @@ class UsersExploration extends Component {
         <br />
 
         <LoadingInfiniteScroll
-          getScrollParent={isModal && getScrollParent}
           hasMore={hasMore}
           isLoading={isLoading}
           useWindow={!isModal}
+          {...isModal ? { getScrollParent } : {}}
         >
           {
             users.map(user => (

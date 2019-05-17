@@ -40,7 +40,7 @@ class Signup extends Component {
   onFormSubmit = formValues => {
     const { dispatch } = this.props
 
-    const apiPath = '/users'
+    const apiPath = '/users/signup'
     const method = 'POST'
 
     this.setState({ isFormLoading: true })

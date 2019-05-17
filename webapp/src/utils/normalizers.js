@@ -1,14 +1,10 @@
 export const userNormalizer = {
-  isMergingDatum: true,
-  normalizer: {
-    userTags: {
-      normalizer: {
-        tag: 'tags'
-      },
-      stateKey: 'userTags'
-    }
-  },
-  stateKey: 'users'
+  userTags: {
+    normalizer: {
+      tag: 'tags'
+    },
+    stateKey: 'userTags'
+  }
 }
 
 export const articleNormalizer = {
