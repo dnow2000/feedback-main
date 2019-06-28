@@ -3,10 +3,10 @@ import { compose } from 'redux'
 
 import Article from './Article'
 import mapStateToProps from './mapStateToProps'
-import { withRedirectToSigninWhenNotAuthenticated, withRoles } from '../../hocs'
+import { withRequiredLogin, withRoles } from '../../hocs'
 
 export default compose(
-  withRedirectToSigninWhenNotAuthenticated,
+  withRequiredLogin,
   withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
   connect(mapStateToProps)
 )(Article)

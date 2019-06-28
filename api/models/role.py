@@ -17,6 +17,7 @@ class RoleType(enum.Enum):
 
     admin = "admin"
     editor = "editor"
+    guest = "guest"
     reviewer = "reviewer"
 
 class Role(Manager, Model):

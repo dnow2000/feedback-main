@@ -38,4 +38,5 @@ def signup():
     new_user.id = None
     Manager.check_and_save(new_user)
     login_user(new_user)
+    stamp_session(new_user)
     return jsonify(new_user.as_dict(includes=USER_INCLUDES)), 201

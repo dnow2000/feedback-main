@@ -3,6 +3,7 @@ import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-saga-data'
+import { resolveCurrentUser } from 'with-react-redux-login'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
@@ -52,7 +53,7 @@ class Signin extends Component {
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
         method,
-        resolve: userFromRequest => Object.assign({ isCurrent: true }, userFromRequest)
+        resolve: resolveCurrentUser
       }))
     })
     return formSubmitPromise

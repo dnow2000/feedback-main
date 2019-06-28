@@ -1,4 +1,3 @@
-""" error handlers """
 import simplejson as json
 from flask import current_app as app, jsonify
 

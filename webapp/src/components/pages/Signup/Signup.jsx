@@ -6,10 +6,11 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
+import { resolveCurrentUser } from 'with-react-redux-login'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
-import { withRedirectToArticlesWhenAlreadyAuthenticated } from '../../hocs'
+import { withNotRequiredLogin } from '../../hocs'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 
@@ -53,7 +54,7 @@ class Signup extends Component {
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
         method,
-        resolve: userFromRequest => Object.assign({ isCurrent: true }, userFromRequest)
+        resolve: resolveCurrentUser
       }))
     })
     return formSubmitPromise
@@ -111,7 +112,7 @@ Signup.propTypes = {
 }
 
 export default compose(
-  withRedirectToArticlesWhenAlreadyAuthenticated,
+  withNotRequiredLogin,
   withRouter,
   connect()
 )(Signup)

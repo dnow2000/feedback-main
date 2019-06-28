@@ -13,7 +13,8 @@ def create_user(
 ):
     user = User()
     user.email = email
-    user.setPassword(password)
+    if password:
+        user.setPassword(password)
     user.publicName = public_name
 
     user.expertise = expertise

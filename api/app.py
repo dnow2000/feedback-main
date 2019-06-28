@@ -1,9 +1,11 @@
 import os
 from flask_cors import CORS
 from flask_login import LoginManager
-from flask import Flask 
+from flask import Flask
 
+from models.utils.install_models import install_models
 from models.utils.db import db
+from routes import install_routes
 from utils.config import IS_DEV
 
 app = Flask(__name__, static_url_path='/static')
@@ -31,11 +33,11 @@ cors = CORS(app,
 app.url_map.strict_slashes = False
 
 with app.app_context():
-    from models.utils.install_models import install_models
-    install_models()
+    if IS_DEV:
+        install_models()
     import utils.login_manager
     import utils.nltk_downloader
-    import routes
+    install_routes()
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

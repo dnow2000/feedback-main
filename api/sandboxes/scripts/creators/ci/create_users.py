@@ -8,6 +8,11 @@ from utils.config import COMMAND_NAME, EMAIL_HOST
 
 USERS_BY_TYPE_COUNT = 3
 
+default_user = create_user()
+PLAIN_PASSWORD = 'Azerty123456.'
+default_user.setPassword(PLAIN_PASSWORD)
+HASHED_PASSWORD = default_user.password
+
 def create_users():
     logger.info('create_users')
 
@@ -17,11 +22,13 @@ def create_users():
 
     for user_type in user_types:
         for role_index in range(USERS_BY_TYPE_COUNT):
-            users_by_name['{} {}'.format(user_type, role_index)] = create_user(
+            user = create_user(
                 email="{}test.{}.{}@{}".format(COMMAND_NAME, user_type, role_index, EMAIL_HOST),
-                password="{}test0.{}.{}".format(COMMAND_NAME, user_type.capitalize(), role_index),
+                password=None,
                 public_name="{} Test {} {}".format(COMMAND_NAME.upper(), user_type, role_index)
             )
+            user.password = HASHED_PASSWORD
+            users_by_name['{} {}'.format(user_type, role_index)] = user
 
     Manager.check_and_save(*users_by_name.values())
 
