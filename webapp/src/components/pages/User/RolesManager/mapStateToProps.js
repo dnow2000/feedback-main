@@ -10,7 +10,7 @@ function mapStateToProps (state, ownProps) {
 
   const rolesByType = {}
   roleTypes.forEach(roleType => {
-    rolesByType[roleType] = selectRoleByUserIdAndType(userId, roleType)})
+    rolesByType[roleType] = selectRoleByUserIdAndType(state, userId, roleType)})
 
   return {
     roleTypes,

@@ -70,6 +70,10 @@ REVIEW_INCLUDES = [
     }
 ]
 
+USER_ARTICLE_INCLUDES = [
+    'article'
+]
+
 VERDICT_INCLUDES = [
     "article",
     {

@@ -11,6 +11,7 @@ def install_routes():
     import routes.sign
     import routes.tags
     import routes.trendings
+    import routes.user_articles
     import routes.users
     import routes.verdicts
     import routes.verdict_users

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { requestData } from 'redux-saga-data'
 
-import RolesManagerContainer from './RolesManager/RolesManagerContainer'
+import PublicationsManagerContainer from './PublicationsManager/PublicationsManagerContainer'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 import UserItemContainer from '../Users/UsersExploration/UserItem/UserItemContainer'
@@ -38,7 +38,10 @@ class User extends Component {
             <UserItemContainer user={user} />
           </section>
           <section>
-            <RolesManagerContainer />
+            <h3 className="subtitle">
+              REVIEWER
+            </h3>
+            <PublicationsManagerContainer user={user} />
           </section>
         </MainContainer>
       </Fragment>

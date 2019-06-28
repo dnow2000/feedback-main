@@ -1,4 +1,3 @@
-""" trendings """
 from flask import current_app as app, jsonify, request
 
 from domain.trendings import get_topic_with_theme, get_trendings

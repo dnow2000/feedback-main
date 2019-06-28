@@ -22,10 +22,7 @@ class RolesManager extends Component {
     if (!roleTypes) {
       return null
     }
-
-    console.log('roleTypes', roleTypes)
-    console.log('rolesByType', rolesByType)
-
+    
     return (
       <div>
         {roleTypes.map(({ value }) => (
