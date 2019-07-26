@@ -9,7 +9,7 @@ from utils.config import COMMAND_NAME, EMAIL_HOST
 USERS_BY_TYPE_COUNT = 3
 
 default_user = create_user()
-PLAIN_PASSWORD = 'Azerty123456.'
+PLAIN_PASSWORD = 'user@AZERTY123'
 default_user.setPassword(PLAIN_PASSWORD)
 HASHED_PASSWORD = default_user.password
 
