@@ -1,8 +1,7 @@
-import { resetData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { closeModal } from 'redux-react-modals'
-import { requestData } from 'redux-saga-data'
+import { requestData, resetData } from 'redux-saga-data'
 
 import { closeNavigation } from '../../../reducers/navigation'
 

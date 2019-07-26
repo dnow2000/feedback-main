@@ -1,9 +1,8 @@
-import { assignData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { Form } from 'react-final-form'
-import { requestData } from 'redux-saga-data'
+import { assignData, requestData } from 'redux-saga-data'
 
 import ReviewItemContainer from './ReviewItem/ReviewItemContainer'
 import { TextField } from '../../../layout/form/fields'

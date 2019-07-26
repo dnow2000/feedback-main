@@ -2,9 +2,9 @@ import { requestData } from 'redux-saga-data'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { user } = ownProps
-  const { id: userId } = user
+  const { id: userId } = user || {}
   return {
-    requestGetPublications: () => dispatch(requestData({
+    requestGetPublications: () => user && dispatch(requestData({
       apiPath: `userArticles/${userId}`
     }))
   }

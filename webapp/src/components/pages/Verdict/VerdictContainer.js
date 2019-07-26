@@ -7,6 +7,9 @@ import { withRequiredLogin, withRoles } from '../../hocs'
 
 export default compose(
   withRequiredLogin,
-  withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
+  withRoles({
+    creationRoleTypes: ['editor'],
+    modificationRoleTypes: ['editor']
+  }),
   connect(mapStateToProps)
 )(Verdict)

@@ -38,7 +38,7 @@ export const withRoles = (config = {
         isModifiedEntity
       } = query.context()
       const { canRenderChildren } = this.state
-      
+
       if (canRenderChildren) {
         return
       }
@@ -100,7 +100,7 @@ export const withRoles = (config = {
   }
 
   function mapStateToProps (state) {
-    const accessRoles = selectCurrentRolesByTypes(state, config.accessRoles)
+    const accessRoles = selectCurrentRolesByTypes(state, config.accessRoleTypes)
     const creationRoles = selectCurrentRolesByTypes(state, config.creationRoleTypes)
     const modificationRoles = selectCurrentRolesByTypes(state, config.modificationRoleTypes)
     return {

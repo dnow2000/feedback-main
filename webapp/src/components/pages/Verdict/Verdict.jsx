@@ -26,7 +26,7 @@ class Verdict extends Component {
   }
 
   componentDidUpdate() {
-    this.handleRedirectToEditUrlWhenIdWhileWeAreInNewUrl()
+    this.handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl()
   }
 
   handleRequestData = () => {
@@ -102,12 +102,13 @@ class Verdict extends Component {
     return formSubmitPromise
   }
 
-  handleRedirectToEditUrlWhenIdWhileWeAreInNewUrl() {
+  handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
     const { currentUserVerdictPatch, history, query } = this.props
     const { id } = currentUserVerdictPatch || {}
+    console.log('id', id)
     const { isCreatedEntity } = query.context()
     if (isCreatedEntity && id) {
-      history.push(`/verdicts/${id}?edit`)
+      history.push(`/verdicts/${id}?modification`)
     }
   }
 
@@ -134,7 +135,10 @@ class Verdict extends Component {
                   REVIEWED ARTICLE
                 </span>
                 <span className="flex-auto" />
-                <NavLink className="button is-primary right" to={`/articles/${articleId}`}>
+                <NavLink
+                  className="button is-primary right"
+                  to={`/articles/${articleId}`}
+                >
                   See article
                 </NavLink>
               </h2>
@@ -172,7 +176,7 @@ class Verdict extends Component {
                     className="form flex-rows is-full-layout"
                     disabled={isFormLoading}
                     noValidate
-                    onSubmit={handleSubmit}
+                    onSubmit={event => event.preventDefault && handleSubmit(event)}
                   >
                     {!isCreatedEntity && <FormFieldsContainer />}
                     <FormFooterContainer

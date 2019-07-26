@@ -1,10 +1,9 @@
 import classnames from 'classnames'
-import { assignData } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { requestData } from 'redux-saga-data'
+import { assignData, requestData } from 'redux-saga-data'
 
 import ArticleItemContainer from './ArticleItem/ArticleItemContainer'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
