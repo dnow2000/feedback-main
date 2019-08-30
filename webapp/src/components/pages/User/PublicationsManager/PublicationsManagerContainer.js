@@ -1,10 +1,27 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { requestData } from 'redux-saga-data'
 
 import PublicationsManager from './PublicationsManager'
-import mapDispatchToProps from './mapDispatchToProps'
-import mapStateToProps from './mapStateToProps'
+
+const mapStateToProps = (state, ownProps) => {
+  const { user } = ownProps
+  const { id: userId } = user || {}
+  return {
+    publications: selectPublicationsByUserId(state, userId)
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { user } = ownProps
+  const { id: userId } = user || {}
+  return {
+    requestGetPublications: () => user && dispatch(requestData({
+      apiPath: `userArticles/${userId}`
+    }))
+  }
+}
 
 export default compose(
   withRouter,

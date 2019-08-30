@@ -2,8 +2,19 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 import Verdicts from './Verdicts'
-import mapStateToProps from './mapStateToProps'
 import { withRequiredLogin} from '../../hocs'
+import { selectVerdictsByArticleId } from '../../../selectors'
+
+function mapStateToProps (state, ownProps) {
+  const { query } = ownProps
+  const queryParams = query.parse()
+  const { articleId } = queryParams
+  return {
+    verdicts: articleId
+      ? selectVerdictsByArticleId(state, articleId)
+      : state.data.verdicts
+  }
+}
 
 export default compose(
   withRequiredLogin,

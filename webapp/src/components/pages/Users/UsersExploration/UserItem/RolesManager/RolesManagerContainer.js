@@ -1,7 +1,14 @@
 import { connect } from 'react-redux'
+import { requestData } from 'redux-saga-data'
 
 import RolesManager from './RolesManager'
-import mapDispatchToProps from './mapDispatchToProps'
-import mapStateToProps from './mapStateToProps'
+
+const mapStateToProps = state => ({
+  roleTypes: state.data.roleTypes
+})
+
+const mapDispatchToProps = dispatch => ({
+  requestGetRoleTypes: () => dispatch(requestData({ apiPath: '/roleTypes' }))
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(RolesManager)

@@ -69,7 +69,7 @@ export const verdictNormalizer = {
   reviews: {
     normalizer: {
       evaluation: 'evaluations',
-      user: 'users'
+      user: userConfig
     },
     stateKey: 'reviews',
   },

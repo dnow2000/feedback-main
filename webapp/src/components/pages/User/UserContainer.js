@@ -1,10 +1,16 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
 
-import { withRequiredLogin, withRoles } from '../../hocs'
-
 import User from './User'
-import mapStateToProps from './mapStateToProps'
+import { withRequiredLogin, withRoles } from '../../hocs'
+import { selectUserById } from '../../../selectors'
+
+const mapStateToProps = (state, ownProps) =>  {
+  const { match: { params: { userId } } } = ownProps
+  return {
+    user: selectUserById(state, userId)
+  }
+}
 
 export default compose(
   withRequiredLogin,

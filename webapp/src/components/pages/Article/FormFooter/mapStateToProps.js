@@ -5,7 +5,7 @@ import {
   selectCurrentUserReviewByArticleId
 } from '../../../../selectors'
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) =>  {
   const {
     match: { params: { articleId } },
   } = ownProps

@@ -1,6 +1,6 @@
 import { selectCurrentUser } from 'with-react-redux-login'
 
-function mapStateToProps(state) {
+const mapStateToProps = state =>  {
   return {
     currentUser: selectCurrentUser(state),
   }

@@ -2,7 +2,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import { selectCurrentRolesByTypes } from '../../../selectors'
 
-function mapStateToProps(state) {
+const mapStateToProps = state =>  {
   return {
     currentRoles: selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']),
     currentUser: selectCurrentUser(state),

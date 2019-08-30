@@ -1,6 +1,6 @@
 import { requestData } from 'redux-saga-data'
 
-export function mapDispatchToProps (dispatch) {
+export const mapDispatchToProps = dispatch => {
   return {
     onUploadClick: (image, handleSuccess, handleFail) => {
 

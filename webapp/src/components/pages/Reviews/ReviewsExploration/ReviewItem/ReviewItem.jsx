@@ -6,7 +6,6 @@ import Extract from '../../../../layout/Extract'
 import Rating from '../../../../layout/Rating'
 import Tag from '../../../../layout/Tag'
 
-
 const ReviewItem = ({ review, tags, user }) => {
   const { comment, id, rating } = review
   const {

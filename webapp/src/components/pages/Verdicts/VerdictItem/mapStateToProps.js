@@ -4,7 +4,7 @@ import {
   selectUserById,
 } from '../../../../selectors'
 
-function mapStateToProps(state, ownProps) {
+const mapStateToProps = (state, ownProps) =>  {
   const { verdict } = ownProps
   const { articleId, id, userId } = verdict || {}
   return {

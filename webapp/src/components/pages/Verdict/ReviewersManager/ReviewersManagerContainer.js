@@ -3,7 +3,14 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 
 import ReviewersManager from './ReviewersManager'
-import mapStateToProps from './mapStateToProps'
+import { selectUsersByVerdictId } from '../../../../selectors'
+
+function mapStateToProps (state, ownProps) {
+  const { match: { params: { verdictId } } } = ownProps
+  return {
+    verdictUsers: selectUsersByVerdictId(state, verdictId)
+  }
+}
 
 export default compose(
   withRouter,
