@@ -34,7 +34,7 @@ const mapStateToProps = (state, ownProps) => {
       state,
       articleId,
       null
-    ),
+    )
   }
 }
 

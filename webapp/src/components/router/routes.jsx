@@ -1,18 +1,18 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
-import ArticleContainer from '../components/pages/Article/ArticleContainer'
-import ArticlesContainer from '../components/pages/Articles/ArticlesContainer'
-import HomeContainer from '../components/pages/Home/HomeContainer'
-import ReviewContainer from '../components/pages/Review/ReviewContainer'
-import ReviewsContainer from '../components/pages/Reviews/ReviewsContainer'
-import UserContainer from '../components/pages/User/UserContainer'
-import UsersContainer from '../components/pages/Users/UsersContainer'
-import VerdictContainer from '../components/pages/Verdict/VerdictContainer'
-import VerdictsContainer from '../components/pages/Verdicts/VerdictsContainer'
-import SigninContainer from '../components/pages/Signin/SigninContainer'
-import SignupContainer from '../components/pages/Signup/SignupContainer'
-import TrendingsContainer from '../components/pages/Trendings/TrendingsContainer'
+import ArticleContainer from '../pages/Article/ArticleContainer'
+import ArticlesContainer from '../pages/Articles/ArticlesContainer'
+import HomeContainer from '../pages/Home/HomeContainer'
+import ReviewContainer from '../pages/Review/ReviewContainer'
+import ReviewsContainer from '../pages/Reviews/ReviewsContainer'
+import UserContainer from '../pages/User/UserContainer'
+import UsersContainer from '../pages/Users/UsersContainer'
+import VerdictContainer from '../pages/Verdict/VerdictContainer'
+import VerdictsContainer from '../pages/Verdicts/VerdictsContainer'
+import SigninContainer from '../pages/Signin/SigninContainer'
+import SignupContainer from '../pages/Signup/SignupContainer'
+import TrendingsContainer from '../pages/Trendings/TrendingsContainer'
 
 const routes = [
   {
@@ -22,7 +22,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/articles/:articleId',
+    path: '/articles/:articleId([A-Z][a-z]+|creation)/:modification(modification)?',
     render: () => <ArticleContainer />,
     title: 'Article',
   },

@@ -12,10 +12,10 @@ import { Icon } from '../../layout/Icon'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 import scrapDecorator from './decorators/scrapDecorator'
+import getFormParams from '../../../utils/getFormParams'
 import { articleNormalizer } from '../../../utils/normalizers'
 
 class Article extends Component {
-
   constructor() {
     super()
     this.state = { isFormLoading: false }
@@ -25,10 +25,11 @@ class Article extends Component {
     this.handleRequestData()
   }
 
+  getArticleFormParams = () => getFormParams('article', this.props)
+
   handleRequestData = () => {
-    const { dispatch, match, query } = this.props
-    const { params: { articleId } } = match
-    const { isCreatedEntity } = query.context()
+    const { dispatch } = this.props
+    const { id, isCreatedEntity } = this.getArticleFormParams()
 
     if (isCreatedEntity) {
       return
@@ -36,17 +37,17 @@ class Article extends Component {
 
     dispatch(
       requestData({
-        apiPath: `/articles/${articleId}`,
+        apiPath: `/articles/${id}`,
         normalizer: articleNormalizer,
       })
     )
   }
 
   handleRequestFail = formResolver => (state, action) => {
-    // we return API errors back to the form
     const { payload } = action
     const nextState = { isFormLoading: false }
     const errors = parseSubmitErrors(payload.errors)
+
     this.setState(nextState, () => formResolver(errors))
   }
 
@@ -54,6 +55,7 @@ class Article extends Component {
     const { payload: { datum } } = action
     const { history } = this.props
     const nextState = { isFormLoading: false }
+
     this.setState(nextState, () => {
       formResolver()
       const nextUrl = `/articles/${datum.id}`
@@ -62,15 +64,12 @@ class Article extends Component {
   }
 
   onFormSubmit = formValues => {
-    const { article, dispatch, query } = this.props
+    const { article, dispatch } = this.props
+    const { method } = this.getArticleFormParams()
     const { id } = (article || {})
-    const { method } = query.context()
 
     const apiPath = `/articles/${id || ''}`
     this.setState({ isFormLoading: true })
-    // NOTE: we need to promise the request callbacks
-    // in order to inject their payloads into the form
-
     const formSubmitPromise = new Promise(resolve => {
       dispatch(requestData({
         apiPath,
@@ -84,10 +83,10 @@ class Article extends Component {
   }
 
   render() {
-    const { article, canCreateArticle, query } = this.props
+    const { article, canCreateArticle, history } = this.props
+    const { creationUrl, isCreatedEntity } = this.getArticleFormParams()
     const { id } = (article || {})
     const { isFormLoading } = this.state
-    const { isCreatedEntity } = query.context()
 
     return (
       <Fragment>
@@ -102,7 +101,7 @@ class Article extends Component {
                 {canCreateArticle && (
                   <button
                     className="button is-primary"
-                    onClick={() => query.changeToCreation()}
+                    onClick={() => history.push(creationUrl)}
                     type="button"
                   >
                     New article
@@ -131,7 +130,11 @@ class Article extends Component {
               key={id}
               onSubmit={this.onFormSubmit}
               render={formProps => {
-                const { form, handleSubmit, validating }= formProps
+                const {
+                  form: { reset: resetForm },
+                  handleSubmit,
+                  validating
+                }= formProps
                 const canSubmit = getCanSubmit(
                   Object.assign({ isLoading: isFormLoading }, formProps))
                 return (
@@ -145,8 +148,8 @@ class Article extends Component {
                     <FormFieldsContainer validating={validating} />
                     <FormFooterContainer
                       canSubmit={canSubmit}
-                      form={form}
                       isLoading={isFormLoading}
+                      resetForm={resetForm}
                     />
                   </form>
                 )
@@ -169,9 +172,9 @@ Article.propTypes = {
   article: PropTypes.object,
   canCreateArticle: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default Article

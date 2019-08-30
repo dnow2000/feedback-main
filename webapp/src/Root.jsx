@@ -9,8 +9,9 @@ import {
 } from 'react-router-dom'
 
 import NotMatch from './components/pages/NotMatch'
+import routes from './components/router/routes'
 import App from './App'
-import routes from './utils/routes'
+
 import { configureStore } from './utils/store'
 
 const { store, persistor } = configureStore()

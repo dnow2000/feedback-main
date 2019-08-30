@@ -1,10 +1,5 @@
-import { connect } from 'react-redux'
-import { compose } from 'redux'
-import withQueryRouter from 'with-query-router'
+import { withRouter } from 'react-router-dom'
 
 import FormFields from './FormFields'
 
-export default compose(
-  withQueryRouter(),
-  connect()
-)(FormFields)
+export default withRouter(FormFields)

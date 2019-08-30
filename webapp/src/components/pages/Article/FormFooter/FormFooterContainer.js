@@ -1,12 +1,11 @@
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import FormFooter from './FormFooter'
 import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
 import selectCurrentUserReviewByArticleId from '../../../../selectors/selectCurrentUserReviewByArticleId'
-
 
 const mapStateToProps = (state, ownProps) =>  {
   const {
@@ -29,6 +28,6 @@ const mapStateToProps = (state, ownProps) =>  {
 }
 
 export default compose(
-  withQueryRouter(),
+  withRouter,
   connect(mapStateToProps)
 )(FormFooter)
