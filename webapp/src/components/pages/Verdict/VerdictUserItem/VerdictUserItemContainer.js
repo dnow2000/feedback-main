@@ -4,8 +4,8 @@ import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import VerdictUserItem from './VerdictUserItem'
+import selectReviewByArticleIdAndUserId from './selectors/selectReviewByArticleIdAndUserId'
 import selectEvaluationById from '../../../../selectors/selectEvaluationById'
-import selectReviewByArticleIdAndUserId from '../../../../selectors/selectReviewByArticleIdAndUserId'
 import selectTagsByUserId from '../../../../selectors/selectTagsByUserId'
 import selectVerdictById from '../../../../selectors/selectVerdictById'
 
