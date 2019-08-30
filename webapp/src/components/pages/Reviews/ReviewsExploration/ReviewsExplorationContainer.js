@@ -3,7 +3,7 @@ import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 
 import ReviewsExploration from './ReviewsExploration'
-import { selectReviewsByArticleId } from '../../../../selectors'
+import selectReviewsByArticleId from '../../../../selectors/selectReviewsByArticleId'
 
 const mapStateToProps = (state, ownProps) => {
   const { query } = ownProps

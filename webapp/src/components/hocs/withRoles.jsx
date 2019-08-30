@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 
-import { selectCurrentRolesByTypes } from '../../selectors'
+import selectCurrentRolesByTypes from '../../selectors/selectCurrentRolesByTypes'
 
 export const withRoles = (config = {
   accessRoleTypes: [],

@@ -1,6 +1,11 @@
 import { connect } from 'react-redux'
 
 import Hamburger from './Hamburger'
-import mapStateToProps from './mapStateToProps'
+
+function mapStateToProps (state) {
+  return {
+    isNavigationActive: state.navigation.isActive
+  }
+}
 
 export default connect(mapStateToProps)(Hamburger)

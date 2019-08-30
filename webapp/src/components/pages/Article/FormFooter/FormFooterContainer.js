@@ -4,10 +4,8 @@ import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import FormFooter from './FormFooter'
-import {
-  selectRoleByUserIdAndType,
-  selectCurrentUserReviewByArticleId
-} from '../../../../selectors'
+import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
+import selectCurrentUserReviewByArticleId from '../../../../selectors/selectCurrentUserReviewByArticleId'
 
 
 const mapStateToProps = (state, ownProps) =>  {

@@ -1,7 +1,7 @@
 import moment from 'moment'
 import { createSelector } from 'reselect'
 
-export const selectUsers = createSelector(
+const selectUsers = createSelector(
   state => state.data.users,
   users => {
     const filteredUsers = [...users]

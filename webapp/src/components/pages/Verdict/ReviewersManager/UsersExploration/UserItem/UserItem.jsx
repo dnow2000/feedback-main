@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-saga-data'
 
-import RolesManagerContainer from './RolesManager/RolesManagerContainer'
-import AvatarContainer from '../../../../layout/Avatar/AvatarContainer'
+import AvatarContainer from '../../../../../layout/Avatar/AvatarContainer'
 
 class UserItem extends Component {
 
@@ -24,10 +23,8 @@ class UserItem extends Component {
 
   render () {
     const {
-      adminRole,
       user,
-      tags,
-      withAddButton
+      tags
     } = this.props
     const {
       id,
@@ -57,41 +54,32 @@ class UserItem extends Component {
                 }
               </div>
             </div>
-            {withAddButton && (
-              <div>
-                <button
-                  className="button is-primary"
-                  onClick={this.handleAddReviewer}
-                  type="button"
-                >
-                    +
-                </button>
-              </div>
-            )}
+            <div>
+              <button
+                className="button is-primary"
+                onClick={this.handleAddReviewer}
+                type="button"
+              >
+                  +
+              </button>
+            </div>
           </div>
         </div>
-        <nav className="control flex-wrap flex-start items-center p12">
-          {adminRole && <RolesManagerContainer user={user} />}
-        </nav>
       </article>
     )
   }
 }
 
 UserItem.defaultProps = {
-  adminRole: null,
   tags: null,
-  user: null,
-  withAddButton: false
+  user: null
 }
 
 UserItem.propTypes = {
-  adminRole: PropTypes.shape(),
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape().isRequired,
   tags: PropTypes.array,
-  user: PropTypes.shape(),
-  withAddButton: PropTypes.bool,
+  user: PropTypes.shape()
 }
 
 export default UserItem

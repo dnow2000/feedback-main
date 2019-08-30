@@ -4,7 +4,7 @@ function mapArgsToCacheKey(state, texts) {
   return (texts || []).map(text => text).join('')
 }
 
-export const selectTagsByTexts = createCachedSelector(
+const selectTagsByTexts = createCachedSelector(
   state => state.data.tags,
   (state, texts) => texts,
   (tags, texts) =>

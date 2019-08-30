@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 
 import RolesManager from './RolesManager'
-import { selectRoleByUserIdAndType } from '../../../../selectors'
+import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
 
 const mapStateToProps = (state, ownProps) => {
   const { data: { roleTypes } } = state

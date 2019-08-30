@@ -4,8 +4,8 @@ import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import UserItem from './UserItem'
-import selectRoleByUserIdAndType from '../../../../../selectors/selectRoleByUserIdAndType'
-import selectTagsByUserId from '../../../../../selectors/selectTagsByUserId'
+import selectRoleByUserIdAndType from '../../../../../../selectors/selectRoleByUserIdAndType'
+import selectTagsByUserId from '../../../../../../selectors/selectTagsByUserId' 
 
 const mapStateToProps = (state, ownProps) => {
   const { user } = ownProps

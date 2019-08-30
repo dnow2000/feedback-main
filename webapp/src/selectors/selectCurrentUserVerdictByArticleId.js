@@ -5,7 +5,7 @@ function mapArgsToCacheKey(state, userId, articleId) {
   return `${userId || ''}/${articleId || ''}`
 }
 
-export const selectCurrentUserVerdictByArticleId = createCachedSelector(
+const selectCurrentUserVerdictByArticleId = createCachedSelector(
   state => state.data.verdicts,
   selectCurrentUser,
   (state, articleId) => articleId,

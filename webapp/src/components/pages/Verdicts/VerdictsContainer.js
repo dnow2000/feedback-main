@@ -3,7 +3,7 @@ import { compose } from 'redux'
 
 import Verdicts from './Verdicts'
 import { withRequiredLogin} from '../../hocs'
-import { selectVerdictsByArticleId } from '../../../selectors'
+import selectVerdictsByArticleId from '../../../selectors/selectVerdictsByArticleId'
 
 function mapStateToProps (state, ownProps) {
   const { query } = ownProps

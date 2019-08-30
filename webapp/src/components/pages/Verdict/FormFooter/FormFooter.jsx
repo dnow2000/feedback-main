@@ -35,7 +35,7 @@ class FormFooter extends Component {
           <NavLink
             className="button is-primary"
             id="edit-verdict"
-            to={`/verdicts/${verdictId}?edit`}
+            to={`/verdicts/${verdictId}?modification`}
           >
             Edit Verdict
           </NavLink>

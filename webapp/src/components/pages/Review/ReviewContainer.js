@@ -3,16 +3,14 @@ import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import Review from './Review'
-import selectFormInitialValuesByArticleId from './selectFormInitialValuesByArticleId'
+import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
+import selectVerdictsByArticleIdAndByUserId from './selectors/selectVerdictsByArticleIdAndByUserId'
 import { withRequiredLogin, withRoles } from '../../hocs'
-import {
-  getArticleIdByMatchAndQuery,
-  selectArticleById,
-  selectVerdictsByArticleIdAndByUserId
-} from '../../../selectors'
+import selectArticleIdByMatchAndQuery from '../../../selectors/selectArticleIdByMatchAndQuery'
+import selectArticleById from '../../../selectors/selectArticleById'
 
 const mapStateToProps = (state, ownProps) =>  {
-  const articleId = getArticleIdByMatchAndQuery(
+  const articleId = selectArticleIdByMatchAndQuery(
     state,
     ownProps.match,
     ownProps.query

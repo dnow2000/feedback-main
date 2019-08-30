@@ -4,7 +4,7 @@ function mapArgsToCacheKey(state, scopeTypes) {
   return (scopeTypes || []).map(scopeType => scopeType).join('')
 }
 
-export const selectTagsByScopes = createCachedSelector(
+const selectTagsByScopes = createCachedSelector(
   state => state.data.tags,
   (state, scopeTypes) => scopeTypes,
   (tags, scopeTypes) =>

@@ -4,7 +4,7 @@ function mapArgsToCacheKey(state, type) {
   return type || ''
 }
 
-export const selectEvaluationsByType = createCachedSelector(
+const selectEvaluationsByType = createCachedSelector(
   state => state.data.evaluations,
   (state, type) => type,
   (evaluations, type) =>

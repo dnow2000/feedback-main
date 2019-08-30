@@ -4,14 +4,12 @@ import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import VerdictUserItem from './VerdictUserItem'
-import {
-  selectEvaluationById,
-  selectReviewByArticleIdAndUserId,
-  selectTagsByUserId,
-  selectVerdictById
-} from '../../../../selectors'
+import selectEvaluationById from '../../../../selectors/selectEvaluationById'
+import selectReviewByArticleIdAndUserId from '../../../../selectors/selectReviewByArticleIdAndUserId'
+import selectTagsByUserId from '../../../../selectors/selectTagsByUserId'
+import selectVerdictById from '../../../../selectors/selectVerdictById'
 
-function mapStateToProps (state, ownProps) {
+const mapStateToProps = (state, ownProps) =>  {
   const { match: { params: { verdictId } } } = ownProps
   const { id: userId } = ownProps.user
 

@@ -4,12 +4,13 @@ import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import UsersExploration from './UsersExploration'
-import selectUsers from '../../../../selectors/selectUsers'
+import selectEligibleVerdictUsersByVerdictId from './selectors/selectEligibleVerdictUsersByVerdictId'
 
-const mapStateToProps = state =>  {
+const mapStateToProps = (state, ownProps) =>  {
+  const { match: { params: { verdictId } } } = ownProps
   return {
     currentUser: selectCurrentUser(state),
-    users: selectUsers(state),
+    users: selectEligibleVerdictUsersByVerdictId(state, verdictId),
   }
 }
 

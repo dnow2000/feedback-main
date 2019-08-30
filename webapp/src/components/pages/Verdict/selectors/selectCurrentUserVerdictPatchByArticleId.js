@@ -1,12 +1,12 @@
 import createCachedSelector from 're-reselect'
 
-import { selectCurrentUserVerdictByArticleId } from './selectCurrentUserVerdictByArticleId'
+import selectCurrentUserVerdictByArticleId from '../../../../selectors/selectCurrentUserVerdictByArticleId'
 
 function mapArgsToCacheKey(state, userId, articleId) {
   return `${userId || ''}/${articleId || ''}`
 }
 
-export const selectCurrentUserVerdictPatchByArticleId = createCachedSelector(
+const selectCurrentUserVerdictPatchByArticleId = createCachedSelector(
   selectCurrentUserVerdictByArticleId,
   (state, articleId) => articleId,
   (verdict, articleId) => Object.assign({ articleId }, verdict)

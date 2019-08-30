@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 
-export const selectTrendings = createSelector(
+const selectTrendings = createSelector(
   state => state.data.trendings,
   trendings => {
     const filteredTrendings = [...trendings]

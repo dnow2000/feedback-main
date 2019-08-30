@@ -4,7 +4,7 @@ function mapArgsToCacheKey(state, roleType, userId) {
   return `${roleType || ''} ${userId || ''}`
 }
 
-export const selectRoleByUserIdAndType = createCachedSelector(
+const selectRoleByUserIdAndType = createCachedSelector(
   state => state.data.roles,
   (state, userId) => userId,
   (state, userId, roleType) => roleType,

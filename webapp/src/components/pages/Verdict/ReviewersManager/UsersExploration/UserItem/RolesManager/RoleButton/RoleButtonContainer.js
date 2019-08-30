@@ -4,7 +4,8 @@ import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
 import RoleButton from './RoleButton'
-import selectRoleByUserIdAndType from '../../../../../../../selectors/selectRoleByUserIdAndType'
+import { selectRoleByUserIdAndType } from '../../../../../../../selectors'
+
 
 const mapStateToProps = (state, ownProps) => {
   const { roleType, user } = ownProps

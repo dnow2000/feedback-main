@@ -4,7 +4,7 @@ function mapArgsToCacheKey(state, reviewId) {
   return reviewId || ''
 }
 
-export const selectReviewById = createCachedSelector(
+const selectReviewById = createCachedSelector(
   state => state.data.reviews,
   (state, reviewId) => reviewId,
   (reviews, reviewId) => reviews.find(review => review.id === reviewId)

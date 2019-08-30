@@ -1,8 +1,7 @@
 import { compose } from 'redux'
 
-import { withRequiredLogin, withRoles } from '../../hocs'
-
 import Users from './Users'
+import { withRequiredLogin, withRoles } from '../../hocs'
 
 export default compose(
   withRequiredLogin,

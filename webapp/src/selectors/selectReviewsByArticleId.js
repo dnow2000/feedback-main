@@ -4,7 +4,7 @@ function mapArgsToCacheKey(state, articleId) {
   return articleId || ''
 }
 
-export const selectReviewsByArticleId = createCachedSelector(
+const selectReviewsByArticleId = createCachedSelector(
   state => state.data.reviews,
   (state, articleId) => articleId,
   (reviews, articleId) =>

@@ -3,14 +3,12 @@ import { compose } from 'redux'
 
 import Verdict from './Verdict'
 import { withRequiredLogin, withRoles } from '../../hocs'
-import {
-  selectArticleById,
-  getArticleIdByMatchAndQuery,
-  selectCurrentUserVerdictPatchByArticleId,
-} from '../../../selectors'
+import selectCurrentUserVerdictPatchByArticleId from './selectors/selectCurrentUserVerdictPatchByArticleId'
+import selectArticleIdByMatchAndQuery from '../../../selectors/selectArticleIdByMatchAndQuery'
+import selectArticleById from '../../../selectors/selectArticleById'
 
 const mapStateToProps = (state, ownProps) =>  {
-  const articleId = getArticleIdByMatchAndQuery(
+  const articleId = selectArticleIdByMatchAndQuery(
     state,
     ownProps.match,
     ownProps.query

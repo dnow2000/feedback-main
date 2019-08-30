@@ -5,7 +5,7 @@ function mapArgsToCacheKey(state, types) {
   return (types || []).join(',')
 }
 
-export const selectCurrentRolesByTypes = createCachedSelector(
+const selectCurrentRolesByTypes = createCachedSelector(
   state => state.data.roles,
   selectCurrentUser,
   (state, types) => types,

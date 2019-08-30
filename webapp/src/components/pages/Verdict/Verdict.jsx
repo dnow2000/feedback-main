@@ -105,7 +105,6 @@ class Verdict extends Component {
   handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
     const { currentUserVerdictPatch, history, query } = this.props
     const { id } = currentUserVerdictPatch || {}
-    console.log('id', id)
     const { isCreatedEntity } = query.context()
     if (isCreatedEntity && id) {
       history.push(`/verdicts/${id}?modification`)

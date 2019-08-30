@@ -4,14 +4,10 @@ import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import ArticleItem from './ArticleItem'
-import {
-  selectCurrentUserReviewByArticleId,
-  selectCurrentUserVerdictByArticleId,
-  selectRoleByUserIdAndType,
-  selectReviewsByArticleId
-} from '../../../../selectors'
-
-
+import selectCurrentUserReviewByArticleId from '../../../../selectors/selectCurrentUserReviewByArticleId'
+import selectCurrentUserVerdictByArticleId from '../../../../selectors/selectCurrentUserVerdictByArticleId'
+import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
+import selectReviewsByArticleId from '../../../../selectors/selectReviewsByArticleId'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { article } = ownProps

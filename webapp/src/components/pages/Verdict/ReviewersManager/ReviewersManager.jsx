@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { showModal } from 'redux-react-modals'
 
+import UsersExplorationContainer from './UsersExploration/UsersExplorationContainer'
 import VerdictUserItemContainer from '../VerdictUserItem/VerdictUserItemContainer'
-import UsersExplorationContainer from '../../Users/UsersExploration/UsersExplorationContainer'
 
 class ReviewersManager extends Component {
 

@@ -4,14 +4,11 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import Article from './Article'
 import { withRequiredLogin, withRoles } from '../../hocs'
-import {
-  selectArticleById,
-  selectCurrentUserReviewByArticleId,
-  selectRoleByUserIdAndType,
-  selectReviewsByArticleIdAndVerdictId,
-  selectVerdictsByArticleId,
-} from '../../../selectors'
-
+import selectArticleById from '../../../selectors/selectArticleById'
+import selectCurrentUserReviewByArticleId from '../../../selectors/selectCurrentUserReviewByArticleId'
+import selectRoleByUserIdAndType from '../../../selectors/selectRoleByUserIdAndType'
+import selectReviewsByArticleIdAndVerdictId from '../../../selectors/selectReviewsByArticleIdAndVerdictId'
+import selectVerdictsByArticleId from '../../../selectors/selectVerdictsByArticleId'
 
 const mapStateToProps = (state, ownProps) => {
   const currentUser = selectCurrentUser(state)

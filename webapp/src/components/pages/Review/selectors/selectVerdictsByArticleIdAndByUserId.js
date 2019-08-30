@@ -1,7 +1,7 @@
 import createCachedSelector from 're-reselect'
 
-import { selectVerdictsByArticleId } from './selectVerdictsByArticleId'
-import { selectVerdictUsersByUserId } from './selectVerdictUsersByUserId'
+import selectVerdictUsersByUserId from './selectVerdictUsersByUserId'
+import selectVerdictsByArticleId from '../../../../selectors/selectVerdictsByArticleId'
 
 function mapArgsToCacheKey(state, articleId) {
   return articleId || ''

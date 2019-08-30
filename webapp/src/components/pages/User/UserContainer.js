@@ -3,7 +3,7 @@ import { compose } from 'redux'
 
 import User from './User'
 import { withRequiredLogin, withRoles } from '../../hocs'
-import { selectUserById } from '../../../selectors'
+import selectUserById from '../../../selectors/selectUserById'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { match: { params: { userId } } } = ownProps

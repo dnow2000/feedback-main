@@ -4,6 +4,7 @@ import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 
 import PublicationsManager from './PublicationsManager'
+import selectPublicationsByUserId from './selectors/selectPublicationsByUserId'
 
 const mapStateToProps = (state, ownProps) => {
   const { user } = ownProps

@@ -1,12 +1,12 @@
 import createCachedSelector from 're-reselect'
 
-import { selectReviewTagsByReviewId } from './selectReviewTagsByReviewId'
+import selectReviewTagsByReviewId from './selectReviewTagsByReviewId'
 
 function mapArgsToCacheKey(state, reviewId) {
   return reviewId || ''
 }
 
-export const selectTagsByReviewId = createCachedSelector(
+const selectTagsByReviewId = createCachedSelector(
   state => state.data.tags,
   selectReviewTagsByReviewId,
   (tags, reviewTags) =>
