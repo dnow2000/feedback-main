@@ -3,19 +3,13 @@ import PropTypes from 'prop-types'
 import React, { Component, Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import getFormParams from '../../../../utils/getFormParams'
-
 class FormFooter extends Component {
-
-  getArticleFormParams = () =>
-    getFormParams('article', this.props)
-
   render () {
     const {
       canEdit,
       canReview,
       canSubmit,
-      formParams,
+      form,
       history,
       isLoading,
       match,
@@ -30,7 +24,7 @@ class FormFooter extends Component {
       modificationUrl,
       readOnly,
       readOnlyUrl
-    } = this.getArticleFormParams()
+    } = form
     const { id: reviewId } = review || {}
 
     return (
@@ -109,6 +103,12 @@ FormFooter.propTypes = {
   canEdit: PropTypes.bool,
   canReview: PropTypes.bool,
   canSubmit: PropTypes.bool,
+  form: PropTypes.shape({
+    isCreatedEntity: PropTypes.bool,
+    modificationUrl: PropTypes.string,
+    readOnly: PropTypes.string,
+    readOnlyUrl: PropTypes.string
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,

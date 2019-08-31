@@ -12,7 +12,6 @@ import { Icon } from '../../layout/Icon'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 import scrapDecorator from './decorators/scrapDecorator'
-import getFormParams from '../../../utils/getFormParams'
 import { articleNormalizer } from '../../../utils/normalizers'
 
 class Article extends Component {
@@ -25,11 +24,9 @@ class Article extends Component {
     this.handleRequestData()
   }
 
-  getArticleFormParams = () => getFormParams('article', this.props)
-
   handleRequestData = () => {
-    const { dispatch } = this.props
-    const { id, isCreatedEntity } = this.getArticleFormParams()
+    const { dispatch, form } = this.props
+    const { id, isCreatedEntity } = form
 
     if (isCreatedEntity) {
       return
@@ -64,8 +61,8 @@ class Article extends Component {
   }
 
   onFormSubmit = formValues => {
-    const { article, dispatch } = this.props
-    const { method } = this.getArticleFormParams()
+    const { article, dispatch, form } = this.props
+    const { method } = form
     const { id } = (article || {})
 
     const apiPath = `/articles/${id || ''}`
@@ -83,8 +80,8 @@ class Article extends Component {
   }
 
   render() {
-    const { article, canCreateArticle, history } = this.props
-    const { creationUrl, isCreatedEntity } = this.getArticleFormParams()
+    const { article, canCreateArticle, form, history } = this.props
+    const { creationUrl, isCreatedEntity } = form
     const { id } = (article || {})
     const { isFormLoading } = this.state
 
@@ -172,6 +169,11 @@ Article.propTypes = {
   article: PropTypes.object,
   canCreateArticle: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    creationUrl: PropTypes.string,
+    id: PropTypes.string,
+    isCreatedEntity: PropTypes.bool,
+  }).isRequired,
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired

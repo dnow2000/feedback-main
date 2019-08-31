@@ -1,5 +1,4 @@
-import { withRouter } from 'react-router-dom'
-
 import FormFields from './FormFields'
+import withFormRouter from '../../../hocs/withFormRouter/withFormRouter'
 
-export default withRouter(FormFields)
+export default withFormRouter(FormFields)

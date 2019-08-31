@@ -4,6 +4,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import Article from './Article'
 import { withRequiredLogin, withRoles } from '../../hocs'
+import withFormRouter from '../../hocs/withFormRouter/withFormRouter'
 import selectArticleById from '../../../selectors/selectArticleById'
 import selectCurrentUserReviewByArticleId from '../../../selectors/selectCurrentUserReviewByArticleId'
 import selectRoleByUserIdAndType from '../../../selectors/selectRoleByUserIdAndType'
@@ -41,5 +42,6 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
   withRequiredLogin,
   withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
+  withFormRouter,
   connect(mapStateToProps)
 )(Article)

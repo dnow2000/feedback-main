@@ -1,9 +1,9 @@
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import FormFooter from './FormFooter'
+import withFormRouter from '../../../hocs/withFormRouter/withFormRouter'
 import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
 import selectCurrentUserReviewByArticleId from '../../../../selectors/selectCurrentUserReviewByArticleId'
 
@@ -28,6 +28,6 @@ const mapStateToProps = (state, ownProps) =>  {
 }
 
 export default compose(
-  withRouter,
+  withFormRouter,
   connect(mapStateToProps)
 )(FormFooter)

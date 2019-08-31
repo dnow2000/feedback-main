@@ -1,10 +1,20 @@
 import { createSelector } from 'reselect'
 
-const getFormParams = createSelector(
-  (entityName, { match }) => match.params[`${entityName}Id`],
-  (entityName, { location }) => location.pathname,
-  (entityName, { location }) => location.search,
-  (entityName, { match }) => match.params.modification,
+const getId = ({ match, location, name }) => {
+  const { params } = match
+  if (name) {
+    return params[`${name}Id`]
+  }
+
+  const { pathname } = location
+  return pathname.split('/').slice(-1)[0]
+}
+
+const getForm = createSelector(
+  getId,
+  ({ location }) => location.pathname,
+  ({ location }) => location.search,
+  ({ match }) => match.params.modification,
   (id, pathname, search, modification) => {
 
     const isCreatedEntity = id === "creation"
@@ -39,4 +49,4 @@ const getFormParams = createSelector(
   }
 )
 
-export default getFormParams
+export default getForm

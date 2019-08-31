@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React from 'react'
 
 import {
   CheckboxField,
@@ -8,83 +8,80 @@ import {
   TextField,
 } from '../../../layout/form/fields'
 import createValidateScrapField from './validators/createValidateScrapField'
-import getFormParams from '../../../../utils/getFormParams'
 
 const validateScrapField = createValidateScrapField()
 
-class FormFields extends Component {
-  getArticleFormParams = () => getFormParams('article', this.props)
+const FormFields = ({
+  form,
+  validating
+}) => {
+  const { isModifiedEntity, readOnly } = form
 
-  render () {
-    const { validating } = this.props
-    const { isModifiedEntity, readOnly } = this.getArticleFormParams()
+  return (
+    <div className="section">
+      <div className="field-group">
+        <TextField
+          label="url"
+          name="url"
+          readOnly={readOnly || isModifiedEntity}
+          renderValue={() => (
+            <button
+              className={classnames("button is-loading is-transparent", {
+                "is-seethrough": !validating
+              })}
+              type="button"
+            />
+          )}
+          required
+          validate={validateScrapField}
+        />
+        <TextField
+          label="title"
+          name="title"
+          readOnly={readOnly}
+          required
+        />
+        <TextareaField
+          label="summary"
+          name="summary"
+          readOnly={readOnly}
+          required
+          rows={readOnly ? 1 : 5}
+        />
 
-    return (
-      <div className="section">
-        <div className="field-group">
+        <div className="optional-subtitle">
+          Optional:
+        </div>
+        <CheckboxField
+          label="Is this article reviewable ?"
+          name="isReviewable"
+          readOnly={readOnly}
+        />
+        <div className="flex-columns flex-wrap">
           <TextField
-            label="url"
-            name="url"
-            readOnly={readOnly || isModifiedEntity}
-            renderValue={() => (
-              <button
-                className={classnames("button is-loading is-transparent", {
-                  "is-seethrough": !validating
-                })}
-                type="button"
-              />
-            )}
-            required
-            validate={validateScrapField}
+            className='pr12'
+            label="Total shares"
+            name="totalShares"
+            readOnly={readOnly}
+            type="number"
           />
           <TextField
-            label="title"
-            name="title"
+            className='pr12'
+            label="Facebook shares"
+            name="fbShares"
             readOnly={readOnly}
-            required
+            type="number"
           />
-          <TextareaField
-            label="summary"
-            name="summary"
+          <TextField
+            label="Twitter shares"
+            name="twitterShares"
             readOnly={readOnly}
-            required
-            rows={readOnly ? 1 : 5}
+            type="number"
           />
-
-          <div className="optional-subtitle">
-            Optional:
-          </div>
-          <CheckboxField
-            label="Is this article reviewable ?"
-            name="isReviewable"
-            readOnly={readOnly}
-          />
-          <div className="flex-columns flex-wrap">
-            <TextField
-              className='pr12'
-              label="Total shares"
-              name="totalShares"
-              readOnly={readOnly}
-              type="number"
-            />
-            <TextField
-              className='pr12'
-              label="Facebook shares"
-              name="fbShares"
-              readOnly={readOnly}
-              type="number"
-            />
-            <TextField
-              label="Twitter shares"
-              name="twitterShares"
-              readOnly={readOnly}
-              type="number"
-            />
-          </div>
         </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 FormFields.defaultProps = {
@@ -92,6 +89,10 @@ FormFields.defaultProps = {
 }
 
 FormFields.propTypes = {
+  form: PropTypes.shape({
+    isModifiedEntity: PropTypes.bool,
+    readOnly: PropTypes.bool,
+  }).isRequired,
   validating: PropTypes.bool
 }
 
