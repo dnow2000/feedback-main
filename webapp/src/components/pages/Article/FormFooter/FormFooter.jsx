@@ -1,9 +1,9 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 
-class FormFooter extends Component {
+class FormFooter extends PureComponent {
   render () {
     const {
       canEdit,

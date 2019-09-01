@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-saga-data'
@@ -11,7 +11,7 @@ import MainContainer from '../../layout/Main/MainContainer'
 import { TextField } from '../../layout/form/fields'
 import { articleNormalizer } from '../../../utils/normalizers'
 
-class Articles extends Component {
+class Articles extends PureComponent {
   constructor (props) {
     super(props)
     const { dispatch } = props

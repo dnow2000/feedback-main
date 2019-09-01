@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
 import PublicationItem from './PublicationItem/PublicationItemContainer'
 
-class PublicationsManager extends Component {
+class PublicationsManager extends PureComponent {
 
   componentDidMount () {
     const { requestGetPublications } = this.props

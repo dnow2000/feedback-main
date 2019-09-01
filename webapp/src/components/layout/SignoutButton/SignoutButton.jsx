@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { closeModal } from 'redux-react-modals'
 import { requestData, resetData } from 'redux-saga-data'
 
 import { closeNavigation } from '../../../reducers/navigation'
 
-class SignoutButton extends Component {
+class SignoutButton extends PureComponent {
 
   handleFail = () => {
     const { handleFail, handleFailRedirect, history } = this.props

@@ -3,7 +3,7 @@
 import classnames from 'classnames'
 import { convertToRaw } from 'draft-js'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { Field } from 'react-final-form'
 import { composeValidators } from 'react-final-form-utils'
 
@@ -11,7 +11,7 @@ import Texteditor from './Texteditor'
 import { FieldError } from '../../layout'
 import getRequiredValidate from '../../utils/getRequiredValidate'
 
-export class TexteditorField extends Component {
+export class TexteditorField extends PureComponent {
   constructor () {
     super()
     this.state = {

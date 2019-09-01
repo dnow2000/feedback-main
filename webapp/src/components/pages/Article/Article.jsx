@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-saga-data'
@@ -14,7 +14,7 @@ import MainContainer from '../../layout/Main/MainContainer'
 import scrapDecorator from './decorators/scrapDecorator'
 import { articleNormalizer } from '../../../utils/normalizers'
 
-class Article extends Component {
+class Article extends PureComponent {
   constructor() {
     super()
     this.state = { isFormLoading: false }

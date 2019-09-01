@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { requestData } from 'redux-saga-data'
 
-class RolesManager extends Component {
+class RolesManager extends PureComponent {
   componentDidMount () {
     this.handleRequestData()
   }

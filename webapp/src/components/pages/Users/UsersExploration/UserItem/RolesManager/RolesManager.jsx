@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 
 import RoleButtonContainer from './RoleButton/RoleButtonContainer'
 
-class RolesManager extends Component {
+class RolesManager extends PureComponent {
   componentDidMount () {
     const { requestGetRoleTypes, roleTypes } = this.props
     if (roleTypes.length > 0) {

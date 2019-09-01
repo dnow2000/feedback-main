@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-saga-data'
 
@@ -9,7 +9,7 @@ import { trendingMaxDates, trendingThemes } from './utils'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 
-class Trendings extends Component {
+class Trendings extends PureComponent {
   constructor (props) {
     super(props)
 

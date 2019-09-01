@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
@@ -9,7 +9,7 @@ import Extract from '../../../layout/Extract'
 import Tag from '../../../layout/Tag'
 import { ROOT_PATH, THUMBS_URL } from '../../../../utils/config'
 
-class ArticleItem extends Component {
+class ArticleItem extends PureComponent {
   onDeleteClick = () => {
     const { article, dispatch } = this.props
     const { id } = article

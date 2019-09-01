@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Transition from 'react-transition-group/Transition'
 import { requestData } from 'redux-saga-data'
 
@@ -15,7 +15,7 @@ const transitionStyles = {
   entering: { maxHeight: 400, opacity: 1 },
 }
 
-class TrendingItem extends Component {
+class TrendingItem extends PureComponent {
   constructor () {
     super()
     this.state = {

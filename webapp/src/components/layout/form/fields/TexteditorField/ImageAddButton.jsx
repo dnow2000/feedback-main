@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { requestData } from 'redux-saga-data'
 
@@ -9,7 +9,7 @@ import { THUMBS_URL } from '../../../../../utils/config'
 
 const { addImage } = imagePlugin
 
-export class RawImageAddButton extends Component {
+export class RawImageAddButton extends PureComponent {
   constructor () {
     super()
     this.state = {

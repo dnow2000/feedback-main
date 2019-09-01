@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
@@ -13,7 +13,7 @@ import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 import { articleNormalizer, verdictNormalizer } from '../../../utils/normalizers'
 
-class Verdict extends Component {
+class Verdict extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {

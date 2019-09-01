@@ -1,8 +1,8 @@
 import get from 'lodash.get'
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 
-class Stream extends Component {
+class Stream extends PureComponent {
   constructor () {
     super()
     this.state = { currentIndex: 0 }

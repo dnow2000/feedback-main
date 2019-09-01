@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-saga-data'
@@ -10,7 +10,7 @@ import FormFooter from './FormFooter'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 
-class Signin extends Component {
+class Signin extends PureComponent {
   constructor(props) {
     super(props)
     this.state = { isFormLoading: false }

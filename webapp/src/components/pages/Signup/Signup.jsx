@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
@@ -14,7 +14,7 @@ import { withNotRequiredLogin } from '../../hocs'
 import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 
-class Signup extends Component {
+class Signup extends PureComponent {
   constructor(props) {
     super(props)
     this.state = { isFormLoading: false }

@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-saga-data'
 
 import AvatarContainer from '../../../../../layout/Avatar/AvatarContainer'
 
-class UserItem extends Component {
+class UserItem extends PureComponent {
 
   handleAddReviewer = () => {
     const { dispatch, match, user } = this.props

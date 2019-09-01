@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import { showModal } from 'redux-react-modals'
 
 import UsersExplorationContainer from './UsersExploration/UsersExplorationContainer'
 import VerdictUserItemContainer from '../VerdictUserItem/VerdictUserItemContainer'
 
-class ReviewersManager extends Component {
+class ReviewersManager extends PureComponent {
 
   onAddClick = () => {
     const {

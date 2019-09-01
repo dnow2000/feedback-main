@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { requestData } from 'redux-saga-data'
 
 import PublicationsManagerContainer from './PublicationsManager/PublicationsManagerContainer'
@@ -8,7 +8,7 @@ import MainContainer from '../../layout/Main/MainContainer'
 import UserItemContainer from '../Users/UsersExploration/UserItem/UserItemContainer'
 import { userNormalizer } from '../../../utils/normalizers'
 
-class User extends Component {
+class User extends PureComponent {
   componentDidMount() {
     this.handleRequestData()
   }

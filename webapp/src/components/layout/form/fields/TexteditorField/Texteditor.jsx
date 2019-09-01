@@ -6,7 +6,7 @@ import {
   UnderlineButton,
 } from 'draft-js-buttons'
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 
 import {
   AlignmentTool,
@@ -17,7 +17,7 @@ import {
 import { ControlBar } from './ControlBar'
 import ImageDropzone from './ImageDropzone'
 
-export class TextEditor extends Component {
+export class TextEditor extends PureComponent {
   constructor (props) {
     super(props)
     const { value } = props

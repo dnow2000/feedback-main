@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-saga-data'
@@ -12,7 +12,7 @@ function getScrollParent () {
   return document.querySelector('.modal-dialog')
 }
 
-class UsersExploration extends Component {
+class UsersExploration extends PureComponent {
   constructor (props) {
     super(props)
     const { currentUser, dispatch } = props

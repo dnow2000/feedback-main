@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import { stringify } from 'query-string'
-import React, { Component } from 'react'
+import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-saga-data'
 
 import AvatarContainer from '../../../layout/Avatar/AvatarContainer'
 
-class VerdictUserItem extends Component {
+class VerdictUserItem extends PureComponent {
 
   handleRemoveUser = () => {
     const { dispatch, match, user } = this.props

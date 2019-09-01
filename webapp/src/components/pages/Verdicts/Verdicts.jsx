@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Component, Fragment } from 'react'
+import React, { Fragment, PureComponent } from 'react'
 import { requestData } from 'redux-saga-data'
 
 import VerdictItemContainer from './VerdictItem/VerdictItemContainer'
@@ -7,7 +7,7 @@ import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 import { verdictNormalizer } from '../../../utils/normalizers'
 
-class Verdicts extends Component {
+class Verdicts extends PureComponent {
 
   componentDidMount() {
     const { query } = this.props
