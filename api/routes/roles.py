@@ -1,7 +1,7 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
-from models.manager import Manager
 from models.role import Role, RoleType
 from models.user import User
 from models.utils.db import db
@@ -29,7 +29,7 @@ def post_role():
     role.type = request.json['type']
     role.user = user
 
-    Manager.check_and_save(role)
+    Handler.save(role)
 
     return jsonify(role.as_dict()), 200
 
@@ -40,7 +40,7 @@ def delete_role(role_id):
 
     role = load_or_404(Role, role_id)
 
-    Manager.delete(role)
+    Handler.delete(role)
 
     db.session.commit()
 

@@ -2,6 +2,7 @@ import os
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask import Flask
+from sqlalchemy_handler import Handler
 
 from models.utils.install_models import install_models
 from models.utils.db import db
@@ -22,7 +23,7 @@ app.config['REMEMBER_COOKIE_HTTPONLY'] = True
 app.config['REMEMBER_COOKIE_SECURE'] = True
 
 db.init_app(app)
-
+Handler.set_db(db)
 login_manager.init_app(app)
 
 cors = CORS(app,

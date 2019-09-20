@@ -1,11 +1,9 @@
-""" articles """
 import subprocess
-
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
 from models import Article
-from models.manager import Manager
 from repository.articles import get_articles_query_with_keywords, \
                                 filter_articles_by_is_reviewable, \
                                 get_articles_keywords_join_query, \
@@ -71,7 +69,7 @@ def create_article():
     article = Article()
     article.populateFromDict(content)
 
-    Manager.check_and_save(article)
+    Handler.save(article)
 
     # TODO: put it in a celery pipe
     p = subprocess.Popen('PYTHONPATH="." python scripts/manager.py screenshotmachine'
@@ -91,7 +89,7 @@ def edit_article(article_id):
     article = load_or_404(Article, article_id)
     article.populateFromDict(request.json)
 
-    Manager.check_and_save(article)
+    Handler.save(article)
 
     return jsonify(article.as_dict(includes=ARTICLE_INCLUDES)), 201
 
@@ -104,6 +102,6 @@ def soft_delete_article(article_id):
     article = load_or_404(Article, article_id)
     article.soft_delete()
 
-    Manager.check_and_save(article)
+    Handler.save(article)
 
     return jsonify(article.as_dict()), 201

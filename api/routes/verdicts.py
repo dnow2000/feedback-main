@@ -1,9 +1,8 @@
-""" verdicts """
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
-from models import Verdict
-from models.manager import Manager
+from models.verdict import Verdict
 from repository.verdicts import filter_verdicts_with_article_id
 from utils.includes import VERDICT_INCLUDES
 from utils.rest import expect_json_data,\
@@ -40,7 +39,7 @@ def create_verdict():
     verdict = Verdict()
     verdict.populateFromDict(request.json)
     verdict.user = current_user
-    Manager.check_and_save(verdict)
+    Handler.save(verdict)
     return jsonify(verdict.as_dict(includes=VERDICT_INCLUDES)), 201
 
 @app.route('/verdicts/<verdict_id>', methods=['PATCH'])
@@ -52,5 +51,5 @@ def edit_verdict(verdict_id):
 
     verdict = load_or_404(Verdict, verdict_id)
     verdict.populateFromDict(request.json)
-    Manager.check_and_save(verdict)
+    Handler.save(verdict)
     return jsonify(verdict.as_dict(includes=VERDICT_INCLUDES)), 201

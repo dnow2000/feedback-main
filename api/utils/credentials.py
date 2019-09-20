@@ -1,6 +1,6 @@
-""" credentials """
+from sqlalchemy_handler import Handler
+
 from models import User
-from models.manager import Manager
 from models.utils.db import db
 from models.utils.api_errors import ApiErrors
 
@@ -33,4 +33,4 @@ def change_password(user, password):
         user = User.query.filter_by(email=user).one()
     user.setPassword(password)
     user = db.session.merge(user)
-    Manager.check_and_save(user)
+    Handler.save(user)

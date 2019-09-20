@@ -1,6 +1,7 @@
+from sqlalchemy_handler import Handler
+
 from models.article import Article
 from models.tag import Tag
-from models.manager import Manager
 from tests.utils import create_article_tag
 from utils.logger import logger
 
@@ -45,7 +46,7 @@ def create_article_tags():
         tag=tag
     )
 
-    Manager.check_and_save(*article_tags_by_name.values())
+    Handler.save(*article_tags_by_name.values())
 
     logger.info('created {} article_tags_by_name'.format(len(article_tags_by_name)))
 

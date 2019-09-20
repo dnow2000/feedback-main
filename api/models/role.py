@@ -4,9 +4,9 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        String
 from sqlalchemy.orm import relationship
+from sqlalchemy_handler import Handler
 
 from models.utils.db import Model
-from models.manager import Manager
 
 class RoleType(enum.Enum):
     def as_dict(self):
@@ -20,7 +20,7 @@ class RoleType(enum.Enum):
     guest = "guest"
     reviewer = "reviewer"
 
-class Role(Manager, Model):
+class Role(Handler, Model):
 
     userId = Column(BigInteger,
                     ForeignKey('user.id'),

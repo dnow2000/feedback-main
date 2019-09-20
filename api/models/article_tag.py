@@ -1,11 +1,11 @@
 from sqlalchemy import BigInteger, Column, ForeignKey
 from sqlalchemy.orm import backref, relationship
+from sqlalchemy_handler import Handler
 
 from models.utils.db import Model
-from models.manager import Manager
 
-class ArticleTag(Manager,
-                Model):
+class ArticleTag(Handler,
+                 Model):
 
     articleId = Column(BigInteger,
                        ForeignKey('article.id'),

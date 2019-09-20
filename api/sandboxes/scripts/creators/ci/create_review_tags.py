@@ -1,8 +1,9 @@
+from sqlalchemy_handler import Handler
+
 from models.article import Article
 from models.review import Review
 from models.tag import Tag
 from models.user import User
-from models.manager import Manager
 from tests.utils import create_review_tag
 from utils.logger import logger
 
@@ -47,7 +48,7 @@ def create_review_tags():
         tag=tag
     )
 
-    Manager.check_and_save(*review_tags_by_name.values())
+    Handler.save(*review_tags_by_name.values())
 
     logger.info('created {} review_tags_by_name'.format(len(review_tags_by_name)))
 

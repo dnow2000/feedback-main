@@ -1,12 +1,10 @@
-""" images """
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
 from models import Image
-from models.manager import Manager
 from validation import check_and_read_files_thumb, \
                        check_has_role
-from utils.human_ids import dehumanize
 from utils.rest import login_or_api_key_required
 
 @app.route('/images', methods=['POST'])
@@ -22,7 +20,7 @@ def create_image():
     image_dict = { "name": request.files['thumb'].filename }
     image.populateFromDict(image_dict)
 
-    Manager.check_and_save(image)
+    Handler.save(image)
 
     image.save_thumb(thumb, 0)
 

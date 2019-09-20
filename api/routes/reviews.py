@@ -1,8 +1,8 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
 from models import Review
-from models.manager import Manager
 from repository.reviews import filter_reviews_with_article_id, \
                                get_reviews_join_query, \
                                get_reviews_query_with_keywords, \
@@ -54,7 +54,7 @@ def create_review():
     review.populateFromDict(request.json)
     review.user = current_user
 
-    Manager.check_and_save(review)
+    Handler.save(review)
 
     save_tags(review, request.json.get('tagIds', []))
 
@@ -70,7 +70,7 @@ def edit_review(review_id):
     review = load_or_404(Review, review_id)
     review.populateFromDict(request.json)
 
-    Manager.check_and_save(review)
+    Handler.save(review)
 
     save_tags(review, request.json.get('tagIds', []))
 

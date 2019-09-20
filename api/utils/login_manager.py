@@ -1,4 +1,3 @@
-""" login_manager """
 import uuid
 from flask import current_app as app, jsonify, session
 from flask_login import login_user

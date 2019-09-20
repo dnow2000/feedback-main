@@ -6,10 +6,10 @@ from models.utils.db import db
 
 class Save(Errors):
     @staticmethod
-    def check_and_save(*objects):
+    def save(*objects):
         if not objects:
             raise ValueError('Objects to save need to be passed as arguments'
-                             + ' to check_and_save')
+                             + ' to save')
 
         # CUMULATE ERRORS IN ONE SINGLE API ERRORS DURING ADD TIME
         api_errors = ApiErrors()

@@ -1,8 +1,7 @@
-from models.manager import Manager
 from tests.utils import create_user_article
 from utils.logger import logger
 
-def create_user_articles(users_by_name, articles_by_name):
+def create_user_articles():
     logger.info('create_user_articles')
 
     article_users_by_name = {}

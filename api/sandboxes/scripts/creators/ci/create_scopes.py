@@ -1,5 +1,6 @@
+from sqlalchemy_handler import Handler
+
 from models.scope import ScopeType
-from models.manager import Manager
 from models.tag import Tag
 from tests.utils import create_scope
 from utils.logger import logger
@@ -40,7 +41,7 @@ def create_scopes():
             scope_type="user"
         )
 
-    Manager.check_and_save(*scopes_by_name.values())
+    Handler.save(*scopes_by_name.values())
 
     logger.info('created {} scopes'.format(len(scopes_by_name)))
 

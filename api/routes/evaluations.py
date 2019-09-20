@@ -1,7 +1,6 @@
 from flask import current_app as app, jsonify
 
-from models import Evaluation
-from models.manager import Manager
+from models.evaluation import Evaluation
 from utils.includes import REVIEW_INCLUDES
 from utils.rest import login_or_api_key_required
 

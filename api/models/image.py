@@ -1,13 +1,12 @@
 from sqlalchemy import Column,\
                        String
 from sqlalchemy.orm import relationship
+from sqlalchemy_handler import Handler
 
-from models.utils.db import Model
-from models.manager import Manager
 from models.mixins import HasThumbMixin
+from models.utils.db import Model
 
-
-class Image(Manager,
+class Image(Handler,
             Model,
             HasThumbMixin):
 

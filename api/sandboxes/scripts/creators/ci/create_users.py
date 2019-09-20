@@ -1,10 +1,10 @@
+from sqlalchemy_handler import Handler
+
 from models.role import RoleType
-from models.manager import Manager
 from sandboxes.scripts.utils.storage_utils import store_public_object_from_sandbox_assets
 from tests.utils import create_user
-from utils.logger import logger
-
 from utils.config import COMMAND_NAME, EMAIL_HOST
+from utils.logger import logger
 
 USERS_BY_TYPE_COUNT = 3
 
@@ -30,7 +30,7 @@ def create_users():
             user.password = HASHED_PASSWORD
             users_by_name['{} {}'.format(user_type, role_index)] = user
 
-    Manager.check_and_save(*users_by_name.values())
+    Handler.save(*users_by_name.values())
 
     for user_type in user_types:
         for role_index in range(USERS_BY_TYPE_COUNT):

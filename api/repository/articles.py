@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
+from sqlalchemy_handler import Handler
 
 from models.article import Article
 from models.article_tag import ArticleTag
-from models.manager import Manager
 from models.tag import Tag
 from domain.content import get_buzzsumo_content,\
                            get_newspaper_content
@@ -58,7 +58,7 @@ def sync_articles(from_date, to_date):
     ).all()
     for article in articles:
         update_article(article)
-    Manager.check_and_save(*articles)
+    Handler.save(*articles)
 
 def create_clock_sync_articles(from_date_minutes, to_date_minutes):
     def clock_sync_articles():

@@ -1,15 +1,15 @@
 from inspect import isclass
+from sqlalchemy_handler import Handler
 
 import models
-from models.manager import Manager
 
 def get_saved_counts_by_model_name(app):
     saved_counts_by_model_name = {}
     for model_name in dir(models):
         model = getattr(models, model_name)
         if isclass(model)\
-           and issubclass(model, Manager)\
-           and model_name != "Manager":
+           and issubclass(model, Handler)\
+           and model_name != "Handler":
             saved_counts_by_model_name[model_name] = model.query.count()
     return saved_counts_by_model_name
 

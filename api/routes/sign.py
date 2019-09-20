@@ -1,7 +1,7 @@
 from flask_login import current_user, login_required, logout_user, login_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
-from models.manager import Manager
 from models.user import User
 from utils.credentials import get_user_with_credentials
 from utils.includes import USER_INCLUDES
@@ -36,7 +36,7 @@ def signout():
 def signup():
     new_user = User(from_dict=request.json)
     new_user.id = None
-    Manager.check_and_save(new_user)
+    Handler.save(new_user)
     login_user(new_user)
     stamp_session(new_user)
     return jsonify(new_user.as_dict(includes=USER_INCLUDES)), 201

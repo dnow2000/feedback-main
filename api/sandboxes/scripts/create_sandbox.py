@@ -1,4 +1,3 @@
-""" create_sandbox """
 from repository.clean import clean_all_database
 from sandboxes.scripts import creators
 

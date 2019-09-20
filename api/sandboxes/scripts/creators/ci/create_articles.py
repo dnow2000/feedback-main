@@ -1,4 +1,5 @@
-from models.manager import Manager
+from sqlalchemy_handler import Handler
+
 from tests.utils import create_article
 from utils.logger import logger
 from utils.screenshotmachine import capture
@@ -62,7 +63,7 @@ def create_articles(with_capture=False):
         url="https://www.lemonde.fr/cinema/article/2019/01/10/cocorico-fred-poulet-revient-a-la-chanson_5407141_3476.html"
     )
 
-    Manager.check_and_save(*articles_by_name.values())
+    Handler.save(*articles_by_name.values())
 
     if with_capture:
         for article in articles_by_name.values():

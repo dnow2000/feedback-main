@@ -1,8 +1,8 @@
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
 from models import User
-from models.manager import Manager
 from repository.users import filter_users_with_roles, \
                              get_users_join_query, \
                              get_users_query_with_keywords
@@ -56,5 +56,5 @@ def get_user(user_id):
 @expect_json_data
 def patch_profile():
     current_user.populateFromDict(request.json)
-    Manager.check_and_save(current_user)
+    Handler.save(current_user)
     return jsonify(current_user.as_dict(includes=USER_INCLUDES)), 200

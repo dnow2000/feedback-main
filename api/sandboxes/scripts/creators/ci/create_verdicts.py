@@ -1,8 +1,8 @@
+from sqlalchemy_handler import Handler
+
 from models.article import Article
 from models.evaluation import Evaluation
-from models.verdict import Verdict
 from models.user import User
-from models.manager import Manager
 from tests.utils import create_verdict
 from utils.logger import logger
 
@@ -23,7 +23,7 @@ def create_verdicts():
         rating=1,
     )
 
-    Manager.check_and_save(*verdicts_by_name.values())
+    Handler.save(*verdicts_by_name.values())
 
     logger.info('created {} verdicts'.format(len(verdicts_by_name)))
 

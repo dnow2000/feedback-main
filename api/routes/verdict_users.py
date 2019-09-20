@@ -1,8 +1,8 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_handler import Handler
 
-from models import VerdictUser
-from models.manager import Manager
+from models.verdict_user import VerdictUser
 from repository.verdicts import filter_verdicts_with_article_id
 from utils.rest import expect_json_data,\
                        load_or_404,\
@@ -18,5 +18,5 @@ def create_verdict_user():
 
     verdict_user = VerdictUser()
     verdict_user.populateFromDict(request.json)
-    Manager.check_and_save(verdict_user)
+    Handler.save(verdict_user)
     return jsonify(verdict_user.as_dict()), 201

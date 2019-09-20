@@ -1,15 +1,15 @@
-from sqlalchemy import Binary, Column, String
 import bcrypt
+from sqlalchemy import Binary, Column, String
+from sqlalchemy_handler import Handler
 
 from models.utils.db import Model
-from models.manager import Manager
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasThumbMixin, \
                           NeedsValidationMixin
 from models import Role
 
-class User(Manager,
+class User(Handler,
            Model,
            HasExternalThumbUrlMixin,
            HasQualificationMixin,

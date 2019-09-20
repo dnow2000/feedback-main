@@ -4,9 +4,9 @@ from sqlalchemy import BigInteger, \
                        Column, \
                        Text, \
                        String
+from sqlalchemy_handler import Handler
 
 from models.utils.db import Model
-from models.manager import Manager
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasThumbMixin, \
                           HasSharesMixin, \
@@ -15,7 +15,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
 from models.role import RoleType
 from utils.human_ids import humanize
 
-class Article(Manager,
+class Article(Handler,
               Model,
               VersionedMixin,
               HasExternalThumbUrlMixin,
@@ -39,7 +39,7 @@ class Article(Manager,
     url = Column(String(220), nullable=False, unique=True)
 
     def as_dict(self, **options):
-        article = Manager.as_dict(self, **options)
+        article = Handler.as_dict(self, **options)
 
         # REMOVE OTHER REVIEWERS REVIEWS
         # TODO: This will never enable to see all reviews. Remove.

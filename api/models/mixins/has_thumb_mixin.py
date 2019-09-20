@@ -83,4 +83,4 @@ class HasThumbMixin(object):
 
         self.thumbCount = max(index+1, self.thumbCount or 0)
 
-        self.__class__.check_and_save(self)
+        self.__class__.save(self)

@@ -1,10 +1,10 @@
 from sqlalchemy import BigInteger, Column, ForeignKey
 from sqlalchemy.orm import backref, relationship
+from sqlalchemy_handler import Handler
 
 from models.utils.db import Model
-from models.manager import Manager
 
-class ReviewTag(Manager,
+class ReviewTag(Handler,
                 Model):
 
     reviewId = Column(BigInteger,
