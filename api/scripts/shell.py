@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import db
 
@@ -7,6 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
+ApiHandler.set_db(db)
 db.app = app
 
 # IMPORT A LOT OF TOOLS TO MAKE THEM AVAILABLE

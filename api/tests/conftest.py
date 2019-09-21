@@ -2,6 +2,7 @@ import os
 from functools import wraps
 import pytest
 from flask import Flask
+from sqlalchemy_api_handler import ApiHandler
 
 from repository import clean
 from models.utils.db import db
@@ -38,7 +39,8 @@ def app():
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
-
+    ApiHandler.set_db(db)
+    
     with app.app_context():
         from models.utils.install_models import install_models
         install_models()
