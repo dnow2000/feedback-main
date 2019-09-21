@@ -1,5 +1,6 @@
 from flask import current_app as app, jsonify
-from models.utils.api_errors import ApiErrors
+from sqlalchemy_api_handler import ApiErrors
+
 from sandboxes.scripts import getters
 
 @app.route('/sandboxes/<getter_name>', methods=['GET'])
@@ -12,7 +13,7 @@ def get_sandbox(getter_name):
             return jsonify(obj)
 
     errors = ApiErrors()
-    errors.addError(
+    errors.add_error(
         'getter',
         'Il n\'existe pas de tel \"{}\" getter pour la sandbox'.format(getter_name)
     )

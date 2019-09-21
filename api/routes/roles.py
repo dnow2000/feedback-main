@@ -1,11 +1,11 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 
 from models.role import Role, RoleType
 from models.user import User
 from models.utils.db import db
-from utils.rest import load_or_404, login_or_api_key_required
+from utils.rest import login_or_api_key_required
 from validation import check_has_role
 
 
@@ -14,7 +14,7 @@ from validation import check_has_role
 def list_roles():
     check_has_role(current_user, 'admin')
 
-    role_types = [role_type.as_dict() for role_type in RoleType]
+    role_types = [as_dict(role_type) for role_type in RoleType]
 
     return jsonify(role_types), 200
 
@@ -29,9 +29,9 @@ def post_role():
     role.type = request.json['type']
     role.user = user
 
-    Handler.save(role)
+    ApiHandler.save(role)
 
-    return jsonify(role.as_dict()), 200
+    return jsonify(as_dict(role)), 200
 
 @app.route('/roles/<role_id>', methods=['DELETE'])
 @login_or_api_key_required
@@ -40,7 +40,7 @@ def delete_role(role_id):
 
     role = load_or_404(Role, role_id)
 
-    Handler.delete(role)
+    ApiHandler.delete(role)
 
     db.session.commit()
 

@@ -1,10 +1,10 @@
 from sqlalchemy import BigInteger, Column, ForeignKey
 from sqlalchemy.orm import backref, relationship
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
-class UserArticle(Handler, Model):
+class UserArticle(ApiHandler, Model):
 
     userId = Column(BigInteger,
                     ForeignKey('user.id'),

@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.tag import Tag
 from models.user import User
@@ -24,7 +24,7 @@ def create_user_tags():
         tag=tag
     )
 
-    Handler.save(*user_tags_by_name.values())
+    ApiHandler.save(*user_tags_by_name.values())
 
     logger.info('created {} user_tags_by_name'.format(len(user_tags_by_name)))
 

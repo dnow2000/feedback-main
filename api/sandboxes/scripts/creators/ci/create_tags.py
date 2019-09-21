@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from tests.utils import create_tag
 from utils.logger import logger
@@ -13,7 +13,7 @@ def create_tags():
     for tag in ALL_TAGS:
         tags_by_text[tag['text']] = create_tag(tag['text'], info=tag.get('info'))
 
-    Handler.save(*tags_by_text.values())
+    ApiHandler.save(*tags_by_text.values())
 
     logger.info('created {} tags'.format(len(tags_by_text)))
 

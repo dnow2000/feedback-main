@@ -44,7 +44,7 @@ def get_users_from_climate_feedback_community_scrap(users_max=3):
                          .first()
 
         if user:
-            user.populateFromDict(data)
+            user.populate_from_dict(data)
         else:
             user = create_user(**data)
 
@@ -103,7 +103,7 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
                                    .first()
             if not article:
                 article = create_article(**data)
-                article.populateFromDict(resolve_content_with_url(article.url))
+                article.populate_from_dict(resolve_content_with_url(article.url))
                 create_user_article(user, article)
 
 
@@ -163,7 +163,7 @@ def set_article_from_climate_feedback_evaluation_scrap(
     verdict_content = soup.find('div', class_="entry-content")
     article.url = verdict_content.find('a', class_="inline-btn")['href']
     article.title = soup.find('h1', class_="entry-title").text
-    article.populateFromDict(resolve_content_with_url(article.url))
+    article.populate_from_dict(resolve_content_with_url(article.url))
 
     verdict_comment = verdict_content.find('p').text
     # verdict_comment += soup.find("h4", text="SUMMARY").nextSibling.text

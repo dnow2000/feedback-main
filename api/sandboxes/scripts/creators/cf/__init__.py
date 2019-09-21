@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from repository.climate_feedback import get_articles_from_climate_feedback_feedbacks_scrap
 from tests.utils import create_role, create_user
@@ -12,7 +12,7 @@ def create_sandbox(**kwargs):
     )
     editor_user.setPassword("emmanuel.Vincent.0")
     create_role(editor_user, role_type="editor")
-    Handler.save(editor_user)
+    ApiHandler.save(editor_user)
     articles = get_articles_from_climate_feedback_feedbacks_scrap(10, editor_user)
-    Handler.save(*articles)
+    ApiHandler.save(*articles)
     logger.info('create_cf_sandbox...done')

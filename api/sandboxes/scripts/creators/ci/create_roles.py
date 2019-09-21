@@ -1,5 +1,5 @@
 import re
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.role import RoleType
 from models.user import User
@@ -31,7 +31,7 @@ def create_roles():
                     role_type=role_type.value
                 )
 
-    Handler.save(*roles_by_name.values())
+    ApiHandler.save(*roles_by_name.values())
 
     logger.info('created {} roles'.format(len(roles_by_name)))
 

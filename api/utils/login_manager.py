@@ -1,14 +1,21 @@
 import uuid
 from flask import current_app as app, jsonify, session
 from flask_login import login_user
+from sqlalchemy_api_handler import ApiErrors, as_dict
+from typing import Iterable
+from werkzeug.local import LocalProxy
+from sqlalchemy_api_handler import ApiHandler
 
-from models.utils.api_errors import ApiErrors
 from models.user import User
 from repository.user_sessions import delete_user_session, \
                                      existing_user_session, \
                                      register_user_session
 from utils.credentials import get_user_with_credentials
 
+
+@as_dict.register(LocalProxy)
+def _(local_proxy, column=None, includes: Iterable = ()):
+    return as_dict.registry[ApiHandler](local_proxy, column=column, includes=includes)
 
 @app.login_manager.user_loader
 def get_user_with_id(user_id):
@@ -33,7 +40,7 @@ def get_user_with_request(request):
 @app.login_manager.unauthorized_handler
 def send_401():
     api_errors = ApiErrors()
-    api_errors.addError('global', 'Authentification nécessaire')
+    api_errors.add_error('global', 'Authentification nécessaire')
     return jsonify(api_errors.errors), 401
 
 

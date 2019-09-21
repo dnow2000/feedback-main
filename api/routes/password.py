@@ -1,6 +1,6 @@
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify, request
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiErrors, ApiHandler
 
 from domain.password import check_new_password_validity, \
                             check_password_strength, \
@@ -11,7 +11,6 @@ from domain.password import check_new_password_validity, \
                             validate_reset_request
 from repository.users import find_user_by_email, \
                              find_user_by_reset_password_token
-from models.utils import ApiErrors
 from utils.rest import expect_json_data
 
 @app.route('/users/current/change-password', methods=['POST'])
@@ -25,7 +24,7 @@ def post_change_password():
     check_password_strength('newPassword', new_password)
     check_new_password_validity(current_user, old_password, new_password)
     current_user.setPassword(new_password)
-    Handler.save(current_user)
+    ApiHandler.save(current_user)
     return '', 204
 
 @app.route("/users/new-password", methods=['POST'])
@@ -38,13 +37,13 @@ def post_new_password():
 
     if not user:
         api_errors = ApiErrors()
-        api_errors.addError('token', 'Votre lien de changement de mot de passe est invalide.')
+        api_errors.add_error('token', 'Votre lien de changement de mot de passe est invalide.')
         raise api_errors
 
     check_reset_token_validity(user)
     check_password_strength('newPassword', new_password)
     user.setPassword(new_password)
-    Handler.save(user)
+    ApiHandler.save(user)
     return '', 204
 
 @app.route("/users/reset-password", methods=['POST'])
@@ -58,7 +57,7 @@ def post_for_password_token():
         return '', 204
 
     generate_reset_token(user)
-    Handler.save(user)
+    ApiHandler.save(user)
 
 
     """

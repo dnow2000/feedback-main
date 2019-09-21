@@ -1,8 +1,7 @@
 import simplejson as json
 from flask import current_app as app, jsonify
-
-from models.utils.api_errors import ApiErrors, ResourceGoneError
-
+from sqlalchemy_api_handler import ApiErrors
+from sqlalchemy_api_handler.api_errors import ResourceGoneError
 
 @app.errorhandler(ApiErrors)
 def restize_api_errors(e):

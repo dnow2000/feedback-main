@@ -1,5 +1,5 @@
-""" tags """
 from flask import current_app as app, jsonify, request
+from sqlalchemy_api_handler import as_dict
 
 from models import Tag
 from repository.tags import filter_tags_with_scopes
@@ -18,4 +18,4 @@ def list_tags():
 
     tags = query.all()
 
-    return jsonify([tag.as_dict(includes=TAG_INCLUDES) for tag in tags])
+    return jsonify([as_dict(tag, includes=TAG_INCLUDES) for tag in tags])

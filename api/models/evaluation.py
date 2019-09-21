@@ -3,7 +3,7 @@ from sqlalchemy import Column,\
                        Integer,\
                        String,\
                        Text
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
@@ -11,7 +11,7 @@ class EvaluationType(enum.Enum):
     article = "article"
     claim = "claim"
 
-class Evaluation(Handler,
+class Evaluation(ApiHandler,
                  Model):
 
     label = Column(String(50),

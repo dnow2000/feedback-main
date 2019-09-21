@@ -1,4 +1,3 @@
-""" health_check """
 from flask import current_app as app, jsonify
 
 from utils.health_checker import check_database_connection

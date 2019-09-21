@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.article import Article
 from models.evaluation import Evaluation
@@ -46,7 +46,7 @@ def create_reviews():
         user=user
     )
 
-    Handler.save(*reviews_by_name.values())
+    ApiHandler.save(*reviews_by_name.values())
 
     logger.info('created {} reviews'.format(len(reviews_by_name)))
 

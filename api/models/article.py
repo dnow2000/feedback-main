@@ -4,7 +4,7 @@ from sqlalchemy import BigInteger, \
                        Column, \
                        Text, \
                        String
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler, humanize
 
 from models.utils.db import Model
 from models.mixins import HasExternalThumbUrlMixin, \
@@ -13,9 +13,8 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           SoftDeletableMixin, \
                           VersionedMixin
 from models.role import RoleType
-from utils.human_ids import humanize
 
-class Article(Handler,
+class Article(ApiHandler,
               Model,
               VersionedMixin,
               HasExternalThumbUrlMixin,

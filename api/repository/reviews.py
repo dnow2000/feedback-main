@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler, dehumanize, humanize
 
 from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
@@ -6,7 +6,6 @@ from models.review import Review
 from models.review_tag import ReviewTag
 from models.tag import Tag
 from models.user import User
-from utils.human_ids import dehumanize, humanize
 
 review_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     Review,
@@ -19,7 +18,7 @@ def save_tags(review, humanized_tag_ids):
 
     for reviewTag in review.reviewTags:
         if reviewTag.tag.id not in tag_ids:
-            Handler.delete(reviewTag)
+            ApiHandler.delete(reviewTag)
 
     review_tags = []
     for tag_id in tag_ids:
@@ -31,7 +30,7 @@ def save_tags(review, humanized_tag_ids):
             review_tag.tag = tag
         review_tags.append(review_tag)
     if review_tags:
-        Handler.save(*review_tags)
+        ApiHandler.save(*review_tags)
 
 def filter_reviews_with_article_id(query, article_id):
     query = query.filter_by(articleId=dehumanize(article_id))

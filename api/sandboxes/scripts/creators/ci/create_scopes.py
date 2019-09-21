@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.scope import ScopeType
 from models.tag import Tag
@@ -41,7 +41,7 @@ def create_scopes():
             scope_type="user"
         )
 
-    Handler.save(*scopes_by_name.values())
+    ApiHandler.save(*scopes_by_name.values())
 
     logger.info('created {} scopes'.format(len(scopes_by_name)))
 

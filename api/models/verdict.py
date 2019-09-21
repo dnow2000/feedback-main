@@ -3,13 +3,13 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        Text
 from sqlalchemy.orm import relationship
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import get_model_with_table_name, Model
 from models.mixins import HasRatingMixin, SoftDeletableMixin
 
 
-class Verdict(Handler,
+class Verdict(ApiHandler,
               Model,
               HasRatingMixin,
               SoftDeletableMixin):

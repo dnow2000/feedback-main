@@ -1,4 +1,3 @@
-""" has qualification mixin """
 from sqlalchemy import Column, String, Text
 
 class HasQualificationMixin(object):

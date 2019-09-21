@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from tests.utils import create_evaluation
 from utils.logger import logger
@@ -78,7 +78,7 @@ def create_evaluations():
         value=-2
     )
 
-    Handler.save(*evaluations_by_name.values())
+    ApiHandler.save(*evaluations_by_name.values())
 
     logger.info('created {} evaluations'.format(len(evaluations_by_name)))
 

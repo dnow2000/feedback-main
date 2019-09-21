@@ -4,7 +4,7 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        String
 from sqlalchemy.orm import relationship
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
@@ -20,7 +20,7 @@ class RoleType(enum.Enum):
     guest = "guest"
     reviewer = "reviewer"
 
-class Role(Handler, Model):
+class Role(ApiHandler, Model):
 
     userId = Column(BigInteger,
                     ForeignKey('user.id'),

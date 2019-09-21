@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.article import Article
 from models.tag import Tag
@@ -24,7 +24,7 @@ def create_verdict_tags():
         tag=tag
     )
 
-    Handler.save(*verdict_tags_by_name.values())
+    ApiHandler.save(*verdict_tags_by_name.values())
 
     logger.info('created {} verdict_tags_by_name'.format(len(verdict_tags_by_name)))
 

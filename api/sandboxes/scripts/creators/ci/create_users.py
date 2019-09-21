@@ -1,4 +1,4 @@
-from sqlalchemy_handler import Handler
+from sqlalchemy_api_handler import ApiHandler
 
 from models.role import RoleType
 from sandboxes.scripts.utils.storage_utils import store_public_object_from_sandbox_assets
@@ -30,7 +30,7 @@ def create_users():
             user.password = HASHED_PASSWORD
             users_by_name['{} {}'.format(user_type, role_index)] = user
 
-    Handler.save(*users_by_name.values())
+    ApiHandler.save(*users_by_name.values())
 
     for user_type in user_types:
         for role_index in range(USERS_BY_TYPE_COUNT):

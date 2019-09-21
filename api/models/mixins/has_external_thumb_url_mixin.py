@@ -1,4 +1,3 @@
-""" has external thumb url """
 from sqlalchemy import Column,\
                        String
 

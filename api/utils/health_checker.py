@@ -1,6 +1,4 @@
-""" health_checker """
 from models.user import User
-
 
 def check_database_connection():
     database_working = False
