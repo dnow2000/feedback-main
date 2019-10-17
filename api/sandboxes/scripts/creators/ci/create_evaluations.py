@@ -1,7 +1,6 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
-from tests.utils import create_evaluation
-from utils.logger import logger
+from tests.utils.creators.create_evaluation import create_evaluation
 
 def create_evaluations():
     logger.info('create_evaluations')

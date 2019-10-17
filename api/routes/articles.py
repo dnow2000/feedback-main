@@ -11,10 +11,10 @@ from repository.articles import get_articles_query_with_keywords, \
                                 filter_articles_by_is_reviewable, \
                                 get_articles_keywords_join_query, \
                                 resolve_content_with_url
+from routes.utils.includes import ARTICLE_INCLUDES
 from validation.articles import check_article_is_not_yet_saved
 from validation.roles import check_has_role
 from utils.config import API_ROOT_PATH
-from utils.includes import ARTICLE_INCLUDES
 from utils.rest import expect_json_data,\
                        login_or_api_key_required
 

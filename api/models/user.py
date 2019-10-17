@@ -7,7 +7,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasThumbMixin, \
                           NeedsValidationMixin
-from models import Role
+from models.role import Role
 
 class User(ApiHandler,
            Model,
@@ -24,7 +24,7 @@ class User(ApiHandler,
 
     clearTextPassword = None
 
-    def checkPassword(self, passwordToCheck):
+    def check_password(self, passwordToCheck):
         return bcrypt.hashpw(passwordToCheck.encode('utf-8'), self.password) == self.password
 
     def errors(self):
@@ -55,14 +55,14 @@ class User(ApiHandler,
     def populateFromDict(self, dct):
         super(User, self).populate_from_dict(dct)
         if dct.__contains__('password') and dct['password']:
-            self.setPassword(dct['password'])
+            self.set_password(dct['password'])
 
-    def setPassword(self, newpass):
+    def set_password(self, newpass):
         self.clearTextPassword = newpass
         self.password = bcrypt.hashpw(newpass.encode('utf-8'),
                                       bcrypt.gensalt())
 
-    def hasRights(self, roleType):
+    def has_rights(self, roleType):
         return Role.query\
                    .filter((Role.userId == self.id) &
                            (Role.type == roleType))\

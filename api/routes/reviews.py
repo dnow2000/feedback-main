@@ -5,12 +5,12 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    listify, \
                                    load_or_404
 
-from models import Review
+from models.review import Review
 from repository.reviews import filter_reviews_with_article_id, \
                                get_reviews_join_query, \
                                get_reviews_query_with_keywords, \
                                save_tags
-from utils.includes import REVIEW_INCLUDES
+from routes.utils.includes import REVIEW_INCLUDES
 from utils.rest import expect_json_data, \
                        login_or_api_key_required
 from validation import check_has_role

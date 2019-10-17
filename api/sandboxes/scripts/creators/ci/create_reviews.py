@@ -1,11 +1,10 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.article import Article
 from models.evaluation import Evaluation
 from models.review import Review
 from models.user import User
-from tests.utils import create_review
-from utils.logger import logger
+from tests.utils.creators.create_review import create_review
 
 def create_reviews():
     logger.info('create_reviews')

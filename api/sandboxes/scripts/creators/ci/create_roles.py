@@ -1,11 +1,10 @@
 import re
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.role import RoleType
 from models.user import User
-from tests.utils import create_role
+from tests.utils.creators.create_role import create_role
 from utils.config import COMMAND_NAME
-from utils.logger import logger
 
 def create_roles():
     logger.info('create_roles')

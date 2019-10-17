@@ -1,9 +1,8 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.scope import ScopeType
 from models.tag import Tag
-from tests.utils import create_scope
-from utils.logger import logger
+from tests.utils.creators.create_scope import create_scope
 
 from sandboxes.scripts.utils.tags import ARTICLE_TAGS, \
                                          REVIEW_VERDICT_TAGS, \

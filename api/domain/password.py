@@ -12,11 +12,11 @@ RESET_PASSWORD_TOKEN_LENGTH = 10
 def check_new_password_validity(user, old_password, new_password):
     errors = ApiErrors()
 
-    if not user.checkPassword(old_password):
+    if not user.check_password(old_password):
         errors.add_error('oldPassword', 'Your old password is incorrect.')
         raise errors
 
-    if user.checkPassword(new_password):
+    if user.check_password(new_password):
         errors.add_error('newPassword', 'You new password is the same as the old one.')
         raise errors
 
@@ -35,8 +35,8 @@ def validate_change_password_request(json):
 
 def generate_reset_token(user):
     token = create_random_token(length=RESET_PASSWORD_TOKEN_LENGTH)
-    user.resetPasswordToken = token
-    user.resetPasswordTokenValidityLimit = datetime.utcnow() + timedelta(hours=24)
+    user.reset_passwordToken = token
+    user.reset_passwordTokenValidityLimit = datetime.utcnow() + timedelta(hours=24)
 
 
 def validate_reset_request(request):
@@ -64,7 +64,7 @@ def validate_new_password_request(request):
 
 
 def check_reset_token_validity(user):
-    if datetime.utcnow() > user.resetPasswordTokenValidityLimit:
+    if datetime.utcnow() > user.reset_passwordTokenValidityLimit:
         errors = ApiErrors()
         errors.add_error('token',
                         'Votre lien de changement de mot de passe est périmé. Veuillez effecture une nouvelle demande.')

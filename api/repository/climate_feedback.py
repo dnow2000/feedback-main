@@ -1,18 +1,18 @@
 import re
 from bs4 import BeautifulSoup
 import requests
+from sqlalchemy_api_handler import logger
 
 from models.article import Article
 from models.user import User
-from tests.utils import create_article, \
-                        create_review, \
-                        create_role, \
-                        create_user, \
-                        create_user_article, \
-                        create_verdict
+from tests.utils.creators.create_article import create_article
+from tests.utils.creators.create_review import create_review
+from tests.utils.creators.create_role import create_role
+from tests.utils.creators.create_user import create_user
+from tests.utils.creators.create_user_article import create_user_article
+from tests.utils.creators.create_verdict import create_verdict
 from repository.articles import resolve_content_with_url
 from utils.config import EMAIL_HOST
-from utils.logger import logger
 
 def get_users_from_climate_feedback_community_scrap(users_max=3):
     result = requests.get('https://climatefeedback.org/community/')

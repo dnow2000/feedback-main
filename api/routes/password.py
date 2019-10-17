@@ -1,6 +1,6 @@
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiErrors, ApiHandler
+from sqlalchemy_api_handler import ApiErrors, ApiHandler, logger
 
 from domain.password import check_new_password_validity, \
                             check_password_strength, \
@@ -23,7 +23,7 @@ def post_change_password():
     old_password = json.get('oldPassword')
     check_password_strength('newPassword', new_password)
     check_new_password_validity(current_user, old_password, new_password)
-    current_user.setPassword(new_password)
+    current_user.set_password(new_password)
     ApiHandler.save(current_user)
     return '', 204
 
@@ -42,7 +42,7 @@ def post_new_password():
 
     check_reset_token_validity(user)
     check_password_strength('newPassword', new_password)
-    user.setPassword(new_password)
+    user.set_password(new_password)
     ApiHandler.save(user)
     return '', 204
 
@@ -65,7 +65,7 @@ def post_for_password_token():
     try:
         send_reset_password_email(user, app.mailjet_client.send.create, app_origin_url)
     except MailServiceException as e:
-        app.logger.error('Mail service failure', e)
+        logger.error('Mail service failure', e)
     """
 
     return '', 204

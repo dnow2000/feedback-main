@@ -2,7 +2,7 @@ from flask import current_app as app, jsonify
 from sqlalchemy_api_handler import as_dict, dehumanize
 
 from models import UserArticle
-from utils.includes import USER_ARTICLE_INCLUDES
+from routes.utils.includes import USER_ARTICLE_INCLUDES
 from utils.rest import login_or_api_key_required
 
 

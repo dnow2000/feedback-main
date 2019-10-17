@@ -4,8 +4,10 @@ from sqlalchemy_api_handler import ApiHandler
 from models.article import Article
 from repository.articles import get_articles_query_with_keywords, \
                                 get_articles_keywords_join_query
-from tests.conftest import clean_all_database
-from tests.utils import create_article, create_article_tag, create_tag
+from tests.utils.clean import with_clean_all_database
+from tests.utils.creators.create_article import create_article
+from tests.utils.creators.create_article_tag import create_article_tag
+from tests.utils.creators.create_tag import create_tag
 
 def filter_articles_with_keywords(keywords):
     query = get_articles_keywords_join_query(Article.query)
@@ -13,7 +15,7 @@ def filter_articles_with_keywords(keywords):
     return query
 
 @pytest.mark.standalone
-@clean_all_database
+@with_clean_all_database
 def test_get_articles_with_one_complete_keyword_returns_result(app):
     # given
     article1 = create_article(
@@ -41,7 +43,7 @@ def test_get_articles_with_one_complete_keyword_returns_result(app):
     assert article1 in articles
 
 @pytest.mark.standalone
-@clean_all_database
+@with_clean_all_database
 def test_get_articles_with_one_truncated_keyword_returns_result(app):
     # given
     article1 = create_article(
@@ -69,7 +71,7 @@ def test_get_articles_with_one_truncated_keyword_returns_result(app):
     assert article1 in articles
 
 @pytest.mark.standalone
-@clean_all_database
+@with_clean_all_database
 def test_get_articles_with_one_close_around_keyword_returns_result(app):
     # given
     article1 = create_article(
@@ -97,7 +99,7 @@ def test_get_articles_with_one_close_around_keyword_returns_result(app):
     assert article1 in articles
 
 @pytest.mark.standalone
-@clean_all_database
+@with_clean_all_database
 def test_get_articles_with_one_far_around_keyword_returns_no_result(app):
     # given
     article1 = create_article(
@@ -124,7 +126,7 @@ def test_get_articles_with_one_far_around_keyword_returns_no_result(app):
     assert len(articles) == 0
 
 @pytest.mark.standalone
-@clean_all_database
+@with_clean_all_database
 def test_get_articles_with_several_around_keywords_returns_result(app):
     # given
     article1 = create_article(
@@ -152,7 +154,7 @@ def test_get_articles_with_several_around_keywords_returns_result(app):
     assert article1 in articles
 
 @pytest.mark.standalone
-@clean_all_database
+@with_clean_all_database
 def test_get_articles_with_keyword_tag_returns_result(app):
     # given
     article1 = create_article(

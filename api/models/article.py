@@ -5,12 +5,12 @@ from sqlalchemy import BigInteger, \
                        Text, \
                        String
 from sqlalchemy_api_handler import ApiHandler, humanize
+from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
 from models.utils.db import Model
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasThumbMixin, \
                           HasSharesMixin, \
-                          SoftDeletableMixin, \
                           VersionedMixin
 from models.role import RoleType
 

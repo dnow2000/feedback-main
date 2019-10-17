@@ -3,8 +3,8 @@ from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, as_dict
 
 from models.user import User
+from routes.utils.includes import USER_INCLUDES
 from utils.credentials import get_user_with_credentials
-from utils.includes import USER_INCLUDES
 from utils.login_manager import stamp_session, discard_session
 
 @app.route("/users/current", methods=["GET"])

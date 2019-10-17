@@ -1,21 +1,21 @@
 from postgresql_audit.flask import versioning_manager
+from sqlalchemy_api_handler import logger
 
 from models.utils.db import db
-from models import Article, \
-                   ArticleTag, \
-                   Evaluation, \
-                   Review, \
-                   ReviewTag, \
-                   Role, \
-                   Scope, \
-                   Tag, \
-                   User, \
-                   UserArticle, \
-                   UserTag, \
-                   Verdict, \
-                   VerdictTag, \
-                   VerdictUser
-from utils.logger import logger
+from models.article import Article
+from models.article_tag import ArticleTag
+from models.evaluation import Evaluation
+from models.review import Review
+from models.review_tag import ReviewTag
+from models.role import Role
+from models.scope import Scope
+from models.tag import Tag
+from models.user import User
+from models.user_article import UserArticle
+from models.user_tag import UserTag
+from models.verdict import Verdict
+from models.verdict_tag import VerdictTag
+from models.verdict_user import VerdictUser
 
 def clean_all_database():
     """ Order of deletions matters because of foreign key constraints """

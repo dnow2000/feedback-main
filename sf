@@ -95,12 +95,12 @@ export GIT_TAG=`cd "$ROOT_PATH/api" && git describe --tags --abbrev=0`
 # Need to specify what alembic command you want to execute
 # Example: ./$COMMAND_NAME alembic upgrade HEAD
 if [[ "$CMD" == "alembic" ]]; then
-  RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src && PYTHONPATH=. alembic '"$*"'"'
+  RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api&& PYTHONPATH=. alembic '"$*"'"'
 
 # Connect to API container
 elif [[ "$CMD" == "bash" ]]; then
 	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. bash '"$CMD $*"'"'
+		RUN='docker exec -it $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. bash '"$CMD $*"'"'
 	else
 		scalingo -a "$SCALINGO_APP" run "bash"
 		exit
@@ -108,7 +108,7 @@ elif [[ "$CMD" == "bash" ]]; then
 
 # Clear all data in postgresql database
 elif [[ "$CMD" == "clean-all-database" ]]; then
-  RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/clean.py'
+  RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. python scripts/clean.py"'
 
 # Clear all assets in static
 elif [[ "$CMD" == "clean-all-storage" ]]; then
@@ -120,33 +120,42 @@ elif [[ "$CMD" == "kill-all-containers" ]]; then
   RUN='docker kill $(docker ps -q)'
 
 # Force docker-compose to build the docker images
-elif [[ "$CMD" == "rebuild-backend" ]]; then
-  RUN='docker-compose build --no-cache;'
+elif [[ "$CMD" == "rebuild-development" ]]; then
+  RUN='cd $ROOT_PATH;
+       docker-compose -f docker-compose.development.yml pull $*;
+       docker-compose -f docker-compose.development.yml build --no-cache $*;'
 
 # Start API server with database and nginx server
-elif [[ "$CMD" == "start-backend" ]]; then
-  RUN='cd $ROOT_PATH && docker-compose up'
+elif [[ "$CMD" == "start-development" ]]; then
+  RUN='cd $ROOT_PATH;
+       sh scripts/start_development.sh $*;'
 
-# Restart API after removing the database and files
-elif [[ "$CMD" == "restart-backend" ]]; then
- RUN='sudo rm -rf $ROOT_PATH/api/static/object_store_data;
-      sudo rm -rf $ROOT_PATH/docker_data/postgres;
-      cd $ROOT_PATH && docker-compose up --force-recreate'
+# Run tests for API
+elif [[ "$CMD" == "start-test-api" ]]; then
+ if [[ $# == 0 ]]; then
+   confirm "Warning: your database will be wiped. Is this OK ?"
+    "$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
+    RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v tests"'
+ else
+    RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v '"$*"'"'
+ fi
 
 # Start web frontend localy
 elif [[ "$CMD" == "start-webapp" ]]; then
-	RUN='cd $ROOT_PATH/webapp && yarn start'
+	RUN='cd $ROOT_PATH/webapp;
+      yarn start;'
 
-# Run tests for API
-# Need start-backend to be successful and delete all data
-elif [[ "$CMD" == "test-backend" ]]; then
-  if [[ $# == 0 ]]; then
-    confirm "Warning: your database will be wiped. Is this OK ?"
-     "$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
-     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v tests"'
-  else
-     RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v '"$*"'"'
-  fi
+# Restart API after removing the database and files
+elif [[ "$CMD" == "restart-development" ]]; then
+ RUN='cd $ROOT_PATH;
+      sudo rm -rf api/static/object_store_data;
+      sudo rm -rf docker_data_development/postgres;
+      sh scripts/start_development.sh --force-recreate $*;'
+
+ # Stop development containers
+ elif [[ "$CMD" == "stop-development" ]]; then
+   RUN='cd $ROOT_PATH;
+        docker-compose -f docker-compose.development.yml stop $*;'
 
 # Run tests for end to end
 # Need start-backend AND start-webapp in two other processes
@@ -157,9 +166,11 @@ elif [[ "$CMD" == "test-cafe-webapp" ]]; then
 		confirm "Warning: your database will be wiped. Is this OK ?"
 	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
 		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
-		RUN='cd $APP_PATH && ./scripts/manager.js testcafe -b chrome:headless'
+		RUN='cd $APP_PATH;
+        scripts/manager.js testcafe -b chrome:headless'
 	else
-  	RUN='cd $APP_PATH && ./scripts/manager.js testcafe '"$*"
+  	RUN='cd $APP_PATH;
+         scripts/manager.js testcafe '"$*"
 	fi
 
 # =============================================
@@ -275,7 +286,7 @@ elif [[ "$CMD" == "symlink" ]]; then
 elif [[ "$CMD" == "psql" ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "development" ]]; then
-    RUN='docker exec -it `docker ps | grep postgres | cut -d" " -f 1` bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
+    RUN='docker exec -it $APP_NAME-api-development bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
 	else
 		scalingo -a $SCALINGO_APP pgsql-console
 		exit
@@ -284,7 +295,7 @@ elif [[ "$CMD" == "psql" ]]; then
 # Open a python prompt in the specified environment
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
+		RUN='docker exec -it $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
 		exit
@@ -297,7 +308,7 @@ elif [[ "$CMD" == "python" ]]; then
 # Run python scripts from api/scripts
 else
   if [[ "$ENV" == "development" ]]; then
-    RUN='docker exec `docker ps | grep flask | cut -d" " -f 1` bash -c "cd /opt/services/flaskapp/src/ && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
+    RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
   else
     scalingo -a "$SCALINGO_APP" run 'python scripts/manager.py '"$CMD $*"''
     exit

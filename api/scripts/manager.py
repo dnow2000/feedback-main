@@ -5,22 +5,23 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import db
 
-app = Flask(__name__)
-app.secret_key = os.environ.get('FLASK_SECRET', '+%+3Q23!zbc+!Dd@')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
+flask_app = Flask(__name__)
+
+flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+3Q23!zbc+!Dd@')
+flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(flask_app)
 ApiHandler.set_db(db)
-db.app = app
 
 def create_app(env=None):
-    app.env = env
-    return app
+    flask_app.env = env
+    return flask_app
 
-app.manager = Manager(create_app)
+flask_app.manager = Manager(create_app)
 
-with app.app_context():
-    import scripts
+flask_app.app_context().push()
+import scripts
 
 if __name__ == "__main__":
-    app.manager.run()
+    flask_app.manager.run()

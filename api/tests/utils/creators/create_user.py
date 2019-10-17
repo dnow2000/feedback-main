@@ -14,7 +14,7 @@ def create_user(
     user = User()
     user.email = email
     if password:
-        user.setPassword(password)
+        user.set_password(password)
     user.publicName = public_name
 
     user.expertise = expertise

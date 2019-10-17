@@ -1,9 +1,8 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.tag import Tag
 from models.user import User
-from tests.utils import create_user_tag
-from utils.logger import logger
+from tests.utils.creators.create_user_tag import create_user_tag
 
 def create_user_tags():
     logger.info('create_user_tags')

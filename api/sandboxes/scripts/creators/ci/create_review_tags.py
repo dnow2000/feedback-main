@@ -1,11 +1,10 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.article import Article
 from models.review import Review
 from models.tag import Tag
 from models.user import User
-from tests.utils import create_review_tag
-from utils.logger import logger
+from tests.utils.creators.create_review_tag import create_review_tag
 
 def create_review_tags():
     logger.info('create_review_tags')

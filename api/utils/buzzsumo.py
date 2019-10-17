@@ -1,7 +1,6 @@
 import os
+from sqlalchemy_api_handler import logger
 from urllib.parse import urlencode
-
-from utils.logger import logger
 
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
 BUZZSUMO_API_URL = "http://api.buzzsumo.com/search"

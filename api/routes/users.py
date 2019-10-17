@@ -5,11 +5,11 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    listify, \
                                    load_or_404
 
-from models import User
+from models.user import User
 from repository.users import filter_users_with_roles, \
                              get_users_join_query, \
                              get_users_query_with_keywords
-from utils.includes import USER_INCLUDES
+from routes.utils.includes import USER_INCLUDES
 from utils.rest import expect_json_data,\
                        login_or_api_key_required
 from validation import check_has_role

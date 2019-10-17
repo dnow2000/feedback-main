@@ -1,7 +1,12 @@
 from sqlalchemy_api_handler import ApiErrors, ApiHandler
 
-from models import User
+from models.user import User
 from models.utils.db import db
+
+PLAIN_DEFAULT_TESTING_PASSWORD = 'user@AZERTY123'
+default_user = User()
+default_user.set_password(PLAIN_DEFAULT_TESTING_PASSWORD)
+HASHED_DEFAULT_TESTING_PASSWORD = default_user.password
 
 def get_user_with_credentials(identifier, password):
     errors = ApiErrors()
@@ -21,7 +26,7 @@ def get_user_with_credentials(identifier, password):
     if not user.isValidated:
         errors.add_error('identifier', "This account is not validated")
         raise errors
-    if not user.checkPassword(password):
+    if not user.check_password(password):
         errors.add_error('password', 'Wrong password')
         raise errors
 
@@ -30,6 +35,6 @@ def get_user_with_credentials(identifier, password):
 def change_password(user, password):
     if type(user) != User:
         user = User.query.filter_by(email=user).one()
-    user.setPassword(password)
+    user.set_password(password)
     user = db.session.merge(user)
     ApiHandler.save(user)

@@ -1,9 +1,7 @@
-from sqlalchemy_api_handler import ApiHandler
-
-from tests.utils import create_tag
-from utils.logger import logger
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from sandboxes.scripts.utils.tags import ALL_TAGS
+from tests.utils.creators.create_tag import create_tag
 
 def create_tags():
     logger.info('create_tags')

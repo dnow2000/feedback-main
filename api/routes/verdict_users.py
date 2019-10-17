@@ -3,7 +3,6 @@ from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 
 from models.verdict_user import VerdictUser
-from repository.verdicts import filter_verdicts_with_article_id
 from utils.rest import expect_json_data, \
                        login_or_api_key_required
 from validation import check_has_role

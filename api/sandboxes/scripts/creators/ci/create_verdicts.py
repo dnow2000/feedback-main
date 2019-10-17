@@ -1,10 +1,9 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.article import Article
 from models.evaluation import Evaluation
 from models.user import User
-from tests.utils import create_verdict
-from utils.logger import logger
+from tests.utils.creators.create_verdict import create_verdict
 
 def create_verdicts():
     logger.info('create_verdicts')

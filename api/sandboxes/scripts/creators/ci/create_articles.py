@@ -1,7 +1,6 @@
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
-from tests.utils import create_article
-from utils.logger import logger
+from tests.utils.creators.create_article import create_article
 from utils.screenshotmachine import capture
 
 def create_articles(with_capture=False):
