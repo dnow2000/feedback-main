@@ -3,15 +3,16 @@ from sqlalchemy import Column,\
                        Integer,\
                        String,\
                        Text
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
-from models.manager import Manager
 
 class EvaluationType(enum.Enum):
     article = "article"
     claim = "claim"
 
-class Evaluation(Manager, Model):
+class Evaluation(ApiHandler,
+                 Model):
 
     label = Column(String(50),
                   nullable=True)

@@ -1,17 +1,13 @@
-from models.role import RoleType
-from models.manager import Manager
-from sandboxes.scripts.utils.storage_utils import store_public_object_from_sandbox_assets
-from tests.utils import create_user
-from utils.logger import logger
+from sqlalchemy_api_handler import ApiHandler, logger
 
+from models.role import RoleType
+from sandboxes.scripts.utils.storage_utils import store_public_object_from_sandbox_assets
+from tests.utils.creators.create_user import create_user
+from utils.credentials import HASHED_DEFAULT_TESTING_PASSWORD, \
+                              PLAIN_DEFAULT_TESTING_PASSWORD
 from utils.config import COMMAND_NAME, EMAIL_HOST
 
 USERS_BY_TYPE_COUNT = 3
-
-default_user = create_user()
-PLAIN_PASSWORD = 'user@AZERTY123'
-default_user.setPassword(PLAIN_PASSWORD)
-HASHED_PASSWORD = default_user.password
 
 def create_users():
     logger.info('create_users')
@@ -24,13 +20,13 @@ def create_users():
         for role_index in range(USERS_BY_TYPE_COUNT):
             user = create_user(
                 email="{}test.{}.{}@{}".format(COMMAND_NAME, user_type, role_index, EMAIL_HOST),
-                password=None,
+                password=PLAIN_DEFAULT_TESTING_PASSWORD,
                 public_name="{} Test {} {}".format(COMMAND_NAME.upper(), user_type, role_index)
             )
-            user.password = HASHED_PASSWORD
+            user.password = HASHED_DEFAULT_TESTING_PASSWORD
             users_by_name['{} {}'.format(user_type, role_index)] = user
 
-    Manager.check_and_save(*users_by_name.values())
+    ApiHandler.save(*users_by_name.values())
 
     for user_type in user_types:
         for role_index in range(USERS_BY_TYPE_COUNT):

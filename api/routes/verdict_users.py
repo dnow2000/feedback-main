@@ -1,11 +1,9 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 
-from models import VerdictUser
-from models.manager import Manager
-from repository.verdicts import filter_verdicts_with_article_id
-from utils.rest import expect_json_data,\
-                       load_or_404,\
+from models.verdict_user import VerdictUser
+from utils.rest import expect_json_data, \
                        login_or_api_key_required
 from validation import check_has_role
 
@@ -17,6 +15,6 @@ def create_verdict_user():
     check_has_role(current_user, 'editor')
 
     verdict_user = VerdictUser()
-    verdict_user.populateFromDict(request.json)
-    Manager.check_and_save(verdict_user)
-    return jsonify(verdict_user.as_dict()), 201
+    verdict_user.populate_from_dict(request.json)
+    ApiHandler.save(verdict_user)
+    return jsonify(as_dict(verdict_user)), 201

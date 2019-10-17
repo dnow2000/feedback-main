@@ -1,0 +1,65 @@
+version: "3.7"
+
+services:
+  api-development:
+    build:
+      context: ./api
+      dockerfile: ./Dockerfile
+    command: >
+      bash -c "set -x;
+               cd /opt/api;
+               pip install -r ./requirements.txt;
+               python -m nltk.downloader punkt stopwords;
+               while true; do python app.py; done;"
+    container_name: ${APP_NAME}-api-development
+    depends_on:
+      - postgres-development
+    environment:
+      - APP_NAME=${APP_NAME}
+      - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
+      - COMMAND_NAME=${COMMAND_NAME}
+      - ENV=${ENV:-development}
+      - GIT_TAG=${GIT_TAG}
+      - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-development/${DB_NAME}
+      - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
+      - TLD=${TLD}
+    networks:
+      - db_development_nw
+      - web_development_nw
+    volumes:
+      - ./api:/opt/api
+
+  nginx-development:
+    build: nginx
+    container_name: ${APP_NAME}-nginx-development
+    depends_on:
+      - api-development
+    networks:
+      - web_development_nw
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+
+  postgres-development:
+    command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
+    container_name: ${APP_NAME}-postgres-development
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_NAME}_password
+      - POSTGRES_USER=${DB_NAME}_user
+    image: postgres:10.1
+    networks:
+      - db_development_nw
+    volumes:
+      - "./docker_data_development/postgres-development:/var/lib/postgresql/data"
+
+networks:
+  db_development_nw:
+    driver: bridge
+  web_development_nw:
+    driver: bridge
+
+volumes:
+  docker_data_development:

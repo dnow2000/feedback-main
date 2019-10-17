@@ -1,29 +1,33 @@
-""" credentials """
-from models import User
-from models.manager import Manager
+from sqlalchemy_api_handler import ApiErrors, ApiHandler
+
+from models.user import User
 from models.utils.db import db
-from models.utils.api_errors import ApiErrors
+
+PLAIN_DEFAULT_TESTING_PASSWORD = 'user@AZERTY123'
+default_user = User()
+default_user.set_password(PLAIN_DEFAULT_TESTING_PASSWORD)
+HASHED_DEFAULT_TESTING_PASSWORD = default_user.password
 
 def get_user_with_credentials(identifier, password):
     errors = ApiErrors()
     errors.status_code = 401
 
     if identifier is None:
-        errors.addError('identifier', 'Identifier is missing.')
+        errors.add_error('identifier', 'Identifier is missing.')
     if password is None:
-        errors.addError('password', 'Password is missing.')
-    errors.maybeRaise()
+        errors.add_error('password', 'Password is missing.')
+    errors.maybe_raise()
 
     user = User.query.filter_by(email=identifier).first()
 
     if not user:
-        errors.addError('identifier', 'Wrong identifier')
+        errors.add_error('identifier', 'Wrong identifier')
         raise errors
     if not user.isValidated:
-        errors.addError('identifier', "This account is not validated")
+        errors.add_error('identifier', "This account is not validated")
         raise errors
-    if not user.checkPassword(password):
-        errors.addError('password', 'Wrong password')
+    if not user.check_password(password):
+        errors.add_error('password', 'Wrong password')
         raise errors
 
     return user
@@ -31,6 +35,6 @@ def get_user_with_credentials(identifier, password):
 def change_password(user, password):
     if type(user) != User:
         user = User.query.filter_by(email=user).one()
-    user.setPassword(password)
+    user.set_password(password)
     user = db.session.merge(user)
-    Manager.check_and_save(user)
+    ApiHandler.save(user)

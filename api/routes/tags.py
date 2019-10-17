@@ -1,9 +1,9 @@
-""" tags """
 from flask import current_app as app, jsonify, request
+from sqlalchemy_api_handler import as_dict
 
-from models import Tag
+from models.tag import Tag
+from routes.utils.includes import TAG_INCLUDES
 from repository.tags import filter_tags_with_scopes
-from utils.includes import TAG_INCLUDES
 from utils.rest import login_or_api_key_required
 
 
@@ -18,4 +18,4 @@ def list_tags():
 
     tags = query.all()
 
-    return jsonify([tag.as_dict(includes=TAG_INCLUDES) for tag in tags])
+    return jsonify([as_dict(tag, includes=TAG_INCLUDES) for tag in tags])

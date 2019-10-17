@@ -1,10 +1,10 @@
+from sqlalchemy_api_handler import ApiHandler, logger
+
 from models.article import Article
 from models.evaluation import Evaluation
 from models.review import Review
 from models.user import User
-from models.manager import Manager
-from tests.utils import create_review
-from utils.logger import logger
+from tests.utils.creators.create_review import create_review
 
 def create_reviews():
     logger.info('create_reviews')
@@ -45,7 +45,7 @@ def create_reviews():
         user=user
     )
 
-    Manager.check_and_save(*reviews_by_name.values())
+    ApiHandler.save(*reviews_by_name.values())
 
     logger.info('created {} reviews'.format(len(reviews_by_name)))
 

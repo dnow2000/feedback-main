@@ -1,4 +1,5 @@
-""" ci """
+from sqlalchemy_api_handler import logger
+
 from sandboxes.scripts.creators.ci.create_article_tags import *
 from sandboxes.scripts.creators.ci.create_articles import *
 from sandboxes.scripts.creators.ci.create_evaluations import *
@@ -12,7 +13,6 @@ from sandboxes.scripts.creators.ci.create_users import *
 from sandboxes.scripts.creators.ci.create_verdicts import *
 from sandboxes.scripts.creators.ci.create_verdict_tags import *
 from sandboxes.scripts.creators.ci.create_verdict_users import *
-from utils.logger import logger
 
 def create_sandbox(with_capture=False):
     logger.info('create_ci_sandbox...')

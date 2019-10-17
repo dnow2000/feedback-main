@@ -1,9 +1,7 @@
-""" storage utils """
 import os
 from pathlib import Path
+from sqlalchemy_api_handler import ApiHandler, humanize
 
-from models.manager import Manager
-from utils.human_ids import humanize
 from utils.object_storage import store_public_object
 from utils.string_processing import get_model_plural_name
 
@@ -35,4 +33,4 @@ def store_public_object_from_sandbox_assets(folder, obj, thumb_id, index=0):
                                 MIMES_BY_FOLDER[folder],
                                 symlink_path=thumb_path)
 
-    Manager.check_and_save(obj)
+    ApiHandler.save(obj)

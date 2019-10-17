@@ -1,9 +1,15 @@
+from utils.config import COMMAND_NAME, EMAIL_HOST
+
 def get_email(first_name, last_name, domain):
     return "{}.{}@{}".format(
         first_name.replace(' ', '').strip().lower(),
         last_name.replace(' ', '').strip().lower(),
         domain
     )
+
+def get_sandbox_role_email(role_type, index=0):
+    email = "{}test.{}.{}@{}".format(COMMAND_NAME, role_type, index, EMAIL_HOST)
+    return email
 
 def get_password_from_email(email):
     chunks = email.split('.')

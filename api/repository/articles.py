@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
+from sqlalchemy_api_handler import ApiHandler
 
 from models.article import Article
 from models.article_tag import ArticleTag
-from models.manager import Manager
 from models.tag import Tag
 from domain.content import get_buzzsumo_content,\
                            get_newspaper_content
@@ -47,7 +47,7 @@ def update_article(article):
 
     if article.buzzsumoId:
         buzzsumo_content = get_buzzsumo_content(article.url)
-        article.populateFromDict(buzzsumo_content)
+        article.populate_from_dict(buzzsumo_content)
 
 def sync_articles(from_date, to_date):
     articles = filter_by_activity_date_and_verb(
@@ -58,7 +58,7 @@ def sync_articles(from_date, to_date):
     ).all()
     for article in articles:
         update_article(article)
-    Manager.check_and_save(*articles)
+    ApiHandler.save(*articles)
 
 def create_clock_sync_articles(from_date_minutes, to_date_minutes):
     def clock_sync_articles():

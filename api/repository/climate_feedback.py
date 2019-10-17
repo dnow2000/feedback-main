@@ -1,18 +1,18 @@
 import re
 from bs4 import BeautifulSoup
 import requests
+from sqlalchemy_api_handler import logger
 
 from models.article import Article
 from models.user import User
-from tests.utils import create_article, \
-                        create_review, \
-                        create_role, \
-                        create_user, \
-                        create_user_article, \
-                        create_verdict
+from tests.utils.creators.create_article import create_article
+from tests.utils.creators.create_review import create_review
+from tests.utils.creators.create_role import create_role
+from tests.utils.creators.create_user import create_user
+from tests.utils.creators.create_user_article import create_user_article
+from tests.utils.creators.create_verdict import create_verdict
 from repository.articles import resolve_content_with_url
 from utils.config import EMAIL_HOST
-from utils.logger import logger
 
 def get_users_from_climate_feedback_community_scrap(users_max=3):
     result = requests.get('https://climatefeedback.org/community/')
@@ -44,7 +44,7 @@ def get_users_from_climate_feedback_community_scrap(users_max=3):
                          .first()
 
         if user:
-            user.populateFromDict(data)
+            user.populate_from_dict(data)
         else:
             user = create_user(**data)
 
@@ -103,7 +103,7 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
                                    .first()
             if not article:
                 article = create_article(**data)
-                article.populateFromDict(resolve_content_with_url(article.url))
+                article.populate_from_dict(resolve_content_with_url(article.url))
                 create_user_article(user, article)
 
 
@@ -163,7 +163,7 @@ def set_article_from_climate_feedback_evaluation_scrap(
     verdict_content = soup.find('div', class_="entry-content")
     article.url = verdict_content.find('a', class_="inline-btn")['href']
     article.title = soup.find('h1', class_="entry-title").text
-    article.populateFromDict(resolve_content_with_url(article.url))
+    article.populate_from_dict(resolve_content_with_url(article.url))
 
     verdict_comment = verdict_content.find('p').text
     # verdict_comment += soup.find("h4", text="SUMMARY").nextSibling.text

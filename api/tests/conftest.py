@@ -1,13 +1,15 @@
 import os
-from functools import wraps
 import pytest
 from flask import Flask
+from flask_login import LoginManager
+from sqlalchemy_api_handler import ApiHandler
 
-from repository import clean
 from models.utils.db import db
+from models.utils.install import install_models
+from routes.utils.install import install_routes
+
 
 items_by_category = {'first': [], 'last': []}
-
 
 def _sort_alphabetically(category):
     return sorted(items_by_category[category], key=lambda item: item.location)
@@ -34,33 +36,23 @@ def pytest_collection_modifyitems(config, items):
 
 @pytest.fixture(scope='session')
 def app():
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    db.init_app(app)
+    flask_app = Flask(__name__)
 
-    with app.app_context():
-        from models.utils.install_models import install_models
-        install_models()
+    flask_app.config['SECRET_KEY'] = 'T5-5-3Yga;h;SAf2u3i'
+    flask_app.config['REMEMBER_COOKIE_HTTPONLY'] = False
+    flask_app.config['SESSION_COOKIE_HTTPONLY'] = False
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    flask_app.config['TESTING'] = True
 
-    return app
+    login_manager = LoginManager()
+    login_manager.init_app(flask_app)
+    db.init_app(flask_app)
+    ApiHandler.set_db(db)
 
+    flask_app.app_context().push()
+    install_models()
+    import utils.login_manager
+    install_routes()
 
-"""
-def mocked_mail(f):
-    @wraps(f)
-    def decorated_function(app, *args, **kwargs):
-        app.mailjet_client = Mock(spec=Client)
-        app.mailjet_client.send = Mock()
-        return f(app, *args, **kwargs)
-
-    return decorated_function
-"""
-
-def clean_all_database(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        clean.clean_all_database()
-        return f(*args, **kwargs)
-
-    return decorated_function
+    return flask_app

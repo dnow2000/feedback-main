@@ -1,8 +1,7 @@
-from models.manager import Manager
-from tests.utils import create_tag
-from utils.logger import logger
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from sandboxes.scripts.utils.tags import ALL_TAGS
+from tests.utils.creators.create_tag import create_tag
 
 def create_tags():
     logger.info('create_tags')
@@ -12,7 +11,7 @@ def create_tags():
     for tag in ALL_TAGS:
         tags_by_text[tag['text']] = create_tag(tag['text'], info=tag.get('info'))
 
-    Manager.check_and_save(*tags_by_text.values())
+    ApiHandler.save(*tags_by_text.values())
 
     logger.info('created {} tags'.format(len(tags_by_text)))
 

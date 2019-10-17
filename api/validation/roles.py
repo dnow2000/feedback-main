@@ -1,8 +1,7 @@
-""" roles """
 from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy_api_handler import ApiErrors
 
 from models import Role
-from models.utils import ApiErrors
 
 def check_has_role(user, type):
     try:
@@ -10,5 +9,5 @@ def check_has_role(user, type):
         return True
     except NoResultFound:
         api_errors = ApiErrors()
-        api_errors.addError('global', "You don't have the rights for this")
+        api_errors.add_error('global', "You don't have the rights for this")
         raise api_errors

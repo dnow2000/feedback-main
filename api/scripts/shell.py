@@ -1,23 +1,17 @@
 import os
 from flask import Flask
+from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import db
+from models.utils.install import install_models
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
-db.app = app
+flask_app = Flask(__name__)
 
-# IMPORT A LOT OF TOOLS TO MAKE THEM AVAILABLE
-# IN THE PYTHON SHELL
-from models.manager import *
-from models.mixins import *
-from models import *
-from repository import *
-from domain import *
-from sandboxes import *
-from sqlalchemy import *
-from utils.credentials import *
-from utils.human_ids import *
-from utils.includes import *
+flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db.init_app(flask_app)
+ApiHandler.set_db(db)
+
+flask_app.app_context().push()
+install_models()

@@ -1,11 +1,10 @@
 import re
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.role import RoleType
 from models.user import User
-from models.manager import Manager
-from tests.utils import create_role
+from tests.utils.creators.create_role import create_role
 from utils.config import COMMAND_NAME
-from utils.logger import logger
 
 def create_roles():
     logger.info('create_roles')
@@ -31,7 +30,7 @@ def create_roles():
                     role_type=role_type.value
                 )
 
-    Manager.check_and_save(*roles_by_name.values())
+    ApiHandler.save(*roles_by_name.values())
 
     logger.info('created {} roles'.format(len(roles_by_name)))
 

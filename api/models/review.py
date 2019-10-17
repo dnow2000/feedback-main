@@ -3,13 +3,14 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        Text
 from sqlalchemy.orm import relationship
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
 from models.utils.db import get_model_with_table_name, Model
-from models.manager import Manager
-from models.mixins import HasRatingMixin, SoftDeletableMixin
+from models.mixins import HasRatingMixin
 
 
-class Review(Manager,
+class Review(ApiHandler,
              Model,
              HasRatingMixin,
              SoftDeletableMixin):

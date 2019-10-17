@@ -1,10 +1,10 @@
+from sqlalchemy_api_handler import ApiHandler, logger
+
 from models.article import Article
 from models.tag import Tag
 from models.verdict import Verdict
 from models.user import User
-from models.manager import Manager
-from tests.utils import create_verdict_tag
-from utils.logger import logger
+from tests.utils.creators.create_verdict_tag import create_verdict_tag
 
 def create_verdict_tags():
     logger.info('create_verdict_tags')
@@ -23,7 +23,7 @@ def create_verdict_tags():
         tag=tag
     )
 
-    Manager.check_and_save(*verdict_tags_by_name.values())
+    ApiHandler.save(*verdict_tags_by_name.values())
 
     logger.info('created {} verdict_tags_by_name'.format(len(verdict_tags_by_name)))
 

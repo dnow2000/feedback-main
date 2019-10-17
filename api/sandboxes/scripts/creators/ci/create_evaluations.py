@@ -1,6 +1,6 @@
-from models.manager import Manager
-from tests.utils import create_evaluation
-from utils.logger import logger
+from sqlalchemy_api_handler import ApiHandler, logger
+
+from tests.utils.creators.create_evaluation import create_evaluation
 
 def create_evaluations():
     logger.info('create_evaluations')
@@ -77,7 +77,7 @@ def create_evaluations():
         value=-2
     )
 
-    Manager.check_and_save(*evaluations_by_name.values())
+    ApiHandler.save(*evaluations_by_name.values())
 
     logger.info('created {} evaluations'.format(len(evaluations_by_name)))
 

@@ -2,43 +2,48 @@ import os
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask import Flask
+from sqlalchemy_api_handler import ApiHandler
 
-from models.utils.install_models import install_models
 from models.utils.db import db
-from routes import install_routes
+from models.utils.install import install_models
+from routes.utils.install import install_routes
 from utils.config import IS_DEV
 
-app = Flask(__name__, static_url_path='/static')
+flask_app = Flask(__name__, static_url_path='/static')
+
+flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')
+flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
+flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+flask_app.config['SESSION_COOKIE_HTTPONLY'] = True
+flask_app.config['SESSION_COOKIE_SECURE'] = False if IS_DEV else True
+flask_app.config['REMEMBER_COOKIE_DURATION'] = 90 * 24 * 3600
+flask_app.config['PERMANENT_SESSION_LIFETIME'] = 90 * 24 * 3600
+flask_app.config['REMEMBER_COOKIE_HTTPONLY'] = True
+flask_app.config['REMEMBER_COOKIE_SECURE'] = True
+
 login_manager = LoginManager()
+login_manager.init_app(flask_app)
+db.init_app(flask_app)
+ApiHandler.set_db(db)
 
-app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_COOKIE_SECURE'] = False if IS_DEV else True
-app.config['REMEMBER_COOKIE_DURATION'] = 90 * 24 * 3600
-app.config['PERMANENT_SESSION_LIFETIME'] = 90 * 24 * 3600
-app.config['REMEMBER_COOKIE_HTTPONLY'] = True
-app.config['REMEMBER_COOKIE_SECURE'] = True
-
-db.init_app(app)
-
-login_manager.init_app(app)
-
-cors = CORS(app,
+@flask_app.teardown_request
+def remove_db_session(exc):
+    try:
+        db.session.remove()
+    except AttributeError:
+        pass
+cors = CORS(flask_app,
             resources={r"/*": {"origins": "*"}},
             supports_credentials=True)
+flask_app.url_map.strict_slashes = False
 
-# make Werkzeug match routing rules with or without a trailing slash
-app.url_map.strict_slashes = False
-
-with app.app_context():
-    if IS_DEV:
-        install_models()
-    import utils.login_manager
-    import utils.nltk_downloader
-    install_routes()
+flask_app.app_context().push()
+if IS_DEV:
+    install_models()
+import utils.login_manager
+import utils.nltk_downloader
+install_routes()
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port, debug=IS_DEV, use_reloader=True)
+    flask_app.run(host="0.0.0.0", port=port, debug=IS_DEV, use_reloader=True)

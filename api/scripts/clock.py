@@ -1,5 +1,6 @@
 import os
 from flask import Flask
+from sqlalchemy_api_handler import ApiHandler
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from models.utils.db import db
@@ -10,6 +11,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['DEBUG'] = True
 db.init_app(app)
+ApiHandler.set_db(db)
 db.app = app
 
 # everything in minutes

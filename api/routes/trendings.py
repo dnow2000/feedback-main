@@ -1,9 +1,9 @@
 from flask import current_app as app, jsonify, request
+from sqlalchemy_api_handler.utils.listify import paginate_obj
 
 from domain.trendings import get_topic_with_theme, get_trendings
 from repository.trendings import filter_not_saved_trendings
-from utils.rest import login_or_api_key_required, \
-                       paginate_obj
+from utils.rest import login_or_api_key_required
 
 
 @app.route('/trendings', methods=['GET'])

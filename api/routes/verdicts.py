@@ -1,13 +1,11 @@
-""" verdicts """
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
+from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 
-from models import Verdict
-from models.manager import Manager
+from models.verdict import Verdict
 from repository.verdicts import filter_verdicts_with_article_id
-from utils.includes import VERDICT_INCLUDES
+from routes.utils.includes import VERDICT_INCLUDES
 from utils.rest import expect_json_data,\
-                       load_or_404,\
                        login_or_api_key_required
 from validation import check_has_role
 
@@ -22,13 +20,13 @@ def list_verdicts():
 
     verdicts = query.all()
 
-    return jsonify([verdict.as_dict(includes=VERDICT_INCLUDES) for verdict in verdicts])
+    return jsonify([as_dict(verdict(includes=VERDICT_INCLUDES)) for verdict in verdicts])
 
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
 @login_or_api_key_required
 def get_verdict(verdict_id):
     verdict = load_or_404(Verdict, verdict_id)
-    return jsonify(verdict.as_dict(includes=VERDICT_INCLUDES))
+    return jsonify(as_dict(verdict(includes=VERDICT_INCLUDES)))
 
 @app.route('/verdicts', methods=['POST'])
 @login_or_api_key_required
@@ -38,10 +36,10 @@ def create_verdict():
     check_has_role(current_user, 'editor')
 
     verdict = Verdict()
-    verdict.populateFromDict(request.json)
+    verdict.populate_from_dict(request.json)
     verdict.user = current_user
-    Manager.check_and_save(verdict)
-    return jsonify(verdict.as_dict(includes=VERDICT_INCLUDES)), 201
+    ApiHandler.save(verdict)
+    return jsonify(as_dict(verdict(includes=VERDICT_INCLUDES))), 201
 
 @app.route('/verdicts/<verdict_id>', methods=['PATCH'])
 @login_or_api_key_required
@@ -51,6 +49,6 @@ def edit_verdict(verdict_id):
     check_has_role(current_user, 'editor')
 
     verdict = load_or_404(Verdict, verdict_id)
-    verdict.populateFromDict(request.json)
-    Manager.check_and_save(verdict)
-    return jsonify(verdict.as_dict(includes=VERDICT_INCLUDES)), 201
+    verdict.populate_from_dict(request.json)
+    ApiHandler.save(verdict)
+    return jsonify(as_dict(verdict(includes=VERDICT_INCLUDES))), 201

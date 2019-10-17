@@ -2,5 +2,4 @@
 *.secret
 shared
 
-docker_data
-docker_data_git
+docker_data*

@@ -1,8 +1,8 @@
+from sqlalchemy_api_handler import ApiHandler, logger
+
 from models.article import Article
 from models.tag import Tag
-from models.manager import Manager
-from tests.utils import create_article_tag
-from utils.logger import logger
+from tests.utils.creators.create_article_tag import create_article_tag
 
 def create_article_tags():
     logger.info('create_article_tags')
@@ -45,7 +45,7 @@ def create_article_tags():
         tag=tag
     )
 
-    Manager.check_and_save(*article_tags_by_name.values())
+    ApiHandler.save(*article_tags_by_name.values())
 
     logger.info('created {} article_tags_by_name'.format(len(article_tags_by_name)))
 

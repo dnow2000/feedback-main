@@ -1,8 +1,6 @@
 import itertools
 import random
-
-from utils.human_ids import humanize
-
+from sqlalchemy_api_handler import humanize
 
 def create_random_token(length=6):
     token = random.SystemRandom()

@@ -1,4 +1,3 @@
-""" has rating mixin """
 from sqlalchemy import BigInteger, \
                        Column
 
