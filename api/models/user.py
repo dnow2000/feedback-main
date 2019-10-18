@@ -45,6 +45,12 @@ class User(ApiHandler,
     def get_id(self):
         return str(self.id)
 
+    def has_rights(self, roleType):
+        return Role.query\
+                   .filter((Role.userId == self.id) &
+                           (Role.type == roleType))\
+                   .first() is not None
+
     def is_authenticated(self):
         return True
 
@@ -53,7 +59,7 @@ class User(ApiHandler,
 
     def is_anonymous(self):
         return False
-
+        
     def populate_from_dict(self, dct):
         user_dict = dict({}, **dct)
 
@@ -71,9 +77,3 @@ class User(ApiHandler,
         self.clearTextPassword = newpass
         self.password = bcrypt.hashpw(newpass.encode('utf-8'),
                                       bcrypt.gensalt())
-
-    def has_rights(self, roleType):
-        return Role.query\
-                   .filter((Role.userId == self.id) &
-                           (Role.type == roleType))\
-                   .first() is not None

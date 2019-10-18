@@ -3,23 +3,24 @@ from models.user import User
 from utils.config import COMMAND_NAME, EMAIL_HOST
 
 def create_user(
+        affiliation=None,
         email="{}test.foo.1@{}".format(COMMAND_NAME, EMAIL_HOST),
-        password="{}test.Foo.1".format(COMMAND_NAME),
-        public_name="{} Test Foo 1".format(COMMAND_NAME.capitalize()),
+        first_name="{} Test Foo 1".format(COMMAND_NAME.capitalize()),
         expertise=None,
         external_thumb_url=None,
-        organization=None,
-        profession=None,
+        last_name="Foo 1",
+        password="{}test.Foo.1".format(COMMAND_NAME),
+        title=None,
 ):
     user = User()
+    user.affiliation = affiliation
     user.email = email
+    user.firstName = first_name
     if password:
         user.set_password(password)
-    user.publicName = public_name
-
     user.expertise = expertise
     user.external_thumb_url = external_thumb_url
-    user.profession = profession
-    user.organization = organization
+    user.last_name = last_name
+    user.title = title
 
     return user

@@ -1,10 +1,12 @@
 from sqlalchemy import Column, String, Text
 
 class HasQualificationMixin(object):
+    academicWebsite = Column(String(30))
+
+    affiliation = Column(String(220))
+
     expertise = Column(Text, nullable=True)
 
-    organization = Column(String(220))
+    orcidId = Column(String(220))
 
-    profession =  Column(String(220))
-
-    url = Column(String(220))
+    title = Column(String(220))

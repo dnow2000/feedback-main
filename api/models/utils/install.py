@@ -8,6 +8,7 @@ def install_models():
     import models.article_tag
     import models.evaluation
     import models.image
+    import models.publication
     import models.review
     import models.review_tag
     import models.role
@@ -15,6 +16,7 @@ def install_models():
     import models.tag
     import models.user
     import models.user_article
+    import models.user_publication
     import models.user_session
     import models.user_tag
     import models.verdict

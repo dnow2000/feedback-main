@@ -4,6 +4,7 @@ import requests
 from sqlalchemy_api_handler import logger
 
 from models.article import Article
+from models.publication import Publication
 from models.user import User
 from tests.utils.creators.create_article import create_article
 from tests.utils.creators.create_review import create_review
@@ -30,14 +31,22 @@ def get_users_from_climate_feedback_community_scrap(users_max=3):
         else:
             expertise = None
 
+        first_name = None
+        last_name = expert_row.h3.a.text
+        if ' ' in expert_row.h3.a.text:
+            name_chunks = expert_row.h3.a.text.split(' ')
+            first_name = name_chunks[0]
+            last_name = name_chunks[1:]
+
         data = {
+            "affiliation": expert_row.p.text.split(',')[1],
             "email": "sftest.reviewer.cf{}@{}".format(expert_row_index, EMAIL_HOST),
             "expertise": expertise,
             "external_thumb_url": expert_row.img['src'],
-            "organization": expert_row.p.text.split(',')[1],
+            "first_name": first_name,
+            "last_name": last_name,
             "password": "sftest.Reviewer.cf{}".format(expert_row_index),
-            "profession": expert_row.p.text.split(',')[0],
-            "public_name": expert_row.h3.a.text
+            "title": expert_row.p.text.split(',')[0]
         }
 
         user = User.query.filter_by(publicName=data['public_name'])\
@@ -66,13 +75,21 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
     soup = BeautifulSoup(result.text, 'html.parser')
     info = soup.find("div", class_="med-body")
 
-    user.publicName = info.find("h2", class_="noborder").text
+    user.affiliation = situation_line.split(",")[1]
+    user.external_thumb_url=soup.find("img", class_="avatar")['src']
+    user.title = situation_line.split(",")[0]
+
+    name = info.find("h2", class_="noborder").text
+    first_name = None
+    last_name = name
+    if ' ' in name:
+        name_chunks = name.split(' ')
+        first_name = name_chunks[0]
+        last_name = name_chunks[1:]
     paragraphs = info.find_all("p")
     situation_line = paragraphs[0].text
-    user.organization = situation_line.split(",")[1]
-    user.profession = situation_line.split(",")[0]
-
-    user.external_thumb_url=soup.find("img", class_="avatar")['src']
+    user.firstName = first_name
+    user.lastName = last_name
 
     expertise_line = paragraphs[1].text
     if 'Expertise:' in expertise_line:
@@ -94,17 +111,17 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
         publication_anchors = publication_image.parent.find_all("a")
         for publication_anchor in publication_anchors:
 
-            data = {
+            publication_dict = {
                 "tags": "isValidatedAsPeerPublication",
                 "url": publication_anchor['href']
             }
 
-            article = Article.query.filter_by(url=data['url'])\
-                                   .first()
-            if not article:
-                article = create_article(**data)
-                article.populate_from_dict(resolve_content_with_url(article.url))
-                create_user_article(user, article)
+            publication = Publication.query.filter_by(url=data['url'])\
+                                 .first()
+            if not publication:
+                publication = create_article(**publication_dict)
+                publication.populate_from_dict(resolve_content_with_url(publication.url))
+                create_user_article(user, publication)
 
 
 def get_articles_from_climate_feedback_feedbacks_scrap(
@@ -182,8 +199,6 @@ def set_article_from_climate_feedback_evaluation_scrap(
                     .parent\
                     .find_all('div', class_="row expert-widget")
 
-
-
     for (reviewer_row_index, reviewer_row) in enumerate(reviewer_rows):
         logger.info('reviewer {}...'.format(reviewer_row_index))
 
@@ -195,7 +210,7 @@ def set_article_from_climate_feedback_evaluation_scrap(
 
         already_matching_created_users = [
             user for user in store['users']
-            if user.publicName == reviewer_name
+            if '{} {}'.format(user.firstName, user.lastName) == reviewer_name
         ]
         if already_matching_created_users:
             user = already_matching_created_users[0]

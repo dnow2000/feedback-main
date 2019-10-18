@@ -17,11 +17,11 @@ from models.role import RoleType
 
 class Article(ApiHandler,
               Model,
-              VersionedMixin,
               HasExternalThumbUrlMixin,
               HasSharesMixin,
               HasThumbMixin,
-              SoftDeletableMixin):
+              SoftDeletableMixin,
+              VersionedMixin):
     authors = Column(Text)
 
     buzzsumoId = Column(BigInteger, unique=True)
