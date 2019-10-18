@@ -7,6 +7,7 @@ import {
   composeValidators
 } from 'react-final-form-utils'
 
+import Dropzone from 'react-dropzone'
 import AvatarEditor from 'react-avatar-editor'
 
 import { FieldError } from '../layout'
@@ -32,6 +33,10 @@ class PictureField extends React.PureComponent {
   handleScale = event => {
     const scale = parseFloat(event.target.value)
     this.setState({ scale })
+  }
+
+  handleDrop = dropped => {
+    this.setState({ image: dropped[0] })
   }
 
   onImageChange = () => {
@@ -87,16 +92,26 @@ class PictureField extends React.PureComponent {
                   />
                 </label>
               </div>
+              <div>
+                <Dropzone
+                  onDrop={this.handleDrop}
+                  disableClick
+                  style={{ width: '250px', height: '250px' }}
+                >
+                  {({getRootProps}) => (
+                    <div {...getRootProps()}>
+                      <AvatarEditor
+                        ref={this.avatarRef}
+                        image={image}
+                        onImageChange={this.onImageChange}
+                        scale={scale}
+                      />
+                    </div>
+                  )}
+                </Dropzone>
+              </div>
               {image && (
                 <>
-                  <div>
-                    <AvatarEditor
-                      ref={this.avatarRef}
-                      image={image}
-                      onImageChange={this.onImageChange}
-                      scale={scale}
-                    />
-                  </div>
                   <input
                     name="scale"
                     type="range"
