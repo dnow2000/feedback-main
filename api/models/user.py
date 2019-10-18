@@ -38,6 +38,7 @@ class User(ApiHandler,
             errors.check_email('email', self.email)
         if self.clearTextPassword:
             errors.check_min_length('password', self.clearTextPassword, 8)
+            self.clearTextPassword = None
         return errors
 
     def get_id(self):
@@ -52,10 +53,18 @@ class User(ApiHandler,
     def is_anonymous(self):
         return False
 
-    def populateFromDict(self, dct):
-        super(User, self).populate_from_dict(dct)
+    def populate_from_dict(self, dct):
+        user_dict = dict({}, **dct)
+
+        password = None
         if dct.__contains__('password') and dct['password']:
-            self.set_password(dct['password'])
+            password = dct['password']
+            del user_dict['password']
+
+        super(User, self).populate_from_dict(user_dict)
+
+        if password:
+            self.set_password(password)
 
     def set_password(self, newpass):
         self.clearTextPassword = newpass

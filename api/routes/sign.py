@@ -30,11 +30,9 @@ def signout():
     logout_user()
     return jsonify({"global": "Disconnected"})
 
-
 @app.route("/users/signup", methods=["POST"])
 def signup():
-    new_user = User(from_dict=request.json)
-    new_user.id = None
+    new_user = User(**request.json)
     ApiHandler.save(new_user)
     login_user(new_user)
     stamp_session(new_user)
