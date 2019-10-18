@@ -1,7 +1,7 @@
 from uuid import UUID
 from sqlalchemy_api_handler import ApiHandler
 
-from models import UserSession
+from models.user_session import UserSession
 
 
 def register_user_session(user_id: int, session_uuid: UUID):

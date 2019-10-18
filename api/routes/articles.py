@@ -6,7 +6,7 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    load_or_404, \
                                    listify
 
-from models import Article
+from models.article import Article
 from repository.articles import get_articles_query_with_keywords, \
                                 filter_articles_by_is_reviewable, \
                                 get_articles_keywords_join_query, \

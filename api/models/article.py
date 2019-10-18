@@ -4,7 +4,8 @@ from sqlalchemy import BigInteger, \
                        Column, \
                        Text, \
                        String
-from sqlalchemy_api_handler import ApiHandler, humanize
+from typing import Iterable
+from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
 from models.utils.db import Model
@@ -37,27 +38,28 @@ class Article(ApiHandler,
 
     url = Column(String(220), nullable=False, unique=True)
 
-    def as_dict(self, **options):
-        article = Handler.as_dict(self, **options)
-
-        # REMOVE OTHER REVIEWERS REVIEWS
-        # TODO: This will never enable to see all reviews. Remove.
-        if 'reviews' in article and\
-            current_user.is_authenticated and\
-            RoleType.reviewer in map(lambda role: role.type, current_user.roles):
-            humanized_user_id = humanize(current_user.id)
-            reviews = article['reviews']
-            article['reviews'] = [
-                review for review in article['reviews']
-                if review['userId'] == humanized_user_id
-            ]
-            if len(article['reviews']) == 1:
-                article['reviews'] = reviews
-
-        return article
-
-    def getScore(self):
+    def get_score(self):
         amount = 0
         if self.tags and 'PeerVerified' in self.tags:
             amount -= 10
         return amount
+
+@as_dict.register(Article)
+def _(article, unused_column=None, includes: Iterable = ()):
+    article_dict = as_dict(article, includes=includes)
+
+    # REMOVE OTHER REVIEWERS REVIEWS
+    # TODO: This will never enable to see all reviews. Remove.
+    if 'reviews' in article_dict and\
+        current_user.is_authenticated and\
+        RoleType.reviewer in map(lambda role: role.type, current_user.roles):
+        humanized_user_id = humanize(current_user.id)
+        reviews = article_dict['reviews']
+        article_dict['reviews'] = [
+            review for review in article_dict['reviews']
+            if review['userId'] == humanized_user_id
+        ]
+        if len(article_dict['reviews']) == 1:
+            article_dict['reviews'] = reviews
+
+    return article_dict

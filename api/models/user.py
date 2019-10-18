@@ -20,7 +20,8 @@ class User(ApiHandler,
     email = Column(String(120), nullable=False, unique=True)
     password = Column(Binary(60), nullable=False)
 
-    publicName = Column(String(30))
+    firstName = Column(String(30))
+    lastName = Column(String(30))
 
     clearTextPassword = None
 
