@@ -100,7 +100,7 @@ if [[ "$CMD" == "alembic" ]]; then
 # Connect to API container
 elif [[ "$CMD" == "bash" ]]; then
 	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. bash '"$CMD $*"'"'
+		RUN='docker exec -it $APP_NAME-api-development bash'
 	else
 		scalingo -a "$SCALINGO_APP" run "bash"
 		exit
