@@ -19,6 +19,7 @@ class PictureField extends React.PureComponent {
     this.avatarRef = React.createRef()
     this.state = {
       image: null,
+      scale: 1,
     }
   }
 
@@ -26,6 +27,11 @@ class PictureField extends React.PureComponent {
     this.setState({
       image: event.target.files[0],
     })
+  }
+
+  handleScale = event => {
+    const scale = parseFloat(event.target.value)
+    this.setState({ scale })
   }
 
   onImageChange = () => {
@@ -49,7 +55,7 @@ class PictureField extends React.PureComponent {
       type,
       validate,
     } = this.props
-    const { image } = this.state
+    const { image, scale } = this.state
 
     return (
       <>
@@ -82,11 +88,26 @@ class PictureField extends React.PureComponent {
                 </label>
               </div>
               {image && (
-                <AvatarEditor
-                  ref={this.avatarRef}
-                  image={image}
-                  onImageChange={this.onImageChange}
-                />
+                <>
+                  <div>
+                    <AvatarEditor
+                      ref={this.avatarRef}
+                      image={image}
+                      onImageChange={this.onImageChange}
+                      scale={scale}
+                    />
+                  </div>
+                  <input
+                    name="scale"
+                    type="range"
+                    onChange={this.handleScale}
+                    min='1'
+                    max="2"
+                    step="0.01"
+                    defaultValue="1"
+                    className='pt40'
+                  />
+                </>
               )
               }
               <FieldError meta={meta} />
