@@ -21,7 +21,6 @@ class Signup extends PureComponent {
   }
 
   handleRequestFail = formResolver => (state, action) => {
-    // we return API errors back to the form
     const { payload } = action
     const nextState = { isFormLoading: false }
     const errors = parseSubmitErrors(payload.errors)
@@ -40,24 +39,41 @@ class Signup extends PureComponent {
 
   onFormSubmit = formValues => {
     const { dispatch } = this.props
+    const { pictureCroppingRect, picture } = formValues
 
-    const apiPath = '/users/signup'
-    const method = 'POST'
+    const body = new FormData()
+    body.append('thumb', picture)
+    body.append('croppingRect[x]', pictureCroppingRect.x)
+    body.append('croppingRect[y]', pictureCroppingRect.y)
+    body.append('croppingRect[width]', pictureCroppingRect.width)
+    body.append('croppingRect[height]', pictureCroppingRect.height)
+    Object.keys(formValues).forEach( key => {
+      if (key === 'picture' || key === 'pictureCroppingRect') {
+        return
+      }
+      body.append(key, formValues[key])
+    })
 
     this.setState({ isFormLoading: true })
-    // NOTE: we need to promise the request callbacks
-    // in order to inject their payloads into the form
     const formSubmitPromise = new Promise(resolve => {
       dispatch(requestData({
-        apiPath,
-        body: { ...formValues },
+        apiPath: '/users/signup',
+        body,
         handleFail: this.handleRequestFail(resolve),
         handleSuccess: this.handleRequestSuccess(resolve),
-        method,
+        method: 'POST',
         resolve: resolveCurrentUser
       }))
     })
+
     return formSubmitPromise
+  }
+
+  onImageChange = form => (picture, pictureCroppingRect) => {
+    form.batch(() => {
+      form.change('picture', picture)
+      form.change('pictureCroppingRect', pictureCroppingRect)
+    })
   }
 
   render() {
@@ -70,13 +86,14 @@ class Signup extends PureComponent {
           <section className="section fullheight flex-center items-center">
             <Form
               onSubmit={this.onFormSubmit}
-              render={({
-                dirtySinceLastSubmit,
-                handleSubmit,
-                hasSubmitErrors,
-                hasValidationErrors,
-                pristine,
-              }) => {
+              render={(form) => {
+                const {
+                  dirtySinceLastSubmit,
+                  handleSubmit,
+                  hasSubmitErrors,
+                  hasValidationErrors,
+                  pristine,
+                } = form
                 const canSubmit =
                   (!pristine &&
                     !hasSubmitErrors &&
@@ -93,7 +110,7 @@ class Signup extends PureComponent {
                     noValidate
                     onSubmit={handleSubmit}
                   >
-                    <FormFields />
+                    <FormFields onImageChange={this.onImageChange(form)} />
                     <FormFooter canSubmit={canSubmit} />
                   </form>
                 )
