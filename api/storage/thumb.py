@@ -3,7 +3,7 @@ import requests
 from sqlalchemy_api_handler import ApiErrors, ApiHandler, logger
 
 from domain.thumbs import DO_NOT_CROP, standardize_image
-from utils.object_storage import store_public_object
+from storage.object import store_public_object
 
 ALLOWED_EXTENSIONS = {'jpg', 'png', 'jpeg', 'gif'}
 BLACK = b'\x00\x00\x00'

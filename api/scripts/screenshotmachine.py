@@ -5,7 +5,7 @@ from flask import current_app as app
 
 from models.article import Article
 from utils.screenshotmachine import capture
-from utils.thumbs import save_thumb
+from storage.thumb import save_thumb
 
 
 @app.manager.option('-u',

@@ -5,7 +5,7 @@ from sqlalchemy import Column,\
 from sqlalchemy_api_handler import humanize
 
 from utils.inflect import inflect_engine
-from utils.object_storage import delete_public_object, \
+from storage.object import delete_public_object, \
                                  get_public_object_date, \
                                  get_storage_base_url
 from utils.string_processing import get_model_plural_name

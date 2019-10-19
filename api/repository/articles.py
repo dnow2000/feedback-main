@@ -10,7 +10,7 @@ from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
 from repository.activities import filter_by_activity_date_and_verb
 from utils.screenshotmachine import capture
-from utils.thumbs import save_thumb
+from storage.thumb import save_thumb
 
 article_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     Article,

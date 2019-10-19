@@ -2,7 +2,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from tests.utils.creators.create_article import create_article
 from utils.screenshotmachine import capture
-from utils.thumb_storage import save_thumb
+from storage.thumb import save_thumb
 
 def create_articles(with_capture=False):
     logger.info('create_articles')

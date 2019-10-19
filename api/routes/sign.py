@@ -7,7 +7,7 @@ from models.user import User
 from routes.utils.includes import USER_INCLUDES
 from utils.credentials import get_user_with_credentials
 from utils.login_manager import stamp_session, discard_session
-from utils.thumb_storage import get_crop, read_thumb, save_thumb
+from storage.thumb import get_crop, read_thumb, save_thumb
 from validation.thumbs import check_thumb_in_request, \
                               check_thumb_quality
 
