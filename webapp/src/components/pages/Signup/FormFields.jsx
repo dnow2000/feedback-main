@@ -77,19 +77,19 @@ const FormFields = ({onImageChange}) => (
       />
       <TextField
         id="publication-1"
-        name="publication"
+        name="publication-1"
         label="Publication 1"
         sublabel="Link to qualifying publication(s). You should be the first author[1] of an article published in a referred health science journal within the last 4 years."
         required
       />
       <TextField
         id="publication-2"
-        name="publication"
+        name="publication-2"
         label="Publication 2"
       />
       <TextField
         id="publication-3"
-        name="publication"
+        name="publication-3"
         label="Publication 3"
       />
       <TextField

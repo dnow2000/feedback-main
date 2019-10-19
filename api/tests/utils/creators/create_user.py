@@ -5,9 +5,9 @@ from utils.config import COMMAND_NAME, EMAIL_HOST
 def create_user(
         affiliation=None,
         email="{}test.foo.1@{}".format(COMMAND_NAME, EMAIL_HOST),
-        first_name="{} Test Foo 1".format(COMMAND_NAME.capitalize()),
         expertise=None,
         external_thumb_url=None,
+        first_name="{} Test Foo 1".format(COMMAND_NAME.capitalize()),
         last_name="Foo 1",
         password="{}test.Foo.1".format(COMMAND_NAME),
         title=None,

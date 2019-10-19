@@ -46,8 +46,10 @@ def signup():
         publication_key = 'publication-{}'.format(index)
         if publication_key in request.form:
             publication_url = request.form[publication_key]
-            publication = Publication(url=publication_url)
-            publications.append(publication)
+            publication = Publication.query.filter_by(url=publication_url).one()
+            if not publication:
+                publication = Publication(url=publication_url)
+                publications.append(publication)
 
     thumb = read_thumb(files=request.files, form=request.form)
     check_thumb_quality(thumb)

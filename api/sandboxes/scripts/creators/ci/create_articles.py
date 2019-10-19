@@ -2,6 +2,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from tests.utils.creators.create_article import create_article
 from utils.screenshotmachine import capture
+from utils.thumb_storage import save_thumb
 
 def create_articles(with_capture=False):
     logger.info('create_articles')
@@ -68,7 +69,7 @@ def create_articles(with_capture=False):
         for article in articles_by_name.values():
             logger.info('capture screenshot for {}...'.format(article.url))
             thumb = capture(article.url)
-            article.save_thumb(thumb, 0)
+            save_thumb(article, thumb, 0)
             logger.info('capture screenshot for {}...Done.'.format(article.url))
 
     logger.info('created {} articles'.format(len(articles_by_name)))

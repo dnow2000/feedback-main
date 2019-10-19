@@ -1,7 +1,7 @@
 import io
 from typing import List
 
-from PIL.Image import Image
+from PIL.Image import Image, open
 
 CONVERSION_QUALITY = 90
 DO_NOT_CROP = [0, 0, 1]
@@ -57,7 +57,7 @@ def _resize_image(image: Image) -> Image:
     return resized_image
 
 def standardize_image(image: bytes, crop_params: List) -> bytes:
-    raw_image = Image.open(io.BytesIO(image)).convert('RGB')
+    raw_image = open(io.BytesIO(image)).convert('RGB')
     cropped_image = _crop_image(crop_params[0], crop_params[1], crop_params[2], raw_image)
     resized_image = _resize_image(cropped_image)
     standard_image = _convert_to_jpeg(resized_image)

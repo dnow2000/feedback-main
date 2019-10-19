@@ -3,7 +3,7 @@ from pprint import pprint
 import traceback
 from flask import current_app as app
 
-from models import Article
+from models.article import Article
 from utils.screenshotmachine import capture
 
 

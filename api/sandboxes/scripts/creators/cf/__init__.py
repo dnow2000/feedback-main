@@ -1,14 +1,15 @@
 from sqlalchemy_api_handler import ApiHandler, logger
 
+from models.user import User
 from repository.climate_feedback import get_articles_from_climate_feedback_feedbacks_scrap
-from tests.utils.creators.create_role import create_role 
-from tests.utils.creators.create_user import create_user
+from tests.utils.creators.create_role import create_role
 
 def create_sandbox(**kwargs):
     logger.info('create_cf_sandbox...')
-    editor_user = create_user(
+    editor_user = User(
         email="emmanuel.vincent@sciencefeedback.fr",
-        public_name="Emmanuel Vincent"
+        firstName="Emmanuel Vincent",
+        lastName="Vincent"
     )
     editor_user.set_password("emmanuel.Vincent.0")
     create_role(editor_user, role_type="editor")

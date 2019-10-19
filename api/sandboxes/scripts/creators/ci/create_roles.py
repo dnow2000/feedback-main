@@ -13,9 +13,10 @@ def create_roles():
 
     for user in User.query.all():
 
+        full_name = "{} {}".format(user.firstName, user.lastName)
         user_type = re.match(
             r'{} Test (.*) (.*)'.format(COMMAND_NAME.upper()),
-            user.publicName
+            full_name
         ).group(1)
 
         if user_type not in ['user', 'master']:

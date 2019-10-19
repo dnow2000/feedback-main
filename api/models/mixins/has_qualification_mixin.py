@@ -5,7 +5,7 @@ class HasQualificationMixin(object):
 
     affiliation = Column(String(220))
 
-    expertise = Column(Text, nullable=True)
+    expertise = Column(Text)
 
     orcidId = Column(String(220))
 

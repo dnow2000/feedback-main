@@ -30,16 +30,18 @@ class User(ApiHandler,
 
     def errors(self):
         errors = super(User, self).errors()
-        if self.id is None\
-           and User.query.filter_by(email=self.email).count()>0:
-            errors.add_error('email', 'Un compte lié à cet email existe déjà')
-        if self.publicName:
-            errors.check_min_length('publicName', self.publicName, 3)
-        if self.email:
-            errors.check_email('email', self.email)
         if self.clearTextPassword:
             errors.check_min_length('password', self.clearTextPassword, 8)
             self.clearTextPassword = None
+        if self.firstName:
+            errors.check_min_length('firstName', self.firstName, 3)
+        if self.email:
+            errors.check_email('email', self.email)
+        if self.id is None\
+           and User.query.filter_by(email=self.email).count()>0:
+            errors.add_error('email', 'Un compte lié à cet email existe déjà')
+        if self.lastName:
+            errors.check_min_length('lastName', self.lastName, 3)
         return errors
 
     def get_id(self):
@@ -59,7 +61,7 @@ class User(ApiHandler,
 
     def is_anonymous(self):
         return False
-        
+
     def populate_from_dict(self, dct):
         user_dict = dict({}, **dct)
 

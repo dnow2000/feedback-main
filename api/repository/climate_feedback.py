@@ -42,20 +42,22 @@ def get_users_from_climate_feedback_community_scrap(users_max=3):
             "affiliation": expert_row.p.text.split(',')[1],
             "email": "sftest.reviewer.cf{}@{}".format(expert_row_index, EMAIL_HOST),
             "expertise": expertise,
-            "external_thumb_url": expert_row.img['src'],
-            "first_name": first_name,
-            "last_name": last_name,
+            "externalThumbUrl": expert_row.img['src'],
+            "firstName": first_name,
+            "lastName": last_name,
             "password": "sftest.Reviewer.cf{}".format(expert_row_index),
             "title": expert_row.p.text.split(',')[0]
         }
 
-        user = User.query.filter_by(publicName=data['public_name'])\
-                         .first()
+        user = User.query.filter_by(
+            firstName=data['firstName'],
+            lastName=data['lastName']
+        ).first()
 
         if user:
             user.populate_from_dict(data)
         else:
-            user = create_user(**data)
+            user = User(**data)
 
         set_user_from_climate_feedback_user_scrap(user, expert_row.h3.a['href'])
 
