@@ -1,10 +1,12 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import { withRouter } from 'react-router-dom'
 
-import { withNotRequiredLogin } from '../../hocs'
+import { withRedirectWhenLoggedIn } from '../../hocs'
 import Signin from './Signin'
 
 export default compose(
-  withNotRequiredLogin,
+  withRouter,
+  withRedirectWhenLoggedIn,
   connect()
 )(Signin)

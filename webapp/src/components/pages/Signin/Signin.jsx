@@ -4,10 +4,10 @@ import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-saga-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
+import { NavLink } from 'react-router-dom'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 
 class Signin extends PureComponent {
@@ -64,7 +64,6 @@ class Signin extends PureComponent {
 
     return (
       <Fragment>
-        <HeaderContainer />
         <MainContainer name="sign-in">
           <section className="section fullheight flex-center items-center">
             <Form
@@ -99,6 +98,9 @@ class Signin extends PureComponent {
               }}
             />
           </section>
+          <NavLink className="button is-primary" to="/signup">
+            Register ?
+          </NavLink>
         </MainContainer>
       </Fragment>
     )
