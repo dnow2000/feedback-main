@@ -24,3 +24,5 @@ def upgrade():
 
 def downgrade():
     op.add_column('user', 'publicName', nullable=False)
+    op.drop_column('user', 'firstName')
+    op.drop_column('user', 'lastName')

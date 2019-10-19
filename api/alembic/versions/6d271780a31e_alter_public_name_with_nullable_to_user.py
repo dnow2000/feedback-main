@@ -1,4 +1,4 @@
-"""alter public name to nullable
+"""alter public name with nullable to user
 
 Revision ID: 6d271780a31e
 Revises: 5f64fdd4e7bf
