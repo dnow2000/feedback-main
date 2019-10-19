@@ -12,7 +12,7 @@ def create_article(
     article.authors = authors
     article.isReviewable = is_reviewable
     article.summary = summary
-    article.tatgs = tags
+    article.tags = tags
     article.title = title
     article.url = url
 

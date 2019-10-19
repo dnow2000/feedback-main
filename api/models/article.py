@@ -44,9 +44,10 @@ class Article(ApiHandler,
             amount -= 10
         return amount
 
+
 @as_dict.register(Article)
-def _(article, unused_column=None, includes: Iterable = ()):
-    article_dict = as_dict(article, includes=includes)
+def _(article, column=None, includes: Iterable = ()):
+    article_dict = as_dict.registry[ApiHandler](article, includes=includes)
 
     # REMOVE OTHER REVIEWERS REVIEWS
     # TODO: This will never enable to see all reviews. Remove.
