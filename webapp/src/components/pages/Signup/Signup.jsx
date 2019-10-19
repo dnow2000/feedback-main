@@ -2,16 +2,12 @@ import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
-import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
 import { requestData } from 'redux-saga-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
+import { NavLink } from 'react-router-dom'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
-import { withNotRequiredLogin } from '../../hocs'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
 import MainContainer from '../../layout/Main/MainContainer'
 
 class Signup extends PureComponent {
@@ -81,8 +77,7 @@ class Signup extends PureComponent {
 
     return (
       <Fragment>
-        <HeaderContainer />
-        <MainContainer name="sign-in">
+        <MainContainer name="sign-up">
           <section className="section fullheight flex-center items-center">
             <Form
               onSubmit={this.onFormSubmit}
@@ -117,6 +112,9 @@ class Signup extends PureComponent {
               }}
             />
           </section>
+          <NavLink className="button is-primary" to="/signin">
+            Already have an account ?
+          </NavLink>
         </MainContainer>
       </Fragment>
     )
@@ -128,8 +126,4 @@ Signup.propTypes = {
   history: PropTypes.object.isRequired,
 }
 
-export default compose(
-  withNotRequiredLogin,
-  withRouter,
-  connect()
-)(Signup)
+export default Signup

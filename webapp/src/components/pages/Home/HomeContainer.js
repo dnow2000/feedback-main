@@ -1,12 +1,12 @@
-import { connect } from "react-redux"
-import { compose } from "redux"
+import { connect } from 'react-redux'
+import { compose } from 'redux'
+import { withRouter } from 'react-router-dom'
 
 import Home from './Home'
-
-const mapStateToProps = state => {
-  return { reviews: state.data.reviews }
-}
+import { withRedirectWhenLoggedIn } from '../../hocs'
 
 export default compose(
-  connect(mapStateToProps)
+  withRouter,
+  withRedirectWhenLoggedIn,
+  connect()
 )(Home)
