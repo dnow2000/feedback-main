@@ -28,7 +28,8 @@ class UsersExploration extends PureComponent {
   componentDidMount() {
     const { query } = this.props
     const queryParams = query.parse()
-    if (!queryParams.page) {
+    const hasLoaderResetPage = !queryParams.page
+    if (hasLoaderResetPage) {  // NOTE @colas: if not, request will be triggered in componentDidUpdate when page is reset
       this.handleRequestData()
     }
   }

@@ -5,5 +5,5 @@ import { withRequiredLogin, withRoles } from '../../hocs'
 
 export default compose(
   withRequiredLogin,
-  withRoles({ creationRoleTypes: ['master'], modificationRoleTypes: ['master'] })
+  withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] })
 )(Users)

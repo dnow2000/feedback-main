@@ -6,7 +6,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 import UsersExploration from './UsersExploration'
 import selectUsers from '../../../../selectors/selectUsers'
 
-const mapStateToProps = state =>  {
+const mapStateToProps = state => {
   return {
     currentUser: selectCurrentUser(state),
     users: selectUsers(state),
