@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 
 import ArticleContainer from '../pages/Article/ArticleContainer'
 import ArticlesContainer from '../pages/Articles/ArticlesContainer'
-import HomeContainer from '../pages/Home/HomeContainer'
+import LandingContainer from '../pages/Landing/LandingContainer'
 import ReviewContainer from '../pages/Review/ReviewContainer'
 import ReviewsContainer from '../pages/Reviews/ReviewsContainer'
 import UserContainer from '../pages/User/UserContainer'
@@ -18,7 +18,7 @@ const routes = [
   {
     exact: true,
     path: '/',
-    render: () => <Redirect to="/home" />,
+    render: () => <Redirect to="/landing" />,
   },
   {
     exact: true,
@@ -34,9 +34,9 @@ const routes = [
   },
   {
     exact: true,
-    path: '/home',
-    render: () => <HomeContainer />,
-    title: 'Home',
+    path: '/landing',
+    render: () => <LandingContainer />,
+    title: 'Landing',
   },
   {
     exact: true,

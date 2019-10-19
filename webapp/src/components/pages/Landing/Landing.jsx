@@ -6,7 +6,7 @@ import MainContainer from '../../layout/Main/MainContainer'
 const titleClassName = "title has-text-grey has-text-weight-normal is-size-1"
 const subtitleClassName = "subtitle has-text-grey-light is-size-3"
 
-const Home = () => (
+const Landing = () => (
   <Fragment>
     <MainContainer name="home">
         <div className="col-1of2">
@@ -29,4 +29,4 @@ const Home = () => (
   </Fragment>
 )
 
-export default Home
+export default Landing
