@@ -15,14 +15,15 @@ services:
     depends_on:
       - postgres-development
     environment:
-      - APP_NAME=${APP_NAME}
+      - APP_NAME=$APP_NAME
       - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
-      - COMMAND_NAME=${COMMAND_NAME}
+      - COMMAND_NAME=$COMMAND_NAME
       - ENV=${ENV:-development}
-      - GIT_TAG=${GIT_TAG}
+      - GIT_TAG=$GIT_TAG
+      - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
       - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-development/${DB_NAME}
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
-      - TLD=${TLD}
+      - TLD=$TLD
     networks:
       - db_development_nw
       - web_development_nw
@@ -53,7 +54,7 @@ services:
     networks:
       - db_development_nw
     volumes:
-      - "./docker_data_development/postgres-development:/var/lib/postgresql/data"
+      - "./docker_data_development/postgres:/var/lib/postgresql/data"
 
 networks:
   db_development_nw:

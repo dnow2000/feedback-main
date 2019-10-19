@@ -10,6 +10,7 @@ from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
 from repository.activities import filter_by_activity_date_and_verb
 from utils.screenshotmachine import capture
+from storage.thumb import save_thumb
 
 article_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     Article,
@@ -43,7 +44,7 @@ def resolve_content_with_url(url, **kwargs):
 def update_article(article):
     if article.thumbCount == 0:
         thumb = capture(article.url)
-        article.save_thumb(thumb, 0, no_convert=True)
+        save_thumb(article, thumb, 0, no_convert=True)
 
     if article.buzzsumoId:
         buzzsumo_content = get_buzzsumo_content(article.url)

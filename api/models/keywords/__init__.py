@@ -46,7 +46,8 @@ def install_keywords():
 
     User.__ts_vector__ = create_tsvector(
         cast(coalesce(User.email, ''), TEXT),
-        cast(coalesce(User.publicName, ''), TEXT),
+        cast(coalesce(User.firstName, ''), TEXT),
+        cast(coalesce(User.lastName, ''), TEXT),
     )
     User.__table_args__ = (
         Index(

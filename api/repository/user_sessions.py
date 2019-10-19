@@ -1,7 +1,7 @@
 from uuid import UUID
 from sqlalchemy_api_handler import ApiHandler
 
-from models import UserSession
+from models.user_session import UserSession
 
 
 def register_user_session(user_id: int, session_uuid: UUID):
@@ -15,7 +15,7 @@ def delete_user_session(user_id: int, session_uuid: UUID):
     session = UserSession.query \
         .filter_by(userId=user_id, uuid=session_uuid) \
         .first()
-    APiHandler.delete(session)
+    ApiHandler.delete(session)
 
 
 def existing_user_session(user_id: int, session_uuid: UUID) -> bool:

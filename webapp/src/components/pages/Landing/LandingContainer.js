@@ -2,11 +2,11 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { withRouter } from 'react-router-dom'
 
+import Landing from './Landing'
 import { withRedirectWhenLoggedIn } from '../../hocs'
-import Signin from './Signin'
 
 export default compose(
   withRouter,
   withRedirectWhenLoggedIn,
   connect()
-)(Signin)
+)(Landing)

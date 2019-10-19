@@ -4,6 +4,24 @@ from models.utils.activity import install_activity
 from models.utils.db import db
 
 def install_models():
+    import models.article
+    import models.article_tag
+    import models.evaluation
+    import models.image
+    import models.publication
+    import models.review
+    import models.review_tag
+    import models.role
+    import models.scope
+    import models.tag
+    import models.user
+    import models.user_article
+    import models.user_publication
+    import models.user_session
+    import models.user_tag
+    import models.verdict
+    import models.verdict_user
+    import models.verdict_tag
 
     install_activity()
 

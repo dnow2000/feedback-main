@@ -4,25 +4,25 @@ import withLogin from 'with-react-redux-login'
 
 import { userNormalizer } from '../../../utils/normalizers'
 
-export const withRequiredLogin = compose(
+
+const withRedirectWhenLoggedIn = compose(
   withQueryRouter(),
   withLogin({
-    handleFail: (state, action, ownProps) => {
-      const { history, location: { pathname, search} } = ownProps
-      const from = encodeURIComponent(`${pathname}${search}`)
-      history.push(`/signin?from=${from}`)
-    },
     handleSuccess: (state, action, ownProps) => {
       const { payload: { datum: { validationToken } } } = action
-      const { history } = ownProps
+      const { history, location: { pathname } } = ownProps
       const validated = validationToken === null
       if (!validated) {
         history.push('/home')
+        return
+      }
+      if (pathname === '/signin' || pathname === '/signup' || pathname === '/' || pathname === '/home') {
+        history.push('/articles')
       }
     },
-    isRequired: true,
-    normalizer: userNormalizer
+    isRequired: false,
+    normalizer: userNormalizer,
   })
 )
 
-export default withRequiredLogin
+export default withRedirectWhenLoggedIn
