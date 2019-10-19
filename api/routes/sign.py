@@ -44,8 +44,8 @@ def signup():
     publications = []
     for index in [1, 2, 3]:
         publication_key = 'publication-{}'.format(index)
-        if publication_key in request.json:
-            publication_url = request.json[publication_key]
+        if publication_key in request.form:
+            publication_url = request.form[publication_key]
             publication = Publication(url=publication_url)
             publications.append(publication)
 
