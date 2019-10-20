@@ -37,7 +37,7 @@ class Get:
                 .with_auth(email=get_sandbox_role_email('editor')) \
                 .get('/reviews')
             assert result.status_code == 200
-            reviews = result.json()
+            reviews = result.json
             assert len(reviews) == 3
 
     class Returns400:

@@ -13,6 +13,7 @@ from models.tag import Tag
 from models.user import User
 from models.user_article import UserArticle
 from models.user_tag import UserTag
+from models.user_session import UserSession
 from models.verdict import Verdict
 from models.verdict_tag import VerdictTag
 from models.verdict_user import VerdictUser
@@ -34,6 +35,7 @@ def clean_all_database():
     UserArticle.query.delete()
     Article.query.delete()
     Role.query.delete()
+    UserSession.query.delete()
     User.query.delete()
     versioning_manager.activity_cls.query.delete()
     db.session.commit()

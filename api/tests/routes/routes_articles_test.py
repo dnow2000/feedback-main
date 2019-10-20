@@ -10,7 +10,6 @@ from utils.logger import deactivate_logger
 
 class Get:
     class Returns200:
-        @pytest.mark.skip(reason="")
         @with_clean_all_database
         def when_get_articles_should_return_a_list_of_articles(self, app):
             # given
@@ -25,7 +24,7 @@ class Get:
 
             # then
             assert result.status_code == 200
-            articles = result.json()
+            articles = result.json
             assert len(articles) == 6
 
         @with_clean_all_database
