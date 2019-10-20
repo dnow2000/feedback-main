@@ -77,7 +77,7 @@ jobs: # a collection of steps
       - run:
           name: Run backend
           command: |
-            docker-compose up
+            docker-compose -f docker-compose.development.yml up
           background: true
       - run:
           name: Run frontend
