@@ -1,3 +1,6 @@
+from sqlalchemy_api_handler import as_dict
+
+from utils.credentials import PLAIN_DEFAULT_TESTING_PASSWORD
 from utils.config import COMMAND_NAME, EMAIL_HOST
 
 def get_email(first_name, last_name, domain):
@@ -31,6 +34,8 @@ def get_password_from_email(email):
     return minimal_password
 
 def get_user_helper(user):
-    return dict(user.as_dict(), **{
-        "password": get_password_from_email(user.email)
-    })
+    return dict(
+        as_dict(user), **{
+            "password": PLAIN_DEFAULT_TESTING_PASSWORD
+        }
+    )

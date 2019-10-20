@@ -4,6 +4,7 @@ from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import db
+from scripts.utils.manager import install_scripts
 
 flask_app = Flask(__name__)
 
@@ -21,7 +22,7 @@ def create_app(env=None):
 flask_app.manager = Manager(create_app)
 
 flask_app.app_context().push()
-import scripts
+install_scripts()
 
 if __name__ == "__main__":
     flask_app.manager.run()
