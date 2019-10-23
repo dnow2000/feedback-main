@@ -1,7 +1,7 @@
 version: 2
 jobs:
   build:
-    working_directory: "~/build-ci"
+    working_directory: ~/main-ci
     docker:
       - image: circleci/python:3.7.0
         environment:
@@ -28,7 +28,7 @@ jobs:
           paths:
             - "venv"
   test-api:
-    working_directory: "~/test-api-ci"
+    working_directory: ~/main-ci
     docker:
       - image: circleci/python:3.7.0
     steps:
@@ -48,7 +48,7 @@ jobs:
             pytest tests
 
   test-end2end:
-    working_directory: ~/test-end2end-ci
+    working_directory: ~/main-ci
     machine:
       image: circleci/classic:latest
     steps:
@@ -110,21 +110,20 @@ jobs:
             yarn test:end2end
 
   check-dependencies:
-    working_directory: ~/api-ci # directory where steps will run
-    docker: # run the steps with Docker
+    working_directory: ~/main-ci
+    docker:
       - image: circleci/python:3.7.0
-    steps: # a collection of executable commands
-      - checkout # special step to check out source code to the working directory
-      - restore_cache: # restores saved dependency cache if the Branch key template or requirements.txt files have not changed since the previous run
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
-      - run: # install and activate virtual environment with pip
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
+      - run:
           name: Install requirements
           command: |
             cd api
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-
       - run:
           name: Check outdated dependencies
           command:
@@ -141,9 +140,9 @@ workflows:
             - build
       - test-end2end
   schedule:
-    triggers: #use the triggers key to indicate a scheduled build
+    triggers:
       - schedule:
-          cron: "0 1 * * 1" # run every monday at 1 am !!!! UTC TIME !!!!
+          cron: "0 1 * * 1"
           filters:
             branches:
               only:
