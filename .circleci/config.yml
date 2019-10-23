@@ -103,7 +103,7 @@ jobs:
             nvm use v8.15.1
             cd webapp
             dockerize -wait http://localhost/health -timeout 5m -wait-retry-interval 5s
-            yarn test:cafe
+            yarn test:end2end
 
   check-dependencies:
     working_directory: ~/api-ci # directory where steps will run
