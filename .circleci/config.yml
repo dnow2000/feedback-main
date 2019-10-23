@@ -19,7 +19,7 @@ jobs:
       - save_cache:
           key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
           paths:
-            - "venv"
+            - "./api/venv"
   test-api:
     working_directory: ~/main-ci
     docker:
