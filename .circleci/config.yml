@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
       - run:
           name: Install requirements
           command: |
@@ -24,10 +24,11 @@ jobs:
             pip install -r requirements.txt
             python ./utils/nltk_downloader.py
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
           paths:
             - "venv"
   test-api:
+    working_directory: "~/test-api-ci"
     docker:
       - image: circleci/python:3.7.0
     steps:
