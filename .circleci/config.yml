@@ -7,9 +7,27 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps-{{ checksum "./api/requirements.txt" }}
+      - restore_cache:
+          key: deps-{{ checksum "./api/utils/nltk_downloader.py"}}
+      - restore_cache:
+          key: deps-{{ checksum "./webapp/package.json"}}
       - run:
-          name: Install requirements
+          name: Install api requirement
+          command: |
+            cd api
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+            python ./utils/nltk_downloader.py
+      - run:
+          name: Install api requirement
+          command: |
+            cd api
+            . venv/bin/activate
+            python ./utils/nltk_downloader.py
+      - run:
+          name: Install frontend node_modules
           command: |
             cd api
             python3 -m venv venv
@@ -17,10 +35,18 @@ jobs:
             pip install -r requirements.txt
             python ./utils/nltk_downloader.py
       - save_cache:
-          key: deps-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps-{{ checksum "./api/requirements.txt" }}
           paths:
             - ~/main-ci/api/venv
+      - save_cache:
+          key: deps-{{ checksum "./api/utils/nltk_downloader.py"}}
+          paths:
             - /home/circleci/nltk_data
+      - save_cache:
+          key: deps-{{ checksum "./webapp/package.json"}}
+          paths:
+            - ~/main-ci/webapp/node_modules
+            - ~/main-ci/webapp/yarn.lock
 
   test-api:
     working_directory: ~/main-ci
@@ -57,6 +83,8 @@ jobs:
       image: circleci/classic:latest
     steps:
       - checkout
+      - restore_cache:
+          key: deps-{{ checksum "./webapp/package.json"}}
       - run:
           name: Init env
           command: |
@@ -86,8 +114,8 @@ jobs:
       - run:
           name: Run backend
           command: |
-            echo $APP_NAME
-            docker-compose -f docker-compose.development.yml up
+            echo BEN$APP_NAME
+            $COMMAND_NAME start-development
           background: true
       - run:
           name: Run frontend
