@@ -16,13 +16,11 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
             python ./utils/nltk_downloader.py
-            ls ~/root/nltk_data/
-            ls /root/nltk_data/
       - save_cache:
           key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths:
             - ~/main-ci/api/venv
-            - /root/nltk_data/
+            - /home/circleci/nltk_data
 
   test-api:
     working_directory: ~/main-ci
@@ -43,9 +41,6 @@ jobs:
           name: Running flask
           command: |
             cd api
-            pwd
-            ls
-            ls /root/nltk_data
             . venv/bin/activate
             python app.py
           background: true
