@@ -19,10 +19,10 @@ def create_user_tags():
 
     user = User.query.filter_by(email="sftest.reviewer.2@sciencefeedback.co").one()
     tag = Tag.query.filter_by(text="immunology").one()
-    user_tag = UserTag()
-    user_tag.user = user
-    user_tag.tag = tag
-    user_tags_by_name["reviewer 2 / immunology"] = user_tag
+    user_tags_by_name["reviewer 2 / immunology"] = create_user_tag(
+        user=user,
+        tag=tag
+    )
 
 
     ApiHandler.save(*user_tags_by_name.values())
