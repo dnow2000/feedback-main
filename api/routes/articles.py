@@ -45,8 +45,6 @@ def list_articles():
                             page=request.args.get('page'),
                             paginate=10)
 
-    print(article_dicts)
-
     return jsonify(article_dicts)
 
 

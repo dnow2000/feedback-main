@@ -91,6 +91,7 @@ jobs:
       - run:
           name: Run backend
           command: |
+            echo $APP_NAME
             docker-compose -f docker-compose.development.yml up
           background: true
       - run:
