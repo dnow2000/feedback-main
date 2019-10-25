@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
+          key: deps1-{{ checksum "./api/requirements.txt" }}
       - run:
           name: Install requirements
           command: |
@@ -17,7 +17,7 @@ jobs:
             pip install -r requirements.txt
             python ./utils/nltk_downloader.py
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
+          key: deps1-{{ checksum "./api/requirements.txt" }}
           paths:
             - "~/main-ci/api/venv"
   test-api:
@@ -33,6 +33,8 @@ jobs:
           POSTGRES_USER: $DB_NAME_user
     steps:
       - checkout
+      - restore_cache:
+          key: deps1-{{ checksum "./api/requirements.txt" }}
       - run:
           name: Running flask
           command: |
