@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ checksum "./api/requirements.txt" }}
+          key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - run:
           name: Install requirements
           command: |
@@ -17,9 +17,10 @@ jobs:
             pip install -r requirements.txt
             python ./utils/nltk_downloader.py
       - save_cache:
-          key: deps1-{{ checksum "./api/requirements.txt" }}
+          key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths:
-            - "~/main-ci/api/venv"
+            - ~/main-ci/api/venv
+            - /root/nltk_data/
   test-api:
     working_directory: ~/main-ci
     docker:
@@ -34,7 +35,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ checksum "./api/requirements.txt" }}
+          key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - run:
           name: Running flask
           command: |
