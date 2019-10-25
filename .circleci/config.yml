@@ -113,8 +113,7 @@ jobs:
       - run:
           name: Run backend
           command: |
-            echo BEN$APP_NAME
-            $COMMAND_NAME start-development
+            ./$COMMAND_NAME start-development
           background: true
       - run:
           name: Run frontend
