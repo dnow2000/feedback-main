@@ -5,10 +5,14 @@ from flask import current_app as app
 
 from models.utils.clean import clean_all_database
 
-@app.manager.command
-def clean():
+@app.manager.option('-t',
+                    '--target',
+                    help='Clean target',
+                    default="database")
+def clean(target):
     try:
-        clean_all_database()
+        if target == "database":
+            clean_all_database()
     except Exception as e:
         print('ERROR: ' + str(e))
         traceback.print_tb(e.__traceback__)

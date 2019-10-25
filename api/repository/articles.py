@@ -44,7 +44,7 @@ def resolve_content_with_url(url, **kwargs):
 def update_article(article):
     if article.thumbCount == 0:
         thumb = capture(article.url)
-        save_thumb(article, thumb, 0, no_convert=True)
+        save_thumb(article, thumb, 0, convert=False)
 
     if article.buzzsumoId:
         buzzsumo_content = get_buzzsumo_content(article.url)

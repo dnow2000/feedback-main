@@ -3,8 +3,8 @@ from flask_login import current_user
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, \
                                    as_dict, \
-                                   load_or_404, \
-                                   listify
+                                   listify, \
+                                   load_or_404
 
 from models.article import Article
 from repository.articles import get_articles_query_with_keywords, \
@@ -39,12 +39,13 @@ def list_articles():
         query = get_articles_keywords_join_query(query)
         query = get_articles_query_with_keywords(query, keywords)
 
-    return jsonify(listify(Article,
+    article_dicts = listify(Article,
                             includes=ARTICLE_INCLUDES,
                             query=query,
                             page=request.args.get('page'),
-                            paginate=10,
-                            order_by='article.id desc'))
+                            paginate=10)
+
+    return jsonify(article_dicts)
 
 
 @app.route('/articles/<article_id>', methods=['GET'])

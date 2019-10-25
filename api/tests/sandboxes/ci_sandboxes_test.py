@@ -1,24 +1,28 @@
 import pytest
 
-from sandboxes.scripts.creators.ci import create_sandbox
-from tests.utils.clean import with_clean_all_database
-from tests.utils.count import assert_created_counts,\
-                              get_saved_counts_by_model_name
+from sandboxes.scripts.create_sandbox import create_sandbox
+from tests.utils.count import assert_created_counts
 from utils.logger import deactivate_logger
 
 @pytest.mark.standalone
-@with_clean_all_database
-def test_ci_sandbox_created_all_the_ci_objects(app):
-    saved_counts_by_model_name = get_saved_counts_by_model_name(app)
+def when_ci_sandbox_created_all_the_ci_objects(app):
     deactivate_logger('info')
-    create_sandbox()
+    create_sandbox('ci')
     assert_created_counts(
-        app,
-        saved_counts_by_model_name,
         Article=6,
+        ArticleTag=5,
         Evaluation=10,
+        Publication=0,
         Review=3,
+        ReviewTag=3,
         Role=24,
+        Scope=43,
         User=18,
-        Verdict=1
+        UserArticle=0,
+        UserPublication=0,
+        UserSession=0,
+        UserTag=2,
+        Verdict=1,
+        VerdictTag=1,
+        VerdictUser=1,
     )

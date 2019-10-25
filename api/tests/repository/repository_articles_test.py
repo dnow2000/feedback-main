@@ -16,7 +16,7 @@ def filter_articles_with_keywords(keywords):
 
 @pytest.mark.standalone
 @with_clean_all_database
-def test_get_articles_with_one_complete_keyword_returns_result(app):
+def when_get_articles_with_one_complete_keyword_returns_result(app):
     # given
     article1 = create_article(
         url="http://article1.com",
@@ -44,7 +44,7 @@ def test_get_articles_with_one_complete_keyword_returns_result(app):
 
 @pytest.mark.standalone
 @with_clean_all_database
-def test_get_articles_with_one_truncated_keyword_returns_result(app):
+def when_get_articles_with_one_truncated_keyword_returns_result(app):
     # given
     article1 = create_article(
         url="http://article1.com",
@@ -72,7 +72,7 @@ def test_get_articles_with_one_truncated_keyword_returns_result(app):
 
 @pytest.mark.standalone
 @with_clean_all_database
-def test_get_articles_with_one_close_around_keyword_returns_result(app):
+def when_get_articles_with_one_close_around_keyword_returns_result(app):
     # given
     article1 = create_article(
         url="http://article1.com",
@@ -100,7 +100,7 @@ def test_get_articles_with_one_close_around_keyword_returns_result(app):
 
 @pytest.mark.standalone
 @with_clean_all_database
-def test_get_articles_with_one_far_around_keyword_returns_no_result(app):
+def when_get_articles_with_one_far_around_keyword_returns_no_result(app):
     # given
     article1 = create_article(
         url="http://article1.com",
@@ -127,7 +127,7 @@ def test_get_articles_with_one_far_around_keyword_returns_no_result(app):
 
 @pytest.mark.standalone
 @with_clean_all_database
-def test_get_articles_with_several_around_keywords_returns_result(app):
+def when_get_articles_with_several_around_keywords_returns_result(app):
     # given
     article1 = create_article(
         url="http://article1.com",
@@ -155,7 +155,7 @@ def test_get_articles_with_several_around_keywords_returns_result(app):
 
 @pytest.mark.standalone
 @with_clean_all_database
-def test_get_articles_with_keyword_tag_returns_result(app):
+def when_get_articles_with_keyword_tag_returns_result(app):
     # given
     article1 = create_article(
         url="http://article1.com",

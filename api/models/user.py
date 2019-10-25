@@ -1,5 +1,5 @@
 import bcrypt
-from sqlalchemy import Binary, Column, String
+from sqlalchemy import Column, LargeBinary, String
 from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
@@ -18,7 +18,7 @@ class User(ApiHandler,
           ):
 
     email = Column(String(120), nullable=False, unique=True)
-    password = Column(Binary(60), nullable=False)
+    password = Column(LargeBinary(60), nullable=False)
 
     firstName = Column(String(30))
     lastName = Column(String(30))

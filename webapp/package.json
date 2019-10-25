@@ -55,7 +55,7 @@
     "redux-saga": "^0.15.3",
     "redux-saga-data": "2.7.0",
     "reselect": "^3.0.1",
-    "testcafe": "1.1.2",
+    "testcafe": "1.6.0",
     "whatwg-fetch": "2.0.3",
     "with-query-router": "3.1.0",
     "with-react-redux-login": "1.6.0"
@@ -77,8 +77,7 @@
     "precommit": "./scripts/precommit.sh",
     "prettier": "yarn run eslint ./src --fix",
     "start": "react-app-rewired start",
-    "test": "react-app-rewired test",
-    "test:cafe": "testcafe 'chrome:headless' testcafe"
+    "test:end2end": "testcafe 'chrome:headless' testcafe"
   },
   "eslintConfig": {
     "extends": "react-app"

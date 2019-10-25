@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  api-development:
+  api-test-api:
     build:
       context: ./api
       dockerfile: ./Dockerfile
@@ -11,56 +11,40 @@ services:
                pip install -r ./requirements.txt;
                python -m nltk.downloader punkt stopwords;
                while true; do python app.py; done;"
-    container_name: ${APP_NAME}-api-development
+    container_name: ${APP_NAME}-api-test-api
     depends_on:
-      - postgres-development
+      - postgres-test-api
     environment:
       - APP_NAME=$APP_NAME
       - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
       - COMMAND_NAME=$COMMAND_NAME
-      - ENV=${ENV:-development}
+      - ENV=${ENV:-test-api}
       - GIT_TAG=$GIT_TAG
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
-      - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-development/${DB_NAME}
+      - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-test-api/${DB_NAME}
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     networks:
-      - db_development_nw
-      - web_development_nw
+      - db_test-api_nw
     volumes:
       - ./api:/opt/api
 
-  nginx-development:
-    build: nginx
-    container_name: ${APP_NAME}-nginx-development
-    depends_on:
-      - api-development
-    networks:
-      - web_development_nw
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-
-  postgres-development:
+  postgres-test-api:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
-    container_name: ${APP_NAME}-postgres-development
+    container_name: ${APP_NAME}-postgres-test-api
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_PASSWORD=${DB_NAME}_password
       - POSTGRES_USER=${DB_NAME}_user
     image: postgres:10.1
     networks:
-      - db_development_nw
+      - db_test-api_nw
     volumes:
-      - "./docker_data_development/postgres:/var/lib/postgresql/data"
+      - "./docker_data_test-api/postgres:/var/lib/postgresql/data"
 
 networks:
-  db_development_nw:
-    driver: bridge
-  web_development_nw:
+  db_test-api_nw:
     driver: bridge
 
 volumes:
-  docker_data_development:
+  docker_data_test-api:

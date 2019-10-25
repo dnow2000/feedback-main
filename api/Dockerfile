@@ -1,7 +1,7 @@
 FROM python:3.8
 
 ENV PYTHONUNBUFFERED 1
-WORKDIR /usr/local/bin
+WORKDIR /opt/api
 
 COPY ./requirements.txt ./
 RUN pip install -r ./requirements.txt
