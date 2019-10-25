@@ -37,6 +37,8 @@ jobs:
           name: Running flask
           command: |
             cd api
+            pwd
+            ls
             . venv/bin/activate
             python app.py
           background: true
