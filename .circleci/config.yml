@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - run:
           name: Install requirements
           command: |
@@ -17,7 +17,7 @@ jobs:
             pip install -r requirements.txt
             python ./utils/nltk_downloader.py
       - save_cache:
-          key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths:
             - ~/main-ci/api/venv
             - /home/circleci/nltk_data
@@ -36,7 +36,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - run:
           name: Running flask
           command: |
@@ -121,7 +121,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
+          key: deps-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
       - run:
           name: Install requirements
           command: |
