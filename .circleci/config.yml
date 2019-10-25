@@ -13,15 +13,14 @@ jobs:
       - restore_cache:
           key: deps-{{ checksum "./webapp/package.json"}}
       - run:
-          name: Install api requirement
+          name: Install api requirements
           command: |
             cd api
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements.txt
-            python ./utils/nltk_downloader.py
       - run:
-          name: Install api requirement
+          name: Install api nltk data
           command: |
             cd api
             . venv/bin/activate
@@ -149,7 +148,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps-{{ .Branch }}-{{ checksum "./api/requirements.txt" }}
+          key: deps-{{ checksum "./api/requirements.txt" }}
       - run:
           name: Install requirements
           command: |
@@ -171,7 +170,9 @@ workflows:
       - test-api:
           requires:
             - build
-      - test-end2end
+      - test-end2end:
+          requires:
+            - build
   schedule:
     triggers:
       - schedule:
