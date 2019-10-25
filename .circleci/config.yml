@@ -21,6 +21,7 @@ jobs:
           paths:
             - ~/main-ci/api/venv
             - /root/nltk_data/
+
   test-api:
     working_directory: ~/main-ci
     docker:
@@ -42,6 +43,7 @@ jobs:
             cd api
             pwd
             ls
+            ls /root/nltk_data
             . venv/bin/activate
             python app.py
           background: true
