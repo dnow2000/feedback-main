@@ -7,12 +7,10 @@ import selectUsers from 'selectors/selectUsers'
 
 import UsersExploration from './UsersExploration'
 
-const mapStateToProps = state => {
-  return {
-    currentUser: selectCurrentUser(state),
-    users: selectUsers(state),
-  }
-}
+const mapStateToProps = state => ({
+  currentUser: selectCurrentUser(state),
+  users: selectUsers(state),
+})
 
 export default compose(
   withQueryRouter(),
