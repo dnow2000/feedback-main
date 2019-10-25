@@ -49,7 +49,10 @@ fi
 
 CMD="$1"
 
-MODE=$(cut -d "-" -f 2- <<< "$CMD")
+if [[ $CMD =~ '-' ]]; then
+  MODE=$(cut -d "-" -f 2- <<< "$CMD")
+fi
+MODE=${MODE:-'development'}
 
 shift
 
@@ -104,13 +107,13 @@ elif [[ "$CMD" =~ bash-* ]]; then
 		exit
 	fi
 
-# Clear all data in postgresql database
-elif [[ "$CMD" =~ "clean-all-database-*" ]]; then
-  RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py clean -t=database"'
-
-# Clear all assets in static
-elif [[ "$CMD" == "clean-all-storage" ]]; then
-	RUN='rm -rf $ROOT_PATH/api/static/object_store_data;'
+# Clean all type of data
+elif [[ "$CMD" =~ clean* ]]; then
+  if [[ "$1" == "database" ]]; then
+    RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py clean -t=database";'
+  elif [[ "$1" == "storage" ]]; then
+    RUN='sudo rm -rf $ROOT_PATH/api/static/object_store_data;'
+  fi
 
 # Kill ALL docker containersy/
 elif [[ "$CMD" == "kill-all-containers" ]]; then
@@ -118,19 +121,19 @@ elif [[ "$CMD" == "kill-all-containers" ]]; then
   RUN='docker kill $(docker ps -q)'
 
 # Force docker-compose to build the docker images
-elif [[ "$CMD" =~ rebuild-* ]]; then
+elif [[ "$CMD" =~ rebuild* ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml pull $*;
        docker-compose -f docker-compose.$MODE.yml build --no-cache $*;'
 
 # Restart docker-compose up with forcing recreation and unmounting volumes
-elif [[ "$CMD" =~ restart-* ]]; then
+elif [[ "$CMD" =~ restart* ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml down --volumes $*;
        sh scripts/start_$MODE.sh --force-recreate $*;'
 
 # Start docker-compose up with adapted env variables or frontends with local env
-elif [[ "$CMD" =~ start-* ]]; then
+elif [[ "$CMD" =~ start* ]]; then
   if [[ "$ENV" == "webapp" ]]; then
     RUN='cd $ROOT_PATH/webapp;
          yarn start;'
@@ -140,7 +143,7 @@ elif [[ "$CMD" =~ start-* ]]; then
   fi
 
 # Stop development containers
-elif [[ "$CMD" =~ stop- ]]; then
+elif [[ "$CMD" =~ stop* ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml stop $*;'
 
@@ -161,7 +164,7 @@ elif [[ "$CMD" =~ stop- ]]; then
 #	SANDBOX_NAME="ci"
 #	if [[ $# == 0 ]]; then
 #		confirm "Warning: your database will be wiped. Is this OK ?"
-#	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-all-database
+#	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-$MODE database
 #		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
 #		RUN='cd $APP_PATH;
 #       scripts/manager.js testcafe -b chrome:headless'
@@ -280,7 +283,7 @@ elif [[ "$CMD" == "symlink" ]]; then
 # =============================================
 
 # Connect to Postgresql database in command line
-elif [[ "$CMD" =~ psql-* ]]; then
+elif [[ "$CMD" =~ psql* ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "development" ]]; then
     RUN='docker exec -it $APP_NAME-api-$MODE bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
@@ -290,7 +293,7 @@ elif [[ "$CMD" =~ psql-* ]]; then
   fi
 
 # Open a python prompt in the specified environment
-elif [[ "$CMD" =~ python-* ]]; then
+elif [[ "$CMD" =~ python* ]]; then
 	if [[ "$ENV" == "development" ]]; then
 		RUN='docker exec -it $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else
@@ -305,7 +308,7 @@ elif [[ "$CMD" =~ python-* ]]; then
 # Run python scripts from api/scripts
 else
   if [[ "$ENV" == "development" ]]; then
-    RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
+    RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
   else
     scalingo -a "$SCALINGO_APP" run 'python scripts/manager.py '"$CMD $*"''
     exit
