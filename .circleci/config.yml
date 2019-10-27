@@ -56,6 +56,11 @@ jobs:
             set +o pipefail
             docker load -i ~/caches/images-test-api.tar | true
       - run:
+          name: Load cached docker images
+          command: |
+            set +o pipefail
+            docker load -i ~/caches/images.tar | true
+      - run:
           name: Running test api
           command: |
             ./$COMMAND_NAME -m test-api start
