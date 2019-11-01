@@ -3,14 +3,15 @@ jobs:
   build:
     working_directory: ~/main-ci
     machine:
-      image: circleci/classic:latest
+      image: $APP_NAME/main:0.1
     steps:
       - checkout
-      - restore_cache:
-          key: deps-{{ checksum "requirements.txt" }}
-      - restore_cache:
-          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          paths: ~/caches/images-test-api.tar
+      - run:
+          name: Build docker builder
+          command: |
+            docker build -t $APP_NAME/main:0.1 .
+            docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
+            docker push $APP_NAME/main:0.1
       - run:
           name: Install main requirements
           command: |
