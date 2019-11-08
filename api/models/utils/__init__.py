@@ -1,6 +1,3 @@
-from models.keywords import import_keywords
-from models.utils.activity import import_activity
-
 def import_models():
     from models.article import Article
     from models.article_tag import ArticleTag
@@ -20,9 +17,4 @@ def import_models():
     from models.verdict import Verdict
     from models.verdict_user import VerdictUser
     from models.verdict_tag import VerdictTag
-
-    import_keywords()
-
-    import_activity()
-
     return list(locals().values())
