@@ -5,8 +5,8 @@ from flask_login import LoginManager
 from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import db
-from models.utils.install import install_models
-from routes.utils.install import install_routes
+from models.utils import import_models
+from routes.utils import import_routes
 
 
 items_by_category = {'first': [], 'last': []}
@@ -51,8 +51,8 @@ def app():
     ApiHandler.set_db(db)
 
     flask_app.app_context().push()
-    install_models()
+    import_models()
     import utils.login_manager
-    install_routes()
+    import_routes()
 
     return flask_app
