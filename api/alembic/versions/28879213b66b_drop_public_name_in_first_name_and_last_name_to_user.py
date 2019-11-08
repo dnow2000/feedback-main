@@ -18,11 +18,11 @@ depends_on = None
 
 def upgrade():
     op.drop_column('user', 'publicName')
-    op.add_column('user', sa.Column('firstName', sa.String(30), nullable=False))
-    op.add_column('user', sa.Column('lastName', sa.String(30), nullable=False))
+    op.add_column('user', sa.Column('firstName', sa.String(30), server_default='Marx', nullable=False))
+    op.add_column('user', sa.Column('lastName', sa.String(30), server_default='Landers', nullable=False))
 
 
 def downgrade():
-    op.add_column('user', sa.Column('publicName', sa.String(30), nullable=False))
+    op.add_column('user', sa.Column('publicName', sa.String(30), server_default='Marx Landers', nullable=False))
     op.drop_column('user', 'firstName')
     op.drop_column('user', 'lastName')
