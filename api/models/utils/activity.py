@@ -4,7 +4,7 @@ from postgresql_audit.flask import versioning_manager
 
 from models.utils.db import db
 
-def install_activity():
+def import_activity():
 
     orm.configure_mappers()
     # FIXME: This is seriously ugly... (based on https://github.com/kvesteri/postgresql-audit/issues/21)

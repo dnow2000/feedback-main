@@ -9,7 +9,7 @@ from models.tag import Tag
 from models.user import User
 from models.verdict import Verdict
 
-def install_keywords():
+def import_keywords():
     Article.__ts_vector__ = create_tsvector(
         cast(coalesce(Article.title, ''), TEXT),
         cast(coalesce(Article.summary, ''), TEXT),
