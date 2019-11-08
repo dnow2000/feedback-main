@@ -155,7 +155,7 @@ elif [[ "$CMD" == start ]]; then
          yarn start;'
   else
     RUN='cd $ROOT_PATH;
-        sh scripts/start_$MODE.sh $*;'
+         sh scripts/start_$MODE.sh $*;'
   fi
 
 # Stop development containers

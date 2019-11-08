@@ -119,7 +119,7 @@ jobs:
       - run:
           name: Run backend
           command: |
-            ./$COMMAND_NAME start-serve-development
+            ./$COMMAND_NAME -m serve-development start
           background: true
       - run:
           name: Run frontend

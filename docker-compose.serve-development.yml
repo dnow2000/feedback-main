@@ -25,8 +25,8 @@ services:
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     networks:
-      - db_development_nw
-      - web_development_nw
+      - db_server_development_nw
+      - web_server_development_nw
     volumes:
       - ./api:/opt/api
 
@@ -36,7 +36,7 @@ services:
     depends_on:
       - api-serve-development
     networks:
-      - web_development_nw
+      - web_server_development_nw
     ports:
       - "80:80"
       - "443:443"
@@ -52,14 +52,14 @@ services:
       - POSTGRES_USER=${DB_NAME}_user
     image: postgres:10.1
     networks:
-      - db_development_nw
+      - db_server_development_nw
     volumes:
       - "./docker_data_serve-development/postgres:/var/lib/postgresql/data"
 
 networks:
-  db_development_nw:
+  db_server_development_nw:
     driver: bridge
-  web_development_nw:
+  web_server_development_nw:
     driver: bridge
 
 volumes:
