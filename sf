@@ -112,7 +112,7 @@ export GIT_TAG=`cd "$ROOT_PATH/api" && git describe --tags --abbrev=0`
 # Need to specify what alembic command you want to execute
 # Example: ./$COMMAND_NAME alembic upgrade HEAD
 if [[ "$CMD" == "alembic" ]]; then
-  RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. alembic '"$*"'"'
+  RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. alembic '"$*"'"'
 
 # Connect to API container
 elif [[ "$CMD" == bash ]]; then
