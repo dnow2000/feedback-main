@@ -163,7 +163,7 @@ jobs:
             pip install -r requirements.txt
       - run:
           name: Check outdated dependencies
-          command:
+          command: |
             cd api
             ./scripts/check-pip-dependencies.sh
 
