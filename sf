@@ -16,7 +16,12 @@ while [ -h "$PRG" ] ; do
     PRG=$(dirname "$PRG")"/$link"
   fi
 done
-ROOT_PATH=$(realpath "$(dirname "$PRG")")
+
+ROOT_PATH="."
+if [ -x "$(command -v realpath)" ]; then
+  ROOT_PATH=$(realpath "$(dirname "$PRG")")
+fi
+
 set -o allexport
 [[ -f $ROOT_PATH/.env ]] && source $ROOT_PATH/.env
 set +o allexport
@@ -25,34 +30,45 @@ set +o allexport
 #  Helper that describes all functionalities
 # =============================================
 
-if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]]; then
-    echo "$(basename "$0") [-h] [-e env -b backend c] -- program to deal with the ecosystem
+if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
+  echo "$(basename "$0") -- program to deal with $APP_NAME ecosystem
 where:
-    -h  show this help text
-    -e  specify environment to target (default: development)
-    -b  specify backend to connect with local app (default: localhost)
-    -t  specify version you want to deploy (create tag with this name)
-    -c  command that you want to run"
-    exit 0
+  -h            show this help text"
+  while read option name default help; do
+    printf "  %s=%-10s %s  (default: $default)\n" $option "<$name>" "$(sed -e 's/^"//' -e 's/"$//' <<<"$help")"
+  done < params.txt
+  exit 0
 fi
 
 # =============================================
 # Get script parameters
 # =============================================
 
-if [[ $# -gt 2 ]] && [[ "$1" == "-e" ]]; then
-  ENV=$2
-  shift 2
-else
-  ENV=${ENV:-'development'}
+while read option name default help; do
+  eval "$name=$default"
+done < $ROOT_PATH/params.txt
+
+while read; do
+  while read option name default help; do
+    if [[ $# -gt 2 ]]; then
+      if [[ "$1" == "$option" ]]; then
+        eval "$name=$2"
+        shift 2
+      fi
+    fi
+  done < $ROOT_PATH/params.txt
+done < $ROOT_PATH/params.txt
+
+set -o allexport
+[[ -f $ROOT_PATH/.env.$ENV ]] && source $ROOT_PATH/.env.$ENV
+set +o allexport
+
+if [[ "$TAG" != "not-set" ]] && [[ ! "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+  echo "tag format should be Semantic Versioning compliant x.x.x"
+  exit 1
 fi
 
 CMD="$1"
-
-if [[ $CMD =~ '-' ]]; then
-  MODE=$(cut -d "-" -f 2- <<< "$CMD")
-fi
-MODE=${MODE:-'development'}
 
 shift
 
@@ -99,7 +115,7 @@ if [[ "$CMD" == "alembic" ]]; then
   RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && PYTHONPATH=. alembic '"$*"'"'
 
 # Connect to API container
-elif [[ "$CMD" =~ bash-* ]]; then
+elif [[ "$CMD" == bash ]]; then
 	if [[ "$ENV" == "development" ]]; then
 		RUN='docker exec -it $APP_NAME-api-$MODE bash'
 	else
@@ -108,7 +124,7 @@ elif [[ "$CMD" =~ bash-* ]]; then
 	fi
 
 # Clean all type of data
-elif [[ "$CMD" =~ clean* ]]; then
+elif [[ "$CMD" == clean ]]; then
   if [[ "$1" == "database" ]]; then
     RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py clean -t=database";'
   elif [[ "$1" == "storage" ]]; then
@@ -121,19 +137,19 @@ elif [[ "$CMD" == "kill-all-containers" ]]; then
   RUN='docker kill $(docker ps -q)'
 
 # Force docker-compose to build the docker images
-elif [[ "$CMD" =~ rebuild* ]]; then
+elif [[ "$CMD" == rebuild ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml pull $*;
        docker-compose -f docker-compose.$MODE.yml build --no-cache $*;'
 
 # Restart docker-compose up with forcing recreation and unmounting volumes
-elif [[ "$CMD" =~ restart* ]]; then
+elif [[ "$CMD" == restart ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml down --volumes $*;
        sh scripts/start_$MODE.sh --force-recreate $*;'
 
 # Start docker-compose up with adapted env variables or frontends with local env
-elif [[ "$CMD" =~ start* ]]; then
+elif [[ "$CMD" == start ]]; then
   if [[ "$MODE" == "webapp" ]]; then
     RUN='cd $ROOT_PATH/webapp;
          yarn start;'
@@ -143,7 +159,7 @@ elif [[ "$CMD" =~ start* ]]; then
   fi
 
 # Stop development containers
-elif [[ "$CMD" =~ stop* ]]; then
+elif [[ "$CMD" == stop ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml stop $*;'
 
@@ -283,7 +299,7 @@ elif [[ "$CMD" == "symlink" ]]; then
 # =============================================
 
 # Connect to Postgresql database in command line
-elif [[ "$CMD" =~ psql* ]]; then
+elif [[ "$CMD" == psql ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "development" ]]; then
     RUN='docker exec -it $APP_NAME-api-$MODE bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
@@ -293,7 +309,7 @@ elif [[ "$CMD" =~ psql* ]]; then
   fi
 
 # Open a python prompt in the specified environment
-elif [[ "$CMD" =~ python* ]]; then
+elif [[ "$CMD" == python ]]; then
 	if [[ "$ENV" == "development" ]]; then
 		RUN='docker exec -it $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else

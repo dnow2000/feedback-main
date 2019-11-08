@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  api-development:
+  api-serve-development:
     build:
       context: ./api
       dockerfile: ./Dockerfile
@@ -11,17 +11,17 @@ services:
                pip install -r ./requirements.txt;
                python -m nltk.downloader punkt stopwords;
                while true; do python app.py; done;"
-    container_name: ${APP_NAME}-api-development
+    container_name: ${APP_NAME}-api-serve-development
     depends_on:
-      - postgres-development
+      - postgres-serve-development
     environment:
       - APP_NAME=$APP_NAME
       - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
       - COMMAND_NAME=$COMMAND_NAME
-      - ENV=${ENV:-development}
+      - ENV=${ENV:-serve-development}
       - GIT_TAG=$GIT_TAG
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
-      - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-development/${DB_NAME}
+      - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-serve-development/${DB_NAME}
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     networks:
@@ -30,11 +30,11 @@ services:
     volumes:
       - ./api:/opt/api
 
-  nginx-development:
+  nginx-serve-development:
     build: nginx
-    container_name: ${APP_NAME}-nginx-development
+    container_name: ${APP_NAME}-nginx-serve-development
     depends_on:
-      - api-development
+      - api-serve-development
     networks:
       - web_development_nw
     ports:
@@ -43,9 +43,9 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
 
-  postgres-development:
+  postgres-serve-development:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
-    container_name: ${APP_NAME}-postgres-development
+    container_name: ${APP_NAME}-postgres-serve-development
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_PASSWORD=${DB_NAME}_password
@@ -54,7 +54,7 @@ services:
     networks:
       - db_development_nw
     volumes:
-      - "./docker_data_development/postgres:/var/lib/postgresql/data"
+      - "./docker_data_serve-development/postgres:/var/lib/postgresql/data"
 
 networks:
   db_development_nw:
@@ -63,4 +63,4 @@ networks:
     driver: bridge
 
 volumes:
-  docker_data_development:
+  docker_data_serve-development:

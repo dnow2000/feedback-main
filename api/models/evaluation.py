@@ -15,7 +15,7 @@ class Evaluation(ApiHandler,
                  Model):
 
     label = Column(String(50),
-                  nullable=True)
+                   nullable=True)
 
     info = Column(Text, nullable=True)
 

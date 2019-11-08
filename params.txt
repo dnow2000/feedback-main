@@ -1,0 +1,4 @@
+-e ENV      development       "specify environment to target"
+-f FILE     none              "file to upload"
+-m MODE     serve-development "specify mode to target"
+-t TAG      not-set           "specify version you want to deploy"

@@ -4,9 +4,10 @@ from flask_login import LoginManager
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
+from models.utils import import_models
 from models.utils.db import db
 from models.utils.install import install_models
-from routes.utils.install import install_routes
+from routes.utils import import_routes
 from utils.config import IS_DEV
 
 flask_app = Flask(__name__, static_url_path='/static')
@@ -38,11 +39,12 @@ cors = CORS(flask_app,
 flask_app.url_map.strict_slashes = False
 
 flask_app.app_context().push()
+import_models()
 if IS_DEV:
     install_models()
 import utils.login_manager
 import utils.nltk_downloader
-install_routes()
+import_routes()
 
 if __name__ == '__main__':
     port = int(os.environ.get("PORT", 5000))

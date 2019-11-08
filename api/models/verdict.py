@@ -6,7 +6,6 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-
 from models.utils.db import get_model_with_table_name, Model
 from models.mixins import HasRatingMixin
 

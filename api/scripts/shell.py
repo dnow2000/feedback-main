@@ -2,8 +2,8 @@ import os
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
+from models.utils import import_models
 from models.utils.db import db
-from models.utils.install import install_models
 
 flask_app = Flask(__name__)
 
@@ -14,4 +14,4 @@ db.init_app(flask_app)
 ApiHandler.set_db(db)
 
 flask_app.app_context().push()
-install_models()
+import_models()
