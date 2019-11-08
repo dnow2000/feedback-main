@@ -6,6 +6,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import db
 from models.utils import import_models
+from models.utils.install import install_models
 from routes.utils import import_routes
 
 
@@ -52,6 +53,7 @@ def app():
 
     flask_app.app_context().push()
     import_models()
+    install_models()
     import utils.login_manager
     import_routes()
 
