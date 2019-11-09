@@ -76,7 +76,6 @@
   "scripts": {
     "eject": "react-app-rewired eject",
     "build": "react-app-rewired build",
-    "precommit": "./scripts/precommit.sh",
     "prettier": "yarn run eslint ./src --fix",
     "start": "react-app-rewired start",
     "test:end2end": "testcafe 'chrome:headless' testcafe"
