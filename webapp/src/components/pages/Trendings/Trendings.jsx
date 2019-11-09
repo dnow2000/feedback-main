@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { assignData, requestData } from 'redux-saga-data'
+import { assignData, requestData } from 'redux-thunk-data'
 
 import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
 import { trendingMaxDates, trendingThemes } from './utils'

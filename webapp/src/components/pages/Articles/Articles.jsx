@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
-import { assignData, requestData } from 'redux-saga-data'
+import { assignData, requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from './ArticleItem/ArticleItemContainer'
 import HeaderContainer from '../../layout/Header/HeaderContainer'

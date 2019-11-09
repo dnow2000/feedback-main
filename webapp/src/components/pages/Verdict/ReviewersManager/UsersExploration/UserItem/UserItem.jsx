@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 import AvatarContainer from '../../../../../layout/Avatar/AvatarContainer'
 

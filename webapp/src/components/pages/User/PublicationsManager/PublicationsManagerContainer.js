@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 import PublicationsManager from './PublicationsManager'
 import selectPublicationsByUserId from './selectors/selectPublicationsByUserId'

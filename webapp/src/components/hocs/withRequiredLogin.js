@@ -1,8 +1,9 @@
 import { compose } from 'redux'
+import { requestData } from 'redux-thunk-data'
 import withQueryRouter from 'with-query-router'
 import withLogin from 'with-react-redux-login'
 
-import { userNormalizer } from '../../../utils/normalizers'
+import { userNormalizer } from '../../utils/normalizers'
 
 export const withRequiredLogin = compose(
   withQueryRouter(),
@@ -21,7 +22,8 @@ export const withRequiredLogin = compose(
       }
     },
     isRequired: true,
-    normalizer: userNormalizer
+    normalizer: userNormalizer,
+    requestData
   })
 )
 

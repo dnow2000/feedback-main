@@ -2,7 +2,8 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 import User from './User'
-import { withRequiredLogin, withRoles } from '../../hocs'
+import withRequiredLogin from '../../hocs/withRequiredLogin'
+import withRoles from '../../hocs/withRoles'
 import selectUserById from '../../../selectors/selectUserById'
 
 const mapStateToProps = (state, ownProps) =>  {

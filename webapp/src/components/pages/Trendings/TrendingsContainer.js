@@ -3,7 +3,8 @@ import { compose } from 'redux'
 
 import Trendings from './Trendings'
 import selectTrendings from './selectors/selectTrendings'
-import { withRequiredLogin, withRoles } from '../../hocs'
+import withRequiredLogin from '../../hocs/withRequiredLogin'
+import withRoles from '../../hocs/withRoles'
 
 const mapStateToProps = state =>  {
   return {

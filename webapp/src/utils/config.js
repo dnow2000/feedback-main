@@ -8,8 +8,8 @@ moment.locale('fr-fr')
 
 const { NODE_ENV } = process.env
 export const IS_DEBUG = true
-export const IS_DEV = NODE_ENV === 'development'
-export const IS_PROD = !IS_DEV
+export const IS_DEVELOPMENT = NODE_ENV === 'development'
+export const IS_PROD = !IS_DEVELOPMENT
 export const MOBILE_OS = getMobileOperatingSystem()
 
 export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost'

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 import { Icon } from '../../../layout/Icon'
 import Authors from '../../../layout/Authors'

@@ -91,7 +91,7 @@ $l-vert-gutter: ($l-height - ($l-bar-height * 3)) / 2;
   }
 
   .link {
-    &.active {
+    &.is-active {
       .link-inner {
         transform: translate3d(0, $l-vert-gutter, 0) rotate(45deg);
       }

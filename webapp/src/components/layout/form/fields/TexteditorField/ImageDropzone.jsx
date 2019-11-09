@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import ReactDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 import { imagePlugin } from './plugins'
 import { THUMBS_URL } from '../../../../../utils/config'

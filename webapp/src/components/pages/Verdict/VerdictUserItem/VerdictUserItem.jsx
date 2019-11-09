@@ -3,7 +3,7 @@ import { stringify } from 'query-string'
 import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 import AvatarContainer from '../../../layout/Avatar/AvatarContainer'
 

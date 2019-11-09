@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 import VerdictItemContainer from './VerdictItem/VerdictItemContainer'
 import HeaderContainer from '../../layout/Header/HeaderContainer'

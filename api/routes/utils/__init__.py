@@ -1,4 +1,4 @@
-from utils.config import IS_DEV
+from utils.config import IS_DEVELOPMENT
 
 def import_routes():
     import routes.articles
@@ -21,5 +21,5 @@ def import_routes():
 
     import routes.utils.errors
 
-    if IS_DEV:
+    if IS_DEVELOPMENT:
         import routes.sandboxes

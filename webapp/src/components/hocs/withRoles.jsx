@@ -6,7 +6,7 @@ import withQueryRouter from 'with-query-router'
 
 import selectCurrentRolesByTypes from '../../selectors/selectCurrentRolesByTypes'
 
-export const withRoles = (config = {
+const withRoles = (config = {
   accessRoleTypes: [],
   creationRoleTypes: [],
   modificationRoleTypes: []

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { closeModal } from 'redux-react-modals'
-import { requestData, resetData } from 'redux-saga-data'
+import { requestData, resetData } from 'redux-thunk-data'
 
 import { closeNavigation } from '../../../reducers/navigation'
 

@@ -3,7 +3,7 @@ import { compose } from 'redux'
 import { withRouter } from 'react-router-dom'
 
 import Landing from './Landing'
-import { withRedirectWhenLoggedIn } from '../../hocs'
+import withRedirectWhenLoggedIn from '../../hocs/withRedirectWhenLoggedIn'
 
 export default compose(
   withRouter,

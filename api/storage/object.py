@@ -3,7 +3,7 @@ from datetime import datetime
 from pathlib import Path, PurePath
 import swiftclient
 
-from utils.config import IS_DEV
+from utils.config import IS_DEVELOPMENT
 
 def get_storage_base_url():
     return os.environ.get('OBJECT_STORAGE_URL')
@@ -43,7 +43,7 @@ def local_path(bucket, object_id):
 
 
 def store_public_object(bucket, object_id, blob, content_type, symlink_path=None):
-    if IS_DEV:
+    if IS_DEVELOPMENT:
         os.makedirs(local_dir(bucket, object_id), exist_ok=True)
 
         file_local_path = local_path(bucket, object_id)

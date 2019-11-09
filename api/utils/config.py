@@ -11,15 +11,15 @@ EMAIL_HOST = "{}.{}".format(APP_NAME, TLD)
 API_ROOT_PATH = Path(os.path.dirname(os.path.realpath(__file__))) / '..'
 BROWSER_URL = os.environ.get('BROWSER_URL', 'http://localhost:3000')
 ENV = os.environ.get('ENV', 'development')
-IS_DEV = ENV == 'development'
+IS_DEVELOPMENT = ENV == 'development'
 IS_INTEGRATION = ENV == 'integration'
 IS_STAGING = ENV == 'staging'
-IS_PROD = ENV == 'production'
+IS_PRODUCTION = ENV == 'production'
 LOG_LEVEL = int(os.environ.get('LOG_LEVEL', LOG_LEVEL_INFO))
 
-if IS_DEV:
+if IS_DEVELOPMENT:
     API_URL = 'localhost'
-elif IS_PROD:
+elif IS_PRODUCTION:
     API_URL = 'https://backend.{}.{}'.format(APP_NAME, TLD)
 else:
     API_URL = 'https://backend-{}.{}.{}'.format(ENV, APP_NAME, TLD)

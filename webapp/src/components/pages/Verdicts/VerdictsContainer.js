@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 
 import Verdicts from './Verdicts'
-import { withRequiredLogin} from '../../hocs'
+import withRequiredLogin from '../../hocs/withRequiredLogin'
 import selectVerdictsByArticleId from '../../../selectors/selectVerdictsByArticleId'
 
 function mapStateToProps (state, ownProps) {

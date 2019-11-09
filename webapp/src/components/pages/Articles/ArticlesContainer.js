@@ -3,7 +3,7 @@ import { compose } from 'redux'
 
 import Articles from './Articles'
 import selectArticles from './selectors/selectArticles'
-import { withRequiredLogin } from '../../hocs'
+import withRequiredLogin from '../../hocs/withRequiredLogin'
 import selectRoleByUserIdAndType from '../../../selectors/selectRoleByUserIdAndType'
 
 const mapStateToProps = (state, ownProps) => {

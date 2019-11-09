@@ -1,4 +1,4 @@
-import { requestData } from 'redux-saga-data'
+import { requestData } from 'redux-thunk-data'
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { roleType, user } = ownProps

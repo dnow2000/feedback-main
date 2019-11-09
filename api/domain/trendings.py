@@ -2,7 +2,7 @@ import requests
 
 from utils.buzzsumo import get_content_with_buzzsumo_result, \
                            get_buzzsumo_url
-from utils.config import IS_DEV
+from utils.config import IS_DEVELOPMENT
 
 def get_topic_with_theme(theme):
     if theme == 'climate':
@@ -37,7 +37,7 @@ def get_trendings(
 
     if 'results' not in response:
         print('WARNING: EMPTY RESPONSE FROM BUZZSUMO ' + repr(response))
-        if IS_DEV:
+        if IS_DEVELOPMENT:
             return [{
                 'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/170708175538-05-trump-abroad-0708-super-tease.jpg',
                 'facebookShares': 1000,

@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { closeNavigation,
+import {
+  closeNavigation,
   showNavigation
 } from '../../../reducers/navigation'
 
@@ -15,7 +16,7 @@ const Hamburger = ({
   <div className={className || 'hamburger'}>
     <NavLink
       className={classnames('link', {
-        'active': isNavigationActive
+        'is-active': isNavigationActive
       })}
       to='#footer'
       onClick={e => {

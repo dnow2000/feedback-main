@@ -150,7 +150,7 @@ elif [[ "$CMD" == restart ]]; then
 
 # Start docker-compose up with adapted env variables or frontends with local env
 elif [[ "$CMD" == start ]]; then
-  if [[ "$MODE" == "webapp" ]]; then
+  if [[ "$MODE" == "serve-webapp" ]]; then
     RUN='cd $ROOT_PATH/webapp;
          yarn start;'
   else

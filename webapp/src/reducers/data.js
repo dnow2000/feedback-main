@@ -1,4 +1,4 @@
-import { createDataReducer } from 'redux-saga-data'
+import { createDataReducer } from 'redux-thunk-data'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 

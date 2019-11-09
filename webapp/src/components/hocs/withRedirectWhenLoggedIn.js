@@ -1,8 +1,9 @@
 import { compose } from 'redux'
+import { requestData } from 'redux-thunk-data'
 import withQueryRouter from 'with-query-router'
 import withLogin from 'with-react-redux-login'
 
-import { userNormalizer } from '../../../utils/normalizers'
+import { userNormalizer } from '../../utils/normalizers'
 
 
 const withRedirectWhenLoggedIn = compose(
@@ -16,12 +17,18 @@ const withRedirectWhenLoggedIn = compose(
         history.push('/home')
         return
       }
-      if (pathname === '/signin' || pathname === '/signup' || pathname === '/' || pathname === '/home') {
+      if (
+        pathname === '/signin'||
+        pathname === '/signup'||
+        pathname === '/'||
+        pathname === '/home'
+      ) {
         history.push('/articles')
       }
     },
     isRequired: false,
     normalizer: userNormalizer,
+    requestData,
   })
 )
 

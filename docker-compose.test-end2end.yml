@@ -52,9 +52,13 @@ services:
       - ${FRONTEND_PORT:-3000}:3000
     volumes:
       - ./${FRONTEND_NAME}:/opt/frontend
-      
+
   nginx-end2end:
-    build: nginx
+    build:
+      args:
+        - MODE=test-end2end
+      context: ./nginx
+      dockerfile: ./Dockerfile.nossl
     container_name: ${APP_NAME}-nginx-end2end
     depends_on:
       - api-end2end
