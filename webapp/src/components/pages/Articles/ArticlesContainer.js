@@ -1,5 +1,8 @@
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 import { compose } from 'redux'
+import withQuery from 'with-react-query'
+import withForm from 'with-react-form'
 
 import Articles from './Articles'
 import selectArticles from './selectors/selectArticles'
@@ -21,6 +24,9 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default compose(
+  withRouter,
   withRequiredLogin,
+  withQuery(),
+  withForm,
   connect(mapStateToProps)
 )(Articles)

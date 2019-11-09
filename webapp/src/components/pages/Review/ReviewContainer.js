@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import Review from './Review'
@@ -28,6 +29,7 @@ const mapStateToProps = (state, ownProps) =>  {
 }
 
 export default compose(
+  withQueryRouter(),
   withRequiredLogin,
   withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
   connect(mapStateToProps)

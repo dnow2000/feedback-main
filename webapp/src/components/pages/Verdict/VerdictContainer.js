@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import withQueryRouter from 'with-query-router'
 
 import Verdict from './Verdict'
 import withRequiredLogin from '../../hocs/withRequiredLogin'
@@ -22,6 +23,7 @@ const mapStateToProps = (state, ownProps) =>  {
 }
 
 export default compose(
+  withQueryRouter(),
   withRequiredLogin,
   withRoles({
     creationRoleTypes: ['editor'],

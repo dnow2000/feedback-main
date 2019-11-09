@@ -35,6 +35,13 @@ class Articles extends PureComponent {
     }
   }
 
+  handleCreateArticle = () => {
+    const { form, history } = this.props
+    const { creationUrl } = form
+    console.log({creationUrl})
+    history.push(creationUrl)
+  }
+
   handleRequestData = () => {
     const { dispatch, location } = this.props
     const { search } = location
@@ -76,7 +83,7 @@ class Articles extends PureComponent {
       dispatch(assignData({ articles: [] }))
     }
 
-    query.change(
+    query.getSearchFromUpdate(
       {
         keywords: isEmptyKeywords ? null : keywords,
         page: null,
@@ -86,7 +93,7 @@ class Articles extends PureComponent {
 
   onReviewableClick = reviewable => () => {
     const { dispatch, query } = this.props
-    const queryParams = query.parse()
+    const queryParams = query.getParams()
 
     dispatch(assignData({ articles: [] }))
 
@@ -94,7 +101,7 @@ class Articles extends PureComponent {
       ? null
       : reviewable
 
-    query.change(
+    query.getSearchFromUpdate(
       {
         page: null,
         reviewable: nextReviewable,
@@ -105,7 +112,7 @@ class Articles extends PureComponent {
 
   render() {
     const { articles, canCreateArticle, query } = this.props
-    const queryParams = query.parse()
+    const queryParams = query.getParams()
     const { reviewable } = queryParams
     const { hasMore, isLoading } = this.state
 
@@ -137,7 +144,7 @@ class Articles extends PureComponent {
                 <button
                   className="button is-primary"
                   id="create-article"
-                  onClick={() => query.changeToCreation()}
+                  onClick={this.handleCreateArticle}
                   type="button"
                 >
                   New article

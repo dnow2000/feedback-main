@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { compose } from 'redux'
-import withQueryRouter from 'with-query-router'
 
 import selectCurrentRolesByTypes from '../../selectors/selectCurrentRolesByTypes'
 
@@ -110,10 +108,7 @@ const withRoles = (config = {
     }
   }
 
-  return compose(
-    withQueryRouter(),
-    connect(mapStateToProps)
-  )(_withRoles)
+  return connect(mapStateToProps)(_withRoles)
 }
 
 export default withRoles

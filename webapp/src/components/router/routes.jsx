@@ -29,7 +29,7 @@ const routes = [
   {
     exact: true,
     path: '/articles',
-    render: () => <ArticlesContainer />,
+    render: () => <ArticlesContainer name="article" />,
     title: 'Articles',
   },
   {

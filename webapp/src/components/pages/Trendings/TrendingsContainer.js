@@ -1,5 +1,6 @@
 import { connect } from 'react-redux'
 import { compose } from 'redux'
+import withQueryRouter from 'with-query-router'
 
 import Trendings from './Trendings'
 import selectTrendings from './selectors/selectTrendings'
@@ -13,6 +14,7 @@ const mapStateToProps = state =>  {
 }
 
 export default compose(
+  withQueryRouter(),
   withRequiredLogin,
   withRoles({ accessRoleTypes: ['editor'] }),
   connect(mapStateToProps)
