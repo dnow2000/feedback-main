@@ -1,10 +1,11 @@
 import { connect } from 'react-redux'
 
+import selectArticleById from 'selectors/selectArticleById'
+import selectEvaluationById from 'selectors/selectEvaluationById'
+import selectTagsByReviewId from 'selectors/selectTagsByReviewId'
+import selectUserById from 'selectors/selectUserById'
+
 import ReviewItem from './ReviewItem'
-import selectArticleById from '../../../../../selectors/selectArticleById'
-import selectEvaluationById from '../../../../../selectors/selectEvaluationById'
-import selectTagsByReviewId from '../../../../../selectors/selectTagsByReviewId'
-import selectUserById from '../../../../../selectors/selectUserById'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { review } =  ownProps

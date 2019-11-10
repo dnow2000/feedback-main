@@ -2,10 +2,11 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import withFormRouter from 'components/hocs/withFormRouter/withFormRouter'
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
+
 import FormFooter from './FormFooter'
-import withFormRouter from '../../../hocs/withFormRouter/withFormRouter'
-import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
-import selectCurrentUserReviewByArticleId from '../../../../selectors/selectCurrentUserReviewByArticleId'
 
 const mapStateToProps = (state, ownProps) =>  {
   const {

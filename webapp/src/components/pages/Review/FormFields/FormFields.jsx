@@ -6,10 +6,10 @@ import {
   HiddenField,
   RadiosField,
   TexteditorField
-} from '../../../layout/form/fields'
+} from 'components/layout/form/fields'
 import {
   selectOptionsFromNameAndEntitiesAndPlaceholder,
-} from '../../../layout/form/utils'
+} from 'components/layout/form/utils'
 
 
 const EVALUATIONS_NAME = 'evaluationId'

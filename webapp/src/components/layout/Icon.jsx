@@ -1,8 +1,8 @@
 import React from 'react'
 
-import { ROOT_PATH } from '../../utils/config'
+import { ROOT_PATH } from 'utils/config'
 
-export const Icon = ({ svg, name, ...imgProps }) => {
+const Icon = ({ svg, name, ...imgProps }) => {
   if (!Icon.rootPath) {
     console.warn('You need to define a rootPath for your Icon')
   }

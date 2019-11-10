@@ -3,15 +3,16 @@ import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
+import withRoles from 'components/hocs/withRoles'
+import withFormRouter from 'components/hocs/withFormRouter/withFormRouter'
+import selectArticleById from 'selectors/selectArticleById'
+import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+import selectReviewsByArticleIdAndVerdictId from 'selectors/selectReviewsByArticleIdAndVerdictId'
+import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
+
 import Article from './Article'
-import withRequiredLogin from '../../hocs/withRequiredLogin'
-import withRoles from '../../hocs/withRoles'
-import withFormRouter from '../../hocs/withFormRouter/withFormRouter'
-import selectArticleById from '../../../selectors/selectArticleById'
-import selectCurrentUserReviewByArticleId from '../../../selectors/selectCurrentUserReviewByArticleId'
-import selectRoleByUserIdAndType from '../../../selectors/selectRoleByUserIdAndType'
-import selectReviewsByArticleIdAndVerdictId from '../../../selectors/selectReviewsByArticleIdAndVerdictId'
-import selectVerdictsByArticleId from '../../../selectors/selectVerdictsByArticleId'
 
 const mapStateToProps = (state, ownProps) => {
   const currentUser = selectCurrentUser(state)

@@ -3,8 +3,9 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { requestData } from 'redux-thunk-data'
 
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+
 import RoleButton from './RoleButton'
-import selectRoleByUserIdAndType from '../../../../../../../selectors/selectRoleByUserIdAndType'
 
 const mapStateToProps = (state, ownProps) => {
   const { roleType, user } = ownProps

@@ -4,9 +4,10 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { Form } from 'react-final-form'
 import { assignData, requestData } from 'redux-thunk-data'
 
+import { TextField } from 'components/layout/form/fields'
+import { itemReviewNormalizer } from 'utils/normalizers'
+
 import ReviewItemContainer from './ReviewItem/ReviewItemContainer'
-import { TextField } from '../../../layout/form/fields'
-import { itemReviewNormalizer } from '../../../../utils/normalizers'
 
 function getScrollParent () {
   return document.querySelector('.modal-dialog')

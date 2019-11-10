@@ -4,15 +4,17 @@ import { Form } from 'react-final-form'
 import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-thunk-data'
 
+import Footer from 'components/layout/Footer'
+import Icon from 'components/layout/Icon'
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
+import { articleNormalizer } from 'utils/normalizers'
+
 import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import FormFooterContainer from './FormFooter/FormFooterContainer'
-import Footer from '../../layout/Footer'
-import { Icon } from '../../layout/Icon'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
-import MainContainer from '../../layout/Main/MainContainer'
 import scrapDecorator from './decorators/scrapDecorator'
-import { articleNormalizer } from '../../../utils/normalizers'
+
 
 class Article extends PureComponent {
   constructor() {

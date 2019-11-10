@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 
+import selectArticleById from 'selectors/selectArticleById'
+import selectReviewsByArticleIdAndVerdictId from 'selectors/selectReviewsByArticleIdAndVerdictId'
+import selectUserById from 'selectors/selectUserById'
+
 import VerdictItem from './VerdictItem'
-import selectArticleById from '../../../../selectors/selectArticleById'
-import selectReviewsByArticleIdAndVerdictId from '../../../../selectors/selectReviewsByArticleIdAndVerdictId'
-import selectUserById from '../../../../selectors/selectUserById'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { verdict } = ownProps

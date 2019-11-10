@@ -3,7 +3,7 @@ import React from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 
-import ReviewItemContainer from '../../Reviews/ReviewsExploration/ReviewItem/ReviewItemContainer'
+import ReviewItemContainer from 'components/pages/Reviews/ReviewsExploration/ReviewItem/ReviewItemContainer'
 
 const VerdictItem = ({ article, verdict, reviews, user }) => {
   const { title, url } = article || {}

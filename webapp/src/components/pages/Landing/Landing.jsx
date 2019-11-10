@@ -1,7 +1,7 @@
 import React, { Fragment } from "react"
 import { NavLink } from 'react-router-dom'
 
-import MainContainer from '../../layout/Main/MainContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
 
 const titleClassName = "title has-text-grey has-text-weight-normal is-size-1"
 const subtitleClassName = "subtitle has-text-grey-light is-size-3"

@@ -2,8 +2,9 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+
 import TrendingItem from './TrendingItem'
-import selectRoleByUserIdAndType from '../../../../selectors/selectRoleByUserIdAndType'
 
 const mapStateToProps = state =>  {
   const currentUser = selectCurrentUser(state)

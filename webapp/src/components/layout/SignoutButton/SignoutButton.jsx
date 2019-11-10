@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { closeModal } from 'redux-react-modals'
 import { requestData, resetData } from 'redux-thunk-data'
 
-import { closeNavigation } from '../../../reducers/navigation'
+import { closeNavigation } from 'reducers/navigation'
 
 class SignoutButton extends PureComponent {
 

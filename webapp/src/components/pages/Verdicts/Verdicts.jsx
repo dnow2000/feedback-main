@@ -2,10 +2,11 @@ import PropTypes from 'prop-types'
 import React, { Fragment, PureComponent } from 'react'
 import { requestData } from 'redux-thunk-data'
 
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
+import { verdictNormalizer } from 'utils/normalizers'
+
 import VerdictItemContainer from './VerdictItem/VerdictItemContainer'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
-import MainContainer from '../../layout/Main/MainContainer'
-import { verdictNormalizer } from '../../../utils/normalizers'
 
 class Verdicts extends PureComponent {
 

@@ -4,10 +4,11 @@ import { compose } from 'redux'
 import withQuery from 'with-react-query'
 import withForm from 'with-react-form'
 
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+
 import Articles from './Articles'
 import selectArticles from './selectors/selectArticles'
-import withRequiredLogin from '../../hocs/withRequiredLogin'
-import selectRoleByUserIdAndType from '../../../selectors/selectRoleByUserIdAndType'
 
 const mapStateToProps = (state, ownProps) => {
   const { currentUser } = ownProps

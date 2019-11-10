@@ -5,13 +5,14 @@ import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
+import ArticleItemContainer from 'components/pages/Articles/ArticleItem/ArticleItemContainer'
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
+import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
+
 import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
-import ArticleItemContainer from '../Articles/ArticleItem/ArticleItemContainer'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
-import MainContainer from '../../layout/Main/MainContainer'
-import { articleNormalizer, verdictNormalizer } from '../../../utils/normalizers'
 
 class Verdict extends PureComponent {
   constructor(props) {

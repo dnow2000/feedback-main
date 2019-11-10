@@ -1,0 +1,5 @@
+{
+  "assertionTimeout": 8000,
+  "browsers": "chrome:headless",
+  "selectorTimeout": 20000
+}

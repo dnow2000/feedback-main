@@ -2,8 +2,9 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Dotdotdot from 'react-dotdotdot'
 
+import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+
 import RolesManagerContainer from './RolesManager/RolesManagerContainer'
-import AvatarContainer from '../../../../layout/Avatar/AvatarContainer'
 
 const UserItem = ({
   adminRole,

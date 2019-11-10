@@ -3,11 +3,12 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import selectEvaluationById from 'selectors/selectEvaluationById'
+import selectTagsByUserId from 'selectors/selectTagsByUserId'
+import selectVerdictById from 'selectors/selectVerdictById'
+
 import VerdictUserItem from './VerdictUserItem'
 import selectReviewByArticleIdAndUserId from './selectors/selectReviewByArticleIdAndUserId'
-import selectEvaluationById from '../../../../selectors/selectEvaluationById'
-import selectTagsByUserId from '../../../../selectors/selectTagsByUserId'
-import selectVerdictById from '../../../../selectors/selectVerdictById'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { match: { params: { verdictId } } } = ownProps

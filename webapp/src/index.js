@@ -1,21 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import './utils/install'
-import Root from './Root'
-import * as cacheServiceWorker from './workers/cache'
+import Root from 'components/Root'
+import 'utils/styles'
+import * as serviceWorker from 'workers/service'
 
-const render = () => {
-  ReactDOM.render(<Root />, document.getElementById('root'))
-}
+ReactDOM.render(<Root />, document.getElementById('root'))
 
-cacheServiceWorker.unregister()
-
-render()
-
-// Webpack Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('./Root', () => {
-    render()
-  })
-}
+serviceWorker.unregister()

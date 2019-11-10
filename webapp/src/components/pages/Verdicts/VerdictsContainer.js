@@ -2,9 +2,10 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
+import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
+
 import Verdicts from './Verdicts'
-import withRequiredLogin from '../../hocs/withRequiredLogin'
-import selectVerdictsByArticleId from '../../../selectors/selectVerdictsByArticleId'
 
 function mapStateToProps (state, ownProps) {
   const { query } = ownProps

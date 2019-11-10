@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
-import AvatarContainer from '../../../layout/Avatar/AvatarContainer'
+import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
 
 class VerdictUserItem extends PureComponent {
 

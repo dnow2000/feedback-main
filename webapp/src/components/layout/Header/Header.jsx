@@ -2,10 +2,10 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import AvatarContainer from '../Avatar/AvatarContainer'
-import HamburgerContainer from '../Hamburger/HamburgerContainer'
-import Logo from '../Logo'
-import NavigationContainer from '../Navigation/NavigationContainer'
+import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+import HamburgerContainer from 'components/layout/Hamburger/HamburgerContainer'
+import Logo from 'components/layout/Logo'
+import NavigationContainer from 'components/layout/Navigation/NavigationContainer'
 
 const signPathnames = ['/signin', '/signup']
 

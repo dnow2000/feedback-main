@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import {
   closeNavigation,
   showNavigation
-} from '../../../reducers/navigation'
+} from 'reducers/navigation'
 
 const Hamburger = ({
   className,

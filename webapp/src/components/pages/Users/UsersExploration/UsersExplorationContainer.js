@@ -3,8 +3,9 @@ import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import selectUsers from 'selectors/selectUsers'
+
 import UsersExploration from './UsersExploration'
-import selectUsers from '../../../../selectors/selectUsers'
 
 const mapStateToProps = state => {
   return {

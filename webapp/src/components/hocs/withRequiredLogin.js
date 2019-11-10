@@ -1,7 +1,7 @@
 import { requestData } from 'redux-thunk-data'
 import withLogin from 'with-react-redux-login'
 
-import { userNormalizer } from '../../utils/normalizers'
+import { userNormalizer } from 'utils/normalizers'
 
 export const withRequiredLogin = withLogin({
   handleFail: (state, action, ownProps) => {

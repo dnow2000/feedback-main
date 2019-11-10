@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
-import selectCurrentRolesByTypes from '../../selectors/selectCurrentRolesByTypes'
+import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
 const withRoles = (config = {
   accessRoleTypes: [],

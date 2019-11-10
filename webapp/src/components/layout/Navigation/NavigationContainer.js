@@ -4,7 +4,7 @@ import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import Navigation from './Navigation'
-import selectCurrentRolesByTypes from '../../../selectors/selectCurrentRolesByTypes'
+import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
 const mapStateToProps = state =>  {
   return {

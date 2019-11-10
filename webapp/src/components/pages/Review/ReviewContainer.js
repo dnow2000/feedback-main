@@ -3,13 +3,14 @@ import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
+import withRoles from 'components/hocs/withRoles'
+import selectArticleIdByMatchAndQuery from 'selectors/selectArticleIdByMatchAndQuery'
+import selectArticleById from 'selectors/selectArticleById'
+
 import Review from './Review'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 import selectVerdictsByArticleIdAndByUserId from './selectors/selectVerdictsByArticleIdAndByUserId'
-import withRequiredLogin from '../../hocs/withRequiredLogin'
-import withRoles from '../../hocs/withRoles'
-import selectArticleIdByMatchAndQuery from '../../../selectors/selectArticleIdByMatchAndQuery'
-import selectArticleById from '../../../selectors/selectArticleById'
 
 const mapStateToProps = (state, ownProps) =>  {
   const articleId = selectArticleIdByMatchAndQuery(

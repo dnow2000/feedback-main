@@ -3,10 +3,10 @@ import React, { Fragment, PureComponent } from 'react'
 import { requestData } from 'redux-thunk-data'
 
 import PublicationsManagerContainer from './PublicationsManager/PublicationsManagerContainer'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
-import MainContainer from '../../layout/Main/MainContainer'
-import UserItemContainer from '../Users/UsersExploration/UserItem/UserItemContainer'
-import { userNormalizer } from '../../../utils/normalizers'
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
+import UserItemContainer from 'components/pages/Users/UsersExploration/UserItem/UserItemContainer'
+import { userNormalizer } from 'utils/normalizers'
 
 class User extends PureComponent {
   componentDidMount() {

@@ -6,7 +6,7 @@ import {
   PasswordField,
   TextField,
   PictureField,
- } from '../../layout/form/fields'
+} from 'components/layout/form/fields'
 
 const ROLES = {
   editor: 'editor',

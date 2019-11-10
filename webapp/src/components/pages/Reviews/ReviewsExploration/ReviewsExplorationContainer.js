@@ -2,8 +2,9 @@ import { connect } from 'react-redux'
 import { compose } from 'redux'
 import withQueryRouter from 'with-query-router'
 
+import selectReviewsByArticleId from 'selectors/selectReviewsByArticleId'
+
 import ReviewsExploration from './ReviewsExploration'
-import selectReviewsByArticleId from '../../../../selectors/selectReviewsByArticleId'
 
 const mapStateToProps = (state, ownProps) => {
   const { query } = ownProps

@@ -3,9 +3,10 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+import selectTagsByUserId from 'selectors/selectTagsByUserId'
+
 import UserItem from './UserItem'
-import selectRoleByUserIdAndType from '../../../../../selectors/selectRoleByUserIdAndType'
-import selectTagsByUserId from '../../../../../selectors/selectTagsByUserId'
 
 const mapStateToProps = (state, ownProps) => {
   const { user } = ownProps

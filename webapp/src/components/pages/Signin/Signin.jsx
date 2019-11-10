@@ -6,9 +6,10 @@ import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 import { NavLink } from 'react-router-dom'
 
+import MainContainer from 'components/layout/Main/MainContainer'
+
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
-import MainContainer from '../../layout/Main/MainContainer'
 
 class Signin extends PureComponent {
   constructor(props) {

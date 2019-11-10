@@ -4,10 +4,11 @@ import React, { Fragment, PureComponent } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
+
 import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
 import { trendingMaxDates, trendingThemes } from './utils'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
-import MainContainer from '../../layout/Main/MainContainer'
 
 class Trendings extends PureComponent {
   constructor (props) {

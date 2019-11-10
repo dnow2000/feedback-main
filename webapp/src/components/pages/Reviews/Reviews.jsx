@@ -1,8 +1,9 @@
 import React, { Fragment } from 'react'
 
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import MainContainer from 'components/layout/Main/MainContainer'
+
 import ReviewsExplorationContainer from './ReviewsExploration/ReviewsExplorationContainer'
-import HeaderContainer from '../../layout/Header/HeaderContainer'
-import MainContainer from '../../layout/Main/MainContainer'
 
 const Reviews = () => (
   <Fragment>

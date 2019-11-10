@@ -4,7 +4,7 @@ import React from 'react'
 
 import { TextField } from './TextField'
 import { createValidatePasswordField } from '../validators'
-import { Icon } from '../../Icon'
+import Icon from 'components/layout/Icon'
 
 const DEFAULT_ERROR_MESSAGE =
   'Password should contain at east 12 characters, one number, one capital letter, one lower case and one from any of _-&?~#|^@=+.$,<>%*!:;'

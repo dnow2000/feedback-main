@@ -1,7 +1,7 @@
 import { isEmpty } from 'react-final-form-utils'
 import { createSelector } from 'reselect'
 
-import { API_URL } from '../../../../utils/config'
+import { API_URL } from 'utils/config'
 
 const getScrap = createSelector(
   url => url,

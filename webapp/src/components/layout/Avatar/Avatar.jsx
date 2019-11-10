@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { Icon } from '../Icon'
-import { THUMBS_URL } from '../../../utils/config'
+import Icon from 'components/layout/Icon'
+import { THUMBS_URL } from 'utils/config'
 
 const Avatar = ({ className, user, whiteHeader }) => {
   if (user) {

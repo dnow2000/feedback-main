@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import AvatarContainer from '../../../../layout/Avatar/AvatarContainer'
-import Extract from '../../../../layout/Extract'
-import Rating from '../../../../layout/Rating'
-import Tag from '../../../../layout/Tag'
+import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+import Extract from 'components/layout/Extract'
+import Rating from 'components/layout/Rating'
+import Tag from 'components/layout/Tag'
 
 const ReviewItem = ({ review, tags, user }) => {
   const { comment, id, rating } = review

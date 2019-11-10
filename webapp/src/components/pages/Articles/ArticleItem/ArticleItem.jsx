@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
-import { Icon } from '../../../layout/Icon'
+import Icon from 'components/layout/Icon'
 import Authors from '../../../layout/Authors'
 import Extract from '../../../layout/Extract'
 import Tag from '../../../layout/Tag'

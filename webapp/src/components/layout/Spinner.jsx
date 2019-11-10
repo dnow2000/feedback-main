@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
-import { Icon } from './Icon'
+import Icon from 'components/layout/Icon'
 
 class Spinner extends PureComponent {
   constructor() {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { withRouter } from 'react-router-dom'
 
-import getForm from './getForm'
+import getForm from 'components/hocs/withFormRouter/getForm'
 
 const withFormRouter = WrappedComponent => {
   const _withFormRouter = props => (

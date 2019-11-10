@@ -4,9 +4,8 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import visibleFor from './visibleFor'
-import SignoutButtonContainer from '../SignoutButton/SignoutButtonContainer'
-
-import { closeNavigation } from '../../../reducers/navigation'
+import SignoutButtonContainer from 'components/layout/SignoutButton/SignoutButtonContainer'
+import { closeNavigation } from 'reducers/navigation'
 
 const links = [
   {
