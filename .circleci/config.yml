@@ -20,18 +20,18 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - run:
-          name: Load cache images
+          name: Load images from cache if exists
           command: |
             set +o pipefail
             docker load -i ~/main-ci/caches/images-test-api.tar | true
             docker load -i ~/main-ci/caches/images-test-end2end.tar | true
       - run:
-          name: Rebuild images
+          name: Build images
           command: |
             ./$COMMAND_NAME -m test-api build
             ./$COMMAND_NAME -m test-end2end build
       - run:
-          name: Save images
+          name: Save images in caches
           command: |
             mkdir -p ~/main-ci/caches
             docker save $(docker images -q) -o ~/main-ci/caches/images-test-api.tar
@@ -57,7 +57,7 @@ jobs:
           key: deps3-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
       - run:
-          name: Load test-api cache image
+          name: Load test-api image from cache
           command: |
             set +o pipefail
             docker load -i ~/main-ci/caches/images-test-api.tar | true
@@ -81,7 +81,7 @@ jobs:
           key: deps3-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           paths: ~/main-ci/caches/images-test-end2end.tar
       - run:
-          name: Load test-end2end cache image
+          name: Load test-end2end image from cache
           command: |
             set +o pipefail
             docker load -i ~/main-ci/caches/images-test-end2end.tar | true

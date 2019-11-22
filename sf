@@ -225,20 +225,20 @@ elif [[ "$CMD" == "kill-all-containers" ]]; then
   confirm "Warning: all your docker containers are going to be killed ?"
   RUN='docker kill $(docker ps -q)'
 
-# Pull and build the docker images
+# Build the docker images
 elif [[ "$CMD" == build ]]; then
   RUN='cd $ROOT_PATH;
-       docker-compose -f docker-compose.$MODE.yml pull $*;
        docker-compose -f docker-compose.$MODE.yml build $*;'
 
 # Pull and build the docker images from no cache
 elif [[ "$CMD" == rebuild ]]; then
+  docker-compose -f docker-compose.$MODE.yml pull $*
   ./$COMMAND_NAME -m $MODE build --no-cache $*
   exit
 
 # Restart docker-compose up with forcing recreation and unmounting volumes
 elif [[ "$CMD" == restart ]]; then
-  docker-compose -f docker-compose.$MODE.yml down --volumes $*;
+  docker-compose -f docker-compose.$MODE.yml down --volumes $*
   ./$COMMAND_NAME -m $MODE start --force-recreate $*
   exit
 
