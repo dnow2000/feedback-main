@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-  api-end2end:
+  api-test-end2end:
     build:
       context: ./api
       dockerfile: ./Dockerfile
@@ -11,9 +11,9 @@ services:
                pip install -r ./requirements.txt;
                python -m nltk.downloader punkt stopwords;
                while true; do python app.py; done;"
-    container_name: ${APP_NAME}-api-end2end
+    container_name: ${APP_NAME}-api-test-end2end
     depends_on:
-      - postgres-end2end
+      - postgres-test-end2end
     environment:
       - APP_NAME=$APP_NAME
       - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
@@ -53,15 +53,15 @@ services:
     volumes:
       - ./${FRONTEND_NAME}:/opt/frontend
 
-  nginx-end2end:
+  nginx-test-end2end:
     build:
       args:
         - MODE=test-end2end
       context: ./nginx
       dockerfile: ./Dockerfile.nossl
-    container_name: ${APP_NAME}-nginx-end2end
+    container_name: ${APP_NAME}-nginx-test-end2end
     depends_on:
-      - api-end2end
+      - api-test-end2end
     networks:
       - web_test-end2end_nw
     ports:
@@ -70,9 +70,9 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
 
-  postgres-end2end:
+  postgres-test-end2end:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
-    container_name: ${APP_NAME}-postgres-end2end
+    container_name: ${APP_NAME}-postgres-test-end2end
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_PASSWORD=${DB_NAME}_password
