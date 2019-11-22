@@ -2,15 +2,16 @@ version: 2
 jobs:
   build:
     working_directory: ~/main-ci
-    machine: true
+    machine:
+      image: circleci/classic:latest
     steps:
       - checkout
       - run:
           name: Install main requirements
           command: |
-            python3 -m venv venv
-            . venv/bin/activate
             pip install --upgrade pip
+            python -m virtualenv venv
+            . venv/bin/activate
             pip install -r requirements.txt
       - run:
           name: Load test-api cache image
