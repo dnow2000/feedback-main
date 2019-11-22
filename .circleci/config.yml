@@ -6,6 +6,14 @@ jobs:
       image: circleci/classic:latest
     steps:
       - checkout
+      - restore_cache:
+          key: deps-{{ checksum "requirements.txt" }}
+      - restore_cache:
+          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          paths: ~/caches/images-test-api.tar
+      - restore_cache:
+          key: docker-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          paths: ~/caches/images-test-end2end.tar
       - run:
           name: Install main requirements
           command: |
@@ -14,26 +22,32 @@ jobs:
             . venv/bin/activate
             pip install -r requirements.txt
       - run:
-          name: Load test-api cache image
+          name: Load cache images
           command: |
             set +o pipefail
             docker load -i ~/caches/images-test-api.tar | true
+            docker load -i ~/caches/images-test-end2end.tar | true
       - run:
-          name: Rebuild test-api image
+          name: Rebuild images
           command: |
             ./$COMMAND_NAME -m test-api rebuild
+            ./$COMMAND_NAME -m test-end2end rebuild
       - run:
-          name: Save test-api image
+          name: Save images
           command: |
             mkdir -p ~/caches
-            docker save $(docker images -q) -o ~/caches/images.tar
-      - save_cache:
-          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          paths: ~/caches/images-test-api.tar
+            docker save $(docker images -q) -o ~/caches/images-test-api.tar
+            docker save $(docker images -q) -o ~/caches/images-test-end2end.tar
       - save_cache:
           key: deps-{{ checksum "requirements.txt" }}
           paths:
             - ~/main-ci/venv
+      - save_cache:
+          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          paths: ~/caches/images-test-api.tar
+      - save_cache:
+          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          paths: ~/caches/images-test-end2end.tar
 
   test-api:
     working_directory: ~/main-ci
@@ -51,14 +65,37 @@ jobs:
             set +o pipefail
             docker load -i ~/caches/images-test-api.tar | true
       - run:
-          name: Load cached docker images
+          name: Venv
           command: |
-            set +o pipefail
-            docker load -i ~/caches/images.tar | true
+            . venv/bin/activate
       - run:
-          name: Running test api
+          name: Start test-api
           command: |
             ./$COMMAND_NAME -m test-api start
+
+  test-end2end:
+    working_directory: ~/main-ci
+    machine: true
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ checksum "requirements.txt" }}
+      - restore_cache:
+          key: docker-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          paths: ~/caches/images-test-end2end.tar
+      - run:
+          name: Load test-end2end cache image
+          command: |
+            set +o pipefail
+            docker load -i ~/caches/images-test-end2end.tar | true
+      - run:
+          name: Venv
+          command: |
+            . venv/bin/activate
+      - run:
+          name: Start test-end2end
+          command: |
+            ./$COMMAND_NAME -m test-end2end start
 
 workflows:
   version: 2
@@ -68,3 +105,6 @@ workflows:
       - test-api:
           requires:
             - build
+      - test-end2end:
+          requires:
+            - test-api
