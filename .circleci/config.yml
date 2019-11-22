@@ -2,16 +2,9 @@ version: 2
 jobs:
   build:
     working_directory: ~/main-ci
-    machine:
-      image: $APP_NAME/main:0.1
+    machine: true
     steps:
       - checkout
-      - run:
-          name: Build docker builder
-          command: |
-            docker build -t $APP_NAME/main:0.1 .
-            docker login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD
-            docker push $APP_NAME/main:0.1
       - run:
           name: Install main requirements
           command: |

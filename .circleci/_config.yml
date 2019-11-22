@@ -2,8 +2,7 @@ version: 2
 jobs:
   build:
     working_directory: ~/main-ci
-    docker:
-      - image: circleci/python:3.7.0
+    machine: true
     steps:
       - checkout
       - restore_cache:
