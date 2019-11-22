@@ -7,11 +7,11 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps0-{{ checksum "requirements.txt" }}
+          key: deps1-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps1-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - restore_cache:
-          key: deps0-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps1-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
       - run:
           name: Install main requirements
           command: |
@@ -23,8 +23,8 @@ jobs:
           name: Load cache images
           command: |
             set +o pipefail
-            docker load -i ~/caches/images-test-api.tar | true
-            docker load -i ~/caches/images-test-end2end.tar | true
+            docker load -i ~/main-ci/caches/images-test-api.tar | true
+            docker load -i ~/main-ci/caches/images-test-end2end.tar | true
       - run:
           name: Rebuild images
           command: |
@@ -37,13 +37,13 @@ jobs:
             docker save $(docker images -q) -o ~/main-ci/caches/images-test-api.tar
             docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
       - save_cache:
-          key: deps0-{{ checksum "requirements.txt" }}
+          key: deps1-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
       - save_cache:
-          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps1-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
       - save_cache:
-          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps1-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           paths: ~/main-ci/caches/images-test-end2end.tar
 
   test-api:
@@ -52,9 +52,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps0-{{ checksum "requirements.txt" }}
+          key: deps1-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps1-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
       - run:
           name: Load test-api cache image
@@ -76,9 +76,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps0-{{ checksum "requirements.txt" }}
+          key: deps1-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: deps0-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps1-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           paths: ~/main-ci/caches/images-test-end2end.tar
       - run:
           name: Load test-end2end cache image
