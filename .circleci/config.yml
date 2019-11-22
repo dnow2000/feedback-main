@@ -7,19 +7,17 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps-{{ checksum "requirements.txt" }}
+          key: deps0-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          paths: ~/caches/images-test-api.tar
+          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - restore_cache:
-          key: docker-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          paths: ~/caches/images-test-end2end.tar
+          key: deps0-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
       - run:
           name: Install main requirements
           command: |
-            pip install --upgrade pip
             python -m virtualenv venv
             . venv/bin/activate
+            pip install --upgrade pip
             pip install -r requirements.txt
       - run:
           name: Load cache images
@@ -35,19 +33,18 @@ jobs:
       - run:
           name: Save images
           command: |
-            mkdir -p ~/caches
-            docker save $(docker images -q) -o ~/caches/images-test-api.tar
-            docker save $(docker images -q) -o ~/caches/images-test-end2end.tar
+            mkdir -p ~/main-ci/caches
+            docker save $(docker images -q) -o ~/main-ci/caches/images-test-api.tar
+            docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
       - save_cache:
-          key: deps-{{ checksum "requirements.txt" }}
-          paths:
-            - ~/main-ci/venv
+          key: deps0-{{ checksum "requirements.txt" }}
+          paths: ~/main-ci/venv
       - save_cache:
-          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          paths: ~/caches/images-test-api.tar
+          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          paths: ~/main-ci/caches/images-test-api.tar
       - save_cache:
-          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          paths: ~/caches/images-test-end2end.tar
+          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          paths: ~/main-ci/caches/images-test-end2end.tar
 
   test-api:
     working_directory: ~/main-ci
@@ -55,15 +52,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps-{{ checksum "requirements.txt" }}
+          key: deps0-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: docker-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          paths: ~/caches/images-test-api.tar
+          key: deps0-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          paths: ~/main-ci/caches/images-test-api.tar
       - run:
           name: Load test-api cache image
           command: |
             set +o pipefail
-            docker load -i ~/caches/images-test-api.tar | true
+            docker load -i ~/main-ci/caches/images-test-api.tar | true
       - run:
           name: Venv
           command: |
@@ -79,15 +76,15 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps-{{ checksum "requirements.txt" }}
+          key: deps0-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: docker-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          paths: ~/caches/images-test-end2end.tar
+          key: deps0-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          paths: ~/main-ci/caches/images-test-end2end.tar
       - run:
           name: Load test-end2end cache image
           command: |
             set +o pipefail
-            docker load -i ~/caches/images-test-end2end.tar | true
+            docker load -i ~/main-ci/caches/images-test-end2end.tar | true
       - run:
           name: Venv
           command: |
