@@ -77,7 +77,7 @@ shift
 # Set variables for env
 # =============================================
 
-API_SERVICE=$API_SERVICE
+API_SERVICE=${APP_NAME}-api-$MODE
 DATABASE_NAME=${APP_NAME}_$DATABASE
 DATABASE_PASSWORD=${APP_NAME}_password
 DATABASE_SERVICE=$APP_NAME-${DATABASE}db-$MODE
