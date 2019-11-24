@@ -1,4 +1,4 @@
-import { ROOT_PATH } from './utils/config'
+const { ROOT_PATH } = process.env
 
 fixture("00 Landing | Arriving to the Landing").page(`${ROOT_PATH}`)
 

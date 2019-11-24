@@ -21,6 +21,8 @@ export const IS_DEBUG = true
 export const IS_DEVELOPMENT = NODE_ENV === 'development'
 export const IS_PRODUCTION = !IS_DEVELOPMENT
 
+console.log({REACT_APP_API_URL})
+
 export const API_URL = REACT_APP_API_URL || 'http://localhost'
 export const ICONS_URL = REACT_APP_ICONS_URL || `${API_URL}/static/icons`
 export const IMAGES_URL = REACT_APP_IMAGES_URL || `${API_URL}/static/images`

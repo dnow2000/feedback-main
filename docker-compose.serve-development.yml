@@ -8,8 +8,6 @@ services:
     command: >
       bash -c "set -x;
                cd /opt/api;
-               pip install -r ./requirements.txt;
-               python -m nltk.downloader punkt stopwords;
                while true; do python app.py; done;"
     container_name: ${APP_NAME}-api-serve-development
     depends_on:

@@ -43,8 +43,10 @@ services:
     depends_on:
       - api-test-end2end
     environment:
+      - API_URL=http://nginx-test-end2end:80
       - ENV=${ENV:-development}
       - GIT_TAG=${GIT_TAG}
+      - ROOT_PATH=http://localhost:3000
     networks:
       - db_test-end2end_nw
       - web_test-end2end_nw
@@ -62,10 +64,6 @@ services:
       - api-test-end2end
     networks:
       - web_test-end2end_nw
-    ports:
-      - "80:80"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
 
   postgres-test-end2end:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on

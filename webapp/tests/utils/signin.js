@@ -1,6 +1,6 @@
 import { Role, Selector } from 'testcafe'
 
-import { ROOT_PATH } from './config'
+const { ROOT_PATH } = process.env
 
 export const signinAs = user => async t => {
   const { email, password } = user
@@ -17,7 +17,7 @@ export const signinAs = user => async t => {
 }
 
 export const createUserRole = roleType => Role(
-  `${ROOT_PATH}signin`,
+  `${ROOT_PATH}/signin`,
   signinAs(roleType),
   { preserveUrl: true }
 )
