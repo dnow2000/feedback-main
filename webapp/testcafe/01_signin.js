@@ -1,5 +1,5 @@
-import { fetchSandbox } from './helpers/sandboxes'
-import { createUserRole } from './helpers/signin'
+import { fetchSandbox } from './utils/sandboxes'
+import { createUserRole } from './utils/signin'
 
 
 fixture("Signin | leads to the good redirect after signin")

@@ -1,7 +1,7 @@
 import {
   createCurrentUserReviewButton,
   signinAndSeeReviewsAs
-} from './helpers/reviews'
+} from './utils/reviews'
 
 fixture.skip("User Reviews")
   .beforeEach(signinAndSeeReviewsAs('user'))

@@ -6,13 +6,13 @@ import {
   summaryArticleTextarea,
   titleArticleInput,
   urlArticleInput
-} from './helpers/article'
+} from './utils/article'
 import {
   signinAndCreateArticleAs,
   signinAndSeeArticleAs,
   signinAndSeeCurrentUserReviewedArticleAs,
-} from './helpers/articles'
-import { signinAndNavigateToAs } from './helpers/signin'
+} from './utils/articles'
+import { signinAndNavigateToAs } from './utils/signin'
 
 fixture.skip("User Article").beforeEach(signinAndSeeArticleAs('user'))
 

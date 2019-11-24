@@ -3,8 +3,8 @@ import {
   createCurrentUserReviewButton,
   seeArticleButton,
   seeCurrentUserReviewButton
-} from './helpers/articles'
-import { createUserRole } from './helpers/signin'
+} from './utils/articles'
+import { createUserRole } from './utils/signin'
 
 fixture.skip("User Articles")
   .beforeEach(t => t.useRole(createUserRole('user')))

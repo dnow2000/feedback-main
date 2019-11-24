@@ -1,5 +1,14 @@
 version: 2.1
 
+orbs:
+  classic: circleci/classic:latest
+
+executors:
+  classic:
+    machine:
+      image: circleci/classic:latest
+    working_directory: ~/main-ci
+
 commands:
   test:
     parameters:
@@ -17,24 +26,16 @@ commands:
           name: Load <<parameters.mode>> images from cache if exists
           command: |
             set +o pipefail
-            echo "BEFORE"
-            docker images
-
             docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/images.tar | true
             while read REPOSITORY TAG IMAGE_ID
               do
                 echo "== Tagging $REPOSITORY $TAG $IMAGE_ID =="
                 docker tag "$IMAGE_ID" "$REPOSITORY:$TAG"
             done < ~/main-ci/docker-caches/<<parameters.mode>>/images.list
-
-            echo "AFTER"
-            docker images
       - run:
           name: Build <<parameters.mode>> images
           command: |
             ./$COMMAND_NAME -m <<parameters.mode>> build
-            echo "AFTER BUILD"
-            docker images
       - run:
           name: Save <<parameters.mode>> images in caches
           command: |
@@ -53,15 +54,12 @@ commands:
       - run:
           name: Start <<parameters.mode>>
           command: |
-            docker images
             ./$COMMAND_NAME -m <<parameters.mode>> start
 
 
 jobs:
   build:
-    working_directory: ~/main-ci
-    machine:
-      image: circleci/classic:latest
+    executor: classic
     steps:
       - checkout
       - restore_cache:
@@ -77,17 +75,13 @@ jobs:
           key: deps7-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   test-api:
-    working_directory: ~/main-ci
-    machine:
-      image: circleci/classic:latest
+    executor: classic
     steps:
       - test:
           key: deps7-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           mode: "test-api"
   test-end2end:
-    working_directory: ~/main-ci
-    machine:
-      image: circleci/classic:latest
+    executor: classic
     steps:
       - test:
           key: deps7-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
@@ -95,7 +89,6 @@ jobs:
 
 
 workflows:
-  version: 2
   commit:
     jobs:
       - build
