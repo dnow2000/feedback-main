@@ -33,11 +33,6 @@ commands:
           name: Build <<parameters.mode>> images
           command: |
             ./$COMMAND_NAME -m <<parameters.mode>> build
-      - save_cache:
-          key: <<parameters.key>>
-          paths:
-            - ~/main-ci/docker-caches/<<parameters.mode>>/images.list
-            - ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
       - run:
           name: Venv
           command: |
@@ -53,7 +48,11 @@ commands:
             docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.mode>>/images.list
             docker save $(docker images -q) -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
             cat ~/main-ci/docker-caches/<<parameters.mode>>/images.list
-
+      - save_cache:
+          key: <<parameters.key>>
+          paths:
+            - ~/main-ci/docker-caches/<<parameters.mode>>/images.list
+            - ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
 
 jobs:
   build:
