@@ -2,9 +2,6 @@ version: 2.1
 
 commands:
   build-test:
-    working_directory: ~/main-ci
-    machine:
-      image: circleci/classic:latest
     parameters:
       mode:
         type: string
@@ -24,19 +21,17 @@ commands:
             echo "AFTER"
             docker images
       - run:
-          name: Build <<parameters.mode> images
+          name: Build <<parameters.mode>> images
           command: |
             ./$COMMAND_NAME -m <<parameters.mode>> build
             echo "AFTER BUILD"
             docker images
       - run:
-          name: Save <<parameters.mode> images in caches
+          name: Save <<parameters.mode>> images in caches
           command: |
             mkdir -p ~/main-ci/caches/test-api
             docker save -o ~/main-ci/caches/${APP_NAME}_api_<<parameters.mode>>.tar ${APP_NAME}_api_<<parameters.mode>>:latest
   start-test:
-    working_directory: ~/main-ci
-    machine: true
     parameters:
       mode:
         type: string
@@ -48,7 +43,7 @@ commands:
           key: deps6-{{ checksum "docker-compose.<<parameters.mode>>.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/${APP_NAME}_api_<<parameters.mode>>.tar.tar
       - run:
-          name: Load <<parameters.mode> image from cache
+          name: Load <<parameters.mode>> image from cache
           command: |
             set +o pipefail
             echo "BEFORE"
@@ -61,7 +56,7 @@ commands:
           command: |
             . venv/bin/activate
       - run:
-          name: Start <<parameters.mode>
+          name: Start <<parameters.mode>>
           command: |
             docker images
             ./$COMMAND_NAME -m <<parameters.mode>> start
@@ -87,18 +82,30 @@ jobs:
           key: deps6-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   build-test-api:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
     steps:
       - build-test:
           mode: "test-api"
   build-test-end2end:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
     steps:
       - build-test:
           mode: "test-end2end"
   start-test-api:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
     steps:
       - start-test:
           mode: "test-api"
   start-test-end2end:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
     steps:
       - start-test:
           mode: "test-end2end"
