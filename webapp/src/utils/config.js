@@ -6,15 +6,24 @@ import { getMobileOperatingSystem } from './getMobileOperatingSystem'
 
 moment.locale('fr-fr')
 
-const { NODE_ENV } = process.env
+const {
+  NODE_ENV,
+  REACT_APP_API_URL,
+  REACT_APP_IMAGES_URL,
+  REACT_APP_THUMBS_URL,
+  REACT_APP_VERSION
+} = process.env
+
+export const VERSION = REACT_APP_VERSION || ''
+
 export const IS_DEBUG = true
 export const IS_DEVELOPMENT = NODE_ENV === 'development'
-export const IS_PROD = !IS_DEVELOPMENT
-export const MOBILE_OS = getMobileOperatingSystem()
+export const IS_PRODUCTION = !IS_DEVELOPMENT
 
-export const API_URL = process.env.REACT_APP_API_URL || 'http://localhost'
-export const THUMBS_URL =
-  process.env.REACT_APP_THUMBS_URL || 'http://localhost/storage/thumbs'
+export const API_URL = REACT_APP_API_URL || 'http://localhost'
+export const ICONS_URL = REACT_APP_ICONS_URL || `${API_URL}/static/icons`
+export const IMAGES_URL = REACT_APP_IMAGES_URL || `${API_URL}/static/images`
+export const THUMBS_URL = REACT_APP_THUMBS_URL || `${API_URL}/storage/thumbs`
 
 let calculatedLocalhost
 if (typeof window !== 'undefined') {
@@ -43,6 +52,8 @@ function keyboardWillHide() {
     .join(' ')
 }
 
+export const MOBILE_OS = getMobileOperatingSystem()
+
 let CALC_ROOT_PATH = ''
 if (typeof window !== 'undefined' && window.cordova) {
   document.body.className += ' cordova'
@@ -62,6 +73,5 @@ if (typeof window !== 'undefined' && window.cordova) {
   CALC_ROOT_PATH = `${window.location.protocol}//${document.location.host}`
 }
 
-export const ROOT_PATH = CALC_ROOT_PATH || 'http://localhost:3000/'
-
-export const DEFAULT_TO = '/accueil'
+export const LOCALHOST_ROOT_PATH = "http://localhost:3000/"
+export const ROOT_PATH = CALC_ROOT_PATH || LOCALHOST_ROOT_PATH

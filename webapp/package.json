@@ -76,8 +76,8 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "format:js": "prettier-eslint --write '{src,tests}/**/*.{js,jsx}'",
-    "start": "react-scripts start",
-    "test:end2end": "testcafe 'chrome:headless' testcafe"
+    "start": "REACT_APP_VERSION=$(grep -m1 version package.json | awk -F: '{ print $2 }' | sed 's/[\", ]//g') react-scripts start",
+    "test:end2end": "testcafe 'chrome:headless' tests"
   },
   "browserslist": {
     "production": [

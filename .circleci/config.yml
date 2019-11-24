@@ -1,8 +1,5 @@
 version: 2.1
 
-orbs:
-  classic: circleci/classic:latest
-
 executors:
   classic:
     machine:

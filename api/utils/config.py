@@ -14,12 +14,12 @@ ENV = os.environ.get('ENV', 'development')
 IS_DEVELOPMENT = ENV == 'development'
 IS_INTEGRATION = ENV == 'integration'
 IS_STAGING = ENV == 'staging'
-IS_PRODUCTION = ENV == 'production'
+IS_PRODUCTIONUCTION = ENV == 'production'
 LOG_LEVEL = int(os.environ.get('LOG_LEVEL', LOG_LEVEL_INFO))
 
 if IS_DEVELOPMENT:
     API_URL = 'localhost'
-elif IS_PRODUCTION:
+elif IS_PRODUCTIONUCTION:
     API_URL = 'https://backend.{}.{}'.format(APP_NAME, TLD)
 else:
     API_URL = 'https://backend-{}.{}.{}'.format(ENV, APP_NAME, TLD)
