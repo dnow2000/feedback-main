@@ -47,7 +47,7 @@ jobs:
           key: deps4-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
 
-    build-test-api:
+    build-test-end2end:
       working_directory: ~/main-ci
       machine:
         image: circleci/classic:latest
