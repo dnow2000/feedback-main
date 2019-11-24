@@ -134,10 +134,10 @@ workflows:
   commit:
     jobs:
       - build-setup
-      - build-test-api
+      - build-test-api:
           requires:
             - build-setup
-      - build-test-end2end
+      - build-test-end2end:
           requires:
             - build-setup
       - test-api:
