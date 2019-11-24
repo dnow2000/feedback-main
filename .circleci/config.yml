@@ -16,7 +16,7 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: deps9-{{ checksum "requirements.txt" }}
+          key: deps10-{{ checksum "requirements.txt" }}
       - restore_cache:
           key: <<parameters.key>>
       - run:
@@ -60,7 +60,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps9-{{ checksum "requirements.txt" }}
+          key: deps10-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -69,19 +69,19 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
-          key: deps9-{{ checksum "requirements.txt" }}
+          key: deps10-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   test-api:
     executor: classic
     steps:
       - test:
-          key: deps9-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps10-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           mode: "test-api"
   test-end2end:
     executor: classic
     steps:
       - test:
-          key: deps9-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps10-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           mode: "test-end2end"
 
 
