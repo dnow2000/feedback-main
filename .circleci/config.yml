@@ -1,4 +1,72 @@
-version: 2
+version: 2.1
+
+commands:
+  build-test:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
+    parameters:
+      mode:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps6-{{ checksum "requirements.txt" }}
+      - restore_cache:
+          key: deps6-{{ checksum "docker-compose.<<parameters.mode>>.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+      - run:
+          name: Load <<parameters.mode>> images from cache if exists
+          command: |
+            set +o pipefail
+            echo "BEFORE"
+            docker images
+            docker load -i ~/main-ci/caches/${APP_NAME}_api_<<parameters.mode>>.tar | true
+            echo "AFTER"
+            docker images
+      - run:
+          name: Build <<parameters.mode> images
+          command: |
+            ./$COMMAND_NAME -m <<parameters.mode>> build
+            echo "AFTER BUILD"
+            docker images
+      - run:
+          name: Save <<parameters.mode> images in caches
+          command: |
+            mkdir -p ~/main-ci/caches/test-api
+            docker save -o ~/main-ci/caches/${APP_NAME}_api_<<parameters.mode>>.tar ${APP_NAME}_api_<<parameters.mode>>:latest
+  start-test:
+    working_directory: ~/main-ci
+    machine: true
+    parameters:
+      mode:
+        type: string
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps6-{{ checksum "requirements.txt" }}
+      - restore_cache:
+          key: deps6-{{ checksum "docker-compose.<<parameters.mode>>.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          paths: ~/main-ci/caches/${APP_NAME}_api_<<parameters.mode>>.tar.tar
+      - run:
+          name: Load <<parameters.mode> image from cache
+          command: |
+            set +o pipefail
+            echo "BEFORE"
+            docker images
+            docker load -i ~/main-ci/caches/${APP_NAME}_api_<<parameters.mode>>.tar.tar | true
+            echo "AFTER"
+            docker images
+      - run:
+          name: Venv
+          command: |
+            . venv/bin/activate
+      - run:
+          name: Start <<parameters.mode>
+          command: |
+            docker images
+            ./$COMMAND_NAME -m <<parameters.mode>> start
+
+
 jobs:
   build-setup:
     working_directory: ~/main-ci
@@ -7,7 +75,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps5-{{ checksum "requirements.txt" }}
+          key: deps6-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -16,126 +84,25 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
-          key: deps5-{{ checksum "requirements.txt" }}
+          key: deps6-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
-
   build-test-api:
-    working_directory: ~/main-ci
-    machine:
-      image: circleci/classic:latest
     steps:
-      - checkout
-      - restore_cache:
-          key: deps5-{{ checksum "requirements.txt" }}
-      - restore_cache:
-          key: deps5-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-      - run:
-          name: Load images from cache if exists
-          command: |
-            set +o pipefail
-            echo "BEFORE"
-            docker images
-            docker load -i ~/main-ci/caches/images-test-api.tar | true
-            echo "AFTER"
-            docker images
-      - run:
-          name: Build images
-          command: |
-            ./$COMMAND_NAME -m test-api build
-            echo "AFTER BUILD"
-            docker images
-      - run:
-          name: Save images in caches
-          command: |
-            mkdir -p ~/main-ci/caches/test-api
-            docker save $(docker images -q) -o ~/main-ci/caches/images-test-api.tar
-            docker save -o ~/main-ci/caches/test-api/${APP_NAME}_nginx_test-api.tar ${APP_NAME}_nginx_test-api:latest;"
+      - build-test:
+          mode: "test-api"
   build-test-end2end:
-    working_directory: ~/main-ci
-    machine:
-      image: circleci/classic:latest
     steps:
-      - checkout
-      - restore_cache:
-          key: deps5-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-      - run:
-          name: Install main requirements
-          command: |
-            python -m virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
-            pip install -r requirements.txt
-      - run:
-          name: Load images from cache if exists
-          command: |
-            set +o pipefail
-            docker load -i ~/main-ci/caches/images-test-end2end.tar | true
-      - run:
-          name: Build images
-          command: |
-            ./$COMMAND_NAME -m test-api build
-            ./$COMMAND_NAME -m test-end2end build
-      - run:
-          name: Save images in caches
-          command: |
-            mkdir -p ~/main-ci/caches
-            docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
-      - save_cache:
-          key: deps5-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          paths: ~/main-ci/caches/images-test-end2end.tar
+      - build-test:
+          mode: "test-end2end"
+  start-test-api:
+    steps:
+      - start-test:
+          mode: "test-api"
+  start-test-end2end:
+    steps:
+      - start-test:
+          mode: "test-end2end"
 
-  test-api:
-    working_directory: ~/main-ci
-    machine: true
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps5-{{ checksum "requirements.txt" }}
-      - restore_cache:
-          key: deps5-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          paths: ~/main-ci/caches/images-test-api.tar
-      - run:
-          name: Load test-api image from cache
-          command: |
-            set +o pipefail
-            echo "BEFORE"
-            docker images
-            docker load -i ~/main-ci/caches/images-test-api.tar | true
-            echo "AFTER"
-            docker images
-      - run:
-          name: Venv
-          command: |
-            . venv/bin/activate
-      - run:
-          name: Start test-api
-          command: |
-            docker images
-            ./$COMMAND_NAME -m test-api start
-
-  test-end2end:
-    working_directory: ~/main-ci
-    machine: true
-    steps:
-      - checkout
-      - restore_cache:
-          key: deps5-{{ checksum "requirements.txt" }}
-      - restore_cache:
-          key: deps5-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          paths: ~/main-ci/caches/images-test-end2end.tar
-      - run:
-          name: Load test-end2end image from cache
-          command: |
-            set +o pipefail
-            docker load -i ~/main-ci/caches/images-test-end2end.tar | true
-      - run:
-          name: Venv
-          command: |
-            . venv/bin/activate
-      - run:
-          name: Start test-end2end
-          command: |
-            ./$COMMAND_NAME -m test-end2end start
 
 workflows:
   version: 2
@@ -148,9 +115,9 @@ workflows:
       - build-test-end2end:
           requires:
             - build-setup
-      - test-api:
+      - start-test-api:
           requires:
             - build-test-api
-      - test-end2end:
+      - start-test-end2end:
           requires:
             - build-test-end2end
