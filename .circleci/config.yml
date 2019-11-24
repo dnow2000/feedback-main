@@ -39,8 +39,8 @@ commands:
           name: Save <<parameters.mode>> images in caches
           command: |
             mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-            docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.key>>/images.list
-            docker save $(docker images -q) -o ~/main-ci/docker-caches/<<parameters.key>>/images.tar
+            docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.mode>>/images.list
+            docker save $(docker images -q) -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
       - save_cache:
           key: <<parameters.key>>
           paths:
