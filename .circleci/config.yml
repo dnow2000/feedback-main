@@ -16,7 +16,7 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: deps7-{{ checksum "requirements.txt" }}
+          key: deps8-{{ checksum "requirements.txt" }}
       - restore_cache:
           key: <<parameters.key>>
       - run:
@@ -33,12 +33,6 @@ commands:
           name: Build <<parameters.mode>> images
           command: |
             ./$COMMAND_NAME -m <<parameters.mode>> build
-      - run:
-          name: Save <<parameters.mode>> images in caches
-          command: |
-            mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-            docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.mode>>/images.list
-            docker save $(docker images -q) -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
       - save_cache:
           key: <<parameters.key>>
           paths:
@@ -54,6 +48,12 @@ commands:
             cat ~/main-ci/docker-caches/<<parameters.mode>>/images.list
             docker images
             ./$COMMAND_NAME -m <<parameters.mode>> start
+      - run:
+          name: Save <<parameters.mode>> images in caches
+          command: |
+            mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
+            docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.mode>>/images.list
+            docker save $(docker images -q) -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
 
 
 jobs:
@@ -62,7 +62,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps7-{{ checksum "requirements.txt" }}
+          key: deps8-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -71,19 +71,19 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
-          key: deps7-{{ checksum "requirements.txt" }}
+          key: deps8-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   test-api:
     executor: classic
     steps:
       - test:
-          key: deps7-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps8-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           mode: "test-api"
   test-end2end:
     executor: classic
     steps:
       - test:
-          key: deps7-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps8-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           mode: "test-end2end"
 
 
