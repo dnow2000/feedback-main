@@ -32,7 +32,11 @@ commands:
       - run:
           name: Build <<parameters.mode>> images
           command: |
+            echo "BEFORE"
+            docker images
             ./$COMMAND_NAME -m <<parameters.mode>> build
+            echo "AFTER"
+            docker images
       - run:
           name: Venv
           command: |
