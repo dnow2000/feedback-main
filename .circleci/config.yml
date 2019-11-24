@@ -47,39 +47,39 @@ jobs:
           key: deps4-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
 
-    build-test-end2end:
-      working_directory: ~/main-ci
-      machine:
-        image: circleci/classic:latest
-      steps:
-        - checkout
-        - restore_cache:
-            key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-        - run:
-            name: Install main requirements
-            command: |
-              python -m virtualenv venv
-              . venv/bin/activate
-              pip install --upgrade pip
-              pip install -r requirements.txt
-        - run:
-            name: Load images from cache if exists
-            command: |
-              set +o pipefail
-              docker load -i ~/main-ci/caches/images-test-end2end.tar | true
-        - run:
-            name: Build images
-            command: |
-              ./$COMMAND_NAME -m test-api build
-              ./$COMMAND_NAME -m test-end2end build
-        - run:
-            name: Save images in caches
-            command: |
-              mkdir -p ~/main-ci/caches
-              docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
-        - save_cache:
-            key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-            paths: ~/main-ci/caches/images-test-end2end.tar
+  build-test-end2end:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+      - run:
+          name: Install main requirements
+          command: |
+            python -m virtualenv venv
+            . venv/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt
+      - run:
+          name: Load images from cache if exists
+          command: |
+            set +o pipefail
+            docker load -i ~/main-ci/caches/images-test-end2end.tar | true
+      - run:
+          name: Build images
+          command: |
+            ./$COMMAND_NAME -m test-api build
+            ./$COMMAND_NAME -m test-end2end build
+      - run:
+          name: Save images in caches
+          command: |
+            mkdir -p ~/main-ci/caches
+            docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
+      - save_cache:
+          key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          paths: ~/main-ci/caches/images-test-end2end.tar
 
   test-api:
     working_directory: ~/main-ci
