@@ -1,17 +1,13 @@
 version: 2
 jobs:
-  build:
+  build-setup:
     working_directory: ~/main-ci
     machine:
       image: circleci/classic:latest
     steps:
       - checkout
       - restore_cache:
-          key: deps3-{{ checksum "requirements.txt" }}
-      - restore_cache:
-          key: deps3-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-      - restore_cache:
-          key: deps3-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps4-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -19,32 +15,71 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r requirements.txt
+      - save_cache:
+          key: deps4-{{ checksum "requirements.txt" }}
+          paths: ~/main-ci/venv
+
+  build-test-api:
+    working_directory: ~/main-ci
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps4-{{ checksum "requirements.txt" }}
+      - restore_cache:
+          key: deps4-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
       - run:
           name: Load images from cache if exists
           command: |
             set +o pipefail
             docker load -i ~/main-ci/caches/images-test-api.tar | true
-            docker load -i ~/main-ci/caches/images-test-end2end.tar | true
       - run:
           name: Build images
           command: |
             ./$COMMAND_NAME -m test-api build
-            ./$COMMAND_NAME -m test-end2end build
       - run:
           name: Save images in caches
           command: |
             mkdir -p ~/main-ci/caches
             docker save $(docker images -q) -o ~/main-ci/caches/images-test-api.tar
-            docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
       - save_cache:
-          key: deps3-{{ checksum "requirements.txt" }}
-          paths: ~/main-ci/venv
-      - save_cache:
-          key: deps3-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps4-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
-      - save_cache:
-          key: deps3-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          paths: ~/main-ci/caches/images-test-end2end.tar
+
+    build-test-api:
+      working_directory: ~/main-ci
+      machine:
+        image: circleci/classic:latest
+      steps:
+        - checkout
+        - restore_cache:
+            key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+        - run:
+            name: Install main requirements
+            command: |
+              python -m virtualenv venv
+              . venv/bin/activate
+              pip install --upgrade pip
+              pip install -r requirements.txt
+        - run:
+            name: Load images from cache if exists
+            command: |
+              set +o pipefail
+              docker load -i ~/main-ci/caches/images-test-end2end.tar | true
+        - run:
+            name: Build images
+            command: |
+              ./$COMMAND_NAME -m test-api build
+              ./$COMMAND_NAME -m test-end2end build
+        - run:
+            name: Save images in caches
+            command: |
+              mkdir -p ~/main-ci/caches
+              docker save $(docker images -q) -o ~/main-ci/caches/images-test-end2end.tar
+        - save_cache:
+            key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+            paths: ~/main-ci/caches/images-test-end2end.tar
 
   test-api:
     working_directory: ~/main-ci
@@ -52,9 +87,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps3-{{ checksum "requirements.txt" }}
+          key: deps4-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: deps3-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps4-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           paths: ~/main-ci/caches/images-test-api.tar
       - run:
           name: Load test-api image from cache
@@ -76,9 +111,9 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps3-{{ checksum "requirements.txt" }}
+          key: deps4-{{ checksum "requirements.txt" }}
       - restore_cache:
-          key: deps3-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps4-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           paths: ~/main-ci/caches/images-test-end2end.tar
       - run:
           name: Load test-end2end image from cache
@@ -98,10 +133,16 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
+      - build-setup
+      - build-test-api
+          requires:
+            - build-setup
+      - build-test-end2end
+          requires:
+            - build-setup
       - test-api:
           requires:
-            - build
+            - build-test-api
       - test-end2end:
           requires:
-            - test-api
+            - build-test-end2end
