@@ -95,7 +95,11 @@ jobs:
           name: Load test-api image from cache
           command: |
             set +o pipefail
+            echo "BEFORE"
+            docker images
             docker load -i ~/main-ci/caches/images-test-api.tar | true
+            echo "AFTER"
+            docker images
       - run:
           name: Venv
           command: |
@@ -103,6 +107,7 @@ jobs:
       - run:
           name: Start test-api
           command: |
+            docker images
             ./$COMMAND_NAME -m test-api start
 
   test-end2end:
