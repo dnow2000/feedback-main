@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Fragment } from 'react'
 import Helmet from 'react-helmet'
 
-const { NODE_ENV } = process.env
+import { IS_DEVELOPMENT, ROOT_PATH } from 'utils/config'
 
 const App = ({ children }) => (
   <Fragment>
@@ -15,11 +15,11 @@ const App = ({ children }) => (
       <meta
         httpEquiv="Content-Security-Policy"
         content={`default-src 'self' blob: data: https: http: gap://ready 'unsafe-inline'
-                ${NODE_ENV === 'development' && "'unsafe-eval'"};
+                ${IS_DEVELOPMENT && "'unsafe-eval'"};
                 connect-src 'self'
                 https: http: ws://localhost:3000 wss://web-local:3000`}
       />
-      <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+      <link rel="manifest" href={`${ROOT_PATH}/manifest.json`} />
       <title>Science Feedback</title>
     </Helmet>
     {children}
