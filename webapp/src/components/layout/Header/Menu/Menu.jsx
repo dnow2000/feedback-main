@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 import SignoutButtonContainer from 'components/layout/SignoutButton/SignoutButtonContainer'
 import { closeMenu } from 'reducers/menu'
 
-import links from '../links'
+import { links } from '../utils'
 
 
 const Menu = ({ currentRoles, dispatch, isActive, location, currentUser }) => (
@@ -34,7 +34,7 @@ const Menu = ({ currentRoles, dispatch, isActive, location, currentUser }) => (
             <div className="item" key={label}>
               {path === location.pathname ? (
                 <div className="py12 link current">
-                  {label}
+                  {label(currentRoles)}
                 </div>
               ) : (
                 <NavLink

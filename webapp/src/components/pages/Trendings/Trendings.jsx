@@ -25,9 +25,13 @@ class Trendings extends PureComponent {
   }
 
   componentDidMount() {
-    const { query } = this.props
-    const queryParams = query.parse()
-    if (!queryParams.page) {
+    const { history, query } = this.props
+    const queryParams = query.getParams()
+    const { theme, page } = queryParams
+    if (!theme) {
+      history.push(query.getSearchFromUpdate({ theme: "all" }))
+    }
+    if (!page) {
       this.handleRequestData()
     }
   }
@@ -69,8 +73,8 @@ class Trendings extends PureComponent {
   }
 
   handleRequestDataWithQuery = (key, value) => () => {
-    const { dispatch, query } = this.props
-    const queryParams = query.parse()
+    const { dispatch, history, query } = this.props
+    const queryParams = query.getParams()
 
     let nextValue = value
 
@@ -82,15 +86,15 @@ class Trendings extends PureComponent {
     }
 
     dispatch(assignData({ trendings: [] }))
-    query.change({
+    history.push(query.getSearchFromUpdate({
       [key]: nextValue,
       page: null
-    })
+    }))
   }
 
   render() {
     const { query, trendings } = this.props
-    const queryParams = query.parse()
+    const queryParams = query.getParams()
     const { days, theme } = queryParams
     const { hasMore, isLoading } = this.state
 
@@ -104,6 +108,7 @@ class Trendings extends PureComponent {
             </h1>
             <div className="flex-columns items-center mb12">
               <div>
+
                 {trendingThemes.map(({ label, value }) => (
                   <button
                     className={classnames("button is-primary", {
@@ -166,7 +171,13 @@ Trendings.defaultProps = {
 Trendings.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }),
+  query: PropTypes.shape({
+    getParams: PropTypes.func.isRequired,
+    getSearchFromUpdate: PropTypes.func.isRequired
+  }).isRequired,
   trendings: PropTypes.array
 }
 

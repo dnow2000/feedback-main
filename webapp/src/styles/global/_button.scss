@@ -1,10 +1,13 @@
 .button {
-  border-radius: 4px;
-  font-weight: 500;
+  border-radius: 1rem;
+  cursor: pointer;
+  font-weight: $font-weight-semibold;
+  min-width: 4em;
+  padding: 0.5rem;
   text-decoration: none;
 
   &:not(:last-child) {
-    margin-right: 12px;
+    margin-right: 0.75rem;
   }
 
   &:focus {
@@ -45,6 +48,13 @@
   }
 
 
+  &.is-primary {
+    background-color: $primary;
+    border-color: transparent;
+    color: $white;
+  }
+
+
   &.is-secondary {
     background: none;
     border-color: transparent;
@@ -61,6 +71,8 @@
   }
 
   &.is-outlined {
+    background-color: transparent;
     box-shadow: none;
+    color: $grey;
   }
 }

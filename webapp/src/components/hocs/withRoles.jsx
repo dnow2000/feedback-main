@@ -28,13 +28,16 @@ const withRoles = (config = {
       const {
         accessRoles,
         creationRoles,
+        form,
+        history,
         modificationRoles,
-        query
       } = this.props
       const {
+        getReadOnlyUrl,
+        id,
         isCreatedEntity,
         isModifiedEntity
-      } = query.context()
+      } = form
       const { canRenderChildren } = this.state
 
       if (canRenderChildren) {
@@ -46,7 +49,7 @@ const withRoles = (config = {
           this.setState({ canRenderChildren: true })
           return
         }
-        query.changeToReadOnly()
+        history.push(getReadOnlyUrl())
       }
 
       if (isModifiedEntity) {
@@ -54,19 +57,17 @@ const withRoles = (config = {
           this.setState({ canRenderChildren: true })
           return
         }
-        query.changeToReadOnly()
+        history.push(getReadOnlyUrl())
       }
 
       if (!isCreatedEntity && !isModifiedEntity) {
-
         if (accessRoles) {
           if (accessRoles.length) {
             this.setState({ canRenderChildren: true })
             return
           }
-          query.changeToReadOnly()
+          history.push(getReadOnlyUrl())
         }
-
         this.setState({ canRenderChildren: true })
       }
 
@@ -92,9 +93,9 @@ const withRoles = (config = {
     accessRoles: PropTypes.arrayOf(PropTypes.shape()),
     creationRoles: PropTypes.arrayOf(PropTypes.shape()),
     currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+    form: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
-    modificationRoles: PropTypes.arrayOf(PropTypes.shape()),
-    query: PropTypes.object.isRequired
+    modificationRoles: PropTypes.arrayOf(PropTypes.shape())
   }
 
   function mapStateToProps (state) {

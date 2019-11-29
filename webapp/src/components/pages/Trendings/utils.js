@@ -6,6 +6,7 @@ export const trendingMaxDates = [
 ]
 
 export const trendingThemes = [
+  { label: 'All', value: 'all' },
   { label: 'Climate', value: 'climate' },
   { label: 'Health', value: 'health' }
 ]

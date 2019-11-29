@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import links from '../links'
+import { links } from '../utils'
 
 const Navigation = ({ currentRoles, currentUser, location }) => (
   <div className="navigation">
