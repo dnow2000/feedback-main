@@ -30,14 +30,6 @@ commands:
                 docker tag "$IMAGE_ID" "$REPOSITORY:$TAG"
             done < ~/main-ci/docker-caches/<<parameters.mode>>/images.list | true
       - run:
-          name: Build <<parameters.mode>> images
-          command: |
-            echo "BEFORE"
-            docker images
-            ./$COMMAND_NAME -m <<parameters.mode>> build
-            echo "AFTER"
-            docker images
-      - run:
           name: Venv
           command: |
             . venv/bin/activate
