@@ -8,7 +8,6 @@
   margin-bottom: 30px;
 }
 
-
 .field-label {
 
   display: flex;
@@ -110,4 +109,10 @@
   height: 190px;
   border-radius: 3px;
   background-color: #f2f3f6;
+
+  .slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }

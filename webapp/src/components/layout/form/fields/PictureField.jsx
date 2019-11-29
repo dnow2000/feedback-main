@@ -51,16 +51,19 @@ class PictureField extends React.PureComponent {
 
   renderSlider = () => {
     return (
-      <input
-        className='pt40'
-        defaultValue="1"
-        max="2"
-        min='1'
-        name="scale"
-        onChange={this.handleScale}
-        step="0.01"
-        type="range"
-      />
+      <div
+        className='slider-container'
+      >
+        <input
+          defaultValue="1"
+          max="2"
+          min='1'
+          name="scale"
+          onChange={this.handleScale}
+          step="0.01"
+          type="range"
+        />
+      </div>
     )
   }
 
