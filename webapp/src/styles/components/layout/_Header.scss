@@ -1,11 +1,27 @@
 .header {
-  left: 0;
-  right: 0;
-  pointer-events: none;
-  position: fixed;
-  z-index: 1000;
-
   * {
     pointer-events: auto;
+  }
+
+  align-items: center;
+  background-color: $grey-lighter;
+  display: flex;
+  height: $header-height;
+  justify-content: flex-start;
+  left: 0;
+  right: 0;
+  padding: 24px;
+  pointer-events: none;
+  position: fixed;
+  transition: filter 0.5s, opacity 0.5s;
+  z-index: 1000;
+
+  &.scrolling {
+    filter: blur(1px);
+    opacity: 0.1;
+  }
+
+  .left-content {
+    margin-right: 12px;
   }
 }

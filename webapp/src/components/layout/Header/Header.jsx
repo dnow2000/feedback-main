@@ -1,5 +1,6 @@
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
@@ -9,19 +10,36 @@ import NavigationContainer from 'components/layout/Navigation/NavigationContaine
 
 const signPathnames = ['/signin', '/signup']
 
+
 const Header = ({ currentUser, location, whiteHeader }) => {
+  const [isScrolling, setIsScrolling] = useState()
   const isSignPathname = signPathnames.includes(location.pathname)
+
+  useEffect(() => {
+    const handleScroll = event => {
+      const nextIsScrolling = window.scrollY !== 0
+      setIsScrolling(nextIsScrolling)
+    }
+    document.addEventListener('scroll', handleScroll)
+    return () => {
+      document.removeEventListener(handleScroll)
+    }
+  }, [])
+
 
   return (
     <Fragment>
-      <header className="header flex-start flex-columns items-center p12">
-        <div className="mr12">
-          <Logo />
+      <header className={classnames("header", { scrolling: isScrolling })}>
+        <div className="left-content">
+          <Logo withName />
         </div>
-        <AvatarContainer whiteHeader={whiteHeader} />
+
         <div className="flex-auto" />
         {currentUser && !isSignPathname ? (
-          <HamburgerContainer />
+          <Fragment>
+            <HamburgerContainer />
+            <AvatarContainer whiteHeader={whiteHeader} />
+          </Fragment>
         ) : (
           !isSignPathname && (
             <NavLink className="button is-primary" to="/signin">
