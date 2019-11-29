@@ -25,62 +25,76 @@ class FormFields extends React.PureComponent {
     this.setState({role})
   }
 
-  render() {
+  renderForEditor() {
+    return null
+  }
+
+  renderForReviewer() {
     const { onImageChange } = this.props
     const { role } = this.state
     return (
       <Fragment>
         <div className="field-group">
-          <h3 className="field-group-title">
-            Personal details:
-          </h3>
+          <div className="fields-table">
+            <PictureField
+              className="col-tablet-33"
+              id="picture"
+              label="Photo"
+              name="picture"
+              onImageChange={onImageChange}
+              required
+            />
+            <div className="col-tablet-66">
+              <TextField
+                id="first-name"
+                label="First name"
+                name="firstName"
+                placeholder="John"
+                required
+              />
+              <TextField
+                id="last-name"
+                label="Last name"
+                name="lastName"
+                placeholder="Doe"
+                required
+              />
+            </div>
+          </div>
           <TextField
-            id="first-name"
-            name="firstName"
-            label="First Name"
-            required
-          />
-          <TextField
-            id="last-name"
-            name="lastName"
-            label="Last Name"
-            required
-          />
-          <EmailField
             id="email"
-            name="email"
             label="Email"
-            sublabel="Official email from your research institution"
+            name="email"
+            placeholder="john.doe@gmail.com"
             required
-          />
-          <PasswordField
-            id="password"
-            name="password"
-            label="Password"
-            placeholder="Your login password"
-            required
-          />
-          <TextField
-            id="title"
-            name="title"
-            label="Title"
-            sublabel="(eg: Postdoctoral research fellow, Associate Professor)"
-            required
+            sublabel="Official email from your research institution, it will not be displayed publicly."
           />
           <TextField
             id="website"
-            name="academicWebsite"
             label="Academic Website"
+            name="academicWebsite"
+            placeholder="https://scholar.googl.com/johndoe"
             required
+            sublabel="Link to a webpage listing your publications."
           />
-          <PictureField
-            id="picture"
-            name="picture"
-            label="Picture"
-            sublabel="Professional picture, square headshot"
-            required
-            onImageChange={onImageChange}
-          />
+          <div className="fields-table">
+            <TextField
+              className="col-tablet-50"
+              id="title"
+              label="Title"
+              name="title"
+              placeholder="Associate Professor"
+              required
+            />
+            <TextField
+              className="col-tablet-50"
+              id="affiliation"
+              label="Affiliation"
+              name="affiliation"
+              placeholder="University of California"
+              required
+            />
+          </div>
           {role === 'reviewer' && (
             <>
               <TextField
@@ -131,6 +145,10 @@ class FormFields extends React.PureComponent {
         </div>
       </Fragment>
     )
+  }
+
+  render() {
+    return this.renderForReviewer()
   }
 }
 

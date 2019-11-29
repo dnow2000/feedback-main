@@ -12,44 +12,39 @@ import {
 import { FieldError } from '../layout'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-export class TextField extends React.PureComponent {
-
-  renderField = ({ input, meta }) => {
-    const {
-      autoComplete,
-      className,
-      disabled,
-      id,
-      label,
-      name,
-      placeholder,
-      readOnly,
-      renderInner,
-      renderValue,
-      required,
-      sublabel,
-      type,
-    } = this.props
-    return (
+export const TextField = ({
+  autoComplete,
+  className,
+  disabled,
+  id,
+  label,
+  name,
+  placeholder,
+  readOnly,
+  renderInner,
+  renderValue,
+  required,
+  type,
+  validate,
+}) => (
+  <Field
+    name={name}
+    validate={composeValidators(validate, getRequiredValidate(required))}
+    parse={createParseNumberValue(type)}
+    render={({ input, meta }) => (
       <div
-        className={classnames("field", className, { readonly: readOnly })}
+        className={classnames("field text-field",
+          className, { readonly: readOnly })}
         id={id}
       >
-        <label
-          className="field-label"
-          htmlFor={name}
-        >
-          <span>{label}</span>
-          {required && !readOnly && <span className="field-asterisk">{"*"}</span>}
+        <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
+          {label && (
+            <span>
+              <span>{label}</span>
+              {required && !readOnly && <span className="field-asterisk">*</span>}
+            </span>
+          )}
         </label>
-        {sublabel && (
-          <label
-            className="field-sublabel"
-            htmlFor={name}
-          >
-            <span>{sublabel}</span>
-          </label>
-        )}
         <div className="field-control">
           <div className="field-value flex-columns items-center">
             <div className="field-inner flex-columns items-center">
@@ -70,39 +65,21 @@ export class TextField extends React.PureComponent {
           <FieldError meta={meta} />
         </div>
       </div>
-    )
-  }
-
-  render() {
-    const {
-      name,
-      required,
-      type,
-      validate,
-    } = this.props
-      return (
-        <Field
-          name={name}
-          parse={createParseNumberValue(type)}
-          render={this.renderField}
-          validate={composeValidators(validate, getRequiredValidate(required))}
-        />
-      )
-    }
-}
-
+    )}
+  />
+)
 
 TextField.defaultProps = {
   autoComplete: false,
   className: '',
   disabled: false,
   id: null,
+  label: '',
   placeholder: 'Please enter a value',
   readOnly: false,
   renderInner: () => null,
   renderValue: () => null,
   required: false,
-  sublabel: null,
   type: 'text',
   validate: null,
 }
@@ -112,14 +89,13 @@ TextField.propTypes = {
   className: PropTypes.string,
   disabled: PropTypes.bool,
   id: PropTypes.string,
-  label: PropTypes.string.isRequired,
+  label: PropTypes.string,
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   readOnly: PropTypes.bool,
   renderInner: PropTypes.func,
   renderValue: PropTypes.func,
   required: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
-  sublabel: PropTypes.string,
   type: PropTypes.string,
   validate: PropTypes.func,
 }
