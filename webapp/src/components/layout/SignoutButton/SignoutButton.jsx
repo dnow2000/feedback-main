@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { closeModal } from 'redux-react-modals'
-import { requestData, resetData } from 'redux-thunk-data'
+import { requestData, reinitializeData } from 'redux-thunk-data'
 
 import { closeNavigation } from 'reducers/navigation'
 
@@ -26,7 +26,7 @@ class SignoutButton extends PureComponent {
       handleSuccess,
       handleSuccessRedirect,
       history,
-      noResetData
+      noReinitializeData
     } = this.props
 
     if (handleSuccess) {
@@ -34,8 +34,8 @@ class SignoutButton extends PureComponent {
       return
     }
 
-    if (!noResetData) {
-      dispatch(resetData())
+    if (!noReinitializeData) {
+      dispatch(reinitializeData())
     }
 
     dispatch(closeNavigation())
@@ -78,7 +78,7 @@ SignoutButton.defaultProps = {
   handleFailRedirect: null,
   handleSuccess: null,
   handleSuccessRedirect: null,
-  noResetData: null
+  noReinitializeData: null
 }
 
 SignoutButton.propTypes = {
@@ -91,7 +91,7 @@ SignoutButton.propTypes = {
   handleSuccess: PropTypes.func,
   handleSuccessRedirect: PropTypes.func,
   history: PropTypes.object.isRequired,
-  noResetData: PropTypes.bool
+  noReinitializeData: PropTypes.bool
 }
 
 export default SignoutButton
