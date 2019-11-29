@@ -34,7 +34,7 @@ class FormFields extends React.PureComponent {
     const { role } = this.state
     return (
       <Fragment>
-        <div className="field-group">
+        <div className="fields-container">
           <div className="fields-table">
             <PictureField
               className="col-tablet-33"
@@ -95,50 +95,43 @@ class FormFields extends React.PureComponent {
               required
             />
           </div>
+          <TextField
+            id="expertise"
+            name="expertiseAreas"
+            label="Areas of expertise"
+            placeholder="Cardiovascular health, Infectious diseases, Multiple sclerosis"
+            sublabel="Please separate fields by a comma"
+            required
+          />
           {role === 'reviewer' && (
             <>
-              <TextField
-                id="bio"
-                name="bio"
-                label="Bio"
-                required
-              />
-              <TextField
-                id="affiliation"
-                name="affiliation"
-                label="Affiliation"
-                sublabel="(eg: University of California)"
-                required
-              />
-              <TextField
-                id="expertise"
-                name="expertiseAreas"
-                label="Areas of expertise"
-                sublabel="Comma separated, e.g. 'Cardiovascular health, Infectious diseases, Multiple sclerosis'"
-                required
-              />
-              <TextField
-                id="orcid-id"
-                name="orcidId"
-                label="ORCID id"
-                sublabel="(You can create one here: https://orcid.org/)"
-              />
+              <div className="field-separator">
+                <h2 className="field-separator-title">Publications</h2>
+              </div>
               <TextField
                 id="publication-1"
                 name="publication-1"
                 label="Publication 1"
-                sublabel="Link to qualifying publication(s). You should be the first author[1] of an article published in a referred health science journal within the last 4 years."
+                placeholder="Link to qualifying publications."
                 required
               />
               <TextField
                 id="publication-2"
                 name="publication-2"
                 label="Publication 2"
+                placeholder="Link to qualifying publications."
               />
               <TextField
                 id="publication-3"
                 name="publication-3"
                 label="Publication 3"
+                placeholder="Link to qualifying publications."
+              />
+              <TextField
+                id="orcid-id"
+                name="orcidId"
+                label="ORCID id"
+                sublabel="You can create one here: https://orcid.org"
               />
             </>
           )}

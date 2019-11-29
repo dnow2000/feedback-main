@@ -1,4 +1,4 @@
-.field-group {
+.fields-container {
   display: table;
   width: 100%;
   margin-bottom: 1rem;
@@ -10,10 +10,6 @@
 
 
 .field-label {
-  // @extend .mb12;
-  // @extend .pb7;
-  // @extend .pr12;
-  // @extend .fs16;
 
   display: flex;
   align-items: center;
@@ -56,6 +52,29 @@
   margin-top: 15px;
 }
 
+.field-separator {
+  margin-top: 70px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .field-separator-title {
+    height: 29px;
+    font-family: Apercu;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
+  }
+
+
+}
+
 .field-inner {
   border-radius: 3px;
   overflow: hidden;
@@ -64,13 +83,10 @@
 }
 
 .field-input {
-  // @extend .py7;
-  @extend .px18;
-  // @extend .fs16;
-  // @extend .flex-1;
-  @extend .no-border;
-  // @extend .is-medium;
-  // @extend .no-outline;
+  border: 0;
+  padding-left: 18px;
+  padding-right: 18px;
+  width: 100%;
   background-color: transparent;
   height: 18px;
   font-family: Apercu;
