@@ -74,7 +74,7 @@ class FormFields extends React.PureComponent {
             id="website"
             label="Academic Website"
             name="academicWebsite"
-            placeholder="https://scholar.googl.com/johndoe"
+            placeholder="https://scholar.google.com/johndoe"
             required
             sublabel="Link to a webpage listing your publications."
           />

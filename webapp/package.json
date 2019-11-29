@@ -71,7 +71,7 @@
     "stylelint-config-standard": "^19.0.0",
     "stylelint-scss": "^3.12.0",
     "testcafe": "1.6.0"
-  },    
+  },
   "scripts": {
     "build": "react-scripts build",
     "eject": "react-scripts eject",
