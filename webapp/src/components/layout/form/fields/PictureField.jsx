@@ -49,7 +49,25 @@ class PictureField extends React.PureComponent {
     onImageChange(image, croppingRect)
   }
 
-  render() {
+  renderSlider = () => {
+    return (
+      <div
+        className='slider-container'
+      >
+        <input
+          defaultValue="1"
+          max="2"
+          min='1'
+          name="scale"
+          onChange={this.handleScale}
+          step="0.01"
+          type="range"
+        />
+      </div>
+    )
+  }
+
+  renderField = ({ input, meta }) => {
     const {
       className,
       id,
@@ -57,77 +75,65 @@ class PictureField extends React.PureComponent {
       name,
       readOnly,
       required,
+    } = this.props
+    const { image, scale } = this.state
+    return (
+      <div
+        className={classnames("field", className, { readonly: readOnly })}
+        id={id}
+      >
+        <label
+          className="field-label"
+          htmlFor={name}
+        >
+          <span>{label}</span>
+          {required && !readOnly && <span className="field-asterisk">{"*"}</span>}
+        </label>
+        <div className="field-picture">
+          <div>
+            <Dropzone
+              className="fpo"
+              onDrop={this.handleDrop}
+            >
+              {({getRootProps, getInputProps}) => (
+                <div {...getRootProps()}>
+                  <input
+                    onChange={this.onClickAttachFile}
+                    {...getInputProps()}
+                  />
+                  <AvatarEditor
+                    image={image}
+                    onImageChange={this.onImageChange}
+                    ref={this.avatarRef}
+                    scale={scale}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
+              )}
+            </Dropzone>
+          </div>
+          {image && this.renderSlider()}
+        </div>
+        <FieldError meta={meta} />
+      </div>
+    )
+  }
+
+
+  render() {
+    const {
+      name,
+      required,
       type,
       validate,
     } = this.props
-    const { image, scale } = this.state
-
     return (
       <>
         <Field
           name={name}
-          validate={composeValidators(validate, getRequiredValidate(required))}
           parse={createParseNumberValue(type)}
-          render={({ input, meta }) => (
-            <div
-              className={classnames("field text-field",
-                className, { readonly: readOnly })}
-              id={id}
-            >
-              <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
-                {label && (
-                  <span>
-                    <span>{label}</span>
-                    {required && !readOnly && <span className="field-asterisk">*</span>}
-                  </span>
-                )}
-              </label>
-              <div className="section">
-                <label className="button is-primary is-outlined">
-                  {"Attach file"}
-                  <input
-                    hidden
-                    onChange={this.onClickAttachFile}
-                    type="file"
-                  />
-                </label>
-              </div>
-              <div>
-                <Dropzone
-                  onDrop={this.handleDrop}
-                  disableClick
-                  style={{ width: '250px', height: '250px' }}
-                >
-                  {({getRootProps}) => (
-                    <div {...getRootProps()}>
-                      <AvatarEditor
-                        ref={this.avatarRef}
-                        image={image}
-                        onImageChange={this.onImageChange}
-                        scale={scale}
-                      />
-                    </div>
-                  )}
-                </Dropzone>
-              </div>
-              {image && (
-                <>
-                  <input
-                    name="scale"
-                    type="range"
-                    onChange={this.handleScale}
-                    min='1'
-                    max="2"
-                    step="0.01"
-                    defaultValue="1"
-                    className='pt40'
-                  />
-                </>
-              )
-              }
-              <FieldError meta={meta} />
-            </div>
-          )}
+          render={this.renderField}
+          validate={composeValidators(validate, getRequiredValidate(required))}
         />
 
       </>

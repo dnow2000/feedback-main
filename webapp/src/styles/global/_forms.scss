@@ -1,374 +1,118 @@
-.form {
-  @extend .box;
-  @extend .p36;
-  @extend .is-relative;
-}
-
-.field-sep {
-  @extend .is-absolute;
-
-  border-top: 1px solid $grey-light;
-  height: 16px;
-  left: 0;
-  right: 0;
-  position: absolute;
-}
-
-.field-group {
+.fields-container {
   display: table;
   width: 100%;
   margin-bottom: 1rem;
-
-  .field-group-title {
-    @extend .fs16;
-    @extend .mb16;
-
-    color: $blue-light;
-    font-weight: 400;
-  }
-
-  .field-group-sub-title {
-    @extend .fs12;
-    @extend .mb8;
-
-    color: $blue-light;
-    font-weight: 400;
-  }
-}
-
-.form-footer {
-  height: $footer-height;
-  min-height: $footer-height;
-  max-height: $footer-height;
-
-  button {
-    @extend .no-border;
-    @extend .no-outline;
-    @extend .no-background;
-  }
-}
-
-.field-label {
-  @extend .mb12;
-  @extend .pb7;
-  @extend .pr12;
-  @extend .fs16;
-
-  .field-asterisk {
-    @extend .ml3;
-
-    color: $primary;
-  }
-
-  &.empty {
-    padding: 0;
-  }
-}
-
-.field-inner {
-  background-color: $white;
-  border-radius: rem(20px);
-  border: 2px solid $grey-light;
-  overflow: hidden;
-}
-
-.checkbox-field,
-.checkboxes-field,
-.radio-field,
-.radios-field {
-  @extend .p12;
-
-  .field-inner {
-    color: black;
-    padding-left: 4px;
-    border: none;
-    border-radius: 0;
-    font-weight: 500;
-
-    input[type="radio"][disabled] {
-      cursor: inherit;
-    }
-
-    input[type="radio"] {
-      background-color: #DDDDDD;
-      background-image:
-        -webkit-linear-gradient(0deg, transparent 20%, hsla(0, 0%, 100%, 0.7), transparent 80%),
-        -webkit-linear-gradient(90deg, transparent 20%, hsla(0, 0%, 100%, 0.7), transparent 80%);
-      border-radius: 10px;
-      box-shadow:
-        inset 0 1px 1px hsla(0, 0%, 100%, 0.8),
-        0 0 0 1px hsla(0, 0%, 0%, 0.6),
-        0 2px 3px hsla(0, 0%, 0%, 0.6),
-        0 4px 3px hsla(0, 0%, 0%, 0.4);
-      cursor: pointer;
-      display: inline-block;
-      height: 15px;
-      margin-right: 15px;
-      position: relative;
-      width: 15px;
-      -webkit-appearance: none;
-
-      &:focus {
-        outline: none;
-      }
-    }
-
-    input[type="radio"]::after {
-      background-color: $grey-light;
-      border-radius: 25px;
-      box-shadow:
-        inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
-        0 1px 1px hsla(0, 0%, 100%, 0.8);
-      content: '';
-      display: block;
-      height: 7px;
-      left: 4px;
-      position: relative;
-      top: 4px;
-      width: 7px;
-    }
-
-    input[type="radio"]:checked::after {
-      background-color: $primary;
-      box-shadow:
-        inset 0 0 0 1px hsla(0, 0%, 0%, 0.4),
-        inset 0 2px 2px hsla(0, 0%, 100%, 0.4),
-        0 1px 1px hsla(0, 0%, 100%, 0.8),
-        0 0 2px 2px hsla(0, 70%, 70%, 0.4);
-    }
-  }
-}
-
-.checkboxes-field {
-  .field-inner {
-    button {
-      @extend .mb8;
-      @extend .mr4;
-
-      border: 2px solid $primary;
-      border-radius: 16px;
-
-      &.not-checked {
-        color: $primary;
-      }
-
-      &.checked {
-        background-color: $primary;
-        color: white;
-
-        &[disabled] {
-          &[readonly] {
-            opacity: 1;
-          }
-        }
-      }
-
-      &[disabled] {
-        cursor: inherit;
-      }
-    }
-  }
-}
-
-.radio-field,
-.radios-field {
-  .radio {
-    &.checked {
-      input[type="radio"][readonly] {
-        opacity: 1;
-      }
-    }
-  }
-}
-
-.field-select {
-  @extend .no-outline;
-  @extend .no-background;
-  @extend .pl24;
-  @extend .fs16;
-
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-repeat: no-repeat;
-  background-position: 97.5% 50%;
-  background-image: url('/icons/dropdown-disclosure-down.svg');
-  border-radius: rem(16px);
-  border: none;
-  font-weight: 500;
-  height: 36px;
-  min-width: 250px;
-  min-height: 36px;
-  width: 250px;
-}
-
-.field-textarea,
-.field-texteditor {
-  min-height: 100px;
-  resize: none;
-  width: 100%;
-}
-
-.field-input,
-.field-textarea,
-.field-texteditor {
-  @extend .py7;
-  @extend .px18;
-  @extend .fs16;
-  @extend .flex-1;
-  @extend .no-border;
-  @extend .is-medium;
-  @extend .no-outline;
-}
-
-.field-checkbox,
-.field-checkboxes,
-.field-input,
-.field-textarea,
-.field-texteditor,
-.field-select {
-  color: $text;
-}
-
-.textarea-field,
-.texteditor-field {
-  @extend .mb36;
-
-  .field-inner {
-    width: 100%;
-  }
-}
-
-.texteditor-field {
-  .controls-bar {
-    margin-bottom: 0.5rem;
-    overflow-y: hidden;
-
-    button {
-      border: 2px solid $grey-light;
-      border-radius: 0;
-      margin-right: 0;
-
-      &:first-child {
-        border-right: 0;
-        border-radius: rem(5px) 0 0 rem(5px);
-      }
-
-      &:last-child {
-        border-left: 0;
-        border-radius: 0 rem(5px) rem(5px) 0;
-      }
-
-      .icon {
-        height: 30px;
-        width: 30px;
-      }
-
-      &.clicked {
-        background-color: $grey-light;
-      }
-    }
-  }
-
-  .field-texteditor {
-    .control-bar {
-      @extend .is-absolute;
-      @extend .r8;
-      @extend .b-54;
-      @extend .flex-columns;
-      @extend .items-center;
-      @extend .fs12;
-      @extend .mb16;
-
-      color: $blue-light;
-      font-weight: 400;
-    }
-
-    .texteditor {
-      &:focus {
-        outline: 0;
-      }
-    }
-  }
-
-  &.readonly {
-    .field-texteditor {
-      .texteditor {
-        img[class*='draftJsEmojiPlugin__image'] {
-          border-radius: 0;
-          box-shadow: none;
-        }
-      }
-    }
-  }
 }
 
 .field {
-  &.readonly {
-    .field-inner {
-      border: none;
-      background-color: transparent;
-      padding-left: 4px;
-      resize: none;
+  margin-bottom: 30px;
+}
 
-      .field-checkbox,
-      .field-checkboxes,
-      .field-input,
-      .field-textarea,
-      .field-texteditor,
-      .field-select {
-        color: $blue-light;
-        opacity: 1;
-      }
+.field-label {
 
-      .field-checkbox,
-      .field-checkboxes {
-        input[type="checkbox"] {
-          opacity: 1;
-        }
-      }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-      .field-select {
-        background-image: none;
-        cursor: default;
-        opacity: 1;
-      }
-    }
+  font-family: Apercu;
+  font-size: 18px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #000000;
+
+  .field-asterisk {
+    color: red;
+    font-size: 25px;
   }
 }
+
+.field-sublabel {
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  margin-top: 10px;
+  height: 16px;
+  font-family: Apercu;
+  font-size: 14px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #767584;
+}
+
 
 .field-control {
-  @extend .pt8;
+  margin-top: 15px;
 }
 
-.label-aligned-with-control {
-  display: table-row;
+.field-separator {
+  margin-top: 70px;
+  margin-bottom: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  .field-label,
-  .field-value {
-    display: table-cell;
-  }
-}
-
-.form .label-aligned-with-control {
-  .field {
-    @extend .label-aligned-with-control;
-  }
-}
-
-.field .label-aligned-with-control {
-  @extend .label-aligned-with-control;
-}
-
-.field-errors {
-  color: $red;
-  // min-height: 24px;
-
-  &:empty::before {
-    content: "\200b"; // unicode zero width space character
+  .field-separator-title {
+    height: 29px;
+    font-family: Apercu;
+    font-size: 24px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #000000;
   }
 
-  &.field-error-message + .field-error-message {
-    // si on a plusieurs erreurs pour un seul champ
-    @extend .pl12;
+
+}
+
+.field-inner {
+  border-radius: 3px;
+  overflow: hidden;
+  background-color: #f2f3f6;
+  height: 60px;
+}
+
+.field-input {
+  border: 0;
+  padding-left: 18px;
+  padding-right: 18px;
+  width: 100%;
+  background-color: transparent;
+  height: 18px;
+  font-family: Apercu;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.13;
+  letter-spacing: normal;
+}
+
+.fields-table {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.field-picture {
+  margin-top: 15px;
+  width: 190px;
+  height: 190px;
+  border-radius: 3px;
+  background-color: #f2f3f6;
+
+  .slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
