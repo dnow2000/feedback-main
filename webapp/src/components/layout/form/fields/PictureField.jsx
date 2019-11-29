@@ -92,7 +92,6 @@ class PictureField extends React.PureComponent {
         <div className="field-picture">
           <div>
             <Dropzone
-              className="fpo"
               onDrop={this.handleDrop}
             >
               {({getRootProps, getInputProps}) => (

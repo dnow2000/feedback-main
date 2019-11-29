@@ -120,9 +120,9 @@ class Signup extends PureComponent {
                 )
               }}
             />
-            <NavLink className="button is-primary" to="/signin">
+            {/* <NavLink className="button is-primary" to="/signin">
               Already have an account ?
-            </NavLink>
+            </NavLink> */}
             </div>
         </MainContainer>
       </Fragment>

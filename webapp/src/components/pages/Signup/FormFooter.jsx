@@ -3,7 +3,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const FormFooter = ({ canSubmit, isLoading }) => (
-  <footer className="field buttons-field">
+  <footer className="field submit">
     <button
       className={classnames('button is-primary', {
         'is-loading': isLoading,
@@ -11,8 +11,8 @@ const FormFooter = ({ canSubmit, isLoading }) => (
       disabled={!canSubmit}
       type="submit"
     >
-      <span className="is-block">
-        Sign up
+      <span className="title">
+        Send an application
       </span>
     </button>
   </footer>
