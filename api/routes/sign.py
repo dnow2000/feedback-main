@@ -46,7 +46,7 @@ def signup():
         publication_key = 'publication-{}'.format(index)
         if publication_key in request.form:
             publication_url = request.form[publication_key]
-            publication = Publication.query.filter_by(url=publication_url).one()
+            publication = Publication.query.filter_by(url=publication_url).first()
             if not publication:
                 publication = Publication(url=publication_url)
                 publications.append(publication)

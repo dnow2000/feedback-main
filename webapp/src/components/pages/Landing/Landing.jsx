@@ -8,7 +8,7 @@ const subtitleClassName = "subtitle has-text-grey-light is-size-3"
 
 const Landing = () => (
   <Fragment>
-    <MainContainer name="home">
+    <MainContainer name="landing">
         <div className="col-1of2">
           <p className={titleClassName}>
             On fait du fact checking, rejoins nous ;)

@@ -43,7 +43,7 @@ class Verdicts extends PureComponent {
     return (
       <Fragment>
         <HeaderContainer />
-        <MainContainer name='home'>
+        <MainContainer name='verdicts'>
           <section className='section hero'>
             <h1 className='main-title'>
               VERDICTS

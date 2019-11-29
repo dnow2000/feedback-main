@@ -14,7 +14,7 @@ export const withRequiredLogin = withLogin({
     const { history } = ownProps
     const validated = validationToken === null
     if (!validated) {
-      history.push('/home')
+      history.push('/landing')
     }
   },
   isRequired: true,
