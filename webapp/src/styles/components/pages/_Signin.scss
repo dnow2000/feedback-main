@@ -1,5 +1,4 @@
-.sign-in-main,
-.sign-up-main {
+.signin-main {
   position: relative;
 
   .logo-side {
@@ -98,7 +97,7 @@
   }
 
   h4 {
-    font-size: $size-normal;
+    font-size: $font-size-normal;
     float: left;
   }
 
@@ -137,7 +136,7 @@
     }
 
     input {
-      font-weight: $weight-semibold;
+      font-weight: $font-weight-semibold;
     }
   }
 }

@@ -1,10 +1,17 @@
-$family-monospace: monospace !default;
-$family-sans-serif: "Raleway", "Helvetica Neue", Arial, sans-serif;
+$font-family-sans-serif: "Raleway", "Helvetica Neue", Arial, sans-serif;
 
-$weight-light: 300;
-$weight-normal: 400;
-$weight-semibold: 500;
-$weight-bold: 700;
+$font-color-normal: $grey-dark;
+
+$font-size-big: 1.5rem;
+$font-size-bigger: 2rem;
+$font-size-smaller: 0.75rem;
+$font-size-small: 0.875rem;
+$font-size-normal: 1rem;
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-semibold: 500;
+$font-weight-bold: 600;
 
 $font-size: 16px;
 

@@ -78,41 +78,41 @@ class Signup extends PureComponent {
 
     return (
       <Fragment>
-        <MainContainer name="sign-up">
-          <section className="section fullheight flex-center items-center">
-            <Form
-              onSubmit={this.onFormSubmit}
-              render={(form) => {
-                const {
-                  dirtySinceLastSubmit,
-                  handleSubmit,
-                  hasSubmitErrors,
-                  hasValidationErrors,
-                  pristine,
-                } = form
-                const canSubmit =
-                  (!pristine &&
-                    !hasSubmitErrors &&
-                    !hasValidationErrors &&
-                    !isFormLoading) ||
-                  (!hasValidationErrors &&
-                    hasSubmitErrors &&
-                    dirtySinceLastSubmit)
-                return (
-                  <form
-                    className="form flex-rows is-full-layout"
-                    autoComplete="off"
-                    disabled={isFormLoading}
-                    noValidate
-                    onSubmit={handleSubmit}
-                  >
-                    <FormFields onImageChange={this.onImageChange(form)} />
-                    <FormFooter canSubmit={canSubmit} />
-                  </form>
-                )
-              }}
-            />
-          </section>
+        <MainContainer name="signup">
+          <h1 className="title">
+            Get  on board !
+          </h1>
+          <Form
+            onSubmit={this.onFormSubmit}
+            render={(form) => {
+              const {
+                dirtySinceLastSubmit,
+                handleSubmit,
+                hasSubmitErrors,
+                hasValidationErrors,
+                pristine,
+              } = form
+              const canSubmit =
+                (!pristine &&
+                  !hasSubmitErrors &&
+                  !hasValidationErrors &&
+                  !isFormLoading) ||
+                (!hasValidationErrors &&
+                  hasSubmitErrors &&
+                  dirtySinceLastSubmit)
+              return (
+                <form
+                  autoComplete="off"
+                  disabled={isFormLoading}
+                  noValidate
+                  onSubmit={handleSubmit}
+                >
+                  <FormFields onImageChange={this.onImageChange(form)} />
+                  <FormFooter canSubmit={canSubmit} />
+                </form>
+              )
+            }}
+          />
           <NavLink className="button is-primary" to="/signin">
             Already have an account ?
           </NavLink>

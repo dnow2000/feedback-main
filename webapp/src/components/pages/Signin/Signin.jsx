@@ -65,7 +65,7 @@ class Signin extends PureComponent {
 
     return (
       <Fragment>
-        <MainContainer name="sign-in">
+        <MainContainer name="signin">
           <section className="section fullheight flex-center items-center">
             <Form
               onSubmit={this.onFormSubmit}
