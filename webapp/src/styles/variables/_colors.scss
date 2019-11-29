@@ -1,0 +1,36 @@
+// Colors
+
+$black: hsl(0, 0%, 4%) !default;
+$black-bis:    hsl(0, 0%, 7%) !default;
+$black-ter:    hsl(0, 0%, 14%) !default;
+$blue-light: rgba(132, 146, 166, 0.94);
+$blue:  #0076FF;
+$blue-dark: #1565C0;
+$brown: #827717;
+$cyan:         hsl(204, 86%, 53%) !default;
+$green:        hsl(141, 71%, 48%) !default;
+$grey-lighter: #F7F7F7;
+$grey-light: #DAE1E3;
+$grey: #A9A9A9;
+$grey-dark: #808080;
+$grey-darker:  #4A4A4A !default;
+$orange:       hsl(14, 100%, 53%) !default;
+$orange-dark:  hsl(14, 100%, 45%) !default;
+$purple:       hsl(271, 100%, 71%) !default;
+$red: #E60039;
+$turquoise:    hsl(171, 100%, 41%) !default;
+$violet: #BD10E0;
+$white-ter:    hsl(0, 0%, 96%) !default;
+$white-bis:    hsl(0, 0%, 98%) !default;
+$white:        hsl(0, 0%, 100%) !default;
+$yellow:       hsl(48, 100%, 67%) !default;
+
+$primary: $green;
+
+$text: $black;
+$link: $text;
+$title-color: inherit;
+$subtitle-color: inherit;
+$text-strong: inherit;
+$success: $green;
+$input-color: $text;

@@ -19,14 +19,31 @@
     box-shadow: none;
   }
 
+
   &.is-loading {
+    color: transparent!important;
+    pointer-events: none;
+
     &::after {
-      border-bottom-color: $grey-darker;
-      border-left-color: $grey-darker;
+      animation: spinAround .5s linear infinite;
+      -webkit-animation: spinAround .5s linear infinite;
+      border-bottom-color: $primary;
+      border-left-color: $primary;
+      border-radius: 290486px;
       border-right-color: transparent;
+      border-style: solid;
       border-top-color: transparent;
+      border-width: 2px;
+      content: "";
+      display: block;
+      height: 1em;
+      left: calc(50% - .5em);
+      position: absolute!important;
+      top: calc(50% - .5em);
+      width: 1em;
     }
   }
+
 
   &.is-secondary {
     background: none;
