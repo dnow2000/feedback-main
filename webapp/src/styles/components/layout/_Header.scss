@@ -4,7 +4,6 @@
   }
 
   align-items: center;
-  background-color: $grey-lighter;
   display: flex;
   height: $header-height;
   justify-content: flex-start;
@@ -19,6 +18,7 @@
   &.scrolling {
     filter: blur(1px);
     opacity: 0.1;
+    pointer-events: none;
   }
 
   .left-content {

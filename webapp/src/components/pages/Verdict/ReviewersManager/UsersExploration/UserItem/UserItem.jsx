@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-thunk-data'
 
-import AvatarContainer from '../../../../../layout/Avatar/AvatarContainer'
+import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
 
 class UserItem extends PureComponent {
 

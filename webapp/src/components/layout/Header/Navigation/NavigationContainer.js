@@ -9,8 +9,7 @@ import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 const mapStateToProps = state =>  {
   return {
     currentRoles: selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']),
-    currentUser: selectCurrentUser(state),
-    isActive: state.navigation.isActive,
+    currentUser: selectCurrentUser(state)
   }
 }
 

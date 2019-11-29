@@ -3,31 +3,30 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import {
-  closeNavigation,
-  showNavigation
-} from 'reducers/navigation'
+import { closeMenu, showMenu } from 'reducers/menu'
 
 const Hamburger = ({
   className,
+  disabled,
   dispatch,
-  isNavigationActive
+  isMenuActive
 }) => (
   <div className={className || 'hamburger'}>
     <NavLink
       className={classnames('link', {
-        'is-active': isNavigationActive
+        'is-active': isMenuActive
       })}
+      disabled={disabled}
       to='#footer'
       onClick={e => {
         e.preventDefault()
-        if (!isNavigationActive) {
-          dispatch(showNavigation())
+        if (!isMenuActive && !disabled) {
+          dispatch(showMenu())
         } else {
           // For keyboard users.
           // Not used for mouseclicks
           // instead we capture clicks via dismiss overlay
-          dispatch(closeNavigation())
+          dispatch(closeMenu())
         }
       }}
     >
@@ -40,13 +39,15 @@ const Hamburger = ({
 
 Hamburger.defaultProps = {
   className: '',
-  isNavigationActive: false
+  disabled: false,
+  isMenuActive: false
 }
 
 Hamburger.propTypes = {
   className: PropTypes.string,
+  disabled: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  isNavigationActive: PropTypes.bool
+  isMenuActive: PropTypes.bool
 }
 
 export default Hamburger

@@ -4,9 +4,11 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
-import HamburgerContainer from 'components/layout/Hamburger/HamburgerContainer'
 import Logo from 'components/layout/Logo'
-import NavigationContainer from 'components/layout/Navigation/NavigationContainer'
+
+import HamburgerContainer from './Hamburger/HamburgerContainer'
+import MenuContainer from './Menu/MenuContainer'
+import NavigationContainer from './Navigation/NavigationContainer'
 
 const signPathnames = ['/signin', '/signup']
 
@@ -17,12 +19,12 @@ const Header = ({ currentUser, location, whiteHeader }) => {
 
   useEffect(() => {
     const handleScroll = event => {
-      const nextIsScrolling = window.scrollY !== 0
+      const nextIsScrolling = window.scrollY > 50
       setIsScrolling(nextIsScrolling)
     }
     document.addEventListener('scroll', handleScroll)
     return () => {
-      document.removeEventListener(handleScroll)
+      document.removeEventListener('scroll', handleScroll)
     }
   }, [])
 
@@ -37,7 +39,9 @@ const Header = ({ currentUser, location, whiteHeader }) => {
         <div className="flex-auto" />
         {currentUser && !isSignPathname ? (
           <Fragment>
-            <HamburgerContainer />
+            <NavigationContainer />
+            <HamburgerContainer disabled={isScrolling} />
+            <MenuContainer />
             <AvatarContainer whiteHeader={whiteHeader} />
           </Fragment>
         ) : (
@@ -48,7 +52,6 @@ const Header = ({ currentUser, location, whiteHeader }) => {
           )
         )}
       </header>
-      <NavigationContainer />
     </Fragment>
   )
 }

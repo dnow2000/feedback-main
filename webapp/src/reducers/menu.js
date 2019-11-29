@@ -1,25 +1,25 @@
-export const SHOW_NAVIGATION = 'SHOW_NAVIGATION'
-export const CLOSE_NAVIGATION = 'CLOSE_NAVIGATION'
+export const SHOW_MENU = 'SHOW_MENU'
+export const CLOSE_MENU = 'CLOSE_MENU'
 
 const initialState = { isActive: false }
 
 function navigation (state = initialState, action) {
   switch (action.type) {
-    case SHOW_NAVIGATION:
+    case SHOW_MENU:
       return Object.assign({}, state, { isActive: true })
-    case CLOSE_NAVIGATION:
+    case CLOSE_MENU:
       return Object.assign({}, state, { isActive: false })
     default:
       return state
   }
 }
 
-export function closeNavigation () {
-  return { type: CLOSE_NAVIGATION }
+export function closeMenu () {
+  return { type: CLOSE_MENU }
 }
 
-export function showNavigation () {
-  return { type: SHOW_NAVIGATION }
+export function showMenu () {
+  return { type: SHOW_MENU }
 }
 
 export default navigation

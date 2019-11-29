@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { closeModal } from 'redux-react-modals'
 import { requestData, reinitializeData } from 'redux-thunk-data'
 
-import { closeNavigation } from 'reducers/navigation'
+import { closeMenu } from 'reducers/menu'
 
 class SignoutButton extends PureComponent {
 
@@ -38,7 +38,7 @@ class SignoutButton extends PureComponent {
       dispatch(reinitializeData())
     }
 
-    dispatch(closeNavigation())
+    dispatch(closeMenu())
 
     const redirect = handleSuccessRedirect && handleSuccessRedirect()
     if (redirect) {

@@ -2,12 +2,12 @@ import { combineReducers } from 'redux'
 import { modals } from 'redux-react-modals'
 
 import data from './data'
-import navigation from './navigation'
+import menu from './menu'
 
 const rootReducer = combineReducers({
   data,
-  modals,
-  navigation,
+  menu,
+  modals
 })
 
 export default rootReducer

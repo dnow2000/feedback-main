@@ -1,4 +1,4 @@
-const visibleFor = (roleTypes) =>
+const visibleFor = roleTypes =>
   currentRoles => {
     if (!roleTypes || roleTypes.length === 0) {
       return false

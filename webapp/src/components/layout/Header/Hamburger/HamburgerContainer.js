@@ -2,9 +2,9 @@ import { connect } from 'react-redux'
 
 import Hamburger from './Hamburger'
 
-function mapStateToProps (state) {
+const mapStateToProps = state => {
   return {
-    isNavigationActive: state.navigation.isActive
+    isMenuActive: state.menu.isActive
   }
 }
 

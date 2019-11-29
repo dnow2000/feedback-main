@@ -21,6 +21,10 @@ $l-vert-gutter: ($l-height - ($l-bar-height * 3)) / 2;
   vertical-align: middle;
   width: 3rem;
 
+  @media(min-width: $tablet) {
+    display: none;
+  }
+
   .link {
     display: inline-block;
     cursor: pointer;
@@ -28,6 +32,10 @@ $l-vert-gutter: ($l-height - ($l-bar-height * 3)) / 2;
     transition-duration: 0.15s;
     transition-timing-function: linear;
     position: relative;
+
+    &[disabled] {
+      cursor: default;
+    }
   }
 
   .link-box {
