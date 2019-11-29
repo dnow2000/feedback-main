@@ -60,7 +60,7 @@ export class TextField extends React.PureComponent {
                 disabled={disabled || readOnly}
                 placeholder={readOnly ? '' : placeholder}
                 readOnly={readOnly}
-                required={!!required} // cast to boolean
+                required={!!required}
                 type={type}
               />
               {renderInner()}

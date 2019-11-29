@@ -6,6 +6,7 @@ import {
   PasswordField,
   TextField,
   PictureField,
+  CheckboxField
 } from 'components/layout/form/fields'
 
 const ROLES = {
@@ -135,6 +136,17 @@ class FormFields extends React.PureComponent {
               />
             </>
           )}
+        <div className="pt20"></div>
+        <CheckboxField
+            id="community-rules"
+            name="community-rules"
+            text="I agree to comply to community rules."
+        />
+        <CheckboxField
+            id="terms-and-conditions"
+            name="terms-and-conditions"
+            text="I hereby accept Terms and Conditions relatives to science-feedback.co."
+        />
         </div>
       </Fragment>
     )
