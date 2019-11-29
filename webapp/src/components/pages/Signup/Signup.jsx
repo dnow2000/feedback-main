@@ -29,7 +29,7 @@ class Signup extends PureComponent {
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
       formResolver()
-      const nextUrl = `/home`
+      const nextUrl = `/landing`
       history.push(nextUrl)
     })
   }

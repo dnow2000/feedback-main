@@ -10,14 +10,14 @@ const withRedirectWhenLoggedIn = withLogin({
     const { history, location: { pathname } } = ownProps
     const validated = validationToken === null
     if (!validated) {
-      history.push('/home')
+      history.push('/landing')
       return
     }
     if (
       pathname === '/signin'||
       pathname === '/signup'||
-      pathname === '/'||
-      pathname === '/home'
+      pathname === '/landing'||
+      pathname === '/'
     ) {
       history.push('/articles')
     }
