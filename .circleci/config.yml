@@ -29,7 +29,7 @@ commands:
                 echo "== Tagging $REPOSITORY $TAG $IMAGE_ID =="
                 docker tag "$IMAGE_ID" "$REPOSITORY:$TAG"
             done < ~/main-ci/docker-caches/<<parameters.mode>>/images.list | true
-            echo docker images
+            docker images
       - run:
           name: Venv
           command: |
