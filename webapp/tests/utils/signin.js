@@ -1,6 +1,6 @@
 import { Role, Selector } from 'testcafe'
 
-const { ROOT_PATH } = process.env
+import { ROOT_PATH } from './config'
 
 export const signinAs = user => async t => {
   const { email, password } = user
