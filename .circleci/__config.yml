@@ -37,10 +37,11 @@ commands:
       - run:
           name: Save <<parameters.mode>> images in caches
           command: |
-            if [ ! -f ~/main-ci/docker-caches/<<parameters.mode>>/images.tar ]; then
+            docker images
+            if [ ! -f ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar main-ci_api-<<parameters.mode>>
-              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/postgres_images.tar main-ci_postgres-<<parameters.mode>>
+              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar mainci_api-<<parameters.mode>>
+              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/postgres_images.tar postgres-<<parameters.mode>>
             fi
       - save_cache:
           key: <<parameters.key>>

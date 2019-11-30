@@ -42,6 +42,7 @@ commands:
       - run:
           name: Save <<parameters.mode>> images in caches
           command: |
+            docker images
             if [ ! -f ~/main-ci/docker-caches/<<parameters.mode>>/images.tar ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
               docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.mode>>/images.list
