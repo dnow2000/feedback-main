@@ -25,12 +25,10 @@ commands:
             set +o pipefail
             if [ -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               IMAGE_FILES=$(ls ~/main-ci/docker-caches/<<parameters.mode>>)
-              echo $IMAGE_FILES
               for file in $IMAGE_FILES; do
                 docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/$file;
               done
             fi
-            docker images
       - run:
           name: Venv
           command: |
@@ -40,13 +38,11 @@ commands:
           command: |
             ./$COMMAND_NAME -m <<parameters.mode>> start
       - run:
-          name: Save <<parameters.mode>> images in caches
+          name: Save <<parameters.mode>> images in caches if not exists
           command: |
-            docker images
             if [ ! -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
               NAMED_IMAGES=$(docker images | awk '{if ($1 != "<none>" && $1 != "REPOSITORY") print $1;}')
-              echo $NAMED_IMAGES
               for image in $NAMED_IMAGES; do
                 docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/$image.tar $image;
               done
