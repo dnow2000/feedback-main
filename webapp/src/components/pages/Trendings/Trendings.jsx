@@ -103,9 +103,6 @@ class Trendings extends PureComponent {
         <HeaderContainer />
         <MainContainer name="trendings">
           <section className="section hero">
-            <h1 className="title">
-              Trendings
-            </h1>
             <div className="flex-columns items-center mb12">
               <div>
 

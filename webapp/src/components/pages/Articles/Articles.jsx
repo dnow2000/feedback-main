@@ -121,9 +121,6 @@ class Articles extends PureComponent {
         <HeaderContainer />
         <MainContainer name="articles">
           <section className="section hero is-relative">
-            <h1 className="title">
-              Articles
-            </h1>
             <div className="control">
 
               {['true', 'false'].map(boolString => (

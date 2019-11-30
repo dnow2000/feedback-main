@@ -23,6 +23,7 @@ commands:
           name: Load <<parameters.mode>> images from cache if exists
           command: |
             set +o pipefail
+            cat ~/main-ci/docker-caches/<<parameters.mode>>/images.list | true
             docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/images.tar | true
             while read REPOSITORY TAG IMAGE_ID
               do
