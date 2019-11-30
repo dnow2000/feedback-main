@@ -26,8 +26,8 @@ commands:
             if [ -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               IMAGE_FILES=$(ls ~/main-ci/docker-caches/<<parameters.mode>>)
               echo $IMAGE_FILES
-              for file in $IMAGE_FILES do
-                docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/$file
+              for file in $IMAGE_FILES; do
+                docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/$file;
               done
             fi
             docker images
@@ -48,7 +48,7 @@ commands:
               NAMED_IMAGES=$(docker images | awk '{if ($1 != "<none>" && $1 != "REPOSITORY") print $1;}')
               echo $NAMED_IMAGES
               for image in $NAMED_IMAGES; do
-                docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/$image.tar
+                docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/$image.tar;
               done
             fi
       - save_cache:
