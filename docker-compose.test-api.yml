@@ -12,6 +12,7 @@ services:
     container_name: ${APP_NAME}-api-test-api
     depends_on:
       - postgres-test-api
+    image: api-test-api
     environment:
       - APP_NAME=$APP_NAME
       - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
