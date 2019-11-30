@@ -5,13 +5,13 @@ import {
   evaluationNeutralOption,
   evaluationReviewSelect,
   submitReviewButton
-} from './helpers/review'
+} from './utils/review'
 import {
   signinAndCreateCurrentUserReviewAs,
   signinAndSeeCurrentUserReviewAs,
   signinAndSeeArticleReviewsAs
-} from './helpers/articles'
-import { signinAndNavigateToAs } from './helpers/signin'
+} from './utils/articles'
+import { signinAndNavigateToAs } from './utils/signin'
 
 fixture.skip("User Review")
 

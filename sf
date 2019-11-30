@@ -30,12 +30,13 @@ set +o allexport
 #  Helper that describes all functionalities
 # =============================================
 
+PARAM_FIELDS="option name entries default help"
 if [[ $# -eq 0 ]] || [[ "$1" == "-h" ]] || [[ "$1" == "--help" ]]; then
   echo "$(basename "$0") -- program to deal with $APP_NAME ecosystem
 where:
-  -h            show this help text"
-  while read option name default help; do
-    printf "  %s=%-10s %s  (default: $default)\n" $option "<$name>" "$(sed -e 's/^"//' -e 's/"$//' <<<"$help")"
+  -h                                                                                                show this help text"
+  while read $PARAM_FIELDS; do
+    printf "  %s=%-12s %-50s %-30s %s\n" $option "<$name>" "$(sed -e 's/^"//' -e 's/"$//' <<<"$entries")" "(default: $default)" "$(sed -e 's/^"//' -e 's/"$//' <<<"$help")"
   done < params.txt
   exit 0
 fi
@@ -44,12 +45,12 @@ fi
 # Get script parameters
 # =============================================
 
-while read option name default help; do
+while read $PARAM_FIELDS; do
   eval "$name=$default"
 done < $ROOT_PATH/params.txt
 
 while read; do
-  while read option name default help; do
+  while read $PARAM_FIELDS; do
     if [[ $# -gt 2 ]]; then
       if [[ "$1" == "$option" ]]; then
         eval "$name=$2"
@@ -76,6 +77,12 @@ shift
 # Set variables for env
 # =============================================
 
+API_SERVICE=${APP_NAME}-api-$MODE
+DATABASE_NAME=${APP_NAME}_$DATABASE
+DATABASE_PASSWORD=${APP_NAME}_password
+DATABASE_SERVICE=$APP_NAME-${DATABASE}db-$MODE
+DATABASE_USER=${APP_NAME}_user
+
 if [[ "$ENV" == "production" ]]; then
 	SCALINGO_APP=$APP_NAME-backend
 elif [[ ! "$ENV" == "development" ]]; then
@@ -85,6 +92,20 @@ fi
 # =============================================
 # Utilities functions
 # =============================================
+
+RED='\033[0;31m'
+ORANGE='\033[0;33m'
+WARNING_COLOR='\e[38;5;197m'
+NO_COLOR='\033[0m'
+
+UNAME_OUT="$(uname -s)"
+case "${UNAME_OUT}" in
+    Linux*)     MACHINE=Linux;;
+    Darwin*)    MACHINE=Mac;;
+    CYGWIN*)    MACHINE=Cygwin;;
+    MINGW*)     MACHINE=MinGw;;
+    *)          MACHINE="UNKNOWN:${UNAME_OUT}"
+esac
 
 function confirm {
  read -p "$1 (y/n) : " -n 1 -r
@@ -102,7 +123,42 @@ function ensure_remote {
   fi
 }
 
-export GIT_TAG=`cd "$ROOT_PATH/api" && git describe --tags --abbrev=0`
+function echo_error {
+  echo -e "${RED}""$1""${NO_COLOR}"
+}
+
+function echo_warning {
+  echo -e "${ORANGE}""$1""${NO_COLOR}"
+}
+
+current_branch=$(git symbolic-ref -q HEAD)
+current_branch=${current_branch##refs/heads/}
+
+function update_branch {
+  branch="$1"
+  git fetch
+  git checkout $branch
+  git reset --hard origin/$branch || exit_error_restoring_branch
+  git submodule update || exit_error_restoring_branch
+}
+
+function tag_frontend_component {
+  component="$1"
+  tag_name="$2"
+  tag_version="v$tag_name"
+  cd "$ROOT_PATH"/"$component"
+  yarn version --new-version "$tag_name"
+}
+
+function exit_error_restoring_branch {
+  git checkout "$current_branch"
+  exit 1
+}
+
+function exit_success_restoring_branch {
+  git checkout "$current_branch"
+  exit 0
+}
 
 # =============================================
 # Local commands : use Docker
@@ -112,41 +168,79 @@ export GIT_TAG=`cd "$ROOT_PATH/api" && git describe --tags --abbrev=0`
 # Need to specify what alembic command you want to execute
 # Example: ./$COMMAND_NAME alembic upgrade HEAD
 if [[ "$CMD" == "alembic" ]]; then
-  RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. alembic '"$*"'"'
+  RUN='docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. alembic '"$*"'"'
 
 # Connect to API container
 elif [[ "$CMD" == bash ]]; then
-	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it $APP_NAME-api-$MODE bash'
-	else
+	if [[ "$PLATFORM" == "localhost" ]]; then
+		RUN='docker exec -it $API_SERVICE bash'
+	elif [[ "$PLATFORM" == "scalingo" ]]; then
 		scalingo -a "$SCALINGO_APP" run "bash"
 		exit
 	fi
 
 # Clean all type of data
 elif [[ "$CMD" == clean ]]; then
-  if [[ "$1" == "database" ]]; then
-    RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py clean -t=database";'
-  elif [[ "$1" == "storage" ]]; then
-    RUN='sudo rm -rf $ROOT_PATH/api/static/object_store_data;'
+  TARGET=$1
+  if [[ "$TARGET" == "storage" ]]; then
+    RUN='cd $ROOT_PATH;
+         sudo rm -rf api/static/object_store_data;'
+  else
+    RUN='cd $ROOT_PATH;
+         sh scripts/clean.sh $MODE $TARGET;'
   fi
+
+# Create diff output between schema in staging & local backend
+elif [[ "$CMD" == "diff-schema" ]]; then
+  docker exec $DATABASE_SERVICE pg_dump -d $DATABASE_SERVICE -U $DATABASE_USER -s > /tmp/$COMMAND_NAME_schema_local
+  scalingo -a $APP_NAME-api-staging run 'dbclient-fetcher postgresql 10.4 && pg_dump "$SCALINGO_POSTGRESQL_URL" -s' > /tmp/$COMMAND_NAME_schema_staging
+  diff /tmp/$COMMAND_NAME_schema_staging /tmp/$COMMAND_NAME_schema_local
+  exit
+
+# Dump database into pgdump file
+elif [[ "$CMD" == "dump-db" ]]; then
+  RUN='mkdir -p "$ROOT_PATH/db_dumps";
+       docker exec $DATABASE_SERVICE bash -c "PGPASSWORD='$DATABASE_PASSWORD' pg_dump -h localhost -d '$DATABASE_NAME' -U '$DATABASE_USER' -F c > "/var/lib/postgresql/`date +%Y%m%d_%H%M%S`.pgdump'
+
+# Create schema_init.sql into alembic
+elif [[ "$CMD" == "schema-db" ]]; then
+  if [[ "$ENV" == "development" ]]; then
+    RUN='docker exec $DATABASE_SERVICE bash -c "PGPASSWORD='$DATABASE_PASSWORD' pg_dump -h localhost -d '$DATABASE_NAME' --no-owner --no-privileges --schema-only -U '$DATABASE_USER' -F p > /var/lib/postgresql/schema_`date +%Y%m%d_%H%M%S`.pgdump"'
+  else
+    RUN="cd $ROOT_PATH;
+        ./scripts/scalingo/schema_db.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
+  fi
+
+# Dump database into pgdump file
+elif [[ "$CMD" == "env" ]]; then
+  cat $ROOT_PATH/.env
+  echo ""
+  while read $PARAM_FIELDS; do
+    echo "$name=$(eval echo \$$name)"
+  done < $ROOT_PATH/params.txt
+  exit;
 
 # Kill ALL docker containersy/
 elif [[ "$CMD" == "kill-all-containers" ]]; then
   confirm "Warning: all your docker containers are going to be killed ?"
   RUN='docker kill $(docker ps -q)'
 
-# Force docker-compose to build the docker images
-elif [[ "$CMD" == rebuild ]]; then
+# Build the docker images
+elif [[ "$CMD" == build ]]; then
   RUN='cd $ROOT_PATH;
-       docker-compose -f docker-compose.$MODE.yml pull $*;
-       docker-compose -f docker-compose.$MODE.yml build --no-cache $*;'
+       docker-compose -f docker-compose.$MODE.yml build $*;'
+
+# Pull and build the docker images from no cache
+elif [[ "$CMD" == rebuild ]]; then
+  docker-compose -f docker-compose.$MODE.yml pull $*
+  ./$COMMAND_NAME -m $MODE build --no-cache $*
+  exit
 
 # Restart docker-compose up with forcing recreation and unmounting volumes
 elif [[ "$CMD" == restart ]]; then
-  RUN='cd $ROOT_PATH;
-       docker-compose -f docker-compose.$MODE.yml down --volumes $*;
-       sh scripts/start_$MODE.sh --force-recreate $*;'
+  docker-compose -f docker-compose.$MODE.yml down --volumes $*
+  ./$COMMAND_NAME -m $MODE start --force-recreate $*
+  exit
 
 # Start docker-compose up with adapted env variables or frontends with local env
 elif [[ "$CMD" == start ]]; then
@@ -164,34 +258,38 @@ elif [[ "$CMD" == stop ]]; then
        docker-compose -f docker-compose.$MODE.yml stop $*;'
 
 
-# Run tests for API
-#elif [[ "$CMD" == "start-test-api" ]]; then
-# if [[ $# == 0 ]]; then
-#   confirm "Warning: your database will be wiped. Is this OK ?"
-#    RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v tests"'
-# else
-#    RUN='docker exec $APP_NAME-api-development bash -c "cd /opt/api && rm -rf static/object_store_data/thumbs/* && PYTHONPATH=. pytest --color=yes -rsx -v '"$*"'"'
-# fi
-
-# Run tests for end to end
-# Need start-backend AND start-webapp in two other processes
-#elif [[ "$CMD" == "start-test-end2end" ]]; then
-#	APP_PATH=$ROOT_PATH/webapp
-#	SANDBOX_NAME="ci"
-#	if [[ $# == 0 ]]; then
-#		confirm "Warning: your database will be wiped. Is this OK ?"
-#	 	"$ROOT_PATH"/$COMMAND_NAME -e $ENV clean-$MODE database
-#		"$ROOT_PATH"/$COMMAND_NAME -e $ENV sandbox --name="$SANDBOX_NAME"
-#		RUN='cd $APP_PATH;
-#       scripts/manager.js testcafe -b chrome:headless'
-#	else
-# 	RUN='cd $APP_PATH;
-#        scripts/manager.js testcafe '"$*"
-#	fi
-
 # =============================================
 # Deploy commands
 # =============================================
+
+# Tag new version using main repo
+elif [[ "$CMD" == "tag" ]]; then
+  if [[ "$TAG" != "not-set" ]]; then
+    TAG_VERSION="v$TAG"
+
+    # TAG API
+    cd "$ROOT_PATH"/api
+    echo "$TAG_VERSION" > version.txt
+    git add version.txt
+
+    # TAG FRONTENDS
+    tag_frontend_component backoffice "$TAG"
+
+    # TAG MAIN
+    cd "$ROOT_PATH"
+    git add .
+    git commit -m "🚀 $TAG_VERSION"
+    git push origin master
+    git tag "$TAG_VERSION"
+    git push origin "$TAG_VERSION"
+
+    echo "New version tagged : $TAG"
+
+    exit_success_restoring_branch
+  else
+    echo "You need to specify a tag."
+    exit
+  fi
 
 # Deploy current version of backend
 elif [[ "$CMD" == "deploy-backend" ]]; then
@@ -281,6 +379,43 @@ elif [[ "$CMD" == "deploy-webapp" ]]; then
 	git push origin $tagname
 	exit
 
+# Deploy all components using main repo
+elif [[ "$CMD" == "deploy" ]]; then
+  ensure_remote "Deploy cannot be run on the local environment. Use (for example) \"$COMMAND_NAME -e staging -t X.Y.Z "$CMD"\"."
+
+  if [[ "$TAG" == 'not-set' ]]; then
+    echo_error "ERROR: You need to specify an existing tag to deploy"
+    exit_error_restoring_branch
+  fi
+
+  echo "$TAG will be deployed to $ENV"
+  DEPLOY_PATH=${ROOT_PATH}
+  cd $DEPLOY_PATH
+  update_branch $ENV
+
+  if [[ ! -z $(git ls-remote --tags origin refs/tags/v"$TAG") ]]; then
+    git checkout "v$TAG"
+    git submodule update
+  else
+    echo_error "ERROR: You need to specify an existing remote tag to deploy"
+    exit_error_restoring_branch
+  fi
+
+  commit_to_deploy=$(git log -n 1 --pretty=format:%H)
+  if [[ "$ENV" == "production" ]]; then
+    confirm "Warning: code will be deployed to production. Are you sure ?"
+    update_branch staging
+    staging_commit=$(git log -n 1 --pretty=format:%H staging)
+    if [[ "$staging_commit" != "$commit_to_deploy" ]]; then
+      echo_error "ERROR: Can only deploy in production commits that are also deployed in staging"
+      exit_error_restoring_branch
+    fi
+  fi
+
+  git push -f origin HEAD:"$ENV"
+
+  exit_success_restoring_branch
+
 # =============================================
 # Initialization commands
 # =============================================
@@ -302,7 +437,7 @@ elif [[ "$CMD" == "symlink" ]]; then
 elif [[ "$CMD" == psql ]]; then
 	COLUMNS=${COLUMNS:-''};
 	if [[ "$ENV" == "development" ]]; then
-    RUN='docker exec -it $APP_NAME-api-$MODE bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
+    RUN='docker exec -it $API_SERVICE bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
 	else
 		scalingo -a $SCALINGO_APP pgsql-console
 		exit
@@ -311,7 +446,7 @@ elif [[ "$CMD" == psql ]]; then
 # Open a python prompt in the specified environment
 elif [[ "$CMD" == python ]]; then
 	if [[ "$ENV" == "development" ]]; then
-		RUN='docker exec -it $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
+		RUN='docker exec -it $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
 		exit
@@ -324,7 +459,7 @@ elif [[ "$CMD" == python ]]; then
 # Run python scripts from api/scripts
 else
   if [[ "$ENV" == "development" ]]; then
-    RUN='docker exec $APP_NAME-api-$MODE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
+    RUN='docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
   else
     scalingo -a "$SCALINGO_APP" run 'python scripts/manager.py '"$CMD $*"''
     exit

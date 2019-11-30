@@ -1,4 +1,4 @@
-import { ROOT_PATH } from '../src/utils/config'
+import { ROOT_PATH } from './utils/config'
 
 fixture("00 Landing | Arriving to the Landing").page(`${ROOT_PATH}`)
 
