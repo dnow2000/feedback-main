@@ -12,7 +12,7 @@ commands:
       key:
         type: string
       images:
-        type: mapping
+        type: string
       mode:
         type: string
     steps:
@@ -77,7 +77,7 @@ jobs:
     steps:
       - test:
           key: deps16-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          image: "mainci_api-test-end2end mainci_frontend-test-end2end mainci_nginx-test-end2end postgres"
+          images: "mainci_api-test-end2end mainci_frontend-test-end2end mainci_nginx-test-end2end postgres"
           mode: "test-end2end"
 
 
