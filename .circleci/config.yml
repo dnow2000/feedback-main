@@ -12,7 +12,7 @@ commands:
       key:
         type: string
       images:
-        type: strig
+        type: mapping
       mode:
         type: string
     steps:
@@ -25,8 +25,7 @@ commands:
           name: Load <<parameters.mode>> images from cache if exists
           command: |
             set +o pipefail
-            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar | true
-            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/postgres_images.tar | true
+            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/images.tar | true
             docker images
       - run:
           name: Venv
@@ -42,7 +41,7 @@ commands:
             docker images
             if [ ! -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar <<parameters.images>>
+              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar <<parameters.images>>
             fi
       - save_cache:
           key: <<parameters.key>>
