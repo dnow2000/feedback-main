@@ -11,12 +11,14 @@ commands:
     parameters:
       key:
         type: string
+      images:
+        type: strig
       mode:
         type: string
     steps:
       - checkout
       - restore_cache:
-          key: deps15-{{ checksum "requirements.txt" }}
+          key: deps16-{{ checksum "requirements.txt" }}
       - restore_cache:
           key: <<parameters.key>>
       - run:
@@ -38,10 +40,9 @@ commands:
           name: Save <<parameters.mode>> images in caches
           command: |
             docker images
-            if [ ! -f ~/main-ci/docker-caches/<<parameters.mode>> ]; then
+            if [ ! -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar mainci_api-<<parameters.mode>>
-              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/postgres_images.tar postgres
+              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar <<parameters.images>>
             fi
       - save_cache:
           key: <<parameters.key>>
@@ -54,7 +55,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps15-{{ checksum "requirements.txt" }}
+          key: deps16-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -63,19 +64,21 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
-          key: deps15-{{ checksum "requirements.txt" }}
+          key: deps16-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   test-api:
     executor: classic
     steps:
       - test:
-          key: deps15-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps16-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          images: "mainci_api-test-api postgres"
           mode: "test-api"
   test-end2end:
     executor: classic
     steps:
       - test:
-          key: deps15-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps16-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          image: "mainci_api-test-end2end mainci_frontend-test-end2end mainci_nginx-test-end2end postgres"
           mode: "test-end2end"
 
 
