@@ -11,21 +11,24 @@ commands:
     parameters:
       key:
         type: string
-      images:
-        type: string
       mode:
         type: string
     steps:
       - checkout
       - restore_cache:
-          key: deps16-{{ checksum "requirements.txt" }}
+          key: deps17-{{ checksum "requirements.txt" }}
       - restore_cache:
           key: <<parameters.key>>
       - run:
           name: Load <<parameters.mode>> images from cache if exists
           command: |
             set +o pipefail
-            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/images.tar | true
+            if [ -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
+              IMAGE_FILES=$(ls ~/main-ci/docker-caches/<<parameters.mode>>)
+              for file in $IMAGE_FILES do
+                docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/$file | true
+              done
+            fi
             docker images
       - run:
           name: Venv
@@ -41,7 +44,10 @@ commands:
             docker images
             if [ ! -d ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar <<parameters.images>>
+              NAMED_IMAGES=$(docker images | awk '{if ($1 != "<none>" && $1 != "REPOSITORY") print $1;}')
+              for image in $NAMED_IMAGES do
+                docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/$image.tar
+              done
             fi
       - save_cache:
           key: <<parameters.key>>
@@ -54,7 +60,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps16-{{ checksum "requirements.txt" }}
+          key: deps17-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -63,21 +69,19 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
-          key: deps16-{{ checksum "requirements.txt" }}
+          key: deps17-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   test-api:
     executor: classic
     steps:
       - test:
-          key: deps16-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
-          images: "mainci_api-test-api postgres"
+          key: deps17-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           mode: "test-api"
   test-end2end:
     executor: classic
     steps:
       - test:
-          key: deps16-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
-          images: "mainci_api-test-end2end mainci_frontend-test-end2end mainci_nginx-test-end2end postgres"
+          key: deps17-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           mode: "test-end2end"
 
 
