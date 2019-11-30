@@ -16,20 +16,15 @@ commands:
     steps:
       - checkout
       - restore_cache:
-          key: deps14-{{ checksum "requirements.txt" }}
+          key: deps15-{{ checksum "requirements.txt" }}
       - restore_cache:
           key: <<parameters.key>>
       - run:
           name: Load <<parameters.mode>> images from cache if exists
           command: |
             set +o pipefail
-            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/images.tar | true
-            while read REPOSITORY TAG IMAGE_ID
-              do
-                echo "== Tagging $REPOSITORY $TAG $IMAGE_ID =="
-                docker tag "$IMAGE_ID" "$REPOSITORY:$TAG"
-            done < ~/main-ci/docker-caches/<<parameters.mode>>/images.list | true
-            cat ~/main-ci/docker-caches/<<parameters.mode>>/images.list | true
+            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar | true
+            docker load -i ~/main-ci/docker-caches/<<parameters.mode>>/postgres_images.tar | true
             docker images
       - run:
           name: Venv
@@ -43,17 +38,15 @@ commands:
           name: Save <<parameters.mode>> images in caches
           command: |
             docker images
-            if [ ! -f ~/main-ci/docker-caches/<<parameters.mode>>/images.tar ]; then
+            if [ ! -f ~/main-ci/docker-caches/<<parameters.mode>> ]; then
               mkdir -p ~/main-ci/docker-caches/<<parameters.mode>>
-              docker images | sed '1d' | awk '{print $1 " " $2 " " $3}' > ~/main-ci/docker-caches/<<parameters.mode>>/images.list
-              docker save $(docker images -q) -o ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
-              cat ~/main-ci/docker-caches/<<parameters.mode>>/images.list
+              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/api_images.tar mainci_api-<<parameters.mode>>
+              docker save -o ~/main-ci/docker-caches/<<parameters.mode>>/postgres_images.tar postgres
             fi
       - save_cache:
           key: <<parameters.key>>
           paths:
-            - ~/main-ci/docker-caches/<<parameters.mode>>/images.list
-            - ~/main-ci/docker-caches/<<parameters.mode>>/images.tar
+            - ~/main-ci/docker-caches/<<parameters.mode>>
 
 jobs:
   build:
@@ -61,7 +54,7 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: deps14-{{ checksum "requirements.txt" }}
+          key: deps15-{{ checksum "requirements.txt" }}
       - run:
           name: Install main requirements
           command: |
@@ -70,19 +63,19 @@ jobs:
             pip install --upgrade pip
             pip install -r requirements.txt
       - save_cache:
-          key: deps14-{{ checksum "requirements.txt" }}
+          key: deps15-{{ checksum "requirements.txt" }}
           paths: ~/main-ci/venv
   test-api:
     executor: classic
     steps:
       - test:
-          key: deps14-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
+          key: deps15-{{ checksum "docker-compose.test-api.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}
           mode: "test-api"
   test-end2end:
     executor: classic
     steps:
       - test:
-          key: deps14-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
+          key: deps15-{{ checksum "docker-compose.test-end2end.yml" }}-{{ checksum "./api/requirements.txt" }}-{{ checksum "./api/utils/nltk_downloader.py"}}-{{ checksum "./webapp/package.json"}}
           mode: "test-end2end"
 
 
