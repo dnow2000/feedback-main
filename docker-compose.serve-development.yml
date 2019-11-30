@@ -22,6 +22,7 @@ services:
       - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-serve-development/${DB_NAME}
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
+    image: $APP_NAME-api-serve-development
     networks:
       - db_server_development_nw
       - web_server_development_nw
@@ -37,6 +38,7 @@ services:
     container_name: ${APP_NAME}-nginx-serve-development
     depends_on:
       - api-serve-development
+    image: $APP_NAME-nginx-serve-development
     networks:
       - web_server_development_nw
     ports:
