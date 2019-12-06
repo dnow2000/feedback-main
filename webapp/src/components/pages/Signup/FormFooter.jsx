@@ -5,9 +5,10 @@ import PropTypes from 'prop-types'
 const FormFooter = ({ canSubmit, isLoading }) => (
   <footer className="field submit">
     <button
-      className={classnames('button is-primary', {
-        'is-loading': isLoading,
-      })}
+      className={classnames(
+        'button is-primary',
+        {'is-disabled': !canSubmit, 'is-loading': isLoading }
+      )}
       disabled={!canSubmit}
       type="submit"
     >

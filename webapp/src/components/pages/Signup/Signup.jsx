@@ -14,19 +14,19 @@ import FormFooter from './FormFooter'
 class Signup extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = { isFormLoading: false }
+    this.state = { isFormLoading: false, submitErrors: null }
   }
 
   handleRequestFail = formResolver => (state, action) => {
     const { payload } = action
-    const nextState = { isFormLoading: false }
     const errors = parseSubmitErrors(payload.errors)
+    const nextState = { isFormLoading: false, submitErrors: errors }
     this.setState(nextState, () => formResolver(errors))
   }
 
   handleRequestSuccess = formResolver => () => {
     const { history } = this.props
-    const nextState = { isFormLoading: false }
+    const nextState = { isFormLoading: false, submitErrors: null }
     this.setState(nextState, () => {
       formResolver()
       const nextUrl = `/landing`
@@ -35,6 +35,7 @@ class Signup extends PureComponent {
   }
 
   onFormSubmit = formValues => {
+    console.log('SUBMIT')
     const { dispatch } = this.props
     const { pictureCroppingRect, picture } = formValues
 
@@ -74,21 +75,21 @@ class Signup extends PureComponent {
   }
 
   render() {
-    const { isFormLoading } = this.state
+    const { isFormLoading, submitErrors } = this.state
 
     return (
       <Fragment>
         <MainContainer name="signup">
           <div className="container">
-            <h1 className="title">Get on board!</h1>
-            <div className="buttons">
+            <h1 className="title">{"Get on board!"}</h1>
+            {/* <div className="buttons">
               <button className="button">
                 <span className="title">Apply as Reviewer</span>
               </button>
               <button className="button">
                 <span className="title">Apply as Editor</span>
               </button>
-            </div>
+            </div> */}
             <Form
               onSubmit={this.onFormSubmit}
               render={(form) => {
@@ -107,15 +108,21 @@ class Signup extends PureComponent {
                   (!hasValidationErrors &&
                     hasSubmitErrors &&
                     dirtySinceLastSubmit)
+                console.log('CAN SUBMIT', form.errors, submitErrors)
                 return (
                   <form
                     autoComplete="off"
-                    disabled={isFormLoading}
                     noValidate
                     onSubmit={handleSubmit}
                   >
                     <FormFields onImageChange={this.onImageChange(form)} />
-                    <FormFooter canSubmit={canSubmit} />
+                    <FormFooter canSubmit/>
+                    {submitErrors !== null && (
+                      <>
+                        <span>{"ERRORS"}</span>
+                        <span>{Object.values(submitErrors)}</span>
+                      </>
+                    )}
                   </form>
                 )
               }}
