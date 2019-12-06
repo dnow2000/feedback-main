@@ -27,7 +27,7 @@ def check_and_read_files_thumb(files=None):
 
 
 def check_thumb_in_request(files, form):
-    missing_image_error = ApiErrors({'thumb': ["Vous devez fournir une image d'accroche"]})
+    missing_image_error = ApiErrors({'thumb': ["This field is obligatory"]})
 
     if 'thumb' in files:
         if files['thumb'].filename == '':

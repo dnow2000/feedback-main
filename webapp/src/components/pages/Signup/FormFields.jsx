@@ -39,9 +39,9 @@ class FormFields extends React.PureComponent {
           <div className="fields-table">
             <PictureField
               className="col-tablet-33"
-              id="picture"
+              id="thumb"
               label="Photo"
-              name="picture"
+              name="thumb"
               onImageChange={onImageChange}
               required
             />
