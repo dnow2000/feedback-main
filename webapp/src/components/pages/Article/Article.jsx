@@ -118,7 +118,7 @@ class Article extends PureComponent {
 
           <section className="section">
             <h2 className="subtitle flex-columns items-center">
-              <Icon className="icon mr12" svg="ico-newspaper" />
+              <Icon className="icon mr12" name="ico-newspaper" />
               DETAILS
             </h2>
             <Form

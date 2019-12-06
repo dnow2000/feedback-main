@@ -11,8 +11,7 @@ const Landing = ({requestGetVerdicts}) => {
   return (
     <>
       <HeaderContainer />
-      <MainContainer name="landing">
-
+      <MainContainer className="with-header" name="landing">
         <section className="hero">
           <div className="container">
             <p className="h1">

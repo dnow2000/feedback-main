@@ -98,7 +98,7 @@ class ArticleItem extends PureComponent {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  <Icon className="icon" svg="external-link" />
+                  <Icon className="icon" name="external-link" />
                 </a>
               </div>
               <div className="infos flex-columns items-center py12">
