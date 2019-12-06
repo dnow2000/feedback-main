@@ -6,9 +6,10 @@ import {
   createParseNumberValue,
   composeValidators
 } from 'react-final-form-utils'
-
 import Dropzone from 'react-dropzone'
 import AvatarEditor from 'react-avatar-editor'
+
+import { ROOT_PATH } from 'utils/config'
 
 import { FieldError } from '../layout'
 import getRequiredValidate from '../utils/getRequiredValidate'
@@ -30,7 +31,7 @@ class PictureField extends React.PureComponent {
     }
   }
 
-  onClickAttachFile = event => {
+  handleFileAttached = event => {
     this.setState({
       image: event.target.files[0],
     })
@@ -45,7 +46,7 @@ class PictureField extends React.PureComponent {
     this.setState({ image: dropped[0] })
   }
 
-  onImageChange = () => {
+  handleImageChange = () => {
     const { onImageChange } = this.props
     const { image } = this.state
     if (!this.avatarRef) {
@@ -117,12 +118,12 @@ class PictureField extends React.PureComponent {
                   <input
                     disabled={image !== null}
                     name={name}
-                    onChange={this.onClickAttachFile}
+                    onChange={this.handleFileAttached}
                     {...getInputProps()}
                   />
                   <AvatarEditor
-                    image={image}
-                    onImageChange={this.onImageChange}
+                    image={image || `${ROOT_PATH}/images/drag.png`}
+                    onImageChange={this.handleImageChange}
                     ref={this.avatarRef}
                     scale={scale}
                     style={{ width: '100%', height: '100%' }}
