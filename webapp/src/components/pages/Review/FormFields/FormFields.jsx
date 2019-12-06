@@ -31,27 +31,32 @@ const FormFields = ({ evaluations, query, tags }) => {
     TAGS_PLACEHOLDER,
     'text',
     'id',
-    'info'
+    'info',
+    'positivity'
   )
   const { readOnly } = query.context()
+  console.log('TAG OPTIONS', tagOptions)
+  console.log('EVAL OPTIONS', evaluationOptions)
+
+  // return (
+  //   <div className="fields-container">
+  //     <div className="fields-table">
+  //       <RadiosField
+  //         className="col-tablet-33"
+  //         name={EVALUATIONS_NAME}
+  //         options={evaluationOptions}
+  //         readOnly={readOnly}
+  //         required
+  //       />
+  //     </div>
+  //   </div>
+  // )
 
   return (
     <div className="section">
 
-      <HiddenField name="articleId" type="hidden" />
-
+      {/* <HiddenField name="articleId" type="hidden" />
       <div className="field-group">
-        <h3 className="field-group-title">
-          COMMENT <span className="field-asterisk">*</span>
-        </h3>
-        <h4 className="field-group-sub-title">
-          Your overall assessment of the article in a few sentences.
-          Explain why the article is of low/high credibility,
-          what is incorrect, missing, misleading, inaccurate,
-          or flawed in the article (if anything) and what is actually correct
-          (please support your claims with appropriate references,
-            adding a figure if appropriate).
-        </h4>
         <TexteditorField
           name="comment"
           placeholder=""
@@ -59,7 +64,7 @@ const FormFields = ({ evaluations, query, tags }) => {
           required
         />
         <div className='field-sep' />
-      </div>
+      </div> */}
 
       <div className="field-group">
         <h3 className="field-group-title">
