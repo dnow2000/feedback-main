@@ -59,7 +59,42 @@ const Landing = ({requestGetVerdicts}) => {
         </section>
         <section className="footer">
           <div className="container is-footer">
-            <div className="container">
+            <div className="logo-container">
+              <img src={`${ROOT_PATH}/images/logo_footer.png`} className="image" alt="Community" />
+            </div>
+            <div className="links-container-big">
+              <p className="h3">Community</p>
+              <NavLink className="link" to="/">
+                Climate reviewers
+              </NavLink>
+              <NavLink className="link" to="/">
+                Health reviewers
+              </NavLink>
+              <NavLink className="link" to="/signup">
+                Apply to become a reviewer
+              </NavLink>
+            </div>
+            <div className="links-container-big">
+              <p className="h3">Organization</p>
+              <NavLink className="link" to="/">
+                About
+              </NavLink>
+              <NavLink className="link" to="/">
+                Support us
+              </NavLink>
+              <NavLink className="link" to="/">
+                Community standards
+              </NavLink>
+
+            </div>
+            <div className="links-container-small">
+              <p className="h3">Contact Us</p>
+              <NavLink className="link" to="/">
+                Press
+              </NavLink>
+              <NavLink className="link" to="/">
+                Contact Us
+              </NavLink>
 
             </div>
           </div>
