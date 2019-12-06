@@ -8,6 +8,12 @@
   position: fixed;
   right: 0;
 
+  &.scrolling {
+    filter: blur(1px);
+    opacity: 0.1;
+    pointer-events: none;
+  }
+
   .container {
     align-items: center;
     display: flex;
@@ -20,12 +26,6 @@
     transition: filter 0.5s, opacity 0.5s;
     width: 100%;
     z-index: 1000;
-
-    &.scrolling {
-      filter: blur(1px);
-      opacity: 0.1;
-      pointer-events: none;
-    }
 
     .left-content {
       margin-right: 12px;

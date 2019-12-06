@@ -64,9 +64,7 @@ const Landing = ({requestGetVerdicts}) => {
             </div>
           </div>
         </section>
-
       </MainContainer>
-
     </>
   )
 }
