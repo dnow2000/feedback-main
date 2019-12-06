@@ -132,9 +132,7 @@ class Trendings extends PureComponent {
               </select>
             </div>
           </section>
-
-          <div className=>
-
+          
           <section>
             <LoadingInfiniteScroll
               hasMore={hasMore}
