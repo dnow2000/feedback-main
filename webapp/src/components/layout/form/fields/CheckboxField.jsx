@@ -37,6 +37,7 @@ export class CheckboxField extends React.PureComponent {
           <input
             {...inputProps}
             {...input}
+            name={name}
             required={!!required}
             type={type}
           />

@@ -4,33 +4,70 @@ import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
-import { NavLink } from 'react-router-dom'
 
 import MainContainer from 'components/layout/Main/MainContainer'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
 
+
+
+function getTopErrorId(errors) {
+  if (errors.length === 0) {
+    return null
+  }
+  const errorIds = Object.keys(errors[0])
+  if (errorIds.includes('global')) {
+    return null
+  }
+  return errorIds[0]  // TODO @colas: find top
+}
+
+function getGlobalError(errors) {
+  if (errors.length === 0) {
+    return null
+  }
+  const errorIds = Object.keys(errors[0])
+  if (!errorIds.includes('global')) {
+    return null
+  }
+  return errors[0]['global']
+
+}
+
 class Signup extends PureComponent {
   constructor(props) {
     super(props)
-    this.state = { isFormLoading: false, submitErrors: null }
+    this.state = { isFormLoading: false, globalError: null }
   }
 
   handleRequestFail = formResolver => (state, action) => {
     const { payload } = action
     const errors = parseSubmitErrors(payload.errors)
-    const nextState = { isFormLoading: false, submitErrors: errors }
-    this.setState(nextState, () => formResolver(errors))
-    if (errors) {
-      const errorId = Object.keys(errors)[0]
-      window.scrollTo(0, document.getElementById(errorId).offsetTop - 20)
+    const globalError = getGlobalError(errors)
+    const topErrorId = getTopErrorId(errors)
+    console.log('BAKCEND GLOBAL ERROR', globalError)
+    console.log('BACKEND FIELD ERROR', topErrorId)
+    this.setState({ isFormLoading: false, globalError }, () => formResolver(errors))
+    if (topErrorId) {
+      this.scrollToError(topErrorId)
     }
+  }
+
+  scrollToError = errorId => {
+    const element = document.querySelector(`input[name=${errorId}]`)
+    if (!element) {
+      console.warn('NO ELEMENT FOUND FOR ', errorId)
+      return
+    }
+    const topErrorPosition = element.offsetTop
+    console.log('SCROLL to POSITION', errorId, topErrorPosition)
+    window.scrollTo(0, topErrorPosition - 100)
   }
 
   handleRequestSuccess = formResolver => () => {
     const { history } = this.props
-    const nextState = { isFormLoading: false, submitErrors: null }
+    const nextState = { isFormLoading: false, globalError: null }
     this.setState(nextState, () => {
       formResolver()
       const nextUrl = `/landing`
@@ -38,16 +75,17 @@ class Signup extends PureComponent {
     })
   }
 
-  onFormSubmit = formValues => {
+  handleSubmitHighLevel = formValues => {
     const { dispatch } = this.props
     const { pictureCroppingRect, picture } = formValues
-
     const body = new FormData()
     body.append('thumb', picture)
-    body.append('croppingRect[x]', pictureCroppingRect.x)
-    body.append('croppingRect[y]', pictureCroppingRect.y)
-    body.append('croppingRect[width]', pictureCroppingRect.width)
-    body.append('croppingRect[height]', pictureCroppingRect.height)
+    if (pictureCroppingRect) {
+      body.append('croppingRect[x]', pictureCroppingRect.x)
+      body.append('croppingRect[y]', pictureCroppingRect.y)
+      body.append('croppingRect[width]', pictureCroppingRect.width)
+      body.append('croppingRect[height]', pictureCroppingRect.height)
+    }
     Object.keys(formValues).forEach( key => {
       if (key === 'picture' || key === 'pictureCroppingRect') {
         return
@@ -77,62 +115,68 @@ class Signup extends PureComponent {
     })
   }
 
-  render() {
-    const { isFormLoading, submitErrors } = this.state
+  renderForm = (form) => {
+    const {
+      globalError,
+      isFormLoading
+    } = this.state
+    const {
+      handleSubmit,
+      errors
+    } = form
+    const errorIds = Object.keys(errors)
+    const handleSubmitAndScrollIfNeeded = (event) => {
+      console.log('FRONTEND FIELD ERROR', errorIds)
+      if (errorIds.length > 0) {
+        const topErrorId = errorIds[0]  // TODO @colas: get top error
+        this.scrollToError(topErrorId)
+      }
+      handleSubmit(event)
+    }
+    return (
+      <form
+        autoComplete="off"
+        noValidate
+        onSubmit={handleSubmitAndScrollIfNeeded}
+      >
+        <FormFields onImageChange={this.onImageChange(form)} />
+        <FormFooter canSubmit={!isFormLoading} />
+        {globalError !== null && (
+          <span>
+            {globalError}
+          </span>
+        )}
+      </form>
+    )
+  }
 
+  renderApplicationTypeButtons() {
+    return (
+      <div className="buttons">
+        <button className="button">
+          <span className="title">Apply as Reviewer</span>
+        </button>
+        <button className="button">
+          <span className="title">Apply as Editor</span>
+        </button>
+      </div>
+    )
+  }
+
+  render() {
     return (
       <Fragment>
         <MainContainer name="signup">
           <div className="container">
-            <h1 className="title">{"Get on board!"}</h1>
-            {/* <div className="buttons">
-              <button className="button">
-                <span className="title">Apply as Reviewer</span>
-              </button>
-              <button className="button">
-                <span className="title">Apply as Editor</span>
-              </button>
-            </div> */}
+            <h1 className="title">
+              {`Get on board!`}
+            </h1>
+            {this.renderApplicationTypeButtons()}
             <Form
-              onSubmit={this.onFormSubmit}
-              render={(form) => {
-                const {
-                  dirtySinceLastSubmit,
-                  handleSubmit,
-                  hasSubmitErrors,
-                  hasValidationErrors,
-                  pristine,
-                } = form
-                const canSubmit =
-                  (!pristine &&
-                    !hasSubmitErrors &&
-                    !hasValidationErrors &&
-                    !isFormLoading) ||
-                  (!hasValidationErrors &&
-                    hasSubmitErrors &&
-                    dirtySinceLastSubmit)
-                return (
-                  <form
-                    autoComplete="off"
-                    noValidate
-                    onSubmit={handleSubmit}
-                  >
-                    <FormFields onImageChange={this.onImageChange(form)} />
-                    <FormFooter canSubmit/>
-                    {submitErrors !== null && (
-                      <>
-                        <span>{"ERRORS"}</span>
-                        <span>{Object.values(submitErrors)}</span>
-                      </>
-                    )}
-                  </form>
-                )
-              }}
+              onSubmit={this.handleSubmitHighLevel}
+              render={this.renderForm}
             />
-            {/* <NavLink className="button is-primary" to="/signin">
-              Already have an account ?
-            </NavLink> */}
-            </div>
+          </div>
         </MainContainer>
       </Fragment>
     )

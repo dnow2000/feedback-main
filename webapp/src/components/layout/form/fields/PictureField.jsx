@@ -97,6 +97,7 @@ class PictureField extends React.PureComponent {
               {({getRootProps, getInputProps}) => (
                 <div {...getRootProps()}>
                   <input
+                    name={name}
                     onChange={this.onClickAttachFile}
                     {...getInputProps()}
                   />
