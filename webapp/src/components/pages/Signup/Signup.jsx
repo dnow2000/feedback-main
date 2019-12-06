@@ -19,7 +19,7 @@ function getTopErrorId(errors) {
   if (errorIds.length === 0) {
     return null
   }
-  return errorIds[0]  // TODO @colas: find top positioned instead of random 
+  return errorIds[0]  // TODO @colas: find top positioned instead of random
 }
 
 function getGlobalError(errors) {
@@ -48,7 +48,7 @@ class Signup extends PureComponent {
     this.setState({ isFormLoading: false, globalError }, () => {
       formResolver(errors)
       if (topErrorId) {
-        setTimeout(() => this.scrollToError(topErrorId))
+        this.scrollToError(topErrorId)
       }
     })
   }
@@ -59,8 +59,8 @@ class Signup extends PureComponent {
       console.warn('NO ELEMENT FOUND FOR ', errorId)
       return
     }
-    const topErrorPosition = element.offsetTop
-    window.scrollTo(0, topErrorPosition - 20)
+    const errorPosition = element.offsetTop
+    setTimeout(() => window.scrollTo(0, errorPosition - 20))
   }
 
   handleRequestSuccess = formResolver => () => {
@@ -78,12 +78,10 @@ class Signup extends PureComponent {
     const { pictureCroppingRect, picture } = formValues
     const body = new FormData()
     body.append('thumb', picture)
-    if (pictureCroppingRect) {
-      body.append('croppingRect[x]', pictureCroppingRect.x)
-      body.append('croppingRect[y]', pictureCroppingRect.y)
-      body.append('croppingRect[width]', pictureCroppingRect.width)
-      body.append('croppingRect[height]', pictureCroppingRect.height)
-    }
+    body.append('croppingRect[x]', pictureCroppingRect.x)
+    body.append('croppingRect[y]', pictureCroppingRect.y)
+    body.append('croppingRect[width]', pictureCroppingRect.width)
+    body.append('croppingRect[height]', pictureCroppingRect.height)
     Object.keys(formValues).forEach( key => {
       if (key === 'picture' || key === 'pictureCroppingRect') {
         return
@@ -169,7 +167,7 @@ class Signup extends PureComponent {
             <h1 className="title">
               {`Get on board!`}
             </h1>
-            {this.renderApplicationTypeButtons()}
+            {/* {this.renderApplicationTypeButtons()} */}
             <Form
               onSubmit={this.handleSubmitHighLevel}
               render={this.renderForm}
