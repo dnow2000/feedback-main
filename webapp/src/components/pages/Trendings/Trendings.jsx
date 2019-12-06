@@ -102,43 +102,38 @@ class Trendings extends PureComponent {
       <Fragment>
         <HeaderContainer />
         <MainContainer name="trendings">
-          <section className="section hero">
-            <div className="flex-columns items-center mb12">
-              <div>
+          <section className="controls">
+            <div className="themes">
+              {trendingThemes.map(({ label, value }) => (
+                <button
+                  className={classnames({"selected": theme !== value})}
+                  key={value}
+                  onClick={this.handleRequestDataWithQuery('theme', value)}
+                  type="button"
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
 
-                {trendingThemes.map(({ label, value }) => (
-                  <button
-                    className={classnames("button is-primary", {
-                      "is-outlined": theme !== value,
-                    })}
-                    key={value}
-                    onClick={this.handleRequestDataWithQuery('theme', value)}
-                    type="button"
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-
-              <div className="flex-auto" />
-
-              <div>
+            <div className="days">
+              <select onChange={event => {
+                console.log(event.target.value)
+                this.handleRequestDataWithQuery('days', event.target.value)
+              }}>
                 {trendingMaxDates.map(({ label, value }) => (
-                  <button
-                    className={classnames("button is-secondary", {
-                      "is-inversed": (days || '1') !== String(value),
-                    })}
+                  <option
                     key={value}
-                    onClick={this.handleRequestDataWithQuery('days', value)}
-                    type="button"
+                    value={value}
                   >
                     {label}
-                  </button>
+                  </option>
                 ))}
-              </div>
-
+              </select>
             </div>
           </section>
+
+          <div className=>
 
           <section>
             <LoadingInfiniteScroll
@@ -179,3 +174,8 @@ Trendings.propTypes = {
 }
 
 export default Trendings
+
+
+
+
+document.querySelector('input[name="${errorKey}"]')

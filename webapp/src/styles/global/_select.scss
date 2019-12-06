@@ -1,0 +1,22 @@
+.select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: white;
+  background-image: url("/icons/dropdown-disclosure-down.svg");
+  background-position: 90% 50%;
+  background-repeat: no-repeat;
+  border: 1px solid #E4E6F4;
+  border-radius: rem(16px);
+  color: #1F2338;
+  font-weight: 500;
+  height: rem(32px);
+  padding-left: rem(12px);
+  text-align: center;
+  width: rem(126px);
+
+  &:before {
+    background-image: url("/icons/calendar.svg");
+    background-position: 10% 50%;
+    background-repeat: no-repeat;
+  }
+}

@@ -1,9 +1,18 @@
 .footer {
+  align-items: center;
   background-color: $black-ter;
   color: $white;
+  display: flex;
+  padding: rem(36px);
 
-  .contact {
-    color: $primary;
-    text-decoration: none;
+  .left {
+    margin-bottom: rem(8px);
+    
+    .contact {
+      color: $primary;
+      text-decoration: none;
+    }
   }
+
+
 }

@@ -1,21 +1,24 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
 import { ROOT_PATH } from 'utils/config'
 
-const Icon = ({ svg, name, ...imgProps }) => {
-  if (!Icon.rootPath) {
-    console.warn('You need to define a rootPath for your Icon')
-  }
-  return (
-    <img
-      {...imgProps}
-      alt={svg}
-      className={imgProps.className || 'icon'}
-      src={`${Icon.rootPath}/icons/${svg}.svg`}
-    />
-  )
+export const Icon = ({ name, path, ...imgProps }) => (
+  <img
+    {...imgProps}
+    alt={name}
+    className={imgProps.className || 'icon'}
+    src={`${path}/${name}`}
+  />
+)
+
+Icon.defaultProps = {
+  path: `${ROOT_PATH}/icons`
 }
 
-Icon.rootPath = ROOT_PATH
+Icon.propTypes = {
+  name: PropTypes.string.isRequired,
+  path: PropTypes.string
+}
 
 export default Icon

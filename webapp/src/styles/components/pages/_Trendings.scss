@@ -1,22 +1,25 @@
 .trendings-main {
-  .mini-tabutton {
-    display: inline-block;
-    font-size: 15px;
-    background-color: white;
-    padding: 5px 12px;
-    margin: 10px 5px;
-    cursor: pointer;
-  }
+  .controls {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: rem(12px);
 
-  .selected-tab {
-    background-color: lightblue !important;
-  }
+    .themes {
+      button {
+        @extend .button;
+        @extend .is-primary;
 
-  .tabutton {
-    font-size: 25px;
-    background-color: white;
-    padding: 5px 15px;
-    margin: 10px;
-    cursor: pointer;
+        &.selected {
+          @extend .is-outlined;
+        }
+      }
+    }
+
+    .days {
+      select {
+        @extend .select;
+      }
+    }
   }
 }

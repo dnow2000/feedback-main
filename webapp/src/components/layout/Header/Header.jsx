@@ -32,25 +32,27 @@ const Header = ({ currentUser, location, whiteHeader }) => {
   return (
     <Fragment>
       <header className={classnames("header", { scrolling: isScrolling })}>
-        <div className="left-content">
-          <Logo withName />
-        </div>
+        <div className="container">
+          <div className="left-content">
+            <Logo withName />
+          </div>
 
-        <div className="flex-auto" />
-        {currentUser && !isSignPathname ? (
-          <Fragment>
-            <NavigationContainer />
-            <HamburgerContainer disabled={isScrolling} />
-            <MenuContainer />
-            <AvatarContainer whiteHeader={whiteHeader} />
-          </Fragment>
-        ) : (
-          !isSignPathname && (
-            <NavLink className="button is-primary" to="/signin">
-              Sign In
-            </NavLink>
-          )
-        )}
+          <div className="flex-auto" />
+          {currentUser && !isSignPathname ? (
+            <Fragment>
+              <NavigationContainer />
+              <HamburgerContainer disabled={isScrolling} />
+              <MenuContainer />
+              <AvatarContainer whiteHeader={whiteHeader} />
+            </Fragment>
+          ) : (
+            !isSignPathname && (
+              <NavLink className="button is-primary" to="/signin">
+                Sign In
+              </NavLink>
+            )
+          )}
+        </div>
       </header>
     </Fragment>
   )

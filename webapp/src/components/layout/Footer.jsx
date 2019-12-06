@@ -1,9 +1,9 @@
 import React from 'react'
 
 const Footer = () => (
-  <div className="footer flex-columns items-center p36">
-    <div>
-      <div className="mb8">
+  <div className="footer">
+    <div className="left">
+      <div>
         Email us for further information
       </div>
       <div>

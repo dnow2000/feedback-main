@@ -3,25 +3,32 @@
     pointer-events: auto;
   }
 
-  align-items: center;
-  display: flex;
   height: $header-height;
-  justify-content: flex-start;
   left: 0;
-  right: 0;
-  padding: 24px;
-  pointer-events: none;
   position: fixed;
-  transition: filter 0.5s, opacity 0.5s;
-  z-index: 1000;
+  right: 0;
 
-  &.scrolling {
-    filter: blur(1px);
-    opacity: 0.1;
+  .container {
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    padding: 24px;
     pointer-events: none;
-  }
+    margin-left: auto;
+    margin-right: auto;
+    max-width: $container-width;
+    transition: filter 0.5s, opacity 0.5s;
+    width: 100%;
+    z-index: 1000;
 
-  .left-content {
-    margin-right: 12px;
+    &.scrolling {
+      filter: blur(1px);
+      opacity: 0.1;
+      pointer-events: none;
+    }
+
+    .left-content {
+      margin-right: 12px;
+    }
   }
 }
