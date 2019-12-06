@@ -53,6 +53,7 @@ class PictureField extends React.PureComponent {
     }
     let croppingRect = this.avatarRef.current.getCroppingRect()
     if (croppingRect.height) {
+      console.log('CROP', croppingRect)
       onImageChange(image, croppingRect)
       return
     }
@@ -114,6 +115,7 @@ class PictureField extends React.PureComponent {
               {({getRootProps, getInputProps}) => (
                 <div {...getRootProps()}>
                   <input
+                    disabled={image !== null}
                     name={name}
                     onChange={this.onClickAttachFile}
                     {...getInputProps()}

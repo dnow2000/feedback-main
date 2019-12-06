@@ -113,15 +113,16 @@ class Signup extends PureComponent {
     })
   }
 
-  renderForm = (form) => {
+  renderForm = formProps => {
     const {
       globalError,
       isFormLoading
     } = this.state
     const {
       handleSubmit,
-      errors
-    } = form
+      errors,
+      form,
+    } = formProps
     const errorIds = Object.keys(errors)
     const handleSubmitAndScrollIfNeeded = (event) => {
       console.log('FRONTEND FIELD ERROR', errors, errorIds)
