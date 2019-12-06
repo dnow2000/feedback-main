@@ -22,6 +22,10 @@
     box-shadow: none;
   }
 
+  &.is-disabled {
+    cursor: not-allowed;
+    opacity: 0.3;
+  }
 
   &.is-loading {
     color: transparent!important;

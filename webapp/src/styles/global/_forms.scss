@@ -145,6 +145,23 @@
 }
 
 //
+// ERRORS
+//
+.field-errors {
+  color: $red;
+  // min-height: 24px;
+
+  &:empty::before {
+    content: "\200b"; // unicode zero width space character
+  }
+
+  &.field-error-message + .field-error-message {
+    // si on a plusieurs erreurs pour un seul champ
+    @extend .pl12;
+  }
+}
+
+//
 // SUBMIT
 //
 .submit {
