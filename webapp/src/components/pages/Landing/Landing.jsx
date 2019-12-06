@@ -5,12 +5,13 @@ import { NavLink } from 'react-router-dom'
 import MainContainer from 'components/layout/Main/MainContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import Icon from 'components/layout/Icon'
-
+import VerdictItem from 'components/pages/Verdicts/VerdictItem/VerdictItem'
 import { ROOT_PATH } from 'utils/config'
 
 
-const Landing = ({requestGetVerdicts}) => {
+const Landing = ({requestGetVerdicts, verdicts}) => {
   useEffect(() => {requestGetVerdicts()}, [])
+  console.log('#################################> Verdict', verdicts);
   return (
     <>
       <HeaderContainer />
@@ -35,6 +36,9 @@ const Landing = ({requestGetVerdicts}) => {
               <p className="h2">
                 Latest Reviews
               </p>
+              {(verdicts || []).map(verdict =>
+                <VerdictItem key={verdict.id} verdict={verdict} />
+              )}
             </div>
           </div>
         </section>
