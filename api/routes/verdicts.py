@@ -19,7 +19,7 @@ def list_verdicts():
         query = filter_verdicts_with_article_id(query, article_id)
 
     verdicts = query.all()
-
+    
     return jsonify([as_dict(verdict, includes=VERDICT_INCLUDES) for verdict in verdicts])
 
 @app.route('/verdicts/<verdict_id>', methods=['GET'])

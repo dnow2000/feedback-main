@@ -4,10 +4,11 @@ import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 import Icon from 'components/layout/Icon'
-import Authors from '../../../layout/Authors'
-import Extract from '../../../layout/Extract'
-import Tag from '../../../layout/Tag'
-import { ROOT_PATH, THUMBS_URL } from '../../../../utils/config'
+import Authors from 'components/layout/Authors'
+import Extract from 'components/layout/Extract'
+import Tag from 'components/layout/Tag'
+import { ROOT_PATH, THUMBS_URL } from 'utils/config'
+
 
 class ArticleItem extends PureComponent {
   onDeleteClick = () => {

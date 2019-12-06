@@ -3,6 +3,7 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
@@ -50,4 +51,4 @@ class Review(ApiHandler,
         verdict_users = VerdictUser.query.filter_by(userId=self.userId)
         verdict_ids = [verdict_user.verdict.id for verdict_user in verdict_users]
         verdicts = Verdict.query.filter(Verdict.id.in_(verdict_ids)).all()
-        return verdicts
+        return InstrumentedList(verdicts)

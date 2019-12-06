@@ -3,9 +3,10 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        Text
 from sqlalchemy.orm import relationship
+from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
-
+from sqlalchemy.orm.collections import InstrumentedList
 from models.utils.db import get_model_with_table_name, Model
 from models.mixins import HasRatingMixin
 
@@ -46,4 +47,5 @@ class Verdict(ApiHandler,
             (Review.articleId == self.articleId) &\
             (Review.userId.in_(verdict_user_ids))
         ).all()
-        return reviews
+
+        return InstrumentedList(reviews)
