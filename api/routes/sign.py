@@ -43,7 +43,7 @@ def signup():
 
     publications = []
     for index in [1, 2, 3]:
-        publication_key = 'publication-{}'.format(index)
+        publication_key = 'publication{}'.format(index)
         if publication_key in request.form:
             publication_url = request.form[publication_key]
             publication = Publication.query.filter_by(url=publication_url).first()

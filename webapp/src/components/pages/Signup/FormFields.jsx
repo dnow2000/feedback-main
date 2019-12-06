@@ -71,6 +71,13 @@ class FormFields extends React.PureComponent {
             sublabel="Official email from your research institution, it will not be displayed publicly."
           />
           <TextField
+            id="password"
+            label="Password"
+            name="password"
+            placeholder="MySaf3Pa55word!"
+            required
+          />
+          <TextField
             id="website"
             label="Academic Website"
             name="academicWebsite"
@@ -111,20 +118,20 @@ class FormFields extends React.PureComponent {
               </div>
               <TextField
                 id="publication-1"
-                name="publication-1"
+                name="publication1"
                 label="Publication 1"
                 placeholder="Link to qualifying publications."
                 required
               />
               <TextField
                 id="publication-2"
-                name="publication-2"
+                name="publication2"
                 label="Publication 2"
                 placeholder="Link to qualifying publications."
               />
               <TextField
                 id="publication-3"
-                name="publication-3"
+                name="publication3"
                 label="Publication 3"
                 placeholder="Link to qualifying publications."
               />
@@ -139,13 +146,15 @@ class FormFields extends React.PureComponent {
         <div className="pt20"></div>
         <CheckboxField
             id="community-rules"
-            name="community-rules"
+            name="communityRules"
             text="I agree to comply to community rules."
+            required
         />
         <CheckboxField
             id="terms-and-conditions"
-            name="terms-and-conditions"
+            name="termsAndConditions"
             text="I hereby accept Terms and Conditions relatives to science-feedback.co."
+            required
         />
         </div>
       </Fragment>
