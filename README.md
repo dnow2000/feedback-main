@@ -2,7 +2,7 @@
 
 ### Install
   You need first:
-  
+
     docker (https://docs.docker.com/install/)
     docker-compose (https://docs.docker.com/compose/install/#install-compose)
 
@@ -11,12 +11,8 @@
     yarn (https://yarnpkg.com/en/docs/install)
 
   Specially for macosx users:
-  
-    brew install coreutils
 
-  You need a version of Node:
-    
-    8.12.0 or 10.13.0
+    brew install coreutils
 
   Then for everybody:
 
