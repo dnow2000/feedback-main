@@ -175,7 +175,7 @@
     height: 53px;
     border-radius: 26.5px;
     box-shadow: 0 2px 4px 0 rgba(0, 92, 255, 0.33);
-    background-color: #005cff;
+    background-color: $primary;
 
     .title {
       font-family: Apercu;
@@ -186,7 +186,7 @@
       line-height: normal;
       letter-spacing: normal;
       text-align: center;
-      color: #ffffff;
+      color: $white;
     }
   }
 }

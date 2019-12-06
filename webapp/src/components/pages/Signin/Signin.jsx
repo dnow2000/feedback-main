@@ -6,6 +6,7 @@ import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 import { NavLink } from 'react-router-dom'
 
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 
 import FormFields from './FormFields'
@@ -65,8 +66,9 @@ class Signin extends PureComponent {
 
     return (
       <Fragment>
+        <HeaderContainer />
         <MainContainer name="signin">
-          <section className="section fullheight flex-center items-center">
+          <section>
             <Form
               onSubmit={this.onFormSubmit}
               render={({
@@ -98,10 +100,11 @@ class Signin extends PureComponent {
                 )
               }}
             />
+            <NavLink className="button is-secondary" to="/signup">
+              Register ?
+            </NavLink>
           </section>
-          <NavLink className="button is-primary" to="/signup">
-            Register ?
-          </NavLink>
+
         </MainContainer>
       </Fragment>
     )
