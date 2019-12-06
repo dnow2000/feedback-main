@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-thunk-data'
@@ -43,11 +43,8 @@ class Signup extends PureComponent {
   handleRequestFail = formResolver => (state, action) => {
     const { payload } = action
     const errors = parseSubmitErrors(payload.errors)
-    console.log('BACKEND ERRORS', errors)
     const globalError = getBackendGlobalError(errors)
-    console.log('BACKEND GLOBAL ERROR', globalError)
     const fieldErrorId = getBackendFieldErrorId(errors)
-    console.log('BACKEND FIELD ERROR', fieldErrorId)
     this.setState({ isFormLoading: false, globalError }, () => {
       formResolver(errors)
       if (fieldErrorId) {
@@ -164,20 +161,18 @@ class Signup extends PureComponent {
 
   render() {
     return (
-      <Fragment>
-        <MainContainer name="signup">
-          <div className="container">
-            <h1 className="title">
-              {`Get on board!`}
-            </h1>
-            {/* {this.renderApplicationTypeButtons()} */}
-            <Form
-              onSubmit={this.handleSubmitHighLevel}
-              render={this.renderForm}
-            />
-          </div>
-        </MainContainer>
-      </Fragment>
+      <MainContainer name="signup">
+        <div className="container">
+          <h1 className="title">
+            {`Get on board!`}
+          </h1>
+          {/* {this.renderApplicationTypeButtons()} */}
+          <Form
+            onSubmit={this.handleSubmitHighLevel}
+            render={this.renderForm}
+          />
+        </div>
+      </MainContainer>
     )
   }
 }

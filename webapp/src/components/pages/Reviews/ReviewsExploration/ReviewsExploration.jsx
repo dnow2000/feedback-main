@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { Form } from 'react-final-form'
 import { assignData, requestData } from 'redux-thunk-data'
@@ -98,7 +98,7 @@ class ReviewsExploration extends PureComponent {
     const { hasMore, isLoading } = this.state
 
     return (
-      <Fragment>
+      <>
         <Form
           initialValues={queryParams}
           onSubmit={this.onKeywordsSubmit}
@@ -138,7 +138,7 @@ class ReviewsExploration extends PureComponent {
             ))
           }
         </LoadingInfiniteScroll>
-      </Fragment>
+      </>
     )
   }
 }

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
@@ -119,7 +119,7 @@ class Verdict extends PureComponent {
     const { isCreatedEntity } = query.context()
 
     return (
-      <Fragment>
+      <>
         <HeaderContainer />
         <MainContainer name="verdict">
           <section className="section hero">
@@ -189,7 +189,7 @@ class Verdict extends PureComponent {
             />
           </section>
         </MainContainer>
-      </Fragment>
+      </>
     )
   }
 }

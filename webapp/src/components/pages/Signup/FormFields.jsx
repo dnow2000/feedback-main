@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import {
   EmailField,
@@ -34,7 +34,7 @@ class FormFields extends React.PureComponent {
     const { onImageChange } = this.props
     const { role } = this.state
     return (
-      <Fragment>
+      <>
         <div className="fields-container">
           <div className="fields-table">
             <PictureField
@@ -158,7 +158,7 @@ class FormFields extends React.PureComponent {
             text="I hereby accept Terms and Conditions relatives to science-feedback.co."
           />
         </div>
-      </Fragment>
+      </>
     )
   }
 

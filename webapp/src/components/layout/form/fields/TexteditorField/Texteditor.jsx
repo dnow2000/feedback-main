@@ -6,7 +6,7 @@ import {
   UnderlineButton,
 } from 'draft-js-buttons'
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 
 import {
   AlignmentTool,
@@ -141,21 +141,21 @@ export class TextEditor extends PureComponent {
               ref={element => { this.editor = element }}
             />
             {!readOnly && (
-              <Fragment>
+              <>
                 <InlineToolbar>
                   {
                     externalProps => (
-                      <Fragment>
+                      <>
                         <BoldButton {...externalProps} />
                         <ItalicButton {...externalProps} />
                         <UnderlineButton {...externalProps} />
                         <LinkButton {...externalProps} />
-                      </Fragment>
+                      </>
                     )
                   }
                 </InlineToolbar>
                 <AlignmentTool />
-              </Fragment>
+              </>
             )}
           </div>
         )}

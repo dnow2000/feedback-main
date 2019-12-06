@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
@@ -99,7 +99,7 @@ class Trendings extends PureComponent {
     const { hasMore, isLoading } = this.state
 
     return (
-      <Fragment>
+      <>
         <HeaderContainer />
         <MainContainer name="trendings">
           <section className="controls">
@@ -132,7 +132,7 @@ class Trendings extends PureComponent {
               </select>
             </div>
           </section>
-          
+
           <section>
             <LoadingInfiniteScroll
               hasMore={hasMore}
@@ -149,7 +149,7 @@ class Trendings extends PureComponent {
             </LoadingInfiniteScroll>
           </section>
         </MainContainer>
-      </Fragment>
+      </>
     )
   }
 }

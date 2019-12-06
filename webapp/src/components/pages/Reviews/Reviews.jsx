@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
@@ -6,7 +6,7 @@ import MainContainer from 'components/layout/Main/MainContainer'
 import ReviewsExplorationContainer from './ReviewsExploration/ReviewsExplorationContainer'
 
 const Reviews = () => (
-  <Fragment>
+  <>
     <HeaderContainer />
     <MainContainer name="reviews">
 
@@ -20,7 +20,7 @@ const Reviews = () => (
         <ReviewsExplorationContainer />
       </section>
     </MainContainer>
-  </Fragment>
+  </>
 )
 
 export default Reviews

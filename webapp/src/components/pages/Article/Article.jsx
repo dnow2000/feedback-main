@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-thunk-data'
@@ -88,7 +88,7 @@ class Article extends PureComponent {
     const { isFormLoading } = this.state
 
     return (
-      <Fragment>
+      <>
         <HeaderContainer />
         <MainContainer name="article">
           <section className="section hero is-relative">
@@ -157,7 +157,7 @@ class Article extends PureComponent {
           </section>
         </MainContainer>
         <Footer />
-      </Fragment>
+      </>
     )
   }
 }

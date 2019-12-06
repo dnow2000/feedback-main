@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types'
-import React, { Fragment } from 'react'
+import React from 'react'
 import Helmet from 'react-helmet'
 
 import { IS_DEVELOPMENT, ROOT_PATH } from 'utils/config'
 
 const App = ({ children }) => (
-  <Fragment>
+  <>
     <Helmet>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, shrink-to-fit=no" />
@@ -23,7 +23,7 @@ const App = ({ children }) => (
       <title>Science Feedback</title>
     </Helmet>
     {children}
-  </Fragment>
+  </>
 )
 
 App.propTypes = {

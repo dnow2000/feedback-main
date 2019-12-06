@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { requestData } from 'redux-thunk-data'
 
 import PublicationsManagerContainer from './PublicationsManager/PublicationsManagerContainer'
@@ -26,7 +26,7 @@ class User extends PureComponent {
   render () {
     const { user } = this.props
     return (
-      <Fragment>
+      <>
         <HeaderContainer />
         <MainContainer name="review">
           <section className="section hero">
@@ -44,7 +44,7 @@ class User extends PureComponent {
             <PublicationsManagerContainer user={user} />
           </section>
         </MainContainer>
-      </Fragment>
+      </>
     )
   }
 }

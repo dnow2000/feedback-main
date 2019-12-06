@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { requestData } from 'redux-thunk-data'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
@@ -41,7 +41,7 @@ class Verdicts extends PureComponent {
       verdicts
     } = this.props
     return (
-      <Fragment>
+      <>
         <HeaderContainer />
         <MainContainer name='verdicts'>
           <section className='section hero'>
@@ -57,7 +57,7 @@ class Verdicts extends PureComponent {
             }
           </section>
         </MainContainer>
-      </Fragment>
+      </>
     )
   }
 }

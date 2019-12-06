@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 
 import RoleButtonContainer from './RoleButton/RoleButtonContainer'
 
@@ -15,7 +15,7 @@ class RolesManager extends PureComponent {
   render() {
     const { roleTypes, user } = this.props
     return (
-      <Fragment>
+      <>
         {roleTypes.map(roleType => (
           <RoleButtonContainer
             key={roleType.id}
@@ -23,7 +23,7 @@ class RolesManager extends PureComponent {
             user={user}
           />
         ))}
-      </Fragment>
+      </>
     )
   }
 }

@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { Fragment, PureComponent } from 'react'
+import React, { PureComponent } from 'react'
 import { NavLink } from 'react-router-dom'
 
 class FormFooter extends PureComponent {
@@ -30,7 +30,7 @@ class FormFooter extends PureComponent {
     return (
       <div className="control level">
         {canEdit && (
-          <Fragment>
+          <>
             {readOnly ? (
               <button
                 className="button is-primary"
@@ -55,7 +55,7 @@ class FormFooter extends PureComponent {
                 Cancel
               </button>
             )}
-          </Fragment>
+          </>
         )}
         {readOnly ? (
           <NavLink className="button is-secondary" to="/articles">
