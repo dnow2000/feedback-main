@@ -1,11 +1,10 @@
 .main {
+  padding-top: $header-height;
+  min-height: 100vh;
 
   .container {
     margin-left: auto;
     margin-right: auto;
-    min-height: 100vh;
-    padding-bottom: rem(24px);
-    padding-top: $header-height;
     width: 75%;
 
     .section {

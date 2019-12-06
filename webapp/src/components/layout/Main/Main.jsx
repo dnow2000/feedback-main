@@ -4,10 +4,8 @@ import { Modal } from 'redux-react-modals'
 
 const Main = ({ children, name, Tag }) => (
   <Tag className={`main ${name}-main`}>
-    <div className="container">
-      <Modal name="main" />
-      {children}
-    </div>
+    <Modal name="main" />
+    {children}
   </Tag>
 )
 

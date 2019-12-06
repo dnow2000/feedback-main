@@ -47,7 +47,7 @@ const Header = ({ currentUser, location, whiteHeader }) => {
             </Fragment>
           ) : (
             !isSignPathname && (
-              <NavLink className="button is-primary" to="/signin">
+              <NavLink className="button" to="/signin">
                 Sign In
               </NavLink>
             )
