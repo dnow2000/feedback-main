@@ -39,9 +39,9 @@ class FormFields extends React.PureComponent {
           <div className="fields-table">
             <PictureField
               className="col-tablet-33"
-              id="picture"
+              id="thumb"
               label="Photo"
-              name="picture"
+              name="thumb"
               onImageChange={onImageChange}
               required
             />
@@ -69,6 +69,14 @@ class FormFields extends React.PureComponent {
             placeholder="john.doe@gmail.com"
             required
             sublabel="Official email from your research institution, it will not be displayed publicly."
+            type="email"
+          />
+          <PasswordField
+            id="password"
+            label="Password"
+            name="password"
+            placeholder="MySaf3Pa55word!"
+            required
           />
           <TextField
             id="website"
@@ -98,11 +106,11 @@ class FormFields extends React.PureComponent {
           </div>
           <TextField
             id="expertise"
-            name="expertiseAreas"
             label="Areas of expertise"
+            name="expertiseAreas"
             placeholder="Cardiovascular health, Infectious diseases, Multiple sclerosis"
-            sublabel="Please separate fields by a comma"
             required
+            sublabel="Please separate fields by a comma"
           />
           {role === 'reviewer' && (
             <>
@@ -111,42 +119,44 @@ class FormFields extends React.PureComponent {
               </div>
               <TextField
                 id="publication-1"
-                name="publication-1"
                 label="Publication 1"
+                name="publication1"
                 placeholder="Link to qualifying publications."
                 required
               />
               <TextField
                 id="publication-2"
-                name="publication-2"
                 label="Publication 2"
+                name="publication2"
                 placeholder="Link to qualifying publications."
               />
               <TextField
                 id="publication-3"
-                name="publication-3"
                 label="Publication 3"
+                name="publication3"
                 placeholder="Link to qualifying publications."
               />
               <TextField
                 id="orcid-id"
-                name="orcidId"
                 label="ORCID id"
+                name="orcidId"
                 sublabel="You can create one here: https://orcid.org"
               />
             </>
           )}
-        <div className="pt20"></div>
-        <CheckboxField
+          <div className="pt20" />
+          <CheckboxField
             id="community-rules"
-            name="community-rules"
+            name="communityRules"
+            required
             text="I agree to comply to community rules."
-        />
-        <CheckboxField
+          />
+          <CheckboxField
             id="terms-and-conditions"
-            name="terms-and-conditions"
+            name="termsAndConditions"
+            required
             text="I hereby accept Terms and Conditions relatives to science-feedback.co."
-        />
+          />
         </div>
       </Fragment>
     )

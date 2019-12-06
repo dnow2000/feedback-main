@@ -58,6 +58,7 @@ export class TextField extends React.PureComponent {
                 autoComplete={autoComplete ? 'on' : 'off'}
                 className={`field-input field-${type}`}
                 disabled={disabled || readOnly}
+                name={name}
                 placeholder={readOnly ? '' : placeholder}
                 readOnly={readOnly}
                 required={!!required}

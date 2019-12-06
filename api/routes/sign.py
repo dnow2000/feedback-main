@@ -26,6 +26,7 @@ def signin():
     stamp_session(user)
     return jsonify(as_dict(user, includes=USER_INCLUDES)), 200
 
+
 @app.route("/users/signout", methods=["GET"])
 @login_required
 def signout():
@@ -33,17 +34,18 @@ def signout():
     logout_user()
     return jsonify({"global": "Disconnected"})
 
+
 @app.route("/users/signup", methods=["POST"])
 def signup():
     check_thumb_in_request(files=request.files, form=request.form)
 
     user_dict = dict({}, **request.form)
-    if 'picture' in user_dict:
-        del user_dict['picture']
+    if 'thumb' in user_dict:
+        del user_dict['thumb']
 
     publications = []
     for index in [1, 2, 3]:
-        publication_key = 'publication-{}'.format(index)
+        publication_key = 'publication{}'.format(index)
         if publication_key in request.form:
             publication_url = request.form[publication_key]
             publication = Publication.query.filter_by(url=publication_url).first()

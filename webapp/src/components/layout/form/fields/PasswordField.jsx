@@ -7,7 +7,7 @@ import { createValidatePasswordField } from '../validators'
 import Icon from 'components/layout/Icon'
 
 const DEFAULT_ERROR_MESSAGE =
-  'Password should contain at east 12 characters, one number, one capital letter, one lower case and one from any of _-&?~#|^@=+.$,<>%*!:;'
+  'Password should contain at least 12 characters, one number, one capital letter, one lower case and one from any of _-&?~#|^@=+.$,<>%*!:;'
 const validatePasswordField = createValidatePasswordField(DEFAULT_ERROR_MESSAGE)
 
 export class PasswordField extends React.PureComponent {

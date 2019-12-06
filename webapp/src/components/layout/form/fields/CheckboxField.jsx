@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
 
 import { FieldError } from '../layout'
+import getRequiredValidate from '../utils/getRequiredValidate'
 
 export class CheckboxField extends React.PureComponent {
 
@@ -36,6 +37,7 @@ export class CheckboxField extends React.PureComponent {
           <input
             {...inputProps}
             {...input}
+            name={name}
             required={!!required}
             type={type}
           />
@@ -72,6 +74,7 @@ export class CheckboxField extends React.PureComponent {
         validate={validate}
         type={type}
         render={this.renderField}
+        validate={getRequiredValidate(required)}
       />
     )
   }
