@@ -33,7 +33,7 @@ export class PasswordField extends React.PureComponent {
               onClick={this.onToggleVivisbility}
               className="no-border no-outline no-background mx12 is-primary-text"
             >
-              <Icon name={`ico-eye${status}`} />
+              <Icon name={`ico-eye${status}.svg`} />
             </button>
           )
         }

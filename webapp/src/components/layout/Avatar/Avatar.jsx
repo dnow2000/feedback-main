@@ -14,7 +14,7 @@ const Avatar = ({ className, user, whiteHeader }) => {
   }
   return (
     <span className='icon'>
-      <Icon name={`ico-user-circled${whiteHeader ? '-w' : ''}`} />
+      <Icon name={`ico-user-circled${whiteHeader ? '-w' : ''}.svg`} />
     </span>
   )
 }

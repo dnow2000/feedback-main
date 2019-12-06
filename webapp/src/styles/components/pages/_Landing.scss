@@ -4,6 +4,8 @@
   width: 100%;
 
   section {
+    padding-bottom: 100px;
+
     &.hero {
       align-items: center;
       background-image: url("/images/hero-img.png");
@@ -11,11 +13,24 @@
       background-position: center;
       background-size: cover;
       display: flex;
-      height: 700px;
+      height: 600px;
+      justify-content: center;
+      padding-bottom: 0px;
+    }
+
+    &.footer {
+      align-items: center;
+      background-color: $turquoise-dark;
+      height: 500px;
       justify-content: center;
     }
 
     .container {
+      &.is-footer {
+        align-items: baseline;
+        display: flex;
+        flex-direction: row;
+      }
       align-items: center;
       display: flex;
       flex-direction: column;
@@ -23,13 +38,34 @@
       max-width: 1024px;
       margin: auto;
     }
+
+    .section-title {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-bottom: 20px;
+      padding-top: 50px;
+      width: 100%;
+      &.has-border-top {
+        border-top-width: 1px;
+        border-top-style: solid;
+        border-top-color: $grey-light
+      }
+    }
   }
 
   .cta {
     @extend .button;
-    background-color: $white;
+
+    &.white {
+      background-color: $white;
+      color: $turquoise;
+    }
+
+    background-color: $turquoise;
+    color: $white;
     border-radius: 1.5em;
-    color: $turquoise;
     font-size: rem(18px);
     padding: 0.75em;
     padding-left: 30px;
@@ -40,15 +76,31 @@
     color: $white;
     font-size: rem(48px);
     font-weight: 200;
+    margin-bottom: 100px;
     text-align: center;
-    margin-bottom: 100px
   }
 
   .h2 {
     color: $black;
     font-size: rem(44px);
     font-weight: 800;
+    margin-top: 30px;
+    margin-bottom: 70px;
     text-align: center;
-    margin-bottom: 100px
+  }
+
+  .p {
+    color: $black;
+    font-size: rem(20px);
+    font-weight: 300;
+    max-width: 800px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+    line-height: rem(33px);
+    text-align: center;
+  }
+
+  .image {
+    width: 100%;
   }
 }
