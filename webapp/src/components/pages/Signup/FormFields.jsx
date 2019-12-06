@@ -106,11 +106,11 @@ class FormFields extends React.PureComponent {
           </div>
           <TextField
             id="expertise"
-            name="expertiseAreas"
             label="Areas of expertise"
+            name="expertiseAreas"
             placeholder="Cardiovascular health, Infectious diseases, Multiple sclerosis"
-            sublabel="Please separate fields by a comma"
             required
+            sublabel="Please separate fields by a comma"
           />
           {role === 'reviewer' && (
             <>
@@ -119,44 +119,44 @@ class FormFields extends React.PureComponent {
               </div>
               <TextField
                 id="publication-1"
-                name="publication1"
                 label="Publication 1"
+                name="publication1"
                 placeholder="Link to qualifying publications."
                 required
               />
               <TextField
                 id="publication-2"
-                name="publication2"
                 label="Publication 2"
+                name="publication2"
                 placeholder="Link to qualifying publications."
               />
               <TextField
                 id="publication-3"
-                name="publication3"
                 label="Publication 3"
+                name="publication3"
                 placeholder="Link to qualifying publications."
               />
               <TextField
                 id="orcid-id"
-                name="orcidId"
                 label="ORCID id"
+                name="orcidId"
                 sublabel="You can create one here: https://orcid.org"
               />
             </>
           )}
-        <div className="pt20"></div>
-        <CheckboxField
+          <div className="pt20" />
+          <CheckboxField
             id="community-rules"
             name="communityRules"
-            text="I agree to comply to community rules."
             required
-        />
-        <CheckboxField
+            text="I agree to comply to community rules."
+          />
+          <CheckboxField
             id="terms-and-conditions"
             name="termsAndConditions"
-            text="I hereby accept Terms and Conditions relatives to science-feedback.co."
             required
-        />
+            text="I hereby accept Terms and Conditions relatives to science-feedback.co."
+          />
         </div>
       </Fragment>
     )

@@ -6,25 +6,24 @@ import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 
 import MainContainer from 'components/layout/Main/MainContainer'
-
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
 
 
 
 function getTopErrorId(errors) {
-  if (errors.length === 0) {
+  if (!errors || Array.isArray(errors)) {
     return null
   }
-  const errorIds = Object.keys(errors[0])
-  if (errorIds.includes('global')) {
+  const errorIds = Object.keys(errors)
+  if (errorIds.length === 0) {
     return null
   }
-  return errorIds[0]  // TODO @colas: find top
+  return errorIds[0]  // TODO @colas: find top positioned instead of random 
 }
 
 function getGlobalError(errors) {
-  if (errors.length === 0) {
+  if (!errors || !Array.isArray(errors) || errors.length === 0) {
     return null
   }
   const errorIds = Object.keys(errors[0])
@@ -46,12 +45,12 @@ class Signup extends PureComponent {
     const errors = parseSubmitErrors(payload.errors)
     const globalError = getGlobalError(errors)
     const topErrorId = getTopErrorId(errors)
-    console.log('BAKCEND GLOBAL ERROR', globalError)
-    console.log('BACKEND FIELD ERROR', topErrorId)
-    this.setState({ isFormLoading: false, globalError }, () => formResolver(errors))
-    if (topErrorId) {
-      this.scrollToError(topErrorId)
-    }
+    this.setState({ isFormLoading: false, globalError }, () => {
+      formResolver(errors)
+      if (topErrorId) {
+        setTimeout(() => this.scrollToError(topErrorId))
+      }
+    })
   }
 
   scrollToError = errorId => {
@@ -61,8 +60,7 @@ class Signup extends PureComponent {
       return
     }
     const topErrorPosition = element.offsetTop
-    console.log('SCROLL to POSITION', errorId, topErrorPosition)
-    window.scrollTo(0, topErrorPosition - 100)
+    window.scrollTo(0, topErrorPosition - 20)
   }
 
   handleRequestSuccess = formResolver => () => {
@@ -127,11 +125,11 @@ class Signup extends PureComponent {
     const errorIds = Object.keys(errors)
     const handleSubmitAndScrollIfNeeded = (event) => {
       console.log('FRONTEND FIELD ERROR', errorIds)
+      handleSubmit(event)
       if (errorIds.length > 0) {
         const topErrorId = errorIds[0]  // TODO @colas: get top error
         this.scrollToError(topErrorId)
       }
-      handleSubmit(event)
     }
     return (
       <form
