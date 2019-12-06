@@ -75,15 +75,15 @@ class Signup extends PureComponent {
 
   handleSubmitHighLevel = formValues => {
     const { dispatch } = this.props
-    const { thumbCroppingRect, picture } = formValues
+    const { thumb, croppingRect } = formValues
     const body = new FormData()
-    body.append('thumb', picture)
-    body.append('croppingRect[x]', thumbCroppingRect.x)
-    body.append('croppingRect[y]', thumbCroppingRect.y)
-    body.append('croppingRect[width]', thumbCroppingRect.width)
-    body.append('croppingRect[height]', thumbCroppingRect.height)
+    body.append('thumb', thumb)
+    body.append('croppingRect[x]', croppingRect.x)
+    body.append('croppingRect[y]', croppingRect.y)
+    body.append('croppingRect[width]', croppingRect.width)
+    body.append('croppingRect[height]', croppingRect.height)
     Object.keys(formValues).forEach( key => {
-      if (key === 'thumb' || key === 'thumbCroppingRect') {
+      if (key === 'thumb' || key === 'croppingRect') {
         return
       }
       body.append(key, formValues[key])
@@ -104,10 +104,10 @@ class Signup extends PureComponent {
     return formSubmitPromise
   }
 
-  onImageChange = form => (picture, thumbCroppingRect) => {
+  onImageChange = form => (thumb, croppingRect) => {
     form.batch(() => {
-      form.change('thumb', picture)
-      form.change('thumbCroppingRect', thumbCroppingRect)
+      form.change('thumb', thumb)
+      form.change('croppingRect', croppingRect)
     })
   }
 
