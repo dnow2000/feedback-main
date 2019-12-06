@@ -69,8 +69,9 @@ class FormFields extends React.PureComponent {
             placeholder="john.doe@gmail.com"
             required
             sublabel="Official email from your research institution, it will not be displayed publicly."
+            type="email"
           />
-          <TextField
+          <PasswordField
             id="password"
             label="Password"
             name="password"
