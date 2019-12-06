@@ -1,32 +1,49 @@
-import React, { Fragment } from "react"
+import PropTypes from 'prop-types'
+import React, { useEffect } from "react"
 import { NavLink } from 'react-router-dom'
 
 import MainContainer from 'components/layout/Main/MainContainer'
+import HeaderContainer from 'components/layout/Header/HeaderContainer'
 
-const titleClassName = "title has-text-grey has-text-weight-normal is-size-1"
-const subtitleClassName = "subtitle has-text-grey-light is-size-3"
 
-const Landing = () => (
-  <Fragment>
-    <MainContainer name="landing">
-        <div className="col-1of2">
-          <p className={titleClassName}>
-            On fait du fact checking, rejoins nous ;)
-          </p>
-          <br />
-          <p className={subtitleClassName}>
-            Science Feedback is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
-          </p>
-        </div>
-        <NavLink className="button is-primary" to="/signup">
-          Register
-        </NavLink>
-        <NavLink className="button is-primary" to="/signin">
-          Already have an account ?
-        </NavLink>
-    </MainContainer>
+const Landing = ({requestGetVerdicts}) => {
+  useEffect(() => {requestGetVerdicts()}, [])
+  return (
+    <>
+      <HeaderContainer />
+      <MainContainer name="landing">
 
-  </Fragment>
-)
+        <section className="hero">
+          <div className="container">
+            <p className="h1">
+              <b>2000</b> articles fact-checked<br />
+              by <b>14450</b> Scientists
+            </p>
+            <NavLink className="cta" to="/signup">
+              Join the community
+            </NavLink>
+          </div>
+        </section>
+        <section>
+          <div className="container">
+
+            <p className="h2">
+              Latest Reviews
+            </p>
+            <div>
+
+            </div>
+          </div>
+        </section>
+
+      </MainContainer>
+
+    </>
+  )
+}
+
+Landing.propTypes = {
+  requestGetVerdicts: PropTypes.func.isRequired
+}
 
 export default Landing

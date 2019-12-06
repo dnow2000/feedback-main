@@ -20,7 +20,7 @@ def list_verdicts():
 
     verdicts = query.all()
 
-    return jsonify([as_dict(verdict(includes=VERDICT_INCLUDES)) for verdict in verdicts])
+    return jsonify([as_dict(verdict, includes=VERDICT_INCLUDES) for verdict in verdicts])
 
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
 @login_or_api_key_required

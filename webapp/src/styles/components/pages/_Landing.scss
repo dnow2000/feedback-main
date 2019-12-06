@@ -1,47 +1,54 @@
 .landing-main {
-
+  padding-left: 0;
+  padding-right: 0;
   width: 100%;
 
-  .section {
+  section {
+    &.hero {
+      align-items: center;
+      background-image: url("/images/hero-img.png");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      display: flex;
+      height: 700px;
+      justify-content: center;
+    }
 
+    .container {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 1024px;
+      margin: auto;
+    }
+  }
+
+  .cta {
+    @extend .button;
+    background-color: $white;
+    border-radius: 1.5em;
+    color: $turquoise;
+    font-size: rem(18px);
+    padding: 0.75em;
+    padding-left: 30px;
+    padding-right: 30px
+  }
+
+  .h1 {
+    color: $white;
+    font-size: rem(48px);
+    font-weight: 200;
     text-align: center;
-    @media(min-width: $tablet) {
-      text-align: left;
-    }
+    margin-bottom: 100px
+  }
 
-    .col-1of2 {
-      &:first-of-type {
-        padding-left: 120px;
-        padding-right: 16px;
-      }
-      &:last-of-type {
-        padding-left: 16px;
-        padding-right: 120px;
-      }
-    }
-
-    .bubble {
-      display: none;
-      height: 400px;
-
-      &.bubble-left {
-        left: 2.5rem;
-      }
-
-      &.bubble-right {
-        right: 2.5rem;
-        @media(min-width: $desktop) {
-          right: 5rem;
-        }
-        @media(min-width: $widescreen) {
-          right: 10rem;
-        }
-      }
-
-      @media(min-width: $tablet) {
-        display: inherit;
-      }
-
-    }
+  .h2 {
+    color: $black;
+    font-size: rem(44px);
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 100px
   }
 }
