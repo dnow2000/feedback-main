@@ -1,0 +1,8 @@
+.checkboxes {
+  display: flex;
+  justify-content: flex-wrap;
+
+  button {
+    @extend .button;
+  }
+}

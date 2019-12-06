@@ -44,13 +44,13 @@ class Radios extends PureComponent {
     const { value: stateValue } = this.state
 
     return (
-      <div className={className}>
+      <div className='radios'>
         {options && options.map(({ label, title, value }) => {
           const checked = stateValue === value
           return (
             <div
               className={classnames(
-                `radio radio-${label.replace(/\s/g,"-")} flex-columns items-center`,
+                `radio radio-${label.replace(/\s/g,"-")}`,
                 { checked }
               )}
               key={value}
@@ -59,7 +59,6 @@ class Radios extends PureComponent {
               <input
                 {...inputProps}
                 checked={checked}
-                className="mr8"
                 defaultValue={undefined}
                 disabled={disabled || readOnly}
                 readOnly={readOnly}

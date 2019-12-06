@@ -8,14 +8,14 @@ import {
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
+import { ControlBar } from './ControlBar'
+import ImageDropzone from './ImageDropzone'
 import {
   AlignmentTool,
   InlineToolbar,
   LinkButton,
   plugins,
 } from './plugins'
-import { ControlBar } from './ControlBar'
-import ImageDropzone from './ImageDropzone'
 
 export class TextEditor extends PureComponent {
   constructor (props) {

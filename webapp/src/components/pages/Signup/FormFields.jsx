@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import {
-  EmailField,
-  PasswordField,
-  TextField,
-  PictureField,
-  CheckboxField
-} from 'components/layout/form/fields'
+import CheckboxField from 'components/layout/form/fields/CheckboxField'
+import EmailField from 'components/layout/form/fields/EmailField'
+import PasswordField from 'components/layout/form/fields/PasswordField'
+import PictureField from 'components/layout/form/fields/PictureField'
+import TextField from 'components/layout/form/fields/TextField'
+
 
 const ROLES = {
   editor: 'editor',

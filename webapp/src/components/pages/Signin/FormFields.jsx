@@ -3,7 +3,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import { EmailField, PasswordField } from 'components/layout/form/fields'
+import EmailField from 'components/layout/form/fields/EmailField'
+import PasswordField from 'components/layout/form/fields/PasswordField'
 
 const FormFields = () => (
   <div>

@@ -1,0 +1,10 @@
+.radios {
+  .radio {
+    align-items: center;
+    display: flex;
+
+    input {
+      margin-right: rem(8px);
+    }
+  }
+}

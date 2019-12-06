@@ -27,7 +27,6 @@ export const RadiosField = ({
           <div className="field-inner">
             <Radios
               {...inputProps}
-              className="field-radios"
               disabled={disabled}
               options={options}
               readOnly={readOnly}

@@ -4,7 +4,7 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { Form } from 'react-final-form'
 import { assignData, requestData } from 'redux-thunk-data'
 
-import { TextField } from 'components/layout/form/fields'
+import TextField from 'components/layout/form/fields/TextField'
 import { itemReviewNormalizer } from 'utils/normalizers'
 
 import ReviewItemContainer from './ReviewItem/ReviewItemContainer'

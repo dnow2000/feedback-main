@@ -4,8 +4,10 @@ import ReactDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
 
+import { THUMBS_URL } from 'utils/config'
+
 import { imagePlugin } from './plugins'
-import { THUMBS_URL } from '../../../../../utils/config'
+
 
 const { addImage } = imagePlugin
 

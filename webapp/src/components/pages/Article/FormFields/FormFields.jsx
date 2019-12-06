@@ -2,11 +2,9 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import {
-  CheckboxField,
-  TextareaField,
-  TextField,
-} from 'components/layout/form/fields'
+import CheckboxField from 'components/layout/form/fields/CheckboxField'
+import TextareaField from 'components/layout/form/fields/TextareaField'
+import TextField from 'components/layout/form/fields/TextField'
 
 import createValidateScrapField from './validators/createValidateScrapField'
 

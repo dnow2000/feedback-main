@@ -1,15 +1,12 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import {
-  HiddenField,
-  CheckboxesField,
-  SelectField,
-  TexteditorField
-} from '../../../layout/form/fields'
-import {
-  selectOptionsFromNameAndEntitiesAndPlaceholder,
-} from '../../../layout/form/utils'
+import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
+import HiddenField from 'components/layout/form/fields/HiddenField'
+import SelectField from 'components/layout/form/fields/SelectField'
+import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
+
+import selectOptionsFromNameAndEntitiesAndPlaceholder from 'components/layout/form/utils/selectOptionsFromNameAndEntitiesAndPlaceholder'
 
 const SELECT_EVALUATIONS_NAME = 'evaluationId'
 const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'

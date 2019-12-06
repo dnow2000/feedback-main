@@ -50,13 +50,13 @@ class Checkboxes extends PureComponent {
     const { values } = this.state
 
     return (
-      <div className={classnames('flex-columns flex-wrap', className)}>
+      <div className={classnames('checkboxes', className)}>
         {options && options.map(({ label, title, value }) => {
           const checked = values.includes(value)
           return (
             <span className="" key={value}>
               <button
-                className={classnames("button", {
+                className={classnames({
                   checked,
                   "not-checked": !checked
                 })}
