@@ -12,7 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  color: $black;
   font-family: Apercu;
   font-size: 18px;
   font-weight: bold;
@@ -20,11 +20,14 @@
   font-style: normal;
   line-height: normal;
   letter-spacing: normal;
-  color: #000000;
+  position: relative;
 
   .field-asterisk {
-    color: red;
+    color: $red;
     font-size: 25px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
   }
 }
 
@@ -62,7 +65,7 @@
   padding-right: 18px;
   width: 100%;
   background-color: transparent;
-  height: 18px;
+  height: 100%;
   font-family: Apercu;
   font-size: 16px;
   font-weight: normal;
@@ -70,6 +73,15 @@
   font-style: normal;
   line-height: 1.13;
   letter-spacing: normal;
+
+  &:focus {
+    border-color: $primary;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: none !important;
+    outline:0px !important;
+    -webkit-appearance:none;
+  }
 }
 
 //
@@ -149,6 +161,8 @@
 //
 .field-errors {
   color: $red;
+  font-weight: 200;
+  padding-top: 10px;
   // min-height: 24px;
 
   &:empty::before {
@@ -158,6 +172,7 @@
   &.field-error-message + .field-error-message {
     // si on a plusieurs erreurs pour un seul champ
     @extend .pl12;
+    color: $red;
   }
 }
 
