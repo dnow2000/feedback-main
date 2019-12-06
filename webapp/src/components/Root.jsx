@@ -1,6 +1,5 @@
 import React from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
-import { hot } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import {
   BrowserRouter,
@@ -32,4 +31,4 @@ const Root = () => (
   </Provider>
 )
 
-export default hot(module)(Root)
+export default Root
