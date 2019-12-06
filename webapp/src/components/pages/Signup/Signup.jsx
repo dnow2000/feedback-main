@@ -75,15 +75,15 @@ class Signup extends PureComponent {
 
   handleSubmitHighLevel = formValues => {
     const { dispatch } = this.props
-    const { pictureCroppingRect, picture } = formValues
+    const { thumbCroppingRect, picture } = formValues
     const body = new FormData()
     body.append('thumb', picture)
-    body.append('croppingRect[x]', pictureCroppingRect.x)
-    body.append('croppingRect[y]', pictureCroppingRect.y)
-    body.append('croppingRect[width]', pictureCroppingRect.width)
-    body.append('croppingRect[height]', pictureCroppingRect.height)
+    body.append('croppingRect[x]', thumbCroppingRect.x)
+    body.append('croppingRect[y]', thumbCroppingRect.y)
+    body.append('croppingRect[width]', thumbCroppingRect.width)
+    body.append('croppingRect[height]', thumbCroppingRect.height)
     Object.keys(formValues).forEach( key => {
-      if (key === 'picture' || key === 'pictureCroppingRect') {
+      if (key === 'thumb' || key === 'thumbCroppingRect') {
         return
       }
       body.append(key, formValues[key])
@@ -104,10 +104,10 @@ class Signup extends PureComponent {
     return formSubmitPromise
   }
 
-  onImageChange = form => (picture, pictureCroppingRect) => {
+  onImageChange = form => (picture, thumbCroppingRect) => {
     form.batch(() => {
-      form.change('picture', picture)
-      form.change('pictureCroppingRect', pictureCroppingRect)
+      form.change('thumb', picture)
+      form.change('thumbCroppingRect', thumbCroppingRect)
     })
   }
 
@@ -122,7 +122,7 @@ class Signup extends PureComponent {
     } = form
     const errorIds = Object.keys(errors)
     const handleSubmitAndScrollIfNeeded = (event) => {
-      console.log('FRONTEND FIELD ERROR', errorIds)
+      console.log('FRONTEND FIELD ERROR', errors)
       handleSubmit(event)
       if (errorIds.length > 0) {
         const topErrorId = errorIds[0]  // TODO @colas: get top error

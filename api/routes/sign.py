@@ -40,8 +40,8 @@ def signup():
     check_thumb_in_request(files=request.files, form=request.form)
 
     user_dict = dict({}, **request.form)
-    if 'picture' in user_dict:
-        del user_dict['picture']
+    if 'thumb' in user_dict:
+        del user_dict['thumb']
 
     publications = []
     for index in [1, 2, 3]:
