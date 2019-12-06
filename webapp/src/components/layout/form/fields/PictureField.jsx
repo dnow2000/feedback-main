@@ -24,6 +24,12 @@ class PictureField extends React.PureComponent {
     }
   }
 
+  componentWillUnmount() {
+    if (this.croppingRectInterval) {
+      clearInterval(this.croppingRectInterval)
+    }
+  }
+
   onClickAttachFile = event => {
     this.setState({
       image: event.target.files[0],
@@ -45,8 +51,19 @@ class PictureField extends React.PureComponent {
     if (!this.avatarRef) {
       return
     }
-    const croppingRect = this.avatarRef.current.getCroppingRect()
-    onImageChange(image, croppingRect)
+    let croppingRect = this.avatarRef.current.getCroppingRect()
+    if (croppingRect.height) {
+      onImageChange(image, croppingRect)
+      return
+    }
+    this.croppingRectInterval = setInterval(() => {
+      croppingRect = this.avatarRef.current.getCroppingRect()
+      console.log('RETRY CROP', croppingRect)
+      if (croppingRect.height) {
+        onImageChange(image, croppingRect)
+        clearInterval(this.croppingRectInterval)
+      }
+    }, 1000)
   }
 
   renderSlider = () => {
@@ -107,6 +124,7 @@ class PictureField extends React.PureComponent {
                     ref={this.avatarRef}
                     scale={scale}
                     style={{ width: '100%', height: '100%' }}
+                    border={0}
                   />
                 </div>
               )}

@@ -11,8 +11,8 @@ import FormFooter from './FormFooter'
 
 
 
-function getTopErrorId(errors) {
-  if (!errors || Array.isArray(errors)) {
+function getBackendFieldErrorId(errors) {
+  if (!errors || errors[0]) {
     return null
   }
   const errorIds = Object.keys(errors)
@@ -22,8 +22,8 @@ function getTopErrorId(errors) {
   return errorIds[0]  // TODO @colas: find top positioned instead of random
 }
 
-function getGlobalError(errors) {
-  if (!errors || !Array.isArray(errors) || errors.length === 0) {
+function getBackendGlobalError(errors) {
+  if (!errors || !errors[0]) {
     return null
   }
   const errorIds = Object.keys(errors[0])
@@ -43,12 +43,15 @@ class Signup extends PureComponent {
   handleRequestFail = formResolver => (state, action) => {
     const { payload } = action
     const errors = parseSubmitErrors(payload.errors)
-    const globalError = getGlobalError(errors)
-    const topErrorId = getTopErrorId(errors)
+    console.log('BACKEND ERRORS', errors)
+    const globalError = getBackendGlobalError(errors)
+    console.log('BACKEND GLOBAL ERROR', globalError)
+    const fieldErrorId = getBackendFieldErrorId(errors)
+    console.log('BACKEND FIELD ERROR', fieldErrorId)
     this.setState({ isFormLoading: false, globalError }, () => {
       formResolver(errors)
-      if (topErrorId) {
-        this.scrollToError(topErrorId)
+      if (fieldErrorId) {
+        this.scrollToError(fieldErrorId)
       }
     })
   }
@@ -80,7 +83,6 @@ class Signup extends PureComponent {
     body.append('thumb', thumb)
     body.append('croppingRect[x]', croppingRect.x)
     body.append('croppingRect[y]', croppingRect.y)
-    body.append('croppingRect[width]', croppingRect.width)
     body.append('croppingRect[height]', croppingRect.height)
     Object.keys(formValues).forEach( key => {
       if (key === 'thumb' || key === 'croppingRect') {
@@ -122,11 +124,11 @@ class Signup extends PureComponent {
     } = form
     const errorIds = Object.keys(errors)
     const handleSubmitAndScrollIfNeeded = (event) => {
-      console.log('FRONTEND FIELD ERROR', errors)
+      console.log('FRONTEND FIELD ERROR', errors, errorIds)
       handleSubmit(event)
       if (errorIds.length > 0) {
-        const topErrorId = errorIds[0]  // TODO @colas: get top error
-        this.scrollToError(topErrorId)
+        const fieldErrorId = errorIds[0]  // TODO @colas: get top error
+        this.scrollToError(fieldErrorId)
       }
     }
     return (
