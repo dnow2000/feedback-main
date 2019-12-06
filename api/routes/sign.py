@@ -26,12 +26,14 @@ def signin():
     stamp_session(user)
     return jsonify(as_dict(user, includes=USER_INCLUDES)), 200
 
+
 @app.route("/users/signout", methods=["GET"])
 @login_required
 def signout():
     discard_session()
     logout_user()
     return jsonify({"global": "Disconnected"})
+
 
 @app.route("/users/signup", methods=["POST"])
 def signup():

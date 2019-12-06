@@ -22,6 +22,10 @@ class Signup extends PureComponent {
     const errors = parseSubmitErrors(payload.errors)
     const nextState = { isFormLoading: false, submitErrors: errors }
     this.setState(nextState, () => formResolver(errors))
+    if (errors) {
+      const errorId = Object.keys(errors)[0]
+      window.scrollTo(0, document.getElementById(errorId).offsetTop - 20)
+    }
   }
 
   handleRequestSuccess = formResolver => () => {
@@ -35,7 +39,6 @@ class Signup extends PureComponent {
   }
 
   onFormSubmit = formValues => {
-    console.log('SUBMIT')
     const { dispatch } = this.props
     const { pictureCroppingRect, picture } = formValues
 
@@ -108,7 +111,6 @@ class Signup extends PureComponent {
                   (!hasValidationErrors &&
                     hasSubmitErrors &&
                     dirtySinceLastSubmit)
-                console.log('CAN SUBMIT', form.errors, submitErrors)
                 return (
                   <form
                     autoComplete="off"
