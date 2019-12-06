@@ -3,19 +3,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const FormFooter = ({ canSubmit, isLoading }) => (
-  <footer className="field buttons-field">
-    <button
-      className={classnames('button is-primary', {
-        'is-loading': isLoading,
-      })}
-      disabled={!canSubmit}
-      type="submit"
-    >
-      <span className="is-block">
-        Log In
-      </span>
-    </button>
-  </footer>
+  <button
+    className={classnames('button is-primary', {
+      'is-loading': isLoading,
+    })}
+    disabled={!canSubmit}
+    type="submit"
+  >
+      Log In
+  </button>
 )
 
 FormFooter.defaultProps = {
