@@ -139,45 +139,6 @@
 }
 
 //
-// CHECKBOX
-//
-.checkbox-field {
-  margin-bottom: 0px;
-  .checkbox-text-container {
-    padding-left: 14px;
-    height: 58px;
-    font-family: Apercu;
-    font-size: 18px;
-    font-weight: 400;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.29;
-    letter-spacing: normal;
-    color: $black;
-  }
-}
-
-//
-// ERRORS
-//
-.field-errors {
-  color: $red;
-  font-weight: 200;
-  padding-top: 10px;
-  // min-height: 24px;
-
-  &:empty::before {
-    content: "\200b"; // unicode zero width space character
-  }
-
-  &.field-error-message + .field-error-message {
-    // si on a plusieurs erreurs pour un seul champ
-    @extend .pl12;
-    color: $red;
-  }
-}
-
-//
 // SUBMIT
 //
 .submit {

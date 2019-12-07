@@ -2,16 +2,6 @@
 
 Nos règles de styles sont les suivantes:
 
-## Outils externes
-
-On utilise une librairie externe qui aide à définir des outils utilisés partout. Pour le moment on a [la-sass-vy](https://www.npmjs.com/package/la-sass-vy) qui apporte 3 utilités :
-
-  - une règle mixin qui permet d'exprimer les fonts en pixel. On peut ainsi reprendre directement les valeurs px données dans les wireframes Invision, car la règle mixin convertit automatiquement en rem les tailles des fonts pour toutes les classes utilisant les sucres `.fs<px>`
-
-  - des sucres syntaxiques `mb`, `my`, ... à la façon basscss, pour réduire la taille de code css, et rendre les fichiers css moins verbeux.
-
-  - des classNames easy-handy pour définir des composants flex, ex : `flex-columns items-center justify-content` est la config souvent utilisée dans l'application pour faire des lignes flex d'objets.
-
 ## Règles dans les fichiers react pour appeler les classes
 
 Au niveau des fichiers react avec des éléments portant des propriétés className, on applique le mieux possible le fait de :

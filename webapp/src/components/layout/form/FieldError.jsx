@@ -1,7 +1,7 @@
 /* eslint
   react/jsx-one-expression-per-line: 0 */
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 
 // NOTE: les index d'array ne doit pas servir de clé unique
 // pour les éléments d'une liste d'éléménts
@@ -28,18 +28,22 @@ export const FieldError = ({ className, customMessage, meta }) => {
     : (Array.isArray(errorMessage) && errorMessage) || [].concat(errorMessage)
   return (
     <span
-      className={`field-errors is-block ${className}`}
+      className={`field-error ${className}`}
     >
       {(errorMessage && (
-        <span className="flex-columns">
-          <span className="flex-0 mr3">
-            <span aria-hidden className="icon-warning-circled fs18" title="" />
+        <span className="container">
+          <span className="icon">
+            <span
+              aria-hidden
+              className="icon-warning-circled"
+              title=""
+            />
           </span>
-          <span className="flex-1 is-semi-bold fs12">
+          <span className="messages">
             {errorMessage.map((err, index) => (
               <span
                 key={setDangerousArrayKeyIndex(index)}
-                className="field-error-message is-block mt2"
+                className="message"
               >
                 {err}
               </span>
