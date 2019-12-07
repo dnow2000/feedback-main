@@ -10,6 +10,7 @@ const {
   NODE_ENV,
   REACT_APP_API_URL,
   REACT_APP_API_THUMBS_URL,
+  REACT_APP_LOGO_ICONS_PATH,
   REACT_APP_ROOT_ASSETS_PATH,
   REACT_APP_VERSION
 } = process.env
@@ -74,3 +75,4 @@ if (typeof window !== 'undefined' && window.cordova) {
 export const LOCALHOST_ROOT_PATH = "http://localhost:3000/"
 export const ROOT_PATH = CALC_ROOT_PATH || LOCALHOST_ROOT_PATH
 export const ROOT_ASSETS_PATH = REACT_APP_ROOT_ASSETS_PATH || `${ROOT_PATH}/static/assets`
+export const ROOT_LOGO_ICONS_PATH = REACT_APP_LOGO_ICONS_PATH || `${ROOT_PATH}/static/icons`
