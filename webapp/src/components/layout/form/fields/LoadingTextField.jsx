@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { TextField } from './TextField'
+import TextField from './TextField'
 
 export const LoadingTextField = props => {
   const { validating } = props

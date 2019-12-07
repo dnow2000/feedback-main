@@ -1,0 +1,11 @@
+.text-field {
+  .field-value {
+    align-items: center;
+    display: flex;
+
+    .field-inner {
+      align-items: center;
+      display: flex;
+    }
+  }
+}

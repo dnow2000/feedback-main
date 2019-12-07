@@ -11,7 +11,7 @@ import AvatarEditor from 'react-avatar-editor'
 
 import { ROOT_PATH } from 'utils/config'
 
-import { FieldError } from '../layout'
+import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
 class PictureField extends React.PureComponent {

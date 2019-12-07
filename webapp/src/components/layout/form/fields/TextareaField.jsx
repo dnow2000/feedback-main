@@ -7,10 +7,10 @@ import { Field } from 'react-final-form'
 import PropTypes from 'prop-types'
 import { composeValidators } from 'react-final-form-utils'
 
-import { FieldError } from '../layout'
+import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-export const TextareaField = ({
+const TextareaField = ({
   autoComplete,
   className,
   disabled,
@@ -51,7 +51,7 @@ export const TextareaField = ({
             )}
           </label>
           <div className="field-control">
-            <div className="field-value flex-columns items-center">
+            <div className="field-value">
               <span className="field-inner">
                 <Textarea
                   {...input}

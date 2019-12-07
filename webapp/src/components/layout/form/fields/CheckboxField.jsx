@@ -1,13 +1,14 @@
 /* eslint react/jsx-one-expression-per-line: 0 */
 import classnames from 'classnames'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
+import { composeValidators } from 'react-final-form-utils'
 
-import { FieldError } from '../layout'
+import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-export class CheckboxField extends React.PureComponent {
+export class CheckboxField extends PureComponent {
 
   renderField = ({ input, meta }) => {
     const {
@@ -52,29 +53,17 @@ export class CheckboxField extends React.PureComponent {
 
   render() {
     const {
-      autoComplete,
-      className,
-      disabled,
-      id,
-      label,
-      text,
       name,
-      placeholder,
-      readOnly,
-      renderInner,
-      renderValue,
       required,
       type,
-      validate,
-      ...inputProps
+      validate
     } = this.props
     return (
       <Field
         name={name}
-        validate={validate}
         type={type}
         render={this.renderField}
-        validate={getRequiredValidate(required)}
+        validate={composeValidators(validate, getRequiredValidate(required))}
       />
     )
   }

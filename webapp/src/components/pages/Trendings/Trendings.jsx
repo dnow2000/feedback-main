@@ -95,7 +95,7 @@ class Trendings extends PureComponent {
   render() {
     const { query, trendings } = this.props
     const queryParams = query.getParams()
-    const { days, theme } = queryParams
+    const { theme } = queryParams
     const { hasMore, isLoading } = this.state
 
     return (
@@ -172,8 +172,3 @@ Trendings.propTypes = {
 }
 
 export default Trendings
-
-
-
-
-document.querySelector('input[name="${errorKey}"]')

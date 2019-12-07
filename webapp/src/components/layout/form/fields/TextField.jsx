@@ -1,18 +1,18 @@
 /* eslint
   react/jsx-one-expression-per-line: 0 */
 import classnames from 'classnames'
-import React from 'react'
 import PropTypes from 'prop-types'
+import React from 'react'
 import { Field } from 'react-final-form'
 import {
   createParseNumberValue,
   composeValidators
 } from 'react-final-form-utils'
 
-import { FieldError } from '../layout'
+import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-export class TextField extends React.PureComponent {
+class TextField extends React.PureComponent {
 
   renderField = ({ input, meta }) => {
     const {
@@ -51,8 +51,8 @@ export class TextField extends React.PureComponent {
           </label>
         )}
         <div className="field-control">
-          <div className="field-value flex-columns items-center">
-            <div className="field-inner flex-columns items-center">
+          <div className="field-value">
+            <div className="field-inner">
               <input
                 {...input}
                 autoComplete={autoComplete ? 'on' : 'off'}

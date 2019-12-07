@@ -8,7 +8,7 @@ import { Field } from 'react-final-form'
 import { composeValidators } from 'react-final-form-utils'
 
 import Texteditor from './Texteditor'
-import { FieldError } from '../../layout'
+import FieldError from '../../FieldError'
 import getRequiredValidate from '../../utils/getRequiredValidate'
 
 export class TexteditorField extends PureComponent {
@@ -83,7 +83,7 @@ export class TexteditorField extends PureComponent {
             </label>
             <div className="field-control is-relative">
               <div
-                className="field-value flex-columns items-center"
+                className="field-value"
                 ref={element => { this.divEditorElement = element }}
               >
                 <span className="field-inner">

@@ -4,7 +4,7 @@ import React from 'react'
 import { Field } from 'react-final-form'
 
 import Radios from './Radios'
-import { FieldError } from '../../layout'
+import FieldError from '../../FieldError'
 
 export const RadiosField = ({
   className,

@@ -6,10 +6,10 @@ import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
 import { composeValidators } from 'react-final-form-utils'
 
-import { FieldError } from '../layout'
+import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-export const SelectField = ({
+const SelectField = ({
   className,
   disabled,
   label,
@@ -34,7 +34,7 @@ export const SelectField = ({
           )}
         </label>
         <div className="field-control">
-          <div className="field-value flex-columns items-center">
+          <div className="field-value">
             <div className="field-inner">
               <select
                 {...input}

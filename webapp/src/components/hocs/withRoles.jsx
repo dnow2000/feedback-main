@@ -34,7 +34,6 @@ const withRoles = (config = {
       } = this.props
       const {
         getReadOnlyUrl,
-        id,
         isCreatedEntity,
         isModifiedEntity
       } = form

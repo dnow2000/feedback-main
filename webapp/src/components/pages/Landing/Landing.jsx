@@ -10,8 +10,7 @@ import { ROOT_PATH } from 'utils/config'
 
 
 const Landing = ({requestGetVerdicts, verdicts}) => {
-  useEffect(() => {requestGetVerdicts()}, [])
-  console.log('#################################> Verdict', verdicts);
+  useEffect(() => {requestGetVerdicts()}, [requestGetVerdicts])
   return (
     <>
       <HeaderContainer />

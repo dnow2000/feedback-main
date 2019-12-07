@@ -2,11 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
 
-import { FieldError } from '../layout'
+import FieldError from '../FieldError'
 
 const noop = () => {}
 
-export const HiddenField = ({ name, validator }) => (
+const HiddenField = ({ name, validator }) => (
   <Field
     name={name}
     validate={validator}
