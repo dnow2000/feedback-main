@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-thunk-data'
 
-import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+import Avatar from 'components/layout/Avatar'
 
 class UserItem extends PureComponent {
 
@@ -38,7 +38,7 @@ class UserItem extends PureComponent {
               className="anchor flex-columns items-center mr12"
               href={`/users/${id}`}
             >
-              <AvatarContainer user={user} />
+              <Avatar user={user} />
               <div className="mb4 text-left">
                 {publicName}
               </div>

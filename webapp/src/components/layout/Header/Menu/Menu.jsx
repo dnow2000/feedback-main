@@ -18,7 +18,7 @@ const Menu = ({ currentRoles, dispatch, isActive, location, currentUser }) => (
     tabIndex="0"
   >
     <div
-      className="list px12 py10"
+      className="items"
       onClick={e => {
         e.nativeEvent.stopImmediatePropagation()
         e.stopPropagation()
@@ -31,14 +31,14 @@ const Menu = ({ currentRoles, dispatch, isActive, location, currentUser }) => (
         links.filter(({ disabled }) => !disabled)
              .map(({ external, label, target, path, visible }) => (
           visible(currentRoles) && (
-            <div className="item" key={label}>
+            <div className="item navigation" key={label}>
               {path === location.pathname ? (
-                <div className="py12 link current">
+                <div className="link current">
                   {label(currentRoles)}
                 </div>
               ) : (
                 <NavLink
-                  className="block py12 link"
+                  className="block link"
                   id={`see-${path}`}
                   external={external}
                   onClick={() => dispatch(closeMenu())}
@@ -53,7 +53,7 @@ const Menu = ({ currentRoles, dispatch, isActive, location, currentUser }) => (
       {currentUser && (
         <div className="item">
           <SignoutButtonContainer
-            className="block py12 link"
+            className="block link"
             handleSuccessRedirect={() => '/signin'}
             Tag="a"
           >

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+import Avatar from 'components/layout/Avatar'
 import Extract from 'components/layout/Extract'
 import Rating from 'components/layout/Rating'
 import Tag from 'components/layout/Tag'
@@ -23,7 +23,7 @@ const ReviewItem = ({ review, tags, user }) => {
             id='see-user'
           >
             <div className='mr12'>
-              <AvatarContainer user={user} />
+              <Avatar user={user} />
             </div>
             <div className="mr12">
               {publicName}

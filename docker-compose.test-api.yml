@@ -39,7 +39,7 @@ services:
     networks:
       - db_test-api_nw
     volumes:
-      - "./docker_data_test-api/postgres:/var/lib/postgresql/data"
+      - "./docker_data_test-api/postgres:/var/lib/postgresql"
 
 networks:
   db_test-api_nw:

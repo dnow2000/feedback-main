@@ -3,15 +3,14 @@ import PropTypes from 'prop-types'
 import React, { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 
-import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
-import Logo from 'components/layout/Logo'
 
-import HamburgerContainer from './Hamburger/HamburgerContainer'
+import Logo from '../Logo'
 import MenuContainer from './Menu/MenuContainer'
 import NavigationContainer from './Navigation/NavigationContainer'
+import UserAvatarContainer from './UserAvatar/UserAvatarContainer'
+
 
 const signPathnames = ['/signin', '/signup']
-
 
 const Header = ({ currentUser, location, whiteHeader }) => {
   const [isScrolling, setIsScrolling] = useState()
@@ -40,9 +39,11 @@ const Header = ({ currentUser, location, whiteHeader }) => {
         {currentUser && !isSignPathname ? (
           <>
             <NavigationContainer />
-            <HamburgerContainer disabled={isScrolling} />
+            <UserAvatarContainer
+              disabled={isScrolling}
+              whiteHeader={whiteHeader}
+            />
             <MenuContainer />
-            <AvatarContainer whiteHeader={whiteHeader} />
           </>
         ) : (
           !isSignPathname && (

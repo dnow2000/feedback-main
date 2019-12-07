@@ -3,23 +3,24 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
+import Avatar from 'components/layout/Avatar'
 import { closeMenu, showMenu } from 'reducers/menu'
 
-const Hamburger = ({
-  className,
+const UserAvatar = ({
+  currentUser,
   disabled,
   dispatch,
   isMenuActive
 }) => (
-  <div className={className || 'hamburger'}>
+  <div className="user-avatar">
     <NavLink
       className={classnames('link', {
         'is-active': isMenuActive
       })}
       disabled={disabled}
       to='#footer'
-      onClick={e => {
-        e.preventDefault()
+      onClick={event => {
+        event.preventDefault()
         if (!isMenuActive && !disabled) {
           dispatch(showMenu())
         } else {
@@ -30,24 +31,24 @@ const Hamburger = ({
         }
       }}
     >
-      <div className='link-box'>
-        <div className='link-inner' />
-      </div>
+      <Avatar user={currentUser} />
     </NavLink>
   </div>
 )
 
-Hamburger.defaultProps = {
+UserAvatar.defaultProps = {
   className: '',
+  currentUser: null,
   disabled: false,
   isMenuActive: false
 }
 
-Hamburger.propTypes = {
+UserAvatar.propTypes = {
   className: PropTypes.string,
+  currentUser: PropTypes.shape(),
   disabled: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
   isMenuActive: PropTypes.bool
 }
 
-export default Hamburger
+export default UserAvatar

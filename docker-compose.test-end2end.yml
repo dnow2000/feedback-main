@@ -76,7 +76,7 @@ services:
     networks:
       - db_test-end2end_nw
     volumes:
-      - "./docker_data_test-end2end/postgres:/var/lib/postgresql/data"
+      - "./docker_data_test-end2end/postgres:/var/lib/postgresql"
 
 networks:
   db_test-end2end_nw:

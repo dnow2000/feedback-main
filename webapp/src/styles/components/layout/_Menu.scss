@@ -2,8 +2,8 @@
   display: none;
   z-index: 3001; // needed to go above the fixed CTA button on home page
   position: fixed;
-  top: 25px;
-  left: 60%;
+  top: rem(32px);
+  left: 54%;
   right: 0;
   bottom: 0;
   opacity: 0;
@@ -20,17 +20,22 @@
     }
   }
 
-  .list {
+  .items {
     background: white;
     border-radius: 12px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
     color: black;
-    max-width: 400px;
+    max-width: rem(400px);
+    padding-bottom: rem(12px);
+    padding-left: rem(12px);
+    padding-right: rem(12px);
+    padding-top: rem(12px);
     position: absolute;
-    right: 3px;
-    top: 50px;
+    right: rem(4px);
+    top: rem(50px);
     z-index: 100;
     width: calc(100% - 1rem);
+
     // arrow
     // before for an outline in grey, so arrow doesn't disappear on white background;
     // after for real (white) arrow
@@ -43,27 +48,37 @@
     }
 
     &::before {
-      right: 24px;
+      right: 32px;
       border: 11px solid transparent;
       border-bottom-color: $grey-light;
     }
 
     &::after {
-      right: 1.6rem;
+      right: 34px;
       border: 10px solid transparent;
       border-bottom-color: white;
     }
 
     .item {
       border-bottom: 1px solid $grey-light;
+      display: inherit;
       position: relative;
-      width: 100%; // needed when used with Button
+      width: 100%;
+
+      &.navigation {
+        @media(min-width: $tablet) {
+          display: none;
+        }
+      }
 
       .link {
         color: $grey;
         display: block;
-        font-size: 14px;
         font-weight: 500;
+        padding-bottom: 1rem;
+        padding-left: rem(12px);
+        padding-right: rem(12px);
+        padding-top: 1rem;
         text-decoration: none;
         transition: transform 250ms ease-out;
 

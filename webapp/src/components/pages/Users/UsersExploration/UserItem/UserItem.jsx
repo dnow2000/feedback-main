@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import Dotdotdot from 'react-dotdotdot'
 
-import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+import Avatar from 'components/layout/Avatar'
 
 import RolesManagerContainer from './RolesManager/RolesManagerContainer'
 
@@ -23,7 +23,7 @@ const UserItem = ({
             className="anchor flex-columns items-center mr12"
             href={`/users/${id}`}
           >
-            <AvatarContainer user={user} />
+            <Avatar user={user} />
             <div className="mb4 text-left">
               {publicName}
             </div>

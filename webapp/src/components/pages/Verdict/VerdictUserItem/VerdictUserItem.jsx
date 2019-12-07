@@ -5,7 +5,7 @@ import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
-import AvatarContainer from 'components/layout/Avatar/AvatarContainer'
+import Avatar from 'components/layout/Avatar'
 
 class VerdictUserItem extends PureComponent {
 
@@ -64,7 +64,7 @@ class VerdictUserItem extends PureComponent {
         <div className="content p24">
           <div className="flex-columns items-center">
             <div className="col-25 mr12">
-              <AvatarContainer user={user} />
+              <Avatar user={user} />
             </div>
             <div className="center">
               <div className="mb4 text-left">
