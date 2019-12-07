@@ -1,15 +1,14 @@
+import { connect } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
+
+import ImageAddButton from './ImageAddButton'
 
 export const mapDispatchToProps = dispatch => {
   return {
-    onUploadClick: (image, handleSuccess, handleFail) => {
+    requesPostImage: (image, handleSuccess, handleFail) => {
 
       const body = new FormData()
-
       body.append('thumb', image)
-
-      this.setState({ isLoading: true })
-
       dispatch(
         requestData({
           apiPath: '/images',
@@ -22,3 +21,5 @@ export const mapDispatchToProps = dispatch => {
     }
   }
 }
+
+export default connect(mapDispatchToProps)(ImageAddButton)

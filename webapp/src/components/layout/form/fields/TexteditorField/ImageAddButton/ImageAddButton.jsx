@@ -1,15 +1,16 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
 
-import { imagePlugin } from './plugins'
-import { THUMBS_URL } from '../../../../../utils/config'
+import { API_THUMBS_URL } from 'utils/config'
+
+import { imagePlugin } from '../plugins'
+
 
 const { addImage } = imagePlugin
 
-export class RawImageAddButton extends PureComponent {
+class ImageAddButton extends PureComponent {
   constructor () {
     super()
     this.state = {
@@ -17,11 +18,20 @@ export class RawImageAddButton extends PureComponent {
     }
   }
 
+  handleUploadClick = event => {
+    const { requesPostImage } = this.props
+
+    this.setState({ isLoading: true })
+
+    const image = event.target.files[0]
+    requesPostImage(image, this.handleUploadSuccess)
+  }
+
   handleUploadSuccess = (state, action) => {
     const { payload: { datum } } = action
     const { getEditorState, setEditorState } = this.props
     const imageId = datum.id
-    const src = `${THUMBS_URL}/images/${imageId}`
+    const src = `${API_THUMBS_URL}/images/${imageId}`
 
     this.setState({ isLoading: false }, () => {
       const editorState = getEditorState()
@@ -29,28 +39,6 @@ export class RawImageAddButton extends PureComponent {
       setEditorState(editorStateWithImage)
     })
 
-  }
-
-  onUploadClick = event => {
-    const { dispatch } = this.props
-
-    const image = event.target.files[0]
-
-    const body = new FormData()
-
-    body.append('thumb', image)
-
-    this.setState({ isLoading: true })
-
-    dispatch(
-      requestData({
-        apiPath: '/images',
-        body,
-        handleFail: () => this.setState({ isLoading: false }),
-        handleSuccess: this.handleUploadSuccess,
-        method: 'POST'
-      })
-    )
   }
 
   render () {
@@ -67,7 +55,7 @@ export class RawImageAddButton extends PureComponent {
         <input
           id="image-add-button"
           hidden
-          onChange={this.onUploadClick}
+          onChange={this.handleUploadClick}
           ref={element => { this.input = element }}
           type="file"
         />
@@ -77,12 +65,10 @@ export class RawImageAddButton extends PureComponent {
 }
 
 
-RawImageAddButton.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+ImageAddButton.propTypes = {
   getEditorState: PropTypes.func.isRequired,
+  requesPostImage: PropTypes.func.isRequired,
   setEditorState: PropTypes.func.isRequired
 }
-
-const ImageAddButton = connect()(RawImageAddButton)
 
 export default ImageAddButton

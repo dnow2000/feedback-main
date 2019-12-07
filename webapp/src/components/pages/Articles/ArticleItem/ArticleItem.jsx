@@ -7,7 +7,7 @@ import Icon from 'components/layout/Icon'
 import Authors from 'components/layout/Authors'
 import Extract from 'components/layout/Extract'
 import Tag from 'components/layout/Tag'
-import { ROOT_PATH, THUMBS_URL } from 'utils/config'
+import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
 
 
 class ArticleItem extends PureComponent {
@@ -52,8 +52,8 @@ class ArticleItem extends PureComponent {
     const articleImgSrc = externalThumbUrl ||
       (
         thumbCount
-          ? `${THUMBS_URL}/articles/${id}`
-          : `${ROOT_PATH}/images/loading_webshot.png`
+          ? `${API_THUMBS_URL}/articles/${id}`
+          : `${ROOT_ASSETS_PATH}/loading_webshot.png`
       )
 
     return (

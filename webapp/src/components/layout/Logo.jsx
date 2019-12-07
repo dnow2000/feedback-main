@@ -3,27 +3,33 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { ROOT_PATH } from 'utils/config'
+import { ROOT_ASSETS_PATH } from 'utils/config'
 
-const Logo = ({ className, withName }) => (
-  <NavLink
-    className={classnames(className || 'logo', { 'with-name': withName })}
-    isActive={() => false}
-    to='/'
-  >
-    <img src={`${ROOT_PATH}/icons/logo.png`} alt="Logo" />
-    {withName && <span> Science <b>Feedback</b> </span>}
-  </NavLink>
-)
+const Logo = ({ type }) => {
+  let name = "logo.svg"
+  if (type === "header") {
+    name = "logo_header.png"
+  } else if (type === "footer") {
+    name = "logo_footer"
+  }
+
+  return (
+    <NavLink
+      className='logo'
+      isActive={() => false}
+      to='/'
+    >
+      <img src={`${ROOT_ASSETS_PATH}/${name}`} alt="Logo" />
+    </NavLink>
+  )
+}
 
 Logo.defaultProps = {
-  className: '',
-  withName: false
+  type: null
 }
 
 Logo.propTypes = {
-  className: PropTypes.string,
-  withName: PropTypes.bool,
+  type: PropTypes.string,
 }
 
 export default Logo

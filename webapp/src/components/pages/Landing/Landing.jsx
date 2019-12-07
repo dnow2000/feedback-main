@@ -6,7 +6,7 @@ import MainContainer from 'components/layout/Main/MainContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import Icon from 'components/layout/Icon'
 import VerdictItem from 'components/pages/Verdicts/VerdictItem/VerdictItem'
-import { ROOT_PATH } from 'utils/config'
+import { ROOT_ASSETS_PATH } from 'utils/config'
 
 
 const Landing = ({requestGetVerdicts, verdicts}) => {
@@ -51,7 +51,7 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
                 Who we are
               </p>
             </div>
-            <img src={`${ROOT_PATH}/images/community.png`} className="image" alt="Community" />
+            <img src={`${ROOT_ASSETS_PATH}/community.png`} className="image" alt="Community" />
             <p className="p">
               Science Feedback is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
             </p>
@@ -63,7 +63,7 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
         <section className="footer">
           <div className="container is-footer">
             <div className="logo-container">
-              <img src={`${ROOT_PATH}/images/logo_footer.png`} className="image" alt="Community" />
+              <img src={`${ROOT_ASSETS_PATH}/logo_footer.png`} className="image" alt="Community" />
             </div>
             <div className="links-container-big">
               <p className="h3">Community</p>

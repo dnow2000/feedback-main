@@ -9,9 +9,8 @@ moment.locale('fr-fr')
 const {
   NODE_ENV,
   REACT_APP_API_URL,
-  REACT_APP_ICONS_URL,
-  REACT_APP_IMAGES_URL,
-  REACT_APP_THUMBS_URL,
+  REACT_APP_API_THUMBS_URL,
+  REACT_APP_ROOT_ASSETS_PATH,
   REACT_APP_VERSION
 } = process.env
 
@@ -22,9 +21,7 @@ export const IS_DEVELOPMENT = NODE_ENV === 'development'
 export const IS_PRODUCTION = !IS_DEVELOPMENT
 
 export const API_URL = REACT_APP_API_URL || 'http://localhost'
-export const ICONS_URL = REACT_APP_ICONS_URL || `${API_URL}/static/icons`
-export const IMAGES_URL = REACT_APP_IMAGES_URL || `${API_URL}/static/images`
-export const THUMBS_URL = REACT_APP_THUMBS_URL || `${API_URL}/storage/thumbs`
+export const API_THUMBS_URL = REACT_APP_API_THUMBS_URL || `${API_URL}/storage/thumbs`
 
 let calculatedLocalhost
 if (typeof window !== 'undefined') {
@@ -76,3 +73,4 @@ if (typeof window !== 'undefined' && window.cordova) {
 
 export const LOCALHOST_ROOT_PATH = "http://localhost:3000/"
 export const ROOT_PATH = CALC_ROOT_PATH || LOCALHOST_ROOT_PATH
+export const ROOT_ASSETS_PATH = REACT_APP_ROOT_ASSETS_PATH || `${ROOT_PATH}/static/assets`

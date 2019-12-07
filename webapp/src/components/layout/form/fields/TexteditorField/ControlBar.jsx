@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ImageAddButton from './ImageAddButton'
+import ImageAddButtonContainer from './ImageAddButton/ImageAddButtonContainer'
 
 export const ControlBar = ({
   getEditorState,
@@ -12,7 +12,7 @@ export const ControlBar = ({
       (Select a piece of text to add bold, italics or a hypertext link)
     </div>
     <div className="flex-auto" />
-    <ImageAddButton
+    <ImageAddButtonContainer
       getEditorState={getEditorState}
       setEditorState={setEditorState}
     />

@@ -9,7 +9,7 @@ import {
 import Dropzone from 'react-dropzone'
 import AvatarEditor from 'react-avatar-editor'
 
-import { ROOT_PATH } from 'utils/config'
+import { ROOT_ASSETS_PATH } from 'utils/config'
 
 import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
@@ -122,7 +122,7 @@ class PictureField extends React.PureComponent {
                     {...getInputProps()}
                   />
                   <AvatarEditor
-                    image={image || `${ROOT_PATH}/images/drag.png`}
+                    image={image || `${ROOT_ASSETS_PATH}/drag.png`}
                     onImageChange={this.handleImageChange}
                     ref={this.avatarRef}
                     scale={scale}

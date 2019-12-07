@@ -37,7 +37,7 @@ const VerdictItem = ({ article, verdict, reviews, user }) => {
         </div>
         <br />
 
-        {reviews.length > 0 ? (
+        {reviews && reviews.length > 0 ? (
           <div>
             <p className="title">
 Reviews

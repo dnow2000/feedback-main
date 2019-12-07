@@ -4,7 +4,7 @@ import ReactDropzone from 'react-dropzone'
 import { connect } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
 
-import { THUMBS_URL } from 'utils/config'
+import { API_THUMBS_URL } from 'utils/config'
 
 import { imagePlugin } from './plugins'
 
@@ -24,7 +24,7 @@ export class RawImageDropzone extends PureComponent {
     const { getEditorState, setEditorState } = this.props
 
     const imageId = datum.id
-    const src = `${THUMBS_URL}/images/${imageId}`
+    const src = `${API_THUMBS_URL}/images/${imageId}`
 
     this.setState({ isLoading: false }, () => {
       const editorState = getEditorState()

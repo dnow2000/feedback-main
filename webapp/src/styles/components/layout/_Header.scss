@@ -28,7 +28,15 @@
     z-index: 1000;
 
     .left-content {
-      margin-right: 12px;
+      .logo {
+        img {
+          margin: 0.25em;
+          max-height: 2.25em;
+          width: 258px;
+          height: auto;
+          vertical-align: middle;
+        }
+      }
     }
   }
 }

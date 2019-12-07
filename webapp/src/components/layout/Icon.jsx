@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import { ROOT_PATH } from 'utils/config'
+import { ROOT_ASSETS_PATH } from 'utils/config'
 
 export const Icon = ({ name, path, ...imgProps }) => (
   <img
@@ -13,7 +13,7 @@ export const Icon = ({ name, path, ...imgProps }) => (
 )
 
 Icon.defaultProps = {
-  path: `${ROOT_PATH}/icons`
+  path: ROOT_ASSETS_PATH
 }
 
 Icon.propTypes = {

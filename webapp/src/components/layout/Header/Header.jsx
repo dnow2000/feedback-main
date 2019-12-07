@@ -32,7 +32,7 @@ const Header = ({ currentUser, location, whiteHeader }) => {
     <header className={classnames("header", { scrolling: isScrolling })}>
       <div className="container">
         <div className="left-content">
-          <Logo withName />
+          <Logo  />
         </div>
 
         <div className="flex-auto" />
