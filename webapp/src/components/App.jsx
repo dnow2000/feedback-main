@@ -17,7 +17,7 @@ const App = ({ children }) => (
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="msapplication-TileColor" content="#ffffff" />
       <meta name="msapplication-TileImage" content={`${ROOT_LOGO_ICONS_PATH}/ms-icon-144x144.png`} />
-      <meta name="theme-color" content="transparent" />
+      <meta name="theme-color" content="#ffffff" />
       <meta
         httpEquiv="Content-Security-Policy"
         content={`default-src 'self' blob: data: https: http: gap://ready 'unsafe-inline'
