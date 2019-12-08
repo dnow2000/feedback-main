@@ -3,13 +3,18 @@ from sqlalchemy_api_handler import ApiHandler, logger
 from sandboxes.scripts.utils.tags import ALL_TAGS
 from tests.utils.creators.create_tag import create_tag
 
+
 def create_tags():
     logger.info('create_tags')
 
     tags_by_text = {}
 
     for tag in ALL_TAGS:
-        tags_by_text[tag['text']] = create_tag(tag['text'], info=tag.get('info'))
+        tags_by_text[tag['text']] = create_tag(
+            tag['text'],
+            info=tag.get('info'),
+            positivity=tag.get('positivity')
+        )
 
     ApiHandler.save(*tags_by_text.values())
 

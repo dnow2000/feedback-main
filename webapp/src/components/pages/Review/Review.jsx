@@ -79,7 +79,7 @@ class Review extends PureComponent {
     })
   }
 
-  onFormSubmit = formValues => {
+  handleSubmit = formValues => {
     const { formInitialValues, dispatch, query } = this.props
     const { id } = formInitialValues || {}
     const { method } = query.context()
@@ -108,85 +108,91 @@ class Review extends PureComponent {
     }
   }
 
-  render() {
-    const {
-      article,
-      formInitialValues,
-      history,
-      query,
-      verdicts
-    } = this.props
-    const { isFormLoading } = this.state
-    const { isCreatedEntity } = query.context()
+  renderArticle() {
+    const { article } = this.props
+    if (!article) {
+      return null
+    }
+    return (
+      <section className="section">
+        <h2 className="subtitle flex-columns items-center">
+          ARTICLE TO REVIEW
+        </h2>
+        <ArticleItemContainer article={article} noControl />
+      </section>
+    )
+  }
 
+  renderReview = () => {
+    const { formInitialValues } = this.props
+    return (
+      <section className="section">
+        <Form
+          initialValues={formInitialValues}
+          onSubmit={this.handleSubmit}
+          render={this.renderReviewForm}
+        />
+      </section>
+    )
+  }
+
+  renderReviewForm = formProps => {
+    const { isFormLoading } = this.state
+    const { history } = this.props
+    const { form, handleSubmit } = formProps
+    const canSubmit = getCanSubmit(Object.assign(
+      { isLoading: isFormLoading }, formProps))
+    return (
+      <form
+        autoComplete="off"
+        className="form flex-rows is-full-layout"
+        disabled={isFormLoading}
+        noValidate
+        onSubmit={handleSubmit}
+      >
+        <FormFieldsContainer />
+        {/* <FormFooterContainer
+          canSubmit={canSubmit}
+          form={form}
+          history={history}
+        /> */}
+      </form>
+    )
+  }
+
+  renderVerdicts = () => {
+    const { verdicts } = this.props
+    if (!verdicts || verdicts.length === 0) {
+      return null
+    }
+    return (
+      <section className="section">
+        <h2 className="subtitle">
+          SEE ATTACHED VERDICTS
+        </h2>
+        {
+          verdicts.map(verdict => (
+            <NavLink
+              className="button is-secondary"
+              key={verdict.id}
+              to={`/verdicts/${verdict.id}`}
+            >
+              {verdict.id}
+            </NavLink>
+          ))
+        }
+      </section>
+    )
+  }
+
+  render() {
     return (
       <>
         <HeaderContainer />
         <MainContainer name="review">
-          <section className="section hero">
-            <h1 className="title">
-              {isCreatedEntity ? 'Write your review' : 'See the review'}
-            </h1>
-          </section>
-
-          {article && (
-            <section className="section">
-              <h2 className="subtitle flex-columns items-center">
-                ARTICLE TO REVIEW
-              </h2>
-              <ArticleItemContainer article={article} noControl />
-            </section>
-          )}
-
-          <section className="section">
-            <h2 className="subtitle flex-columns items-center">
-              REVIEW DETAILS
-            </h2>
-            <Form
-              initialValues={formInitialValues}
-              onSubmit={this.onFormSubmit}
-              render={formProps => {
-                const { form, handleSubmit } = formProps
-                const canSubmit = getCanSubmit(Object.assign(
-                  { isLoading: isFormLoading }, formProps))
-                return (
-                  <form
-                    autoComplete="off"
-                    className="form flex-rows is-full-layout"
-                    disabled={isFormLoading}
-                    noValidate
-                    onSubmit={handleSubmit}
-                  >
-                    <FormFieldsContainer />
-                    <FormFooterContainer
-                      canSubmit={canSubmit}
-                      form={form}
-                      history={history}
-                    />
-                  </form>
-                )
-              }}
-            />
-          </section>
-
-          {verdicts && verdicts.length > 0 && (
-            <section className="section">
-              <h2 className="subtitle">
-                SEE ATTACHED VERDICTS
-              </h2>
-              {
-                verdicts.map(verdict => (
-                  <NavLink
-                    className="button is-secondary"
-                    key={verdict.id}
-                    to={`/verdicts/${verdict.id}`}
-                  >
-                    {verdict.id}
-                  </NavLink>
-                ))
-              }
-            </section>
-          )}
+          {/* {this.renderArticle()} */}
+          {this.renderReview()}
+          {/* {this.renderVerdicts()} */}
         </MainContainer>
       </>
     )
