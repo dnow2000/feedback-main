@@ -1,4 +1,6 @@
 .user-item {
+  @extend .item;
+
   .control {
     border-top: 1px solid $grey-light;
 
