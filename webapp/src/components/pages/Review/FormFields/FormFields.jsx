@@ -37,7 +37,6 @@ const FormFields = ({ evaluations, query, tags }) => {
   )
   const { readOnly } = query.context()
   console.log('TAG OPTIONS', tags, tagOptions)
-  console.log('EVAL OPTIONS', evaluations, evaluationOptions)
 
   return (
     <div className="fields-container">
@@ -53,6 +52,7 @@ const FormFields = ({ evaluations, query, tags }) => {
         </div>
         <div className="col-tablet-66">
           <CheckboxesField
+            label="Tags"
             name={TAGS_NAME}
             options={tagOptions}
             readOnly={readOnly}

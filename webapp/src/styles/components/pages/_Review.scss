@@ -44,4 +44,42 @@
       }
     }
   }
+
+  .checkbox {
+    height: 32px;
+
+    background-color: white;
+    color: #9da2c4;
+
+    border-color: $red;
+    border-width: 1px;
+    border-radius: 16px;
+    border-style: solid;
+
+    &.checkbox-1 {
+      &.checked {
+        color: #007b7b;
+        background-color: #c9f0f0;
+      }
+      &.not-checked {
+        border-style: solid;
+      }
+    }
+    &.checkbox-0 {
+      &.checked {
+        color: #ffa63a;
+        background-color: #ffd452;
+      }
+      &.not-checked {
+      }
+    }
+    &.checkbox-\-1 {
+      &.checked {
+        color: #e53c3c;
+        background-color: #facece;
+      }
+      &.not-checked {
+      }
+    }
+  }
 }
