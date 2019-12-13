@@ -34,6 +34,12 @@
         font-size: $font-size-little-big;
         margin-bottom: 0.5rem;
       }
+
+      .item {
+        border: 1px solid $grey-light;
+        border-radius: 0.625rem;
+        box-shadow: none;
+      }
     }
   }
 }
