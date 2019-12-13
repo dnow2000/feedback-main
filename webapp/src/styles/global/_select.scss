@@ -2,7 +2,7 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   background-color: white;
-  background-image: url("/assets/dropdown-disclosure-down.svg");
+  background-image: url("/static/assets/dropdown-disclosure-down.svg");
   background-position: 90% 50%;
   background-repeat: no-repeat;
   border: 1px solid #E4E6F4;
@@ -15,7 +15,7 @@
   width: rem(126px);
 
   &:before {
-    background-image: url("/assets/calendar.svg");
+    background-image: url("/static/assets/calendar.svg");
     background-position: 10% 50%;
     background-repeat: no-repeat;
   }
