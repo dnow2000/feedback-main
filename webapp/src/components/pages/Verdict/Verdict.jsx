@@ -5,7 +5,7 @@ import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
-import ArticleItemContainer from 'components/pages/Articles/ArticleItem/ArticleItemContainer'
+import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
