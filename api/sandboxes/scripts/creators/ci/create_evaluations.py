@@ -2,6 +2,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from tests.utils.creators.create_evaluation import create_evaluation
 
+
 def create_evaluations():
     logger.info('create_evaluations')
 
@@ -44,43 +45,43 @@ def create_evaluations():
 
     evaluations_by_name["article / 2"] = create_evaluation(
         "article",
-        info="no inaccuracies, fairly represents the state of scientific knowledge, well argumented and documented, references are provided for key elements. It provides insights to the reader about climate change mechanisms and implications",
+        info="No inaccuracies, fairly represents the state of scientific knowledge, well argued and documented, references are provided for key elements. The article provides insights to the reader about scientific mechanisms and implications, as well as limitations and important unknowns surrounding the evidence.",
         label="Very High",
         value=2
     )
 
     evaluations_by_name["article / 1"] = create_evaluation(
         "article",
-        info="it does not contain scientific inaccuracies and its conclusion follows from the evidence provided",
+        info="The article does not contain scientific inaccuracies and its conclusion follows from the evidence provided. While more detail would have been useful, readers are still accurately informed of the science.",
         label="High",
         value=1
     )
 
     evaluations_by_name["article / 0"] = create_evaluation(
         "article",
-        info="No major inaccuracies, but no important insight to better explain implications of the science",
+        info="No significant errors, but not enough insight either to inform the reader.",
         label="Neutral",
         value=0
     )
 
     evaluations_by_name["article / -1"] = create_evaluation(
         "article",
-        info="it contains significant scientific inaccuracies or misleading statements",
+        info="The article contains significant scientific inaccuracies or misleading statements.",
         label="Low",
         value=-1
     )
 
     evaluations_by_name["article / -2"] = create_evaluation(
         "article",
-        info="it contains major scientific inaccuracies for key facts supporting argumentation, and/or omits important information, and/or presents logical flaws in using information to reach conclusion",
+        info="The article contains major scientific inaccuracies for key facts supporting argumentation, and/or omits important information, and/or presents logical flaws in using information to reach conclusions.",
         label="Very Low",
         value=-2
     )
 
     evaluations_by_name["article / NA"] = create_evaluation(
         "article",
-        info="it contains major scientific inaccuracies for key facts supporting argumentation, and/or omits important information, and/or presents logical flaws in using information to reach conclusion",
-        label="Very Low",
+        info="The article does not build on scientifically verifiable information (e.g. it is mostly about policy, politics or opinions).",
+        label="Not applicable",
         value=None
     )
 

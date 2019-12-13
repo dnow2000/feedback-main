@@ -16,12 +16,7 @@ class EvaluationType(enum.Enum):
 class Evaluation(ApiHandler,
                  Model):
 
-    label = Column(String(50),
-                   nullable=True)
-
+    label = Column(String(50), nullable=True)
     info = Column(Text, nullable=True)
-
-    type = Column(String(50),
-                  nullable=True)
-
+    type = Column(String(50), nullable=True)
     value = Column(Integer, nullable=True)
