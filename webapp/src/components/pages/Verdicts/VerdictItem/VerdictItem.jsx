@@ -9,7 +9,7 @@ import ReviewItemContainer from 'components/pages/Reviews/ReviewsExploration/Rev
 
 
 const RATING_VALUES = ['2', '1', '0', '-1', '-2', 'na']
-
+const MAX_AVATARS = 5
 
 function getMeanRating(ratings) {
   const ratingsNotNull = ratings.filter(r => r !== null)
@@ -70,10 +70,24 @@ function round(x, n=0) {
   return Math.round(x*10**n) / 10**n
 }
 
+function getTruncatedReviewers(reviews) {
+  const users = reviews.map(r => r.user)
+  if (users.length <= MAX_AVATARS) {
+    return users
+  }
+  const usersToShow = users.slice(0, MAX_AVATARS)
+  const fakeUser = {number: users.length - usersToShow.length}
+  return [
+    ...usersToShow,
+    fakeUser
+  ]
+
+}
+
 
 const VerdictItem = ({ article, verdict, user }) => {
   const { title, url } = article || {}
-  const { comment, id, rating, reviews, user: editor } = verdict
+  const { comment, id, rating, user: editor, reviews } = verdict
   const { publicName } = user || {}
 
   // XXX @quentin: put back first line and remove second line when done testing
@@ -132,13 +146,13 @@ const VerdictItem = ({ article, verdict, user }) => {
           <div className="col-tablet-80">
             <div>Reviewers</div>
             <div className="reviewers-container">
-              {/* {reviews.map(r => { */}
-              {[{user: editor}, {user: editor}, {user: editor}].map(r => {
+              {getTruncatedReviewers(reviews).map(user => {
                 return (
                   <Avatar
                     className="avatar reviewer-avatar"
-                    key={r.user.id}
-                    user={r.user}
+                    key={user.id}
+                    number={user.number}
+                    user={user}
                   />
                 )
               })}
