@@ -10,7 +10,7 @@ const FormFooter = ({ canSubmit, isLoading }) => (
     disabled={!canSubmit}
     type="submit"
   >
-      Log In
+      Sign in
   </button>
 )
 

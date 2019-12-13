@@ -71,21 +71,7 @@ class Signin extends PureComponent {
           <section>
             <Form
               onSubmit={this.onFormSubmit}
-              render={({
-                dirtySinceLastSubmit,
-                handleSubmit,
-                hasSubmitErrors,
-                hasValidationErrors,
-                pristine,
-              }) => {
-                const canSubmit =
-                  (!pristine &&
-                    !hasSubmitErrors &&
-                    !hasValidationErrors &&
-                    !isFormLoading) ||
-                  (!hasValidationErrors &&
-                    hasSubmitErrors &&
-                    dirtySinceLastSubmit)
+              render={({ handleSubmit }) => {
                 return (
                   <form
                     className="form flex-rows is-full-layout"
@@ -95,7 +81,7 @@ class Signin extends PureComponent {
                     onSubmit={handleSubmit}
                   >
                     <FormFields />
-                    <FormFooter canSubmit={canSubmit} />
+                    <FormFooter canSubmit />
                   </form>
                 )
               }}

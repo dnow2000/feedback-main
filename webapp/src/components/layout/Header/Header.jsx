@@ -48,7 +48,7 @@ const Header = ({ currentUser, location, whiteHeader }) => {
         ) : (
           !isSignPathname && (
             <NavLink className="button" to="/signin">
-              Sign In
+              Sign in
             </NavLink>
           )
         )}

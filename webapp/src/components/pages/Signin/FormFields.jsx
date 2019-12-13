@@ -24,9 +24,9 @@ const FormFields = () => (
       label="password"
       placeholder="Your login password"
     />
-    <Link className="is-white-text is-underline fs16" to="/mot-de-passe-perdu">
+    {/* <Link className="is-white-text is-underline fs16" to="/mot-de-passe-perdu">
       <span>Mot de passe oublié&nbsp;?</span>
-    </Link>
+    </Link> */}
   </>
 )
 
