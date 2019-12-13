@@ -136,10 +136,10 @@ class Trendings extends PureComponent {
 
             <section>
               <LoadingInfiniteScroll
+                className="feeds"
                 hasMore={hasMore}
                 isLoading={isLoading}
                 useWindow
-                className="feeds"
               >
                 {
                   trendings.map(trending => (

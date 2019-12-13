@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
+import classnames from 'classnames'
 import { requestData } from 'redux-thunk-data'
 import Icon from 'components/layout/Icon'
 
@@ -69,41 +70,41 @@ class TrendingItem extends PureComponent {
     const { isDismissed, isReviewable } = this.state
 
     return (
-      <article className="trending-item">
+      <article className="article-item">
         <NavLink
-          className="trending-container"
+          className="article-container"
           href={url}
           rel="noopener noreferrer"
           target="_blank"
           to={`/articles/creation?trendingId=${id}`}
         >
-          <div className="trending-header">
-            <p className="trending-tag">Climate</p>
-            <p className="trending-date">4 Dec 2019</p>
+          <div className="article-header">
+            <p className="article-tag">Climate</p>
+            <p className="article-date">4 Dec 2019</p>
           </div>
-          <div className="trending-summary">
-            <div className="trending-summary-thumbnail">
+          <div className="article-summary">
+            <div className="article-summary-thumbnail">
               <img
                 alt="Article illustration"
                 className="thumbnail-image"
                 src={externalThumbUrl}
               />
             </div>
-            <div className="trending-summary-container">
-              <p className="trending-title">
+            <div className="article-summary-container">
+              <p className="article-title">
                 {title}
               </p>
               {((subdomain || authors) || '')
                 .split(';')
                 .filter(author => author)
                 .map(author => (
-                  <p className="trending-author" key={author}>
+                  <p className="article-author" key={author}>
                     {author}
                   </p>
                 )
               )}
               <a
-                className="trending-link"
+                className="article-link"
                 href={url}
                 rel="noopener noreferrer"
                 target="_blank"
@@ -128,6 +129,23 @@ class TrendingItem extends PureComponent {
                 <p>{this.displaySocialScores(twitterShares)}</p>
               </div>
             </div>
+          </div>
+          <div className="article-cta-container">
+            <button
+              className={classnames("button is-secondary thin", {
+                'is-loading': isReviewable === false
+              })}
+              onClick={this.handleSaveTrending({ isReviewable: false })}
+              type="button"
+            >
+              Remove
+            </button>
+            <NavLink
+              className="button is-primary thin"
+              to={`/articles/creation?trendingId=${id}`}
+            >
+              Select for Review
+            </NavLink>
           </div>
         </NavLink>
       </article>
