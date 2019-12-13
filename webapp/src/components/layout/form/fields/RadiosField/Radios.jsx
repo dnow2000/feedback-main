@@ -70,6 +70,9 @@ class Radios extends PureComponent {
               <span>
                 {label}
               </span>
+              <span>
+                {id}
+              </span>
             </div>
           )}
         )}
