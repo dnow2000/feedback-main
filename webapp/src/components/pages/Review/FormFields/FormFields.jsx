@@ -22,7 +22,8 @@ const FormFields = ({ evaluations, query, tags }) => {
     EVALUATIONS_PLACEHOLDER,
     'label',
     'id',
-    'info'
+    'info',
+    'value'
   )
 
   const tagOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
@@ -35,22 +36,32 @@ const FormFields = ({ evaluations, query, tags }) => {
     'positivity'
   )
   const { readOnly } = query.context()
-  console.log('TAG OPTIONS', tagOptions)
-  console.log('EVAL OPTIONS', evaluationOptions)
+  console.log('TAG OPTIONS', tags, tagOptions)
+  console.log('EVAL OPTIONS', evaluations, evaluationOptions)
 
-  // return (
-  //   <div className="fields-container">
-  //     <div className="fields-table">
-  //       <RadiosField
-  //         className="col-tablet-33"
-  //         name={EVALUATIONS_NAME}
-  //         options={evaluationOptions}
-  //         readOnly={readOnly}
-  //         required
-  //       />
-  //     </div>
-  //   </div>
-  // )
+  return (
+    <div className="fields-container">
+      <div className="fields-table">
+        <div className="col-tablet-33">
+          <RadiosField
+            label="Credibility score"
+            name={EVALUATIONS_NAME}
+            options={evaluationOptions}
+            readOnly={readOnly}
+            required
+          />
+        </div>
+        <div className="col-tablet-66">
+          <CheckboxesField
+            name={TAGS_NAME}
+            options={tagOptions}
+            readOnly={readOnly}
+            required
+          />
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <div className="section">
