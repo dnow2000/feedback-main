@@ -1,5 +1,7 @@
+import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import withQueryRouter from 'with-query-router'
+import withForm from 'with-react-form'
+import withQuery from 'with-react-query'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
@@ -7,7 +9,12 @@ import withRoles from 'components/hocs/withRoles'
 import Users from './Users'
 
 export default compose(
-  withQueryRouter(),
+  withRouter,
+  withQuery(),
+  withForm,
   withRequiredLogin,
-  withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] })
+  withRoles({
+    creationRoleTypes: ['editor'],
+    modificationRoleTypes: ['editor']
+  })
 )(Users)

@@ -7,27 +7,32 @@
     margin-right: auto;
     width: 75%;
 
-    .section {
-      margin-bottom: 32px;
+    section {
+      margin-bottom: 2rem;
 
       &.fullheight {
         min-height: 100vh;
       }
 
       .title {
-        @extend .fs22;
-
         color: $grey-darker;
-        font-weight: 500;
-        margin-bottom: rem(16px);
+        font-size: $font-size-big;
+        font-weight: $font-weight-bold;
+        margin-bottom: 1rem;
+      }
+
+      .separator {
+        border-top: 2px solid $grey-light;
+        height: 1px;
+        opacity: 0.5;
+        width: 100%;
       }
 
       .subtitle {
-        @extend .fs18;
-
         color: $grey;
-        font-weight: 400;
-        margin-bottom: rem(8px);
+        font-weight: $font-weight-semibold;
+        font-size: $font-size-little-big;
+        margin-bottom: 0.5rem;
       }
     }
   }

@@ -1,7 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import { requestData } from 'redux-thunk-data'
 
 import { API_THUMBS_URL } from 'utils/config'
 

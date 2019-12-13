@@ -1,1 +1,10 @@
-@import 'UserItem.scss';
+.users-main {
+  .items {
+    display: flex;
+    flex-wrap: wrap;
+
+    .item-container {
+      @extend .col-tablet-33;
+    }
+  }
+}

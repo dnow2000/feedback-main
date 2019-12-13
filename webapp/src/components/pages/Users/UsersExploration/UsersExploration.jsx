@@ -5,9 +5,9 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
 import TextField from 'components/layout/form/fields/TextField'
+import UserItemContainer from 'components/layout/UserItem/UserItemContainer'
 import { userNormalizer } from 'utils/normalizers'
 
-import UserItemContainer from './UserItem/UserItemContainer'
 
 
 function getScrollParent () {

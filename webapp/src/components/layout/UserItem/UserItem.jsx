@@ -28,21 +28,23 @@ const UserItem = ({
               {publicName}
             </div>
           </a>
-          <div className="flex-auto center">
-            <div className="flex-start items-center">
-              {
-                tags.map(({ text }) => (
-                  <Dotdotdot className="tag fs12" clamp={60} key={text}>
-                    #{text}
-                  </Dotdotdot>
-                ))
-              }
+          {tags && (
+            <div className="flex-auto center">
+              <div className="flex-start items-center">
+                {
+                  tags.map(({ text }) => (
+                    <Dotdotdot className="tag fs12" clamp={60} key={text}>
+                      #{text}
+                    </Dotdotdot>
+                  ))
+                }
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
       <nav className="control flex-wrap flex-start items-center p12">
-        {adminRole && <RolesManagerContainer user={user} />}
+        {/*adminRole && <RolesManagerContainer user={user} />*/}
       </nav>
     </article>
   )
@@ -56,7 +58,6 @@ UserItem.defaultProps = {
 
 UserItem.propTypes = {
   adminRole: PropTypes.shape(),
-  dispatch: PropTypes.func.isRequired,
   match: PropTypes.shape().isRequired,
   tags: PropTypes.array,
   user: PropTypes.shape()
