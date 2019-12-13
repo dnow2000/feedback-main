@@ -7,11 +7,12 @@ import Checkboxes from './Checkboxes'
 import FieldError from '../../FieldError'
 
 export const CheckboxesField = ({
-  className,
   disabled,
+  label,
   name,
   options,
   readOnly,
+  required,
   ...inputProps
 }) => (
   <Field
@@ -19,15 +20,22 @@ export const CheckboxesField = ({
     render={({ input, meta }) => (
       <div
         className={classnames(
-          className || "field checkboxes-field",
+          "field field-checkboxes",
           { readonly: readOnly })
         }
       >
+        <label
+          className="field-label"
+          htmlFor={name}
+        >
+          <span>{label}</span>
+          {required && !readOnly && <span className="field-asterisk">{"*"}</span>}
+        </label>
         <div className="field-control">
           <div className="field-inner">
             <Checkboxes
               {...inputProps}
-              className="field-checkboxes"
+              className="checkboxes-field"
               disabled={disabled}
               input={input}
               options={options}
@@ -44,19 +52,21 @@ export const CheckboxesField = ({
 )
 
 CheckboxesField.defaultProps = {
-  className: null,
   disabled: false,
+  label: null,
   name: null,
   options: null,
-  readOnly: false
+  readOnly: false,
+  required: false
 }
 
 CheckboxesField.propTypes = {
-  className: PropTypes.string,
   disabled: PropTypes.bool,
+  label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.array,
-  readOnly: PropTypes.bool
+  readOnly: PropTypes.bool,
+  required: PropTypes.bool
 }
 
 export default CheckboxesField

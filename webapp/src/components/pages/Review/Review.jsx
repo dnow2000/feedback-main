@@ -108,7 +108,7 @@ class Review extends PureComponent {
     }
   }
 
-  renderArticle() {
+  renderArticlePreview() {
     const { article } = this.props
     if (!article) {
       return null
@@ -123,20 +123,20 @@ class Review extends PureComponent {
     )
   }
 
-  renderReview = () => {
+  renderReviewSection = () => {
     const { formInitialValues } = this.props
     return (
       <section className="section">
         <Form
           initialValues={formInitialValues}
           onSubmit={this.handleSubmit}
-          render={this.renderReviewForm}
+          render={this.renderReviewFormSection}
         />
       </section>
     )
   }
 
-  renderReviewForm = formProps => {
+  renderReviewFormSection = formProps => {
     const { isFormLoading } = this.state
     const { history } = this.props
     const { form, handleSubmit } = formProps
@@ -160,7 +160,7 @@ class Review extends PureComponent {
     )
   }
 
-  renderVerdicts = () => {
+  renderAttachedVerdicts = () => {
     const { verdicts } = this.props
     if (!verdicts || verdicts.length === 0) {
       return null
@@ -190,9 +190,12 @@ class Review extends PureComponent {
       <>
         <HeaderContainer />
         <MainContainer name="review">
-          {/* {this.renderArticle()} */}
-          {this.renderReview()}
-          {/* {this.renderVerdicts()} */}
+
+          <div className="container">
+            {/* {this.renderArticlePreview()} */}
+            {this.renderReviewSection()}
+            {/* {this.renderAttachedVerdicts()} */}
+          </div>
         </MainContainer>
       </>
     )

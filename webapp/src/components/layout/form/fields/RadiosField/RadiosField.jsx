@@ -7,11 +7,12 @@ import Radios from './Radios'
 import FieldError from '../../FieldError'
 
 export const RadiosField = ({
-  className,
   disabled,
+  label,
   name,
   options,
   readOnly,
+  required,
   ...inputProps
 }) => (
   <Field
@@ -19,10 +20,17 @@ export const RadiosField = ({
     render={({ input, meta }) => (
       <div
         className={classnames(
-          className || "field radios-field",
+          "field radios-field",
           { readonly: readOnly })
         }
       >
+        <label
+          className="field-label"
+          htmlFor={name}
+        >
+          <span>{label}</span>
+          {required && !readOnly && <span className="field-asterisk">{"*"}</span>}
+        </label>
         <div className="field-control">
           <div className="field-inner">
             <Radios
@@ -41,19 +49,21 @@ export const RadiosField = ({
 )
 
 RadiosField.defaultProps = {
-  className: null,
   disabled: false,
+  label: null,
   name: null,
   options: null,
-  readOnly: false
+  readOnly: false,
+  required: false
 }
 
 RadiosField.propTypes = {
-  className: PropTypes.string,
   disabled: PropTypes.bool,
+  label: PropTypes.string,
   name: PropTypes.string,
   options: PropTypes.array,
-  readOnly: PropTypes.bool
+  readOnly: PropTypes.bool,
+  required: PropTypes.bool
 }
 
 export default RadiosField

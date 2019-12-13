@@ -45,14 +45,15 @@ class Radios extends PureComponent {
 
     return (
       <div className='radios'>
-        {options && options.map(({ label, title, value }) => {
+        {options && options.map(({ id, label, title, value }) => {
           const checked = stateValue === value
           return (
             <div
               className={classnames(
-                `radio radio-${label.replace(/\s/g,"-")}`,
+                `radio radio-${id}`,
                 { checked }
               )}
+              id={`radio-${id}`}
               key={value}
               title={title}
             >
@@ -68,6 +69,9 @@ class Radios extends PureComponent {
               />
               <span>
                 {label}
+              </span>
+              <span>
+                {id}
               </span>
             </div>
           )}

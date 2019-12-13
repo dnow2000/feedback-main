@@ -139,6 +139,53 @@
 }
 
 //
+// CHECKBOXES
+//
+.checkboxes-field {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.checkboxes-field {
+  .field-inner {
+    button {
+      @extend .mb8;
+      @extend .mr4;
+
+      border: 2px solid $primary;
+      border-radius: 16px;
+
+      &.not-checked {
+        // color: $primary;
+        color: blue;
+      }
+
+      &.checked {
+        background-color: $primary;
+        color: white;
+
+        &[disabled] {
+          &[readonly] {
+            opacity: 1;
+          }
+        }
+      }
+
+      &[disabled] {
+        cursor: inherit;
+      }
+    }
+  }
+}
+
+.field-checkboxes {
+  .field-inner {
+    height: 100%;
+  }
+}
+
+
+//
 // SUBMIT
 //
 .submit {
