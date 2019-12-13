@@ -1,29 +1,15 @@
 @import 'Radios.scss';
 
-
-.radio-field,
 .radios-field {
-  .radio {
-    &.checked {
-      input[type="radio"][readonly] {
-        opacity: 1;
-      }
-    }
-  }
-}
-
-.radio-field,
-.radios-field {
-  @extend .p12;
-
+  @extend .text-field;
+  
   .field-inner {
-    color: black;
-    padding-left: 4px;
     border: none;
     border-radius: 0;
-    font-weight: 500;
-    // height: inherit;
-    height: 300px;
+    color: black;
+    font-weight: $font-weight-semibold;
+    padding: 0.75rem;
+    padding-left: 0.25rem;
 
     input[type="radio"][disabled] {
       cursor: inherit;
@@ -75,6 +61,14 @@
         inset 0 2px 2px hsla(0, 0%, 100%, 0.4),
         0 1px 1px hsla(0, 0%, 100%, 0.8),
         0 0 2px 2px hsla(0, 70%, 70%, 0.4);
+    }
+
+    .radio {
+      &.checked {
+        input[type="radio"][readonly] {
+          opacity: 1;
+        }
+      }
     }
   }
 }

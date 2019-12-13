@@ -32,7 +32,7 @@ class TextField extends React.PureComponent {
     } = this.props
     return (
       <div
-        className={classnames("field", className, { readonly: readOnly })}
+        className={classnames("text-field", className, { readonly: readOnly })}
         id={id}
       >
         <label

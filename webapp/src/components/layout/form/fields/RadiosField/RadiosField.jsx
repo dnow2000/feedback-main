@@ -20,7 +20,7 @@ export const RadiosField = ({
     render={({ input, meta }) => (
       <div
         className={classnames(
-          "field radios-field",
+          "radios-field",
           { readonly: readOnly })
         }
       >

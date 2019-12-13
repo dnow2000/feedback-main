@@ -36,37 +36,43 @@ const FormFields = ({ evaluations, query, tags }) => {
     'positivity'
   )
   const { readOnly } = query.context()
-  console.log('TAG OPTIONS', tags, tagOptions)
 
   return (
-    <div className="fields-container">
-      <div className="fields-table">
-        <div className="col-tablet-33">
-          <RadiosField
-            label="Credibility score"
-            name={EVALUATIONS_NAME}
-            options={evaluationOptions}
-            readOnly={readOnly}
-            required
-          />
-        </div>
-        <div className="col-tablet-66">
-          <CheckboxesField
-            label="Tags"
-            name={TAGS_NAME}
-            options={tagOptions}
-            readOnly={readOnly}
-            required
-          />
-        </div>
+    <div className="form-fields">
+      <HiddenField
+        name="articleId"
+        type="hidden"
+      />
+      <TexteditorField
+        label="Your review"
+        name="comment"
+        placeholder=""
+        readOnly={readOnly}
+        required
+      />
+      <div className="credibility-and-tags">
+        <RadiosField
+          label="Credibility score"
+          name={EVALUATIONS_NAME}
+          options={evaluationOptions}
+          readOnly={readOnly}
+          required
+        />
+        <CheckboxesField
+          label="Tags"
+          name={TAGS_NAME}
+          options={tagOptions}
+          readOnly={readOnly}
+          required
+        />
       </div>
     </div>
   )
 
+  /*
   return (
-    <div className="section">
-
-      {/* <HiddenField name="articleId" type="hidden" />
+    <div>
+      <HiddenField name="articleId" type="hidden" />
       <div className="field-group">
         <TexteditorField
           name="comment"
@@ -75,7 +81,7 @@ const FormFields = ({ evaluations, query, tags }) => {
           required
         />
         <div className='field-sep' />
-      </div> */}
+      </div>
 
       <div className="field-group">
         <h3 className="field-group-title">
@@ -107,7 +113,7 @@ const FormFields = ({ evaluations, query, tags }) => {
 
 
     </div>
-  )
+  )*/
 }
 
 FormFields.defaultProps = {

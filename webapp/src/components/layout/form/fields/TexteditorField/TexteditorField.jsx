@@ -66,7 +66,7 @@ export class TexteditorField extends PureComponent {
         name={name}
         validate={composeValidators(validate, getRequiredValidate(required))}
         render={({ input, meta }) => (
-          <div className={classnames("field texteditor-field", className, { readonly: readOnly })}>
+          <div className={classnames("texteditor-field", className, { readonly: readOnly })}>
             <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
               {label && (
                 <span>

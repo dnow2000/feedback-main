@@ -31,7 +31,7 @@ export const FieldError = ({ className, customMessage, meta }) => {
       className={`field-error ${className}`}
     >
       {(errorMessage && (
-        <span className="container">
+        <span className="icon-and-messages">
           <span className="icon">
             <span
               aria-hidden

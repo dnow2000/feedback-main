@@ -14,10 +14,10 @@ html {
 body {
   color: $font-color-normal;
   font-family: $font-family-sans-serif;
-  font-weight: $font-weight-normal;
   font-size: $font-size-normal;
-  min-height: 100%;
+  font-weight: $font-weight-normal;
   margin: 0 auto;
+  min-height: 100%;
   -webkit-tap-highlight-color: rgba($white, 0);
   -webkit-tap-highlight-color: transparent;
   -moz-tap-highlight-color: rgba($white, 0);

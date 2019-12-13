@@ -1,11 +1,83 @@
 .text-field {
-  .field-value {
-    align-items: center;
-    display: flex;
+  margin-bottom: 1.875rem;
 
-    .field-inner {
+  .field-label {
+    color: $grey-darker;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $black;
+    font-size: $font-size-little-big;
+    font-weight: $font-weight-bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin-bottom: 0.5rem;
+    position: relative;
+
+    .field-asterisk {
+      color: $red;
+      font-size: 1.25rem;
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+    }
+
+    .field-sublabel {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      margin-top: 0.625rem;
+      height: 1rem;
+      font-size: $font-size-small;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #767584;
+    }
+  }
+
+  .field-control {
+    margin-top: 1rem;
+
+    .field-value {
       align-items: center;
       display: flex;
+
+      .field-inner {
+        align-items: center;
+        background-color: #f2f3f6;
+        border-radius: 0.25rem;
+        display: flex;
+        height: 3.75rem;
+        overflow: hidden;
+        width: 100%;
+
+        .field-input {
+          border: 0;
+          padding-left: 18px;
+          padding-right: 18px;
+          width: 100%;
+          background-color: transparent;
+          height: 100%;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.13;
+          letter-spacing: normal;
+
+          &:focus {
+            border-color: $primary;
+            border-style: solid;
+            border-width: 1px;
+            box-shadow: none !important;
+            outline:0px !important;
+            -webkit-appearance:none;
+          }
+        }
+      }
     }
   }
 }

@@ -30,7 +30,7 @@ export class CheckboxField extends PureComponent {
     } = this.props
     return (
       <div
-        className={classnames("field checkbox-field",
+        className={classnames("checkbox-field",
           className, { readonly: readOnly })}
         id={id}
       >
