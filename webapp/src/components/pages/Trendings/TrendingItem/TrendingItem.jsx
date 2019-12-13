@@ -1,18 +1,13 @@
-import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
-import Transition from 'react-transition-group/Transition'
+import PropTypes from 'prop-types'
+import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
+import Icon from 'components/layout/Icon'
 
-const duration = 500;
-const defaultStyle = {
-  maxHeight: 600,
-  transition: `max-height ${duration}ms ease-in-out`,
-}
 
-const transitionStyles = {
-  entered:  { maxHeight: 0, opacity: 0 },
-  entering: { maxHeight: 400, opacity: 1 },
+
+function round(x, n) {
+  return Math.round(x*10**n) / 10**n
 }
 
 class TrendingItem extends PureComponent {
@@ -46,6 +41,16 @@ class TrendingItem extends PureComponent {
     }))
   }
 
+  displaySocialScores(socialScore) {
+    if (socialScore > 999999){
+      return `${round(socialScore/1000000, 1)}M`
+    }
+    if (socialScore > 999){
+      return `${round(socialScore/1000, 0)}k`
+    }
+    return socialScore
+  }
+
   render () {
     const {
       trending,
@@ -54,6 +59,7 @@ class TrendingItem extends PureComponent {
       authors,
       externalThumbUrl,
       facebookShares,
+      id,
       subdomain,
       title,
       totalShares,
@@ -63,87 +69,68 @@ class TrendingItem extends PureComponent {
     const { isDismissed, isReviewable } = this.state
 
     return (
-      <Transition in={isDismissed} timeout={duration}>
-        {state => (
-          <div style={{...defaultStyle, ...transitionStyles[state]}}>
-            <article className="article-item box">
-              <div className="content pt24 pl24 pr24">
-                <div className="flex-columns items-center mb12">
-                  {totalShares && (
-                    <span className="total-shares mr8">
-                      {totalShares}
-                    </span>
-                  )}
-                  {facebookShares && (
-                    <span className="mr8">
-                      - Facebook: <strong>{facebookShares}</strong>
-                    </span>)}
-                  {twitterShares && (
-                    <span>
-                      - Twitter: <strong>{twitterShares}</strong>
-                    </span>
-                  )}
-                </div>
-                <div className="flex-columns items-center mb12">
-                  <div className="col-25 text-center mr12">
-                    <a href={url} target="_blank" rel="noopener noreferrer">
-                      <img
-                        alt="Webshot"
-                        className="screenshot"
-                        src={externalThumbUrl}
-                      />
-                    </a>
-                  </div>
-                  <div className="flex-auto center">
-                    <a
-                      className="title mb16 fs22"
-                      href={url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <strong>
-                        {title}
-                      </strong>
-                    </a>
-                    <div className="infos flex-columns items-center py12">
-                      <div className="authors mr24">
-                        {((subdomain || authors) || '')
-                          .split(';')
-                          .filter(author => author)
-                          .map(author => (
-                            <p key={author}>
-                              {author}
-                            </p>
-                          ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <nav className="control flex-start items-center p12">
-                <button
-                  className={classnames("button is-primary is-info", {
-                    'is-loading': isReviewable
-                  })}
-                  onClick={this.handleSaveTrending({ isReviewable: true })}
-                  type="button"
-                >
-                  Reviewable
-                </button>
-                <button
-                  className={classnames("button is-primary is-danger", {
-                    'is-loading': isReviewable === false
-                  })}
-                  onClick={this.handleSaveTrending({ isReviewable: false })}
-                  type="button"
-                >
-                  Not reviewable
-                </button>
-              </nav>
-            </article>
+      <article className="trending-item">
+        <NavLink
+          className="trending-container"
+          href={url}
+          rel="noopener noreferrer"
+          target="_blank"
+          to={`/articles/creation?trendingId=${id}`}
+        >
+          <div className="trending-header">
+            <p className="trending-tag">Climate</p>
+            <p className="trending-date">4 Dec 2019</p>
           </div>
-      )}
-      </Transition>
+          <div className="trending-summary">
+            <div className="trending-summary-thumbnail">
+              <img
+                alt="Article illustration"
+                className="thumbnail-image"
+                src={externalThumbUrl}
+              />
+            </div>
+            <div className="trending-summary-container">
+              <p className="trending-title">
+                {title}
+              </p>
+              {((subdomain || authors) || '')
+                .split(';')
+                .filter(author => author)
+                .map(author => (
+                  <p className="trending-author" key={author}>
+                    {author}
+                  </p>
+                )
+              )}
+              <a
+                className="trending-link"
+                href={url}
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Read the article
+              </a>
+            </div>
+          </div>
+          <div className="social-scores-container">
+            <div className="separated-scores">
+              <p>
+                {this.displaySocialScores(totalShares)} Share
+              </p>
+            </div>
+            <div className="separated-scores">
+              <div className="score">
+                <Icon className="icon" name="ico-fb.svg" />
+                <p>{this.displaySocialScores(facebookShares)}</p>
+              </div>
+              <div className="score">
+                <Icon className="icon" name="ico-twtr.svg" />
+                <p>{this.displaySocialScores(twitterShares)}</p>
+              </div>
+            </div>
+          </div>
+        </NavLink>
+      </article>
     )
   }
 }

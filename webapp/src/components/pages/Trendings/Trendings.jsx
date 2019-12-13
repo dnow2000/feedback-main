@@ -102,52 +102,55 @@ class Trendings extends PureComponent {
       <>
         <HeaderContainer />
         <MainContainer name="trendings">
-          <section className="controls">
-            <div className="themes">
-              {trendingThemes.map(({ label, value }) => (
-                <button
-                  className={classnames({"selected": theme !== value})}
-                  key={value}
-                  onClick={this.handleRequestDataWithQuery('theme', value)}
-                  type="button"
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-
-            <div className="days">
-              <select onChange={event => {
-                console.log(event.target.value)
-                this.handleRequestDataWithQuery('days', event.target.value)
-              }}>
-                {trendingMaxDates.map(({ label, value }) => (
-                  <option
+          <div className="container">
+            <section className="controls">
+              <div className="themes">
+                {trendingThemes.map(({ label, value }) => (
+                  <button
+                    className={classnames("thin", {"selected": theme !== value})}
                     key={value}
-                    value={value}
+                    onClick={this.handleRequestDataWithQuery('theme', value)}
+                    type="button"
                   >
                     {label}
-                  </option>
+                  </button>
                 ))}
-              </select>
-            </div>
-          </section>
+              </div>
 
-          <section>
-            <LoadingInfiniteScroll
-              hasMore={hasMore}
-              isLoading={isLoading}
-              useWindow
-            >
-              {
-                trendings.map(trending => (
-                  <div className="mb16" key={trending.id}>
-                    <TrendingItemContainer trending={trending} />
-                  </div>
-                ))
-              }
-            </LoadingInfiniteScroll>
-          </section>
+              <div className="days">
+                <select onChange={event => {
+                  console.log(event.target.value)
+                  this.handleRequestDataWithQuery('days', event.target.value)
+                }}>
+                  {trendingMaxDates.map(({ label, value }) => (
+                    <option
+                      key={value}
+                      value={value}
+                    >
+                      {label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </section>
+
+            <section>
+              <LoadingInfiniteScroll
+                hasMore={hasMore}
+                isLoading={isLoading}
+                useWindow
+                className="feeds"
+              >
+                {
+                  trendings.map(trending => (
+                    <div key={trending.id} className="trending-wrapper">
+                      <TrendingItemContainer trending={trending} />
+                    </div>
+                  ))
+                }
+              </LoadingInfiniteScroll>
+            </section>
+          </div>
         </MainContainer>
       </>
     )

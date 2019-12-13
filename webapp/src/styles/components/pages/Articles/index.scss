@@ -1,26 +1,2 @@
 @import 'ArticleItem.scss';
-
-.articles-main {
-  .section.hero {
-    .control {
-      @extend .b12;
-      @extend .t-8;
-      @extend .r8;
-
-      @media (min-width: $desktop) {
-        bottom: 12px;
-        position: absolute;
-        top: 8px;
-        right: 8px;
-      }
-
-      button {
-        @extend .mb8;
-
-        @media (min-width: $desktop) {
-          margin-bottom: 0;
-        }
-      }
-    }
-  }
-}
+@import 'Article.scss';
