@@ -7,9 +7,11 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class EvaluationType(enum.Enum):
     article = "article"
     claim = "claim"
+
 
 class Evaluation(ApiHandler,
                  Model):
@@ -22,4 +24,4 @@ class Evaluation(ApiHandler,
     type = Column(String(50),
                   nullable=True)
 
-    value = Column(Integer, nullable=False)
+    value = Column(Integer, nullable=True)

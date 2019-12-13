@@ -1,10 +1,5 @@
-from sqlalchemy import Boolean,\
-                       Column,\
-                       Integer
+from sqlalchemy import Column, Float
+
 
 class HasRatingMixin(object):
-    rating = Column(Integer, nullable=False, default=100)
-
-    isApplicable = Column(Boolean,
-                          nullable=False,
-                          default=True)
+    rating = Column(Float, nullable=True)

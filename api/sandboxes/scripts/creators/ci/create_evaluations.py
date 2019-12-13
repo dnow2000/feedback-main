@@ -77,6 +77,13 @@ def create_evaluations():
         value=-2
     )
 
+    evaluations_by_name["article / NA"] = create_evaluation(
+        "article",
+        info="it contains major scientific inaccuracies for key facts supporting argumentation, and/or omits important information, and/or presents logical flaws in using information to reach conclusion",
+        label="Very Low",
+        value=None
+    )
+
     ApiHandler.save(*evaluations_by_name.values())
 
     logger.info('created {} evaluations'.format(len(evaluations_by_name)))

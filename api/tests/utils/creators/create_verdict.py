@@ -1,5 +1,6 @@
 from models.verdict import Verdict
 
+
 def create_verdict(user, article, comment, evaluation=None, rating=None):
     verdict = Verdict()
     verdict.article = article

@@ -5,6 +5,7 @@ from models.evaluation import Evaluation
 from models.user import User
 from tests.utils.creators.create_verdict import create_verdict
 
+
 def create_verdicts():
     logger.info('create_verdicts')
 
