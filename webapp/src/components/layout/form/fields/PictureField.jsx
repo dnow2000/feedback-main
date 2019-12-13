@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import React from 'react'
+import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
 import {
@@ -14,7 +14,7 @@ import { ROOT_ASSETS_PATH } from 'utils/config'
 import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-class PictureField extends React.PureComponent {
+class PictureField extends PureComponent {
 
   constructor(props) {
     super(props)
@@ -54,13 +54,11 @@ class PictureField extends React.PureComponent {
     }
     let croppingRect = this.avatarRef.current.getCroppingRect()
     if (croppingRect.height) {
-      console.log('CROP', croppingRect)
       onImageChange(image, croppingRect)
       return
     }
     this.croppingRectInterval = setInterval(() => {
       croppingRect = this.avatarRef.current.getCroppingRect()
-      console.log('RETRY CROP', croppingRect)
       if (croppingRect.height) {
         onImageChange(image, croppingRect)
         clearInterval(this.croppingRectInterval)
@@ -70,9 +68,7 @@ class PictureField extends React.PureComponent {
 
   renderSlider = () => {
     return (
-      <div
-        className='slider-container'
-      >
+      <div className='slider-container'>
         <input
           defaultValue="1"
           max="2"
@@ -98,7 +94,7 @@ class PictureField extends React.PureComponent {
     const { image, scale } = this.state
     return (
       <div
-        className={classnames("field", className, { readonly: readOnly })}
+        className={classnames("picture-field", { readonly: readOnly })}
         id={id}
       >
         <label
@@ -108,7 +104,7 @@ class PictureField extends React.PureComponent {
           <span>{label}</span>
           {required && !readOnly && <span className="field-asterisk">{"*"}</span>}
         </label>
-        <div className="field-picture">
+        <div className="field-control">
           <div>
             <Dropzone
               onDrop={this.handleDrop}

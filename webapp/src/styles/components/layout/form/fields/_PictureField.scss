@@ -1,0 +1,21 @@
+.picture-field {
+  @extend .text-field;
+
+  .field-label {
+    width: 13.5rem;
+  }
+
+  .field-control {
+    background-color: #f2f3f6;
+    border-radius: 0.25rem;
+    margin-top: 1rem;
+    height: 13.5rem;
+    width: 13.5rem;
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

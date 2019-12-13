@@ -20,7 +20,7 @@ export const CheckboxesField = ({
     render={({ input, meta }) => (
       <div
         className={classnames(
-          "field field-checkboxes",
+          "checkboxes-field",
           { readonly: readOnly })
         }
       >

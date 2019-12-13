@@ -1,16 +1,17 @@
 .checkbox-field {
+  @extend .text-field;
+
   margin-bottom: 0px;
 
   .checkbox-text-container {
-    padding-left: 14px;
+    color: $black;
     height: 58px;
-    font-family: Apercu;
     font-size: 18px;
     font-weight: 400;
     font-stretch: normal;
     font-style: normal;
     line-height: 1.29;
     letter-spacing: normal;
-    color: $black;
+    padding-left: 14px;
   }
 }

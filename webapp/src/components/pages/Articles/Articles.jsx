@@ -5,12 +5,13 @@ import { Form } from 'react-final-form'
 import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
+import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import TextField from 'components/layout/form/fields/TextField'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
-import ArticleItemContainer from './ArticleItem/ArticleItemContainer'
+
 
 
 class Articles extends PureComponent {

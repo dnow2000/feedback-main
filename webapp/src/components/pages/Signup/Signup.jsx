@@ -122,7 +122,6 @@ class Signup extends PureComponent {
     } = formProps
     const errorIds = Object.keys(errors)
     const handleSubmitAndScrollIfNeeded = (event) => {
-      console.log('FRONTEND FIELD ERROR', errors, errorIds)
       handleSubmit(event)
       if (errorIds.length > 0) {
         const fieldErrorId = errorIds[0]  // TODO @colas: get top error

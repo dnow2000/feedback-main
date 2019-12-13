@@ -5,9 +5,9 @@ import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
+import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
-import ArticleItemContainer from 'components/pages/Articles/ArticleItem/ArticleItemContainer'
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
 import FormFooterContainer from './FormFooter/FormFooterContainer'
@@ -108,17 +108,17 @@ class Review extends PureComponent {
     }
   }
 
-  renderArticlePreview() {
+  renderArticleItemSection = () => {
     const { article } = this.props
     if (!article) {
       return null
     }
     return (
-      <section className="section">
-        <h2 className="subtitle flex-columns items-center">
-          ARTICLE TO REVIEW
-        </h2>
-        <ArticleItemContainer article={article} noControl />
+      <section>
+        <ArticleItemContainer
+          article={article}
+          noControl
+        />
       </section>
     )
   }
@@ -126,7 +126,7 @@ class Review extends PureComponent {
   renderReviewSection = () => {
     const { formInitialValues } = this.props
     return (
-      <section className="section">
+      <section>
         <Form
           initialValues={formInitialValues}
           onSubmit={this.handleSubmit}
@@ -145,7 +145,6 @@ class Review extends PureComponent {
     return (
       <form
         autoComplete="off"
-        className="form flex-rows is-full-layout"
         disabled={isFormLoading}
         noValidate
         onSubmit={handleSubmit}
@@ -190,9 +189,11 @@ class Review extends PureComponent {
       <>
         <HeaderContainer />
         <MainContainer name="review">
-
           <div className="container">
-            {/* {this.renderArticlePreview()} */}
+            <h1 className="title">
+              Article Review
+            </h1>
+            {this.renderArticleItemSection()}
             {this.renderReviewSection()}
             {/* {this.renderAttachedVerdicts()} */}
           </div>

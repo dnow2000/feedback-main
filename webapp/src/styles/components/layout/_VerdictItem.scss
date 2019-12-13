@@ -1,0 +1,123 @@
+.verdict-bottom-container {
+  height: 100px;
+  width: 440px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .mean-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    background-color: $white;
+
+    .mean {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100px;
+      height: 80px;
+      opacity: 0.65;
+      border-radius: 10px;
+      font-family: Apercu;
+      font-size: 30px;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      text-align: center;
+
+      &.positive {
+        background-color: $green;
+        color: #88e749;
+      }
+      &.neutral {
+        background-color: $yellow;
+        color: #df8d16;
+      }
+      &.negative {
+        background-color: $red;
+        color: #e53c3c;
+      }
+      &.na {
+        background-color: $grey;
+        color: #f2f3f6;
+      }
+    }
+  }
+
+  .counts-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+    height: 80px;
+    background-color: white;
+
+    .bar {
+      height: 8px;
+
+      &.bar-2 {
+        background-color: #29c2c2;
+      }
+      &.bar-1 {
+        background-color: #88e749;
+      }
+      &.bar-0 {
+        background-color: #ffd452;
+      }
+      &.bar-\-1 {
+        background-color: #fc8900;
+      }
+      &.bar-\-2 {
+        background-color: #d00000;
+      }
+      &.bar-na {
+        background-color: #6d6d6d;
+      }
+    }
+  }
+
+  .users-container {
+    display: flex;
+    height: 80px;
+    width: 280px;
+    border-radius: 10px;
+    background-color: #f2f3f6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+
+    font-family: Apercu;
+    font-size: 12px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: center;
+
+    .reviewers-container {
+      display: flex;
+      flex-direction: row;
+      align-items: left;
+      justify-content: left;
+    }
+
+    .editor-avatar {
+      width: 30px;
+      height: 30px;
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+    .reviewer-avatar {
+      width: 30px;
+      height: 30px;
+      margin-left: 0;
+      margin-right: 5px;
+    }
+  }
+}

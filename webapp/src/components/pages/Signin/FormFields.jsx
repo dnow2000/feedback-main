@@ -3,18 +3,19 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import EmailField from 'components/layout/form/fields/EmailField'
 import PasswordField from 'components/layout/form/fields/PasswordField'
+import TextField from 'components/layout/form/fields/TextField'
 
 const FormFields = () => (
-  <div>
+  <>
     <input type="hidden" name="name" value="user" />
-    <EmailField
+    <TextField
       id="identifier"
       required
       name="identifier"
       label="login"
       placeholder="Your login email"
+      type="email"
     />
     <PasswordField
       id="password"
@@ -26,7 +27,7 @@ const FormFields = () => (
     <Link className="is-white-text is-underline fs16" to="/mot-de-passe-perdu">
       <span>Mot de passe oublié&nbsp;?</span>
     </Link>
-  </div>
+  </>
 )
 
 export default FormFields
