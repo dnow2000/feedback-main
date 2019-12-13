@@ -43,7 +43,8 @@ class ArticleItem extends PureComponent {
       currentUserVerdict,
       match,
       noControl,
-      showSeeAllReviews
+      showSeeAllReviews,
+      withShares
     } = this.props
     const {
       authors,
@@ -113,23 +114,25 @@ class ArticleItem extends PureComponent {
               </a>
             </div>
           </div>
-          <div className="social-scores-container">
-            <div className="separated-scores">
-              <p>
-                {this.displaySocialScores(totalShares)} Share
-              </p>
-            </div>
-            <div className="separated-scores">
-              <div className="score">
-                <Icon className="icon" name="ico-fb.svg" />
-                <p>{this.displaySocialScores(facebookShares)}</p>
+          {withShares && (
+            <div className="social-scores-container">
+              <div className="separated-scores">
+                <p>
+                  {this.displaySocialScores(totalShares)} Share
+                </p>
               </div>
-              <div className="score">
-                <Icon className="icon" name="ico-twtr.svg" />
-                <p>{this.displaySocialScores(twitterShares)}</p>
+              <div className="separated-scores">
+                <div className="score">
+                  <Icon className="icon" name="ico-fb.svg" />
+                  <p>{this.displaySocialScores(facebookShares)}</p>
+                </div>
+                <div className="score">
+                  <Icon className="icon" name="ico-twtr.svg" />
+                  <p>{this.displaySocialScores(twitterShares)}</p>
+                </div>
               </div>
             </div>
-          </div>
+          )}
           <div className="article-cta-container">
             {canVerdict && (
               <NavLink
@@ -170,7 +173,8 @@ ArticleItem.defaultProps = {
   currentUserReview: null,
   currentUserVerdict: null,
   noControl: false,
-  showSeeAllReviews: false
+  showSeeAllReviews: false,
+  withShares: true
 }
 
 ArticleItem.propTypes = {
@@ -183,7 +187,8 @@ ArticleItem.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   noControl: PropTypes.bool,
-  showSeeAllReviews: PropTypes.bool
+  showSeeAllReviews: PropTypes.bool,
+  withShares: PropTypes.bool,
 }
 
 export default ArticleItem

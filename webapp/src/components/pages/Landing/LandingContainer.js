@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   requestGetVerdicts: () => dispatch(requestData({
     apiPath: "/verdicts",
+    normalizer: { article: "articles" }
   }))
 })
 

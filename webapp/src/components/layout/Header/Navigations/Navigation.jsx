@@ -4,13 +4,13 @@ import { NavLink } from 'react-router-dom'
 
 import { links } from '../utils'
 
-const Navigation = ({ currentRoles, currentUser, location }) => (
-  <div className="navigation">
+const Navigations = ({ currentRoles, currentUser, location }) => (
+  <div className="navigations">
   {links &&
     links.filter(({ disabled }) => !disabled)
          .map(({ external, label, target, path, visible }) => (
       visible(currentRoles) && (
-        <div className="item" key={label}>
+        <div className="navigation" key={label}>
           {path === location.pathname ? (
             <div className="current">
               {label(currentRoles)}
@@ -31,12 +31,12 @@ const Navigation = ({ currentRoles, currentUser, location }) => (
   </div>
 )
 
-Navigation.defaultProps = {
+Navigations.defaultProps = {
   currentRoles: null,
   currentUser: null
 }
 
-Navigation.propTypes = {
+Navigations.propTypes = {
   currentRoles: PropTypes.array,
   currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
   location: PropTypes.shape({
@@ -44,4 +44,4 @@ Navigation.propTypes = {
   }).isRequired
 }
 
-export default Navigation
+export default Navigations

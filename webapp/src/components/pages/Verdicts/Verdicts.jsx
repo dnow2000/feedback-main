@@ -4,9 +4,8 @@ import { requestData } from 'redux-thunk-data'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
+import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
 import { verdictNormalizer } from 'utils/normalizers'
-
-import VerdictItemContainer from './VerdictItem/VerdictItemContainer'
 
 class Verdicts extends PureComponent {
 

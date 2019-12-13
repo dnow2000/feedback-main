@@ -1,14 +1,14 @@
 .article-item {
+  border-style: solid;
+  border-color: $grey-light;
+  border-width: 1px;
+  border-radius: 10px;
 
   a.article-container {
     display: flex;
     flex-direction: column;
+    padding: 1.25rem;
     text-decoration: none;
-    padding: 20px;
-    border-style: solid;
-    border-color: $grey-light;
-    border-width: 1px;
-    border-radius: 10px;
 
     &:hover {
       background-color: $blue-lighterer;
@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     flex: 1;
-    padding-bottom: 15px;
+    padding-bottom: 1rem;
     flex-direction: row;
     justify-content: space-between;
 
@@ -34,8 +34,8 @@
       color: $blue;
       padding-left: 10px;
       padding-right: 10px;
-      padding-top: 4px;
-      padding-bottom: 4px;
+      padding-top: 0.25rem;
+      padding-bottom: 0.25rem;
     }
     .article-date {
       font-size: rem(12px);
@@ -68,7 +68,6 @@
     .article-title {
       color: $black;
       font-weight: bold;
-      font-size: rem(16px);
       text-align:left;
       text-overflow: ellipsis;
       max-height: 150px;

@@ -4,6 +4,7 @@ import React from 'react'
 import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 
+import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import Avatar from 'components/layout/Avatar'
 import ReviewItemContainer from 'components/pages/Reviews/ReviewsExploration/ReviewItem/ReviewItemContainer'
 
@@ -110,52 +111,60 @@ const VerdictItem = ({ article, verdict, user }) => {
   console.log('RATINGS', ratings)
   console.log('VERDICT', verdict)
   console.log('COLOR', colorClassName)
+  console.log({article})
 
   return (
-    <div className="verdict-bottom-container">
-      <div className="col-tablet-20">
-        <div className="mean-container">
-          <div className={classnames("mean", colorClassName)}>
-            {meanRating}
+    <div className="verdict-item">
+      {article && (
+        <ArticleItemContainer
+          article={article}
+          withShares={false}
+        />)}
+      <div className="verdict-bottom-container">
+        <div className="col-tablet-20">
+          <div className="mean-container">
+            <div className={classnames("mean", colorClassName)}>
+              {meanRating}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="col-tablet-15">
-        <div className="counts-container">
-          {RATING_VALUES.map(value => {
-            const width = round(barSizeByValue[value], 2)
-            return (
-              <div
-                className={classnames("bar", `bar-${value}`)}
-                key={value}
-                style={{width: `${width}px`}}
+        <div className="col-tablet-15">
+          <div className="counts-container">
+            {RATING_VALUES.map(value => {
+              const width = round(barSizeByValue[value], 2)
+              return (
+                <div
+                  className={classnames("bar", `bar-${value}`)}
+                  key={value}
+                  style={{width: `${width}px`}}
+                />
+              )
+            })}
+          </div>
+        </div>
+        <div className="col-tablet-65">
+          <div className="users-container">
+            <div className="col-tablet-20">
+              <div>Editor</div>
+              <Avatar
+                  className="avatar editor-avatar"
+                user={editor}
               />
-            )
-          })}
-        </div>
-      </div>
-      <div className="col-tablet-65">
-        <div className="users-container">
-          <div className="col-tablet-20">
-            <div>Editor</div>
-            <Avatar
-                className="avatar editor-avatar"
-              user={editor}
-            />
-          </div>
-          <div className="col-tablet-80">
-            <div>Reviewers</div>
-            <div className="reviewers-container">
-              {getTruncatedReviewers(reviews).map(user => {
-                return (
-                  <Avatar
-                    className="avatar reviewer-avatar"
-                    key={user.id}
-                    number={user.number}
-                    user={user}
-                  />
-                )
-              })}
+            </div>
+            <div className="col-tablet-80">
+              <div>Reviewers</div>
+              <div className="reviewers-container">
+                {getTruncatedReviewers(reviews).map(user => {
+                  return (
+                    <Avatar
+                      className="avatar reviewer-avatar"
+                      key={user.id}
+                      number={user.number}
+                      user={user}
+                    />
+                  )
+                })}
+              </div>
             </div>
           </div>
         </div>

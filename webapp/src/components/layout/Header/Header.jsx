@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import Logo from '../Logo'
 import MenuContainer from './Menu/MenuContainer'
-import NavigationContainer from './Navigation/NavigationContainer'
+import NavigationsContainer from './Navigations/NavigationsContainer'
 import UserAvatarContainer from './UserAvatar/UserAvatarContainer'
 
 
@@ -38,7 +38,7 @@ const Header = ({ currentUser, location, whiteHeader }) => {
         <div className="flex-auto" />
         {currentUser && !isSignPathname ? (
           <>
-            <NavigationContainer />
+            <NavigationsContainer />
             <UserAvatarContainer
               disabled={isScrolling}
               whiteHeader={whiteHeader}

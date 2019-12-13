@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 import MainContainer from 'components/layout/Main/MainContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import Icon from 'components/layout/Icon'
-import VerdictItem from 'components/pages/Verdicts/VerdictItem/VerdictItem'
+import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
 
@@ -26,7 +26,8 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
             </NavLink>
           </div>
         </section>
-        <section>
+
+        <section className="verdicts">
           <div className="container">
             <div className="section-title">
               <span className="icon-container">
@@ -35,12 +36,20 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
               <p className="h2">
                 Latest Reviews
               </p>
-              {(verdicts || []).map(verdict =>
-                <VerdictItem key={verdict.id} verdict={verdict} />
-              )}
+              <div className="items">
+                {(verdicts || []).map(verdict => (
+                    <div className="item-container">
+                      <VerdictItemContainer
+                        key={verdict.id}
+                        verdict={verdict}
+                      />
+                    </div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
+
         <section>
           <div className="container">
             <div className="section-title has-border-top">
@@ -60,6 +69,7 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
             </NavLink>
           </div>
         </section>
+
         <section className="footer">
           <div className="container is-footer">
             <div className="logo-container">

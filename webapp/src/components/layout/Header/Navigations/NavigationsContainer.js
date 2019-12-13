@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectCurrentUser } from 'with-react-redux-login'
 
-import Navigation from './Navigation'
+import Navigations from './Navigation'
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
 const mapStateToProps = state =>  {
@@ -16,4 +16,4 @@ const mapStateToProps = state =>  {
 export default compose(
   withRouter,
   connect(mapStateToProps)
-)(Navigation)
+)(Navigations)

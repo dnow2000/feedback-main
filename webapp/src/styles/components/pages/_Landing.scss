@@ -18,6 +18,17 @@
       padding-bottom: 0px;
     }
 
+
+    &.verdicts {
+      .items {
+        display: flex;
+
+        .item-container {
+          @extend .col-tablet-50;
+        }
+      }
+    }
+
     &.footer {
       align-items: center;
       background-color: $turquoise-dark;

@@ -1,11 +1,11 @@
-.navigation {
+.navigations {
   display: none;
 
   @media(min-width: $tablet) {
     display: inherit;
   }
 
-  .item {
+  .navigation {
     font-size: $font-size-big;
     margin-right: 1rem;
 
