@@ -12,6 +12,21 @@
       }
     }
 
+    .title-and-affiliation {
+        align-items: center;
+        display: flex;
+
+        #title {
+          @extend .col-tablet-50;
+
+          padding-right: 1rem;
+        }
+
+        #affiliation {
+          @extend .col-tablet-50;
+        }
+    }
+
     .field-separator {
       margin-top: 70px;
       margin-bottom: 40px;

@@ -82,9 +82,8 @@ class FormFields extends PureComponent {
           required
           sublabel="Link to a webpage listing your publications."
         />
-        <div className="fields-table">
+        <div className="title-and-affiliation">
           <TextField
-            className="col-tablet-50"
             id="title"
             label="Title"
             name="title"
@@ -92,7 +91,6 @@ class FormFields extends PureComponent {
             required
           />
           <TextField
-            className="col-tablet-50"
             id="affiliation"
             label="Affiliation"
             name="affiliation"

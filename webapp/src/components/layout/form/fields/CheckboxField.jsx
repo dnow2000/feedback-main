@@ -8,7 +8,7 @@ import { composeValidators } from 'react-final-form-utils'
 import FieldError from '../FieldError'
 import getRequiredValidate from '../utils/getRequiredValidate'
 
-export class CheckboxField extends PureComponent {
+class CheckboxField extends PureComponent {
 
   renderField = ({ input, meta }) => {
     const {

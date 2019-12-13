@@ -1,17 +1,18 @@
 .checkbox-field {
   @extend .text-field;
 
-  margin-bottom: 0px;
+  .field-control {
+    align-items: center;
+    height: 0.75rem;
+    display: flex;
+    margin-bottom: 0;
 
-  .checkbox-text-container {
-    color: $black;
-    height: 58px;
-    font-size: 18px;
-    font-weight: 400;
-    font-stretch: normal;
-    font-style: normal;
-    line-height: 1.29;
-    letter-spacing: normal;
-    padding-left: 14px;
+    .checkbox-text-container {
+      font-size: $font-size-small;
+      font-stretch: normal;
+      font-style: normal;
+      letter-spacing: normal;
+      padding-left: 0.75rem;
+    }
   }
 }

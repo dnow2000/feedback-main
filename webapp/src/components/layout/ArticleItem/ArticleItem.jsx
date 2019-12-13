@@ -152,7 +152,7 @@ class ArticleItem extends PureComponent {
                     : `/reviews/creation?articleId=${id}`
                 }
               >
-                {currentUserReviewId ? 'See' : 'Write'} Write a review
+                {currentUserReviewId ? 'See' : 'Write'} a review
               </NavLink>
             )}
           </div>
