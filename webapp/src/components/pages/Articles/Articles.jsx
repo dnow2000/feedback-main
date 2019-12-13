@@ -122,76 +122,79 @@ class Articles extends PureComponent {
       <>
         <HeaderContainer />
         <MainContainer name="articles">
-          <section className="section hero is-relative">
-            <div className="control">
+          <div className="container">
+            <section className="section hero is-relative">
+              <div className="control">
 
-              {['true', 'false'].map(boolString => (
-                <button
-                  className={classnames("button is-secondary",
-                    {
-                      "is-inversed": reviewable !== boolString
-                    })}
-                  key={boolString}
-                  onClick={this.onReviewableClick(boolString)}
-                  type="button"
-                >
-                  {boolString === 'false' && "Not "}reviewable
-                </button>
-              ))}
+                {['true', 'false'].map(boolString => (
+                  <button
+                    className={classnames("button is-secondary",
+                      {
+                        "is-inversed": reviewable !== boolString
+                      })}
+                    key={boolString}
+                    onClick={this.onReviewableClick(boolString)}
+                    type="button"
+                  >
+                    {boolString === 'false' && "Not "}reviewable
+                  </button>
+                ))}
 
-              {canCreateArticle && (
-                <button
-                  className="button is-primary"
-                  id="create-article"
-                  onClick={this.handleCreateArticle}
-                  type="button"
-                >
-                  New article
-                </button>
-              )}
-            </div>
-          </section>
+                {canCreateArticle && (
+                  <button
+                    className="button is-primary"
+                    id="create-article"
+                    onClick={this.handleCreateArticle}
+                    type="button"
+                  >
+                    New article
+                  </button>
+                )}
+              </div>
+            </section>
 
-          <section>
-            <Form
-              initialValues={queryParams}
-              onSubmit={this.onKeywordsSubmit}
-              render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <TextField
-                    name="keywords"
-                    placeholder="Type your search"
-                    renderValue={
-                      () => (
-                        <button
-                          className="button is-primary is-outlined search-ok"
-                          type="submit"
-                        >
-                          OK
-                        </button>
-                      )
-                    }
-                  />
-                </form>
-              )}
-            />
+            <section>
+              <Form
+                initialValues={queryParams}
+                onSubmit={this.onKeywordsSubmit}
+                render={({ handleSubmit }) => (
+                  <form onSubmit={handleSubmit}>
+                    <TextField
+                      name="keywords"
+                      placeholder="Type your search"
+                      renderValue={
+                        () => (
+                          <button
+                            className="button is-primary is-outlined search-ok"
+                            type="submit"
+                          >
+                            OK
+                          </button>
+                        )
+                      }
+                    />
+                  </form>
+                )}
+              />
 
-            <br />
+              <br />
 
-            <LoadingInfiniteScroll
-              hasMore={hasMore}
-              isLoading={isLoading}
-              useWindow
-            >
-              {
-                articles.map(article => (
-                  <div className="mb16" key={article.id}>
-                    <ArticleItemContainer article={article} />
-                  </div>
-                ))
-              }
-            </LoadingInfiniteScroll>
-          </section>
+              <LoadingInfiniteScroll
+                className="feeds"
+                hasMore={hasMore}
+                isLoading={isLoading}
+                useWindow
+              >
+                {
+                  articles.map(article => (
+                    <div className="article-wrapper" key={article.id}>
+                      <ArticleItemContainer article={article} />
+                    </div>
+                  ))
+                }
+              </LoadingInfiniteScroll>
+            </section>
+          </div>
         </MainContainer>
       </>
     )

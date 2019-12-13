@@ -1,11 +1,30 @@
 .trendings-main {
+
+  .feeds {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+
+  .trending-wrapper {
+    @extend .col-desktop-50;
+    padding: 10px
+  }
+
   .controls {
     align-items: center;
+    flex: 1;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     margin-bottom: rem(12px);
+    max-height: rem(80px);
 
     .themes {
+      display: flex;
+      flex-direction: row;
       button {
         @extend .button;
         @extend .is-primary;
