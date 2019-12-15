@@ -84,7 +84,6 @@ class PictureField extends PureComponent {
 
   renderField = ({ input, meta }) => {
     const {
-      className,
       id,
       label,
       name,
@@ -159,7 +158,6 @@ class PictureField extends PureComponent {
 }
 
 PictureField.defaultProps = {
-  className: '',
   id: null,
   label: '',
   readOnly: false,
@@ -169,7 +167,6 @@ PictureField.defaultProps = {
 }
 
 PictureField.propTypes = {
-  className: PropTypes.string,
   id: PropTypes.string,
   label: PropTypes.string,
   name: PropTypes.string.isRequired,

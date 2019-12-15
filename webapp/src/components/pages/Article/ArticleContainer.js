@@ -7,7 +7,6 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
-import withFormRouter from 'components/hocs/withFormRouter/withFormRouter'
 import selectArticleById from 'selectors/selectArticleById'
 import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'

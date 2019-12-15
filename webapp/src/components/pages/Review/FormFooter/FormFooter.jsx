@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 
 const FormFooter = ({
@@ -9,19 +9,28 @@ const FormFooter = ({
   history,
   isLoading,
   match,
-  query
+  onCancel
 }) => {
   const {
     params: { reviewId },
   } = match
-  const { isCreatedEntity, readOnly } = query.context({ id:reviewId })
+  const {
+    isCreatedEntity,
+    modificationUrl,
+    readOnly
+  } = form
+
+  const handleModifyClick = useCallback(() => {
+    history.push(modificationUrl)
+  }, [history, modificationUrl])
+
   return (
-    <div className="control level">
+    <div className="form-footer">
       {readOnly ? (
         <button
-          className="button is-primary"
+          className="modify"
           id="modification-review"
-          onClick={() => query.changeToModification()}
+          onClick={handleModifyClick}
           type="button"
         >
           Modify Review
@@ -31,7 +40,7 @@ const FormFooter = ({
           className="button is-secondary"
           id="cancel-review"
           onClick={() => {
-            form.reset()
+            onCancel()
             const next = isCreatedEntity ? '/articles' : `/reviews/${reviewId}`
             history.push(next)
           }}
@@ -41,12 +50,12 @@ const FormFooter = ({
         </button>
       )}
       {readOnly ? (
-        <NavLink className="button is-secondary" to="/articles">
+        <NavLink className="return" to="/articles">
           Return
         </NavLink>
       ) : (
         <button
-          className={classnames('button is-primary flex-1', {
+          className={classnames('create', {
             'is-loading': isLoading,
           })}
           disabled={!canSubmit}
@@ -67,11 +76,21 @@ FormFooter.defaultProps = {
 
 FormFooter.propTypes = {
   canSubmit: PropTypes.bool,
-  form: PropTypes.shape().isRequired,
-  history: PropTypes.object.isRequired,
+  form: PropTypes.shape({
+    isCreatedEntity: PropTypes.bool.isRequired,
+    modificationUrl: PropTypes.string,
+    readOnly: PropTypes.bool.isRequired
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
   isLoading: PropTypes.bool,
-  match: PropTypes.shape().isRequired,
-  query: PropTypes.shape().isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      reviewId: PropTypes.string
+    })
+  }).isRequired,
+  onCancel: PropTypes.func.isRequired
 }
 
 export default FormFooter

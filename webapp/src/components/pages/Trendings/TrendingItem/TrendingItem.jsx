@@ -67,7 +67,7 @@ class TrendingItem extends PureComponent {
       twitterShares,
       url
     } = trending
-    const { isDismissed, isReviewable } = this.state
+    const { isReviewable } = this.state
 
     return (
       <article className="article-item">

@@ -1,7 +1,5 @@
-/* eslint
-  react/jsx-one-expression-per-line: 0 */
 import React from 'react'
-import { Link } from 'react-router-dom'
+
 
 import PasswordField from 'components/layout/form/fields/PasswordField'
 import TextField from 'components/layout/form/fields/TextField'

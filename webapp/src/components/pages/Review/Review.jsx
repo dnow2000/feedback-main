@@ -30,10 +30,10 @@ class Review extends PureComponent {
   }
 
   handleRequestData = () => {
-    const { dispatch, match, query } = this.props
+    const { dispatch, form, match, query } = this.props
     const { params: { reviewId } } = match
-    const { articleId } = query.parse()
-    const { isCreatedEntity } = query.context()
+    const { articleId } = query.getParams()
+    const { isCreatedEntity } = form
 
     dispatch(requestData({ apiPath: '/evaluations' }))
     dispatch(requestData({ apiPath: '/tags?scopes=review' }))
@@ -82,7 +82,7 @@ class Review extends PureComponent {
   handleSubmit = formValues => {
     const { formInitialValues, dispatch, query } = this.props
     const { id } = formInitialValues || {}
-    const { method } = query.context()
+    const { method } = query.getParams()
     this.setState({ isFormLoading: true })
 
     const apiPath = `/reviews/${id || ''}`
@@ -100,9 +100,9 @@ class Review extends PureComponent {
   }
 
   handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
-    const { formInitialValues, history, query } = this.props
+    const { form, formInitialValues, history } = this.props
     const { id } = formInitialValues || {}
-    const { isCreatedEntity } = query.context()
+    const { isCreatedEntity } = form
     if (isCreatedEntity && id) {
       history.push(`/reviews/${id}?modification`)
     }
@@ -138,7 +138,6 @@ class Review extends PureComponent {
 
   renderReviewFormSection = formProps => {
     const { isFormLoading } = this.state
-    const { history } = this.props
     const { form, handleSubmit } = formProps
     const canSubmit = getCanSubmit(Object.assign(
       { isLoading: isFormLoading }, formProps))
@@ -150,11 +149,10 @@ class Review extends PureComponent {
         onSubmit={handleSubmit}
       >
         <FormFieldsContainer />
-        {/* <FormFooterContainer
+        <FormFooterContainer
           canSubmit={canSubmit}
-          form={form}
-          history={history}
-        /> */}
+          onCancel={form.reset}
+        />
       </form>
     )
   }
@@ -195,7 +193,6 @@ class Review extends PureComponent {
             </h1>
             {this.renderArticleItemSection()}
             {this.renderReviewSection()}
-            {/* {this.renderAttachedVerdicts()} */}
           </div>
         </MainContainer>
       </>
@@ -212,10 +209,19 @@ Review.defaultProps = {
 Review.propTypes = {
   article: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
+  form: PropTypes.shape({
+    isCreatedEntity: PropTypes.bool.isRequired
+  }).isRequired,
   formInitialValues: PropTypes.object,
-  history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired,
+  match: PropTypes.shape({
+
+  }).isRequired,
+  query: PropTypes.shape({
+    getParams: PropTypes.func.isRequired
+  }).isRequired,
   verdicts: PropTypes.array
 }
 

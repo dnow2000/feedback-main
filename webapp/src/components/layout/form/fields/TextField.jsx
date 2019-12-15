@@ -17,7 +17,6 @@ class TextField extends React.PureComponent {
   renderField = ({ input, meta }) => {
     const {
       autoComplete,
-      className,
       disabled,
       id,
       label,
@@ -95,7 +94,6 @@ class TextField extends React.PureComponent {
 
 TextField.defaultProps = {
   autoComplete: false,
-  className: '',
   disabled: false,
   id: null,
   placeholder: 'Please enter a value',
@@ -110,7 +108,6 @@ TextField.defaultProps = {
 
 TextField.propTypes = {
   autoComplete: PropTypes.bool,
-  className: PropTypes.string,
   disabled: PropTypes.bool,
   id: PropTypes.string,
   label: PropTypes.string.isRequired,

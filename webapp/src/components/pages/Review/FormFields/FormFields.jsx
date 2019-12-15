@@ -14,7 +14,7 @@ const EVALUATIONS_PLACEHOLDER = ''
 const TAGS_NAME = 'tagIds'
 const TAGS_PLACEHOLDER = ''
 
-const FormFields = ({ evaluations, query, tags }) => {
+const FormFields = ({ evaluations, form, tags }) => {
 
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     EVALUATIONS_NAME,
@@ -35,7 +35,7 @@ const FormFields = ({ evaluations, query, tags }) => {
     'info',
     'positivity'
   )
-  const { readOnly } = query.context()
+  const { readOnly } = form
 
   return (
     <div className="form-fields">
@@ -77,7 +77,9 @@ FormFields.defaultProps = {
 
 FormFields.propTypes = {
   evaluations: PropTypes.array,
-  query: PropTypes.object.isRequired,
+  form: PropTypes.shape({
+    readOnly: PropTypes.bool.isRequired
+  }).isRequired,
   tags: PropTypes.array,
 }
 
