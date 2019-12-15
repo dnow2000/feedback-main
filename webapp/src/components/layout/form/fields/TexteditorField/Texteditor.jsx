@@ -106,7 +106,6 @@ export class TextEditor extends PureComponent {
 
   render() {
     const {
-      className,
       placeholder,
       readOnly
     } = this.props
@@ -120,7 +119,7 @@ export class TextEditor extends PureComponent {
         render={({ getRootProps }) => (
           <div
             {...getRootProps()}
-            className={className}
+            className="texteditor"
             onClick={this.onEditorClick}
             onKeyPress={this.onEditorKeyPress}
             role="button"
@@ -165,7 +164,6 @@ export class TextEditor extends PureComponent {
 }
 
 TextEditor.defaultProps = {
-  className: null,
   initialRawString: null,
   maxLength: null,
   onChange: null,
@@ -175,7 +173,6 @@ TextEditor.defaultProps = {
 }
 
 TextEditor.propTypes = {
-  className: PropTypes.string,
   initialRawString: PropTypes.string,
   maxLength: PropTypes.number,
   onChange: PropTypes.func,

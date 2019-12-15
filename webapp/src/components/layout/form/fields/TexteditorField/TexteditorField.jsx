@@ -73,7 +73,7 @@ export class TexteditorField extends PureComponent {
                   <span>{label}</span>
                   {required && !readOnly && <span className="field-asterisk">*</span>}
                   {!readOnly && (
-                    <span className="fs12">
+                    <span>
                       {' '}
                       ({valueLength} / {maxLength}){' '}
                     </span>
@@ -81,19 +81,17 @@ export class TexteditorField extends PureComponent {
                 </span>
               )}
             </label>
-            <div className="field-control is-relative">
+            <div className="field-control">
               <div
                 className="field-value"
                 ref={element => { this.divEditorElement = element }}
               >
                 <span className="field-inner">
                   <div
-                    className="field-texteditor"
                     role="button"
                     tabIndex="0"
                   >
                     <Texteditor
-                      className="field-texteditor"
                       maxLength={maxLength}
                       onChange={this.onChange(input)}
                       placeholder={readOnly ? '' : placeholder}

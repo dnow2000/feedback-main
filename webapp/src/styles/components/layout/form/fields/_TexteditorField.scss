@@ -1,12 +1,16 @@
 .texteditor-field {
   @extend .text-field;
-  
+
   .field-control {
     position: relative;
 
     .field-value {
       align-items: center;
       display: flex;
+
+      button {
+        width: 100%
+      }
     }
   }
 }
