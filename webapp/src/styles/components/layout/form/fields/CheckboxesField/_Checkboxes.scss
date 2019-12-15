@@ -1,4 +1,6 @@
 .checkboxes {
+  @extend .item;
+  
   display: flex;
   justify-content: flex-wrap;
 

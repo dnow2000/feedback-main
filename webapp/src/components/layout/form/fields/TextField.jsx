@@ -32,7 +32,7 @@ class TextField extends React.PureComponent {
     } = this.props
     return (
       <div
-        className={classnames("text-field", { readonly: readOnly })}
+        className={classnames(`${type}-field`, { readonly: readOnly })}
         id={id}
       >
         <label
@@ -56,7 +56,7 @@ class TextField extends React.PureComponent {
               <input
                 {...input}
                 autoComplete={autoComplete ? 'on' : 'off'}
-                className={`field-input field-${type}`}
+                className="field-input"
                 disabled={disabled || readOnly}
                 name={name}
                 placeholder={readOnly ? '' : placeholder}

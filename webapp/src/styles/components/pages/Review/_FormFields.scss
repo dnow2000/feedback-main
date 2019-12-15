@@ -6,58 +6,74 @@
 
     .credibility-and-tags {
       display: flex;
+      margin-left: -1rem;
+      margin-right: -1rem;
 
       .radios-field {
-        @extend .col-tablet-50;
+        @extend .col-tablet-33;
+
+        padding: 1rem;
       }
 
       .checkboxes-field {
-        @extend .col-tablet-50;
+        @extend .col-tablet-66;
+
+        padding: 1rem;
       }
     }
 
     .radio {
-      height: 32px;
-
       span {
-        @extend .p4;
-
         border-radius: 16px;
+        padding: 0.25rem;
       }
 
       &.radio-2 {
-        span {
+        color: #007b7b;
+
+        &.checked {
           background-color: #c9f0f0;
+          border-color: #92e1e1;
         }
       }
 
       &.radio-1 {
-        span {
-          background-color: #88e749;
+        color: #88e749;
+
+        &.checked {
+          background-color: #c9f0f0;
+          border-color: #92e1e1;
+          border-top: 1px solid;
         }
       }
 
       &.radio-0 {
-        span {
-          background-color: #F7981D;
+        color: #F7981D;
+
+        &.checked {
+          background-color: #c9f0f0;
+          border-color: #ffa63a;
+          border-top: 1px solid;
         }
       }
 
       &.radio-\-1 {
-        span {
-          background-color: #CC0000;
+        color: #CC0000;
+
+        &.checked {
+          background-color: #c9f0f0;
+          border-color: #ff4a27;
+          border-top: 1px solid;
         }
       }
 
       &.radio-\-2 {
-        span {
-          background-color: #990000;
-        }
-      }
+        color: #990000;
 
-      &.radio-99 {
-        span {
-          background-color: #BABABA;
+        &.checked {
+          background-color: #c9f0f0;
+          border-color: #ff4a27;
+          border-top: 1px solid;
         }
       }
     }
@@ -82,6 +98,7 @@
           border-style: solid;
         }
       }
+
       &.checkbox-0 {
         &.checked {
           color: #ffa63a;
@@ -90,6 +107,7 @@
         &.not-checked {
         }
       }
+
       &.checkbox-\-1 {
         &.checked {
           color: #e53c3c;

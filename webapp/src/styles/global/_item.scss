@@ -1,6 +1,6 @@
 .item {
-  border: 1px solid $grey-light;
-  border-radius: 0.625rem;
+  border: $border;
+  border-radius: $border-radius;
   box-shadow: none;
   padding: 1rem;
 }

@@ -50,8 +50,8 @@ class Checkboxes extends PureComponent {
     const { values } = this.state
 
     return (
-      <div className={classnames('checkboxes', className)}>
-        {options && options.map(({ id, label, title, value }) => {
+      <div className="checkboxes">
+        {(options || []).map(({ id, label, title, value }) => {
           const checked = values.includes(value)
           return (
             <button

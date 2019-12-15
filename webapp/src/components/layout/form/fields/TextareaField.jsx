@@ -35,7 +35,7 @@ const TextareaField = ({
           : input.value
 
       return (
-        <div className={classnames("field textarea-field", className, { readonly: readOnly })}>
+        <div className={classnames("textarea-field", { readonly: readOnly })}>
           <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
             {label && (
               <span>

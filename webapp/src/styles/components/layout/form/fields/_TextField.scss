@@ -1,4 +1,4 @@
-.text-field {
+.email-field, .text-field {
   margin-bottom: 1.875rem;
 
   .field-label {
@@ -13,7 +13,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
     position: relative;
 
     .field-asterisk {
@@ -40,7 +40,6 @@
   }
 
   .field-control {
-    margin-top: 1rem;
 
     .field-value {
       align-items: center;

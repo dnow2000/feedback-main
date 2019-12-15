@@ -35,7 +35,6 @@ export const CheckboxesField = ({
           <div className="field-inner">
             <Checkboxes
               {...inputProps}
-              className="checkboxes-field"
               disabled={disabled}
               input={input}
               options={options}

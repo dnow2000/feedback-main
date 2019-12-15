@@ -42,7 +42,7 @@ class CheckboxField extends PureComponent {
             required={!!required}
             type={type}
           />
-          <span className="checkbox-text-container">
+          <span>
             {text}
           </span>
           <FieldError meta={meta} />

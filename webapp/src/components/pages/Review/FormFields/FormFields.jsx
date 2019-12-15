@@ -68,52 +68,6 @@ const FormFields = ({ evaluations, query, tags }) => {
       </div>
     </div>
   )
-
-  /*
-  return (
-    <div>
-      <HiddenField name="articleId" type="hidden" />
-      <div className="field-group">
-        <TexteditorField
-          name="comment"
-          placeholder=""
-          readOnly={readOnly}
-          required
-        />
-        <div className='field-sep' />
-      </div>
-
-      <div className="field-group">
-        <h3 className="field-group-title">
-          CREDIBILITY CRITERIA
-        </h3>
-        <h4 className="field-group-sub-title">
-          Pick all the keywords that apply :
-        </h4>
-        <RadiosField
-          name={EVALUATIONS_NAME}
-          options={evaluationOptions}
-          readOnly={readOnly}
-          required
-        />
-        <div className='field-sep' />
-      </div>
-
-      <div className="field-group">
-        <h3 className="field-group-title">
-          HOW WOULD QUALIFY THIS ARTICLE
-        </h3>
-        <CheckboxesField
-          name={TAGS_NAME}
-          options={tagOptions}
-          readOnly={readOnly}
-        />
-        <div className='field-sep' />
-      </div>
-
-
-    </div>
-  )*/
 }
 
 FormFields.defaultProps = {

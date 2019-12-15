@@ -24,7 +24,7 @@ const SelectField = ({
     name={name}
     validate={composeValidators(validate, getRequiredValidate(required))}
     render={({ input, meta }) => (
-      <div className={classnames(className || "field select-field", { readonly: readOnly })}>
+      <div className={classnames("select-field", { readonly: readOnly })}>
         <label htmlFor={name} className={classnames("field-label", { empty: !label })}>
           {label && (
             <span>
@@ -38,7 +38,6 @@ const SelectField = ({
             <div className="field-inner">
               <select
                 {...input}
-                className="field-select is-block"
                 disabled={disabled || readOnly}
                 id={name}
                 placeholder={placeholder}
