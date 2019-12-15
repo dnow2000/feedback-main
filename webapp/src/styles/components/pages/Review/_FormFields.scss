@@ -23,11 +23,6 @@
     }
 
     .radio {
-      span {
-        border-radius: 16px;
-        padding: 0.25rem;
-      }
-
       &.radio-2 {
         color: #007b7b;
 
@@ -79,41 +74,51 @@
     }
 
     .checkbox {
-      height: 32px;
-
-      background-color: white;
-      color: #9da2c4;
-
-      border-color: $red;
-      border-width: 1px;
-      border-radius: 16px;
-      border-style: solid;
-
       &.checkbox-1 {
         &.checked {
-          color: #007b7b;
-          background-color: #c9f0f0;
+          button {
+            border: 2px solid white;
+            color: #007b7b;
+            background-color: #c9f0f0;
+          }
         }
+
         &.not-checked {
-          border-style: solid;
+          button {
+            border: 2px solid #92e1e1;
+          }
         }
       }
 
       &.checkbox-0 {
         &.checked {
-          color: #ffa63a;
-          background-color: #ffd452;
+          button {
+            border: 2px solid white;
+            color: #ffa63a;
+            background-color: #ffd452;
+          }
         }
+
         &.not-checked {
+          button {
+            border: 2px solid #ffa63a;
+          }
         }
       }
 
       &.checkbox-\-1 {
         &.checked {
-          color: #e53c3c;
-          background-color: #facece;
+          button {
+            border: 2px solid white;
+            color: #e53c3c;
+            background-color: #facece;
+          }
         }
+
         &.not-checked {
+          button {
+            border: 2px solid #e53c3c;
+          }
         }
       }
     }

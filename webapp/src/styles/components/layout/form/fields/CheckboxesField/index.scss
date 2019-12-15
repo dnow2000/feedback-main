@@ -2,38 +2,4 @@
 
 .checkboxes-field {
   @extend .text-field;
-  
-  .field-inner {
-    button {
-      border: 2px solid $primary;
-      border-radius: 1rem;
-      margin-bottom: 0.5rem;
-      margin-right: 0.25rem;
-
-      &.not-checked {
-        color: blue;
-      }
-
-      &.checked {
-        background-color: $primary;
-        color: white;
-
-        &[disabled] {
-          &[readonly] {
-            opacity: 1;
-          }
-        }
-      }
-
-      &[disabled] {
-        cursor: inherit;
-      }
-    }
-
-    .field-checkboxes {
-      .field-inner {
-        height: 100%;
-      }
-    }
-  }
 }

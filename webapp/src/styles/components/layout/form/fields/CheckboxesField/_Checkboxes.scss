@@ -1,10 +1,37 @@
 .checkboxes {
   @extend .item;
-  
-  display: flex;
-  justify-content: flex-wrap;
 
-  button {
-    @extend .button;
+  display: flex;
+  flex-wrap: wrap;
+
+  .checkbox {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    padding: 0.5rem;
+
+    &.checked {
+      &[disabled] {
+        &[readonly] {
+          opacity: 1;
+        }
+      }
+    }
+
+    &[disabled] {
+      cursor: inherit;
+    }
+
+    button {
+      background-color: transparent;
+      border: 2px solid $primary;
+      border-radius: 1rem;
+      color: $grey;
+      font-size: $font-size-smaller;
+      font-weight: $font-weight-bold;
+      padding: 0.5rem;
+      text-transform: capitalize;
+    }
+
   }
 }
