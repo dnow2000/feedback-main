@@ -27,6 +27,23 @@ const FormFooter = ({
   return (
     <div className="form-footer">
       {readOnly ? (
+        <NavLink className="return" to="/articles">
+          Return
+        </NavLink>
+      ) : (
+        <button
+          className={classnames('create', {
+            'is-loading': isLoading,
+          })}
+          disabled={!canSubmit}
+          id="submit-review"
+          type="submit"
+        >
+          Save review
+        </button>
+      )}
+      <div className="space" />
+      {readOnly ? (
         <button
           className="modify"
           id="modification-review"
@@ -47,22 +64,6 @@ const FormFooter = ({
           type="button"
         >
           Cancel
-        </button>
-      )}
-      {readOnly ? (
-        <NavLink className="return" to="/articles">
-          Return
-        </NavLink>
-      ) : (
-        <button
-          className={classnames('create', {
-            'is-loading': isLoading,
-          })}
-          disabled={!canSubmit}
-          id="submit-review"
-          type="submit"
-        >
-          Submit
         </button>
       )}
     </div>

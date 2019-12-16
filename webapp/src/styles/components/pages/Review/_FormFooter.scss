@@ -1,3 +1,19 @@
 .form-footer {
-  
+  align-items: center;
+  background-color: $grey-lighter;
+  display: flex;
+  height: 6.25rem;
+  justify-content: center;
+  left: 0;
+  right: 0;
+  position: absolute;
+
+  .create {
+    @extend .button;
+    @extend .button.is-primary;
+  }
+
+  .space {
+    width: 2rem;
+  }
 }

@@ -1,6 +1,9 @@
 @import 'FormFields.scss';
+@import 'FormFooter.scss';
 
 .review-main {
+  position: relative;
+  
   .title {
     font-size: $font-size-very-big;
     margin-bottom: 1rem;
