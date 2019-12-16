@@ -11,10 +11,10 @@ const HiddenField = ({ name, validator }) => (
     name={name}
     validate={validator}
     render={({ input, meta }) => (
-      <div>
+      <>
         <input type="hidden" {...input} />
         <FieldError meta={meta} />
-      </div>
+      </>
     )}
   />
 )

@@ -8,10 +8,10 @@ export const ControlBar = ({
   setEditorState
 }) => (
   <div className="control-bar">
-    <div className="mr12">
+    <div className="rule">
       (Select a piece of text to add bold, italics or a hypertext link)
     </div>
-    <div className="flex-auto" />
+    <div className="auto" />
     <ImageAddButtonContainer
       getEditorState={getEditorState}
       setEditorState={setEditorState}

@@ -1,0 +1,11 @@
+$texteditor-padding: 1.25rem;
+
+.texteditor {
+  border: $border;
+  border-radius: $border-radius;
+  color: $grey-darker;
+  font-size: $font-size-small;
+  min-height: 6.5rem;
+  padding: $texteditor-padding;
+  padding-top: calc(#{$control-bar-height} + #{$texteditor-padding});
+}

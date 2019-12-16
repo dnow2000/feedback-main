@@ -4,7 +4,7 @@ import React, { PureComponent } from 'react'
 
 import { API_THUMBS_URL } from 'utils/config'
 
-import { imagePlugin } from '../plugins'
+import { imagePlugin } from '../../plugins'
 
 
 const { addImage } = imagePlugin
@@ -45,12 +45,12 @@ class ImageAddButton extends PureComponent {
     return (
       <label
         className={classnames(
-          "button is-primary is-outlined", {
+          "image-add-button", {
           'loading': isLoading
         })}
         htmlFor="image-add-button"
       >
-        Add Image{' '}
+        Upload an image{' '}
         <input
           id="image-add-button"
           hidden

@@ -1,0 +1,30 @@
+@import "ControlBar/index.scss";
+@import "Texteditor.scss";
+
+.texteditor-field {
+  @extend .text-field;
+
+  .field-control {
+    position: relative;
+
+    .field-value {
+      align-items: center;
+      display: flex;
+
+      .field-inner {
+        align-items: baseline;
+        background-color: transparent;
+        border-radius: 0;
+        display: block;
+        height: inherit;
+        overflow: auto;
+        width: 100%;
+
+        .clickable {
+          height: 100%;
+          width: 100%
+        }
+      }
+    }
+  }
+}

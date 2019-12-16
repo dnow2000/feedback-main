@@ -1,0 +1,17 @@
+.image-add-button {
+  @extend .button;
+  @extend .button.is-primary;
+  @extend .button.is-outlined;
+
+  align-items: center;
+  border-left: 1px solid $grey-darker;
+  color: $grey-darker;
+  display: flex;
+  font-size: $font-size-small;
+  font-weight: $font-weight-bold;
+  height: 100%;
+
+  input {
+    height: 100%;
+  }
+}

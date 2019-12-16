@@ -50,7 +50,6 @@ export class TexteditorField extends PureComponent {
 
   render () {
     const {
-      className,
       label,
       maxLength,
       name,
@@ -66,7 +65,7 @@ export class TexteditorField extends PureComponent {
         name={name}
         validate={composeValidators(validate, getRequiredValidate(required))}
         render={({ input, meta }) => (
-          <div className={classnames("texteditor-field", className, { readonly: readOnly })}>
+          <div className={classnames("texteditor-field", { readonly: readOnly })}>
             <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
               {label && (
                 <span>
@@ -88,6 +87,7 @@ export class TexteditorField extends PureComponent {
               >
                 <span className="field-inner">
                   <div
+                    className="clickable"
                     role="button"
                     tabIndex="0"
                   >
@@ -121,7 +121,6 @@ TexteditorField.defaultProps = {
 }
 
 TexteditorField.propTypes = {
-  className: PropTypes.string,
   label: PropTypes.string,
   maxLength: PropTypes.number,
   name: PropTypes.string.isRequired,

@@ -13,7 +13,7 @@
     font-style: normal;
     line-height: normal;
     letter-spacing: normal;
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
     position: relative;
 
     .field-asterisk {
@@ -44,6 +44,7 @@
     .field-value {
       align-items: center;
       display: flex;
+      margin-bottom: 1rem;
 
       .field-inner {
         align-items: center;

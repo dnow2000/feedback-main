@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
-import { ControlBar } from './ControlBar'
+import ControlBar from './ControlBar/ControlBar'
 import ImageDropzone from './ImageDropzone'
 import {
   AlignmentTool,

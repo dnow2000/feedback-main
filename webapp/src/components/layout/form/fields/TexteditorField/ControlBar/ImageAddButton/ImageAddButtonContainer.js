@@ -22,4 +22,4 @@ export const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapDispatchToProps)(ImageAddButton)
+export default connect(null, mapDispatchToProps)(ImageAddButton)
