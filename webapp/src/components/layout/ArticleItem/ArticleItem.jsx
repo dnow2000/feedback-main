@@ -133,32 +133,33 @@ class ArticleItem extends PureComponent {
               </div>
             </div>
           )}
-          <div className="article-cta-container">
-            {canVerdict && (
-              <NavLink
-                className="button is-primary thin"
-                to={
-                  currentUserVerdictId
-                    ? `/verdicts/${currentUserVerdictId}`
-                    : `/verdicts/creation?articleId=${id}`
-                }
-              >
-                See Verdict
-              </NavLink>
-            )}
-            {canReview && (
-              <NavLink
-                className={"button is-primary thin"}
-                to={
-                  currentUserReviewId
-                    ? `/reviews/${currentUserReviewId}`
-                    : `/reviews/creation?articleId=${id}`
-                }
-              >
-                {currentUserReviewId ? 'See' : 'Write'} a review
-              </NavLink>
-            )}
-          </div>
+          {!noControl && (
+            <div className="article-cta-container">
+              {canVerdict && (
+                <NavLink
+                  className="button is-primary thin"
+                  to={
+                    currentUserVerdictId
+                      ? `/verdicts/${currentUserVerdictId}`
+                      : `/verdicts/creation?articleId=${id}`
+                  }
+                >
+                  See Verdict
+                </NavLink>
+              )}
+              {canReview && (
+                <NavLink
+                  className={"button is-primary thin"}
+                  to={
+                    currentUserReviewId
+                      ? `/reviews/${currentUserReviewId}`
+                      : `/reviews/creation?articleId=${id}`
+                  }
+                >
+                  {currentUserReviewId ? 'See' : 'Write'} a review
+                </NavLink>
+              )}
+            </div>)}
         </NavLink>
       </article>
     )
