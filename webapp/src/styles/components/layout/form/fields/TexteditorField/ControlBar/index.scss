@@ -5,7 +5,11 @@ $control-bar-height: 2.375rem;
 .control-bar {
   align-items: center;
   background-color: $grey-very-lighter;
+  border: $border;
   border-radius: $border-radius;
+  border-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
   display: flex;
   height: $control-bar-height;
   left: 0rem;
