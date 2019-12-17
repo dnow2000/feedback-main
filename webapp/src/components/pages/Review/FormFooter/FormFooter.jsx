@@ -7,7 +7,7 @@ const FormFooter = ({
   canSubmit,
   form,
   history,
-  isLoading,
+  isPending,
   match,
   onCancel
 }) => {
@@ -33,7 +33,8 @@ const FormFooter = ({
       ) : (
         <button
           className={classnames('create', {
-            'is-loading': isLoading,
+            'is-disabled': !canSubmit,
+            'is-loading': isPending,
           })}
           disabled={!canSubmit}
           id="submit-review"
@@ -72,7 +73,7 @@ const FormFooter = ({
 
 FormFooter.defaultProps = {
   canSubmit: false,
-  isLoading: false,
+  isPending: false,
 }
 
 FormFooter.propTypes = {
@@ -85,7 +86,7 @@ FormFooter.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  isLoading: PropTypes.bool,
+  isPending: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
       reviewId: PropTypes.string

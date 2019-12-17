@@ -1,228 +1,119 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Form } from 'react-final-form'
-import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
+import { getCanSubmit } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
-import { requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
-import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
+import articleType from 'components/types/articleType'
 
 import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 
-class Review extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isFormLoading: false,
-    }
-  }
+const Review = ({
+  article,
+  form: { isCreatedEntity },
+  formInitialValues,
+  history,
+  isPending,
+  query,
+  requestGetData,
+  requestSubmitReview
+}) => {
+  const { id: modifiedReviewId } = formInitialValues
+  const { articleId } = query.getParams()
 
-  componentDidMount() {
-    this.handleRequestData()
-  }
+  const handleSubmitReview = useCallback(formValues => {
+    requestSubmitReview({ formValues, modifiedReviewId })
+  }, [modifiedReviewId])
 
-  componentDidUpdate() {
-    this.handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl()
-  }
-
-  handleRequestData = () => {
-    const { dispatch, form, match, query } = this.props
-    const { params: { reviewId } } = match
-    const { articleId } = query.getParams()
-    const { isCreatedEntity } = form
-
-    dispatch(requestData({ apiPath: '/evaluations' }))
-    dispatch(requestData({ apiPath: '/tags?scopes=review' }))
-
-    if (!isCreatedEntity) {
-      dispatch(
-        requestData({
-          apiPath: `/reviews/${reviewId}`,
-          normalizer: reviewNormalizer,
-        })
-      )
-      return
-    }
-
-    if (!articleId) {
-      return
-    }
-
-    dispatch(
-      requestData({
-        apiPath: `/articles/${articleId}`,
-        normalizer: articleNormalizer,
-      })
-    )
-  }
-
-  handleRequestFail = formResolver => (state, action) => {
-    const { payload } = action
-    const nextState = { isFormLoading: false }
-    const errors = parseSubmitErrors(payload.errors)
-    this.setState(nextState, () => formResolver(errors))
-  }
-
-  handleRequestSuccess = formResolver => (state, action) => {
-    const { payload: { datum } } = action
-    const { history } = this.props
-    const reviewId = datum.id
-    const nextState = { isFormLoading: false }
-    this.setState(nextState, () => {
-      formResolver()
-      const nextUrl = `/reviews/${reviewId}`
-      history.push(nextUrl)
-    })
-  }
-
-  handleSubmit = formValues => {
-    const { formInitialValues, dispatch, query } = this.props
-    const { id } = formInitialValues || {}
-    const { method } = query.getParams()
-    this.setState({ isFormLoading: true })
-
-    const apiPath = `/reviews/${id || ''}`
-
-    const formSubmitPromise = new Promise(resolve => {
-      dispatch(requestData({
-        apiPath,
-        body: { ...formValues },
-        handleFail: this.handleRequestFail(resolve),
-        handleSuccess: this.handleRequestSuccess(resolve),
-        method
-      }))
-    })
-    return formSubmitPromise
-  }
-
-  handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
-    const { form, formInitialValues, history } = this.props
-    const { id } = formInitialValues || {}
-    const { isCreatedEntity } = form
-    if (isCreatedEntity && id) {
-      history.push(`/reviews/${id}?modification`)
-    }
-  }
-
-  renderArticleItemSection = () => {
-    const { article } = this.props
-    if (!article) {
-      return null
-    }
-    return (
-      <section>
-        <ArticleItemContainer
-          article={article}
-          noControl
-        />
-      </section>
-    )
-  }
-
-  renderReviewSection = () => {
-    const { formInitialValues } = this.props
-    return (
-      <section>
-        <Form
-          initialValues={formInitialValues}
-          onSubmit={this.handleSubmit}
-          render={this.renderReviewFormSection}
-        />
-      </section>
-    )
-  }
-
-  renderReviewFormSection = formProps => {
-    const { isFormLoading } = this.state
-    const { form, handleSubmit } = formProps
-    const canSubmit = getCanSubmit(Object.assign(
-      { isLoading: isFormLoading }, formProps))
+  const renderReviewFormSection = useCallback(formProps => {
+    const { form: { reset }, handleSubmit } = formProps
+    const canSubmit = getCanSubmit({ isLoading: isPending, ...formProps })
     return (
       <form
         autoComplete="off"
-        disabled={isFormLoading}
+        disabled={isPending}
         noValidate
         onSubmit={handleSubmit}
       >
         <FormFieldsContainer />
         <FormFooterContainer
           canSubmit={canSubmit}
-          onCancel={form.reset}
+          onCancel={reset}
         />
       </form>
     )
-  }
+  }, [isPending])
 
-  renderAttachedVerdicts = () => {
-    const { verdicts } = this.props
-    if (!verdicts || verdicts.length === 0) {
-      return null
+  const [isMount, setIsMount] = useState(false)
+  useEffect(() => {
+    if (!isMount) {
+      requestGetData()
+      setIsMount(true)
     }
-    return (
-      <section className="section">
-        <h2 className="subtitle">
-          SEE ATTACHED VERDICTS
-        </h2>
-        {
-          verdicts.map(verdict => (
-            <NavLink
-              className="button is-secondary"
-              key={verdict.id}
-              to={`/verdicts/${verdict.id}`}
-            >
-              {verdict.id}
-            </NavLink>
-          ))
-        }
-      </section>
-    )
-  }
+  }, [requestGetData, isMount])
 
-  render() {
-    return (
-      <>
-        <HeaderContainer />
-        <MainContainer name="review">
-          <div className="container">
-            <h1 className="title">
-              Article Review
-            </h1>
-            {this.renderArticleItemSection()}
-            {this.renderReviewSection()}
-          </div>
-        </MainContainer>
-      </>
-    )
-  }
+  useEffect(() => {
+    const { id } = formInitialValues || {}
+    if (isCreatedEntity && id) {
+      history.push(`/reviews/${id}?modification`)
+    }
+  }, [formInitialValues, history, isCreatedEntity])
+
+
+  return (
+    <>
+      <HeaderContainer />
+      <MainContainer name="review">
+        <div className="container">
+          <h1 className="title">
+            Article Review
+          </h1>
+
+          {article && (
+            <section>
+              <ArticleItemContainer
+                article={article}
+                noControl
+              />
+            </section>)}
+
+          <section>
+            <Form
+              initialValues={formInitialValues}
+              onSubmit={handleSubmitReview}
+              render={renderReviewFormSection}
+            />
+          </section>
+        </div>
+      </MainContainer>
+    </>
+  )
 }
 
 Review.defaultProps = {
   article: null,
-  formInitialValues: null,
-  verdicts: null
+  formInitialValues: null
 }
 
 Review.propTypes = {
-  article: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
+  article: articleType,
   form: PropTypes.shape({
+    id: PropTypes.string,
     isCreatedEntity: PropTypes.bool.isRequired
   }).isRequired,
-  formInitialValues: PropTypes.object,
+  formInitialValues: PropTypes.shape(),
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
-  match: PropTypes.shape({
-
-  }).isRequired,
+  requestGetData: PropTypes.func.isRequired,
+  requestSubmitReview: PropTypes.func.isRequired,
   query: PropTypes.shape({
     getParams: PropTypes.func.isRequired
-  }).isRequired,
-  verdicts: PropTypes.array
+  }).isRequired
 }
 
 export default Review
