@@ -40,7 +40,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/reviews/:reviewId',
+    path: '/reviews/:reviewId([A-Z][a-z]+|creation)/:modification(modification)?',
     render: () => <ReviewContainer />,
     title: 'Review',
   },

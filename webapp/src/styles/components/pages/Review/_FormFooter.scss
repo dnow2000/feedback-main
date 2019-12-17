@@ -8,7 +8,12 @@
   right: 0;
   position: absolute;
 
-  .create {
+  #cancel-review, #return-review {
+    @extend .button;
+    @extend .button.is-secondary;
+  }
+
+  #create-review, #modification-review {
     @extend .button;
     @extend .button.is-primary;
   }
