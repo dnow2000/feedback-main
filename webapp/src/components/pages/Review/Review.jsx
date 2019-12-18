@@ -1,33 +1,56 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
-import { NavLink } from 'react-router-dom'
+import { requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import articleType from 'components/types/articleType'
 import getCanSubmit from 'utils/form/getCanSubmit'
+import parseSubmitErrors from 'utils/form/parseSubmitErrors'
+import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
 import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 
 const Review = ({
   article,
-  form: { isCreatedEntity },
+  dispatch,
+  form: { id: reviewId, isCreatedEntity, isModifiedEntity, method },
   formInitialValues,
   history,
   isPending,
-  query,
-  requestGetData,
-  requestSubmitReview
+  query
 }) => {
-  const { id: modifiedReviewId } = formInitialValues
   const { articleId } = query.getParams()
 
   const handleSubmitReview = useCallback(formValues => {
-    requestSubmitReview({ formValues, modifiedReviewId })
-  }, [modifiedReviewId])
+    let apiPath = "/reviews"
+    if (isModifiedEntity) {
+      apiPath = `${apiPath}/${reviewId}`
+    }
+    return new Promise(resolve => {
+      dispatch(requestData({
+        activityTag: '/reviews',
+        apiPath,
+        body: { ...formValues },
+        handleFail: (state, action) => {
+          const { payload } = action
+          const errors = parseSubmitErrors(payload.errors)
+          resolve(errors)
+        },
+        handleSuccess: (state, action) => {
+          const { payload: { datum } } = action
+          const createdReviewId = datum.id
+          resolve()
+          const nextUrl = `/reviews/${createdReviewId}`
+          history.push(nextUrl)
+        },
+        method
+      }))
+    })
+  }, [dispatch, history, isModifiedEntity, method, reviewId])
 
   const renderReviewFormSection = useCallback(formProps => {
     const { form: { reset }, handleSubmit } = formProps
@@ -48,13 +71,24 @@ const Review = ({
     )
   }, [isPending])
 
-  const [isMount, setIsMount] = useState(false)
+
   useEffect(() => {
-    if (!isMount) {
-      requestGetData()
-      setIsMount(true)
+    dispatch(requestData({ apiPath: '/evaluations' }))
+    dispatch(requestData({ apiPath: '/tags?scopes=review' }))
+
+    if (!isCreatedEntity) {
+      dispatch(requestData({
+        apiPath: `/reviews/${reviewId}`,
+        normalizer: reviewNormalizer }))
+      return
     }
-  }, [requestGetData, isMount])
+
+    if (!articleId) return
+
+    dispatch(requestData({
+      apiPath: `/articles/${articleId}`,
+      normalizer: articleNormalizer }))
+  }, [articleId, dispatch, isCreatedEntity, reviewId])
 
   useEffect(() => {
     const { id } = formInitialValues || {}
@@ -101,6 +135,7 @@ Review.defaultProps = {
 
 Review.propTypes = {
   article: articleType,
+  dispatch: PropTypes.func.isRequired,
   form: PropTypes.shape({
     id: PropTypes.string,
     isCreatedEntity: PropTypes.bool.isRequired
@@ -109,8 +144,6 @@ Review.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired
   }).isRequired,
-  requestGetData: PropTypes.func.isRequired,
-  requestSubmitReview: PropTypes.func.isRequired,
   query: PropTypes.shape({
     getParams: PropTypes.func.isRequired
   }).isRequired

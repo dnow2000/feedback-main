@@ -7,7 +7,6 @@ import { Field } from 'react-final-form'
 
 import composeValidators from 'utils/form/composeValidators'
 import getRequiredValidate from 'utils/form/getRequiredValidate'
-import isPassword from 'utils/form/isPassword'
 
 import FieldError from '../FieldError'
 
