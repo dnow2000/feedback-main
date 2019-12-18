@@ -7,8 +7,11 @@ function mapArgsToCacheKey(state, type) {
 const selectEvaluationsByType = createCachedSelector(
   state => state.data.evaluations,
   (state, type) => type,
-  (evaluations, type) =>
-    evaluations.filter(evaluation => evaluation.type === type)
-)(mapArgsToCacheKey)
+  (evaluations, type) => {
+    const filteredEvaluations = evaluations.filter(evaluation =>
+      evaluation.type === type)
+    filteredEvaluations.sort((e1, e2) => e1.value >= e2.value)
+    return filteredEvaluations
+})(mapArgsToCacheKey)
 
 export default selectEvaluationsByType

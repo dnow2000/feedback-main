@@ -10,7 +10,6 @@ import withRoles from 'components/hocs/withRoles'
 import selectArticleIdByMatchAndQuery from 'selectors/selectArticleIdByMatchAndQuery'
 import selectArticleById from 'selectors/selectArticleById'
 
-
 import Review from './Review'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 import selectVerdictsByArticleIdAndByUserId from './selectors/selectVerdictsByArticleIdAndByUserId'
