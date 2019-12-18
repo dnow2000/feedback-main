@@ -5,11 +5,13 @@ import { convertToRaw } from 'draft-js'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { Field } from 'react-final-form'
-import { composeValidators } from 'react-final-form-utils'
+
+import composeValidators from 'utils/form/composeValidators'
+import getRequiredValidate from 'utils/form/getRequiredValidate'
 
 import Texteditor from './Texteditor'
 import FieldError from '../../FieldError'
-import getRequiredValidate from '../../utils/getRequiredValidate'
+
 
 export class TexteditorField extends PureComponent {
   constructor () {

@@ -3,10 +3,12 @@ import classnames from 'classnames'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
-import { composeValidators } from 'react-final-form-utils'
+
+import composeValidators from 'utils/form/composeValidators'
+import getRequiredValidate from 'utils/form/getRequiredValidate'
 
 import FieldError from '../FieldError'
-import getRequiredValidate from '../utils/getRequiredValidate'
+
 
 class CheckboxField extends PureComponent {
 

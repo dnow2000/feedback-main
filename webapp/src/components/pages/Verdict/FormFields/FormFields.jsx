@@ -5,8 +5,7 @@ import CheckboxesField from 'components/layout/form/fields/CheckboxesField/Check
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
-
-import selectOptionsFromNameAndEntitiesAndPlaceholder from 'components/layout/form/utils/selectOptionsFromNameAndEntitiesAndPlaceholder'
+import selectOptionsFromNameAndEntitiesAndPlaceholder from 'utils/form/selectOptionsFromNameAndEntitiesAndPlaceholder'
 
 const SELECT_EVALUATIONS_NAME = 'evaluationId'
 const SELECT_EVALUATIONS_PLACEHOLDER = 'Select an evaluation'

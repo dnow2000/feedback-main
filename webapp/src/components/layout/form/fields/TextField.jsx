@@ -4,13 +4,13 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'react-final-form'
-import {
-  createParseNumberValue,
-  composeValidators
-} from 'react-final-form-utils'
+
+import composeValidators from 'utils/form/composeValidators'
+import createParseNumberValue from 'utils/form/createParseNumberValue'
+import getRequiredValidate from 'utils/form/getRequiredValidate'
 
 import FieldError from '../FieldError'
-import getRequiredValidate from '../utils/getRequiredValidate'
+
 
 class TextField extends React.PureComponent {
 

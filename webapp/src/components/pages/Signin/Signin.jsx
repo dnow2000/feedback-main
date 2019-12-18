@@ -1,13 +1,13 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
-import { parseSubmitErrors } from 'react-final-form-utils'
 import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 import { NavLink } from 'react-router-dom'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
+import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'

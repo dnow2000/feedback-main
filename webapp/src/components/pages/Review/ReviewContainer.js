@@ -1,4 +1,3 @@
-import { parseSubmitErrors } from 'react-final-form-utils'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
@@ -11,11 +10,13 @@ import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import selectArticleIdByMatchAndQuery from 'selectors/selectArticleIdByMatchAndQuery'
 import selectArticleById from 'selectors/selectArticleById'
+import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
 import Review from './Review'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 import selectVerdictsByArticleIdAndByUserId from './selectors/selectVerdictsByArticleIdAndByUserId'
+
 
 const mapStateToProps = (state, ownProps) =>  {
   const articleId = selectArticleIdByMatchAndQuery(

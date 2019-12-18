@@ -1,13 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
-import { getCanSubmit, parseSubmitErrors } from 'react-final-form-utils'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
+import getCanSubmit from 'utils/form/getCanSubmit'
+import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
 
 import FormFooterContainer from './FormFooter/FormFooterContainer'

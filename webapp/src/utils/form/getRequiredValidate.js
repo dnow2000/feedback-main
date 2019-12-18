@@ -1,10 +1,15 @@
-import { createValidateRequiredField } from 'react-final-form-utils'
+import isEmpty from './isEmpty'
+
+const createValidateRequiredField = error => value => {
+  if (value && !isEmpty(value)) return undefined
+  return error
+}
 
 const validateRequiredField = createValidateRequiredField(
   'This field is obligatory'
 )
 
-const getRequiredValidate = required => {
+export default required => {
   const requiredIsAFunction = required && typeof required === 'function'
   const defaultRequiredValidate =
     (required && validateRequiredField) || undefined
@@ -13,5 +18,3 @@ const getRequiredValidate = required => {
     : defaultRequiredValidate
   return requiredValidate
 }
-
-export default getRequiredValidate
