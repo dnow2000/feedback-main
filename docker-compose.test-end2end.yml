@@ -29,17 +29,17 @@ services:
     volumes:
       - ./api:/opt/api
 
-  frontend-test-end2end:
+  webapp-test-end2end:
     build:
-      context: ./${FRONTEND_NAME}
+      context: ./webapp
       dockerfile: ./Dockerfile
     command: >
       bash -c "set -x;
                source ~/.profile;
-               ln -sf /lib/node/node_modules /opt/frontend/node_modules;
-               cd /opt/frontend;
+               ln -sf /lib/node/node_modules /opt/webapp/node_modules;
+               cd /opt/webapp;
                yarn start;"
-    container_name: ${APP_NAME}-frontend-test-end2end
+    container_name: ${APP_NAME}-webapp-test-end2end
     depends_on:
       - api-test-end2end
     environment:
@@ -51,7 +51,7 @@ services:
       - db_test-end2end_nw
       - web_test-end2end_nw
     volumes:
-      - ./${FRONTEND_NAME}:/opt/frontend
+      - ./webapp:/opt/webapp
 
   nginx-test-end2end:
     build:

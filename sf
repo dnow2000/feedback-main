@@ -142,14 +142,6 @@ function update_branch {
   git submodule update || exit_error_restoring_branch
 }
 
-function tag_frontend_component {
-  component="$1"
-  tag_name="$2"
-  tag_version="v$tag_name"
-  cd "$ROOT_PATH"/"$component"
-  yarn version --new-version "$tag_name"
-}
-
 function exit_error_restoring_branch {
   git checkout "$current_branch"
   exit 1
@@ -243,7 +235,7 @@ elif [[ "$CMD" == restart ]]; then
   ./$COMMAND_NAME -m $MODE start --force-recreate $*
   exit
 
-# Start docker-compose up with adapted env variables or frontends with local env
+# Start docker-compose up with adapted env variables or webapps with local env
 elif [[ "$CMD" == start ]]; then
   if [[ "$MODE" == "serve-webapp" ]]; then
     RUN='cd $ROOT_PATH/webapp;
@@ -268,20 +260,17 @@ elif [[ "$CMD" == "tag" ]]; then
   if [[ "$TAG" != "not-set" ]]; then
     TAG_VERSION="v$TAG"
 
-    # TAG API
     cd "$ROOT_PATH"/api
     echo "$TAG_VERSION" > version.txt
-    git add version.txt
 
-    # TAG FRONTENDS
-    tag_frontend_component backoffice "$TAG"
-
-    # TAG MAIN
     cd "$ROOT_PATH"
     git add .
+
+    cd "$ROOT_PATH"/webapp
+    yarn version --new-version "$tag_name"
+
     git commit -m "🚀 $TAG_VERSION"
     git push origin master
-    git tag "$TAG_VERSION"
     git push origin "$TAG_VERSION"
 
     echo "New version tagged : $TAG"
@@ -291,94 +280,6 @@ elif [[ "$CMD" == "tag" ]]; then
     echo "You need to specify a tag."
     exit
   fi
-
-# Deploy current version of backend
-elif [[ "$CMD" == "deploy-backend" ]]; then
-  cd "$ROOT_PATH"
-  if [[ ! "$ENV" == 'production' ]] && [[ ! "$ENV" == 'staging' ]]; then
-     echo "Can only deploy-backend in staging and production"
-     exit
-  fi
-  commit_to_deploy=`git log -n 1 --pretty=format:%H`
-  current_branch=$(git symbolic-ref -q HEAD)
-  current_branch=${current_branch##refs/heads/}
-  function exit_restoring_branch
-    {
-    git checkout "$current_branch"
-    exit
-    }
-
-	scalingo -a $SCALINGO_APP env-set GIT_TAG=$GIT_TAG
-
-  git fetch
-  git checkout master
-  git pull || exit_restoring_branch
-  git checkout staging
-  git pull || exit_restoring_branch
-  git checkout production
-  git pull || exit_restoring_branch
-  if [[ `git tag -l --points-at $commit_to_deploy | wc -l` == 0 ]]; then
-    echo "ERROR: Can only deploy tagged commits"
-    exit_restoring_branch
-  fi
-  if [[ "$ENV" == "production" ]]; then
-    staging_commit=`git log -n 1 --pretty=format:%H staging`
-    if [[ "$staging_commit" != "$commit_to_deploy" ]]; then
-      echo "ERROR: Can only deploy in production commits that are also deployed in staging"
-      exit_restoring_branch
-    fi
-  fi
-  git checkout $ENV
-  git merge $commit_to_deploy
-  git push origin $ENV
-  exit_restoring_branch
-
-elif [[ "$CMD" == "deploy-webapp" ]]; then
-	ensure_remote "Deploy fontend cannot be run on the local environment. Use (for example) \"$COMMAND_NAME -e staging "$CMD"\"."
-
-	APP_PATH=$ROOT_PATH/webapp
-	cd $APP_PATH
-
-	(set -a; source "$APP_PATH/config/run_envs/$ENV" && yarn build) || exit
-
-	# Add generic redirects for netlify which work with everything routed to
-	# index.htm and relative paths to main.js and main.css for phonegap
-	JSPATH=`grep -o '\./static/js/main\.[a-z0-9]*\.js' build/index.html`
-	JSHASH=`echo "$JSPATH" | cut -d\. -f 3`
-	CSSPATH=`grep -o '\./static/css/main\.[a-z0-9]*\.css' build/index.html`
-	CSSHASH=`echo "$CSSPATH" | cut -d\. -f 3`
-
-	echo "/:path1/main.$JSHASH.js /$JSPATH 301" > build/_redirects
-	echo "/:path1/:path2/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/:path4/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/:path4/:path5/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/:path4/:path5/:path6/main.$JSHASH.js /$JSPATH 301" >> build/_redirects
-
-	echo "/:path1/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/:path4/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/:path4/:path5/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-	echo "/:path1/:path2/:path3/:path4/:path5/:path6/main.$CSSHASH.css /$CSSPATH 301" >> build/_redirects
-
-	cat "public/_redirects" >> build/_redirects
-
-	GIT_VERSION=`git log -n 1 --pretty=format:%h`
-	git diff-index HEAD --quiet --exit-code
-	if [[ "$?" -gt "0" ]]; then
-		GIT_VERSION="$GIT_VERSION*"
-	fi
-	sed -i -e "s/##VERSION##/"$GIT_VERSION"/" build/$JSPATH;
-
-	netlify deploy -e "$ENV"
-
-	delivery_date=`( date --version 2>/dev/null | grep -q GNU\  && date +'%F_%H-%M-%S%N' ) || ( which gdate &>/dev/null && gdate +'%F_%H-%M-%S%N' ) || ( which python &> /dev/null && python -c 'import datetime; print datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S%f")' ) || ( date +'%F_%H-%M-%S' )`
-	delivery_date=${delivery_date:0:21}
-	tagname="deployed-$ENV-$delivery_date"
-	git tag $tagname
-	git push origin $tagname
-	exit
 
 # Deploy all components using main repo
 elif [[ "$CMD" == "deploy" ]]; then
@@ -390,13 +291,11 @@ elif [[ "$CMD" == "deploy" ]]; then
   fi
 
   echo "$TAG will be deployed to $ENV"
-  DEPLOY_PATH=${ROOT_PATH}
-  cd $DEPLOY_PATH
+  cd $ROOT_PATH
   update_branch $ENV
 
   if [[ ! -z $(git ls-remote --tags origin refs/tags/v"$TAG") ]]; then
     git checkout "v$TAG"
-    git submodule update
   else
     echo_error "ERROR: You need to specify an existing remote tag to deploy"
     exit_error_restoring_branch

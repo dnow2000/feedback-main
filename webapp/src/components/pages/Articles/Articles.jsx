@@ -2,12 +2,12 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
-import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import TextField from 'components/layout/form/fields/TextField'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import Items from 'components/layout/Items'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
@@ -179,21 +179,12 @@ class Articles extends PureComponent {
               />
 
               <br />
-
-              <LoadingInfiniteScroll
-                className="feeds"
+              <Items
                 hasMore={hasMore}
                 isLoading={isLoading}
-                useWindow
-              >
-                {
-                  articles.map(article => (
-                    <div className="article-wrapper" key={article.id}>
-                      <ArticleItemContainer article={article} />
-                    </div>
-                  ))
-                }
-              </LoadingInfiniteScroll>
+                items={articles}
+                renderItem={item => <ArticleItemContainer article={item} />}
+              />
             </section>
           </div>
         </MainContainer>

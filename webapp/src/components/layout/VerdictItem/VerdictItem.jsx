@@ -18,7 +18,6 @@ function getMeanRating(ratings) {
   const mean = ratingsNotNull.length > 0
     ? sum / ratingsNotNull.length
     : null
-  console.log('MEAN RATING', mean)
   return mean
 }
 
@@ -45,7 +44,6 @@ function getBarSizeByValue(ratings) {
   for (const value of Object.keys(countsByValue)) {
     barSizeByValue[value] = lagSize + countsByValue[value] * step
   }
-  console.log('BAR SIZES', barSizeByValue)
   return barSizeByValue
 }
 
@@ -59,10 +57,8 @@ function getRatingsCountByValue(ratings) {
     const value = rating !== null
       ? `${rating}`
       : 'na'
-    console.log('VAL', value)
     ratingsCountByValue[value] = ratingsCountByValue[value] + 1
   }
-  console.log('COUNTS BY VALUE', ratingsCountByValue)
   return ratingsCountByValue
 }
 
@@ -72,6 +68,7 @@ function round(x, n=0) {
 }
 
 function getTruncatedReviewers(reviews) {
+  if (!reviews) return
   const users = reviews.map(r => r.user)
   if (users.length <= MAX_AVATARS) {
     return users
@@ -107,11 +104,6 @@ const VerdictItem = ({ article, verdict, user }) => {
     colorClassName = "negative"
   }
   const barSizeByValue = getBarSizeByValue(ratings)
-
-  console.log('RATINGS', ratings)
-  console.log('VERDICT', verdict)
-  console.log('COLOR', colorClassName)
-  console.log({article})
 
   return (
     <div className="verdict-item">
@@ -154,7 +146,7 @@ const VerdictItem = ({ article, verdict, user }) => {
             <div className="col-tablet-80">
               <div>Reviewers</div>
               <div className="reviewers-container">
-                {getTruncatedReviewers(reviews).map(user => {
+                {(getTruncatedReviewers(reviews) || []).map(user => {
                   return (
                     <Avatar
                       className="avatar reviewer-avatar"

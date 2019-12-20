@@ -9,19 +9,18 @@ const visibleFor = roleTypes =>
 
 export const links = [
   {
-    label: () => 'To Review',
-    path: '/articles',
-    visible: () => true
-  },
-  {
-    disabled: () => true,
-    label: 'Reviews',
-    path: '/reviews',
-    visible: visibleFor(['reviewer'])
-  },
-  {
     label: () => 'Trending news',
     path: '/trendings',
+    visible: visibleFor(['editor'])
+  },
+  {
+    label: () => 'To Review',
+    path: '/articles',
+    visible: () => visibleFor(['editor', 'reviewer'])
+  },
+  {
+    label: () => 'Verified',
+    path: '/verdicts',
     visible: visibleFor(['editor'])
   },
   {
@@ -29,12 +28,6 @@ export const links = [
       ? 'Users'
       : 'Reviewers',
     path: '/users',
-    visible: visibleFor(['admin'])
-  },
-  {
-    disabled: true,
-    label: 'Verified',
-    path: '/verdicts',
-    visible: visibleFor(['editor'])
+    visible: visibleFor(['admin', 'editor'])
   },
 ]

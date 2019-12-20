@@ -1,18 +1,5 @@
 .trendings-main {
 
-  .feeds {
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    margin-left: -10px;
-    margin-right: -10px;
-  }
-
-  .trending-wrapper {
-    @extend .col-desktop-50;
-    padding: 10px
-  }
-
   .controls {
     align-items: center;
     flex: 1;

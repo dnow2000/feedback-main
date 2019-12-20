@@ -5,6 +5,7 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import Items from 'components/layout/Items'
 import MainContainer from 'components/layout/Main/MainContainer'
 
 import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
@@ -135,20 +136,12 @@ class Trendings extends PureComponent {
             </section>
 
             <section>
-              <LoadingInfiniteScroll
-                className="feeds"
+              <Items
                 hasMore={hasMore}
                 isLoading={isLoading}
-                useWindow
-              >
-                {
-                  trendings.map(trending => (
-                    <div key={trending.id} className="trending-wrapper">
-                      <TrendingItemContainer trending={trending} />
-                    </div>
-                  ))
-                }
-              </LoadingInfiniteScroll>
+                items={trendings}
+                renderItem={item => <TrendingItemContainer trending={item} />}
+              />
             </section>
           </div>
         </MainContainer>

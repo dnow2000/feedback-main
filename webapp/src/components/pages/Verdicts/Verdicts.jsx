@@ -4,6 +4,7 @@ import { requestData } from 'redux-thunk-data'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
+import Items from 'components/layout/Items'
 import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -11,7 +12,7 @@ class Verdicts extends PureComponent {
 
   componentDidMount() {
     const { query } = this.props
-    const queryParams = query.parse()
+    const queryParams = query.getParams()
     if (!queryParams.page) {
       this.handleRequestData()
     }
@@ -19,7 +20,7 @@ class Verdicts extends PureComponent {
 
   handleRequestData = (handleSuccess, handleFail) => {
     const { dispatch, query } = this.props
-    const queryParams = query.parse()
+    const queryParams = query.getParams()
     const { articleId } = queryParams
 
     let apiPath = '/verdicts'
@@ -43,18 +44,22 @@ class Verdicts extends PureComponent {
       <>
         <HeaderContainer />
         <MainContainer name='verdicts'>
-          <section className='section hero'>
-            <h1 className='main-title'>
-              VERDICTS
-            </h1>
-          </section>
+          <div className="container">
+            <section className='hero'>
+              <h1 className='title'>
+                VERDICTS
+              </h1>
+            </section>
 
-          <section className="section">
-            {
-              verdicts.map(verdict =>
-                <VerdictItemContainer key={verdict.id} verdict={verdict} />)
-            }
-          </section>
+            <section>
+              <Items
+                hasMore={false}
+                isLoading={false}
+                items={verdicts}
+                renderItem={item => <VerdictItemContainer verdict={item} />}
+              />
+            </section>
+          </div>
         </MainContainer>
       </>
     )
