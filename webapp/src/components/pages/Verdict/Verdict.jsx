@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
@@ -15,40 +15,54 @@ import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 
-class Verdict extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isFormLoading: false,
-    }
-  }
+const Verdict = ({
+  article,
+  currentUserVerdictPatch,
+  dispatch,
+  form: { isCreatedEntity, method },
+  history,
+  isPending,
+  match: { params: { verdictId } },
+  query: { getParams },
+}) => {
+  const { articleId } = getParams()
 
-  componentDidMount() {
-    this.handleRequestData()
-  }
 
-  componentDidUpdate() {
-    this.handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl()
-  }
+  const handleSubmitVerdict = useCallback(formValues => {
+    const { id } = currentUserVerdictPatch || {}
+    const apiPath = `/verdicts/${id || ''}`
+    return new Promise(resolve => {
+      dispatch(requestData({
+        apiPath,
+        body: { ...formValues },
+        handleFail: (state, action) => {
+          const { payload } = action
+          const errors = parseSubmitErrors(payload.errors)
+          resolve(errors)
+        },
+        handleSuccess: (state, action) => {
+          const { payload: { datum } } = action
+          const createdVerdictId = datum.id
+          resolve()
+          const nextUrl = `/verdicts/${createdVerdictId}`
+          history.push(nextUrl)
+        },
+        method
+      }))
+    })
+  }, [currentUserVerdictPatch, history])
 
-  handleRequestData = () => {
-    const { dispatch, match, query } = this.props
-    const { params: { verdictId } } = match
-    const queryParams = query.parse()
-    const { articleId } = queryParams || {}
-    const { isCreatedEntity } = query.context()
 
+  useEffect(() => {
     dispatch(requestData({ apiPath: '/evaluations' }))
     dispatch(requestData({ apiPath: '/tags' }))
 
     if (!isCreatedEntity) {
-      dispatch(
-        requestData({
-          apiPath: `/verdicts/${verdictId}`,
-          isMergingDatum: true,
-          normalizer: verdictNormalizer,
-        })
-      )
+      dispatch(requestData({
+        apiPath: `/verdicts/${verdictId}`,
+        isMergingDatum: true,
+        normalizer: verdictNormalizer,
+      }))
       return
     }
 
@@ -56,81 +70,58 @@ class Verdict extends PureComponent {
       return
     }
 
-    dispatch(
-      requestData({
-        apiPath: `/articles/${articleId}`,
-        normalizer: articleNormalizer,
-      })
-    )
-  }
+    dispatch(requestData({
+      apiPath: `/articles/${articleId}`,
+      normalizer: articleNormalizer,
+    }))
+  }, [articleId, verdictId])
 
-  handleRequestFail = formResolver => (state, action) => {
-    const { payload } = action
-    // we return API errors back to the form
-    const nextState = { isFormLoading: false }
-    const errors = parseSubmitErrors(payload.errors)
-    this.setState(nextState, () => formResolver(errors))
-  }
 
-  handleRequestSuccess = formResolver => (state, action) => {
-    const { payload: { datum } } = action
-    const { history } = this.props
-    const nextState = { isFormLoading: false }
-    this.setState(nextState, () => {
-      const verdictId = datum.id
-      formResolver()
-      const nextUrl = `/verdicts/${verdictId}`
-      history.push(nextUrl)
-    })
-  }
-
-  onFormSubmit = formValues => {
-    const { currentUserVerdictPatch, dispatch, query } = this.props
+  useEffect(() => {
     const { id } = currentUserVerdictPatch || {}
-    const { method } = query.context()
-    const apiPath = `/verdicts/${id || ''}`
-    this.setState({ isFormLoading: true })
-    // NOTE: we need to promise the request callbacks
-    // in order to inject their payloads into the form
-    const formSubmitPromise = new Promise(resolve => {
-      dispatch(requestData({
-        apiPath,
-        body: { ...formValues },
-        handleFail: this.handleRequestFail(resolve),
-        handleSuccess: this.handleRequestSuccess(resolve),
-        method
-      }))
-    })
-    return formSubmitPromise
-  }
-
-  handleRedirectToModificationUrlWhenIdWhileWeAreInCreationUrl() {
-    const { currentUserVerdictPatch, history, query } = this.props
-    const { id } = currentUserVerdictPatch || {}
-    const { isCreatedEntity } = query.context()
     if (isCreatedEntity && id) {
       history.push(`/verdicts/${id}?modification`)
     }
-  }
+  })
 
-  render() {
-    const { article, currentUserVerdictPatch, query } = this.props
-    const { id: articleId } = (article || {})
-    const { isFormLoading } = this.state
-    const { isCreatedEntity } = query.context()
 
+  const renderForm = useCallback(formProps => {
+    const canSubmit = !isPending && (
+      isCreatedEntity ||
+      getCanSubmit(formProps)
+    )
+    const { form, handleSubmit } = formProps
     return (
-      <>
-        <HeaderContainer />
-        <MainContainer name="verdict">
-          <section className="section hero">
+      <form
+        autoComplete="off"
+        className="form flex-rows is-full-layout"
+        disabled={isPending}
+        noValidate
+        onSubmit={event => event.preventDefault && handleSubmit(event)}
+      >
+        {!isCreatedEntity && <FormFieldsContainer />}
+        <FormFooterContainer
+          canSubmit={canSubmit}
+          form={form}
+        />
+      </form>
+    )
+  }, [isPending])
+
+
+  return (
+    <>
+      <HeaderContainer />
+      <MainContainer name="verdict">
+        <div className="container">
+          <section className="hero">
             <h1 className="title">
               {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
             </h1>
           </section>
 
           {article && (
-            <section className="section">
+            <section>
               <h2 className="subtitle flex-columns items-center">
                 <span>
                   REVIEWED ARTICLE
@@ -148,7 +139,7 @@ class Verdict extends PureComponent {
           )}
 
           {!isCreatedEntity && (
-            <section className="section">
+            <section>
               <h2 className="subtitle flex-columns items-center">
                 REVIEWERS
               </h2>
@@ -156,7 +147,7 @@ class Verdict extends PureComponent {
             </section>
           )}
 
-          <section className="section">
+          <section>
             {!isCreatedEntity && (
               <h2 className="subtitle flex-columns items-center">
                 VERDICT DETAILS
@@ -164,48 +155,36 @@ class Verdict extends PureComponent {
             )}
             <Form
               initialValues={currentUserVerdictPatch}
-              onSubmit={this.onFormSubmit}
-              render={formProps => {
-                const canSubmit = !isFormLoading && (
-                  isCreatedEntity ||
-                  getCanSubmit(formProps)
-                )
-                const { form, handleSubmit } = formProps
-                return (
-                  <form
-                    autoComplete="off"
-                    className="form flex-rows is-full-layout"
-                    disabled={isFormLoading}
-                    noValidate
-                    onSubmit={event => event.preventDefault && handleSubmit(event)}
-                  >
-                    {!isCreatedEntity && <FormFieldsContainer />}
-                    <FormFooterContainer
-                      canSubmit={canSubmit}
-                      form={form}
-                    />
-                  </form>
-                )
-              }}
+              onSubmit={handleSubmitVerdict}
+              render={renderForm}
             />
           </section>
-        </MainContainer>
-      </>
-    )
-  }
+        </div>
+      </MainContainer>
+    </>
+  )
 }
 
 Verdict.defaultProps = {
   article: null,
   currentUserVerdictPatch: null,
+  isPending: false
 }
 
 Verdict.propTypes = {
   article: PropTypes.shape(),
   currentUserVerdictPatch: PropTypes.shape(),
   dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape().isRequired,
-  match: PropTypes.shape().isRequired,
+  form: PropTypes.shape({
+    isCreatedEntity: PropTypes.bool.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+  isPending: PropTypes.bool,
+  match: PropTypes.shape({
+    params: PropTypes.shape().isRequired
+  }).isRequired,
   query: PropTypes.shape().isRequired
 }
 
