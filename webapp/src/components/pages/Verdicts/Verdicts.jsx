@@ -4,7 +4,7 @@ import { requestData } from 'redux-thunk-data'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
-import Items from 'components/layout/Items'
+import ItemsContainer from 'components/layout/Items/ItemsContainer'
 import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -52,7 +52,7 @@ class Verdicts extends PureComponent {
             </section>
 
             <section>
-              <Items
+              <ItemsContainer
                 hasMore={false}
                 isLoading={false}
                 items={verdicts}

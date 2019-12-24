@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect } from 'react'
 
-import Items from 'components/layout/Items'
+import ItemsContainer from 'components/layout/Items/ItemsContainer'
 import userType from 'components/types/userType'
 
 import UserItemContainer from 'components/layout//UserItem/UserItemContainer'
@@ -13,7 +13,7 @@ const ApplyingReviewers = ({
   const renderItem = useCallback(item => <UserItemContainer user={item} />)
   useEffect(() => { requestGetApplyingReviewers() }, [requestGetApplyingReviewers])
   return (
-    <Items
+    <ItemsContainer
       cols={3}
       hasMore={false}
       isLoading={false}

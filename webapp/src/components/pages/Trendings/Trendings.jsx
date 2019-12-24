@@ -5,7 +5,7 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import Items from 'components/layout/Items'
+import ItemsContainer from 'components/layout/Items/ItemsContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 
 import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
@@ -48,13 +48,12 @@ class Trendings extends PureComponent {
     const { dispatch, location } = this.props
     const { search } = location
 
-    const apiPath = `/trendings${search}`
+    const apiPath =
 
     this.setState({ isLoading: true }, () => {
       dispatch(
         requestData({
-          apiPath,
-          getDatumIdValue: datum => datum.buzzsumoId,
+
           handleFail: () => {
             this.setState({
               hasMore: false,
@@ -94,7 +93,8 @@ class Trendings extends PureComponent {
   }
 
   render() {
-    const { query, trendings } = this.props
+    const { location, query, trendings } = this.props
+    const { search } = location
     const queryParams = query.getParams()
     const { theme } = queryParams
     const { hasMore, isLoading } = this.state
@@ -136,10 +136,11 @@ class Trendings extends PureComponent {
             </section>
 
             <section>
-              <Items
-                hasMore={hasMore}
-                isLoading={isLoading}
-                items={trendings}
+              <ItemsContainer
+                config={{
+                  apiPath: `/trendings${search}`,
+                  getDatumIdValue: datum => datum.buzzsumoId,
+                }}
                 renderItem={item => <TrendingItemContainer trending={item} />}
               />
             </section>
@@ -163,8 +164,7 @@ Trendings.propTypes = {
   query: PropTypes.shape({
     getParams: PropTypes.func.isRequired,
     getSearchFromUpdate: PropTypes.func.isRequired
-  }).isRequired,
-  trendings: PropTypes.array
+  }).isRequired
 }
 
 export default Trendings

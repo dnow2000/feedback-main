@@ -225,7 +225,7 @@ elif [[ "$CMD" == build ]]; then
 # Pull and build the docker images from no cache
 elif [[ "$CMD" == rebuild ]]; then
   cd $ROOT_PATH
-  docker-compose -f docker-compose.$MODE.yml pull $*
+  docker-compose -f docker-compose.$MODE.yml pull
   ./$COMMAND_NAME -m $MODE build --no-cache $*
   exit
 

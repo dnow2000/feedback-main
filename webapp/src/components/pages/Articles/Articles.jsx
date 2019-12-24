@@ -1,81 +1,37 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Form } from 'react-final-form'
 import { assignData, requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import TextField from 'components/layout/form/fields/TextField'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import Items from 'components/layout/Items'
+import ItemsContainer from 'components/layout/Items/ItemsContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
+const Articles = ({
+  canCreateArticle,
+  dispatch,
+  form: { creationUrl },
+  history,
+  query,
+}) => {
+  const queryParams = query.getParams()
+  const { reviewable } = queryParams
 
+  const config = useMemo(() => ({
+    apiPath: '/articles',
+    normalizer: articleNormalizer
+  }))
 
-
-class Articles extends PureComponent {
-  constructor (props) {
-    super(props)
-    const { dispatch } = props
-
-    this.state = {
-      hasMore: false,
-      isLoading: false
-    }
-
-    dispatch(assignData({ articles: [] }))
-  }
-
-  componentDidMount() {
-    this.handleRequestData()
-  }
-
-  componentDidUpdate(prevProps) {
-    const { location } = this.props
-    if (location.search !== prevProps.location.search) {
-      this.handleRequestData()
-    }
-  }
-
-  handleCreateArticle = () => {
-    const { form, history } = this.props
-    const { creationUrl } = form
-    console.log({creationUrl})
+  const handleCreateArticle = useCallback(() => {
     history.push(creationUrl)
-  }
+  }, [creationUrl, history])
 
-  handleRequestData = () => {
-    const { dispatch, location } = this.props
-    const { search } = location
 
-    const apiPath = `/articles${search}`
-
-    this.setState({ isLoading: true })
-
-    dispatch(
-      requestData({
-        apiPath,
-        handleFail: () => {
-          this.setState({
-            hasMore: false,
-            isLoading: false
-          })
-        },
-        handleSuccess: (state, action) => {
-          const { payload: { data } } = action
-          this.setState({
-            hasMore: data && data.length > 0,
-            isLoading: false
-          })
-        },
-        normalizer: articleNormalizer,
-      })
-    )
-  }
-
-  onKeywordsSubmit = values => {
-    const { dispatch, query } = this.props
+  const onKeywordsSubmit = useCallback(values => {
     const { keywords } = values
 
     const isEmptyKeywords =
@@ -92,15 +48,12 @@ class Articles extends PureComponent {
         page: null,
       }
     )
-  }
+  }, [dispatch, query])
 
-  onReviewableClick = reviewable => () => {
-    const { dispatch, query } = this.props
-    const queryParams = query.getParams()
-
+  const onReviewableClick = useCallback(reviewableFromEvent => () => {
     dispatch(assignData({ articles: [] }))
 
-    const nextReviewable = queryParams.reviewable === reviewable
+    const nextReviewable = reviewable === reviewableFromEvent
       ? null
       : reviewable
 
@@ -110,98 +63,86 @@ class Articles extends PureComponent {
         reviewable: nextReviewable,
       }
     )
+  }, [reviewable])
 
-  }
 
-  render() {
-    const { articles, canCreateArticle, query } = this.props
-    const queryParams = query.getParams()
-    const { reviewable } = queryParams
-    const { hasMore, isLoading } = this.state
+  return (
+    <>
+      <HeaderContainer />
+      <MainContainer name="articles">
+        <div className="container">
+          <section className="section hero is-relative">
+            <div className="control">
 
-    return (
-      <>
-        <HeaderContainer />
-        <MainContainer name="articles">
-          <div className="container">
-            <section className="section hero is-relative">
-              <div className="control">
+              {['true', 'false'].map(boolString => (
+                <button
+                  className={classnames("button is-secondary",
+                    {
+                      "is-inversed": reviewable !== boolString
+                    })}
+                  key={boolString}
+                  onClick={onReviewableClick(boolString)}
+                  type="button"
+                >
+                  {boolString === 'false' && "Not "}reviewable
+                </button>
+              ))}
 
-                {['true', 'false'].map(boolString => (
-                  <button
-                    className={classnames("button is-secondary",
-                      {
-                        "is-inversed": reviewable !== boolString
-                      })}
-                    key={boolString}
-                    onClick={this.onReviewableClick(boolString)}
-                    type="button"
-                  >
-                    {boolString === 'false' && "Not "}reviewable
-                  </button>
-                ))}
+              {canCreateArticle && (
+                <button
+                  className="button is-primary"
+                  id="create-article"
+                  onClick={handleCreateArticle}
+                  type="button"
+                >
+                  New article
+                </button>
+              )}
+            </div>
+          </section>
 
-                {canCreateArticle && (
-                  <button
-                    className="button is-primary"
-                    id="create-article"
-                    onClick={this.handleCreateArticle}
-                    type="button"
-                  >
-                    New article
-                  </button>
-                )}
-              </div>
-            </section>
+          <section>
+            <Form
+              initialValues={queryParams}
+              onSubmit={onKeywordsSubmit}
+              render={({ handleSubmit }) => (
+                <form onSubmit={handleSubmit}>
+                  <TextField
+                    name="keywords"
+                    placeholder="Type your search"
+                    renderValue={
+                      () => (
+                        <button
+                          className="button is-primary is-outlined search-ok"
+                          type="submit"
+                        >
+                          OK
+                        </button>
+                      )
+                    }
+                  />
+                </form>
+              )}
+            />
 
-            <section>
-              <Form
-                initialValues={queryParams}
-                onSubmit={this.onKeywordsSubmit}
-                render={({ handleSubmit }) => (
-                  <form onSubmit={handleSubmit}>
-                    <TextField
-                      name="keywords"
-                      placeholder="Type your search"
-                      renderValue={
-                        () => (
-                          <button
-                            className="button is-primary is-outlined search-ok"
-                            type="submit"
-                          >
-                            OK
-                          </button>
-                        )
-                      }
-                    />
-                  </form>
-                )}
-              />
-
-              <br />
-              <Items
-                hasMore={hasMore}
-                isLoading={isLoading}
-                items={articles}
-                renderItem={item => <ArticleItemContainer article={item} />}
-              />
-            </section>
-          </div>
-        </MainContainer>
-      </>
-    )
-  }
+            <br />
+            <ItemsContainer
+              config={config}
+              renderItem={item => <ArticleItemContainer article={item} />}
+            />
+          </section>
+        </div>
+      </MainContainer>
+    </>
+  )
 }
 
 Articles.defaultProps = {
-  articles: null,
   canCreateArticle: false,
 }
 
 Articles.propTypes = {
-  articles: PropTypes.array,
   canCreateArticle: PropTypes.bool,
-  dispatch: PropTypes.func.isRequired,
   location: PropTypes.object.isRequired,
   query: PropTypes.object.isRequired
 }

@@ -7,12 +7,10 @@ import { requestData } from 'redux-thunk-data'
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
-import getCanSubmit from 'utils/form/getCanSubmit'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
 
-import FormFooterContainer from './FormFooter/FormFooterContainer'
-import FormFieldsContainer from './FormFields/FormFieldsContainer'
+import VerdictForm from './VerdictForm/VerdictForm'
 import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 
 const Verdict = ({
@@ -26,7 +24,6 @@ const Verdict = ({
   query: { getParams },
 }) => {
   const { articleId } = getParams()
-
 
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
@@ -84,31 +81,6 @@ const Verdict = ({
     }
   })
 
-
-  const renderForm = useCallback(formProps => {
-    const canSubmit = !isPending && (
-      isCreatedEntity ||
-      getCanSubmit(formProps)
-    )
-    const { form, handleSubmit } = formProps
-    return (
-      <form
-        autoComplete="off"
-        className="form flex-rows is-full-layout"
-        disabled={isPending}
-        noValidate
-        onSubmit={event => event.preventDefault && handleSubmit(event)}
-      >
-        {!isCreatedEntity && <FormFieldsContainer />}
-        <FormFooterContainer
-          canSubmit={canSubmit}
-          form={form}
-        />
-      </form>
-    )
-  }, [isPending])
-
-
   return (
     <>
       <HeaderContainer />
@@ -121,20 +93,11 @@ const Verdict = ({
           </section>
 
           {article && (
-            <section>
-              <h2 className="subtitle flex-columns items-center">
-                <span>
-                  REVIEWED ARTICLE
-                </span>
-                <span className="flex-auto" />
-                <NavLink
-                  className="button is-primary right"
-                  to={`/articles/${articleId}`}
-                >
-                  See article
-                </NavLink>
-              </h2>
-              <ArticleItemContainer article={article} noControl />
+            <section className="article">
+              <ArticleItemContainer
+                article={article}
+                noControl
+              />
             </section>
           )}
 
@@ -156,7 +119,7 @@ const Verdict = ({
             <Form
               initialValues={currentUserVerdictPatch}
               onSubmit={handleSubmitVerdict}
-              render={renderForm}
+              render={VerdictForm}
             />
           </section>
         </div>

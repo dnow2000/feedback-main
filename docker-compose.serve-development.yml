@@ -17,7 +17,6 @@ services:
       - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
       - COMMAND_NAME=$COMMAND_NAME
       - ENV=${ENV:-development}
-      - GIT_TAG=$GIT_TAG
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
       - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-serve-development/${DB_NAME}
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY

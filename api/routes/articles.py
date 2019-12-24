@@ -39,13 +39,17 @@ def list_articles():
         query = get_articles_keywords_join_query(query)
         query = get_articles_query_with_keywords(query, keywords)
 
-    article_dicts = listify(Article,
+    article_dicts, total_data_count = listify(Article,
                             includes=ARTICLE_INCLUDES,
                             query=query,
                             page=request.args.get('page'),
                             paginate=10)
 
-    return jsonify(article_dicts)
+    response = jsonify(article_dicts)
+    response.headers['Total-Data-Count'] = total_data_count
+    response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
+
+    return response
 
 
 @app.route('/articles/<article_id>', methods=['GET'])
