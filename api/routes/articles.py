@@ -43,7 +43,8 @@ def list_articles():
                             includes=ARTICLE_INCLUDES,
                             query=query,
                             page=request.args.get('page'),
-                            paginate=10)
+                            paginate=10,
+                            with_total_data_count=True)
 
     response = jsonify(article_dicts)
     response.headers['Total-Data-Count'] = total_data_count
