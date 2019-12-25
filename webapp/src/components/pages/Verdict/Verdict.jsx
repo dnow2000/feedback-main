@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
-import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
@@ -47,7 +46,7 @@ const Verdict = ({
         method
       }))
     })
-  }, [currentUserVerdictPatch, history])
+  }, [currentUserVerdictPatch, dispatch, history, method])
 
 
   useEffect(() => {

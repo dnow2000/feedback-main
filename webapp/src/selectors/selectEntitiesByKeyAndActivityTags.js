@@ -10,7 +10,7 @@ export default createCachedSelector(
   (entities, tags) => {
     const tagsLength = tags.length
     return entities.filter(entity =>
-      tags.length === entity.__ACTIVITIES__.length
+      tagsLength === entity.__ACTIVITIES__.length
       && tags.every(tag => entity.__ACTIVITIES__.includes(tag)))
   }
 )(mapArgsToCacheKey)

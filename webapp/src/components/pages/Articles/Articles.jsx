@@ -22,9 +22,9 @@ const Articles = ({
   const { reviewable } = queryParams
 
   const config = useMemo(() => ({
-    apiPath: '/articles',
-    normalizer: articleNormalizer
-  }))
+    normalizer: articleNormalizer,
+    stateKey: 'articles'
+  }), [])
 
   const handleCreateArticle = useCallback(() => {
     history.push(creationUrl)

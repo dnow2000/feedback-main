@@ -44,40 +44,33 @@ const Items = ({
   }
   */
 
-  const handleGetItems = useCallback(page => {
-    console.log('WTF', page)
-    const apiSearch = query.getSearchFromUpdate({ page })
-
+  const handleGetItems = useCallback(() => {
+    console.log('WTF', search)
     const stateKey = getStateKeyFromConfig(config)
     dispatch(requestData({
       activityTag: `/${stateKey}`,
-      apiPath: `/${stateKey}${apiSearch}`,
+      apiPath: `/${stateKey}${search}`,
       handleFail: () => setHasMore(false),
       handleSuccess: (state, action) => {
-        const { payload: { data, headers } } = action
+        const { payload: { headers } } = action
         const nextItems = selectItems(state, config)
         const totalItemsCount = parseInt(headers['total-data-count'], 10)
-        // TEMPORARY WAITING THAT fetch-normalize-data
-        // passes directly the already updated state
-        // const currentItemsCount = nextItems.length
-        const currentItemsCount = nextItems.length + data.length
-        console.log({currentItemsCount, totalItemsCount})
+        const currentItemsCount = nextItems.length
         setHasMore(currentItemsCount < totalItemsCount)
         setThreshold(REACHABLE_THRESHOLD)
       },
       ...config
     }))
-  }, [dispatch, query, setHasMore, setThreshold])
+  }, [config, dispatch, search, setHasMore])
 
   const handleLoadMore = useCallback(page => {
     console.log({isPending, hasMore, noItems, page})
 
-    /*
+
     if (noItems && page > 0) {
       history.push(query.getSearchFromUpdate({ page: null }))
       return
     }
-    */
 
     if (isPending || !hasMore) return
     /*
@@ -90,32 +83,28 @@ const Items = ({
     */
     console.log({page})
     setThreshold(UNREACHABLE_THRESHOLD)
-    handleGetItems(page)
-    //history.push(query.getSearchFromUpdate({ page }))
+    history.push(query.getSearchFromUpdate({ page }))
   }, [
     hasMore,
-    handleGetItems,
-    //history,
+    history,
     isPending,
     noItems,
-    //query,
+    query,
     // resetCount,
     //setState
     setThreshold
   ])
 
-  /*
   useEffect(() => {
     if (!needsToInit) return
     history.push(query.getSearchFromUpdate({ page: 1 }))
   }, [history, needsToInit, query])
-  */
 
   useEffect(() => {
-    console.log('ET LA', {page, search})
+    console.log('ET LA', page)
     if (!page) return
     handleGetItems()
-  }, [handleGetItems, search])
+  }, [handleGetItems, page])
 
   /*
   useEffect(() => {
@@ -125,16 +114,16 @@ const Items = ({
   }, [isPending, noItems, setThreshold])
   */
 
-  //if (needsToInit) return null
+  if (needsToInit) return null
 
-  console.log('RENDER', { threshold, hasMore, items })
+  console.log('RENDER', { threshold, hasMore })
   return (
     <InfiniteScroll
       className='items'
       hasMore={hasMore}
       loadMore={handleLoadMore}
+      pageStart={parseInt(page, 10)}
       threshold={threshold}
-      pageStart={0}
       useWindow
     >
       {
