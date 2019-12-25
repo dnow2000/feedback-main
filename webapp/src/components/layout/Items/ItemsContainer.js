@@ -16,7 +16,5 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 export default compose(
-  withRouter,
-  withQuery(),
   connect(mapStateToProps),
 )(Items)

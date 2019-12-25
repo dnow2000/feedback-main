@@ -1,13 +1,12 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
-import { Form } from 'react-final-form'
-import { assignData, requestData } from 'redux-thunk-data'
+import { deleteData, requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
-import TextField from 'components/layout/form/fields/TextField'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import ItemsContainer from 'components/layout/Items/ItemsContainer'
+import KeywordsBarContainer from 'components/layout//KeywordsBar/KeywordsBarContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
@@ -16,54 +15,38 @@ const Articles = ({
   dispatch,
   form: { creationUrl },
   history,
+  location: { search },
   query,
 }) => {
   const queryParams = query.getParams()
   const { reviewable } = queryParams
 
   const config = useMemo(() => ({
-    normalizer: articleNormalizer,
-    stateKey: 'articles'
-  }), [])
+    apiPath: `/articles${search}`,
+    normalizer: articleNormalizer
+  }), [search])
+
 
   const handleCreateArticle = useCallback(() => {
     history.push(creationUrl)
   }, [creationUrl, history])
 
 
-  const onKeywordsSubmit = useCallback(values => {
-    const { keywords } = values
-
-    const isEmptyKeywords =
-      typeof keywords === 'undefined' ||
-      keywords === ''
-
-    if (!isEmptyKeywords) {
-      dispatch(assignData({ articles: [] }))
-    }
-
-    query.getSearchFromUpdate(
-      {
-        keywords: isEmptyKeywords ? null : keywords,
-        page: null,
-      }
-    )
-  }, [dispatch, query])
-
-  const onReviewableClick = useCallback(reviewableFromEvent => () => {
-    dispatch(assignData({ articles: [] }))
+  const handleReviewableClick = useCallback(reviewableFromEvent => () => {
+    dispatch(deleteData(null, { tags: '/articles-items'}))
 
     const nextReviewable = reviewable === reviewableFromEvent
       ? null
       : reviewable
 
-    query.getSearchFromUpdate(
-      {
-        page: null,
-        reviewable: nextReviewable,
-      }
-    )
+    history.push(query.getSearchFromUpdate({
+      reviewable: nextReviewable,
+    }))
   }, [reviewable])
+
+
+  const renderItem = useCallback(item =>
+    <ArticleItemContainer article={item} />)
 
 
   return (
@@ -81,7 +64,7 @@ const Articles = ({
                       "is-inversed": reviewable !== boolString
                     })}
                   key={boolString}
-                  onClick={onReviewableClick(boolString)}
+                  onClick={handleReviewableClick(boolString)}
                   type="button"
                 >
                   {boolString === 'false' && "Not "}reviewable
@@ -102,33 +85,13 @@ const Articles = ({
           </section>
 
           <section>
-            <Form
-              initialValues={queryParams}
-              onSubmit={onKeywordsSubmit}
-              render={({ handleSubmit }) => (
-                <form onSubmit={handleSubmit}>
-                  <TextField
-                    name="keywords"
-                    placeholder="Type your search"
-                    renderValue={
-                      () => (
-                        <button
-                          className="button is-primary is-outlined search-ok"
-                          type="submit"
-                        >
-                          OK
-                        </button>
-                      )
-                    }
-                  />
-                </form>
-              )}
-            />
+            <KeywordsBarContainer />
 
             <br />
             <ItemsContainer
               config={config}
-              renderItem={item => <ArticleItemContainer article={item} />}
+              key={search}
+              renderItem={renderItem}
             />
           </section>
         </div>

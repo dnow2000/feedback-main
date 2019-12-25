@@ -3,14 +3,17 @@ import { getStateKeyFromConfig } from 'fetch-normalize-data'
 import selectEntitiesByKeyAndActivityTags from 'selectors/selectEntitiesByKeyAndActivityTags'
 
 
-export const selectItems = (state, config) => {
-  const stateKey = getStateKeyFromConfig(config)
-  const activityTag = `/${stateKey}`
-  return selectEntitiesByKeyAndActivityTags(state, stateKey, [activityTag])
-}
+export const getItemsActivityTagFromConfig = config =>
+  `/${getStateKeyFromConfig(config)}-items`
 
 
-export const selectRequest = (state, config) => {
-  const activityTag = `/${getStateKeyFromConfig(config)}`
-  return state.requests[activityTag]
-}
+export const selectItems = (state, config) =>
+  selectEntitiesByKeyAndActivityTags(
+    state,
+    getStateKeyFromConfig(config),
+    [getItemsActivityTagFromConfig(config)]
+  )
+
+
+export const selectRequest = (state, config) =>
+  state.requests[getItemsActivityTagFromConfig(config)]
