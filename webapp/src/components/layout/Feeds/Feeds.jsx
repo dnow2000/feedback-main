@@ -5,8 +5,7 @@ import ItemsContainer from './Items/ItemsContainer'
 
 const Feeds = ({ config, renderItem }) => (
   <>
-    <ControlsContainer />
-    <br />
+    <ControlsContainer config={config} />
     <ItemsContainer
       config={config}
       renderItem={renderItem}

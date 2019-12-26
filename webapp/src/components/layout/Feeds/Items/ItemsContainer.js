@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 
 import Items from './Items'
-import { selectItems, selectRequest } from './utils'
+import { selectItems, selectRequest } from '../utils'
 
 
 const mapStateToProps = (state, ownProps) => {

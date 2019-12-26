@@ -9,7 +9,10 @@ const Dates = ({ onChange }) => {
   })
 
   return (
-    <select onChange={handleOnChange}>
+    <select
+      className="dates"
+      onChange={handleOnChange}
+    >
       {trendingMaxDates.map(({ label, value }) => (
         <option
           key={value}

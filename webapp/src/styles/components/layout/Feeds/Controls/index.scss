@@ -1,12 +1,25 @@
+@import 'Dates.scss';
 @import 'KeywordsBar.scss';
+@import 'Themes.scss';
 
 .controls {
   align-items: center;
+  border-bottom: $border;
   display: flex;
   justify-content: space-between;
 
   .right {
     align-items: center;
     display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    @extend .button;
+    @extend .button.is-primary;
+  }
+
+  .text-field {
+    margin-bottom: 0;
   }
 }

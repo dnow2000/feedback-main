@@ -10,36 +10,13 @@ import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
 const Articles = ({
-  canCreateArticle,
-  dispatch,
-  form: { creationUrl },
-  history,
   location: { search },
-  query,
 }) => {
-  const queryParams = query.getParams()
-  const { reviewable } = queryParams
 
   const config = useMemo(() => ({
     apiPath: `/articles${search}`,
     normalizer: articleNormalizer
   }), [search])
-
-
-
-
-
-  const handleReviewableClick = useCallback(reviewableFromEvent => () => {
-    dispatch(deleteData(null, { tags: '/articles-items'}))
-
-    const nextReviewable = reviewable === reviewableFromEvent
-      ? null
-      : reviewable
-
-    history.push(query.getSearchFromUpdate({
-      reviewable: nextReviewable,
-    }))
-  }, [reviewable])
 
 
   const renderItem = useCallback(item =>
@@ -64,14 +41,11 @@ const Articles = ({
   )
 }
 
-Articles.defaultProps = {
-  canCreateArticle: false,
-}
 
 Articles.propTypes = {
-  canCreateArticle: PropTypes.bool,
-  location: PropTypes.object.isRequired,
-  query: PropTypes.object.isRequired
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default Articles

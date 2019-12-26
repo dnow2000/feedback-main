@@ -1,33 +1,21 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Form } from 'react-final-form'
 
 import Icon from 'components/layout/Icon'
 import TextField from 'components/layout/form/fields/TextField'
 
-import { deleteData } from 'redux-thunk-data'
-
 
 const KeywordsBar = ({
-  dispatch,
-  history: { push },
-  query: { getSearchFromUpdate, getParams }
+  keywords,
+  onChange,
 }) => {
-  const queryParams = getParams()
+
+  const initialValues = useMemo(() => ({ keywords }), [keywords])
+
   const handleKeywordsSubmit = useCallback(values => {
     const { keywords } = values
-
-    const isEmptyKeywords =
-      typeof keywords === 'undefined' ||
-      keywords === ''
-
-    if (!isEmptyKeywords) {
-      dispatch(deleteData(null, { tags: '/articles-items'}))
-    }
-
-    push(getSearchFromUpdate({
-      keywords: isEmptyKeywords ? null : keywords,
-    }))
-  }, [dispatch, getSearchFromUpdate, push])
+    onChange('keywords', keywords)
+  }, [onChange])
 
 
   const renderInner = useCallback(() => (
@@ -38,7 +26,7 @@ const KeywordsBar = ({
 
   return (
     <Form
-      initialValues={queryParams}
+      initialValues={initialValues}
       onSubmit={handleKeywordsSubmit}
       render={({ handleSubmit }) => (
         <form

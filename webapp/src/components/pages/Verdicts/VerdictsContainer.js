@@ -1,7 +1,6 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import withQuery from 'with-react-query'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
@@ -21,7 +20,6 @@ const mapStateToProps = (state, ownProps) => {
 
 export default compose(
   withRouter,
-  withQuery(),
   withRequiredLogin,
   connect(mapStateToProps)
 )(Verdicts)

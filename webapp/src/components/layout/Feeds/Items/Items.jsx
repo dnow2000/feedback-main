@@ -4,7 +4,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { requestData } from 'redux-thunk-data'
 
-import { getItemsActivityTagFromConfig, selectItems } from './utils'
+import { getItemsActivityTagFromConfig, selectItems } from '../utils'
 
 const REACHABLE_THRESHOLD = -10
 const UNREACHABLE_THRESHOLD = -10000

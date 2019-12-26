@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect } from 'react'
 
-import ItemsContainer from 'components/layout/Items/ItemsContainer'
+import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
 import userType from 'components/types/userType'
 
 import UserItemContainer from 'components/layout//UserItem/UserItemContainer'

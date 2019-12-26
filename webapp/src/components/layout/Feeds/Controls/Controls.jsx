@@ -1,10 +1,13 @@
 import React, { useCallback } from 'react'
+import { deleteData } from 'redux-thunk-data'
 
 import Dates from './Dates'
 import Themes from './Themes'
 import KeywordsBarContainer from './KeywordsBar/KeywordsBarContainer'
+import { getItemsActivityTagFromConfig } from '../utils'
 
 const Controls = ({
+  config,
   dispatch,
   history: { push },
   query: { getParams: getQueryParams, getSearchFromUpdate }
@@ -13,6 +16,8 @@ const Controls = ({
 
 
   const handleChange =  useCallback((key, value) => () => {
+    dispatch(deleteData(null, { tags: [getItemsActivityTagFromConfig(config)] }))
+
     let nextValue = value
     if (value === 1) {
       if (!days) {

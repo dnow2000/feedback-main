@@ -1,79 +1,55 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
-import { requestData } from 'redux-thunk-data'
+import React, { useCallback, useMemo } from 'react'
 
+import Feeds from 'components/layout/Feeds/Items/ItemsContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
-import ItemsContainer from 'components/layout/Items/ItemsContainer'
 import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
 import { verdictNormalizer } from 'utils/normalizers'
 
-class Verdicts extends PureComponent {
 
-  componentDidMount() {
-    const { query } = this.props
-    const queryParams = query.getParams()
-    if (!queryParams.page) {
-      this.handleRequestData()
-    }
-  }
+const Verdicts = ({ location: { search } }) => {
+  const {
+    verdicts
+  } = this.props
 
-  handleRequestData = (handleSuccess, handleFail) => {
-    const { dispatch, query } = this.props
-    const queryParams = query.getParams()
-    const { articleId } = queryParams
+  const config = useMemo(() => ({
+    apiPath: `/verdicts${search}`,
+    normalizer: verdictNormalizer
+  }), [search])
 
-    let apiPath = '/verdicts'
-    if (articleId) {
-      apiPath = `${apiPath}?articleId=${articleId}`
-    }
 
-    dispatch(requestData({
-      apiPath,
-      handleFail,
-      handleSuccess,
-      normalizer: verdictNormalizer
-    }))
-  }
+  const renderItem = useCallback(item =>
+    <VerdictItemContainer verdict={item} />)
 
-  render () {
-    const {
-      verdicts
-    } = this.props
-    return (
-      <>
-        <HeaderContainer />
-        <MainContainer name='verdicts'>
-          <div className="container">
-            <section className='hero'>
-              <h1 className='title'>
-                VERDICTS
-              </h1>
-            </section>
+  return (
+    <>
+      <HeaderContainer />
+      <MainContainer name='verdicts'>
+        <div className="container">
+          <section className='hero'>
+            <h1 className='title'>
+              VERDICTS
+            </h1>
+          </section>
 
-            <section>
-              <ItemsContainer
-                hasMore={false}
-                isLoading={false}
-                items={verdicts}
-                renderItem={item => <VerdictItemContainer verdict={item} />}
-              />
-            </section>
-          </div>
-        </MainContainer>
-      </>
-    )
-  }
+          <section>
+            <Feeds
+              config={config}
+              renderItem={renderItem}
+            />
+          </section>
+        </div>
+      </MainContainer>
+    </>
+  )
 }
 
-Verdicts.defaultProps = {
-  verdicts: null
-}
 
 Verdicts.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  query: PropTypes.object.isRequired,
-  verdicts: PropTypes.array
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default Verdicts

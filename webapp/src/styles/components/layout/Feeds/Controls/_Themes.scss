@@ -1,0 +1,14 @@
+.themes {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  width: 20rem;
+
+  button {
+    width: 6rem;
+    
+    &.selected {
+      @extend .is-outlined;
+    }
+  }
+}
