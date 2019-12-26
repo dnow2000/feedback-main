@@ -4,9 +4,8 @@ import React, { useCallback, useMemo } from 'react'
 import { deleteData, requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import Feeds from 'components/layout/Feeds/Feeds'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import ItemsContainer from 'components/layout/Items/ItemsContainer'
-import KeywordsBarContainer from 'components/layout//KeywordsBar/KeywordsBarContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
@@ -27,9 +26,7 @@ const Articles = ({
   }), [search])
 
 
-  const handleCreateArticle = useCallback(() => {
-    history.push(creationUrl)
-  }, [creationUrl, history])
+
 
 
   const handleReviewableClick = useCallback(reviewableFromEvent => () => {
@@ -54,41 +51,8 @@ const Articles = ({
       <HeaderContainer />
       <MainContainer name="articles">
         <div className="container">
-          <section className="section hero is-relative">
-            <div className="control">
-
-              {['true', 'false'].map(boolString => (
-                <button
-                  className={classnames("button is-secondary",
-                    {
-                      "is-inversed": reviewable !== boolString
-                    })}
-                  key={boolString}
-                  onClick={handleReviewableClick(boolString)}
-                  type="button"
-                >
-                  {boolString === 'false' && "Not "}reviewable
-                </button>
-              ))}
-
-              {canCreateArticle && (
-                <button
-                  className="button is-primary"
-                  id="create-article"
-                  onClick={handleCreateArticle}
-                  type="button"
-                >
-                  New article
-                </button>
-              )}
-            </div>
-          </section>
-
           <section>
-            <KeywordsBarContainer />
-
-            <br />
-            <ItemsContainer
+            <Feeds
               config={config}
               key={search}
               renderItem={renderItem}

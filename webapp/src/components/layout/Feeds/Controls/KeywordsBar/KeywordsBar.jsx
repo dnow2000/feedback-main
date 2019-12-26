@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { Form } from 'react-final-form'
 
+import Icon from 'components/layout/Icon'
 import TextField from 'components/layout/form/fields/TextField'
 
 import { deleteData } from 'redux-thunk-data'
@@ -28,25 +29,26 @@ const KeywordsBar = ({
     }))
   }, [dispatch, getSearchFromUpdate, push])
 
+
+  const renderInner = useCallback(() => (
+    <button type="submit">
+      <Icon name="loupe" />
+    </button>
+  ))
+
   return (
     <Form
       initialValues={queryParams}
       onSubmit={handleKeywordsSubmit}
       render={({ handleSubmit }) => (
-        <form onSubmit={handleSubmit}>
+        <form
+          className="keywords-bar"
+          onSubmit={handleSubmit}
+        >
           <TextField
             name="keywords"
             placeholder="Type your search"
-            renderValue={
-              () => (
-                <button
-                  className="button is-primary is-outlined search-ok"
-                  type="submit"
-                >
-                  OK
-                </button>
-              )
-            }
+            renderInner={renderInner}
           />
         </form>
       )}

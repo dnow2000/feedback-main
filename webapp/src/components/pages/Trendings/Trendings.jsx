@@ -72,25 +72,7 @@ class Trendings extends PureComponent {
     })
   }
 
-  handleRequestDataWithQuery = (key, value) => () => {
-    const { dispatch, history, query } = this.props
-    const queryParams = query.getParams()
 
-    let nextValue = value
-
-    if (value === 1) {
-      if (!queryParams.days) {
-        return
-      }
-      nextValue = null
-    }
-
-    dispatch(assignData({ trendings: [] }))
-    history.push(query.getSearchFromUpdate({
-      [key]: nextValue,
-      page: null
-    }))
-  }
 
   render() {
     const { location, query, trendings } = this.props
@@ -105,34 +87,9 @@ class Trendings extends PureComponent {
         <MainContainer name="trendings">
           <div className="container">
             <section className="controls">
-              <div className="themes">
-                {trendingThemes.map(({ label, value }) => (
-                  <button
-                    className={classnames("thin", {"selected": theme !== value})}
-                    key={value}
-                    onClick={this.handleRequestDataWithQuery('theme', value)}
-                    type="button"
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
 
-              <div className="days">
-                <select onChange={event => {
-                  console.log(event.target.value)
-                  this.handleRequestDataWithQuery('days', event.target.value)
-                }}>
-                  {trendingMaxDates.map(({ label, value }) => (
-                    <option
-                      key={value}
-                      value={value}
-                    >
-                      {label}
-                    </option>
-                  ))}
-                </select>
-              </div>
+
+            
             </section>
 
             <section>

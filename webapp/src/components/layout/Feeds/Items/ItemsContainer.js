@@ -1,7 +1,4 @@
 import { connect } from 'react-redux'
-import { withRouter } from 'react-router-dom'
-import { compose } from 'redux'
-import withQuery from 'with-react-query'
 
 import Items from './Items'
 import { selectItems, selectRequest } from './utils'
@@ -15,6 +12,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default compose(
-  connect(mapStateToProps),
-)(Items)
+export default connect(mapStateToProps)(Items)
