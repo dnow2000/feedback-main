@@ -1,4 +1,4 @@
-export const trendingMaxDates = [
+export const trendingMaxDays = [
   { label: 'Today', value: 1 },
   { label: '2 days', value: 2 },
   { label: '1 week', value: 7 },

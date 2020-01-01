@@ -1,4 +1,3 @@
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
 
@@ -15,7 +14,7 @@ const Trendings = ({ location: { search } }) => {
 
 
   const renderItem = useCallback(item =>
-    <TrendingItemContainer trending={item} />)
+    <TrendingItemContainer trending={item} />, [])
 
   return (
     <>

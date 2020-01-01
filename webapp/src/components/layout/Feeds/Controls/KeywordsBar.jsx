@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
 import { Form } from 'react-final-form'
 
@@ -6,11 +7,12 @@ import TextField from 'components/layout/form/fields/TextField'
 
 
 const KeywordsBar = ({
-  keywords,
   onChange,
+  selectedKeywords
 }) => {
 
-  const initialValues = useMemo(() => ({ keywords }), [keywords])
+  const initialValues = useMemo(() =>
+    ({ keywords: selectedKeywords }), [selectedKeywords])
 
   const handleKeywordsSubmit = useCallback(values => {
     const { keywords } = values
@@ -22,7 +24,7 @@ const KeywordsBar = ({
     <button type="submit">
       <Icon name="loupe" />
     </button>
-  ))
+  ), [])
 
   return (
     <Form
@@ -42,6 +44,12 @@ const KeywordsBar = ({
       )}
     />
   )
+}
+
+
+KeywordsBar.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  selectedKeywords: PropTypes.string
 }
 
 export default KeywordsBar

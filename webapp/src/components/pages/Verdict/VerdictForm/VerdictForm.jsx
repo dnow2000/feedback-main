@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 
 import getCanSubmit from 'utils/form/getCanSubmit'
-import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import FormFooterContainer from './FormFooter/FormFooterContainer'

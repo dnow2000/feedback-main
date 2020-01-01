@@ -70,7 +70,7 @@ const Verdict = ({
       apiPath: `/articles/${articleId}`,
       normalizer: articleNormalizer,
     }))
-  }, [articleId, verdictId])
+  }, [articleId, dispatch, isCreatedEntity, verdictId])
 
 
   useEffect(() => {

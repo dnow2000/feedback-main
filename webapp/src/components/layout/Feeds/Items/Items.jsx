@@ -1,6 +1,5 @@
-import { getStateKeyFromConfig } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import InfiniteScroll from 'react-infinite-scroller'
 import { requestData } from 'redux-thunk-data'
 
@@ -42,7 +41,7 @@ const Items = ({
         setThreshold(REACHABLE_THRESHOLD)
       }
     }))
-  }, [dispatch, setHasMore, setThreshold])
+  }, [config, dispatch, setHasMore, setThreshold])
 
 
   const handleLoadMore = useCallback(page => {

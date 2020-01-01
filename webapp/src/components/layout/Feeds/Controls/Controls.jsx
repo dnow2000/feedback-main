@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import { deleteData } from 'redux-thunk-data'
 
-import Dates from './Dates'
+import Days from './Days'
 import Themes from './Themes'
-import KeywordsBarContainer from './KeywordsBar/KeywordsBarContainer'
+import KeywordsBar from './KeywordsBar'
 import { getItemsActivityTagFromConfig } from '../utils'
 
 const Controls = ({
@@ -12,21 +13,19 @@ const Controls = ({
   history: { push },
   query: { getParams: getQueryParams, getSearchFromUpdate }
 }) => {
-  const { days, theme } = getQueryParams()
+  const { days, keywords, theme } = getQueryParams()
 
 
-  const handleChange =  useCallback((key, value) => () => {
-    dispatch(deleteData(null, { tags: [getItemsActivityTagFromConfig(config)] }))
-
-    let nextValue = value
-    if (value === 1) {
-      if (!days) {
-        return
-      }
-      nextValue = null
-    }
+  const handleChange =  useCallback((key, value) => {
+    const isEmptyValue =
+      typeof value === 'undefined' ||
+      value === ''
+    const nextValue = isEmptyValue
+      ? null
+      : value
     push(getSearchFromUpdate({ [key]: nextValue }))
-  }, [])
+    dispatch(deleteData(null, { tags: [getItemsActivityTagFromConfig(config)] }))
+  }, [config, dispatch, getSearchFromUpdate, push])
 
 
   return (
@@ -36,14 +35,25 @@ const Controls = ({
         selectedTheme={theme}
       />
       <div className="right">
-        <Dates
+        <Days
           onChange={handleChange}
-          selectedDate={days}
+          selectedDays={days}
         />
-        <KeywordsBarContainer />
+        <KeywordsBar
+          onChange={handleChange}
+          selectedKeywords={keywords}
+        />
       </div>
     </div>
   )
+}
+
+
+Controls.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired
+  }).isRequired
 }
 
 export default Controls

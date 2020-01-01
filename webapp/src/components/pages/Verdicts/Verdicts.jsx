@@ -9,10 +9,6 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 
 const Verdicts = ({ location: { search } }) => {
-  const {
-    verdicts
-  } = this.props
-
   const config = useMemo(() => ({
     apiPath: `/verdicts${search}`,
     normalizer: verdictNormalizer
@@ -20,7 +16,7 @@ const Verdicts = ({ location: { search } }) => {
 
 
   const renderItem = useCallback(item =>
-    <VerdictItemContainer verdict={item} />)
+    <VerdictItemContainer verdict={item} />, [])
 
   return (
     <>

@@ -1,7 +1,5 @@
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
-import { deleteData, requestData } from 'redux-thunk-data'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import Feeds from 'components/layout/Feeds/Feeds'
@@ -20,7 +18,7 @@ const Articles = ({
 
 
   const renderItem = useCallback(item =>
-    <ArticleItemContainer article={item} />)
+    <ArticleItemContainer article={item} />, [])
 
 
   return (

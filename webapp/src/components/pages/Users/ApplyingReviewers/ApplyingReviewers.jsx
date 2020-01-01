@@ -10,7 +10,7 @@ const ApplyingReviewers = ({
   applyingReviewers,
   requestGetApplyingReviewers
 }) => {
-  const renderItem = useCallback(item => <UserItemContainer user={item} />)
+  const renderItem = useCallback(item => <UserItemContainer user={item} />, [])
   useEffect(() => { requestGetApplyingReviewers() }, [requestGetApplyingReviewers])
   return (
     <ItemsContainer
