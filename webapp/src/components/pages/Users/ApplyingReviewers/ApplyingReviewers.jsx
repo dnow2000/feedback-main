@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useEffect, useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
 import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
 import userType from 'components/types/userType'
@@ -17,9 +17,6 @@ const ApplyingReviewers = ({
   }), [search])
 
   const renderItem = useCallback(item => <UserItemContainer user={item} />, [])
-
-  //useEffect(() => { requestGetApplyingReviewers() }, [requestGetApplyingReviewers])
-
 
   return (
     <ItemsContainer

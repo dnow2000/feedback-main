@@ -6,7 +6,6 @@ import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 
 import Trendings from './Trendings'
-import selectTrendings from './selectors/selectTrendings'
 
 
 export default compose(
