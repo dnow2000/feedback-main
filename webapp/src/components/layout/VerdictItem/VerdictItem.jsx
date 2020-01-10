@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import Avatar from 'components/layout/Avatar'
-import ReviewItemContainer from 'components/pages/Reviews/ReviewsExploration/ReviewItem/ReviewItemContainer'
+import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
 
 const RATING_VALUES = ['2', '1', '0', '-1', '-2', 'na']

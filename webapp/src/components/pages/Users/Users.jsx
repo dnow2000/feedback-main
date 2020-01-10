@@ -4,7 +4,6 @@ import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 
 import ApplyingReviewersContainer from './ApplyingReviewers/ApplyingReviewersContainer'
-import UsersExplorationContainer from './UsersExploration/UsersExplorationContainer'
 
 const Users = () => (
   <>

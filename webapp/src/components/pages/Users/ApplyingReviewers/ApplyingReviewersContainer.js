@@ -1,4 +1,6 @@
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import { compose } from 'redux'
 import { requestData } from 'redux-thunk-data'
 
 import ApplyingReviewers from './ApplyingReviewers'
@@ -13,7 +15,10 @@ const mapDispatchToProps = dispatch => ({
   }))
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+export default compose(
+  withRouter,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
 )(ApplyingReviewers)

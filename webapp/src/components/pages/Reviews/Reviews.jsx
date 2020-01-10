@@ -1,26 +1,45 @@
-import React from 'react'
+import PropTypes from 'prop-types'
+import React, { useCallback, useMemo } from 'react'
 
+import Feeds from 'components/layout/Feeds/Feeds'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
+import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
-import ReviewsExplorationContainer from './ReviewsExploration/ReviewsExplorationContainer'
+const Reviews = ({
+  location: { search }
+}) => {
+  const config = useMemo(() => ({
+    apiPath: `/reviews${search}`
+  }), [search])
 
-const Reviews = () => (
-  <>
-    <HeaderContainer />
-    <MainContainer name="reviews">
 
-      <section className="section hero is-relative">
-        <h1 className="title">
-  Reviews
-        </h1>
-      </section>
+  const renderItem = useCallback(item =>
+    <ReviewItemContainer article={item} />, [])
 
-      <section className="section hero">
-        <ReviewsExplorationContainer />
-      </section>
-    </MainContainer>
-  </>
-)
+
+  return (
+    <>
+      <HeaderContainer />
+      <MainContainer name="articles">
+        <div className="container">
+          <section>
+            <Feeds
+              config={config}
+              key={search}
+              renderItem={renderItem}
+            />
+          </section>
+        </div>
+      </MainContainer>
+    </>
+  )
+}
+
+Reviews.propTypes = {
+  location: PropTypes.shape({
+    search: PropTypes.string.isRequired
+  }).isRequired
+}
 
 export default Reviews

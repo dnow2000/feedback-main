@@ -1,51 +1,55 @@
 import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { showModal } from 'redux-react-modals'
 
-import UsersExplorationContainer from './UsersExploration/UsersExplorationContainer'
+import Feeds from 'components/layout/Feeds/Feeds'
+
+import UserItemContainer from './UserItem/UserItemContainer'
 import VerdictUserItemContainer from '../VerdictUserItem/VerdictUserItemContainer'
 
-class ReviewersManager extends PureComponent {
+const ReviewersManager = ({
+  dispatch,
+  location: { search },
+  verdictUsers
+}) => {
+  const hasNoReviewers = !verdictUsers || verdictUsers.length === 0
 
-  onAddClick = () => {
-    const {
-      dispatch,
-    } = this.props
 
-    dispatch(showModal("main", <UsersExplorationContainer isModal withAddButton />))
-  }
+  const config = useMemo(() => ({
+    apiPath: `/users${search}`
+  }), [search])
 
-  render () {
-    const {
-      verdictUsers
-    } = this.props
 
-    const hasNoReviewers = !verdictUsers || verdictUsers.length === 0
+  const onAddClick = useCallback(() => {
+    const renderItem = item => <UserItemContainer user={item} />
+    dispatch(showModal("main",
+      <Feeds config={config} renderItem={renderItem} />))
+  }, [config, dispatch])
 
-    return (
-      <div>
+
+  return (
+    <div>
+      {
+        verdictUsers && verdictUsers.map(verdictUser => (
+          <VerdictUserItemContainer
+            key={verdictUser.id}
+            user={verdictUser}
+          />
+        ))
+      }
+      <button
+        className="button is-secondary"
+        type="button"
+        onClick={onAddClick}
+      >
         {
-          verdictUsers && verdictUsers.map(verdictUser => (
-            <VerdictUserItemContainer
-              key={verdictUser.id}
-              user={verdictUser}
-            />
-          ))
+          hasNoReviewers
+          ? 'Add first reviewers'
+          : 'Add other reviewers'
         }
-        <button
-          className="button is-secondary"
-          type="button"
-          onClick={this.onAddClick}
-        >
-          {
-            hasNoReviewers
-            ? 'Add first reviewers'
-            : 'Add other reviewers'
-          }
-        </button>
-      </div>
-    )
-  }
+      </button>
+    </div>
+  )
 }
 
 ReviewersManager.defaultProps = {
