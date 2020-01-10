@@ -1,4 +1,3 @@
-""" string processing """
 # coding=utf-8
 from datetime import datetime, timedelta
 from operator import itemgetter
@@ -7,7 +6,7 @@ from nltk import edit_distance
 from dateparser import parse
 from psycopg2.extras import DateTimeRange
 
-from utils.inflect_engine import inflect_engine
+from utils.inflect import inflect_engine
 import utils.nltk_downloader
 
 DAY_FORMAT = "%Y-%m-%d"

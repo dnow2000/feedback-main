@@ -3,7 +3,7 @@ export const CLOSE_MENU = 'CLOSE_MENU'
 
 const initialState = { isActive: false }
 
-function navigation (state = initialState, action) {
+function menu (state = initialState, action) {
   switch (action.type) {
     case SHOW_MENU:
       return Object.assign({}, state, { isActive: true })
@@ -22,4 +22,4 @@ export function showMenu () {
   return { type: SHOW_MENU }
 }
 
-export default navigation
+export default menu

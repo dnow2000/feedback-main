@@ -8,4 +8,8 @@ $texteditor-padding: 1.25rem;
   min-height: 15.25rem;
   padding: $texteditor-padding;
   padding-top: calc(#{$control-bar-height} + #{$texteditor-padding});
+
+  &:focus {
+    outline: none;
+  }
 }

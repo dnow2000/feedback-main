@@ -17,7 +17,7 @@ import {
   plugins,
 } from './plugins'
 
-export class TextEditor extends PureComponent {
+class TextEditor extends PureComponent {
   constructor (props) {
     super(props)
     const { value } = props
@@ -53,6 +53,7 @@ export class TextEditor extends PureComponent {
   }
 
   handleResetEditorState = rawString => {
+    console.log({rawString})
     const raw = JSON.parse(rawString)
     const contentState = convertFromRaw(raw)
     const nextEditorState = EditorState.createWithContent(contentState)

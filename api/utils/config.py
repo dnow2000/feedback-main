@@ -19,7 +19,7 @@ LOG_LEVEL = int(os.environ.get('LOG_LEVEL', LOG_LEVEL_INFO))
 
 if IS_DEVELOPMENT:
     API_URL = 'localhost'
-elif IS_PRODUCTIONUCTION:
+elif IS_PRODUCTION:
     API_URL = 'https://backend.{}.{}'.format(APP_NAME, TLD)
 else:
     API_URL = 'https://backend-{}.{}.{}'.format(ENV, APP_NAME, TLD)

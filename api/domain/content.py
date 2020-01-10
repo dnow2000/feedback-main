@@ -1,4 +1,3 @@
-""" article """
 from newspaper import Article as NewspaperArticle
 import requests
 

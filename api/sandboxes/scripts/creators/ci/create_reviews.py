@@ -16,7 +16,7 @@ def create_reviews():
     user = User.query.filter_by(email="sftest.reviewer.0@sciencefeedback.co").one()
     reviews_by_name["Great Barrier / reviewer 0"] = create_review(
         article=article,
-        comment="C'est neutre mais pas tout à fait",
+        comment='{"blocks":[{"key":"2l86g","text":"C\'est neutre mais pas tout à fait","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         evaluation=evaluation,
         rating=1,
         user=user
@@ -28,7 +28,7 @@ def create_reviews():
     user = User.query.filter_by(email="sftest.reviewer.0@sciencefeedback.co").one()
     reviews_by_name["Daily Mail inflates disagreement / reviewer 0"] = create_review(
         article=article,
-        comment="C'est pas très précis",
+        comment='{"blocks":[{"key":"2l86g","text":"C\'est pas très précis","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         evaluation=evaluation,
         rating=-1,
         user=user
@@ -39,7 +39,7 @@ def create_reviews():
     user = User.query.filter_by(email="sftest.reviewer.1@sciencefeedback.co").one()
     reviews_by_name["Daily Mail inflates disagreement / reviewer 1"] = create_review(
         article=article,
-        comment="C'est pas trop trop précis",
+        comment='{"blocks":[{"key":"2l86g","text":"On peut dire que c\'est pourri.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
         evaluation=evaluation,
         rating=-2,
         user=user

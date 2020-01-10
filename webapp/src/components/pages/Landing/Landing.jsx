@@ -38,9 +38,11 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
               </p>
               <div className="items">
                 {(verdicts || []).map(verdict => (
-                    <div className="item-container">
+                    <div
+                      className="item-container"
+                      key={verdict.id}
+                    >
                       <VerdictItemContainer
-                        key={verdict.id}
                         verdict={verdict}
                       />
                     </div>

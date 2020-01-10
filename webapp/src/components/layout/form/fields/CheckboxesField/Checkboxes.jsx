@@ -62,7 +62,6 @@ class Checkboxes extends PureComponent {
               key={value}
             >
               <button
-                id={`checkbox-${id}`}
                 disabled={disabled || readOnly}
                 onClick={this.onCheckboxClick(value)}
                 readOnly={readOnly}
