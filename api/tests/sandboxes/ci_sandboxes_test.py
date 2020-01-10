@@ -11,7 +11,7 @@ def when_ci_sandbox_created_all_the_ci_objects(app):
     assert_created_counts(
         Article=6,
         ArticleTag=5,
-        Evaluation=10,
+        Evaluation=11,
         Publication=0,
         Review=3,
         ReviewTag=3,
