@@ -267,7 +267,7 @@ elif [[ "$CMD" == "tag" ]]; then
     git add .
 
     cd "$ROOT_PATH"/webapp
-    yarn version --new-version "$tag_name"
+    yarn version --new-version "$TAG"
 
     git commit -m "🚀 $TAG_VERSION"
     git push origin master

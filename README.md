@@ -24,7 +24,7 @@
 
 En premier lieu:
  - bien vérifier qu'on a, en local, **main** à jour par rapport à **master**
- - de là on peut poser un tag `my -t I.P.S. tag` (pour savoir le tag précédent, il suffit de faire un `git tag` dans main)
+ - de là on peut poser un tag `./sf -t I.P.S. tag` (pour savoir le tag précédent, il suffit de faire un `git tag` dans main)
  - réaliser le déploiement lorsque les tests de chaque mode sont bien **verts**
 
 Par exemple pour déployer la version 3.0.1 pour l'environnement staging :
