@@ -23,4 +23,4 @@ def upgrade():
 
 def downgrade():
     op.alter_column('review', 'rating', nullable=False)
-    op.alter_column('verdict', 'rating', nullable=True)
+    op.alter_column('verdict', 'rating', nullable=False)
