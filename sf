@@ -83,10 +83,8 @@ DATABASE_PASSWORD=${APP_NAME}_password
 DATABASE_SERVICE=$APP_NAME-${DATABASE}db-$MODE
 DATABASE_USER=${APP_NAME}_user
 
-if [[ "$ENV" == "production" ]]; then
-	SCALINGO_APP=$APP_NAME-backend
-elif [[ ! "$ENV" == "development" ]]; then
-	SCALINGO_APP=$APP_NAME-backend-$ENV
+if [[ "$ENV" != "development" ]]; then
+	SCALINGO_APP=$APP_NAME-api-$ENV
 fi
 
 # =============================================

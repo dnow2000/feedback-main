@@ -19,14 +19,14 @@ def list_verdicts():
         query = filter_verdicts_with_article_id(query, article_id)
 
     verdicts = query.all()
-    
+
     return jsonify([as_dict(verdict, includes=VERDICT_INCLUDES) for verdict in verdicts])
 
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
 @login_or_api_key_required
 def get_verdict(verdict_id):
     verdict = load_or_404(Verdict, verdict_id)
-    return jsonify(as_dict(verdict(includes=VERDICT_INCLUDES)))
+    return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 200
 
 @app.route('/verdicts', methods=['POST'])
 @login_or_api_key_required
@@ -39,7 +39,7 @@ def create_verdict():
     verdict.populate_from_dict(request.json)
     verdict.user = current_user
     ApiHandler.save(verdict)
-    return jsonify(as_dict(verdict(includes=VERDICT_INCLUDES))), 201
+    return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 201
 
 @app.route('/verdicts/<verdict_id>', methods=['PATCH'])
 @login_or_api_key_required
@@ -51,4 +51,4 @@ def edit_verdict(verdict_id):
     verdict = load_or_404(Verdict, verdict_id)
     verdict.populate_from_dict(request.json)
     ApiHandler.save(verdict)
-    return jsonify(as_dict(verdict(includes=VERDICT_INCLUDES))), 201
+    return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 201
