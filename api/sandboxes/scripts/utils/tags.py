@@ -84,7 +84,7 @@ REVIEW_VERDICT_TAGS = [
         "positivity": 0,
     },
     {
-        "info": "conclusion follows from the evidence presented.",
+        "info": "conclusion follows from the evidence presented",
         "text": "sound reasoning",
         "positivity": 1,
     },
