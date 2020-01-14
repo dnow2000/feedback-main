@@ -17,8 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('article', 'isReviewable', existing_type=sa.BOOLEAN, nullable=True)
+    op.alter_column('article', 'isReviewable', existing_type=sa.BOOLEAN(), nullable=True)
 
 
 def downgrade():
-    op.alter_column('article', 'isReviewable', existing_type=sa.BOOLEAN, nullable=False, server_default=expression.false())
+    op.alter_column('article', 'isReviewable', existing_type=sa.BOOLEAN(), nullable=False, server_default=expression.false())

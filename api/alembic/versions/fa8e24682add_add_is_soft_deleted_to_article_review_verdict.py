@@ -17,9 +17,9 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('article', sa.Column('isSoftDeleted', sa.BOOLEAN, nullable=False, server_default=expression.false()))
-    op.add_column('review', sa.Column('isSoftDeleted', sa.BOOLEAN, nullable=False, server_default=expression.false()))
-    op.add_column('verdict', sa.Column('isSoftDeleted', sa.BOOLEAN, nullable=False, server_default=expression.false()))
+    op.add_column('article', sa.Column('isSoftDeleted', sa.BOOLEAN(), nullable=False, server_default=expression.false()))
+    op.add_column('review', sa.Column('isSoftDeleted', sa.BOOLEAN(), nullable=False, server_default=expression.false()))
+    op.add_column('verdict', sa.Column('isSoftDeleted', sa.BOOLEAN(), nullable=False, server_default=expression.false()))
 
 
 def downgrade():

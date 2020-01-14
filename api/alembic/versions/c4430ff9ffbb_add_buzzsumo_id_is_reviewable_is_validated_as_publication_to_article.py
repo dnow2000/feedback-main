@@ -18,8 +18,8 @@ depends_on = None
 
 def upgrade():
     op.add_column('article', sa.Column('buzzsumoId', sa.BigInteger()))
-    op.add_column('article', sa.Column('isReviewable', sa.BOOLEAN, nullable=False, server_default=expression.false()))
-    op.add_column('article', sa.Column('isValidatedAsPeerPublication', sa.BOOLEAN, nullable=False, server_default=expression.false()))
+    op.add_column('article', sa.Column('isReviewable', sa.BOOLEAN(), nullable=False, server_default=expression.false()))
+    op.add_column('article', sa.Column('isValidatedAsPeerPublication', sa.BOOLEAN(), nullable=False, server_default=expression.false()))
 
 
 def downgrade():

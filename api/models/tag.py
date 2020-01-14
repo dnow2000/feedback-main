@@ -7,6 +7,6 @@ from models.utils.db import Model
 
 
 class Tag(ApiHandler, Model, SoftDeletableMixin):
-    text = Column(Text, unique=True)
     info = Column(Text, nullable=True)
     positivity = Column(Integer, nullable=True)
+    text = Column(Text, unique=True)

@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('tag', sa.Column('positivity', sa.Integer))
+    op.add_column('tag', sa.Column('positivity', sa.Integer()))
 
 
 def downgrade():

@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('user', sa.Column('expertise', sa.Text))
+    op.add_column('user', sa.Column('expertise', sa.Text()))
     op.add_column('user', sa.Column('organization', sa.VARCHAR(220)))
     op.add_column('user', sa.Column('profession', sa.VARCHAR(220)))
     op.add_column('user', sa.Column('url', sa.VARCHAR(220)))
