@@ -1,1 +1,14 @@
-<?xml version="1.0" ?><svg id="Layer_1" style="enable-background:new 0 0 48 48;" version="1.1" viewBox="0 0 48 48" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M46.7,45.3L33.4,32c2.9-3.2,4.6-7.4,4.6-12c0-9.9-8.1-18-18-18C10.1,2,2,10.1,2,20c0,9.9,8.1,18,18,18c4.6,0,8.8-1.8,12-4.6  l13.3,13.3L46.7,45.3z M4,20c0-8.8,7.2-16,16-16s16,7.2,16,16s-7.2,16-16,16S4,28.8,4,20z"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="15px" height="13px" viewBox="0 0 15 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Group 10</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Feeds" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Feed---Trending-Editor" transform="translate(-1191.000000, -149.000000)" stroke="#1F2338" stroke-width="1.5">
+            <g id="Group-10" transform="translate(1192.000000, 150.000000)">
+                <circle id="Oval" cx="5" cy="5" r="5"></circle>
+                <line x1="9" y1="8" x2="12.5" y2="10.5" id="Line-3" stroke-linecap="square"></line>
+            </g>
+        </g>
+    </g>
+</svg>

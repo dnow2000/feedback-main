@@ -15,10 +15,12 @@ $grey-light:        #E4E6F4;
 $grey:              #9DA2C4;
 $grey-dark:         #808080;
 $grey-darker:       #1f2338 !default;
-$orange:            hsl(14, 100%, 53%) !default;
+$orange:            #FFA63A;
+$orange-light:      #FFEAAC;
 $orange-dark:       hsl(14, 100%, 45%) !default;
 $purple:            hsl(271, 100%, 71%) !default;
 $red:               #FF6D51;
+$red-light:         #FFC7BD;
 $turquoise:         #00B0E2;
 $turquoise-dark:    #026480;
 $violet:            #BD10E0;
@@ -26,6 +28,8 @@ $white-ter:         hsl(0, 0%, 96%) !default;
 $white-bis:         hsl(0, 0%, 98%) !default;
 $white:             hsl(0, 0%, 100%) !default;
 $yellow:            hsl(48, 100%, 67%) !default;
+$bluegreen:         #06B0AC;
+$bluegreen-light:   #C9F0F0;
 
 $primary: $turquoise;
 
