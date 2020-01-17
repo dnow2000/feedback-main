@@ -40,7 +40,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/reviews/:reviewId([A-Z][a-z]+|creation)/:modification(modification)?',
+    path: '/reviews/:reviewId([A-Za-z0-9]{2,}|creation)?/:modification(modification)?',
     render: () => <ReviewContainer />,
     title: 'Review',
   },
@@ -64,7 +64,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/verdicts/:verdictId',
+    path: '/verdicts/:verdictId([A-Za-z0-9]{2,}|creation)?/:modification(modification)?',
     render: () => <VerdictContainer />,
     title: "Verdict",
   },
