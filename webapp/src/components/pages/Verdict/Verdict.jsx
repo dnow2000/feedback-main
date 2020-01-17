@@ -14,7 +14,7 @@ import VerdictForm from './VerdictForm/VerdictForm'
 const Verdict = ({
   currentUserVerdictPatch,
   dispatch,
-  form: { isCreatedEntity, method },
+  form: { isCreatedEntity, method, readOnly },
   history,
   isPending,
   match: { params: { verdictId } },
@@ -67,6 +67,14 @@ const Verdict = ({
     }
   })
 
+  let title
+  if (isCreatedEntity) {
+    title = 'Create a verdict'
+  } else if (readOnly) {
+    title = 'See the verdict'
+  } else {
+    title = "Edit the verdict"
+  }
   return (
     <>
       <HeaderContainer />
@@ -74,7 +82,7 @@ const Verdict = ({
         <div className="container">
           <section className="hero">
             <h1 className="title">
-              {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
+              {title}
             </h1>
           </section>
           <Form
