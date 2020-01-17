@@ -40,8 +40,6 @@ const FormFields = ({ article, evaluations, form, reviews, tags, trending }) => 
     setReadOnlyArticle(!readOnlyArticle)
   }, [readOnlyArticle, setReadOnlyArticle])
 
-
-
   return (
     <div className="section">
       <HiddenField
@@ -116,7 +114,7 @@ FormFields.defaultProps = {
 }
 
 FormFields.propTypes = {
-  article: PropTypes.shape(articleType),
+  article: articleType,
   evaluations: PropTypes.array,
   query: PropTypes.object.isRequired,
   tags: PropTypes.array,

@@ -147,7 +147,7 @@ const ArticleItem = ({
                 className="button is-primary thin"
                 to={
                   verdictId
-                    ? `/verdicts/${verdictId}`
+                    ? `/verdicts/${verdictId}/modification`
                     : `/verdicts/creation?articleId=${id}`
                 }
               >

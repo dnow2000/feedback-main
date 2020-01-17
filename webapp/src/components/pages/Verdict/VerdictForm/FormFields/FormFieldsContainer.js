@@ -15,10 +15,9 @@ import FormFields from './FormFields'
 
 
 const mapStateToProps = (state, ownProps) =>  {
-  const { form, query } = ownProps
+  const { match: { params: { verdictId } }, query } = ownProps
   const { trendingId } = query.getParams()
   const trending = selectTrendingById(state, parseInt(trendingId))
-  const { id: verdictId } = form
   const verdict = selectVerdictById(state, verdictId)
   const { articleId } = verdict || {}
   const article = selectArticleById(state, articleId)
