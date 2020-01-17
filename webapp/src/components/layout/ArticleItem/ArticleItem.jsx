@@ -30,12 +30,12 @@ const ArticleItem = ({
   canReview,
   canVerdict,
   currentUserReview,
-  currentUserVerdict,
   dispatch,
   match,
   noControl,
   onClickEdit,
   showSeeAllReviews,
+  verdict,
   withEditButton,
   withShares
 }) => {
@@ -54,7 +54,7 @@ const ArticleItem = ({
   } = article
   const { params: { articleId: routeArticleId } } = match
   const { id: currentUserReviewId } = currentUserReview || {}
-  const { id: currentUserVerdictId } = currentUserVerdict || {}
+  const { id: verdictId } = verdict || {}
 
   const onDeleteClick = useCallback(() => {
     dispatch(requestData({
@@ -146,12 +146,12 @@ const ArticleItem = ({
               <NavLink
                 className="button is-primary thin"
                 to={
-                  currentUserVerdictId
-                    ? `/verdicts/${currentUserVerdictId}`
+                  verdictId
+                    ? `/verdicts/${verdictId}`
                     : `/verdicts/creation?articleId=${id}`
                 }
               >
-                See Verdict
+                Edit Verdict
               </NavLink>
             )}
             {canReview && (
@@ -178,10 +178,10 @@ ArticleItem.defaultProps = {
   canReview: false,
   canVerdict: false,
   currentUserReview: null,
-  currentUserVerdict: null,
   noControl: false,
   onClickEdit: null,
   showSeeAllReviews: false,
+  verdict: null,
   withShares: true,
 }
 
@@ -191,12 +191,12 @@ ArticleItem.propTypes = {
   canReview: PropTypes.bool,
   canVerdict: PropTypes.bool,
   currentUserReview: PropTypes.object,
-  currentUserVerdict: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   noControl: PropTypes.bool,
   onClickEdit: PropTypes.func,
   showSeeAllReviews: PropTypes.bool,
+  verdict: PropTypes.object,
   withEditButton: PropTypes.bool,
   withShares: PropTypes.bool,
 }
