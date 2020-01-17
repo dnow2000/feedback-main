@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
+import Dotdotdot from 'react-dotdotdot'
 
 import Icon from 'components/layout/Icon'
 import Authors from 'components/layout/Authors'
@@ -69,12 +70,8 @@ const ArticleItem = ({
 
   return (
     <article className="article-item">
-      <NavLink
+      <div
         className="article-container"
-        href={url}
-        rel="noopener noreferrer"
-        target="_blank"
-        to={`/articles/${id}`}
       >
         <div className="article-header">
           <p className="article-tag">Climate</p>
@@ -89,18 +86,20 @@ const ArticleItem = ({
             />
           </div>
           <div className="article-summary-container">
-            <p className="article-title">
+            <Dotdotdot className="article-title" clamp={4}>
               {title}
-            </p>
-            {((authors) || '')
-              .split(';')
-              .filter(author => author)
-              .map(author => (
-                <p className="article-author" key={author}>
-                  {author}
-                </p>
-              )
-            )}
+            </Dotdotdot>
+            <Dotdotdot clamp={2}>
+              {((authors) || '')
+                .split(';')
+                .filter(author => author)
+                .map(author => (
+                  <p className="article-author" key={author}>
+                    {author}
+                  </p>
+                )
+              )}
+            </Dotdotdot>
             <a
               className="article-link"
               href={url}
@@ -157,7 +156,7 @@ const ArticleItem = ({
               </NavLink>
             )}
           </div>)}
-      </NavLink>
+      </div>
     </article>
   )
 }

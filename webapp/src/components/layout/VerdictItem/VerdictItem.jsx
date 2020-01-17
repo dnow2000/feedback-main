@@ -113,51 +113,43 @@ const VerdictItem = ({ article, verdict, user }) => {
           withShares={false}
         />)}
       <div className="verdict-bottom-container">
-        <div className="col-tablet-20">
-          <div className="mean-container">
-            <div className={classnames("mean", colorClassName)}>
-              {meanRating}
-            </div>
+        <div className="mean-container">
+          <div className={classnames("mean", colorClassName)}>
+            {meanRating}
           </div>
         </div>
-        <div className="col-tablet-15">
-          <div className="counts-container">
-            {RATING_VALUES.map(value => {
-              const width = round(barSizeByValue[value], 2)
+        <div className="counts-container">
+          {RATING_VALUES.map(value => {
+            const width = round(barSizeByValue[value], 2)
+            return (
+              <div
+                className={classnames("bar", `bar-${value}`)}
+                key={value}
+                style={{width: `${width}px`}}
+              />
+            )
+          })}
+        </div>
+        <div className="users-container">
+          <div className="editor-container">
+            <p className="editor-title">Editor</p>
+            <Avatar
+              className="avatar editor-avatar"
+              user={editor}
+            />
+          </div>
+          <div className="reviewers-container">
+            <p className="reviewer-title">Reviewers</p>
+            {(getTruncatedReviewers(reviews) || []).map(user => {
               return (
-                <div
-                  className={classnames("bar", `bar-${value}`)}
-                  key={value}
-                  style={{width: `${width}px`}}
+                <Avatar
+                  className="avatar reviewer-avatar"
+                  key={user.id}
+                  number={user.number}
+                  user={user}
                 />
               )
             })}
-          </div>
-        </div>
-        <div className="col-tablet-65">
-          <div className="users-container">
-            <div className="col-tablet-20">
-              <div>Editor</div>
-              <Avatar
-                  className="avatar editor-avatar"
-                user={editor}
-              />
-            </div>
-            <div className="col-tablet-80">
-              <div>Reviewers</div>
-              <div className="reviewers-container">
-                {(getTruncatedReviewers(reviews) || []).map(user => {
-                  return (
-                    <Avatar
-                      className="avatar reviewer-avatar"
-                      key={user.id}
-                      number={user.number}
-                      user={user}
-                    />
-                  )
-                })}
-              </div>
-            </div>
           </div>
         </div>
       </div>

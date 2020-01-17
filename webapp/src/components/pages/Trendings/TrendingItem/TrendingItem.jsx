@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { NavLink } from 'react-router-dom'
 import classnames from 'classnames'
+import Dotdotdot from 'react-dotdotdot'
 import { requestData } from 'redux-thunk-data'
 import Icon from 'components/layout/Icon'
 
@@ -71,12 +72,8 @@ class TrendingItem extends PureComponent {
 
     return (
       <article className="article-item">
-        <NavLink
+        <div
           className="article-container"
-          href={url}
-          rel="noopener noreferrer"
-          target="_blank"
-          to={`/articles/creation?trendingId=${id}`}
         >
           <div className="article-header">
             <p className="article-tag">Climate</p>
@@ -91,18 +88,20 @@ class TrendingItem extends PureComponent {
               />
             </div>
             <div className="article-summary-container">
-              <p className="article-title">
+              <Dotdotdot className="article-title" clamp={4}>
                 {title}
-              </p>
-              {((subdomain || authors) || '')
-                .split(';')
-                .filter(author => author)
-                .map(author => (
-                  <p className="article-author" key={author}>
-                    {author}
-                  </p>
-                )
-              )}
+              </Dotdotdot>
+              <Dotdotdot clamp={2}>
+                {((subdomain || authors) || '')
+                  .split(';')
+                  .filter(author => author)
+                  .map(author => (
+                    <p className="article-author" key={author}>
+                      {author}
+                    </p>
+                  )
+                )}
+              </Dotdotdot>
               <a
                 className="article-link"
                 href={url}
@@ -147,7 +146,7 @@ class TrendingItem extends PureComponent {
               Select for Review
             </NavLink>
           </div>
-        </NavLink>
+        </div>
       </article>
     )
   }
