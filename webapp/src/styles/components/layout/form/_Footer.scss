@@ -6,16 +6,30 @@
   justify-content: center;
   left: 0;
   right: 0;
-  position: absolute;
+  bottom: 0;
+  position: fixed;
 
-  #cancel-review, #return-review {
+  #cancel-review,
+  #return-review,
+  #cancel-article,
+  #cancel-verdict
+  {
     @extend .button;
     @extend .button.is-secondary;
+    margin-right: 2rem
   }
 
-  #create-review, #modification-review {
+  #create-review,
+  #modification-review,
+  #edit-article,
+  #submit-verdict,
+  #edit-verdict
+  #create-own-review,
+  #see-own-review
+  {
     @extend .button;
     @extend .button.is-primary;
+    margin-right: 4rem
   }
 
   .space {
