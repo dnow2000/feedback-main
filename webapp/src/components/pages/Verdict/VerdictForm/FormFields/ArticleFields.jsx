@@ -32,28 +32,6 @@ const ArticleFields = () => {
         required
         rows={5}
       />
-      <div className="optional-subtitle">
-        {"Optional:"}
-      </div>
-      <div className="flex-columns flex-wrap">
-        <TextField
-          className='pr12'
-          label="Total shares"
-          name="totalShares"
-          type="number"
-        />
-        <TextField
-          className='pr12'
-          label="Facebook shares"
-          name="fbShares"
-          type="number"
-        />
-        <TextField
-          label="Twitter shares"
-          name="twitterShares"
-          type="number"
-        />
-      </div>
     </div>
   )
 }

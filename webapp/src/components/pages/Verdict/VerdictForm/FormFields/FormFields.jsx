@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
@@ -34,7 +34,12 @@ const FormFields = ({ article, trending, evaluations, form, tags }) => {
   )
 
   const { readOnly } = form
-  const readOnlyArticle = true
+  const [readOnlyArticle, setReadOnlyArticle] = useState(true)
+  const handleClickEdit = useCallback(() => {
+    setReadOnlyArticle(!readOnlyArticle)
+  }, [readOnlyArticle, setReadOnlyArticle])
+
+
 
   return (
     <div className="section">
@@ -45,6 +50,7 @@ const FormFields = ({ article, trending, evaluations, form, tags }) => {
             <ArticleItemContainer
               article={article || trending}
               noControl
+              onClickEdit={handleClickEdit}
             />
           )
           : <ArticleFields />

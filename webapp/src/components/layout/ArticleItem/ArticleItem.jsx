@@ -34,7 +34,9 @@ const ArticleItem = ({
   dispatch,
   match,
   noControl,
+  onClickEdit,
   showSeeAllReviews,
+  withEditButton,
   withShares
 }) => {
   const {
@@ -68,11 +70,16 @@ const ArticleItem = ({
         : `${ROOT_ASSETS_PATH}/loading_webshot.png`
     )
 
+  console.log('ON LCICK EDIT', onClickEdit === null, onClickEdit === undefined, onClickEdit)
   return (
     <article className="article-item">
       <div
         className="article-container"
       >
+        {onClickEdit && (
+          <button classname="article-edit" onClick={onClickEdit}>{"EDIT"}</button>
+          )
+        }
         <div className="article-header">
           <p className="article-tag">Climate</p>
           <p className="article-date">4 Dec 2019</p>
@@ -169,8 +176,9 @@ ArticleItem.defaultProps = {
   currentUserReview: null,
   currentUserVerdict: null,
   noControl: false,
+  onClickEdit: null,
   showSeeAllReviews: false,
-  withShares: true
+  withShares: true,
 }
 
 ArticleItem.propTypes = {
@@ -183,7 +191,9 @@ ArticleItem.propTypes = {
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   noControl: PropTypes.bool,
+  onClickEdit: PropTypes.func,
   showSeeAllReviews: PropTypes.bool,
+  withEditButton: PropTypes.bool,
   withShares: PropTypes.bool,
 }
 
