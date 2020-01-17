@@ -1,6 +1,6 @@
 from models.article import Article
 
-def filter_not_saved_trendings(trendings):
+def keep_not_saved_trendings(trendings):
     buzzsumo_ids = [trending['buzzsumoId'] for trending in trendings]
 
     saved_buzzsumo_articles = Article.query\

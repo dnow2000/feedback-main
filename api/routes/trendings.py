@@ -2,7 +2,7 @@ from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler.utils.listify import paginate_obj
 
 from domain.trendings import get_topic_with_theme, get_trendings
-from repository.trendings import filter_not_saved_trendings
+from repository.trendings import keep_not_saved_trendings
 from utils.rest import login_or_api_key_required
 
 
@@ -21,7 +21,7 @@ def list_trendings():
         topic=topic,
     )
 
-    not_saved_trendings = filter_not_saved_trendings(trendings)
+    not_saved_trendings = keep_not_saved_trendings(trendings)
 
     not_saved_trendings = sorted(
         not_saved_trendings,
@@ -32,7 +32,11 @@ def list_trendings():
     paginated_trendings = paginate_obj(
         not_saved_trendings,
         int(request.args.get('page', 1)),
-        10
+        4
     ).items
 
-    return jsonify(paginated_trendings), 200
+    response = jsonify(paginated_trendings)
+    response.headers['Total-Data-Count'] = len(not_saved_trendings)
+    response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
+
+    return response

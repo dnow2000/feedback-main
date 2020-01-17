@@ -40,8 +40,7 @@ def get_users():
                                             includes=USER_INCLUDES,
                                             query=query,
                                             page=request.args.get('page'),
-                                            paginate=10,
-                                            with_total_data_count=True)
+                                            paginate=10)
 
     response = jsonify(user_dicts)
     response.headers['Total-Data-Count'] = total_data_count
