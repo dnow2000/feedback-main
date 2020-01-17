@@ -76,6 +76,7 @@ def get_topic_with_theme(theme):
         return 'vaccine,vaccines,disease,diseases,health,healthy,virus,Natural Remedy,alternative medicine,homeopathy,anti-inflammatory,trans fat,trans fats,immune system,cardiovascular diseases,measles'
     return None
 
+
 def get_trendings(
     days=1,
     topic=None,

@@ -1,9 +1,30 @@
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler.utils.listify import paginate_obj
+from sqlalchemy_api_handler.utils.listify import ApiErrors, paginate_obj
 
-from domain.trendings import get_topic_with_theme, get_trendings
+from domain.trendings import DEVELOPMENT_TRENDINGS, get_topic_with_theme, get_trendings
 from repository.trendings import keep_not_saved_trendings
+from utils.config import IS_DEVELOPMENT
 from utils.rest import login_or_api_key_required
+
+
+@app.route('/trendings/<buzzsumo_id>', methods=['GET'])
+@login_or_api_key_required
+def get_trending(buzzsumo_id):
+
+    trending = None
+    if IS_DEVELOPMENT:
+        kept_trendings = [
+            trending for trending in trendings
+            if trending['buzzsumoId'] == buzzsumo_id
+        ]
+        if len(kept_trendings) > 0:
+            trending = kept_trendings[0]
+        else:
+            api_errors = ApiErrors()
+            api_errors.add_error('buzzsumo_id', 'trending not found')
+            raise api_errors
+
+    return jsonify(trending), 200
 
 
 @app.route('/trendings', methods=['GET'])

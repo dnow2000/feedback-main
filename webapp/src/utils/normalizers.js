@@ -1,3 +1,5 @@
+import { resolveCurrentUser } from 'with-react-redux-login'
+
 export const userNormalizer = {
   roles: 'roles',
   userTags: {
