@@ -6,6 +6,15 @@ from repository.trendings import keep_not_saved_trendings
 from utils.rest import login_or_api_key_required
 
 
+@app.route('/trendings/<trending_id>', methods=['GET'])
+@login_or_api_key_required
+def get_trending(trending_id):
+
+    trending = {}
+
+    return jsonify(trending), 200
+
+
 @app.route('/trendings', methods=['GET'])
 @login_or_api_key_required
 def list_trendings():
