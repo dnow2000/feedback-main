@@ -6,23 +6,37 @@ import withQuery from 'with-react-query'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
-import selectArticleIdByMatchAndQuery from 'selectors/selectArticleIdByMatchAndQuery'
 import selectArticleById from 'selectors/selectArticleById'
 
+import selectTrendingById from './selectors/selectTrendingById'
+import selectVerdictById from './selectors/selectVerdictById'
 import Verdict from './Verdict'
-import selectCurrentUserVerdictPatchByArticleId from './selectors/selectCurrentUserVerdictPatchByArticleId'
 
 const mapStateToProps = (state, ownProps) =>  {
-  const articleId = selectArticleIdByMatchAndQuery(
-    state,
-    ownProps.match,
-    ownProps.query
-  )
-  const currentUserVerdictPatch = selectCurrentUserVerdictPatchByArticleId(state, articleId)
+  const { form, query } = ownProps
+  const { trendingId } = query.getParams()
+  const trending = selectTrendingById(state, parseInt(trendingId))
+  const { id: verdictId } = form
+  const verdict = selectVerdictById(state, verdictId)
+  const { articleId } = verdict || {}
+  const article = selectArticleById(state, articleId)
+  const {
+    externalThumbUrl: articleExternalThumUrl,
+    summary: articleSummary,
+    title: articleTitle,
+    url: articleUrl,
+  } = { ...trending, ...article}
+  const currentUserVerdictPatch = {
+      articleExternalThumUrl,
+      articleSummary,
+      articleTitle,
+      articleUrl,
+      ...verdict
+  }
   return {
-    article: selectArticleById(state, articleId),
-    currentUserVerdictPatch,
-    isPending: (state.requests['/verdicts'] || {}).isPending
+    trending,
+    isPending: (state.requests['/verdicts'] || {}).isPending,
+    currentUserVerdictPatch
   }
 }
 

@@ -141,9 +141,9 @@ class TrendingItem extends PureComponent {
             </button>
             <NavLink
               className="button is-primary thin"
-              to={`/articles/creation?trendingId=${id}`}
+              to={`/verdicts/creation?trendingId=${id}`}
             >
-              Select for Review
+              Select for verdict
             </NavLink>
           </div>
         </div>

@@ -13,16 +13,13 @@ import VerdictForm from './VerdictForm/VerdictForm'
 import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 
 const Verdict = ({
-  article,
   currentUserVerdictPatch,
   dispatch,
   form: { isCreatedEntity, method },
   history,
   isPending,
   match: { params: { verdictId } },
-  query: { getParams },
 }) => {
-  const { articleId } = getParams()
 
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
@@ -61,16 +58,7 @@ const Verdict = ({
       }))
       return
     }
-
-    if (!articleId) {
-      return
-    }
-
-    dispatch(requestData({
-      apiPath: `/articles/${articleId}`,
-      normalizer: articleNormalizer,
-    }))
-  }, [articleId, dispatch, isCreatedEntity, verdictId])
+  }, [dispatch, isCreatedEntity, verdictId])
 
 
   useEffect(() => {
@@ -90,16 +78,6 @@ const Verdict = ({
               {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
             </h1>
           </section>
-
-          {article && (
-            <section className="article">
-              <ArticleItemContainer
-                article={article}
-                noControl
-              />
-            </section>
-          )}
-
           {!isCreatedEntity && (
             <section>
               <h2 className="subtitle flex-columns items-center">
