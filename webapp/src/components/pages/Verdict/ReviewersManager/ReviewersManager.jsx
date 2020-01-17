@@ -29,6 +29,9 @@ const ReviewersManager = ({
 
   return (
     <div>
+      <h2 className="subtitle flex-columns items-center">
+        {"REVIEWERS"}
+      </h2>
       {
         verdictUsers && verdictUsers.map(verdictUser => (
           <VerdictUserItemContainer

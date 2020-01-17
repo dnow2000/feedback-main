@@ -7,6 +7,7 @@ import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
 import selectOptionsFromNameAndEntitiesAndPlaceholder from 'utils/form/selectOptionsFromNameAndEntitiesAndPlaceholder'
+import ReviewersManagerContainer from '../../ReviewersManager/ReviewersManagerContainer'
 import articleType from 'components/types/articleType'
 
 import ArticleFields from './ArticleFields'
@@ -43,7 +44,10 @@ const FormFields = ({ article, trending, evaluations, form, tags }) => {
 
   return (
     <div className="section">
-      <HiddenField name="articleId" type="hidden" />
+      <HiddenField
+        name="articleId"
+        type="hidden"
+      />
       <section className="article">
         {readOnlyArticle
           ? (
@@ -56,7 +60,10 @@ const FormFields = ({ article, trending, evaluations, form, tags }) => {
           : <ArticleFields />
         }
       </section>
-      {article &&
+      <section>
+        <ReviewersManagerContainer />
+      </section>
+      {reviews.length > 0 &&
         (
           <>
             <div className="field-group">

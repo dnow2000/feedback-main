@@ -10,7 +10,6 @@ import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
 
 import VerdictForm from './VerdictForm/VerdictForm'
-import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 
 const Verdict = ({
   currentUserVerdictPatch,
@@ -78,27 +77,11 @@ const Verdict = ({
               {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
             </h1>
           </section>
-          {!isCreatedEntity && (
-            <section>
-              <h2 className="subtitle flex-columns items-center">
-                REVIEWERS
-              </h2>
-              <ReviewersManagerContainer />
-            </section>
-          )}
-
-          <section>
-            {!isCreatedEntity && (
-              <h2 className="subtitle flex-columns items-center">
-                VERDICT DETAILS
-              </h2>
-            )}
-            <Form
-              initialValues={currentUserVerdictPatch}
-              onSubmit={handleSubmitVerdict}
-              render={VerdictForm}
-            />
-          </section>
+          <Form
+            initialValues={currentUserVerdictPatch}
+            onSubmit={handleSubmitVerdict}
+            render={VerdictForm}
+          />
         </div>
       </MainContainer>
     </>

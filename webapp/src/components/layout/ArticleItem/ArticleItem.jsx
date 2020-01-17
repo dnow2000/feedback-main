@@ -69,8 +69,6 @@ const ArticleItem = ({
         ? `${API_THUMBS_URL}/articles/${id}`
         : `${ROOT_ASSETS_PATH}/loading_webshot.png`
     )
-
-  console.log('ON LCICK EDIT', onClickEdit === null, onClickEdit === undefined, onClickEdit)
   return (
     <article className="article-item">
       <div
