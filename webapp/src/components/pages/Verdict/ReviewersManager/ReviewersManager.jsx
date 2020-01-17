@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { showModal } from 'redux-react-modals'
 
 import Feeds from 'components/layout/Feeds/Feeds'
+import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
 import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
 import UserItemContainer from './UserItem/UserItemContainer'
@@ -15,6 +16,7 @@ const ReviewersManager = ({
   reviews,
   verdictUsers,
 }) => {
+
 
   const [selectedUserIds, setSelectedUserIds] = useState([])
   const handleClickUser = useCallback(userId => {
@@ -33,17 +35,20 @@ const ReviewersManager = ({
     }
   }, [selectedUserIds])
 
-  // const config = useMemo(() => ({
-  //   apiPath: `/users${search}`
-  // }), [search])
+  console.log('REVIEWS', reviews)
+  console.log('SELECTED', selectedUserIds)
 
-  // const onAddClick = useCallback(() => {
-  //   const renderItem = item => <UserItemContainer user={item} />
-  //   dispatch(showModal("main",
-  //     <Feeds config={config} renderItem={renderItem} />))
-  // }, [config, dispatch])
+  const config = useMemo(() => ({
+    apiPath: `/users${search}`
+  }), [search])
 
-  // const hasNoReviewers = !verdictUsers || verdictUsers.length === 0
+  const renderItem = useCallback(item => (
+    <UserItemContainer
+      onClick={handleClickUser}
+      user={item}
+    />
+    ), []
+  )
 
   return (
     <div>
@@ -72,6 +77,11 @@ const ReviewersManager = ({
       <h2 className="subtitle flex-columns items-center">
         {"RECRUIT REVIEWERS"}
       </h2>
+      <Feeds
+        cols={2}
+        config={config}
+        renderItem={renderItem}
+      />
     </div>
   )
 }
