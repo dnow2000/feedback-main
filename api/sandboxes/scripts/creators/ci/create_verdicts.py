@@ -17,7 +17,7 @@ def create_verdicts():
         verdicts_by_name[article.id] = create_verdict(
             user,
             article,
-            "C'est neutre en fin de compte %d" % i,
+            comment='{"blocks":[{"key":"2l86g","text":"C\'est neutre en fin de compte, voici mon verdict lol","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
             evaluation=evaluation,
             rating=1,
         )
