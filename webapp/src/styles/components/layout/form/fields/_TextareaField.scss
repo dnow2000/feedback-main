@@ -1,6 +1,88 @@
-.textarea-field {
-  .field-value {
-    align-items: center;
+.textarea-field{
+  margin-bottom: 1.875rem;
+
+  .field-label {
+    color: $grey-darker;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: $black;
+    font-size: $font-size-little-big;
+    font-weight: $font-weight-bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin-bottom: 0.25rem;
+    position: relative;
+
+    .field-asterisk {
+      color: $red;
+      font-size: 1.25rem;
+      position: absolute;
+      right: 0px;
+      bottom: 0px;
+    }
+
+    .field-sublabel {
+      display: flex;
+      align-items: center;
+      justify-content: left;
+      margin-top: 0.625rem;
+      height: 1rem;
+      font-size: $font-size-small;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: #767584;
+    }
+  }
+
+  .field-control {
+
+    .field-value {
+      align-items: center;
+      display: flex;
+      margin-bottom: 1rem;
+
+      .field-inner {
+        align-items: center;
+        background-color: #f2f3f6;
+        border-radius: 0.25rem;
+        display: flex;
+        flex:1;
+        overflow: hidden;
+        height: 200px;
+
+        .field-textarea {
+          border: 0;
+          padding-left: 1rem;
+          padding-right: 1rem;
+          padding-top: 1rem;
+          display: flex;
+          flex: 1;
+          width: 100%;
+          background-color: transparent;
+          height: 200px;
+          font-size: 14px;
+          font-weight: normal;
+          font-stretch: normal;
+          font-style: normal;
+          line-height: 1.13;
+          letter-spacing: normal;
+          resize: none;
+
+          &:focus {
+            border-color: $primary;
+            border-style: solid;
+            border-width: 1px;
+            box-shadow: none !important;
+            outline:0px !important;
+            -webkit-appearance:none;
+          }
+        }
+      }
+    }
   }
 }

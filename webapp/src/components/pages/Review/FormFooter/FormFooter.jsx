@@ -27,47 +27,52 @@ const FormFooter = ({
   return (
     <div className="form-footer">
       {readOnly ? (
-        <NavLink
-          id="return-review"
-          to="/articles"
-        >
-          Return
-        </NavLink>
+        <>
+          <NavLink
+            className="is-secondary"
+            id="return-review"
+            to="/articles"
+          >
+            Return
+          </NavLink>
+          <button
+            className="thin"
+            id="modification-review"
+            onClick={handleModifyClick}
+            type="button"
+          >
+            Modify Review
+          </button>
+        </>
       ) : (
-        <button
-          className={classnames({
-            'is-disabled thin': !canSubmit,
-            'is-loading thin': isPending,
-          })}
-          disabled={!canSubmit}
-          id="create-review"
-          type="submit"
-        >
-          Save review
-        </button>
+        <>
+          <button
+            className="is-secondary"
+            id="cancel-review"
+            onClick={() => {
+              onCancel()
+              const next = isCreatedEntity ? '/articles' : `/reviews/${reviewId}`
+              history.push(next)
+            }}
+            type="button"
+          >
+            Cancel
+          </button>
+          <button
+            className={classnames({
+              'is-disabled thin': !canSubmit,
+              'is-loading thin': isPending,
+            })}
+            disabled={!canSubmit}
+            id="create-review"
+            type="submit"
+          >
+            Save review
+          </button>
+
+        </>
       )}
-      <div className="space" />
-      {readOnly ? (
-        <button
-          id="modification-review"
-          onClick={handleModifyClick}
-          type="button"
-        >
-          Modify Review
-        </button>
-      ) : (
-        <button
-          id="cancel-review"
-          onClick={() => {
-            onCancel()
-            const next = isCreatedEntity ? '/articles' : `/reviews/${reviewId}`
-            history.push(next)
-          }}
-          type="button"
-        >
-          Cancel
-        </button>
-      )}
+
     </div>
   )
 }

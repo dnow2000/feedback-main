@@ -7,18 +7,12 @@ import TextField from 'components/layout/form/fields/TextField'
 
 
 const ArticleFields = () => {
-  const renderValue = useCallback(() => (
-    <button
-      className="button is-transparent"
-      type="button"
-    />
-  ))
+
   return (
-    <div className="field-group">
+    <div>
       <TextField
         label="url"
         name="articleUrl"
-        renderValue={renderValue}
         required
       />
       <TextField

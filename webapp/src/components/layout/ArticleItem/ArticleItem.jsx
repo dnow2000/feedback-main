@@ -74,13 +74,19 @@ const ArticleItem = ({
       <div
         className="article-container"
       >
-        {onClickEdit && (
-          <button classname="article-edit" onClick={onClickEdit}>{"EDIT"}</button>
-          )
-        }
+
         <div className="article-header">
           <p className="article-tag">Climate</p>
-          <p className="article-date">4 Dec 2019</p>
+          <div className="article-date">
+            <p >4 Dec 2019</p>
+            {onClickEdit && (
+              <button className="article-edit" onClick={onClickEdit}>
+                <Icon className="icon" name="ico-edit.svg" />
+              </button>
+              )
+            }
+          </div>
+
         </div>
         <div className="article-summary">
           <div className="article-summary-thumbnail">
