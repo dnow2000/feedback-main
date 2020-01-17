@@ -1,22 +1,55 @@
 .user-item {
-  @extend .item;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid $grey-light;
+  border-radius: 10px;
+  padding: 1rem;
 
-  .control {
-    border-top: 1px solid $grey-light;
-
-    button {
-      &.not-checked {
-        color: $primary;
+  .user-info-container {
+    display: flex;
+    .avatar-container {
+      width: 70px !important;
+      display: flex;
+      justify-content: flex-start;
+    }
+    .info-container {
+      .user-name {
+        font-size: 16px;
+        font-weight: 800;
+        color: $black;
+        margin-bottom: 2px;
       }
+      .user-title {
+        font-size: 14px;
+        font-weight: 400;
+        color: $black;
+        margin-bottom: 4px;
+      }
+      .user-specialities {
+        font-size: 14px;
+        font-weight: 400;
+        color: $grey;
+      }
+    }
+  }
 
-      &.checked {
-        background-color: $primary;
-        color: white;
+  .cta-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 20px
+  }
+  button {
+    &.not-checked {
+      color: $primary;
+    }
 
-        &[disabled] {
-          &[readonly] {
-            opacity: 1;
-          }
+    &.checked {
+      background-color: $primary;
+      color: white;
+
+      &[disabled] {
+        &[readonly] {
+          opacity: 1;
         }
       }
     }
