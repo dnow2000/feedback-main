@@ -28,12 +28,12 @@ class FormFooter extends PureComponent {
     const { id: reviewId } = review || {}
 
     return (
-      <div className="control level">
+      <div className="form-footer">
         {canEdit && (
           <>
             {readOnly ? (
               <button
-                className="button is-primary"
+                className="button is-primary thin"
                 id="edit-article"
                 onClick={() =>
                   history.push(modificationUrl)
@@ -63,7 +63,7 @@ class FormFooter extends PureComponent {
           </NavLink>
         ) : (
           <button
-            className={classnames('button is-primary flex-1', {
+            className={classnames('button is-primary thin', {
               'is-loading': isLoading,
             })}
             disabled={!canSubmit}
@@ -75,7 +75,7 @@ class FormFooter extends PureComponent {
         )}
         {canReview && !isCreatedEntity && (
           <NavLink
-            className="button is-primary"
+            className="button is-primary thin"
             id={`${reviewId ? "see" : "create"}-own-review`}
             to={
               reviewId

@@ -8,7 +8,7 @@
     align-items: center;
     display: flex;
     height: 100%;
-    padding: 0.5rem;
+    padding: 0.2rem;
 
     &.checked {
       &[disabled] {
@@ -22,6 +22,12 @@
       cursor: inherit;
     }
 
+    &:focus {
+      box-shadow: none !important;
+      outline:0px !important;
+      -webkit-appearance:none;
+    }
+
     button {
       background-color: transparent;
       border: 2px solid $primary;
@@ -29,9 +35,17 @@
       color: $grey;
       font-size: $font-size-smaller;
       font-weight: $font-weight-bold;
-      padding: 0.5rem;
+      padding: 0.4rem;
+      padding-right: 0.8rem;
+      padding-left: 0.8rem;
       text-transform: capitalize;
-    }
+      cursor: pointer;
 
+      &:focus {
+        box-shadow: none !important;
+        outline:0px !important;
+        -webkit-appearance:none;
+      }
+    }
   }
 }

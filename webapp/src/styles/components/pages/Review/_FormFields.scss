@@ -25,6 +25,8 @@
     .radio {
       &.radio-2 {
         color: #007b7b;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid $grey-light;
 
         &.checked {
           background-color: #c9f0f0;
@@ -34,6 +36,8 @@
 
       &.radio-1 {
         color: #88e749;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid $grey-light;
 
         &.checked {
           background-color: #c9f0f0;
@@ -43,27 +47,33 @@
       }
 
       &.radio-0 {
-        color: #F7981D;
+        color: $orange;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid $grey-light;
 
         &.checked {
-          background-color: #c9f0f0;
-          border-color: #ffa63a;
+          background-color: $orange-light;
+          border-color: $orange;
           border-top: 1px solid;
         }
       }
 
       &.radio-\-1 {
-        color: #CC0000;
+        color: $red;
+        border-bottom: 1px solid transparent;
+        border-top: 1px solid $grey-light;
 
         &.checked {
-          background-color: #c9f0f0;
-          border-color: #ff4a27;
+          background-color: $red-light;
+          border-color: $red;
           border-top: 1px solid;
+
         }
       }
 
       &.radio-\-2 {
         color: #990000;
+        border-top: 1px solid $grey-light;
 
         &.checked {
           background-color: #c9f0f0;
@@ -78,14 +88,14 @@
         &.checked {
           button {
             border: 2px solid white;
-            color: #007b7b;
-            background-color: #c9f0f0;
+            color: $bluegreen;
+            background-color: $bluegreen-light;
           }
         }
 
         &.not-checked {
           button {
-            border: 2px solid #92e1e1;
+            border: 2px solid $bluegreen-light;
           }
         }
       }
@@ -94,14 +104,14 @@
         &.checked {
           button {
             border: 2px solid white;
-            color: #ffa63a;
-            background-color: #ffd452;
+            color: $orange;
+            background-color: $orange-light;
           }
         }
 
         &.not-checked {
           button {
-            border: 2px solid #ffa63a;
+            border: 2px solid $orange-light;
           }
         }
       }
@@ -110,14 +120,14 @@
         &.checked {
           button {
             border: 2px solid white;
-            color: #e53c3c;
-            background-color: #facece;
+            color: $red;
+            background-color: $red-light;
           }
         }
 
         &.not-checked {
           button {
-            border: 2px solid #e53c3c;
+            border: 2px solid $red-light;
           }
         }
       }

@@ -30,10 +30,10 @@ class FormFooter extends PureComponent {
     const { isCreatedEntity, readOnly } = query.context()
 
     return (
-      <div className="control level">
+      <div className="form-footer">
         {readOnly ? (
           <NavLink
-            className="button is-primary"
+            className="button is-primary thin"
             id="edit-verdict"
             to={`/verdicts/${verdictId}?modification`}
           >
@@ -55,7 +55,7 @@ class FormFooter extends PureComponent {
           </NavLink>
         ) : (
           <button
-            className={classnames('button is-primary flex-1', {
+            className={classnames('button is-primary thin', {
               'is-loading': isLoading,
             })}
             disabled={!canSubmit}

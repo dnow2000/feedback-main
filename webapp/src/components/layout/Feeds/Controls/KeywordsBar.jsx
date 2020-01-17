@@ -1,10 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo } from 'react'
+import React, { useCallback, useMemo, input } from 'react'
 import { Form } from 'react-final-form'
 
 import Icon from 'components/layout/Icon'
-import TextField from 'components/layout/form/fields/TextField'
-
 
 const KeywordsBar = ({
   onChange,
@@ -19,13 +17,6 @@ const KeywordsBar = ({
     onChange('keywords', keywords)
   }, [onChange])
 
-
-  const renderInner = useCallback(() => (
-    <button type="submit">
-      <Icon name="loupe" />
-    </button>
-  ), [])
-
   return (
     <Form
       initialValues={initialValues}
@@ -35,11 +26,18 @@ const KeywordsBar = ({
           className="keywords-bar"
           onSubmit={handleSubmit}
         >
-          <TextField
+          <input
+            {...input}
+            className="keywords-input"
             name="keywords"
             placeholder="Type your search"
-            renderInner={renderInner}
           />
+          <button
+            className="is-inner-input"
+            type="submit"
+          >
+            <Icon className="icon" name="loupe.svg" />
+          </button>
         </form>
       )}
     />

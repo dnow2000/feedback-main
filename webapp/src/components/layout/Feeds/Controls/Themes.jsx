@@ -18,7 +18,7 @@ const Themes = ({
     <div className="themes">
       {trendingThemes.map(({ label, value }) => (
         <button
-          className={classnames({ selected: selectedTheme !== value})}
+          className={classnames({ selected: selectedTheme !== value, thin: true})}
           key={value}
           onClick={handleOnChange(value)}
           type="button"

@@ -36,8 +36,8 @@ const FormFooter = ({
       ) : (
         <button
           className={classnames({
-            'is-disabled': !canSubmit,
-            'is-loading': isPending,
+            'is-disabled thin': !canSubmit,
+            'is-loading thin': isPending,
           })}
           disabled={!canSubmit}
           id="create-review"

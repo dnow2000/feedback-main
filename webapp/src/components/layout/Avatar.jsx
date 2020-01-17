@@ -16,9 +16,9 @@ const Avatar = ({ className, user, whiteHeader, number }) => {
     return <div className={className} style={backgroundStyle} />
   }
   return (
-    <span className='icon'>
-      <Icon name={`ico-user-circled${whiteHeader ? '-w' : ''}.svg`} />
-    </span>
+    <div className={className}>
+      <Icon className={className} name={`ico-user-circled${whiteHeader ? '-w' : ''}.svg`} />
+    </div>
   )
 }
 

@@ -1,11 +1,14 @@
 .button {
   border-radius: 1.5rem;
   cursor: pointer;
-  font-weight: $font-weight-semibold;
+  font-weight: 400;
   font-size: 1rem;
+  letter-spacing: 0.5;
   min-width: 4em;
+  font-kerning: auto;
   padding: 1rem;
   display: block;
+  font-family: apercu;
   text-align: center;
   text-decoration: none;
 
@@ -22,9 +25,13 @@
   }
 
   &.thin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1rem;
     min-width: 4em;
-    padding: 0.5rem;
+    height: 2rem;
+    padding: 0rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
@@ -83,5 +90,19 @@
     background-color: transparent;
     box-shadow: none;
     color: $grey;
+  }
+
+  &.is-inner-input {
+    display: flex;
+    background-color: transparent;
+    padding-left: 0;
+    padding-right: 0;
+    min-width: 30px;
+    min-height: 30px;
+    height: 30px !important;
+    width: 30px !important;;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
   }
 }
