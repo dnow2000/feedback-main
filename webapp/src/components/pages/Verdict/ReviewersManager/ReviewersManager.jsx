@@ -9,6 +9,8 @@ import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContaine
 import UserItemContainer from './UserItem/UserItemContainer'
 import VerdictUserItemContainer from '../VerdictUserItem/VerdictUserItemContainer'
 
+const defaultSelectedUserIds = []  // XXX @colas branch to existing
+
 const ReviewersManager = ({
   dispatch,
   location: { search },
@@ -17,16 +19,18 @@ const ReviewersManager = ({
   verdictUsers,
 }) => {
 
-
-  const [selectedUserIds, setSelectedUserIds] = useState([])
+  const [selectedUserIds, setSelectedUserIds] = useState(defaultSelectedUserIds)
   const handleClickUser = useCallback(userId => {
-    let nextSelectedUserIds
-    if (selectedUserIds.includes(userId)) {
-      nextSelectedUserIds = selectedUserIds.filter(idx => idx !== userId)
-    } else {
-      nextSelectedUserIds = [...selectedUserIds, userId]
-    }
-    setSelectedUserIds(nextSelectedUserIds)
+    setSelectedUserIds(selectedUserIds => {
+      let nextSelectedUserIds
+      if (selectedUserIds.includes(userId)) {
+        nextSelectedUserIds = selectedUserIds.filter(idx => idx !== userId)
+      } else {
+        nextSelectedUserIds = [...selectedUserIds, userId]
+      }
+      console.log('CHANGE', userId, selectedUserIds.length, nextSelectedUserIds.length, nextSelectedUserIds)
+      return nextSelectedUserIds
+    })
     }, [selectedUserIds, setSelectedUserIds]
   )
   useEffect(() => {
@@ -35,8 +39,8 @@ const ReviewersManager = ({
     }
   }, [selectedUserIds])
 
-  console.log('REVIEWS', reviews)
-  console.log('SELECTED', selectedUserIds)
+  console.log('REVIEWS', reviews && reviews.length)
+  console.log('SELECTED', selectedUserIds.length)
 
   const config = useMemo(() => ({
     apiPath: `/users${search}`
