@@ -3,7 +3,7 @@ import React from 'react'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 
-import ApplyingReviewersContainer from './ApplyingReviewers/ApplyingReviewersContainer'
+import ApplyingReviewers from './ApplyingReviewers'
 
 const Users = () => (
   <>
@@ -15,7 +15,7 @@ const Users = () => (
             Applying Reviewers
           </h1>
           <div className="separator" />
-          <ApplyingReviewersContainer />
+          <ApplyingReviewers />
         </section>
       </div>
     </MainContainer>

@@ -1,19 +1,19 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 
 import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
 import userType from 'components/types/userType'
 
 import UserItemContainer from 'components/layout//UserItem/UserItemContainer'
 
-const ApplyingReviewers = ({
-  applyingReviewers,
-  location: { search },
-  requestGetApplyingReviewers
-}) => {
+const ApplyingReviewers = () => {
 
+  const { search } = useLocation()
   const config = useMemo(() => ({
-    apiPath: "/users"
+    apiPath: "/users",
+    activityTag: "applying-reviewers"
   }), [search])
 
   const renderItem = useCallback(item => <UserItemContainer user={item} />, [])
@@ -24,15 +24,9 @@ const ApplyingReviewers = ({
       config={config}
       hasMore={false}
       isLoading={false}
-      items={applyingReviewers}
       renderItem={renderItem}
     />
   )
-}
-
-ApplyingReviewers.propTypes = {
-  applyingReviewers: PropTypes.arrayOf(userType),
-  requestGetApplyingReviewers: PropTypes.func.isRequired
 }
 
 export default ApplyingReviewers

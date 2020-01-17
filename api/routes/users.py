@@ -36,11 +36,18 @@ def get_users():
         query = get_users_join_query(query)
         query = get_users_query_with_keywords(query, keywords)
 
-    return jsonify(listify(User,
-                            includes=USER_INCLUDES,
-                            query=query,
-                            page=request.args.get('page'),
-                            paginate=10))
+    user_dicts, total_data_count = listify(User,
+                                            includes=USER_INCLUDES,
+                                            query=query,
+                                            page=request.args.get('page'),
+                                            paginate=10,
+                                            with_total_data_count=True)
+
+    response = jsonify(user_dicts)
+    response.headers['Total-Data-Count'] = total_data_count
+    response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
+
+    return response
 
 
 @app.route("/users/<user_id>", methods=["GET"])
