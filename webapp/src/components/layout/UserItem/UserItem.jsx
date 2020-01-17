@@ -16,36 +16,31 @@ const UserItem = ({
     publicName,
   } = (user || {})
   return (
-    <article className="user-item box">
-      <div className="content p24">
-        <div className="flex-columns items-center">
-          <a
-            className="anchor flex-columns items-center mr12"
-            href={`/users/${id}`}
-          >
+    <article className="user-item">
+      <div className="user-info-container">
+        <div className="avatar-container">
+          <div>
             <Avatar user={user} />
-            <div className="mb4 text-left">
-              {publicName}
-            </div>
-          </a>
-          {tags && (
-            <div className="flex-auto center">
-              <div className="flex-start items-center">
-                {
-                  tags.map(({ text }) => (
-                    <Dotdotdot className="tag fs12" clamp={60} key={text}>
-                      #{text}
-                    </Dotdotdot>
-                  ))
-                }
-              </div>
-            </div>
-          )}
+          </div>
+        </div>
+        <div className="info-container">
+          <p className="user-name">
+            Martin Parks
+          </p>
+          <p className="user-title">
+            Proffessor associate in UCLA
+          </p>
+          <p className="user-specialities">
+            Cardiology, Vaccines, Hematovirology, Heptatites
+          </p>
         </div>
       </div>
-      <nav className="control flex-wrap flex-start items-center p12">
-        {/*adminRole && <RolesManagerContainer user={user} />*/}
-      </nav>
+      <div className="cta-container">
+        <button className="button is-primary thin">
+          View Profile
+        </button>
+      </div>
+
     </article>
   )
 }
