@@ -20,7 +20,7 @@ const CHECKBOXES_TAGS_NAME = 'tagIds'
 const CHECKBOXES_TAGS_PLACEHOLDER = ''
 
 
-const FormFields = ({ article, trending, evaluations, form, tags }) => {
+const FormFields = ({ article, evaluations, form, reviews, tags, trending }) => {
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     SELECT_EVALUATIONS_NAME,
     evaluations,
