@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 import withForm from 'with-react-form'
 import withQuery from 'with-react-query'
 
@@ -8,17 +9,15 @@ import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import selectArticleById from 'selectors/selectArticleById'
 
-import selectTrendingById from './selectors/selectTrendingById'
-import selectVerdictById from './selectors/selectVerdictById'
 import Verdict from './Verdict'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { match: { params: { verdictId } }, query } = ownProps
-  const { trendingId } = query.getParams()
-  const trending = selectTrendingById(state, parseInt(trendingId))
-  const verdict = selectVerdictById(state, verdictId)
+  const { buzzsumoId } = query.getParams()
+  const trending = selectEntitiesByKeyAndJoin(state, 'trendings', 'buzzsumoId', buzzsumoId)[0]
+  const verdict = selectEntityByKeyAndId(state, 'verdicts', verdictId)
   const { articleId } = verdict || {}
-  const article = selectArticleById(state, articleId)
+  const article = selectEntityByKeyAndId(state, 'articles', articleId)
   const {
     externalThumbUrl: articleExternalThumUrl,
     summary: articleSummary,

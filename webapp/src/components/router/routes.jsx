@@ -14,6 +14,9 @@ import SigninContainer from 'components/pages/Signin/SigninContainer'
 import SignupContainer from 'components/pages/Signup/SignupContainer'
 import TrendingsContainer from 'components/pages/Trendings/TrendingsContainer'
 
+
+const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
+
 const routes = [
   {
     exact: true,
@@ -22,7 +25,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/articles/:articleId([A-Z][a-z]+|creation)/:modification(modification)?',
+    path: `/articles/:articleId${formPath}`,
     render: () => <ArticleContainer />,
     title: 'Article',
   },
@@ -40,7 +43,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/reviews/:reviewId([A-Za-z0-9]{2,}|creation)?/:modification(modification)?',
+    path: `/reviews/:reviewId${formPath}`,
     render: () => <ReviewContainer />,
     title: 'Review',
   },
@@ -64,7 +67,7 @@ const routes = [
   },
   {
     exact: true,
-    path: '/verdicts/:verdictId([A-Za-z0-9]{2,}|creation)?/:modification(modification)?',
+    path: `/verdicts/:verdictId${formPath}`,
     render: () => <VerdictContainer />,
     title: "Verdict",
   },

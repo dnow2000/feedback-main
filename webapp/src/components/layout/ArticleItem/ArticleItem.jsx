@@ -8,6 +8,7 @@ import Icon from 'components/layout/Icon'
 import Authors from 'components/layout/Authors'
 import Extract from 'components/layout/Extract'
 import Tag from 'components/layout/Tag'
+import articleType  from 'components/types/articleType'
 import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
 
 const round = (x, n) => {
@@ -51,7 +52,7 @@ const ArticleItem = ({
     totalShares,
     twitterShares,
     url
-  } = article
+  } = article || {}
   const { params: { articleId: routeArticleId } } = match
   const { id: currentUserReviewId } = currentUserReview || {}
   const { id: verdictId } = verdict || {}
@@ -186,7 +187,7 @@ ArticleItem.defaultProps = {
 }
 
 ArticleItem.propTypes = {
-  article: PropTypes.object,
+  article: articleType,
   canDelete: PropTypes.bool,
   canReview: PropTypes.bool,
   canVerdict: PropTypes.bool,

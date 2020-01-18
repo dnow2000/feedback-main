@@ -18,7 +18,9 @@ const Verdict = ({
   history,
   isPending,
   match: { params: { verdictId } },
+  query: { getParams }
 }) => {
+  const { buzzsumoId } = getParams()
 
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
@@ -55,9 +57,13 @@ const Verdict = ({
         isMergingDatum: true,
         normalizer: verdictNormalizer,
       }))
-      return
     }
-  }, [dispatch, isCreatedEntity, verdictId])
+
+    if (buzzsumoId) {
+      dispatch(requestData({ apiPath: `/trendings/${buzzsumoId}`}))
+    }
+
+  }, [buzzsumoId, dispatch, isCreatedEntity, verdictId])
 
 
   useEffect(() => {

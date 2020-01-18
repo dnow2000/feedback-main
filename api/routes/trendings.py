@@ -13,9 +13,10 @@ def get_trending(buzzsumo_id):
 
     trending = None
     if IS_DEVELOPMENT:
+        buzzsumo_id_number = int(buzzsumo_id)
         kept_trendings = [
-            trending for trending in trendings
-            if trending['buzzsumoId'] == buzzsumo_id
+            trending for trending in DEVELOPMENT_TRENDINGS
+            if trending['buzzsumoId'] == buzzsumo_id_number
         ]
         if len(kept_trendings) > 0:
             trending = kept_trendings[0]
@@ -33,6 +34,7 @@ def list_trendings():
 
     theme = request.args.get('theme')
     days = request.args.get('days')
+    page = int(request.args.get('page', 1))
     topic = get_topic_with_theme(theme)
 
     trendings = get_trendings(
@@ -52,7 +54,7 @@ def list_trendings():
 
     paginated_trendings = paginate_obj(
         not_saved_trendings,
-        int(request.args.get('page', 1)),
+        page,
         4
     ).items
 

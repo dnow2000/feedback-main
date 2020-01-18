@@ -59,9 +59,9 @@ class TrendingItem extends PureComponent {
     } = this.props
     const {
       authors,
+      buzzsumoId,
       externalThumbUrl,
       facebookShares,
-      id,
       subdomain,
       title,
       totalShares,
@@ -141,7 +141,7 @@ class TrendingItem extends PureComponent {
             </button>
             <NavLink
               className="button is-primary thin"
-              to={`/verdicts/creation?trendingId=${id}`}
+              to={`/verdicts/creation?buzzsumoId=${buzzsumoId}`}
             >
               Select for verdict
             </NavLink>
