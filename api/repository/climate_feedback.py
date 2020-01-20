@@ -5,13 +5,9 @@ from sqlalchemy_api_handler import logger
 
 from models.article import Article
 from models.publication import Publication
+from models.review import Review
+from models.role import Role
 from models.user import User
-from tests.utils.creators.create_article import create_article
-from tests.utils.creators.create_review import create_review
-from tests.utils.creators.create_role import create_role
-from tests.utils.creators.create_user import create_user
-from tests.utils.creators.create_user_article import create_user_article
-from tests.utils.creators.create_verdict import create_verdict
 from repository.articles import resolve_content_with_url
 from utils.config import EMAIL_HOST
 
@@ -121,9 +117,9 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
             publication = Publication.query.filter_by(url=data['url'])\
                                  .first()
             if not publication:
-                publication = create_article(**publication_dict)
+                publication = Article(**publication_dict)
                 publication.populate_from_dict(resolve_content_with_url(publication.url))
-                create_user_article(user, publication)
+                UserArticle(article=publication, user=user)
 
 
 def get_articles_from_climate_feedback_feedbacks_scrap(
@@ -152,7 +148,7 @@ def get_articles_from_climate_feedback_feedbacks_scrap(
 
         evaluation_media_body = evaluation_row.find("div", class_="media-body")
 
-        article = create_article()
+        article = Article()
 
         evaluation_url = evaluation_media_body.find("a")['href']
         set_article_from_climate_feedback_evaluation_scrap(
@@ -186,10 +182,10 @@ def set_article_from_climate_feedback_evaluation_scrap(
 
     verdict_comment = verdict_content.find('p').text
     # verdict_comment += soup.find("h4", text="SUMMARY").nextSibling.text
-    create_verdict(
-        editor_user,
-        article,
-        comment=verdict_comment
+    Verdict(
+        article=article,
+        comment=verdict_comment,
+        user=editor_user
     )
 
     content_title = soup.find('h4', text="REVIEWERS’ OVERALL FEEDBACK")
@@ -217,7 +213,7 @@ def set_article_from_climate_feedback_evaluation_scrap(
         if already_matching_created_users:
             user = already_matching_created_users[0]
         else:
-            user = create_user(
+            user = User(
                 email="sftest.reviewer.cf{}@{}".format(len(store['users']), EMAIL_HOST),
                 password="sftest.Reviewer.cf{}".format(len(store['users'])),
             )
@@ -225,10 +221,10 @@ def set_article_from_climate_feedback_evaluation_scrap(
             store['users'].append(user)
 
         logger.info('role {}...'.format(reviewer_row_index))
-        create_role(user, role_type='reviewer')
+        role = Role(role_type='reviewer', user=user)
 
         logger.info('review {}...'.format(reviewer_row_index))
         review_row = content.find('a', text=reviewer_name).parent.parent
         review_row.strong.extract()
         review_comment = review_row.text
-        create_review(user, article, comment=review_comment)
+        review = Review(article=article, comment=review_comment, user=user)

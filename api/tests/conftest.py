@@ -4,10 +4,10 @@ from flask import Flask
 from flask_login import LoginManager
 from sqlalchemy_api_handler import ApiHandler
 
+from models import import_models
 from models.utils.db import db
-from models.utils import import_models
 from models.utils.install import install_models
-from routes.utils import import_routes
+from routes import import_routes
 
 
 items_by_category = {'first': [], 'last': []}

@@ -1,13 +1,13 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 import withForm from 'with-react-form'
 import withQuery from 'with-react-query'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
-import selectArticleById from 'selectors/selectArticleById'
 import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 import selectReviewsByArticleIdAndVerdictId from 'selectors/selectReviewsByArticleIdAndVerdictId'
@@ -28,13 +28,13 @@ const mapStateToProps = (state, ownProps) => {
   const canReview = typeof reviewerRole !== 'undefined'
 
   return {
-    article: selectArticleById(state, articleId),
+    article: selectEntityByKeyAndId(state, 'articles', articleId),
     canCreateArticle,
     canReview,
     currentUser,
     reviewerRole,
     userReview: selectCurrentUserReviewByArticleId(state, articleId),
-    verdicts: selectVerdictsByArticleId(state, articleId),
+    verdicts: selectEntitiesByKeyAndJoin(state, 'verdicts', 'articleId', articleId),
     withoutVerdictReviews: selectReviewsByArticleIdAndVerdictId(
       state,
       articleId,

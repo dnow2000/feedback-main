@@ -4,10 +4,10 @@ from flask_login import LoginManager
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
-from models.utils import import_models
+from models import import_models
 from models.utils.db import db
 from models.utils.install import install_models
-from routes.utils import import_routes
+from routes import import_routes
 from utils.config import IS_DEVELOPMENT
 
 flask_app = Flask(__name__, static_url_path='/static')

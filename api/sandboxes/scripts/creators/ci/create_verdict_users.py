@@ -2,8 +2,8 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.article import Article
 from models.verdict import Verdict
+from models.verdict_user import VerdictUser
 from models.user import User
-from tests.utils.creators.create_verdict_user import create_verdict_user
 
 def create_verdict_users():
     logger.info('create_verdict_users')
@@ -17,7 +17,7 @@ def create_verdict_users():
         user=editor_user
     ).one()
     reviewer_user = User.query.filter_by(email="sftest.reviewer.0@sciencefeedback.co").one()
-    verdict_users_by_name["Great Barrier / reviewer 0"] = create_verdict_user(
+    verdict_users_by_name["Great Barrier / reviewer 0"] = VerdictUser(
         verdict=verdict,
         user=reviewer_user
     )

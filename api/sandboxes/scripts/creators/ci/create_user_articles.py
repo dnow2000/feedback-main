@@ -1,6 +1,5 @@
 from sqlalchemy_api_handler import logger
 
-from tests.utils.creators.create_user_article import create_user_article
 
 def create_user_articles():
     logger.info('create_user_articles')

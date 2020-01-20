@@ -47,7 +47,7 @@ def get_review(review_id):
 @app.route('/reviews', methods=['POST'])
 @login_or_api_key_required
 @expect_json_data
-def create_review():
+def Review():
 
     check_has_role(current_user, 'reviewer')
 
