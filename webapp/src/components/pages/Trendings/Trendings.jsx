@@ -9,7 +9,8 @@ import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
 
 const Trendings = ({ location: { search } }) => {
   const config = useMemo(() => ({
-    apiPath: `/trendings${search}`
+    apiPath: `/trendings${search}`,
+    resolve: trending => ({...trending, id: trending.buzzsumoId})
   }), [search])
 
 

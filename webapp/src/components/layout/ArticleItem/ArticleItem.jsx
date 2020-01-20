@@ -8,6 +8,7 @@ import Icon from 'components/layout/Icon'
 import Authors from 'components/layout/Authors'
 import Extract from 'components/layout/Extract'
 import Tag from 'components/layout/Tag'
+import articleType  from 'components/types/articleType'
 import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
 
 const round = (x, n) => {
@@ -30,11 +31,13 @@ const ArticleItem = ({
   canReview,
   canVerdict,
   currentUserReview,
-  currentUserVerdict,
   dispatch,
   match,
   noControl,
+  onClickEdit,
   showSeeAllReviews,
+  verdict,
+  withEditButton,
   withShares
 }) => {
   const {
@@ -49,10 +52,10 @@ const ArticleItem = ({
     totalShares,
     twitterShares,
     url
-  } = article
+  } = article || {}
   const { params: { articleId: routeArticleId } } = match
   const { id: currentUserReviewId } = currentUserReview || {}
-  const { id: currentUserVerdictId } = currentUserVerdict || {}
+  const { id: verdictId } = verdict || {}
 
   const onDeleteClick = useCallback(() => {
     dispatch(requestData({
@@ -67,15 +70,24 @@ const ArticleItem = ({
         ? `${API_THUMBS_URL}/articles/${id}`
         : `${ROOT_ASSETS_PATH}/loading_webshot.png`
     )
-
   return (
     <article className="article-item">
       <div
         className="article-container"
       >
+
         <div className="article-header">
           <p className="article-tag">Climate</p>
-          <p className="article-date">4 Dec 2019</p>
+          <div className="article-date">
+            <p >4 Dec 2019</p>
+            {onClickEdit && (
+              <button className="article-edit" onClick={onClickEdit}>
+                <Icon className="icon" name="ico-edit.svg" />
+              </button>
+              )
+            }
+          </div>
+
         </div>
         <div className="article-summary">
           <div className="article-summary-thumbnail">
@@ -135,12 +147,12 @@ const ArticleItem = ({
               <NavLink
                 className="button is-primary thin"
                 to={
-                  currentUserVerdictId
-                    ? `/verdicts/${currentUserVerdictId}`
+                  verdictId
+                    ? `/verdicts/${verdictId}/modification`
                     : `/verdicts/creation?articleId=${id}`
                 }
               >
-                See Verdict
+                Edit Verdict
               </NavLink>
             )}
             {canReview && (
@@ -167,23 +179,26 @@ ArticleItem.defaultProps = {
   canReview: false,
   canVerdict: false,
   currentUserReview: null,
-  currentUserVerdict: null,
   noControl: false,
+  onClickEdit: null,
   showSeeAllReviews: false,
-  withShares: true
+  verdict: null,
+  withShares: true,
 }
 
 ArticleItem.propTypes = {
-  article: PropTypes.object,
+  article: articleType,
   canDelete: PropTypes.bool,
   canReview: PropTypes.bool,
   canVerdict: PropTypes.bool,
   currentUserReview: PropTypes.object,
-  currentUserVerdict: PropTypes.object,
   dispatch: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   noControl: PropTypes.bool,
+  onClickEdit: PropTypes.func,
   showSeeAllReviews: PropTypes.bool,
+  verdict: PropTypes.object,
+  withEditButton: PropTypes.bool,
   withShares: PropTypes.bool,
 }
 

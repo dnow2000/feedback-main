@@ -25,7 +25,6 @@ DEVELOPMENT_TRENDINGS = [{
     'totalShares': 354013,
     'twitterShares': 14228,
     'url': 'https://www.cnn.com/2018/11/23/health/climate-change-report-bn/index.html',
-
 }, {
     'buzzsumoId': 1232,
     'externalThumbUrl': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',

@@ -21,7 +21,7 @@ const Reviews = ({
   return (
     <>
       <HeaderContainer />
-      <MainContainer name="articles">
+      <MainContainer name="reviews">
         <div className="container">
           <section>
             <Feeds

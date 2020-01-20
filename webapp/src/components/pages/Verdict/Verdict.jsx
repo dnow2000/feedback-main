@@ -10,19 +10,17 @@ import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
 
 import VerdictForm from './VerdictForm/VerdictForm'
-import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
 
 const Verdict = ({
-  article,
   currentUserVerdictPatch,
   dispatch,
-  form: { isCreatedEntity, method },
+  form: { isCreatedEntity, method, readOnly },
   history,
   isPending,
   match: { params: { verdictId } },
-  query: { getParams },
+  query: { getParams }
 }) => {
-  const { articleId } = getParams()
+  const { buzzsumoId } = getParams()
 
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
@@ -59,18 +57,13 @@ const Verdict = ({
         isMergingDatum: true,
         normalizer: verdictNormalizer,
       }))
-      return
     }
 
-    if (!articleId) {
-      return
+    if (buzzsumoId) {
+      dispatch(requestData({ apiPath: `/trendings/${buzzsumoId}`}))
     }
 
-    dispatch(requestData({
-      apiPath: `/articles/${articleId}`,
-      normalizer: articleNormalizer,
-    }))
-  }, [articleId, dispatch, isCreatedEntity, verdictId])
+  }, [buzzsumoId, dispatch, isCreatedEntity, verdictId])
 
 
   useEffect(() => {
@@ -80,6 +73,14 @@ const Verdict = ({
     }
   })
 
+  let title
+  if (isCreatedEntity) {
+    title = 'Create a verdict'
+  } else if (readOnly) {
+    title = 'See the verdict'
+  } else {
+    title = "Edit the verdict"
+  }
   return (
     <>
       <HeaderContainer />
@@ -87,40 +88,14 @@ const Verdict = ({
         <div className="container">
           <section className="hero">
             <h1 className="title">
-              {isCreatedEntity ? 'Create your verdict' : 'See the verdict'}
+              {title}
             </h1>
           </section>
-
-          {article && (
-            <section className="article">
-              <ArticleItemContainer
-                article={article}
-                noControl
-              />
-            </section>
-          )}
-
-          {!isCreatedEntity && (
-            <section>
-              <h2 className="subtitle flex-columns items-center">
-                REVIEWERS
-              </h2>
-              <ReviewersManagerContainer />
-            </section>
-          )}
-
-          <section>
-            {!isCreatedEntity && (
-              <h2 className="subtitle flex-columns items-center">
-                VERDICT DETAILS
-              </h2>
-            )}
-            <Form
-              initialValues={currentUserVerdictPatch}
-              onSubmit={handleSubmitVerdict}
-              render={VerdictForm}
-            />
-          </section>
+          <Form
+            initialValues={currentUserVerdictPatch}
+            onSubmit={handleSubmitVerdict}
+            render={VerdictForm}
+          />
         </div>
       </MainContainer>
     </>

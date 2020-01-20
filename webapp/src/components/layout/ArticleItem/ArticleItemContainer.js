@@ -5,7 +5,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import ArticleItem from './ArticleItem'
 import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
-import selectCurrentUserVerdictByArticleId from 'selectors/selectCurrentUserVerdictByArticleId'
+import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 import selectReviewsByArticleId from 'selectors/selectReviewsByArticleId'
 
@@ -28,14 +28,15 @@ const mapStateToProps = (state, ownProps) =>  {
   const hasReviews = reviews && reviews.length > 0
   const showSeeAllReviews = typeof editorRole !== 'undefined' && hasReviews
 
-  const currentUserVerdict = selectCurrentUserVerdictByArticleId(state, articleId)
+  const verdict = selectVerdictsByArticleId(state, articleId)[0]
 
   return {
+    article,
     canDelete,
     canReview,
     canVerdict,
     currentUserReview,
-    currentUserVerdict,
+    verdict,
     hasReviews,
     showSeeAllReviews
   }

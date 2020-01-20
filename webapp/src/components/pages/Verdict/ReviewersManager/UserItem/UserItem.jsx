@@ -7,24 +7,11 @@ import Avatar from 'components/layout/Avatar'
 
 class UserItem extends PureComponent {
 
-  handleAddReviewer = () => {
-    const { dispatch, match, user } = this.props
-    const { params: { verdictId } } = match
-    const { id: userId } = user
-    dispatch(requestData({
-      apiPath: '/verdictUsers',
-      body: {
-        userId,
-        verdictId
-      },
-      method: 'POST'
-    }))
-  }
-
   render () {
     const {
       user,
-      tags
+      tags,
+      onClick
     } = this.props
     const {
       id,
@@ -57,7 +44,7 @@ class UserItem extends PureComponent {
             <div>
               <button
                 className="button is-primary"
-                onClick={this.handleAddReviewer}
+                onClick={() => onClick(user.id)}
                 type="button"
               >
                   +

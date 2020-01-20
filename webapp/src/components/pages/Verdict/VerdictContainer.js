@@ -1,28 +1,40 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 import withForm from 'with-react-form'
 import withQuery from 'with-react-query'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
-import selectArticleIdByMatchAndQuery from 'selectors/selectArticleIdByMatchAndQuery'
 import selectArticleById from 'selectors/selectArticleById'
 
 import Verdict from './Verdict'
-import selectCurrentUserVerdictPatchByArticleId from './selectors/selectCurrentUserVerdictPatchByArticleId'
 
 const mapStateToProps = (state, ownProps) =>  {
-  const articleId = selectArticleIdByMatchAndQuery(
-    state,
-    ownProps.match,
-    ownProps.query
-  )
-  const currentUserVerdictPatch = selectCurrentUserVerdictPatchByArticleId(state, articleId)
+  const { match: { params: { verdictId } }, query } = ownProps
+  const { buzzsumoId } = query.getParams()
+  const trending = selectEntitiesByKeyAndJoin(state, 'trendings', 'buzzsumoId', buzzsumoId)[0]
+  const verdict = selectEntityByKeyAndId(state, 'verdicts', verdictId)
+  const { articleId } = verdict || {}
+  const article = selectEntityByKeyAndId(state, 'articles', articleId)
+  const {
+    externalThumbUrl: articleExternalThumUrl,
+    summary: articleSummary,
+    title: articleTitle,
+    url: articleUrl,
+  } = { ...trending, ...article}
+  const currentUserVerdictPatch = {
+      articleExternalThumUrl,
+      articleSummary,
+      articleTitle,
+      articleUrl,
+      ...verdict
+  }
   return {
-    article: selectArticleById(state, articleId),
-    currentUserVerdictPatch,
-    isPending: (state.requests['/verdicts'] || {}).isPending
+    trending,
+    isPending: (state.requests['/verdicts'] || {}).isPending,
+    currentUserVerdictPatch
   }
 }
 

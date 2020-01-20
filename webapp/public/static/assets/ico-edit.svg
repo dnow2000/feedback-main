@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61.2 (89653) - https://sketch.com -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Review/positive" transform="translate(-619.000000, -26.000000)" fill="#000000" fill-rule="nonzero">
+            <path d="M639.281793,26 C638.352241,26 637.473925,26.4628085 636.741994,27.1900818 L621.539799,42.3673104 L619,50 L626.604758,47.4582193 L626.765784,47.3039498 L641.821592,32.2883383 C642.546204,31.5537193 643,30.6721766 643,29.73921 C643,28.8062435 642.546204,27.9247007 641.821592,27.1900818 C641.089662,26.4628085 640.211345,26 639.281793,26 Z M635.575091,31 L638,33.4422991 L625.6337,45.7862073 L622,47 L623.216116,43.3439082 L635.575091,31 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

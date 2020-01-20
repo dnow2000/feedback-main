@@ -20,6 +20,8 @@
     }
   }
 
+
+
   .article-header {
     display: flex;
     align-items: center;
@@ -40,9 +42,25 @@
     }
 
     .article-date {
+      display: flex;
       font-size: rem(12px);
-      color: $grey
+      color: $grey;
+      .article-edit {
+        display: flex;
+        margin-left: 15px;
+        padding: 0px;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border: 0px;
+        &:focus {
+          box-shadow: none !important;
+          outline:0px !important;
+          -webkit-appearance:none;
+        }
+      }
     }
+
   }
 
   .article-summary {
