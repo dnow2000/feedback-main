@@ -12,7 +12,7 @@ from validation import check_has_role
 
 
 @app.route('/verdicts', methods=['GET'])
-def list_verdicts():
+def get_verdicts():
     query = Verdict.query
 
     article_id = request.args.get('articleId')

@@ -7,7 +7,7 @@ from utils.rest import login_or_api_key_required
 
 @app.route('/evaluations', methods=['GET'])
 @login_or_api_key_required
-def list_evaluations():
+def get_evaluations():
     evaluations = Evaluation.query.all()
     return jsonify([
         as_dict(evaluation)

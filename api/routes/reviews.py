@@ -18,7 +18,7 @@ from validation import check_has_role
 
 @app.route('/reviews', methods=['GET'])
 @login_or_api_key_required
-def list_reviews():
+def get_reviews():
     check_has_role(current_user, 'editor')
 
     query = Review.query
@@ -47,7 +47,7 @@ def get_review(review_id):
 @app.route('/reviews', methods=['POST'])
 @login_or_api_key_required
 @expect_json_data
-def Review():
+def create_review():
 
     check_has_role(current_user, 'reviewer')
 
@@ -60,6 +60,7 @@ def Review():
     save_tags(review, request.json.get('tagIds', []))
 
     return jsonify(as_dict(review, includes=REVIEW_INCLUDES)), 201
+
 
 @app.route('/reviews/<review_id>', methods=['PATCH'])
 @login_or_api_key_required

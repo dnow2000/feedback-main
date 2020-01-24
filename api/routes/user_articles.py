@@ -8,7 +8,7 @@ from utils.rest import login_or_api_key_required
 
 @app.route('/userArticles/<user_id>', methods=['GET'])
 @login_or_api_key_required
-def list_user_article(user_id):
+def get_user_article(user_id):
     user_articles = UserArticle.query.filter_by(userId=dehumanize(user_id))
     return jsonify([
         as_dict(user_article, includes=USER_ARTICLE_INCLUDES)

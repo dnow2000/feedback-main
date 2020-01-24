@@ -21,7 +21,7 @@ from utils.rest import expect_json_data, \
 
 @app.route('/articles', methods=['GET'])
 @login_or_api_key_required
-def list_articles():
+def get_articles():
     query = Article.query
 
     reviewable = request.args.get('reviewable')
@@ -83,7 +83,7 @@ def create_article():
 @app.route('/articles/<article_id>', methods=['PATCH'])
 @login_or_api_key_required
 @expect_json_data
-def edit_article(article_id):
+def modify_article(article_id):
 
     check_has_role(current_user, 'editor')
 

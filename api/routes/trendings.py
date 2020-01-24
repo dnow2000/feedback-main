@@ -31,7 +31,7 @@ def get_trending(buzzsumo_id):
 
 @app.route('/trendings', methods=['GET'])
 @login_or_api_key_required
-def list_trendings():
+def get_trendings():
 
     theme = request.args.get('theme')
     days = request.args.get('days')

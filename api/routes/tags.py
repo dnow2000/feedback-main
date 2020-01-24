@@ -9,7 +9,7 @@ from utils.rest import login_or_api_key_required
 
 @app.route('/tags', methods=['GET'])
 @login_or_api_key_required
-def list_tags():
+def get_tags():
     query = Tag.query
 
     scopes = request.args.get('scopes')

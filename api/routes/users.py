@@ -55,7 +55,7 @@ def get_user(user_id):
 @app.route('/users/current', methods=['PATCH'])
 @login_or_api_key_required
 @expect_json_data
-def patch_profile():
+def modify_profile():
     current_user.populate_from_dict(request.json)
     ApiHandler.save(current_user)
     return jsonify(as_dict(current_user, includes=USER_INCLUDES)), 200
