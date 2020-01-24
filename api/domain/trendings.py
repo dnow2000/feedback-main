@@ -76,7 +76,7 @@ def get_topic_with_theme(theme):
     return None
 
 
-def get_trendings(
+def find_trendings(
     days=1,
     topic=None,
     max_trendings=3,

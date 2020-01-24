@@ -1,9 +1,7 @@
 import { connect } from 'react-redux'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
-import selectArticleById from 'selectors/selectArticleById'
-import selectEvaluationById from 'selectors/selectEvaluationById'
 import selectTagsByReviewId from 'selectors/selectTagsByReviewId'
-import selectUserById from 'selectors/selectUserById'
 
 import ReviewItem from './ReviewItem'
 
@@ -12,10 +10,10 @@ const mapStateToProps = (state, ownProps) =>  {
   const { articleId, id, evaluationId, userId } = review
 
   return {
-    article: selectArticleById(state, articleId),
-    evaluation: selectEvaluationById(state, evaluationId),
+    article: selectEntityByKeyAndId(state, 'articles', articleId),
+    evaluation: selectEntityByKeyAndId(state, 'evaluations', evaluationId),
     tags: selectTagsByReviewId(state, id),
-    user: selectUserById(state, userId),
+    user: selectEntityByKeyAndId(state, 'users', userId),
   }
 }
 

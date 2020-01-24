@@ -11,7 +11,6 @@ import withRoles from 'components/hocs/withRoles'
 import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 import selectReviewsByArticleIdAndVerdictId from 'selectors/selectReviewsByArticleIdAndVerdictId'
-import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
 
 import Article from './Article'
 

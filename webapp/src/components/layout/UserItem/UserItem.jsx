@@ -3,6 +3,7 @@ import React from 'react'
 import Dotdotdot from 'react-dotdotdot'
 
 import Avatar from 'components/layout/Avatar'
+import userType from 'components/types/userType'
 
 import RolesManagerContainer from './RolesManager/RolesManagerContainer'
 
@@ -12,9 +13,14 @@ const UserItem = ({
   tags,
 }) => {
   const {
+    affiliation,
+    expertise,
+    firstName,
     id,
-    publicName,
+    lastName,
+    title
   } = (user || {})
+
   return (
     <article className="user-item">
       <div className="user-info-container">
@@ -25,13 +31,13 @@ const UserItem = ({
         </div>
         <div className="info-container">
           <p className="user-name">
-            Martin Parks
+            {firstName} {lastName}
           </p>
           <p className="user-title">
-            Proffessor associate in UCLA
+            {title}, {affiliation}
           </p>
           <p className="user-specialities">
-            Cardiology, Vaccines, Hematovirology, Heptatites
+            {expertise}
           </p>
         </div>
       </div>
@@ -55,7 +61,7 @@ UserItem.propTypes = {
   adminRole: PropTypes.shape(),
   match: PropTypes.shape().isRequired,
   tags: PropTypes.array,
-  user: PropTypes.shape()
+  user: userType
 }
 
 export default UserItem

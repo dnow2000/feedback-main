@@ -7,7 +7,6 @@ import withQuery from 'with-react-query'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
-import selectArticleById from 'selectors/selectArticleById'
 
 import Verdict from './Verdict'
 

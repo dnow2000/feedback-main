@@ -3,7 +3,6 @@ import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
 import { requestData } from 'redux-thunk-data'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'

@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { showModal } from 'redux-react-modals'
 
 import Feeds from 'components/layout/Feeds/Feeds'
 import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'

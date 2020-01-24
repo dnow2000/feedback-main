@@ -1,8 +1,7 @@
 import { connect } from 'react-redux'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
-import selectArticleById from 'selectors/selectArticleById'
 import selectReviewsByArticleIdAndVerdictId from 'selectors/selectReviewsByArticleIdAndVerdictId'
-import selectUserById from 'selectors/selectUserById'
 
 import VerdictItem from './VerdictItem'
 
@@ -10,13 +9,13 @@ const mapStateToProps = (state, ownProps) =>  {
   const { verdict } = ownProps
   const { articleId, id, userId } = verdict || {}
   return {
-    article: selectArticleById(state, articleId),
+    article: selectEntityByKeyAndId(state, 'articles', articleId),
     reviews: selectReviewsByArticleIdAndVerdictId(
       state,
       articleId,
       id
     ),
-    user: selectUserById(state, userId),
+    user: selectEntityByKeyAndId(state, 'users', userId),
   }
 }
 

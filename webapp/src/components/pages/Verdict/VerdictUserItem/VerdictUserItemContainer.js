@@ -1,11 +1,10 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 import { selectCurrentUser } from 'with-react-redux-login'
 
-import selectEvaluationById from 'selectors/selectEvaluationById'
 import selectTagsByUserId from 'selectors/selectTagsByUserId'
-import selectVerdictById from 'selectors/selectVerdictById'
 
 import VerdictUserItem from './VerdictUserItem'
 import selectReviewByArticleIdAndUserId from './selectors/selectReviewByArticleIdAndUserId'
@@ -14,7 +13,7 @@ const mapStateToProps = (state, ownProps) =>  {
   const { match: { params: { verdictId } } } = ownProps
   const { id: userId } = ownProps.user
 
-  const verdict = selectVerdictById(state, verdictId)
+  const verdict = selectEntityByKeyAndId(state, 'verdicts', verdictId)
   const { articleId } = verdict
 
   const review = selectReviewByArticleIdAndUserId(state, articleId, userId)
@@ -22,7 +21,7 @@ const mapStateToProps = (state, ownProps) =>  {
 
   return {
     currentUser: selectCurrentUser(state),
-    evaluation: selectEvaluationById(state, evaluationId),
+    evaluation: selectEntityByKeyAndId(state, 'evaluations', evaluationId),
     review,
     tags: selectTagsByUserId(state, userId),
     verdict

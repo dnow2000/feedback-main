@@ -3,7 +3,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.role import Role, RoleType
 from models.user import User
-from utils.config import COMMAND_NAME
+from utils.config import APP_NAME, COMMAND_NAME, TLD
 
 def create_roles():
     logger.info('create_roles')
@@ -11,12 +11,12 @@ def create_roles():
     roles_by_name = {}
 
     for user in User.query.all():
-
-        full_name = "{} {}".format(user.firstName, user.lastName)
+        regexp = r'{}test.(.[a-z]+).(.*)@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)
         user_type = re.match(
-            r'{} Test (.*) (.*)'.format(COMMAND_NAME.upper()),
-            full_name
+            regexp,
+            user.email
         ).group(1)
+
 
         if user_type not in ['user', 'master']:
             roles_by_name['{} {}'.format(user.email, user_type)] = Role(

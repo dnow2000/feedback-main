@@ -1,7 +1,7 @@
 from sqlalchemy import Column, String, Text
 
 class HasQualificationMixin(object):
-    academicWebsite = Column(String(30))
+    academicWebsite = Column(String(220))
 
     affiliation = Column(String(220))
 

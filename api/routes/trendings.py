@@ -2,7 +2,9 @@ from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiErrors
 from sqlalchemy_api_handler.utils.get_result import paginate_obj
 
-from domain.trendings import DEVELOPMENT_TRENDINGS, get_topic_with_theme, get_trendings
+from domain.trendings import DEVELOPMENT_TRENDINGS, \
+                             find_trendings, \
+                             get_topic_with_theme
 from repository.trendings import keep_not_saved_trendings
 from utils.config import IS_DEVELOPMENT
 from utils.rest import login_or_api_key_required
@@ -38,7 +40,7 @@ def get_trendings():
     page = int(request.args.get('page', 1))
     topic = get_topic_with_theme(theme)
 
-    trendings = get_trendings(
+    trendings = find_trendings(
         days=days,
         max_trendings=50,
         min_shares=200,

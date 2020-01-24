@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 import { selectCurrentUser } from 'with-react-redux-login'
 import withForm from 'with-react-form'
 import withQuery from 'with-react-query'
@@ -8,7 +9,6 @@ import withQuery from 'with-react-query'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import selectArticleIdByMatchAndQuery from 'selectors/selectArticleIdByMatchAndQuery'
-import selectArticleById from 'selectors/selectArticleById'
 
 import Review from './Review'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
@@ -29,7 +29,7 @@ const mapStateToProps = (state, ownProps) =>  {
   const { isPending } = state.requests['/reviews'] || {}
 
   return {
-    article: selectArticleById(state, articleId),
+    article: selectEntityByKeyAndId(state, 'articles', articleId),
     formInitialValues,
     isPending,
     verdicts: selectVerdictsByArticleIdAndByUserId(state, articleId, userId)

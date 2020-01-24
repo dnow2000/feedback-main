@@ -1,13 +1,12 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
+import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import ArticleItem from './ArticleItem'
 import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
-import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
-import selectReviewsByArticleId from 'selectors/selectReviewsByArticleId'
 
 const mapStateToProps = (state, ownProps) =>  {
   const { article } = ownProps
@@ -24,11 +23,11 @@ const mapStateToProps = (state, ownProps) =>  {
 
   const currentUserReview = selectCurrentUserReviewByArticleId(state, articleId)
 
-  const reviews = selectReviewsByArticleId(state, articleId)
+  const reviews = selectEntitiesByKeyAndJoin(state, 'reviews', 'articleId', articleId)
   const hasReviews = reviews && reviews.length > 0
   const showSeeAllReviews = typeof editorRole !== 'undefined' && hasReviews
 
-  const verdict = selectVerdictsByArticleId(state, articleId)[0]
+  const verdict = selectEntitiesByKeyAndJoin(state, 'verdicts', 'articleId', articleId)[0]
 
   return {
     article,
