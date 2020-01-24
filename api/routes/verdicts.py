@@ -5,7 +5,8 @@ from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 from models.verdict import Verdict
 from repository.verdicts import filter_verdicts_with_article_id
 from routes.utils.includes import VERDICT_INCLUDES
-from utils.rest import expect_json_data,\
+from utils.rest import expect_json_data, \
+                       listify, \
                        login_or_api_key_required
 from validation import check_has_role
 
@@ -18,9 +19,11 @@ def list_verdicts():
     if article_id is not None:
         query = filter_verdicts_with_article_id(query, article_id)
 
-    verdicts = query.all()
-
-    return jsonify([as_dict(verdict, includes=VERDICT_INCLUDES) for verdict in verdicts])
+    return listify(Verdict,
+                   includes=VERDICT_INCLUDES,
+                   page=request.args.get('page'),
+                   paginate=10,
+                   query=query)
 
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
 @login_or_api_key_required

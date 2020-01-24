@@ -28,5 +28,5 @@ requests==2.20.1
 simplejson==3.16.0
 sqlalchemy==1.2.11
 SQLAlchemy==1.2.11
-SQLAlchemy_Api_Handler==0.1.9
+SQLAlchemy_Api_Handler==0.1.12
 werkzeug==0.15.6

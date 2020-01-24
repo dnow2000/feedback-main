@@ -4,16 +4,18 @@ import { useSelector } from 'react-redux'
 import { useLocation } from 'react-router-dom'
 
 import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
-import userType from 'components/types/userType'
-
 import UserItemContainer from 'components/layout//UserItem/UserItemContainer'
+import userType from 'components/types/userType'
+import { userConfig } from 'utils/normalizers'
+
 
 const ApplyingReviewers = () => {
 
   const { search } = useLocation()
   const config = useMemo(() => ({
     apiPath: "/users",
-    activityTag: "applying-reviewers"
+    activityTag: "applying-reviewers",
+    ...userConfig
   }), [search])
 
   const renderItem = useCallback(item => <UserItemContainer user={item} />, [])

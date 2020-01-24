@@ -3,8 +3,8 @@ from sqlalchemy_api_handler import ApiHandler, logger
 from models.article import Article
 from models.tag import Tag
 from models.verdict import Verdict
+from models.verdict_tag import VerdictTag
 from models.user import User
-from tests.utils.creators.create_verdict_tag import create_verdict_tag
 
 def create_verdict_tags():
     logger.info('create_verdict_tags')
@@ -18,7 +18,7 @@ def create_verdict_tags():
         user=user
     ).one()
     tag = Tag.query.filter_by(text="accurate").one()
-    verdict_tags_by_name["Great Barrier / editor 0 / accurate"] = create_verdict_tag(
+    verdict_tags_by_name["Great Barrier / editor 0 / accurate"] = VerdictTag(
         verdict=verdict,
         tag=tag
     )

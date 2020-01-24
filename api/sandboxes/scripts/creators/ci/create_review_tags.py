@@ -2,9 +2,9 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.article import Article
 from models.review import Review
+from models.review_tag import ReviewTag
 from models.tag import Tag
 from models.user import User
-from tests.utils.creators.create_review_tag import create_review_tag
 
 def create_review_tags():
     logger.info('create_review_tags')
@@ -18,7 +18,7 @@ def create_review_tags():
         user=user
     ).one()
     tag = Tag.query.filter_by(text="accurate").one()
-    review_tags_by_name["Great Barrier / reviewer 1 / accurate"] = create_review_tag(
+    review_tags_by_name["Great Barrier / reviewer 1 / accurate"] = ReviewTag(
         review=review,
         tag=tag
     )
@@ -30,7 +30,7 @@ def create_review_tags():
         user=user
     ).one()
     tag = Tag.query.filter_by(text="imprecise / unclear").one()
-    review_tags_by_name["Daily Mail inflates disagreement / reviewer 0 / imprecise"] = create_review_tag(
+    review_tags_by_name["Daily Mail inflates disagreement / reviewer 0 / imprecise"] = ReviewTag(
         review=review,
         tag=tag
     )
@@ -42,7 +42,7 @@ def create_review_tags():
         user=user
     ).one()
     tag = Tag.query.filter_by(text="imprecise / unclear").one()
-    review_tags_by_name["Daily Mail inflates disagreement / reviewer 1 / imprecise"] = create_review_tag(
+    review_tags_by_name["Daily Mail inflates disagreement / reviewer 1 / imprecise"] = ReviewTag(
         review=review,
         tag=tag
     )
