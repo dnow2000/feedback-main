@@ -3,8 +3,8 @@ from sqlalchemy_api_handler import ApiHandler, logger
 from models.evaluation import Evaluation
 
 
-def Evaluations():
-    logger.info('Evaluations')
+def create_evaluations():
+    logger.info('create_evaluations')
 
     evaluations_by_name = {}
 

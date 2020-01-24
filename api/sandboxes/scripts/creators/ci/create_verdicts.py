@@ -3,6 +3,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 from models.article import Article
 from models.evaluation import Evaluation
 from models.user import User
+from models.verdict import Verdict
 
 
 def create_verdicts():

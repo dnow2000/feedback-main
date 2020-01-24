@@ -6,8 +6,8 @@ from models.review_tag import ReviewTag
 from models.tag import Tag
 from models.user import User
 
-def ReviewTags():
-    logger.info('ReviewTags')
+def create_review_tags():
+    logger.info('create_review_tags')
 
     review_tags_by_name = {}
 

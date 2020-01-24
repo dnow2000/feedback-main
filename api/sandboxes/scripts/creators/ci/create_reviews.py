@@ -6,8 +6,8 @@ from models.review import Review
 from models.user import User
 
 
-def Reviews():
-    logger.info('Reviews')
+def create_reviews():
+    logger.info('create_reviews')
 
     reviews_by_name = {}
 

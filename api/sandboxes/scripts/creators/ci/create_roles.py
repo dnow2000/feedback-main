@@ -5,8 +5,8 @@ from models.role import Role, RoleType
 from models.user import User
 from utils.config import COMMAND_NAME
 
-def Roles():
-    logger.info('Roles')
+def create_roles():
+    logger.info('create_roles')
 
     roles_by_name = {}
 
@@ -20,13 +20,13 @@ def Roles():
 
         if user_type not in ['user', 'master']:
             roles_by_name['{} {}'.format(user.email, user_type)] = Role(
-                role_type=user_type,
+                type=user_type,
                 user=user
             )
         elif user_type == "master":
             for role_type in RoleType:
                 roles_by_name['{} {}'.format(user.email, role_type)] = Role(
-                    role_type=role_type.value,
+                    type=role_type.value,
                     user=user
                 )
 

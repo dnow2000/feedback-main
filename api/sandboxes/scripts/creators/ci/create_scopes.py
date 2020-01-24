@@ -6,8 +6,8 @@ from sandboxes.scripts.utils.tags import ARTICLE_TAGS, \
                                          REVIEW_VERDICT_TAGS, \
                                          USER_TAGS
 
-def Scopes():
-    logger.info('Scopes')
+def create_scopes():
+    logger.info('create_scopes')
 
     scopes_by_name = {}
 

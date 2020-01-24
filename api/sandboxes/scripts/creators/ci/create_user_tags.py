@@ -4,8 +4,8 @@ from models.tag import Tag
 from models.user import User
 from models.user_tag import UserTag
 
-def UserTags():
-    logger.info('UserTags')
+def create_user_tags():
+    logger.info('create user_tags')
 
     user_tags_by_name = {}
 

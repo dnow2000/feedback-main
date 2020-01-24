@@ -2,7 +2,6 @@ from flask_login import current_user
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, \
                                    as_dict, \
-                                   listify, \
                                    load_or_404
 
 from models.review import Review
@@ -12,6 +11,7 @@ from repository.reviews import filter_reviews_with_article_id, \
                                save_tags
 from routes.utils.includes import REVIEW_INCLUDES
 from utils.rest import expect_json_data, \
+                       listify, \
                        login_or_api_key_required
 from validation import check_has_role
 
@@ -32,11 +32,11 @@ def list_reviews():
         query = get_reviews_join_query(query)
         query = get_reviews_query_with_keywords(query, keywords)
 
-    return jsonify(listify(Review,
-                            includes=REVIEW_INCLUDES,
-                            query=query,
-                            page=request.args.get('page'),
-                            paginate=10))
+    return listify(Review,
+                   includes=REVIEW_INCLUDES,
+                   query=query,
+                   page=request.args.get('page'),
+                   paginate=10)
 
 @app.route('/reviews/<review_id>', methods=['GET'])
 @login_or_api_key_required

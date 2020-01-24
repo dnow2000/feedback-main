@@ -3,19 +3,19 @@ from flask_login import current_user
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, \
                                    as_dict, \
-                                   listify, \
                                    load_or_404
 
 from models.article import Article
-from repository.articles import get_articles_query_with_keywords, \
-                                filter_articles_by_is_reviewable, \
+from repository.articles import filter_articles_by_is_reviewable, \
                                 get_articles_keywords_join_query, \
+                                get_articles_query_with_keywords, \
                                 resolve_content_with_url
 from routes.utils.includes import ARTICLE_INCLUDES
 from validation.articles import check_article_is_not_yet_saved
 from validation.roles import check_has_role
 from utils.config import API_ROOT_PATH
-from utils.rest import expect_json_data,\
+from utils.rest import expect_json_data, \
+                       listify, \
                        login_or_api_key_required
 
 
@@ -39,18 +39,12 @@ def list_articles():
         query = get_articles_keywords_join_query(query)
         query = get_articles_query_with_keywords(query, keywords)
 
-    article_dicts, total_data_count = listify(Article,
-                            includes=ARTICLE_INCLUDES,
-                            query=query,
-                            page=request.args.get('page'),
-                            paginate=4,
-                            with_total_data_count=True)
-
-    response = jsonify(article_dicts)
-    response.headers['Total-Data-Count'] = total_data_count
-    response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
-
-    return response
+    return listify(Article,
+                   includes=ARTICLE_INCLUDES,
+                   query=query,
+                   page=request.args.get('page'),
+                   paginate=4,
+                   with_total_data_count=True)
 
 
 @app.route('/articles/<article_id>', methods=['GET'])
