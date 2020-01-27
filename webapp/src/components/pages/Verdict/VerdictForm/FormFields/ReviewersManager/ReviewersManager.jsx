@@ -6,7 +6,7 @@ import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
 import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
 import UserItemContainer from './UserItem/UserItemContainer'
-import VerdictUserItemContainer from '../VerdictUserItem/VerdictUserItemContainer'
+import VerdictUserItemContainer from './VerdictUserItem/VerdictUserItemContainer'
 
 const defaultSelectedUserIds = []  // XXX @colas branch to existing
 

@@ -4,7 +4,7 @@ import { selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-
 import { compose } from 'redux'
 
 import ReviewersManager from './ReviewersManager'
-import selectUsersByVerdictId from '../../../../selectors/selectUsersByVerdictId'
+import selectUsersByVerdictId from 'selectors/selectUsersByVerdictId'
 
 function mapStateToProps (state, ownProps) {
   const { match: { params: { verdictId } } } = ownProps

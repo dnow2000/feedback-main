@@ -5,9 +5,6 @@ import { requestData } from 'redux-thunk-data'
 import Dotdotdot from 'react-dotdotdot'
 
 import Icon from 'components/layout/Icon'
-import Authors from 'components/layout/Authors'
-import Extract from 'components/layout/Extract'
-import Tag from 'components/layout/Tag'
 import articleType  from 'components/types/articleType'
 import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
 
