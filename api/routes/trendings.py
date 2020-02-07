@@ -1,3 +1,4 @@
+import os
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiErrors
 from sqlalchemy_api_handler.utils.get_result import paginate_obj
@@ -56,7 +57,7 @@ def get_trendings():
     paginated_trendings = paginate_obj(
         not_saved_trendings,
         page,
-        4
+        os.environ.get('TRENDINGS_PAGINATION', 10)
     ).items
 
     response = jsonify(paginated_trendings)

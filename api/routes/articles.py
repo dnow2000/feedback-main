@@ -43,7 +43,7 @@ def get_articles():
                    includes=ARTICLE_INCLUDES,
                    query=query,
                    page=request.args.get('page'),
-                   paginate=4,
+                   paginate=os.environ.get('ARTICLES_PAGINATION', 10),
                    with_total_data_count=True)
 
 
