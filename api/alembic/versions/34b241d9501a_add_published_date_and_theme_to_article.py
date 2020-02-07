@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('article', sa.Column('publishedDate', sa.Datetime()))
+    op.add_column('article', sa.Column('publishedDate', sa.DateTime()))
     op.add_column('article', sa.Column('theme', sa.String(140)))
 
 
