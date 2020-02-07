@@ -12,10 +12,10 @@ services:
     container_name: ${APP_NAME}-api-test-api
     depends_on:
       - postgres-test-api
+    env_file:
+      - ./.env
+      - ./.env.localhost.secret
     environment:
-      - APP_NAME=$APP_NAME
-      - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
-      - COMMAND_NAME=$COMMAND_NAME
       - ENV=${ENV:-development}
       - GIT_TAG=$GIT_TAG
       - MODE=${MODE:-test-api}

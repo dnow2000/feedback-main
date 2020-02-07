@@ -12,10 +12,10 @@ services:
     container_name: ${APP_NAME}-api-serve-development
     depends_on:
       - postgres-serve-development
+    env_file:
+      - ./.env
+      - ./.env.localhost.secret
     environment:
-      - APP_NAME=$APP_NAME
-      - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
-      - COMMAND_NAME=$COMMAND_NAME
       - ENV=${ENV:-development}
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
       - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-serve-development/${DB_NAME}

@@ -3,8 +3,7 @@ from sqlalchemy_api_handler import ApiErrors
 from sqlalchemy_api_handler.utils.get_result import paginate_obj
 
 from domain.trendings import DEVELOPMENT_TRENDINGS, \
-                             find_trendings, \
-                             get_topic_with_theme
+                             find_trendings
 from repository.trendings import keep_not_saved_trendings
 from utils.config import IS_DEVELOPMENT
 from utils.rest import login_or_api_key_required
@@ -38,13 +37,12 @@ def get_trendings():
     theme = request.args.get('theme')
     days = request.args.get('days')
     page = int(request.args.get('page', 1))
-    topic = get_topic_with_theme(theme)
 
     trendings = find_trendings(
         days=days,
         max_trendings=50,
         min_shares=200,
-        topic=topic,
+        theme=theme,
     )
 
     not_saved_trendings = keep_not_saved_trendings(trendings)

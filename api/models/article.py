@@ -2,6 +2,7 @@ from flask_login import current_user
 from sqlalchemy import BigInteger, \
                        Boolean, \
                        Column, \
+                       DateTime, \
                        Text, \
                        String
 from typing import Iterable
@@ -30,9 +31,13 @@ class Article(ApiHandler,
 
     isValidatedAsPeerPublication = Column(Boolean, nullable=False, default=False)
 
+    publishedDate = Column(DateTime)
+
     summary = Column(Text)
 
     tags = Column(Text)
+
+    theme = Column(String(140))
 
     title = Column(String(140))
 

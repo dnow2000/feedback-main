@@ -112,6 +112,7 @@ const Review = ({
               <ArticleItemContainer
                 article={article}
                 noControl
+                withTheme
               />
             </section>)}
 

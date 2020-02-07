@@ -1,6 +1,9 @@
 import os
+from datetime import datetime
 from sqlalchemy_api_handler import logger
 from urllib.parse import urlencode
+
+from utils.date import strftime
 
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
 BUZZSUMO_API_URL = "http://api.buzzsumo.com/search"
@@ -27,8 +30,9 @@ def get_buzzsumo_url(buzzsumo_api_name, url_query):
 def get_content_with_buzzsumo_result(result):
     content = {
         'buzzsumoId': int(result['id']),
-        'facebookShares': result['total_facebook_shares'],
         'externalThumbUrl': result['thumbnail'],
+        'facebookShares': result['total_facebook_shares'],
+        'publishedDate': strftime(datetime.utcfromtimestamp(result['published_date'])),
         'subdomain': result['subdomain'],
         'title': result['title'],
         'totalShares': result['total_shares'],

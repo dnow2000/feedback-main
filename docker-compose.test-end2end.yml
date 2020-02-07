@@ -12,10 +12,10 @@ services:
     container_name: ${APP_NAME}-api-test-end2end
     depends_on:
       - postgres-test-end2end
+    env_file:
+      - ./.env
+      - ./.env.localhost.secret
     environment:
-      - APP_NAME=$APP_NAME
-      - BUZZSUMO_API_KEY=$BUZZSUMO_API_KEY
-      - COMMAND_NAME=$COMMAND_NAME
       - ENV=${ENV:-development}
       - GIT_TAG=$GIT_TAG
       - MODE=${MODE:-test-end2end}

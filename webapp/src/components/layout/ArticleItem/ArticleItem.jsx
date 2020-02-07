@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 import Dotdotdot from 'react-dotdotdot'
@@ -7,6 +7,7 @@ import Dotdotdot from 'react-dotdotdot'
 import Icon from 'components/layout/Icon'
 import articleType  from 'components/types/articleType'
 import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
+import { getFormatPublishedDate } from 'utils/moment'
 
 const round = (x, n) => {
   return Math.round(x*10**n) / 10**n
@@ -35,13 +36,15 @@ const ArticleItem = ({
   showSeeAllReviews,
   verdict,
   withEditButton,
-  withShares
+  withShares,
+  withTheme
 }) => {
   const {
     authors,
     externalThumbUrl,
     facebookShares,
     id,
+    publishedDate,
     summary,
     theme,
     thumbCount,
@@ -53,6 +56,9 @@ const ArticleItem = ({
   const { params: { articleId: routeArticleId } } = match
   const { id: currentUserReviewId } = currentUserReview || {}
   const { id: verdictId } = verdict || {}
+
+  const formatPublishedDate = useMemo(() =>
+    getFormatPublishedDate(publishedDate), [publishedDate])
 
   const onDeleteClick = useCallback(() => {
     dispatch(requestData({
@@ -74,9 +80,9 @@ const ArticleItem = ({
       >
 
         <div className="article-header">
-          <p className="article-tag">Climate</p>
+          {withTheme && theme && <p className="article-tag">{theme}</p>}
           <div className="article-date">
-            <p >4 Dec 2019</p>
+            <p >{formatPublishedDate}</p>
             {onClickEdit && (
               <button className="article-edit" onClick={onClickEdit}>
                 <Icon className="icon" name="ico-edit.svg" />
@@ -181,6 +187,7 @@ ArticleItem.defaultProps = {
   showSeeAllReviews: false,
   verdict: null,
   withShares: true,
+  withTheme: false
 }
 
 ArticleItem.propTypes = {
@@ -197,6 +204,7 @@ ArticleItem.propTypes = {
   verdict: PropTypes.object,
   withEditButton: PropTypes.bool,
   withShares: PropTypes.bool,
+  withTheme: PropTypes.bool
 }
 
 export default ArticleItem

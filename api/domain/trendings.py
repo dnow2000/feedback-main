@@ -9,6 +9,7 @@ DEVELOPMENT_TRENDINGS = [{
     'buzzsumoId': 123,
     'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/170708175538-05-trump-abroad-0708-super-tease.jpg',
     'facebookShares': 1000,
+    'publishedDate': "Tue, 12 Mar 2019 01:02:00 GMT",
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
     'title': "Donald Trump buried a climate change report because 'I don't believe it'",
@@ -19,6 +20,7 @@ DEVELOPMENT_TRENDINGS = [{
     'buzzsumoId': 1231,
     'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/180804095014-03-file-climate-change-super-tease.jpg',
     'facebookShares': 178670,
+    'publishedDate': "Wed, 13 Mar 2019 01:02:00 GMT",
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
     'title': "Climate change will shrink US economy and kill thousands, government report warns",
@@ -29,6 +31,7 @@ DEVELOPMENT_TRENDINGS = [{
     'buzzsumoId': 1232,
     'externalThumbUrl': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',
     'facebookShares': 1423505,
+    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
     'subdomain': 'www.upworthy.com',
     'tags': 'climate',
     'title': "Patagonia’s CEO is donating company’s entire $10M Trump tax cut to fight climate change.",
@@ -39,6 +42,7 @@ DEVELOPMENT_TRENDINGS = [{
     'buzzsumoId': 12321234,
     'facebookShares': 178670,
     'externalThumbUrl': 'https://www.motherjones.com/wp-content/uploads/2018/12/trump-g20-120118.jpeg?w=1200&h=630&crop=1',
+    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
     'subdomain': 'www.motherjones.com',
     'tags': 'climate',
     'title': "19 of 20 world leaders just pledged to fight climate change. Trump was the lone holdout.",
@@ -49,6 +53,7 @@ DEVELOPMENT_TRENDINGS = [{
     'buzzsumoId': 12321235,
     'facebookShares': 178650,
     'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
+    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
     'title': "Trump signs $1.8 billion autism funding bill.",
@@ -59,6 +64,7 @@ DEVELOPMENT_TRENDINGS = [{
     'buzzsumoId': 121212,
     'facebookShares': 138650,
     'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
+    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
     'title': "Hacer ejercicio, la mejor arma para luchar contra la depresión.",
@@ -78,15 +84,17 @@ def get_topic_with_theme(theme):
 
 def find_trendings(
     days=1,
-    topic=None,
     max_trendings=3,
     min_shares=10000,
+    theme=None,
 ):
 
     config = {
         "count": max_trendings * 2,
         "search_type": "trending_now"
     }
+
+    topic = get_topic_with_theme(theme)
     if topic:
         config["topic"] = topic
     if days:
@@ -112,6 +120,8 @@ def find_trendings(
             continue
 
         trending = get_content_with_buzzsumo_result(result)
+        if theme:
+            trending['theme'] = theme.title()
 
         if trending.get('url') in urls:
             print('WARNING, BUZZSUMO RETURNS SEVERAL TIMES THE SAME URL')
