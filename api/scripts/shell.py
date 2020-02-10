@@ -14,4 +14,4 @@ db.init_app(flask_app)
 ApiHandler.set_db(db)
 
 flask_app.app_context().push()
-import_models()
+import_models() 
