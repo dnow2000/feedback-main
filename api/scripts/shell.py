@@ -2,7 +2,7 @@ import os
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
-from models.utils import import_models
+from models import import_models
 from models.utils.db import db
 
 flask_app = Flask(__name__)
