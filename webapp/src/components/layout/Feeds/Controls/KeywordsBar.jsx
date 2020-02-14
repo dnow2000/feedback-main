@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo, input } from 'react'
-import { Form } from 'react-final-form'
+import React, { useCallback, useEffect, useRef, useState } from 'react'
 
 import Icon from 'components/layout/Icon'
 
@@ -9,38 +8,44 @@ const KeywordsBar = ({
   selectedKeywords
 }) => {
 
-  const initialValues = useMemo(() =>
-    ({ keywords: selectedKeywords }), [selectedKeywords])
+  const [value, setValue] = useState(selectedKeywords)
 
-  const handleKeywordsSubmit = useCallback(values => {
-    const { keywords } = values
-    onChange('keywords', keywords)
-  }, [onChange])
+  const handleKeywordsClick = useCallback(() =>
+    onChange('keywords', value), [onChange, value])
+
+  const inputRef = useRef()
+
+  const handlePressEnter = useCallback(event => {
+    if (event.keyCode === 13) {
+      event.preventDefault()
+      handleKeywordsClick()
+    }
+  }, [handleKeywordsClick])
+
+  useEffect(() => {
+    const inputElement = inputRef.current
+    inputElement.addEventListener("keyup", handlePressEnter)
+    return () => inputElement.removeEventListener("keyup", handlePressEnter)
+  }, [handlePressEnter])
 
   return (
-    <Form
-      initialValues={initialValues}
-      onSubmit={handleKeywordsSubmit}
-      render={({ handleSubmit }) => (
-        <form
-          className="keywords-bar"
-          onSubmit={handleSubmit}
-        >
-          <input
-            {...input}
-            className="keywords-input"
-            name="keywords"
-            placeholder="Type your search"
-          />
-          <button
-            className="is-inner-input"
-            type="submit"
-          >
-            <Icon className="icon" name="loupe.svg" />
-          </button>
-        </form>
-      )}
-    />
+    <div className="keywords-bar">
+      <input
+        className="keywords-input"
+        defaultValue={value}
+        name="keywords"
+        onChange={event => setValue(event.target.value)}
+        placeholder="Type your search"
+        ref={inputRef}
+      />
+      <button
+        className="is-inner-input"
+        onClick={handleKeywordsClick}
+        type="button"
+      >
+        <Icon className="icon" name="loupe.svg" />
+      </button>
+    </div>
   )
 }
 
