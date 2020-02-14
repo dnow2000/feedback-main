@@ -2,6 +2,7 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import Feeds from 'components/layout/Feeds/Feeds'
+import Icon from 'components/layout/Icon'
 import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
 import UserItemContainer from './UserItem/UserItemContainer'
@@ -52,32 +53,47 @@ const ReviewersManager = ({
   ), [handleClickUser]
   )
 
+  console.log(verdictUsers)
+
   return (
-    <div>
-      <h2 className="subtitle flex-columns items-center">
-        {"REVIEWS"}
+    <div className="reviewers-manager">
+      <h2 className="subtitle">
+        {"Reviews"}
       </h2>
       {
-        reviews && reviews.map(review => (
-          <ReviewItemContainer
-            key={review.id}
-            review={review}
-          />
-        ))
+        (reviews && reviews.length > 0)
+          ? reviews.map(review => (
+              <ReviewItemContainer
+                key={review.id}
+                review={review}
+              />
+            ))
+          : (
+            <div className="empty-review">
+              <div>
+                <Icon name="ico-plume.svg" />
+                <div>
+                  {'No reviews yet !'}
+                </div>
+              </div>
+            </div>)
+
       }
-      <h2 className="subtitle flex-columns items-center">
-        {"SELECTED REVIEWERS"}
-      </h2>
       {
-        verdictUsers && verdictUsers.map(verdictUser => (
-          <VerdictUserItemContainer
-            key={verdictUser.id}
-            user={verdictUser}
-          />
-        ))
+        (verdictUsers && verdictUsers.length > 0) && (
+          <>
+            <h2 className="subtitle">
+              {"Selected Reviewers"}
+            </h2>
+            {verdictUsers.map(verdictUser => (
+              <VerdictUserItemContainer
+                key={verdictUser.id}
+                user={verdictUser}
+              />))}
+          </>)
       }
-      <h2 className="subtitle flex-columns items-center">
-        {"RECRUIT REVIEWERS"}
+      <h2 className="subtitle">
+        {"Recruit Reviewers"}
       </h2>
       <Feeds
         cols={2}

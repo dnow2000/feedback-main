@@ -18,7 +18,7 @@
 
       .title {
         color: $grey-darker;
-        font-size: $font-size-big;
+        font-size: $font-size-very-big;
         font-weight: $font-weight-bold;
         margin-bottom: 1rem;
       }
@@ -31,9 +31,9 @@
       }
 
       .subtitle {
-        color: $grey;
-        font-weight: $font-weight-semibold;
-        font-size: $font-size-little-big;
+        color: $grey_darker;
+        font-weight: $font-weight-bold;
+        font-size: $font-size-bigger;
         margin-bottom: 0.5rem;
       }
     }

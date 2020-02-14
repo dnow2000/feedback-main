@@ -1,18 +1,13 @@
+@import 'VerdictForm/index.scss';
+
 .verdict-main {
   .container {
     max-width: 41rem;
-  }
 
-  .control.level{
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background-color: rgba(255,255,255,0.8);
-    height: 100px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    flex: 1;
-    position: fixed;
+    section {
+      .title {
+          font-size: 1.75rem;
+      }
+    }
   }
 }

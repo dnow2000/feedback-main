@@ -1,0 +1,13 @@
+.reviewers-manager {
+  .empty-review {
+    align-items: center;
+    background-color: $grey-very-lighter;
+    border-radius: $border-radius;
+    color: rgba(176, 180, 209, 0.57);
+    display: flex;
+    height: 7.75rem;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+}
