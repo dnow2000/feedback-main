@@ -11,7 +11,7 @@ function mapStateToProps (state, ownProps) {
   const verdictUsers = selectUsersByVerdictId(state, verdictId)
   const verdict = selectEntityByKeyAndId(state, 'verdicts', verdictId)
   const { articleId } = verdict || {}
-  const reviews = selectEntitiesByKeyAndJoin(state, 'reviews', 'articleId', articleId)
+  const reviews = selectEntitiesByKeyAndJoin(state, 'reviews', { key: 'articleId', value: articleId })
   return {
     verdictUsers,
     reviews: reviews

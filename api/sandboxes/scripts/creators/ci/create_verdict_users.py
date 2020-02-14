@@ -10,7 +10,7 @@ def create_verdict_users():
 
     verdict_users_by_name = {}
 
-    article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
+    article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     editor_user = User.query.filter_by(email="sftest.editor.0@sciencefeedback.co").one()
     verdict = Verdict.query.filter_by(
         article=article,

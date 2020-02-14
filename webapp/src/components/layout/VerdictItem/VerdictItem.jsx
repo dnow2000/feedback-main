@@ -1,13 +1,9 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
-import Dotdotdot from 'react-dotdotdot'
-import { NavLink } from 'react-router-dom'
 
 import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
 import Avatar from 'components/layout/Avatar'
-import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
-
 
 const RATING_VALUES = ['2', '1', '0', '-1', '-2', 'na']
 const MAX_AVATARS = 5
@@ -30,7 +26,6 @@ function getBarSizeByValue_DEPRECATE(ratings) {  // eslint-disable-line
   for (const value of Object.keys(countsByValue)) {
     barSizeByValue[value] = lagSize + countsByValue[value] / totalCount * (maxSize - lagSize)
   }
-  console.log('BAR SIZES', barSizeByValue)
   return barSizeByValue
 }
 
@@ -84,9 +79,7 @@ function getTruncatedReviewers(reviews) {
 
 
 const VerdictItem = ({ article, verdict, user }) => {
-  const { title, url } = article || {}
-  const { comment, id, rating, user: editor, reviews } = verdict
-  const { publicName } = user || {}
+  const { user: editor, reviews } = verdict
 
   // XXX @quentin: put back first line and remove second line when done testing
   // const ratings = reviews.map(r => r.rating)

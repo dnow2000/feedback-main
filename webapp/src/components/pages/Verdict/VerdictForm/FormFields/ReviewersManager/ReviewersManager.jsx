@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 import Feeds from 'components/layout/Feeds/Feeds'
-import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
 import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
 import UserItemContainer from './UserItem/UserItemContainer'
@@ -30,13 +29,13 @@ const ReviewersManager = ({
       console.log('CHANGE', userId, selectedUserIds.length, nextSelectedUserIds.length, nextSelectedUserIds)
       return nextSelectedUserIds
     })
-    }, [selectedUserIds, setSelectedUserIds]
+    }, [setSelectedUserIds]
   )
   useEffect(() => {
     if (onChange) {
       onChange(selectedUserIds)
     }
-  }, [selectedUserIds])
+  }, [onChange, selectedUserIds])
 
   console.log('REVIEWS', reviews && reviews.length)
   console.log('SELECTED', selectedUserIds.length)
@@ -50,7 +49,7 @@ const ReviewersManager = ({
       onClick={handleClickUser}
       user={item}
     />
-    ), []
+  ), [handleClickUser]
   )
 
   return (

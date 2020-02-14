@@ -4,7 +4,7 @@ import React, { useCallback } from 'react'
 import { trendingMaxDays } from './utils'
 
 const Days = ({
-  selectedDays=1,
+  selectedDays='1',
   onChange
 }) => {
 
@@ -32,7 +32,7 @@ const Days = ({
 
 Days.propTypes = {
   onChange: PropTypes.func.isRequired,
-  selectedDays: PropTypes.number
+  selectedDays: PropTypes.string
 }
 
 export default Days

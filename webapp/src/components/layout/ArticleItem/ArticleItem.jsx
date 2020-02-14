@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { requestData } from 'redux-thunk-data'
 import Dotdotdot from 'react-dotdotdot'
 
 import Icon from 'components/layout/Icon'
@@ -45,7 +44,6 @@ const ArticleItem = ({
     facebookShares,
     id,
     publishedDate,
-    summary,
     theme,
     thumbCount,
     title,
@@ -53,19 +51,11 @@ const ArticleItem = ({
     twitterShares,
     url
   } = article || {}
-  const { params: { articleId: routeArticleId } } = match
   const { id: currentUserReviewId } = currentUserReview || {}
   const { id: verdictId } = verdict || {}
 
   const formatPublishedDate = useMemo(() =>
     getFormatPublishedDate(publishedDate), [publishedDate])
-
-  const onDeleteClick = useCallback(() => {
-    dispatch(requestData({
-      apiPath: `/articles/${id}`,
-      method: 'DELETE'
-    }))
-  }, [dispatch])
 
   const articleImgSrc = externalThumbUrl ||
     (
@@ -97,7 +87,7 @@ const ArticleItem = ({
             <img
               alt="Article illustration"
               className="thumbnail-image"
-              src={externalThumbUrl}
+              src={articleImgSrc}
             />
           </div>
           <div className="article-summary-container">
@@ -155,7 +145,9 @@ const ArticleItem = ({
                     : `/verdicts/creation?articleId=${id}`
                 }
               >
-                Edit Verdict
+                {verdictId
+                  ? 'Work on verdict'
+                  : 'Write your verdict'}
               </NavLink>
             )}
             {canReview && (

@@ -13,7 +13,7 @@ import Verdict from './Verdict'
 const mapStateToProps = (state, ownProps) =>  {
   const { match: { params: { verdictId } }, query } = ownProps
   const { buzzsumoId } = query.getParams()
-  const trending = selectEntitiesByKeyAndJoin(state, 'trendings', 'buzzsumoId', buzzsumoId)[0]
+  const trending = selectEntitiesByKeyAndJoin(state, 'trendings', { key: 'buzzsumoId', value: buzzsumoId })[0]
   const verdict = selectEntityByKeyAndId(state, 'verdicts', verdictId)
   const { articleId } = verdict || {}
   const article = selectEntityByKeyAndId(state, 'articles', articleId)

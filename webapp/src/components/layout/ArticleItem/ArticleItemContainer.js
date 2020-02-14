@@ -23,11 +23,12 @@ const mapStateToProps = (state, ownProps) =>  {
 
   const currentUserReview = selectCurrentUserReviewByArticleId(state, articleId)
 
-  const reviews = selectEntitiesByKeyAndJoin(state, 'reviews', 'articleId', articleId)
+  const articleJoin = { key: 'articleId', value: articleId }
+  const reviews = selectEntitiesByKeyAndJoin(state, 'reviews', articleJoin)
   const hasReviews = reviews && reviews.length > 0
   const showSeeAllReviews = typeof editorRole !== 'undefined' && hasReviews
 
-  const verdict = selectEntitiesByKeyAndJoin(state, 'verdicts', 'articleId', articleId)[0]
+  const verdict = selectEntitiesByKeyAndJoin(state, 'verdicts', articleJoin)[0]
 
   return {
     article,

@@ -1,11 +1,8 @@
 import PropTypes from 'prop-types'
 import React from 'react'
-import Dotdotdot from 'react-dotdotdot'
 
 import Avatar from 'components/layout/Avatar'
 import userType from 'components/types/userType'
-
-import RolesManagerContainer from './RolesManager/RolesManagerContainer'
 
 const UserItem = ({
   adminRole,
@@ -16,7 +13,6 @@ const UserItem = ({
     affiliation,
     expertise,
     firstName,
-    id,
     lastName,
     title
   } = (user || {})
@@ -46,7 +42,6 @@ const UserItem = ({
           View Profile
         </button>
       </div>
-
     </article>
   )
 }

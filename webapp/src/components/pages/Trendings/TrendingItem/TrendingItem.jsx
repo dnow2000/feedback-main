@@ -38,7 +38,6 @@ const TrendingItem = ({ dispatch, trending }) => {
   const formatPublishedDate = useMemo(() =>
     getFormatPublishedDate(publishedDate), [publishedDate])
 
-  const [isDismissed, setIsDismissed] = useState(false)
   const [isReviewable, setIsReviewable] = useState(undefined)
 
   const handleSaveTrending = useCallback(trendingExtraData => () => {
@@ -54,10 +53,9 @@ const TrendingItem = ({ dispatch, trending }) => {
     dispatch(requestData({
       apiPath: '/articles',
       body,
-      handleSuccess: () => setIsDismissed(true),
       method: 'POST',
     }))
-  }, [dispatch, trending, setIsDismissed, setIsReviewable])
+  }, [dispatch, trending, setIsReviewable])
 
   return (
     <article className="article-item">

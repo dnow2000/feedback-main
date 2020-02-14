@@ -1,8 +1,8 @@
 export const trendingMaxDays = [
-  { label: 'Today', value: 1 },
-  { label: '2 days', value: 2 },
-  { label: '1 week', value: 7 },
-  { label: '1 month', value: 30 }
+  { label: 'Today', value: '1' },
+  { label: '2 days', value: '2' },
+  { label: '1 week', value: '7' },
+  { label: '1 month', value: '30' }
 ]
 
 export const trendingThemes = [

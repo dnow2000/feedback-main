@@ -33,7 +33,7 @@ const mapStateToProps = (state, ownProps) => {
     currentUser,
     reviewerRole,
     userReview: selectCurrentUserReviewByArticleId(state, articleId),
-    verdicts: selectEntitiesByKeyAndJoin(state, 'verdicts', 'articleId', articleId),
+    verdicts: selectEntitiesByKeyAndJoin(state, 'verdicts', { key: 'articleId', value: articleId }),
     withoutVerdictReviews: selectReviewsByArticleIdAndVerdictId(
       state,
       articleId,

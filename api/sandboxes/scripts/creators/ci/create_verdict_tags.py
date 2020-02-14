@@ -11,14 +11,14 @@ def create_verdict_tags():
 
     verdict_tags_by_name = {}
 
-    article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
+    article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     user = User.query.filter_by(email="sftest.editor.0@sciencefeedback.co").one()
     verdict = Verdict.query.filter_by(
         article=article,
         user=user
     ).one()
-    tag = Tag.query.filter_by(text="accurate").one()
-    verdict_tags_by_name["Great Barrier / editor 0 / accurate"] = VerdictTag(
+    tag = Tag.query.filter_by(text="inaccurate").one()
+    verdict_tags_by_name["Great Barrier / editor 0 / inaccurate"] = VerdictTag(
         verdict=verdict,
         tag=tag
     )

@@ -6,7 +6,7 @@ import { requestData } from 'redux-thunk-data'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
-import { articleNormalizer, verdictNormalizer } from 'utils/normalizers'
+import { verdictNormalizer } from 'utils/normalizers'
 
 import VerdictForm from './VerdictForm/VerdictForm'
 
