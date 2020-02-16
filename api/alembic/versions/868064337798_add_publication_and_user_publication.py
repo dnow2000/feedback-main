@@ -24,6 +24,7 @@ def upgrade():
         sa.Column('isSoftDeleted', sa.BOOLEAN(), default=False, nullable=False),
         sa.Column('summary', sa.Text()),
         sa.Column('tags', sa.Text()),
+        sa.Column('title', sa.String(140)),
         sa.Column('url', sa.String(220), nullable=False, unique=True)
     )
 
