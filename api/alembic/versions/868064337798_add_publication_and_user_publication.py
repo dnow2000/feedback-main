@@ -21,7 +21,7 @@ def upgrade():
         'publication',
         sa.Column('externalThumbUrl', sa.String(220)),
         sa.Column('id', sa.BigInteger(), primary_key=True, autoincrement=True),
-        sa.Column('isSoftDeleted', sa.BOOLEAN()),
+        sa.Column('isSoftDeleted', sa.BOOLEAN(), default=False, nullable=False),
         sa.Column('summary', sa.Text()),
         sa.Column('tags', sa.Text()),
         sa.Column('url', sa.String(220), nullable=False, unique=True)
