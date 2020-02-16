@@ -19,7 +19,9 @@ depends_on = None
 def upgrade():
     op.create_table(
         'publication',
+        sa.Column('externalThumbUrl', sa.String(220)),
         sa.Column('id', sa.BigInteger(), primary_key=True, autoincrement=True),
+        sa.Column('isSoftDeleted', sa.BOOLEAN()),
         sa.Column('summary', sa.Text()),
         sa.Column('tags', sa.Text()),
         sa.Column('url', sa.String(220), nullable=False, unique=True)
