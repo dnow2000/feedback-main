@@ -17,8 +17,8 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('user', 'academicWebsite', sa.Column(String(220)))
+    op.alter_column('user', 'academicWebsite', sa.Column(sa.String(220)))
 
 
 def downgrade():
-    op.alter_column('user', 'academicWebsite', sa.Column(String(30)))
+    op.alter_column('user', 'academicWebsite', sa.Column(sa.String(30)))
