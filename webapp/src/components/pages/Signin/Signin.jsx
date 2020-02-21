@@ -28,12 +28,12 @@ class Signin extends PureComponent {
 
   handleRequestSuccess = formResolver => () => {
     const { history, query } = this.props
-    const queryParams = query.getParams()
+    const { params: { from } } = query
     const nextState = { isFormLoading: false }
     this.setState(nextState, () => {
       formResolver()
-      const nextUrl = queryParams.from
-        ? decodeURIComponent(queryParams.from)
+      const nextUrl = from
+        ? decodeURIComponent(from)
         : '/articles'
       history.push(nextUrl)
     })

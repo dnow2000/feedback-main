@@ -11,11 +11,11 @@ const Controls = ({
   config,
   dispatch,
   history: { push },
-  query: { getParams: getQueryParams, getSearchFromUpdate }
+  query: {
+    getSearchFromUpdate,
+    params: { days, keywords, theme }
+  }
 }) => {
-  const { days, keywords, theme } = getQueryParams()
-
-
   const handleChange =  useCallback((key, value) => {
     const isEmptyValue =
       typeof value === 'undefined' ||

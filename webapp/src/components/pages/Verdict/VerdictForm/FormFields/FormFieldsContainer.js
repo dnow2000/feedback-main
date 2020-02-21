@@ -12,8 +12,10 @@ import FormFields from './FormFields'
 
 
 const mapStateToProps = (state, ownProps) =>  {
-  const { match: { params: { verdictId } }, query } = ownProps
-  const { buzzsumoId } = query.getParams()
+  const {
+    match: { params: { verdictId } },
+    query: { params: { buzzsumoId } }
+  } = ownProps
   const trending = selectEntitiesByKeyAndJoin(state, 'trendings', { key: 'buzzsumoId', value: buzzsumoId })[0]
   const verdict = selectEntityByKeyAndId(state, 'verdicts', verdictId)
   const { articleId } = verdict || {}

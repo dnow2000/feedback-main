@@ -21,9 +21,9 @@ const Review = ({
   formInitialValues,
   history,
   isPending,
-  query
+  query: { params }
 }) => {
-  const { articleId } = query.getParams()
+  const { articleId } = params
 
   const handleSubmitReview = useCallback(formValues => {
     let apiPath = "/reviews"
@@ -146,7 +146,7 @@ Review.propTypes = {
     push: PropTypes.func.isRequired
   }).isRequired,
   query: PropTypes.shape({
-    getParams: PropTypes.func.isRequired
+    params: PropTypes.shape()
   }).isRequired
 }
 

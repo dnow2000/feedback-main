@@ -17,10 +17,8 @@ const Verdict = ({
   history,
   isPending,
   match: { params: { verdictId } },
-  query: { getParams }
+  query: { params: { buzzsumoId } }
 }) => {
-  const { buzzsumoId } = getParams()
-
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
     const apiPath = `/verdicts/${id || ''}`

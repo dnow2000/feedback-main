@@ -9,9 +9,7 @@ import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
 import Verdicts from './Verdicts'
 
 const mapStateToProps = (state, ownProps) => {
-  const { query } = ownProps
-  const queryParams = query.getParams()
-  const { articleId } = queryParams
+  const { query: { params: { articleId } } } = ownProps
   return {
     verdicts: articleId
       ? selectVerdictsByArticleId(state, articleId)
