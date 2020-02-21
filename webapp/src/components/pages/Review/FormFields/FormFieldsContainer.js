@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
-import withForm from 'with-react-form'
+import withFormidable from 'with-react-formidable'
 
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
 import selectTagsByScopes from 'selectors/selectTagsByScopes'
@@ -17,6 +17,6 @@ const mapStateToProps = state =>  {
 
 export default compose(
   withRouter,
-  withForm,
+  withFormidable,
   connect(mapStateToProps)
 )(FormFields)

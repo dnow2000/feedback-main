@@ -1,6 +1,7 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { useFormidable } from 'with-react-formidable'
 
 import CheckboxField from 'components/layout/form/fields/CheckboxField'
 import TextareaField from 'components/layout/form/fields/TextareaField'
@@ -12,10 +13,9 @@ import createValidateScrapField from './validators/createValidateScrapField'
 const validateScrapField = createValidateScrapField()
 
 const FormFields = ({
-  form,
   validating
 }) => {
-  const { isModifiedEntity, readOnly } = form
+  const { isModifiedEntity, readOnly } = useFormidable()
 
   return (
     <div className="section">
@@ -89,7 +89,7 @@ FormFields.defaultProps = {
 }
 
 FormFields.propTypes = {
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     isModifiedEntity: PropTypes.bool,
     readOnly: PropTypes.bool,
   }).isRequired,

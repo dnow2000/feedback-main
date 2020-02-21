@@ -28,8 +28,8 @@ class Article extends PureComponent {
   }
 
   handleRequestData = () => {
-    const { dispatch, form } = this.props
-    const { id, isCreatedEntity } = form
+    const { dispatch, formidable } = this.props
+    const { id, isCreatedEntity } = formidable
 
     if (isCreatedEntity) {
       return
@@ -64,8 +64,8 @@ class Article extends PureComponent {
   }
 
   onFormSubmit = formValues => {
-    const { article, dispatch, form } = this.props
-    const { method } = form
+    const { article, dispatch, formidable } = this.props
+    const { method } = formidable
     const { id } = (article || {})
 
     const apiPath = `/articles/${id || ''}`
@@ -83,8 +83,8 @@ class Article extends PureComponent {
   }
 
   render() {
-    const { article, canCreateArticle, form, history } = this.props
-    const { creationUrl, isCreatedEntity } = form
+    const { article, canCreateArticle, formidable, history } = this.props
+    const { creationUrl, isCreatedEntity } = formidable
     const { id } = (article || {})
     const { isFormLoading } = this.state
 
@@ -172,7 +172,7 @@ Article.propTypes = {
   article: PropTypes.object,
   canCreateArticle: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     creationUrl: PropTypes.string,
     id: PropTypes.string,
     isCreatedEntity: PropTypes.bool,

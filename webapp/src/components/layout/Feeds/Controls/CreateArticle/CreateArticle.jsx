@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 
 const CreateArticle = ({
-  form: { creationUrl }
+  formidable: { creationUrl }
   history: { push }
 }) => {
 

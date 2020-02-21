@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
-import withForm from 'with-react-form'
+import withFormidable from 'with-react-formidable'
 import withQuery from 'with-react-query'
 import { selectCurrentUser } from 'with-react-redux-login'
 
@@ -45,7 +45,7 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
   withRouter,
   withQuery(),
-  withForm,
+  withFormidable,
   withRequiredLogin,
   withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
   connect(mapStateToProps)

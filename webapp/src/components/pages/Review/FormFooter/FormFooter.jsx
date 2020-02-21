@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom'
 
 const FormFooter = ({
   canSubmit,
-  form,
+  formidable,
   history,
   isPending,
   match,
@@ -18,7 +18,7 @@ const FormFooter = ({
     isCreatedEntity,
     modificationUrl,
     readOnly
-  } = form
+  } = formidable
 
   const handleModifyClick = useCallback(() => {
     history.push(modificationUrl)
@@ -84,7 +84,7 @@ FormFooter.defaultProps = {
 
 FormFooter.propTypes = {
   canSubmit: PropTypes.bool,
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     isCreatedEntity: PropTypes.bool.isRequired,
     modificationUrl: PropTypes.string,
     readOnly: PropTypes.bool.isRequired

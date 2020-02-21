@@ -1,7 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { compose } from 'redux'
-import withForm from 'with-react-form'
+import withFormidable from 'with-react-formidable'
 
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
@@ -97,7 +97,7 @@ const routes = [
   {
     component: compose(
       withRequiredLogin,
-      withForm,
+      withFormidable,
       withRoles({ accessRoleTypes: ['editor'] })
     )(Trendings),
     exact: true,

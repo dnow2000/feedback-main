@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
-import withForm from 'with-react-form'
+import withFormidable from 'with-react-formidable'
 import withQuery from 'with-react-query'
 
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
@@ -33,7 +33,7 @@ const mapStateToProps = (state, ownProps) =>  {
 
 export default compose(
   withRouter,
-  withForm,
+  withFormidable,
   withQuery(),
   connect(mapStateToProps)
 )(FormFields)

@@ -17,7 +17,7 @@ import FormFieldsContainer from './FormFields/FormFieldsContainer'
 const Review = ({
   article,
   dispatch,
-  form: { id: reviewId, isCreatedEntity, isModifiedEntity, method },
+  formidable: { id: reviewId, isCreatedEntity, isModifiedEntity, method },
   formInitialValues,
   history,
   isPending,
@@ -137,7 +137,7 @@ Review.defaultProps = {
 Review.propTypes = {
   article: articleType,
   dispatch: PropTypes.func.isRequired,
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     id: PropTypes.string,
     isCreatedEntity: PropTypes.bool.isRequired
   }).isRequired,

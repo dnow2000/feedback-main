@@ -14,7 +14,7 @@ const EVALUATIONS_PLACEHOLDER = ''
 const TAGS_NAME = 'tagIds'
 const TAGS_PLACEHOLDER = ''
 
-const FormFields = ({ evaluations, form, tags }) => {
+const FormFields = ({ evaluations, formidable, tags }) => {
 
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     EVALUATIONS_NAME,
@@ -35,7 +35,7 @@ const FormFields = ({ evaluations, form, tags }) => {
     'info',
     'positivity'
   )
-  const { readOnly } = form
+  const { readOnly } = formidable
 
   return (
     <div className="form-fields">
@@ -77,7 +77,7 @@ FormFields.defaultProps = {
 
 FormFields.propTypes = {
   evaluations: PropTypes.array,
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     readOnly: PropTypes.bool.isRequired
   }).isRequired,
   tags: PropTypes.array,

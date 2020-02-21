@@ -28,7 +28,7 @@ export default (config = {
       const {
         accessRoles,
         creationRoles,
-        form,
+        formidable,
         history,
         modificationRoles,
       } = this.props
@@ -36,7 +36,7 @@ export default (config = {
         getReadOnlyUrl,
         isCreatedEntity,
         isModifiedEntity
-      } = form
+      } = formidable
       const { canRenderChildren } = this.state
 
       if (canRenderChildren) {
@@ -92,7 +92,7 @@ export default (config = {
     accessRoles: PropTypes.arrayOf(PropTypes.shape()),
     creationRoles: PropTypes.arrayOf(PropTypes.shape()),
     currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-    form: PropTypes.object.isRequired,
+    formidable: PropTypes.object.isRequired,
     history: PropTypes.object.isRequired,
     modificationRoles: PropTypes.arrayOf(PropTypes.shape())
   }

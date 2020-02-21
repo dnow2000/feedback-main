@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom'
 import { compose } from 'redux'
 import { selectEntityByKeyAndId } from 'redux-thunk-data'
 import { selectCurrentUser } from 'with-react-redux-login'
-import withForm from 'with-react-form'
+import withFormidable from 'with-react-formidable'
 import withQuery from 'with-react-query'
 
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
@@ -41,7 +41,7 @@ export default compose(
   withRouter,
   withQuery(),
   withRequiredLogin,
-  withForm,
+  withFormidable,
   withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
   connect(mapStateToProps)
 )(Review)
