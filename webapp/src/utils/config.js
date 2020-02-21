@@ -4,6 +4,7 @@ const {
   NODE_ENV,
   REACT_APP_NAME,
   REACT_APP_API_URL,
+  REACT_APP_THUMBS_URL,
   REACT_APP_VERSION
 } = process.env
 
@@ -16,7 +17,9 @@ export const IS_PRODUCTION = !IS_DEVELOPMENT
 
 const LOCALHOST_API_URL = 'http://localhost'
 export const API_URL = REACT_APP_API_URL || LOCALHOST_API_URL
-export const API_THUMBS_URL = `${API_URL}/storage/thumbs`
+
+const LOCALHOST_API_THUMBS_URL = `${LOCALHOST_API_URL}/storage/thumbs`
+export const API_THUMBS_URL = REACT_APP_THUMBS_URL || LOCALHOST_API_THUMBS_URL
 
 export const LOCALHOST_ROOT_PATH = "http://localhost:3000/"
 export const ROOT_PATH = getMobileRootPath() || LOCALHOST_ROOT_PATH

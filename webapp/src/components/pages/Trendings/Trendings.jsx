@@ -1,21 +1,24 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import Feeds from 'components/layout/Feeds/Feeds'
 import MainContainer from 'components/layout/Main/MainContainer'
 
-import TrendingItemContainer from './TrendingItem/TrendingItemContainer'
+import TrendingItem from './TrendingItem'
 
-const Trendings = ({ location: { search } }) => {
+const Trendings = () => {
+
+  const { search } = useLocation()
+
   const config = useMemo(() => ({
     apiPath: `/trendings${search}`,
     resolve: trending => ({...trending, id: trending.buzzsumoId})
   }), [search])
 
-
   const renderItem = useCallback(item =>
-    <TrendingItemContainer trending={item} />, [])
+    <TrendingItem trending={item} />, [])
+
 
   return (
     <>
@@ -34,12 +37,5 @@ const Trendings = ({ location: { search } }) => {
   )
 }
 
-Trendings.defaultProps = {
-  trendings: null,
-}
-
-Trendings.propTypes = {
-  location: PropTypes.object.isRequired
-}
 
 export default Trendings

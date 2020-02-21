@@ -1,11 +1,14 @@
 import classnames from 'classnames'
 import React, { useCallback, useMemo, useState } from 'react'
-import PropTypes from 'prop-types'
+import { useDispatch, useSelector } from 'react-redux'
 import Dotdotdot from 'react-dotdotdot'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
+import { selectCurrentUser } from 'with-react-redux-login'
 
 import Icon from 'components/layout/Icon'
+import articleType  from 'components/types/articleType'
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 import { getFormatPublishedDate } from 'utils/moment'
 
 const round = (x, n) => Math.round(x*10**n) / 10**n
@@ -21,7 +24,7 @@ const displaySocialScores = socialScore => {
 }
 
 
-const TrendingItem = ({ dispatch, trending }) => {
+const TrendingItem = ({ trending }) => {
   const {
     authors,
     buzzsumoId,
@@ -34,9 +37,16 @@ const TrendingItem = ({ dispatch, trending }) => {
     twitterShares,
     url
   } = trending
+  const dispatch = useDispatch()
 
   const formatPublishedDate = useMemo(() =>
     getFormatPublishedDate(publishedDate), [publishedDate])
+
+  const { id: currentUserId } = useSelector(selectCurrentUser) || {}
+
+  const editorRole = useSelector(state =>
+    selectRoleByUserIdAndType(state, currentUserId, 'editor'))
+  const canVerdict = typeof editorRole !== 'undefined'
 
   const [isReviewable, setIsReviewable] = useState(undefined)
 
@@ -56,6 +66,7 @@ const TrendingItem = ({ dispatch, trending }) => {
       method: 'POST',
     }))
   }, [dispatch, trending, setIsReviewable])
+
 
   return (
     <article className="article-item">
@@ -125,12 +136,12 @@ const TrendingItem = ({ dispatch, trending }) => {
           >
             Remove
           </button>
-          <NavLink
+          {canVerdict && (<NavLink
             className="button is-primary thin"
             to={`/verdicts/creation?buzzsumoId=${buzzsumoId}`}
           >
             Select for verdict
-          </NavLink>
+          </NavLink>)}
         </div>
       </div>
     </article>
@@ -142,8 +153,7 @@ TrendingItem.defaultProps = {
 }
 
 TrendingItem.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  trending: PropTypes.object,
+  trending: articleType,
 }
 
 export default TrendingItem

@@ -173,7 +173,6 @@ ArticleItem.defaultProps = {
   article: null,
   noControl: false,
   onClickEdit: null,
-  verdict: null,
   withEditButton: false,
   withShares: true,
   withTheme: false

@@ -1,8 +1,11 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import { compose } from 'redux'
+import withForm from 'with-react-form'
 
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
+import withRoles from 'components/hocs/withRoles'
 import ArticleContainer from 'components/pages/Article/ArticleContainer'
 import Articles from 'components/pages/Articles'
 import LandingContainer from 'components/pages/Landing/LandingContainer'
@@ -14,7 +17,7 @@ import VerdictContainer from 'components/pages/Verdict/VerdictContainer'
 import VerdictsContainer from 'components/pages/Verdicts/VerdictsContainer'
 import SigninContainer from 'components/pages/Signin/SigninContainer'
 import SignupContainer from 'components/pages/Signup/SignupContainer'
-import TrendingsContainer from 'components/pages/Trendings/TrendingsContainer'
+import Trendings from 'components/pages/Trendings/Trendings'
 
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
@@ -92,9 +95,13 @@ const routes = [
     title: 'Signup',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withForm,
+      withRoles({ accessRoleTypes: ['editor'] })
+    )(Trendings),
     exact: true,
     path: '/trendings',
-    render: () => <TrendingsContainer />,
     title: 'Trendings',
   },
 ]
