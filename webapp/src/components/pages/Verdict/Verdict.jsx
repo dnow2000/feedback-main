@@ -13,7 +13,7 @@ import VerdictForm from './VerdictForm/VerdictForm'
 const Verdict = ({
   currentUserVerdictPatch,
   dispatch,
-  form: { isCreatedEntity, method, readOnly },
+  formidable: { isCreatedEntity, method, readOnly },
   history,
   isPending,
   match: { params: { verdictId } },

@@ -20,7 +20,7 @@ const CHECKBOXES_TAGS_NAME = 'tagIds'
 const CHECKBOXES_TAGS_PLACEHOLDER = ''
 
 
-const FormFields = ({ article, evaluations, form, reviews, tags, trending }) => {
+const FormFields = ({ article, evaluations, formidable, reviews, tags, trending }) => {
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     SELECT_EVALUATIONS_NAME,
     evaluations,
@@ -34,7 +34,7 @@ const FormFields = ({ article, evaluations, form, reviews, tags, trending }) => 
     'text'
   )
 
-  const { readOnly } = form
+  const { readOnly } = formidable
   const [readOnlyArticle, setReadOnlyArticle] = useState(true)
   const handleClickEdit = useCallback(() => {
     setReadOnlyArticle(!readOnlyArticle)

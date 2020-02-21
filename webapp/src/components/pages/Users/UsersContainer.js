@@ -11,7 +11,7 @@ import Users from './Users'
 export default compose(
   withRouter,
   withQuery(),
-  withForm,
+  withFormidable,
   withRequiredLogin,
   withRoles({
     creationRoleTypes: ['editor'],
