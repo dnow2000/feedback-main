@@ -1,8 +1,10 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 
+import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import ArticleContainer from 'components/pages/Article/ArticleContainer'
-import ArticlesContainer from 'components/pages/Articles/ArticlesContainer'
+import Articles from 'components/pages/Articles'
 import LandingContainer from 'components/pages/Landing/LandingContainer'
 import ReviewContainer from 'components/pages/Review/ReviewContainer'
 import ReviewsContainer from 'components/pages/Reviews/ReviewsContainer'
@@ -30,9 +32,9 @@ const routes = [
     title: 'Article',
   },
   {
+    component: withRequiredLogin(Articles),
     exact: true,
     path: '/articles',
-    render: () => <ArticlesContainer name="article" />,
     title: 'Articles',
   },
   {

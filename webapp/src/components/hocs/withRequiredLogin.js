@@ -3,7 +3,7 @@ import withLogin from 'with-react-redux-login'
 
 import { userNormalizer } from 'utils/normalizers'
 
-export const withRequiredLogin = withLogin({
+export default withLogin({
   handleFail: (state, action, ownProps) => {
     const { history, location: { pathname, search} } = ownProps
     const from = encodeURIComponent(`${pathname}${search}`)
@@ -21,5 +21,3 @@ export const withRequiredLogin = withLogin({
   normalizer: userNormalizer,
   requestData
 })
-
-export default withRequiredLogin

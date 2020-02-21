@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom'
 
 import getForm from 'components/hocs/withFormRouter/getForm'
 
-const withFormRouter = WrappedComponent => {
+export default WrappedComponent => {
   const _withFormRouter = props => (
     <WrappedComponent
       form={getForm(props)}
@@ -25,5 +25,3 @@ const withFormRouter = WrappedComponent => {
 
   return withRouter(_withFormRouter)
 }
-
-export default withFormRouter

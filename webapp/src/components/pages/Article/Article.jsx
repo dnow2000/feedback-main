@@ -3,7 +3,7 @@ import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { requestData } from 'redux-thunk-data'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import ArticleItem from 'components/layout/ArticleItem'
 import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
@@ -113,7 +113,7 @@ class Article extends PureComponent {
 
           {id && (
             <section className="section">
-              <ArticleItemContainer article={article} />
+              <ArticleItem article={article} />
             </section>
           )}
 

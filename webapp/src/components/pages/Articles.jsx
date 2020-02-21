@@ -1,24 +1,22 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import ArticleItem from 'components/layout/ArticleItem'
 import Feeds from 'components/layout/Feeds/Feeds'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import { articleNormalizer } from 'utils/normalizers'
 
-const Articles = ({
-  location: { search },
-}) => {
+const Articles = () => {
+  const { search } = useLocation()
 
   const config = useMemo(() => ({
     apiPath: `/articles${search}`,
     normalizer: articleNormalizer
   }), [search])
 
-
   const renderItem = useCallback(item =>
-    <ArticleItemContainer article={item} />, [])
+    <ArticleItem article={item} />, [])
 
 
   return (
@@ -39,11 +37,5 @@ const Articles = ({
   )
 }
 
-
-Articles.propTypes = {
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired
-  }).isRequired
-}
 
 export default Articles

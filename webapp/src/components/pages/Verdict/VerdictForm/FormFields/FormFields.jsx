@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import ArticleItem from 'components/layout/ArticleItem'
 import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
@@ -49,7 +49,7 @@ const FormFields = ({ article, evaluations, form, reviews, tags, trending }) => 
       <section className="article">
         {readOnlyArticle
           ? (
-            <ArticleItemContainer
+            <ArticleItem
               article={article || trending}
               noControl
               onClickEdit={handleClickEdit}

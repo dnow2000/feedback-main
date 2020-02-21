@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
-const withRoles = (config = {
+export default (config = {
   accessRoleTypes: [],
   creationRoleTypes: [],
   modificationRoleTypes: []
@@ -110,5 +110,3 @@ const withRoles = (config = {
 
   return connect(mapStateToProps)(_withRoles)
 }
-
-export default withRoles

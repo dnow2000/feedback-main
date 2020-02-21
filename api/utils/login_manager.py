@@ -14,8 +14,13 @@ from utils.credentials import get_user_with_credentials
 
 
 @as_dict.register(LocalProxy)
-def _(local_proxy, column=None, includes: Iterable = ()):
-    return as_dict.registry[ApiHandler](local_proxy, column=column, includes=includes)
+def _(local_proxy, column=None, includes: Iterable=None):
+    return as_dict.registry[ApiHandler](
+        local_proxy,
+        column=column,
+        includes=includes
+    )
+
 
 @app.login_manager.user_loader
 def get_user_with_id(user_id):

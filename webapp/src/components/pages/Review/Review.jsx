@@ -3,7 +3,7 @@ import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
 import { requestData } from 'redux-thunk-data'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import ArticleItem from 'components/layout/ArticleItem'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import articleType from 'components/types/articleType'
@@ -109,7 +109,7 @@ const Review = ({
 
           {article && (
             <section>
-              <ArticleItemContainer
+              <ArticleItem
                 article={article}
                 noControl
                 withTheme

@@ -11,7 +11,7 @@ def create_verdicts():
 
     verdicts_by_name = {}
     articles = Article.query.all()
-    user = User.query.filter_by(email="sftest.editor.0@sciencefeedback.co").one()
+    user = User.query.filter_by(email="sftest.editor0@sciencefeedback.co").one()
 
     article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     evaluation_value = -2

@@ -1,39 +1,30 @@
 import PropTypes from 'prop-types'
 import React, { useMemo } from 'react'
+import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import Dotdotdot from 'react-dotdotdot'
+import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
+import { selectCurrentUser } from 'with-react-redux-login'
 
 import Icon from 'components/layout/Icon'
 import articleType  from 'components/types/articleType'
+import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
+import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
 import { getFormatPublishedDate } from 'utils/moment'
 
-const round = (x, n) => {
-  return Math.round(x*10**n) / 10**n
-}
+const round = (x, n) => Math.round(x*10**n) / 10**n
 
 const displaySocialScores = socialScore => {
-  if (socialScore > 999999){
-    return `${round(socialScore/1000000, 1)}M`
-  }
-  if (socialScore > 999){
-    return `${round(socialScore/1000, 0)}k`
-  }
+  if (socialScore > 999999) return `${round(socialScore/1000000, 1)}M`
+  if (socialScore > 999) return `${round(socialScore/1000, 0)}k`
   return socialScore
 }
 
 const ArticleItem = ({
   article,
-  canDelete,
-  canReview,
-  canVerdict,
-  currentUserReview,
-  dispatch,
-  match,
   noControl,
   onClickEdit,
-  showSeeAllReviews,
-  verdict,
   withEditButton,
   withShares,
   withTheme
@@ -42,7 +33,7 @@ const ArticleItem = ({
     authors,
     externalThumbUrl,
     facebookShares,
-    id,
+    id: articleId,
     publishedDate,
     theme,
     thumbCount,
@@ -51,24 +42,35 @@ const ArticleItem = ({
     twitterShares,
     url
   } = article || {}
-  const { id: currentUserReviewId } = currentUserReview || {}
-  const { id: verdictId } = verdict || {}
-
   const formatPublishedDate = useMemo(() =>
     getFormatPublishedDate(publishedDate), [publishedDate])
+
+  const currentUser = useSelector(selectCurrentUser)
+  const { id: currentUserId } = currentUser || {}
+  const editorRole = useSelector(state =>
+    selectRoleByUserIdAndType(state, currentUserId, 'editor'))
+  const reviewerRole = useSelector(state =>
+    selectRoleByUserIdAndType(state, currentUserId, 'reviewer'))
+  const canReview = typeof reviewerRole !== 'undefined'
+  const canVerdict = typeof editorRole !== 'undefined'
+
+  const { id: currentUserReviewId } = useSelector(state =>
+    selectCurrentUserReviewByArticleId(state, articleId)) || {}
+
+  const articleJoin = { key: 'articleId', value: articleId }
+
+  const { id: verdictId } = useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'verdicts', articleJoin)[0]) || {}
 
   const articleImgSrc = externalThumbUrl ||
     (
       thumbCount
-        ? `${API_THUMBS_URL}/articles/${id}`
+        ? `${API_THUMBS_URL}/articles/${articleId}`
         : `${ROOT_ASSETS_PATH}/loading_webshot.png`
     )
   return (
     <article className="article-item">
-      <div
-        className="article-container"
-      >
-
+      <div className="article-container">
         <div className="article-header">
           {withTheme && theme && <p className="article-tag">{theme}</p>}
           <div className="article-date">
@@ -80,7 +82,6 @@ const ArticleItem = ({
               )
             }
           </div>
-
         </div>
         <div className="article-summary">
           <div className="article-summary-thumbnail">
@@ -142,7 +143,7 @@ const ArticleItem = ({
                 to={
                   verdictId
                     ? `/verdicts/${verdictId}/modification`
-                    : `/verdicts/creation?articleId=${id}`
+                    : `/verdicts/creation?articleId=${articleId}`
                 }
               >
                 {verdictId
@@ -156,7 +157,7 @@ const ArticleItem = ({
                 to={
                   currentUserReviewId
                     ? `/reviews/${currentUserReviewId}`
-                    : `/reviews/creation?articleId=${id}`
+                    : `/reviews/creation?articleId=${articleId}`
                 }
               >
                 {currentUserReviewId ? 'See' : 'Write'} a review
@@ -170,30 +171,18 @@ const ArticleItem = ({
 
 ArticleItem.defaultProps = {
   article: null,
-  canDelete: false,
-  canReview: false,
-  canVerdict: false,
-  currentUserReview: null,
   noControl: false,
   onClickEdit: null,
-  showSeeAllReviews: false,
   verdict: null,
+  withEditButton: false,
   withShares: true,
   withTheme: false
 }
 
 ArticleItem.propTypes = {
   article: articleType,
-  canDelete: PropTypes.bool,
-  canReview: PropTypes.bool,
-  canVerdict: PropTypes.bool,
-  currentUserReview: PropTypes.object,
-  dispatch: PropTypes.func.isRequired,
-  match: PropTypes.object.isRequired,
   noControl: PropTypes.bool,
   onClickEdit: PropTypes.func,
-  showSeeAllReviews: PropTypes.bool,
-  verdict: PropTypes.object,
   withEditButton: PropTypes.bool,
   withShares: PropTypes.bool,
   withTheme: PropTypes.bool

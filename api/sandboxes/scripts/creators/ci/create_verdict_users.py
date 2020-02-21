@@ -11,12 +11,12 @@ def create_verdict_users():
     verdict_users_by_name = {}
 
     article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
-    editor_user = User.query.filter_by(email="sftest.editor.0@sciencefeedback.co").one()
+    editor_user = User.query.filter_by(email="sftest.editor0@sciencefeedback.co").one()
     verdict = Verdict.query.filter_by(
         article=article,
         user=editor_user
     ).one()
-    reviewer_user = User.query.filter_by(email="sftest.reviewer.0@sciencefeedback.co").one()
+    reviewer_user = User.query.filter_by(email="sftest.reviewer0@sciencefeedback.co").one()
     verdict_users_by_name["Great Barrier / reviewer 0"] = VerdictUser(
         verdict=verdict,
         user=reviewer_user

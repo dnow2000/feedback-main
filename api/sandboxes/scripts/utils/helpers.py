@@ -11,7 +11,7 @@ def get_email(first_name, last_name, domain):
     )
 
 def get_sandbox_role_email(role_type, index=0):
-    email = "{}test.{}.{}@{}".format(COMMAND_NAME, role_type, index, EMAIL_HOST)
+    email = "{}test.{}{}@{}".format(COMMAND_NAME, role_type, index, EMAIL_HOST)
     return email
 
 def get_password_from_email(email):

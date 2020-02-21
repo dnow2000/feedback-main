@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import ArticleItem from 'components/layout/ArticleItem'
 import Avatar from 'components/layout/Avatar'
 
 const RATING_VALUES = ['2', '1', '0', '-1', '-2', 'na']
@@ -101,7 +101,7 @@ const VerdictItem = ({ article, verdict, user }) => {
   return (
     <div className="verdict-item">
       {article && (
-        <ArticleItemContainer
+        <ArticleItem
           article={article}
           withShares={false}
         />)}
