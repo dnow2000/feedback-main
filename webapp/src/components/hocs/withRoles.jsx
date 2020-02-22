@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { useFormidable } from 'with-react-formidable'
 
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
@@ -8,44 +9,34 @@ export default (config = {
   accessRoleTypes: [],
   creationRoleTypes: [],
   modificationRoleTypes: []
-}) => WrappedComponent => {
+}) => WrappedComponent =>
+  props => {
+    const history = useHistory()
+    const location = useLocation()
+    const params = useParams()
+    const {
+      getReadOnlyUrl,
+      isCreatedEntity,
+      isModifiedEntity
+    } = useFormidable(location, params)
 
-  class _withRoles extends PureComponent {
-    constructor() {
-      super()
-      this.state = { canRenderChildren: false }
-    }
+    const [canRenderChildren, setCanRenderChildren] = useState(false)
 
-    componentDidMount = () => {
-      this.renderWhenCreationOrModificationRoles()
-    }
+    const accessRoles = useSelector(state =>
+      selectCurrentRolesByTypes(state, config.accessRoleTypes))
+    const creationRoles = useSelector(state =>
+      selectCurrentRolesByTypes(state, config.creationRoleTypes))
+    const modificationRoles = useSelector(state =>
+      selectCurrentRolesByTypes(state, config.modificationRoleTypes))
 
-    componentDidUpdate = () => {
-      this.renderWhenCreationOrModificationRoles()
-    }
-
-    renderWhenCreationOrModificationRoles = () => {
-      const {
-        accessRoles,
-        creationRoles,
-        formidable,
-        history,
-        modificationRoles,
-      } = this.props
-      const {
-        getReadOnlyUrl,
-        isCreatedEntity,
-        isModifiedEntity
-      } = formidable
-      const { canRenderChildren } = this.state
-
+    useEffect(() => {
       if (canRenderChildren) {
         return
       }
 
       if (isCreatedEntity) {
         if (creationRoles.length) {
-          this.setState({ canRenderChildren: true })
+          setCanRenderChildren(true)
           return
         }
         history.push(getReadOnlyUrl())
@@ -53,7 +44,7 @@ export default (config = {
 
       if (isModifiedEntity) {
         if (modificationRoles.length) {
-          this.setState({ canRenderChildren: true })
+          setCanRenderChildren(true)
           return
         }
         history.push(getReadOnlyUrl())
@@ -62,51 +53,27 @@ export default (config = {
       if (!isCreatedEntity && !isModifiedEntity) {
         if (accessRoles) {
           if (accessRoles.length) {
-            this.setState({ canRenderChildren: true })
+            setCanRenderChildren(true)
             return
           }
           history.push(getReadOnlyUrl())
         }
-        this.setState({ canRenderChildren: true })
+        setCanRenderChildren(true)
       }
-
-    }
-
-    render() {
-      const { canRenderChildren } = this.state
-      if (!canRenderChildren) {
-        return null
-      }
-      return <WrappedComponent {...this.props} />
-    }
-  }
-
-  _withRoles.defaultProps = {
-    accessRoles: [],
-    creationRoles: [],
-    currentUser: null,
-    modificationRoles: []
-  }
-
-  _withRoles.propTypes = {
-    accessRoles: PropTypes.arrayOf(PropTypes.shape()),
-    creationRoles: PropTypes.arrayOf(PropTypes.shape()),
-    currentUser: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
-    formidable: PropTypes.object.isRequired,
-    history: PropTypes.object.isRequired,
-    modificationRoles: PropTypes.arrayOf(PropTypes.shape())
-  }
-
-  function mapStateToProps (state) {
-    const accessRoles = selectCurrentRolesByTypes(state, config.accessRoleTypes)
-    const creationRoles = selectCurrentRolesByTypes(state, config.creationRoleTypes)
-    const modificationRoles = selectCurrentRolesByTypes(state, config.modificationRoleTypes)
-    return {
+    }, [
       accessRoles,
+      canRenderChildren,
       creationRoles,
-      modificationRoles
-    }
-  }
+      modificationRoles,
+      getReadOnlyUrl,
+      history,
+      isCreatedEntity,
+      isModifiedEntity,
+      setCanRenderChildren
+    ])
 
-  return connect(mapStateToProps)(_withRoles)
-}
+    if (!canRenderChildren) {
+      return null
+    }
+    return <WrappedComponent {...props} />
+  }

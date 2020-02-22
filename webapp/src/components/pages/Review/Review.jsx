@@ -1,34 +1,52 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
-import { requestData } from 'redux-thunk-data'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
+import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
+import { useFormidable } from 'with-react-formidable'
+import { useQuery } from 'with-react-query'
 
 import ArticleItem from 'components/layout/ArticleItem'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
-import articleType from 'components/types/articleType'
 import getCanSubmit from 'utils/form/getCanSubmit'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
 import FormFooterContainer from './FormFooter/FormFooterContainer'
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
+import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 
-const Review = ({
-  article,
-  dispatch,
-  formidable: { id: reviewId, isCreatedEntity, isModifiedEntity, method },
-  formInitialValues,
-  history,
-  isPending,
-  query: { params }
-}) => {
-  const { articleId } = params
+
+const Review = () => {
+  const dispatch = useDispatch()
+  const location = useLocation()
+  const params = useParams()
+  const { reviewId: matchReviewId } = params
+  const {
+    id: formReviewId,
+    isCreatedEntity,
+    isModifiedEntity,
+    method
+  } = useFormidable(location, params)
+  const history = useHistory()
+  const { params: { articleId: queryArticleId } } = useQuery(location.search)
+
+  const review = useSelector(state =>
+    selectEntityByKeyAndId(state, 'reviews', matchReviewId)) || {}
+  const articleId = review.articleId || queryArticleId
+  const article = useSelector(state =>
+    selectEntityByKeyAndId(state, 'articles', articleId))
+
+  const formInitialValues = useSelector(state =>
+    selectFormInitialValuesByArticleId(state, articleId))
+
+  const { isPending } = useSelector(state => state.requests['/reviews']) || {}
 
   const handleSubmitReview = useCallback(formValues => {
     let apiPath = "/reviews"
     if (isModifiedEntity) {
-      apiPath = `${apiPath}/${reviewId}`
+      apiPath = `${apiPath}/${formReviewId}`
     }
     return new Promise(resolve => {
       dispatch(requestData({
@@ -50,7 +68,7 @@ const Review = ({
         method
       }))
     })
-  }, [dispatch, history, isModifiedEntity, method, reviewId])
+  }, [dispatch, formReviewId, history, isModifiedEntity, method])
 
   const renderReviewFormSection = useCallback(formProps => {
     const { form: { reset }, handleSubmit } = formProps
@@ -78,7 +96,7 @@ const Review = ({
 
     if (!isCreatedEntity) {
       dispatch(requestData({
-        apiPath: `/reviews/${reviewId}`,
+        apiPath: `/reviews/${formReviewId}`,
         normalizer: reviewNormalizer }))
       return
     }
@@ -88,7 +106,7 @@ const Review = ({
     dispatch(requestData({
       apiPath: `/articles/${articleId}`,
       normalizer: articleNormalizer }))
-  }, [articleId, dispatch, isCreatedEntity, reviewId])
+  }, [articleId, dispatch, isCreatedEntity, formReviewId])
 
   useEffect(() => {
     const { id } = formInitialValues || {}
@@ -129,25 +147,5 @@ const Review = ({
   )
 }
 
-Review.defaultProps = {
-  article: null,
-  formInitialValues: null
-}
-
-Review.propTypes = {
-  article: articleType,
-  dispatch: PropTypes.func.isRequired,
-  formidable: PropTypes.shape({
-    id: PropTypes.string,
-    isCreatedEntity: PropTypes.bool.isRequired
-  }).isRequired,
-  formInitialValues: PropTypes.shape(),
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired,
-  query: PropTypes.shape({
-    params: PropTypes.shape()
-  }).isRequired
-}
 
 export default Review

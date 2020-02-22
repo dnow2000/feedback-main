@@ -1,7 +1,6 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { compose } from 'redux'
-import withFormidable from 'with-react-formidable'
 
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
@@ -9,7 +8,7 @@ import withRoles from 'components/hocs/withRoles'
 import ArticleContainer from 'components/pages/Article/ArticleContainer'
 import Articles from 'components/pages/Articles'
 import LandingContainer from 'components/pages/Landing/LandingContainer'
-import ReviewContainer from 'components/pages/Review/ReviewContainer'
+import Review from 'components/pages/Review/Review'
 import ReviewsContainer from 'components/pages/Reviews/ReviewsContainer'
 import UserContainer from 'components/pages/User/UserContainer'
 import UsersContainer from 'components/pages/Users/UsersContainer'
@@ -47,9 +46,12 @@ const routes = [
     title: 'Landing',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
+    )(Review),
     exact: true,
     path: `/reviews/:reviewId${formPath}`,
-    render: () => <ReviewContainer />,
     title: 'Review',
   },
   {
@@ -97,7 +99,6 @@ const routes = [
   {
     component: compose(
       withRequiredLogin,
-      withFormidable,
       withRoles({ accessRoleTypes: ['editor'] })
     )(Trendings),
     exact: true,

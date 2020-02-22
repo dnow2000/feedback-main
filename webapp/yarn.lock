@@ -14867,16 +14867,15 @@ with-query-router@3.3.0:
     react-router-dom "^5.0.1"
     reselect "^3.0.1"
 
-with-react-formidable@2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/with-react-formidable/-/with-react-formidable-2.0.3.tgz#9078bbad6014d06baebad1c04e4a39db85412042"
-  integrity sha512-4n1AVvFo5EnNe+39eNanJe9oAysmlvppZ9reJGbE4AP4HGRPdfeBL1iuEaLrJ6HFyoi1fzFqnYIaReAaQHjEoA==
+with-react-formidable@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/with-react-formidable/-/with-react-formidable-2.1.1.tgz#8c4a71c4f4f81a0217c84c4ac6c6bf7bc877ce3a"
+  integrity sha512-WFCVGtflKOcA7gAAy6naS8CxUCblcZwpgPb0VAXZVb645uwn0aGto88oY5la7xyUJX7NdDGQ5YnMIuLW4Qf2cQ==
   dependencies:
     pluralize "^8.0.0"
     prop-types "^15.6.2"
     react "^16.9.0"
     react-dom "^16.9.0"
-    reselect "^3.0.1"
 
 with-react-login@1.11.0:
   version "1.11.0"

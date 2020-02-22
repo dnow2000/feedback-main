@@ -14,10 +14,11 @@ export const selectFormInitialValuesByArticleId = createCachedSelector(
   selectCurrentUserTagsByArticleId,
   (review, articleId, reviewTags) => {
     const tagIds = reviewTags && reviewTags.map(tag => tag.id)
-    const formInitialValues = Object.assign({
+    const formInitialValues = {
       articleId,
-      tagIds
-    }, review)
+      tagIds,
+      ...review
+    }
 
     return formInitialValues
   }
