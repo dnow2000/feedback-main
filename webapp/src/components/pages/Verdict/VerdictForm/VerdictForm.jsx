@@ -1,37 +1,39 @@
 import React, { useCallback } from 'react'
-
-import getCanSubmit from 'utils/form/getCanSubmit'
+import { useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { useFormidable } from 'with-react-formidable'
 
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
-import FormFooterContainer from './FormFooter/FormFooterContainer'
+import FormFooter from './FormFooter'
 
-const VerdictForm = ({ isCreatedEntity, isPending, ...formProps }) => {
-    const canSubmit = !isPending && (
-      isCreatedEntity ||
-      getCanSubmit(formProps)
-    )
-    const { form, handleSubmit } = formProps
 
-    const handleFormSubmit = useCallback(event => {
-      event.preventDefault()
-      handleSubmit(event)
-    }, [handleSubmit])
+const VerdictForm = ({ ...formProps }) => {
+  const location = useLocation()
+  const params = useParams()
+  const { isCreatedEntity } = useFormidable(location, params)
 
-    return (
-      <form
-        autoComplete="off"
-        className="form"
-        disabled={isPending}
-        noValidate
-        onSubmit={handleFormSubmit}
-      >
-        {!isCreatedEntity && <FormFieldsContainer />}
-        <FormFooterContainer
-          canSubmit={canSubmit}
-          form={form}
-        />
-      </form>
-    )
+  const { isPending } = useSelector(state =>
+    state.requests['/verdicts']) || {}
+
+  const { form: { reset }, handleSubmit } = formProps
+
+  const handleFormSubmit = useCallback(event => {
+    event.preventDefault()
+    handleSubmit(event)
+  }, [handleSubmit])
+
+  return (
+    <form
+      autoComplete="off"
+      className="form"
+      disabled={isPending}
+      noValidate
+      onSubmit={handleFormSubmit}
+    >
+      {!isCreatedEntity && <FormFieldsContainer />}
+      <FormFooter {...formProps} />
+    </form>
+  )
 }
 
 export default VerdictForm

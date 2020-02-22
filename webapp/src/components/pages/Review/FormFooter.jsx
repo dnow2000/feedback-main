@@ -1,24 +1,27 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
+import { useFormidable } from 'with-react-formidable'
 
 const FormFooter = ({
   canSubmit,
-  formidable,
-  history,
-  isPending,
-  match,
   onCancel
 }) => {
-  const {
-    params: { reviewId },
-  } = match
+  const history = useHistory()
+  const location = useLocation()
+  const params = useParams()
+  const formidable = useFormidable(location, params)
+  const { reviewId } = params
   const {
     isCreatedEntity,
     modificationUrl,
     readOnly
   } = formidable
+  const { isPending } = useSelector(state =>
+    state.requests['/reviews']) || {}
 
   const handleModifyClick = useCallback(() => {
     history.push(modificationUrl)
@@ -78,26 +81,11 @@ const FormFooter = ({
 }
 
 FormFooter.defaultProps = {
-  canSubmit: false,
-  isPending: false,
+  canSubmit: false
 }
 
 FormFooter.propTypes = {
   canSubmit: PropTypes.bool,
-  formidable: PropTypes.shape({
-    isCreatedEntity: PropTypes.bool.isRequired,
-    modificationUrl: PropTypes.string,
-    readOnly: PropTypes.bool.isRequired
-  }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  isPending: PropTypes.bool,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      reviewId: PropTypes.string
-    })
-  }).isRequired,
   onCancel: PropTypes.func.isRequired
 }
 

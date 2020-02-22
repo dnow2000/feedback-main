@@ -1,18 +1,18 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import Feeds from 'components/layout/Feeds/Feeds'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
 import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
-const Reviews = ({
-  location: { search }
-}) => {
+const Reviews = () => {
+  const { search } = useLocation()
+
   const config = useMemo(() => ({
     apiPath: `/reviews${search}`
   }), [search])
-
 
   const renderItem = useCallback(item =>
     <ReviewItemContainer article={item} />, [])
@@ -34,12 +34,6 @@ const Reviews = ({
       </MainContainer>
     </>
   )
-}
-
-Reviews.propTypes = {
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired
-  }).isRequired
 }
 
 export default Reviews

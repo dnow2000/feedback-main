@@ -1,7 +1,14 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useEffect } from 'react'
 import { Form } from 'react-final-form'
-import { requestData } from 'redux-thunk-data'
+import { useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
+import {
+  requestData,
+  selectEntityByKeyAndId,
+  selectEntitiesByKeyAndJoin
+} from 'redux-thunk-data'
+import { useFormidable } from 'with-react-formidable'
+import { useQuery } from 'with-react-query'
 
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
 import MainContainer from 'components/layout/Main/MainContainer'
@@ -10,15 +17,43 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 import VerdictForm from './VerdictForm/VerdictForm'
 
-const Verdict = ({
-  currentUserVerdictPatch,
-  dispatch,
-  formidable: { isCreatedEntity, method, readOnly },
-  history,
-  isPending,
-  match: { params: { verdictId } },
-  query: { params: { buzzsumoId } }
-}) => {
+const Verdict = () => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const location = useLocation()
+  const params = useParams()
+  const { isCreatedEntity, method, readOnly } = useFormidable(location, params)
+  const query = useQuery(location.search)
+  const { verdictId } = params
+  const { params: { buzzsumoId } } = query
+
+  const trending = useSelector(state =>
+    selectEntitiesByKeyAndJoin(
+      state,
+      'trendings',
+      { key: 'buzzsumoId', value: buzzsumoId }
+  )[0])
+
+  const verdict = useSelector(state =>
+    selectEntityByKeyAndId(state, 'verdicts', verdictId))
+  const { articleId } = verdict || {}
+
+  const article = useSelector(state =>
+    selectEntityByKeyAndId(state, 'articles', articleId))
+  const {
+    externalThumbUrl: articleExternalThumUrl,
+    summary: articleSummary,
+    title: articleTitle,
+    url: articleUrl,
+  } = { ...trending, ...article}
+  const currentUserVerdictPatch = {
+      articleExternalThumUrl,
+      articleSummary,
+      articleTitle,
+      articleUrl,
+      ...verdict
+  }
+
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
     const apiPath = `/verdicts/${id || ''}`
@@ -99,27 +134,5 @@ const Verdict = ({
   )
 }
 
-Verdict.defaultProps = {
-  article: null,
-  currentUserVerdictPatch: null,
-  isPending: false
-}
-
-Verdict.propTypes = {
-  article: PropTypes.shape(),
-  currentUserVerdictPatch: PropTypes.shape(),
-  dispatch: PropTypes.func.isRequired,
-  form: PropTypes.shape({
-    isCreatedEntity: PropTypes.bool.isRequired,
-  }).isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-  isPending: PropTypes.bool,
-  match: PropTypes.shape({
-    params: PropTypes.shape().isRequired
-  }).isRequired,
-  query: PropTypes.shape().isRequired
-}
 
 export default Verdict

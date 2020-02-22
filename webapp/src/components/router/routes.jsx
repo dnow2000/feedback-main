@@ -7,12 +7,12 @@ import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import ArticleContainer from 'components/pages/Article/ArticleContainer'
 import Articles from 'components/pages/Articles'
-import LandingContainer from 'components/pages/Landing/LandingContainer'
-import Review from 'components/pages/Review/Review'
-import ReviewsContainer from 'components/pages/Reviews/ReviewsContainer'
+import Landing from 'components/pages/Landing'
+import Review from 'components/pages/Review'
+import Reviews from 'components/pages/Reviews'
 import UserContainer from 'components/pages/User/UserContainer'
 import UsersContainer from 'components/pages/Users/UsersContainer'
-import VerdictContainer from 'components/pages/Verdict/VerdictContainer'
+import Verdict from 'components/pages/Verdict'
 import VerdictsContainer from 'components/pages/Verdicts/VerdictsContainer'
 import SigninContainer from 'components/pages/Signin/SigninContainer'
 import SignupContainer from 'components/pages/Signup/SignupContainer'
@@ -40,9 +40,9 @@ const routes = [
     title: 'Articles',
   },
   {
+    component: withRedirectWhenLoggedIn(Landing),
     exact: true,
     path: '/landing',
-    render: () => <LandingContainer />,
     title: 'Landing',
   },
   {
@@ -55,9 +55,12 @@ const routes = [
     title: 'Review',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ accessRoleTypes: ['editor'] }),
+    )(Reviews),
     exact: true,
     path: '/reviews',
-    render: () => <ReviewsContainer />,
     title: 'Reviews',
   },
   {
@@ -73,9 +76,15 @@ const routes = [
     title: "Users",
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({
+        creationRoleTypes: ['editor'],
+        modificationRoleTypes: ['editor']
+      }),
+    )(Verdict),
     exact: true,
     path: `/verdicts/:verdictId${formPath}`,
-    render: () => <VerdictContainer />,
     title: "Verdict",
   },
   {

@@ -13,8 +13,8 @@ import getCanSubmit from 'utils/form/getCanSubmit'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
-import FormFooterContainer from './FormFooter/FormFooterContainer'
-import FormFieldsContainer from './FormFields/FormFieldsContainer'
+import FormFooter from './FormFooter'
+import FormFields from './FormFields'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 
 
@@ -80,8 +80,8 @@ const Review = () => {
         noValidate
         onSubmit={handleSubmit}
       >
-        <FormFieldsContainer />
-        <FormFooterContainer
+        <FormFields />
+        <FormFooter
           canSubmit={canSubmit}
           onCancel={reset}
         />

@@ -1,12 +1,15 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { useFormidable } from 'with-react-formidable'
 
 import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import RadiosField from 'components/layout/form/fields/RadiosField/RadiosField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
+import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
+import selectTagsByScopes from 'selectors/selectTagsByScopes'
 import selectOptionsFromNameAndEntitiesAndPlaceholder from 'utils/form/selectOptionsFromNameAndEntitiesAndPlaceholder'
-
 
 const EVALUATIONS_NAME = 'evaluationId'
 const EVALUATIONS_PLACEHOLDER = ''
@@ -14,7 +17,17 @@ const EVALUATIONS_PLACEHOLDER = ''
 const TAGS_NAME = 'tagIds'
 const TAGS_PLACEHOLDER = ''
 
-const FormFields = ({ evaluations, formidable, tags }) => {
+
+const FormFields = () => {
+  const location = useLocation()
+  const params = useParams()
+  const { readOnly } = useFormidable(location, params)
+
+  const evaluations = useSelector(state =>
+    selectEvaluationsByType(state, 'article'))
+
+  const tags = useSelector(state =>
+    selectTagsByScopes(state, ['review']))
 
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     EVALUATIONS_NAME,
@@ -35,7 +48,6 @@ const FormFields = ({ evaluations, formidable, tags }) => {
     'info',
     'positivity'
   )
-  const { readOnly } = formidable
 
   return (
     <div className="form-fields">
@@ -70,17 +82,5 @@ const FormFields = ({ evaluations, formidable, tags }) => {
   )
 }
 
-FormFields.defaultProps = {
-  evaluations: null,
-  tags: null
-}
-
-FormFields.propTypes = {
-  evaluations: PropTypes.array,
-  formidable: PropTypes.shape({
-    readOnly: PropTypes.bool.isRequired
-  }).isRequired,
-  tags: PropTypes.array,
-}
 
 export default FormFields

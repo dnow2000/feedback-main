@@ -1,6 +1,7 @@
-import PropTypes from 'prop-types'
-import React, { useEffect } from "react"
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { requestData } from 'redux-thunk-data'
 
 import MainContainer from 'components/layout/Main/MainContainer'
 import HeaderContainer from 'components/layout/Header/HeaderContainer'
@@ -9,8 +10,19 @@ import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemConta
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
 
-const Landing = ({requestGetVerdicts, verdicts}) => {
-  useEffect(() => {requestGetVerdicts()}, [requestGetVerdicts])
+const Landing = () => {
+  const dispatch = useDispatch()
+
+  const verdicts = useSelector(state => state.data.verdicts)
+
+  useEffect(() => {
+    dispatch(requestData({
+      apiPath: "/verdicts",
+      normalizer: { article: "articles" }
+    }))
+  }, [dispatch])
+
+
   return (
     <>
       <HeaderContainer />
@@ -117,10 +129,6 @@ const Landing = ({requestGetVerdicts, verdicts}) => {
       </MainContainer>
     </>
   )
-}
-
-Landing.propTypes = {
-  requestGetVerdicts: PropTypes.func.isRequired
 }
 
 export default Landing
