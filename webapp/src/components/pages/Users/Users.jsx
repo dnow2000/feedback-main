@@ -1,14 +1,14 @@
 import React from 'react'
 
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 
 import ApplyingReviewers from './ApplyingReviewers'
 
 const Users = () => (
   <>
-    <HeaderContainer />
-    <MainContainer name="users">
+    <Header />
+    <Main name="users">
       <div className="container">
         <section>
           <h1 className="title">
@@ -18,7 +18,7 @@ const Users = () => (
           <ApplyingReviewers />
         </section>
       </div>
-    </MainContainer>
+    </Main>
   </>
 )
 

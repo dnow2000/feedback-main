@@ -3,8 +3,8 @@ import { useLocation } from 'react-router-dom'
 
 import ArticleItem from 'components/layout/ArticleItem'
 import Feeds from 'components/layout/Feeds/Feeds'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import { articleNormalizer } from 'utils/normalizers'
 
 const Articles = () => {
@@ -21,8 +21,8 @@ const Articles = () => {
 
   return (
     <>
-      <HeaderContainer />
-      <MainContainer name="articles">
+      <Header />
+      <Main name="articles">
         <div className="container">
           <section>
             <Feeds
@@ -32,7 +32,7 @@ const Articles = () => {
             />
           </section>
         </div>
-      </MainContainer>
+      </Main>
     </>
   )
 }

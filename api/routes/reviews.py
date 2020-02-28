@@ -38,11 +38,13 @@ def get_reviews():
                    page=request.args.get('page'),
                    paginate=10)
 
+
 @app.route('/reviews/<review_id>', methods=['GET'])
 @login_or_api_key_required
 def get_review(review_id):
     review = load_or_404(Review, review_id)
     return jsonify(as_dict(review, includes=REVIEW_INCLUDES))
+
 
 @app.route('/reviews', methods=['POST'])
 @login_or_api_key_required

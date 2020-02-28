@@ -27,8 +27,6 @@ def get_articles():
 
     reviewable = request.args.get('reviewable')
 
-    query = query.filter_by(isSoftDeleted=False)
-
     if reviewable == 'true':
         query = filter_articles_by_is_reviewable(query, True)
     elif reviewable == 'false':
@@ -53,6 +51,7 @@ def get_articles():
 def get_article(article_id):
     article = load_or_404(Article, article_id)
     return jsonify(as_dict(article, includes=ARTICLE_INCLUDES)), 200
+
 
 @app.route('/articles', methods=['POST'])
 @login_or_api_key_required
@@ -81,6 +80,7 @@ def create_article():
 
     return jsonify(as_dict(article, includes=ARTICLE_INCLUDES)), 201
 
+
 @app.route('/articles/<article_id>', methods=['PATCH'])
 @login_or_api_key_required
 @expect_json_data
@@ -94,6 +94,7 @@ def modify_article(article_id):
     ApiHandler.save(article)
 
     return jsonify(as_dict(article, includes=ARTICLE_INCLUDES)), 201
+
 
 @app.route('/articles/<article_id>', methods=['DELETE'])
 @login_or_api_key_required

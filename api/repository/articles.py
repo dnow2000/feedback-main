@@ -17,6 +17,7 @@ article_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     Tag
 )
 
+
 def resolve_content_with_url(url, **kwargs):
     buzzsumo_content = get_buzzsumo_content(url, **kwargs)
 
@@ -41,6 +42,7 @@ def resolve_content_with_url(url, **kwargs):
         **buzzsumo_content
     )
 
+
 def update_article(article):
     if article.thumbCount == 0:
         thumb = capture(article.url)
@@ -49,6 +51,7 @@ def update_article(article):
     if article.buzzsumoId:
         buzzsumo_content = get_buzzsumo_content(article.url)
         article.populate_from_dict(buzzsumo_content)
+
 
 def sync_articles(from_date, to_date):
     articles = filter_by_activity_date_and_verb(
@@ -61,6 +64,7 @@ def sync_articles(from_date, to_date):
         update_article(article)
     ApiHandler.save(*articles)
 
+
 def create_clock_sync_articles(from_date_minutes, to_date_minutes):
     def clock_sync_articles():
         now_date = datetime.utcnow()
@@ -69,10 +73,12 @@ def create_clock_sync_articles(from_date_minutes, to_date_minutes):
         sync_articles(from_date, to_date)
     return clock_sync_articles
 
+
 def get_articles_keywords_join_query(query):
     query = query.outerjoin(ArticleTag)\
                  .outerjoin(Tag)
     return query
+
 
 def get_articles_query_with_keywords(query, keywords):
     keywords_filter = create_filter_matching_all_keywords_in_any_model(
@@ -81,6 +87,7 @@ def get_articles_query_with_keywords(query, keywords):
     )
     query = query.filter(keywords_filter)
     return query
+
 
 def filter_articles_by_is_reviewable(query, is_reviewable):
     query = query.filter_by(isReviewable=is_reviewable)

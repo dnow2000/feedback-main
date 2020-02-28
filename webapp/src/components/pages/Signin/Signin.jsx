@@ -5,12 +5,13 @@ import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 import { NavLink } from 'react-router-dom'
 
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
+
 
 class Signin extends PureComponent {
   constructor(props) {
@@ -66,8 +67,8 @@ class Signin extends PureComponent {
 
     return (
       <>
-        <HeaderContainer />
-        <MainContainer name="signin">
+        <Header />
+        <Main name="signin">
           <section>
             <Form
               onSubmit={this.onFormSubmit}
@@ -91,7 +92,7 @@ class Signin extends PureComponent {
             </NavLink>
           </section>
 
-        </MainContainer>
+        </Main>
       </>
     )
   }

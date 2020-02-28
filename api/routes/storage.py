@@ -5,6 +5,7 @@ from storage.object import local_path
 
 print('LOCAL DEV MODE: Using disk based object storage')
 
+
 @app.route('/storage/<bucketId>/<path:objectId>')
 def send_storage_file(bucketId, objectId):
     path = local_path(bucketId, objectId)

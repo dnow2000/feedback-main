@@ -7,8 +7,8 @@ import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
 import ArticleItem from 'components/layout/ArticleItem'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import getCanSubmit from 'utils/form/getCanSubmit'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
@@ -118,8 +118,8 @@ const Review = () => {
 
   return (
     <>
-      <HeaderContainer />
-      <MainContainer name="review">
+      <Header />
+      <Main name="review">
         <div className="container">
           <h1 className="title">
             Article Review
@@ -142,7 +142,7 @@ const Review = () => {
             />
           </section>
         </div>
-      </MainContainer>
+      </Main>
     </>
   )
 }

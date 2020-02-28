@@ -4,7 +4,7 @@ import { Form } from 'react-final-form'
 import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 
-import MainContainer from 'components/layout/Main/MainContainer'
+import Main from 'components/layout/Main'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 
 import FormFields from './FormFields'
@@ -161,7 +161,7 @@ class Signup extends PureComponent {
 
   render() {
     return (
-      <MainContainer name="signup">
+      <Main name="signup">
         <div className="container">
           <h1 className="title">
             {`Get on board!`}
@@ -172,7 +172,7 @@ class Signup extends PureComponent {
             render={this.renderForm}
           />
         </div>
-      </MainContainer>
+      </Main>
     )
   }
 }

@@ -5,13 +5,15 @@ import data from './data'
 import errors from './errors'
 import menu from './menu'
 import requests from './requests'
+import scroll from './scroll'
 
 const rootReducer = combineReducers({
   data,
   errors,
   menu,
   modals,
-  requests
+  requests,
+  scroll
 })
 
 export default rootReducer

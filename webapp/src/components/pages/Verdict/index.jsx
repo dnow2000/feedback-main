@@ -10,8 +10,8 @@ import {
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -115,8 +115,8 @@ const Verdict = () => {
   }
   return (
     <>
-      <HeaderContainer />
-      <MainContainer name="verdict">
+      <Header />
+      <Main name="verdict">
         <div className="container">
           <section className="hero">
             <h1 className="title">
@@ -129,7 +129,7 @@ const Verdict = () => {
             render={VerdictForm}
           />
         </div>
-      </MainContainer>
+      </Main>
     </>
   )
 }

@@ -18,6 +18,7 @@ def list_roles():
 
     return jsonify(role_types), 200
 
+
 @app.route('/roles', methods=['POST'])
 @login_or_api_key_required
 def post_role():
@@ -32,6 +33,7 @@ def post_role():
     ApiHandler.save(role)
 
     return jsonify(as_dict(role)), 200
+
 
 @app.route('/roles/<role_id>', methods=['DELETE'])
 @login_or_api_key_required

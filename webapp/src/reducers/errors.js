@@ -1,7 +1,6 @@
 const initialState = {}
 
-
-const errors = (state = initialState, action) => {
+export default (state = initialState, action) => {
   const { config={} } = action || {}
   const key = config.activityTag || config.apiPath
 
@@ -12,5 +11,3 @@ const errors = (state = initialState, action) => {
 
   return state
 }
-
-export default errors

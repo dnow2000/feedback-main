@@ -6,8 +6,8 @@ import { requestData } from 'redux-thunk-data'
 import ArticleItem from 'components/layout/ArticleItem'
 import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import { articleNormalizer } from 'utils/normalizers'
 import getCanSubmit from 'utils/form/getCanSubmit'
 import parseSubmitErrors from 'utils/form/parseSubmitErrors'
@@ -90,8 +90,8 @@ class Article extends PureComponent {
 
     return (
       <>
-        <HeaderContainer />
-        <MainContainer name="article">
+        <Header />
+        <Main name="article">
           <section className="section hero is-relative">
             <h1 className="title">
               {isCreatedEntity ? 'New Article' : 'Article'}
@@ -156,7 +156,7 @@ class Article extends PureComponent {
               }}
             />
           </section>
-        </MainContainer>
+        </Main>
         <Footer />
       </>
     )

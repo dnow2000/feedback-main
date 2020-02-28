@@ -3,6 +3,7 @@ from sqlalchemy_api_handler import ApiErrors
 
 from sandboxes.scripts import getters
 
+
 @app.route('/sandboxes/<getter_name>', methods=['GET'])
 def get_sandbox(getter_name):
     for key in dir(getters):

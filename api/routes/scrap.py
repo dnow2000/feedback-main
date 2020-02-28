@@ -4,6 +4,7 @@ from sqlalchemy_api_handler import ApiErrors
 
 from repository.articles import resolve_content_with_url
 
+
 @app.route('/scrap')
 def get_scrap():
     try:

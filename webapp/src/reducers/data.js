@@ -26,6 +26,4 @@ const dataReducer = createDataReducer({
   verdicts: []
 })
 
-const data = persistReducer(dataPersistConfig, dataReducer)
-
-export default data
+export default persistReducer(dataPersistConfig, dataReducer)

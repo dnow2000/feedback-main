@@ -11,6 +11,7 @@ from models.user import User
 from repository.articles import resolve_content_with_url
 from utils.config import EMAIL_HOST
 
+
 def get_users_from_climate_feedback_community_scrap(users_max=3):
     result = requests.get('https://climatefeedback.org/community/')
     soup = BeautifulSoup(result.text, 'html.parser')
@@ -161,6 +162,7 @@ def get_articles_from_climate_feedback_feedbacks_scrap(
         articles.append(article)
 
     return articles
+
 
 def set_article_from_climate_feedback_evaluation_scrap(
         article,

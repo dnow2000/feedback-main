@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import Header from 'components/layout/Header'
 import Feeds from 'components/layout/Feeds/Feeds'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Main from 'components/layout/Main'
 
 import TrendingItem from './TrendingItem'
 
@@ -22,8 +22,8 @@ const Trendings = () => {
 
   return (
     <>
-      <HeaderContainer />
-      <MainContainer name="trendings">
+      <Header />
+      <Main name="trendings">
         <div className="container">
           <section>
             <Feeds
@@ -32,7 +32,7 @@ const Trendings = () => {
             />
           </section>
         </div>
-      </MainContainer>
+      </Main>
     </>
   )
 }

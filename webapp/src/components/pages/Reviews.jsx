@@ -3,8 +3,8 @@ import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import Feeds from 'components/layout/Feeds/Feeds'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
 
 const Reviews = () => {
@@ -20,8 +20,8 @@ const Reviews = () => {
 
   return (
     <>
-      <HeaderContainer />
-      <MainContainer name="reviews">
+      <Header />
+      <Main name="reviews">
         <div className="container">
           <section>
             <Feeds
@@ -31,7 +31,7 @@ const Reviews = () => {
             />
           </section>
         </div>
-      </MainContainer>
+      </Main>
     </>
   )
 }

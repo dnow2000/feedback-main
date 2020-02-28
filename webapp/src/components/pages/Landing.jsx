@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
-import MainContainer from 'components/layout/Main/MainContainer'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
+import Main from 'components/layout/Main'
+import Header from 'components/layout/Header'
 import Icon from 'components/layout/Icon'
 import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
 import { ROOT_ASSETS_PATH } from 'utils/config'
@@ -25,8 +25,8 @@ const Landing = () => {
 
   return (
     <>
-      <HeaderContainer />
-      <MainContainer className="with-header" name="landing">
+      <Header />
+      <Main className="with-header" name="landing">
         <section className="hero">
           <div className="container">
             <p className="h1">
@@ -126,7 +126,7 @@ const Landing = () => {
             </div>
           </div>
         </section>
-      </MainContainer>
+      </Main>
     </>
   )
 }
