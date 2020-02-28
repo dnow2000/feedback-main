@@ -5,7 +5,7 @@ import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 
 import Main from 'components/layout/Main'
-import parseSubmitErrors from 'utils/form/parseSubmitErrors'
+import { parseSubmitErrors } from 'utils/form'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'

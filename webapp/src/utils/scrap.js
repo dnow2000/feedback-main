@@ -1,7 +1,9 @@
+import createDecorator from 'final-form-calculate'
 import { createSelector } from 'reselect'
 
-import { API_URL } from 'utils/config'
-import isEmpty from 'utils/form/isEmpty'
+import { API_URL } from './config'
+import { isEmpty } from './form'
+
 
 const getScrap = createSelector(
   url => url,
@@ -35,4 +37,16 @@ const getScrap = createSelector(
   }
 )
 
-export default getScrap
+
+export const scrapDecorator = createDecorator(
+  {
+    field: 'url',
+    updates: async (url, urlKey, formValues)  => {
+      const scrap = await getScrap(url)
+      if (!scrap) {
+        return {}
+      }
+      return Object.assign({}, scrap.values, formValues)
+    }
+  }
+)

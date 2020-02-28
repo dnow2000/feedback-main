@@ -6,8 +6,10 @@ import React from 'react'
 import Textarea from 'react-autosize-textarea'
 import { Field } from 'react-final-form'
 
-import composeValidators from 'utils/form/composeValidators'
-import getRequiredValidate from 'utils/form/getRequiredValidate'
+import {
+  composeValidators,
+  getRequiredValidate
+} from 'utils/form'
 
 import FieldError from '../FieldError'
 

@@ -6,7 +6,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useFormidable } from 'with-react-formidable'
 
-import getCanSubmit from 'utils/form/getCanSubmit'
+import { getCanSubmit } from 'utils/form'
 
 const FormFooter = ({...formProps}) => {
   const { form: { reset: formReset } } = formProps

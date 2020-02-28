@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react'
 
 import Icon from 'components/layout/Icon'
-import isPassword from 'utils/form/isPassword'
+import { isPassword } from 'utils/form'
 
 import TextField from './TextField'
+
 
 const createValidatePasswordField = error => value => {
   if (isPassword(value)) return undefined

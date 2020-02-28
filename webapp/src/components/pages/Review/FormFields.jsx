@@ -9,7 +9,7 @@ import RadiosField from 'components/layout/form/fields/RadiosField/RadiosField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
 import selectTagsByScopes from 'selectors/selectTagsByScopes'
-import selectOptionsFromNameAndEntitiesAndPlaceholder from 'utils/form/selectOptionsFromNameAndEntitiesAndPlaceholder'
+import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
 
 const EVALUATIONS_NAME = 'evaluationId'
 const EVALUATIONS_PLACEHOLDER = ''

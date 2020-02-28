@@ -6,7 +6,7 @@ import CheckboxesField from 'components/layout/form/fields/CheckboxesField/Check
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
-import selectOptionsFromNameAndEntitiesAndPlaceholder from 'utils/form/selectOptionsFromNameAndEntitiesAndPlaceholder'
+import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
 import articleType from 'components/types/articleType'
 
 import ArticleFields from './ArticleFields'

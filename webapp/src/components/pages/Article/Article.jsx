@@ -9,12 +9,12 @@ import Icon from 'components/layout/Icon'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import { articleNormalizer } from 'utils/normalizers'
-import getCanSubmit from 'utils/form/getCanSubmit'
-import parseSubmitErrors from 'utils/form/parseSubmitErrors'
+import { getCanSubmit, parseSubmitErrors } from 'utils/form'
 
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import FormFooterContainer from './FormFooter/FormFooterContainer'
-import scrapDecorator from './decorators/scrapDecorator'
+
+import { scrapDecorator } from 'utils/scrap'
 
 
 class Article extends PureComponent {

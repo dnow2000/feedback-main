@@ -14,7 +14,7 @@ import UserContainer from 'components/pages/User/UserContainer'
 import UsersContainer from 'components/pages/Users/UsersContainer'
 import Verdict from 'components/pages/Verdict'
 import Verdicts from 'components/pages/Verdicts'
-import SigninContainer from 'components/pages/Signin/SigninContainer'
+import Signin from 'components/pages/Signin'
 import SignupContainer from 'components/pages/Signup/SignupContainer'
 import Trendings from 'components/pages/Trendings/Trendings'
 
@@ -67,13 +67,13 @@ const routes = [
     exact: true,
     path: '/users/:userId',
     render: () => <UserContainer />,
-    title: "User",
+    title: 'User',
   },
   {
     exact: true,
     path: '/users',
     render: () => <UsersContainer />,
-    title: "Users",
+    title: 'Users',
   },
   {
     component: compose(
@@ -85,18 +85,18 @@ const routes = [
     )(Verdict),
     exact: true,
     path: `/verdicts/:verdictId${formPath}`,
-    title: "Verdict",
+    title: 'Verdict',
   },
   {
     component: withRequiredLogin(Verdicts),
     exact: true,
     path: '/verdicts',
-    title: "Verdicts",
+    title: 'Verdicts',
   },
   {
+    component: withRedirectWhenLoggedIn(Signin),
     exact: true,
     path: '/signin',
-    render: () => <SigninContainer />,
     title: 'Signin',
   },
   {

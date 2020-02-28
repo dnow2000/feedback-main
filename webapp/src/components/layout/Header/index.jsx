@@ -26,7 +26,7 @@ export default () => {
 
 
   useEffect(() => {
-    const handleScroll = event => dispatch(assignScroll(window.scrollY < 50))
+    const handleScroll = event => dispatch(assignScroll({ isAtTop: window.scrollY > 50 }))
     document.addEventListener('scroll', handleScroll)
     return () => {
       document.removeEventListener('scroll', handleScroll)

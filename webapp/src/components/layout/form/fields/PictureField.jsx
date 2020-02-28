@@ -5,9 +5,11 @@ import { Field } from 'react-final-form'
 import Dropzone from 'react-dropzone'
 import AvatarEditor from 'react-avatar-editor'
 
-import composeValidators from 'utils/form/composeValidators'
-import createParseNumberValue from 'utils/form/createParseNumberValue'
-import getRequiredValidate from 'utils/form/getRequiredValidate'
+import {
+  composeValidators,
+  createParseNumberValue,
+  getRequiredValidate
+} from 'utils/form'
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
 import FieldError from '../FieldError'
