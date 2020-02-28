@@ -8,13 +8,15 @@ import { useFormidable } from 'with-react-formidable'
 
 import { getCanSubmit } from 'utils/form'
 
-const FormFooter = ({...formProps}) => {
+
+export default ({...formProps}) => {
   const { form: { reset: formReset } } = formProps
   const history = useHistory()
   const location = useLocation()
   const params = useParams()
   const { verdictId } = params
   const { isCreatedEntity, readOnly } = useFormidable(location, params)
+
 
   const { isPending } = useSelector(state =>
     state.requests['/verdicts']) || {}
@@ -23,6 +25,7 @@ const FormFooter = ({...formProps}) => {
     getCanSubmit(formProps)
   )
 
+
   const handleCancelClick = useCallback(() => {
     formReset()
     const next = isCreatedEntity
@@ -30,6 +33,7 @@ const FormFooter = ({...formProps}) => {
       : `/verdicts/${verdictId}`
     history.push(next)
   }, [formReset, history, isCreatedEntity, verdictId])
+
 
   return (
     <div className="form-footer">
@@ -70,5 +74,3 @@ const FormFooter = ({...formProps}) => {
     </div>
   )
 }
-
-export default FormFooter

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 

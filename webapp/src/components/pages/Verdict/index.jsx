@@ -15,9 +15,9 @@ import Main from 'components/layout/Main'
 import { parseSubmitErrors } from 'utils/form'
 import { verdictNormalizer } from 'utils/normalizers'
 
-import VerdictForm from './VerdictForm/VerdictForm'
+import VerdictForm from './VerdictForm'
 
-const Verdict = () => {
+export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation()
@@ -26,6 +26,14 @@ const Verdict = () => {
   const query = useQuery(location.search)
   const { verdictId } = params
   const { params: { buzzsumoId } } = query
+  let title
+  if (isCreatedEntity) {
+    title = 'Create a verdict'
+  } else if (readOnly) {
+    title = 'See the verdict'
+  } else {
+    title = "Edit the verdict"
+  }
 
   const trending = useSelector(state =>
     selectEntitiesByKeyAndJoin(
@@ -53,6 +61,7 @@ const Verdict = () => {
       articleUrl,
       ...verdict
   }
+
 
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
@@ -97,7 +106,6 @@ const Verdict = () => {
 
   }, [buzzsumoId, dispatch, isCreatedEntity, verdictId])
 
-
   useEffect(() => {
     const { id } = currentUserVerdictPatch || {}
     if (isCreatedEntity && id) {
@@ -105,14 +113,7 @@ const Verdict = () => {
     }
   })
 
-  let title
-  if (isCreatedEntity) {
-    title = 'Create a verdict'
-  } else if (readOnly) {
-    title = 'See the verdict'
-  } else {
-    title = "Edit the verdict"
-  }
+
   return (
     <>
       <Header />
@@ -133,6 +134,3 @@ const Verdict = () => {
     </>
   )
 }
-
-
-export default Verdict

@@ -1,10 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-data'
+
 
 import Feeds from 'components/layout/Feeds/Feeds'
 import Icon from 'components/layout/Icon'
 import ReviewItem from 'components/layout/ReviewItem'
 import UserItem from 'components/layout/UserItem'
+import selectUsersByVerdictId from 'selectors/selectUsersByVerdictId'
 
 import VerdictUserItem from './VerdictUserItem/VerdictUserItem'
 
@@ -12,15 +16,35 @@ import VerdictUserItem from './VerdictUserItem/VerdictUserItem'
 const defaultSelectedUserIds = []  // XXX @colas branch to existing
 
 
-export default ({
-  location: { search },
-  onChange,
-  reviews,
-  verdictUsers,
-}) => {
+export default ({ onChange }) => {
   const dispatch = useDispatch()
+  const { search } = useLocation()
+  const params = useParams()
+  const { verdictId } = params
+
+
+  const config = useMemo(() => ({
+    apiPath: `/users${search}`
+  }), [search])
+
 
   const [selectedUserIds, setSelectedUserIds] = useState(defaultSelectedUserIds)
+
+
+  const verdictUsers = useSelector(state =>
+    selectUsersByVerdictId(state, verdictId))
+  const verdict = useSelector(state =>
+    selectEntityByKeyAndId(state, 'verdicts', verdictId))
+  const { articleId } = verdict || {}
+
+  const reviews = useSelector(state =>
+    selectEntitiesByKeyAndJoin(
+      state,
+      'reviews',
+      { key: 'articleId', value: articleId }
+  ))
+
+
   const handleClickUser = useCallback(userId => {
     setSelectedUserIds(selectedUserIds => {
       let nextSelectedUserIds
@@ -29,33 +53,25 @@ export default ({
       } else {
         nextSelectedUserIds = [...selectedUserIds, userId]
       }
-      console.log('CHANGE', userId, selectedUserIds.length, nextSelectedUserIds.length, nextSelectedUserIds)
       return nextSelectedUserIds
     })
     }, [setSelectedUserIds]
   )
-  useEffect(() => {
-    if (onChange) {
-      onChange(selectedUserIds)
-    }
-  }, [onChange, selectedUserIds])
-
-  console.log('REVIEWS', reviews && reviews.length)
-  console.log('SELECTED', selectedUserIds.length)
-
-  const config = useMemo(() => ({
-    apiPath: `/users${search}`
-  }), [search])
 
   const renderItem = useCallback(item => (
     <UserItem
       onClick={handleClickUser}
       user={item}
     />
-  ), [handleClickUser]
-  )
+  ), [handleClickUser])
 
-  console.log(verdictUsers)
+
+  useEffect(() => {
+    if (onChange) {
+      onChange(selectedUserIds)
+    }
+  }, [onChange, selectedUserIds])
+
 
   return (
     <div className="reviewers-manager">

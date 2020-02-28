@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { selectEntityByKeyAndId } from 'redux-thunk-data'

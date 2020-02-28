@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import { useFormidable } from 'with-react-formidable'
 
-import FormFieldsContainer from './FormFields/FormFieldsContainer'
+import FormFields from './FormFields'
 import FormFooter from './FormFooter'
 
 
@@ -30,7 +30,7 @@ const VerdictForm = ({ ...formProps }) => {
       noValidate
       onSubmit={handleFormSubmit}
     >
-      {!isCreatedEntity && <FormFieldsContainer />}
+      {!isCreatedEntity && <FormFields />}
       <FormFooter {...formProps} />
     </form>
   )

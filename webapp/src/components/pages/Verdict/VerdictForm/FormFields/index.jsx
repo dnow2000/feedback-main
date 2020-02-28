@@ -1,5 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-data'
+import { useFormidable } from 'with-react-formidable'
+import { useQuery } from 'with-react-query'
 
 import ArticleItem from 'components/layout/ArticleItem'
 import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
@@ -8,9 +13,11 @@ import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
 import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
 import articleType from 'components/types/articleType'
+import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
+import selectTagsByScopes from 'selectors/selectTagsByScopes'
 
 import ArticleFields from './ArticleFields'
-import ReviewersManagerContainer from './ReviewersManager/ReviewersManagerContainer'
+import ReviewersManager from './ReviewersManager'
 
 
 const SELECT_EVALUATIONS_NAME = 'evaluationId'
@@ -20,13 +27,25 @@ const CHECKBOXES_TAGS_NAME = 'tagIds'
 const CHECKBOXES_TAGS_PLACEHOLDER = ''
 
 
-const FormFields = ({ article, evaluations, formidable, reviews, tags, trending }) => {
+export default () => {
+  const location = useLocation()
+  const params = useParams()
+  const { verdictId } = params
+  const { params: { buzzsumoId } } = useQuery(location.search)
+  const { readOnly } = useFormidable(location, params)
+
+
+  const [readOnlyArticle, setReadOnlyArticle] = useState(true)
+
+  const evaluations = useSelector(state =>
+    selectEvaluationsByType(state, 'article'))
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     SELECT_EVALUATIONS_NAME,
     evaluations,
     SELECT_EVALUATIONS_PLACEHOLDER
   )
 
+  const tags = useSelector(state => selectTagsByScopes(state, ['verdict']))
   const tagOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     CHECKBOXES_TAGS_NAME,
     tags,
@@ -34,11 +53,33 @@ const FormFields = ({ article, evaluations, formidable, reviews, tags, trending 
     'text'
   )
 
-  const { readOnly } = formidable
-  const [readOnlyArticle, setReadOnlyArticle] = useState(true)
+
+  const trending = useSelector(state =>
+    selectEntitiesByKeyAndJoin(
+      state,
+      'trendings',
+      { key: 'buzzsumoId', value: buzzsumoId }
+  )[0])
+
+  const verdict = useSelector(state =>
+    selectEntityByKeyAndId(state, 'verdicts', verdictId))
+
+  const { articleId } = verdict || {}
+  const article = useSelector(state =>
+    selectEntityByKeyAndId(state, 'articles', articleId))
+
+  const reviews = useSelector(state =>
+    selectEntitiesByKeyAndJoin(
+      state,
+      'reviews',
+      { key: 'articleId', value: articleId }
+    ))
+
+
   const handleClickEdit = useCallback(() => {
     setReadOnlyArticle(!readOnlyArticle)
   }, [readOnlyArticle, setReadOnlyArticle])
+
 
   return (
     <div className="section">
@@ -59,7 +100,7 @@ const FormFields = ({ article, evaluations, formidable, reviews, tags, trending 
         }
       </section>
       <section>
-        <ReviewersManagerContainer />
+        <ReviewersManager />
       </section>
       {reviews.length > 0 &&
         (
@@ -106,18 +147,3 @@ const FormFields = ({ article, evaluations, formidable, reviews, tags, trending 
     </div>
   )
 }
-
-FormFields.defaultProps = {
-  article: null,
-  evaluations: null,
-  tags: null
-}
-
-FormFields.propTypes = {
-  article: articleType,
-  evaluations: PropTypes.array,
-  query: PropTypes.object.isRequired,
-  tags: PropTypes.array,
-}
-
-export default FormFields
