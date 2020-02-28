@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
@@ -7,7 +6,6 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import Logo from 'components/layout/Logo'
 import { assignScroll } from 'reducers/scroll'
-import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
 import Menu from './Menu'
 import Navigations from './Navigations'

@@ -1,21 +1,31 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+// import { useSelector } from 'react-redux'
+// import { selectCurrentUser } from 'with-react-redux-login'
 
 import Avatar from 'components/layout/Avatar'
 import userType from 'components/types/userType'
+// import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+// import selectTagsByUserId from 'selectors/selectTagsByUserId'
 
-const UserItem = ({
-  adminRole,
-  user,
-  tags,
-}) => {
+
+const UserItem = ({ user }) => {
   const {
     affiliation,
     expertise,
     firstName,
+    // id: userId,
     lastName,
     title
   } = (user || {})
+
+
+  // const { id: currentUserId } = useSelector(selectCurrentUser) || {}
+
+  //const adminRole = useSelector(state =>
+  //  selectRoleByUserIdAndType(state, currentUserId, 'admin'))
+
+  // const tags = useSelector(state => selectTagsByUserId(state, userId))
+
 
   return (
     <article className="user-item">
@@ -46,16 +56,12 @@ const UserItem = ({
   )
 }
 
+
 UserItem.defaultProps = {
-  adminRole: null,
-  tags: null,
   user: null
 }
 
 UserItem.propTypes = {
-  adminRole: PropTypes.shape(),
-  match: PropTypes.shape().isRequired,
-  tags: PropTypes.array,
   user: userType
 }
 

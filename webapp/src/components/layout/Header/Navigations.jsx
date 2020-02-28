@@ -1,8 +1,6 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
-import { selectCurrentUser } from 'with-react-redux-login'
 
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
@@ -14,8 +12,6 @@ export default () => {
 
   const currentRoles = useSelector(state =>
     selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']))
-
-  const currentUser = useSelector(selectCurrentUser)
 
   return (
     <div className="navigations">

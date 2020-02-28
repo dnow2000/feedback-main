@@ -1,22 +1,24 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 
 import Feeds from 'components/layout/Feeds/Feeds'
 import Icon from 'components/layout/Icon'
-import ReviewItemContainer from 'components/layout/ReviewItem/ReviewItemContainer'
+import ReviewItem from 'components/layout/ReviewItem'
+import UserItem from 'components/layout/UserItem'
 
-import UserItemContainer from './UserItem/UserItemContainer'
-import VerdictUserItemContainer from './VerdictUserItem/VerdictUserItemContainer'
+import VerdictUserItem from './VerdictUserItem/VerdictUserItem'
+
 
 const defaultSelectedUserIds = []  // XXX @colas branch to existing
 
-const ReviewersManager = ({
-  dispatch,
+
+export default ({
   location: { search },
   onChange,
   reviews,
   verdictUsers,
 }) => {
+  const dispatch = useDispatch()
 
   const [selectedUserIds, setSelectedUserIds] = useState(defaultSelectedUserIds)
   const handleClickUser = useCallback(userId => {
@@ -46,7 +48,7 @@ const ReviewersManager = ({
   }), [search])
 
   const renderItem = useCallback(item => (
-    <UserItemContainer
+    <UserItem
       onClick={handleClickUser}
       user={item}
     />
@@ -63,7 +65,7 @@ const ReviewersManager = ({
       {
         (reviews && reviews.length > 0)
           ? reviews.map(review => (
-              <ReviewItemContainer
+              <ReviewItem
                 key={review.id}
                 review={review}
               />
@@ -86,7 +88,7 @@ const ReviewersManager = ({
               {"Selected Reviewers"}
             </h2>
             {verdictUsers.map(verdictUser => (
-              <VerdictUserItemContainer
+              <VerdictUserItem
                 key={verdictUser.id}
                 user={verdictUser}
               />))}
@@ -103,14 +105,3 @@ const ReviewersManager = ({
     </div>
   )
 }
-
-ReviewersManager.defaultProps = {
-  verdictUsers: null
-}
-
-ReviewersManager.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  verdictUsers: PropTypes.array
-}
-
-export default ReviewersManager

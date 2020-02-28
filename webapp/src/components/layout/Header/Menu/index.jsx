@@ -1,10 +1,8 @@
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 import { selectCurrentUser } from 'with-react-redux-login'
-
 
 import { closeMenu } from 'reducers/menu'
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'

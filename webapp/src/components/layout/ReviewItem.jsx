@@ -1,17 +1,29 @@
-import PropTypes from 'prop-types'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import Avatar from 'components/layout/Avatar'
 import Extract from 'components/layout/Extract'
 import Rating from 'components/layout/Rating'
 import Tag from 'components/layout/Tag'
+import selectTagsByReviewId from 'selectors/selectTagsByReviewId'
 
-const ReviewItem = ({ review, tags, user }) => {
-  const { comment, id, rating } = review
+
+export default ({ review }) => {
   const {
-    id: userId,
-    publicName,
-  } = (user || {})
+    comment,
+    id: reviewId,
+    rating,
+    userId
+  } = review
+
+
+  const tags = useSelector(state => selectTagsByReviewId(state, reviewId))
+
+  const user = useSelector(state =>
+    selectEntityByKeyAndId(state, 'users', userId)) || {}
+  const { publicName } = user
+
 
   return (
     <article className="review-item box columns is-vcentered">
@@ -30,12 +42,12 @@ const ReviewItem = ({ review, tags, user }) => {
             </div>
           </a>
           <div className="col-25">
-            {tags && tags.map(({ id: tagId, text }) =>
+            {tags.map(({ id: tagId, text }) =>
               <Tag key={tagId} theme={text} />)}
           </div>
           <a
             className='anchor'
-            href={`/reviews/${id}`}
+            href={`/reviews/${reviewId}`}
             id='see-review'
           >
             <Extract text={comment} />
@@ -47,19 +59,3 @@ const ReviewItem = ({ review, tags, user }) => {
     </article>
   )
 }
-
-
-
-ReviewItem.defaultProps = {
-  review: null,
-  tags: null,
-  user: null,
-}
-
-ReviewItem.propTypes = {
-  review: PropTypes.object,
-  tags: PropTypes.array,
-  user: PropTypes.object,
-}
-
-export default ReviewItem

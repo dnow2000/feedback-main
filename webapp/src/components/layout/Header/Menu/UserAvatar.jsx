@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -7,7 +6,6 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import Avatar from 'components/layout/Avatar'
 import { closeMenu, showMenu } from 'reducers/menu'
-import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
 
 export default () => {

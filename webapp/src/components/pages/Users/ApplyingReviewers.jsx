@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 
 import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
-import UserItemContainer from 'components/layout//UserItem/UserItemContainer'
+import UserItem from 'components/layout//UserItem'
 import { userConfig } from 'utils/normalizers'
 
 
@@ -13,7 +13,7 @@ const ApplyingReviewers = () => {
     ...userConfig
   }), [])
 
-  const renderItem = useCallback(item => <UserItemContainer user={item} />, [])
+  const renderItem = useCallback(item => <UserItem user={item} />, [])
 
   return (
     <ItemsContainer

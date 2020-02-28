@@ -5,7 +5,7 @@ import LoadingInfiniteScroll from 'react-loading-infinite-scroller'
 import { assignData, requestData } from 'redux-thunk-data'
 
 import TextField from 'components/layout/form/fields/TextField'
-import UserItemContainer from 'components/layout/UserItem/UserItemContainer'
+import UserItem from 'components/layout/UserItem'
 import { userNormalizer } from 'utils/normalizers'
 
 
@@ -140,7 +140,7 @@ class UsersExploration extends PureComponent {
           {
             users.map(user => (
               <div className="mb16" key={user.id}>
-                <UserItemContainer
+                <UserItem
                   user={user}
                   withAddButton={withAddButton}
                 />

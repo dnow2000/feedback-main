@@ -5,7 +5,7 @@ import { requestData } from 'redux-thunk-data'
 import PublicationsManagerContainer from './PublicationsManager/PublicationsManagerContainer'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import UserItemContainer from 'components/layout/UserItem/UserItemContainer'
+import UserItem from 'components/layout/UserItem'
 import { userNormalizer } from 'utils/normalizers'
 
 class User extends PureComponent {
@@ -35,7 +35,7 @@ class User extends PureComponent {
             </h1>
           </section>
           <section>
-            <UserItemContainer user={user} />
+            <UserItem user={user} />
           </section>
           <section>
             <h3 className="subtitle">

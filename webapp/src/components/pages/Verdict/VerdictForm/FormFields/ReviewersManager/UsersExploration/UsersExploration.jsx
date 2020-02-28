@@ -7,7 +7,7 @@ import { assignData, requestData } from 'redux-thunk-data'
 import TextField from 'components/layout/form/fields/TextField'
 import { userNormalizer } from 'utils/normalizers'
 
-import UserItemContainer from './UserItem/UserItemContainer'
+import UserItem from './UserItem'
 
 
 function getScrollParent () {
@@ -139,7 +139,7 @@ class UsersExploration extends PureComponent {
           {
             users.map(user => (
               <div className="mb16" key={user.id}>
-                <UserItemContainer
+                <UserItem
                   user={user}
                   withAddButton={withAddButton}
                 />
