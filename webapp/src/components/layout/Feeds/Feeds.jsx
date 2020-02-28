@@ -1,12 +1,12 @@
 import React from 'react'
 
-import ControlsContainer from './Controls/ControlsContainer'
-import ItemsContainer from './Items/ItemsContainer'
+import Controls from './Controls'
+import Items from './Items'
 
 const Feeds = ({ config, renderItem }) => (
   <>
-    <ControlsContainer config={config} />
-    <ItemsContainer
+    <Controls config={config} />
+    <Items
       config={config}
       renderItem={renderItem}
     />

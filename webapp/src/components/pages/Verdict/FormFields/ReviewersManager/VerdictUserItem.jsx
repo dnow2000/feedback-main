@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { stringify } from 'query-string'
 import React, { useCallback } from 'react'
 import Dotdotdot from 'react-dotdotdot'

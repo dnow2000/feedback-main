@@ -2,7 +2,12 @@ import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 
-import { trendingThemes } from './utils'
+
+const trendingThemes = [
+  { label: 'All', value: 'all' },
+  { label: 'Climate', value: 'climate' },
+  { label: 'Health', value: 'health' }
+]
 
 
 const Themes = ({

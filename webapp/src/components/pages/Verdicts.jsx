@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import Feeds from 'components/layout/Feeds/Items/ItemsContainer'
+import Items from 'components/layout/Feeds/Items'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
@@ -34,7 +34,7 @@ export default () => {
           </section>
 
           <section>
-            <Feeds
+            <Items
               config={config}
               renderItem={renderItem}
             />

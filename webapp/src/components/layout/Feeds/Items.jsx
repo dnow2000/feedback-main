@@ -1,24 +1,47 @@
+import { getStateKeyFromConfig } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
 import { requestData } from 'redux-thunk-data'
 
-import { getItemsActivityTagFromConfig, selectItems } from '../utils'
+import selectEntitiesByKeyAndActivityTags from 'selectors/selectEntitiesByKeyAndActivityTags'
+
+import { getItemsActivityTagFromConfig } from './Controls'
 
 const REACHABLE_THRESHOLD = -10
 const UNREACHABLE_THRESHOLD = -10000
 
 
+
+
+const selectItems = (state, config) =>
+  selectEntitiesByKeyAndActivityTags(
+    state,
+    getStateKeyFromConfig(config),
+    [getItemsActivityTagFromConfig(config)]
+  )
+
+const selectRequest = (state, config) =>
+  state.requests[getItemsActivityTagFromConfig(config)]
+
+
 const Items = ({
   cols,
   config,
-  dispatch,
-  isPending,
-  items,
   renderItem
 }) => {
+  const dispatch = useDispatch()
+
+
   const [hasMore, setHasMore] = useState(true)
+
   const [threshold, setThreshold] = useState(REACHABLE_THRESHOLD)
+
+
+  const { isPending } = useSelector(state => selectRequest(state, config)) || {}
+
+  const items = useSelector(state => selectItems(state, config))
 
 
   const handleGetItems = useCallback(page => {
@@ -87,8 +110,6 @@ Items.defaultProps = {
 Items.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
-  isPending: PropTypes.bool,
-  items: PropTypes.array,
   renderItem: PropTypes.func.isRequired
 }
 

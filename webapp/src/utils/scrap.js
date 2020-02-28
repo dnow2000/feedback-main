@@ -5,7 +5,7 @@ import { API_URL } from './config'
 import { isEmpty } from './form'
 
 
-const getScrap = createSelector(
+export const getScrap = createSelector(
   url => url,
   async url => {
 

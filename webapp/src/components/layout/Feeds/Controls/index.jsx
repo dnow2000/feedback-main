@@ -1,21 +1,29 @@
+import { getStateKeyFromConfig } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { deleteData } from 'redux-thunk-data'
+import { useQuery } from 'with-react-query'
 
 import Days from './Days'
 import Themes from './Themes'
 import KeywordsBar from './KeywordsBar'
-import { getItemsActivityTagFromConfig } from '../utils'
 
-const Controls = ({
-  config,
-  dispatch,
-  history: { push },
-  query: {
+
+export const getItemsActivityTagFromConfig = config =>
+  `/${getStateKeyFromConfig(config)}-items`
+
+
+const Controls = ({ config }) => {
+  const dispatch = useDispatch()
+  const history = useHistory()
+  const location = useLocation()
+  const {
     getSearchFromUpdate,
     params: { days, keywords, theme }
-  }
-}) => {
+  } = useQuery(location.search)
+
   const handleChange =  useCallback((key, value) => {
     const isEmptyValue =
       typeof value === 'undefined' ||
@@ -23,9 +31,9 @@ const Controls = ({
     const nextValue = isEmptyValue
       ? null
       : value
-    push(getSearchFromUpdate({ [key]: nextValue }))
+    history.push(getSearchFromUpdate({ [key]: nextValue }))
     dispatch(deleteData(null, { tags: [getItemsActivityTagFromConfig(config)] }))
-  }, [config, dispatch, getSearchFromUpdate, push])
+  }, [config, dispatch, getSearchFromUpdate, history])
 
 
   return (
