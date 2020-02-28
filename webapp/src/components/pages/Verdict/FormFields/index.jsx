@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React, { useCallback, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
@@ -12,7 +11,6 @@ import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
 import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
-import articleType from 'components/types/articleType'
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
 import selectTagsByScopes from 'selectors/selectTagsByScopes'
 

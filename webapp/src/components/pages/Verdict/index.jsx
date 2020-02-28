@@ -15,7 +15,9 @@ import Main from 'components/layout/Main'
 import { parseSubmitErrors } from 'utils/form'
 import { verdictNormalizer } from 'utils/normalizers'
 
-import VerdictForm from './VerdictForm'
+import FormFields from './FormFields'
+import FormFooter from './FormFooter'
+
 
 export default () => {
   const dispatch = useDispatch()
@@ -61,6 +63,9 @@ export default () => {
       articleUrl,
       ...verdict
   }
+
+  const { isPending } = useSelector(state =>
+    state.requests['/verdicts']) || {}
 
 
   const handleSubmitVerdict = useCallback(formValues => {
@@ -114,6 +119,19 @@ export default () => {
   })
 
 
+  const renderForm = useCallback(({ handleSubmit, ...formProps }) => (
+    <form
+      autoComplete="off"
+      className="form"
+      disabled={isPending}
+      noValidate
+      onSubmit={handleSubmit}
+    >
+      <FormFields />
+      <FormFooter {...formProps} />
+    </form>
+  ), [isPending])
+
   return (
     <>
       <Header />
@@ -127,7 +145,7 @@ export default () => {
           <Form
             initialValues={currentUserVerdictPatch}
             onSubmit={handleSubmitVerdict}
-            render={VerdictForm}
+            render={renderForm}
           />
         </div>
       </Main>

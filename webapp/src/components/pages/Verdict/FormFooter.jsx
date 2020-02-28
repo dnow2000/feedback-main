@@ -1,5 +1,4 @@
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
@@ -9,7 +8,7 @@ import { useFormidable } from 'with-react-formidable'
 import { getCanSubmit } from 'utils/form'
 
 
-export default ({...formProps}) => {
+export default ({ ...formProps }) => {
   const { form: { reset: formReset } } = formProps
   const history = useHistory()
   const location = useLocation()

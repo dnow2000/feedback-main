@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-data'
 
@@ -10,14 +10,13 @@ import ReviewItem from 'components/layout/ReviewItem'
 import UserItem from 'components/layout/UserItem'
 import selectUsersByVerdictId from 'selectors/selectUsersByVerdictId'
 
-import VerdictUserItem from './VerdictUserItem/VerdictUserItem'
+import VerdictUserItem from './VerdictUserItem'
 
 
 const defaultSelectedUserIds = []  // XXX @colas branch to existing
 
 
 export default ({ onChange }) => {
-  const dispatch = useDispatch()
   const { search } = useLocation()
   const params = useParams()
   const { verdictId } = params
