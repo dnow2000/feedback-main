@@ -6,7 +6,7 @@ import { requestData } from 'redux-thunk-data'
 import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
 import Icon from 'components/layout/Icon'
-import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
+import VerdictItem from 'components/layout/VerdictItem'
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
 
@@ -54,9 +54,7 @@ const Landing = () => {
                       className="item-container"
                       key={verdict.id}
                     >
-                      <VerdictItemContainer
-                        verdict={verdict}
-                      />
+                      <VerdictItem verdict={verdict} />
                     </div>
                 ))}
               </div>

@@ -13,7 +13,7 @@ import Reviews from 'components/pages/Reviews'
 import UserContainer from 'components/pages/User/UserContainer'
 import UsersContainer from 'components/pages/Users/UsersContainer'
 import Verdict from 'components/pages/Verdict'
-import VerdictsContainer from 'components/pages/Verdicts/VerdictsContainer'
+import Verdicts from 'components/pages/Verdicts'
 import SigninContainer from 'components/pages/Signin/SigninContainer'
 import SignupContainer from 'components/pages/Signup/SignupContainer'
 import Trendings from 'components/pages/Trendings/Trendings'
@@ -88,9 +88,9 @@ const routes = [
     title: "Verdict",
   },
   {
+    component: withRequiredLogin(Verdicts),
     exact: true,
     path: '/verdicts',
-    render: () => <VerdictsContainer />,
     title: "Verdicts",
   },
   {

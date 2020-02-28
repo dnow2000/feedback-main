@@ -1,14 +1,18 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 
 import Feeds from 'components/layout/Feeds/Items/ItemsContainer'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import VerdictItemContainer from 'components/layout/VerdictItem/VerdictItemContainer'
+import VerdictItem from 'components/layout/VerdictItem'
 import { verdictNormalizer } from 'utils/normalizers'
 
 
-const Verdicts = ({ location: { search } }) => {
+export default () => {
+  const { search } = useLocation()
+
+
   const config = useMemo(() => ({
     apiPath: `/verdicts${search}`,
     normalizer: verdictNormalizer
@@ -16,7 +20,8 @@ const Verdicts = ({ location: { search } }) => {
 
 
   const renderItem = useCallback(item =>
-    <VerdictItemContainer verdict={item} />, [])
+    <VerdictItem verdict={item} />, [])
+
 
   return (
     <>
@@ -40,12 +45,3 @@ const Verdicts = ({ location: { search } }) => {
     </>
   )
 }
-
-
-Verdicts.propTypes = {
-  location: PropTypes.shape({
-    search: PropTypes.string.isRequired
-  }).isRequired
-}
-
-export default Verdicts
