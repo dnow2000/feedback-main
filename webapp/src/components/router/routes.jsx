@@ -15,8 +15,8 @@ import Users from 'components/pages/Users'
 import Verdict from 'components/pages/Verdict'
 import Verdicts from 'components/pages/Verdicts'
 import Signin from 'components/pages/Signin'
-import SignupContainer from 'components/pages/Signup/SignupContainer'
-import Trendings from 'components/pages/Trendings/Trendings'
+import Signup from 'components/pages/Signup'
+import Trendings from 'components/pages/Trendings'
 
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
@@ -108,7 +108,12 @@ const routes = [
   {
     exact: true,
     path: '/signup',
-    render: () => <SignupContainer />,
+    render: () => <Redirect to="/signup/reviewer" />,
+  },
+  {
+    component: withRedirectWhenLoggedIn(Signup),
+    exact: true,
+    path: '/signup/:roleType(reviewer|editor)',
     title: 'Signup',
   },
   {

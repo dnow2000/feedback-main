@@ -127,13 +127,6 @@ export const isPassword = (value, count = 12) =>
   hasNumber(value)
 
 
-export const parseSubmitErrors = errors =>
-  Object.keys(errors).reduce((acc, key) => {
-    const err = errors[key]
-    return { ...acc, [key]: err }
-  }, {})
-
-
 export const selectEntitiesOptionsFromNameAndEntities = createCachedSelector(
   (name, entities) => entities,
   (name, entities, placeholder, labelKey) => labelKey || 'label',

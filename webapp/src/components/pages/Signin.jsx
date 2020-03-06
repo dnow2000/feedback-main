@@ -12,7 +12,7 @@ import TextField from 'components/layout/form/fields/TextField'
 import PasswordField from 'components/layout/form/fields/PasswordField'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import { parseSubmitErrors } from 'utils/form'
+import { parseSubmitErrors } from 'utils/errors'
 
 
 export default () => {
@@ -22,6 +22,7 @@ export default () => {
   const location = useLocation()
   const query = useQuery(location.search)
   const { params: { de: from } } = query
+
 
   const handleFormSubmit = useCallback(formValues => {
     const formSubmitPromise = new Promise(resolve => {

@@ -3,12 +3,17 @@
 
     .picture-and-names {
       display: flex;
+
       .picture-field {
         @extend .col-tablet-33;
       }
 
       .names {
         @extend .col-tablet-66;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
       }
     }
 

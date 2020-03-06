@@ -12,7 +12,7 @@ import { useQuery } from 'with-react-query'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import { parseSubmitErrors } from 'utils/form'
+import { parseSubmitErrors } from 'utils/errors'
 import { verdictNormalizer } from 'utils/normalizers'
 
 import FormFields from './FormFields'

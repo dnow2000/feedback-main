@@ -7,8 +7,8 @@ import Main from 'components/layout/Main'
 
 import TrendingItem from './TrendingItem'
 
-const Trendings = () => {
 
+export default () => {
   const { search } = useLocation()
 
   const config = useMemo(() => ({
@@ -36,6 +36,3 @@ const Trendings = () => {
     </>
   )
 }
-
-
-export default Trendings

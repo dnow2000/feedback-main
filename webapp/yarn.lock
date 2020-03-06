@@ -5801,20 +5801,20 @@ fbjs@^1.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetch-normalize-data@1.8.4:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.8.4.tgz#09c7dc35d4376f860526e3998cb02827c32033c0"
-  integrity sha512-hY+vGN/3PgQxwuKyNs7orvcJlSAR57WxRRka1GAr/I3F8rb5OcMhHi7VJZHYcHZDtXwGzD9e4asMozXhKx/NJA==
+fetch-normalize-data@1.10.0-rc3:
+  version "1.10.0-rc3"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.10.0-rc3.tgz#5b2d3e47f3abb485323bb0b22f65e430ec39344e"
+  integrity sha512-FwFwSf+NvM+V0z8VyjQAop1SYNfBRXBotbGGjBC9PkVFE6JH+qxnvrvFxFRTL9Fuh9BwHmUlNYcAAJrkz0HBFA==
   dependencies:
     lodash.uniqby "^4.7.0"
     re-reselect "^3.4.0"
     reselect "^3.0.1"
     uuid "^3.3.2"
 
-fetch-normalize-data@1.8.6:
-  version "1.8.6"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.8.6.tgz#d83f490c79ee3b0eac1577047303a755773839bc"
-  integrity sha512-bejxIuMyOwox0nNUMqoLJDYNDCfP7yq+xi8p8DxI6cbmh+IoimdubiH+u9SuGM6Er3eFyROV9fXs2fbhWAVQMw==
+fetch-normalize-data@1.8.4:
+  version "1.8.4"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.8.4.tgz#09c7dc35d4376f860526e3998cb02827c32033c0"
+  integrity sha512-hY+vGN/3PgQxwuKyNs7orvcJlSAR57WxRRka1GAr/I3F8rb5OcMhHi7VJZHYcHZDtXwGzD9e4asMozXhKx/NJA==
   dependencies:
     lodash.uniqby "^4.7.0"
     re-reselect "^3.4.0"
@@ -11869,12 +11869,12 @@ redux-react-modals@1.3.0:
     react-router-dom "^5.0.0"
     redux "^4.0.4"
 
-redux-thunk-data@1.6.5:
-  version "1.6.5"
-  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.6.5.tgz#f5933a84270ae86a2ebca1065004c01066a7c8b1"
-  integrity sha512-tlk/VEuP7sgp0kZjZeq89Y/yn8i2u5+vPfqewMtJ5Cw3ew1EXdan10Z+Wy0MR4HHr0rZwUstnZCw0V8R1jR2eg==
+redux-thunk-data@1.10.0-rc4:
+  version "1.10.0-rc4"
+  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.10.0-rc4.tgz#7137d9b27340a020e4ce83fa2793a0d88e06f9c3"
+  integrity sha512-+CbEdmDuC2fmzGCGZAsv0pxkB+u83rxmway75Ox7QfG3h5v50Fp2A5vguWs/qQRhgLsuANRHAOXNYkRYf2fOnQ==
   dependencies:
-    fetch-normalize-data "1.8.6"
+    fetch-normalize-data "1.10.0-rc3"
 
 redux-thunk@^2.3.0:
   version "2.3.0"
