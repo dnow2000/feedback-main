@@ -1,6 +1,10 @@
+import { isAtTopFromWindow } from 'utils/scroll'
+
 export const ASSIGN_SCROLL = 'ASSIGN_SCROLL'
 
-const initialState = { isAtTop: false }
+const initialState = {
+  isAtTop: isAtTopFromWindow()
+}
 
 
 export default (state = initialState, action) => {

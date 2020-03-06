@@ -6,6 +6,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import Logo from 'components/layout/Logo'
 import { assignScroll } from 'reducers/scroll'
+import { isAtTopFromWindow } from 'utils/scroll'
 
 import Menu from './Menu'
 import Navigations from './Navigations'
@@ -26,7 +27,8 @@ export default () => {
 
 
   useEffect(() => {
-    const handleScroll = event => dispatch(assignScroll({ isAtTop: window.scrollY > 50 }))
+    const handleScroll = () => dispatch(
+      assignScroll({ isAtTop: isAtTopFromWindow() }))
     document.addEventListener('scroll', handleScroll)
     return () => {
       document.removeEventListener('scroll', handleScroll)
@@ -35,7 +37,7 @@ export default () => {
 
 
   return (
-    <header className={classnames("header", { 'is-at-top': isAtTop })}>
+    <header className={classnames("header", { 'is-blurred': !isAtTop })}>
       <div className="container">
         <div className="left-content">
           <Logo type="header" />
