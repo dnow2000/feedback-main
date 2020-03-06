@@ -1,18 +1,22 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
+import { compose } from 'redux'
 
+import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
+import withRoles from 'components/hocs/withRoles'
 import ArticleContainer from 'components/pages/Article/ArticleContainer'
-import ArticlesContainer from 'components/pages/Articles/ArticlesContainer'
-import LandingContainer from 'components/pages/Landing/LandingContainer'
-import ReviewContainer from 'components/pages/Review/ReviewContainer'
-import ReviewsContainer from 'components/pages/Reviews/ReviewsContainer'
+import Articles from 'components/pages/Articles'
+import Landing from 'components/pages/Landing'
+import Review from 'components/pages/Review'
+import Reviews from 'components/pages/Reviews'
 import UserContainer from 'components/pages/User/UserContainer'
-import UsersContainer from 'components/pages/Users/UsersContainer'
-import VerdictContainer from 'components/pages/Verdict/VerdictContainer'
-import VerdictsContainer from 'components/pages/Verdicts/VerdictsContainer'
-import SigninContainer from 'components/pages/Signin/SigninContainer'
-import SignupContainer from 'components/pages/Signup/SignupContainer'
-import TrendingsContainer from 'components/pages/Trendings/TrendingsContainer'
+import Users from 'components/pages/Users'
+import Verdict from 'components/pages/Verdict'
+import Verdicts from 'components/pages/Verdicts'
+import Signin from 'components/pages/Signin'
+import Signup from 'components/pages/Signup'
+import Trendings from 'components/pages/Trendings'
 
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
@@ -30,69 +34,95 @@ const routes = [
     title: 'Article',
   },
   {
+    component: withRequiredLogin(Articles),
     exact: true,
     path: '/articles',
-    render: () => <ArticlesContainer name="article" />,
     title: 'Articles',
   },
   {
+    component: withRedirectWhenLoggedIn(Landing),
     exact: true,
     path: '/landing',
-    render: () => <LandingContainer />,
     title: 'Landing',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
+    )(Review),
     exact: true,
     path: `/reviews/:reviewId${formPath}`,
-    render: () => <ReviewContainer />,
     title: 'Review',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ accessRoleTypes: ['editor'] }),
+    )(Reviews),
     exact: true,
     path: '/reviews',
-    render: () => <ReviewsContainer />,
     title: 'Reviews',
   },
   {
     exact: true,
     path: '/users/:userId',
     render: () => <UserContainer />,
-    title: "User",
+    title: 'User',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({
+        creationRoleTypes: ['editor'],
+        modificationRoleTypes: ['editor']
+      })
+    )(Users),
     exact: true,
     path: '/users',
-    render: () => <UsersContainer />,
-    title: "Users",
+    title: 'Users',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({
+        creationRoleTypes: ['editor'],
+        modificationRoleTypes: ['editor']
+      }),
+    )(Verdict),
     exact: true,
     path: `/verdicts/:verdictId${formPath}`,
-    render: () => <VerdictContainer />,
-    title: "Verdict",
+    title: 'Verdict',
   },
   {
+    component: withRequiredLogin(Verdicts),
     exact: true,
     path: '/verdicts',
-    render: () => <VerdictsContainer />,
-    title: "Verdicts",
+    title: 'Verdicts',
   },
   {
+    component: withRedirectWhenLoggedIn(Signin),
     exact: true,
     path: '/signin',
-    render: () => <SigninContainer />,
     title: 'Signin',
   },
   {
     exact: true,
     path: '/signup',
-    render: () => <SignupContainer />,
+    render: () => <Redirect to="/signup/reviewer" />,
+  },
+  {
+    component: withRedirectWhenLoggedIn(Signup),
+    exact: true,
+    path: '/signup/:roleType(reviewer|editor)',
     title: 'Signup',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ accessRoleTypes: ['editor'] })
+    )(Trendings),
     exact: true,
     path: '/trendings',
-    render: () => <TrendingsContainer />,
     title: 'Trendings',
   },
 ]

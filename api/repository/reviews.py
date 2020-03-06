@@ -32,15 +32,18 @@ def save_tags(review, humanized_tag_ids):
     if review_tags:
         ApiHandler.save(*review_tags)
 
+
 def filter_reviews_with_article_id(query, article_id):
     query = query.filter_by(articleId=dehumanize(article_id))
     return query
+
 
 def get_reviews_join_query(query):
     query = query.outerjoin(ReviewTag) \
                  .outerjoin(Tag) \
                  .join(User)
     return query
+
 
 def get_reviews_query_with_keywords(query, keywords):
     keywords_filter = create_filter_matching_all_keywords_in_any_model(

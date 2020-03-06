@@ -3,18 +3,19 @@ import React, { PureComponent } from 'react'
 import { Form } from 'react-final-form'
 import { requestData } from 'redux-thunk-data'
 
-import ArticleItemContainer from 'components/layout/ArticleItem/ArticleItemContainer'
+import ArticleItem from 'components/layout/ArticleItem'
 import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
 import { articleNormalizer } from 'utils/normalizers'
-import getCanSubmit from 'utils/form/getCanSubmit'
-import parseSubmitErrors from 'utils/form/parseSubmitErrors'
+import { parseSubmitErrors } from 'utils/errors'
+import { getCanSubmit } from 'utils/form'
 
 import FormFieldsContainer from './FormFields/FormFieldsContainer'
 import FormFooterContainer from './FormFooter/FormFooterContainer'
-import scrapDecorator from './decorators/scrapDecorator'
+
+import { scrapDecorator } from 'utils/scrap'
 
 
 class Article extends PureComponent {
@@ -28,8 +29,8 @@ class Article extends PureComponent {
   }
 
   handleRequestData = () => {
-    const { dispatch, form } = this.props
-    const { id, isCreatedEntity } = form
+    const { dispatch, formidable } = this.props
+    const { id, isCreatedEntity } = formidable
 
     if (isCreatedEntity) {
       return
@@ -64,8 +65,8 @@ class Article extends PureComponent {
   }
 
   onFormSubmit = formValues => {
-    const { article, dispatch, form } = this.props
-    const { method } = form
+    const { article, dispatch, formidable } = this.props
+    const { method } = formidable
     const { id } = (article || {})
 
     const apiPath = `/articles/${id || ''}`
@@ -83,15 +84,15 @@ class Article extends PureComponent {
   }
 
   render() {
-    const { article, canCreateArticle, form, history } = this.props
-    const { creationUrl, isCreatedEntity } = form
+    const { article, canCreateArticle, formidable, history } = this.props
+    const { creationUrl, isCreatedEntity } = formidable
     const { id } = (article || {})
     const { isFormLoading } = this.state
 
     return (
       <>
-        <HeaderContainer />
-        <MainContainer name="article">
+        <Header />
+        <Main name="article">
           <section className="section hero is-relative">
             <h1 className="title">
               {isCreatedEntity ? 'New Article' : 'Article'}
@@ -113,7 +114,7 @@ class Article extends PureComponent {
 
           {id && (
             <section className="section">
-              <ArticleItemContainer article={article} />
+              <ArticleItem article={article} />
             </section>
           )}
 
@@ -156,7 +157,7 @@ class Article extends PureComponent {
               }}
             />
           </section>
-        </MainContainer>
+        </Main>
         <Footer />
       </>
     )
@@ -172,7 +173,7 @@ Article.propTypes = {
   article: PropTypes.object,
   canCreateArticle: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     creationUrl: PropTypes.string,
     id: PropTypes.string,
     isCreatedEntity: PropTypes.bool,

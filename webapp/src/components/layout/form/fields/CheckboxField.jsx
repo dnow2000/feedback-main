@@ -4,8 +4,11 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Field } from 'react-final-form'
 
-import composeValidators from 'utils/form/composeValidators'
-import getRequiredValidate from 'utils/form/getRequiredValidate'
+import {
+  composeValidators,
+  getRequiredValidate
+} from 'utils/form'
+
 
 import FieldError from '../FieldError'
 

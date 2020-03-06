@@ -3,9 +3,9 @@ import React, { PureComponent } from 'react'
 import { requestData } from 'redux-thunk-data'
 
 import PublicationsManagerContainer from './PublicationsManager/PublicationsManagerContainer'
-import HeaderContainer from 'components/layout/Header/HeaderContainer'
-import MainContainer from 'components/layout/Main/MainContainer'
-import UserItemContainer from 'components/layout/UserItem/UserItemContainer'
+import Header from 'components/layout/Header'
+import Main from 'components/layout/Main'
+import UserItem from 'components/layout/UserItem'
 import { userNormalizer } from 'utils/normalizers'
 
 class User extends PureComponent {
@@ -27,15 +27,15 @@ class User extends PureComponent {
     const { user } = this.props
     return (
       <>
-        <HeaderContainer />
-        <MainContainer name="review">
+        <Header />
+        <Main name="review">
           <section className="section hero">
             <h1 className="title">
               Profile
             </h1>
           </section>
           <section>
-            <UserItemContainer user={user} />
+            <UserItem user={user} />
           </section>
           <section>
             <h3 className="subtitle">
@@ -43,7 +43,7 @@ class User extends PureComponent {
             </h3>
             <PublicationsManagerContainer user={user} />
           </section>
-        </MainContainer>
+        </Main>
       </>
     )
   }

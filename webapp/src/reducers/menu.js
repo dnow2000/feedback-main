@@ -3,7 +3,8 @@ export const CLOSE_MENU = 'CLOSE_MENU'
 
 const initialState = { isActive: false }
 
-function menu (state = initialState, action) {
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case SHOW_MENU:
       return Object.assign({}, state, { isActive: true })
@@ -14,12 +15,8 @@ function menu (state = initialState, action) {
   }
 }
 
-export function closeMenu () {
-  return { type: CLOSE_MENU }
-}
 
-export function showMenu () {
-  return { type: SHOW_MENU }
-}
+export const closeMenu = () => ({ type: CLOSE_MENU })
 
-export default menu
+
+export const showMenu = () => ({ type: SHOW_MENU })

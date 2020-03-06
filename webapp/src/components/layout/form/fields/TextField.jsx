@@ -5,9 +5,11 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Field } from 'react-final-form'
 
-import composeValidators from 'utils/form/composeValidators'
-import createParseNumberValue from 'utils/form/createParseNumberValue'
-import getRequiredValidate from 'utils/form/getRequiredValidate'
+import {
+  composeValidators,
+  createParseNumberValue,
+  getRequiredValidate
+} from 'utils/form'
 
 import FieldError from '../FieldError'
 

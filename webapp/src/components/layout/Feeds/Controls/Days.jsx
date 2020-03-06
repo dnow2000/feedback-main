@@ -1,7 +1,14 @@
 import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 
-import { trendingMaxDays } from './utils'
+
+export const trendingMaxDays = [
+  { label: 'Today', value: '1' },
+  { label: '2 days', value: '2' },
+  { label: '1 week', value: '7' },
+  { label: '1 month', value: '30' }
+]
+
 
 const Days = ({
   selectedDays='1',

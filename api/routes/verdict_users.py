@@ -7,6 +7,7 @@ from utils.rest import expect_json_data, \
                        login_or_api_key_required
 from validation import check_has_role
 
+
 @app.route('/verdictUsers', methods=['POST'])
 @login_or_api_key_required
 @expect_json_data

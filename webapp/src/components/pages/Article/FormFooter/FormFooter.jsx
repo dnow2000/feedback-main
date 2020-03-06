@@ -9,7 +9,7 @@ class FormFooter extends PureComponent {
       canEdit,
       canReview,
       canSubmit,
-      form,
+      formidable,
       history,
       isLoading,
       match,
@@ -24,7 +24,7 @@ class FormFooter extends PureComponent {
       modificationUrl,
       readOnly,
       readOnlyUrl
-    } = form
+    } = formidable
     const { id: reviewId } = review || {}
 
     return (
@@ -103,7 +103,7 @@ FormFooter.propTypes = {
   canEdit: PropTypes.bool,
   canReview: PropTypes.bool,
   canSubmit: PropTypes.bool,
-  form: PropTypes.shape({
+  formidable: PropTypes.shape({
     isCreatedEntity: PropTypes.bool,
     modificationUrl: PropTypes.string,
     readOnly: PropTypes.string,

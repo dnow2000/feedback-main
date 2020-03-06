@@ -13,6 +13,7 @@ from repository.users import find_user_by_email, \
                              find_user_by_reset_password_token
 from utils.rest import expect_json_data
 
+
 @app.route('/users/current/change-password', methods=['POST'])
 @login_required
 @expect_json_data
@@ -26,6 +27,7 @@ def post_change_password():
     current_user.set_password(new_password)
     ApiHandler.save(current_user)
     return '', 204
+
 
 @app.route("/users/new-password", methods=['POST'])
 @expect_json_data
@@ -45,6 +47,7 @@ def post_new_password():
     user.set_password(new_password)
     ApiHandler.save(user)
     return '', 204
+
 
 @app.route("/users/reset-password", methods=['POST'])
 @expect_json_data

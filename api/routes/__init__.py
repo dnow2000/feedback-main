@@ -19,7 +19,7 @@ def import_routes():
     import routes.health
     import routes.storage
 
-    import routes.utils.errors
+    import utils.errorhandler
 
     if IS_DEVELOPMENT:
         import routes.sandboxes

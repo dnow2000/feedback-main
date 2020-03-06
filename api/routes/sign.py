@@ -16,6 +16,7 @@ from validation.thumbs import check_thumb_in_request, \
 def get_current_user():
     return jsonify(as_dict(current_user, includes=USER_INCLUDES))
 
+
 @app.route("/users/signin", methods=["POST"])
 def signin():
     json = request.get_json()

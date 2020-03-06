@@ -1,11 +1,11 @@
 import React, { useCallback, useMemo } from 'react'
 
-import ItemsContainer from 'components/layout/Feeds/Items/ItemsContainer'
-import UserItemContainer from 'components/layout//UserItem/UserItemContainer'
+import Items from 'components/layout/Feeds/Items'
+import UserItem from 'components/layout//UserItem'
 import { userConfig } from 'utils/normalizers'
 
 
-const ApplyingReviewers = () => {
+export default () => {
 
   const config = useMemo(() => ({
     apiPath: "/users?roles=reviewer",
@@ -13,10 +13,10 @@ const ApplyingReviewers = () => {
     ...userConfig
   }), [])
 
-  const renderItem = useCallback(item => <UserItemContainer user={item} />, [])
+  const renderItem = useCallback(item => <UserItem user={item} />, [])
 
   return (
-    <ItemsContainer
+    <Items
       cols={3}
       config={config}
       hasMore={false}
@@ -25,6 +25,3 @@ const ApplyingReviewers = () => {
     />
   )
 }
-
-
-export default ApplyingReviewers

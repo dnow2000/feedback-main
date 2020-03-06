@@ -4,7 +4,7 @@ import withLogin from 'with-react-redux-login'
 import { userNormalizer } from 'utils/normalizers'
 
 
-const withRedirectWhenLoggedIn = withLogin({
+export default withLogin({
   handleSuccess: (state, action, ownProps) => {
     const { payload: { datum: { validationToken } } } = action
     const { history, location: { pathname } } = ownProps
@@ -26,5 +26,3 @@ const withRedirectWhenLoggedIn = withLogin({
   normalizer: userNormalizer,
   requestData,
 })
-
-export default withRedirectWhenLoggedIn

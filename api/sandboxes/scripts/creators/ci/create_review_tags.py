@@ -12,7 +12,7 @@ def create_review_tags():
     review_tags_by_name = {}
 
     article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
-    user = User.query.filter_by(email="sftest.reviewer.0@sciencefeedback.co").one()
+    user = User.query.filter_by(email="sftest.reviewer0@sciencefeedback.co").one()
     review = Review.query.filter_by(
         article=article,
         user=user
@@ -24,7 +24,7 @@ def create_review_tags():
     )
 
     article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
-    user = User.query.filter_by(email="sftest.reviewer.0@sciencefeedback.co").one()
+    user = User.query.filter_by(email="sftest.reviewer0@sciencefeedback.co").one()
     review = Review.query.filter_by(
         article=article,
         user=user
@@ -36,7 +36,7 @@ def create_review_tags():
     )
 
     article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
-    user = User.query.filter_by(email="sftest.reviewer.1@sciencefeedback.co").one()
+    user = User.query.filter_by(email="sftest.reviewer1@sciencefeedback.co").one()
     review = Review.query.filter_by(
         article=article,
         user=user

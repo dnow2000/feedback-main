@@ -1,4 +1,4 @@
-import getScrap from '../../utils/getScrap'
+import { getScrap } from 'utils/scrap'
 
 const createValidateScrapField = error => async value => {
   const scrap = await getScrap(value)

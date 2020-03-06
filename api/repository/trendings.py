@@ -1,5 +1,6 @@
 from models.article import Article
 
+
 def keep_not_saved_trendings(trendings):
     buzzsumo_ids = [trending['buzzsumoId'] for trending in trendings]
 

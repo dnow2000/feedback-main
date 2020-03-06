@@ -11,7 +11,7 @@
   position: fixed;
   right: 0;
 
-  &.scrolling {
+  &.is-blurred {
     filter: blur(1px);
     opacity: 0.1;
     pointer-events: none;

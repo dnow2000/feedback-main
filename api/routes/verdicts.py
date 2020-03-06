@@ -25,11 +25,13 @@ def get_verdicts():
                    paginate=10,
                    query=query)
 
+
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
 @login_or_api_key_required
 def get_verdict(verdict_id):
     verdict = load_or_404(Verdict, verdict_id)
     return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 200
+
 
 @app.route('/verdicts', methods=['POST'])
 @login_or_api_key_required
@@ -43,6 +45,7 @@ def create_verdict():
     verdict.user = current_user
     ApiHandler.save(verdict)
     return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 201
+
 
 @app.route('/verdicts/<verdict_id>', methods=['PATCH'])
 @login_or_api_key_required

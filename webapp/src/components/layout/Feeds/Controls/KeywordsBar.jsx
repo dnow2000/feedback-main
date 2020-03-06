@@ -7,13 +7,14 @@ const KeywordsBar = ({
   onChange,
   selectedKeywords
 }) => {
+  const inputRef = useRef()
+
 
   const [value, setValue] = useState(selectedKeywords)
 
+
   const handleKeywordsClick = useCallback(() =>
     onChange('keywords', value), [onChange, value])
-
-  const inputRef = useRef()
 
   const handlePressEnter = useCallback(event => {
     if (event.keyCode === 13) {
@@ -22,11 +23,13 @@ const KeywordsBar = ({
     }
   }, [handleKeywordsClick])
 
+
   useEffect(() => {
     const inputElement = inputRef.current
     inputElement.addEventListener("keyup", handlePressEnter)
     return () => inputElement.removeEventListener("keyup", handlePressEnter)
   }, [handlePressEnter])
+
 
   return (
     <div className="keywords-bar">

@@ -2,7 +2,8 @@ const initialState = {}
 
 const DELETE_REQUEST = 'DELETE_REQUEST'
 
-const requests = (state = initialState, action) => {
+
+export default (state = initialState, action) => {
   const { config={} } = action || {}
   const key = config.activityTag || config.apiPath
 
@@ -47,9 +48,8 @@ const requests = (state = initialState, action) => {
   return state
 }
 
+
 export const deleteRequest = key => ({
   key,
   type: DELETE_REQUEST
 })
-
-export default requests

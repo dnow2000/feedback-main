@@ -8,6 +8,7 @@ from validation import check_and_read_files_thumb, \
 from utils.rest import login_or_api_key_required
 from storage.thumb import save_thumb
 
+
 @app.route('/images', methods=['POST'])
 @login_or_api_key_required
 def create_image():
