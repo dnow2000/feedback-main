@@ -21,6 +21,7 @@ const Signout = ({ children }) => {
         dispatch(reinitializeData())
       },
       name: 'signout',
+      stateKey: null
     }))
     dispatch(closeModal("main"))
   }, [dispatch, history])

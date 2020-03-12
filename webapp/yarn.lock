@@ -5811,10 +5811,10 @@ fetch-normalize-data@1.10.0-rc3:
     reselect "^3.0.1"
     uuid "^3.3.2"
 
-fetch-normalize-data@1.8.4:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.8.4.tgz#09c7dc35d4376f860526e3998cb02827c32033c0"
-  integrity sha512-hY+vGN/3PgQxwuKyNs7orvcJlSAR57WxRRka1GAr/I3F8rb5OcMhHi7VJZHYcHZDtXwGzD9e4asMozXhKx/NJA==
+fetch-normalize-data@1.9.0:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.9.0.tgz#432a685af22c5e7433dfa4e4489804bf2c4234f0"
+  integrity sha512-aZE/k28sGfsmA1g7c+tW8+LEScdY2r5R8IQA6B6C3elbiNl/vXIi+8CGXuPafkeG9i5YwHfxOzUYfBVX4x4xtw==
   dependencies:
     lodash.uniqby "^4.7.0"
     re-reselect "^3.4.0"
@@ -14877,13 +14877,13 @@ with-react-formidable@2.1.1:
     react "^16.9.0"
     react-dom "^16.9.0"
 
-with-react-login@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/with-react-login/-/with-react-login-1.11.0.tgz#20766fc222db34e570ed937d127d5a422c2dcabb"
-  integrity sha512-9ipOZQXl4EBkZq0KHbVezoHhoFYRq08VANuCjRhNG3RPjBgPbfHOuOXsSVIOLibCFTNMUHZTNYjDgJ9ok0/MNw==
+with-react-login@^1.12.0-rc1:
+  version "1.12.0-rc1"
+  resolved "https://registry.yarnpkg.com/with-react-login/-/with-react-login-1.12.0-rc1.tgz#79ae069af9f6b3432e573058b434f611863f5c0c"
+  integrity sha512-qVSiI+rKWkRBiNww5Vf9i1plS8Qp+VTOjGny/XRWumtaahrcEaxW7QdimymtZyabBQV47lyIl8cj2IKVXlK8dg==
   dependencies:
     classnames "2.2.5"
-    fetch-normalize-data "1.8.4"
+    fetch-normalize-data "1.9.0"
     lodash.uniq "^4.5.0"
     prop-types "^15.7.2"
     react "^16.10.1"
@@ -14902,13 +14902,14 @@ with-react-query@1.4.0:
     react "^16.9.0"
     react-dom "^16.9.0"
 
-with-react-redux-login@1.12.0:
-  version "1.12.0"
-  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.12.0.tgz#c56855945c88dd268c7c0a3fc545221fb8af708d"
-  integrity sha512-9QtS5FO18rUuRrlkDkraTzZpGyaqH9OSGkeae4OhjD7AoCI8YAvN845XN8HKGJaIKvEIpp56a7hrPl8WaSV/2Q==
+with-react-redux-login@1.13.0-rc3:
+  version "1.13.0-rc3"
+  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.13.0-rc3.tgz#5f9cd931ba8cff24ae4bb60a70be2ed62b8167e2"
+  integrity sha512-K+Y3hpRQaibZ3+v4qjueUCFdJOEq4OgMJtEotNvnUegh1s5rx+qTMD4eEI7N0ht5jePRHtSV3B8WrNMVI+rNug==
   dependencies:
+    fetch-normalize-data "1.9.0"
     react-redux "^7.1.1"
-    with-react-login "1.11.0"
+    with-react-login "^1.12.0-rc1"
 
 word-wrap@~1.2.3:
   version "1.2.3"
