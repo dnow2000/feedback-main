@@ -7,9 +7,9 @@ const initialState = { isActive: false }
 export default (state = initialState, action) => {
   switch (action.type) {
     case SHOW_MENU:
-      return Object.assign({}, state, { isActive: true })
+      return { ...state, isActive: true }
     case CLOSE_MENU:
-      return Object.assign({}, state, { isActive: false })
+      return { ...state, isActive: false }
     default:
       return state
   }

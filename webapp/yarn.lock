@@ -5801,10 +5801,10 @@ fbjs@^1.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetch-normalize-data@1.10.0-rc3:
-  version "1.10.0-rc3"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.10.0-rc3.tgz#5b2d3e47f3abb485323bb0b22f65e430ec39344e"
-  integrity sha512-FwFwSf+NvM+V0z8VyjQAop1SYNfBRXBotbGGjBC9PkVFE6JH+qxnvrvFxFRTL9Fuh9BwHmUlNYcAAJrkz0HBFA==
+fetch-normalize-data@1.10.0-timeout-3:
+  version "1.10.0-timeout-3"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.10.0-timeout-3.tgz#ea90f4f8133b5ea0699748f1d09deac04649354c"
+  integrity sha512-n/8Ltp7c8k6RcFmfNsj8ulJoE4YwDPu4gKiNrsjFkJWoJXW44RjrYnPNjBlg5d4+WqAIf95yQJRaVq1xB4+omA==
   dependencies:
     lodash.uniqby "^4.7.0"
     re-reselect "^3.4.0"
@@ -11869,12 +11869,12 @@ redux-react-modals@1.3.0:
     react-router-dom "^5.0.0"
     redux "^4.0.4"
 
-redux-thunk-data@1.10.0-rc4:
-  version "1.10.0-rc4"
-  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.10.0-rc4.tgz#7137d9b27340a020e4ce83fa2793a0d88e06f9c3"
-  integrity sha512-+CbEdmDuC2fmzGCGZAsv0pxkB+u83rxmway75Ox7QfG3h5v50Fp2A5vguWs/qQRhgLsuANRHAOXNYkRYf2fOnQ==
+redux-thunk-data@1.10.0-timeout-3:
+  version "1.10.0-timeout-3"
+  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.10.0-timeout-3.tgz#4e51b6718280ef10213321638810c175d260ea5b"
+  integrity sha512-BROxDxUvC2EJ/no9m1EHvQq5kJlqKa+YiD1yUM4ghlqdtw/Ckzmn8SlRjv5/nSADP4HL1BTLzjSaY+9mXRpPDQ==
   dependencies:
-    fetch-normalize-data "1.10.0-rc3"
+    fetch-normalize-data "1.10.0-timeout-3"
 
 redux-thunk@^2.3.0:
   version "2.3.0"

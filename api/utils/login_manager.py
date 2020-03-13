@@ -46,7 +46,7 @@ def get_user_with_request(request):
 def send_401():
     api_errors = ApiErrors()
     api_errors.add_error('global', 'Authentification nécessaire')
-    return jsonify(api_errors.errors), 401
+    return jsonify([api_errors.errors]), 401
 
 
 def stamp_session(user):

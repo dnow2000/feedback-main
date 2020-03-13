@@ -1,19 +1,27 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
-import { scrollToError } from 'utils/scroll'
+import { scrollToInput } from 'utils/scroll'
 
 import Fields from './Fields'
 import Footer from './Footer'
 
 
-export default ({ errors, form, handleSubmit, ...formProps }) => {
-  const { batch, change } = form
-  const errorIds = Object.keys(errors)
+const API_PATH = '/users/signup'
 
 
-  const { globalError } = useSelector(state =>
-    state.errors['/users/signup']) || {}
+export default ({ errors: formErrors, form, handleSubmit, ...formProps }) => {
+  const history = useHistory()
+  const { batch, change, getRegisteredFields } = form
+
+
+  const {
+    errors: requestErrors,
+    isError: isRequestError,
+    isSuccess: isRequestSuccess
+  } = useSelector(state => state.requests[API_PATH]) || {}
+  const { global: globalError } = requestErrors || {}
 
 
   const handleImageChange = useCallback((thumb, croppingRect) => {
@@ -23,20 +31,31 @@ export default ({ errors, form, handleSubmit, ...formProps }) => {
     })
   }, [batch, change])
 
-  const handleSubmitAndScrollIfNeeded = useCallback(event => {
-    handleSubmit(event)
-    if (errorIds.length > 0) {
-      const fieldErrorId = errorIds[0]  // TODO @colas: get top error
-      scrollToError(fieldErrorId)
+  const handleSubmitWithScrollToFormError = useCallback(event => {
+      handleSubmit(event)
+      const firstFieldErrorName = Object.keys(formErrors)[0]
+      if (firstFieldErrorName) scrollToInput(firstFieldErrorName)
+  }, [formErrors, handleSubmit])
+
+
+  useEffect(() => {
+    if (isRequestError) {
+      const firstFieldErrorName = getRegisteredFields()
+                                    .find(fieldName => requestErrors[fieldName])
+      if (firstFieldErrorName) scrollToInput(firstFieldErrorName)
     }
-  }, [errorIds, handleSubmit])
+  }, [getRegisteredFields, isRequestError, requestErrors])
+
+  useEffect(() => {
+    if (isRequestSuccess) history.push(`/landing`)
+  }, [history, isRequestSuccess])
 
 
   return (
     <form
       autoComplete="off"
       noValidate
-      onSubmit={handleSubmitAndScrollIfNeeded}
+      onSubmit={handleSubmitWithScrollToFormError}
     >
       <Fields onImageChange={handleImageChange} />
       <Footer {...formProps} />

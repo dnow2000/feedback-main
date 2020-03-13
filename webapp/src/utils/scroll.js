@@ -1,10 +1,10 @@
 export const isAtTopFromWindow = () => window.scrollY < 50
 
 
-export const scrollToError = errorId => {
-  const element = document.querySelector(`input[name=${errorId}]`)
+export const scrollToInput = inputName => {
+  const element = document.querySelector(`input[name=${inputName}]`)
   if (!element) {
-    console.warn('NO ELEMENT FOUND FOR ', errorId)
+    console.warn('NO ELEMENT FOUND FOR ', inputName)
     return
   }
   const errorPosition = element.offsetTop

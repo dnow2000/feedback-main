@@ -8,22 +8,6 @@ const dataPersistConfig = {
   whitelist: [],
 }
 
-const dataReducer = createDataReducer({
-  articleTags: [],
-  articles: [],
-  evaluations: [],
-  reviewTags: [],
-  reviews: [],
-  roleTypes: [],
-  roles: [],
-  tags: [],
-  trendings: [],
-  userArticles: [],
-  userTags: [],
-  users: [],
-  verdictTags: [],
-  verdictUsers: [],
-  verdicts: []
-})
+const dataReducer = createDataReducer()
 
 export default persistReducer(dataPersistConfig, dataReducer)
