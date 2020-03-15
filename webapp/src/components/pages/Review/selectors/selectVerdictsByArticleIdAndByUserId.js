@@ -12,8 +12,9 @@ export const selectVerdictsByArticleIdAndByUserId = createCachedSelector(
   selectVerdictsByArticleId,
   (state, articleId, userId) => selectVerdictUsersByUserId(state, userId),
   (verdicts, verdictUsers) =>
-    verdicts.filter(verdict => verdictUsers.find(verdictUser =>
-      verdictUser.verdictId === verdict.id))
+    verdicts && verdicts.filter(verdict =>
+      verdictUsers.find(verdictUser =>
+        verdictUser.verdictId === verdict.id))
 )(mapArgsToCacheKey)
 
 export default selectVerdictsByArticleIdAndByUserId

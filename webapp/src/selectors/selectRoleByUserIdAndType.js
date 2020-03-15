@@ -9,7 +9,8 @@ const selectRoleByUserIdAndType = createCachedSelector(
   (state, userId) => userId,
   (state, userId, roleType) => roleType,
   (roles, userId, roleType) =>
-    roles.find(role => role.userId === userId && role.type === roleType)
+    roles && roles.find(role =>
+      role.userId === userId && role.type === roleType)
 )(mapArgsToCacheKey)
 
 export default selectRoleByUserIdAndType

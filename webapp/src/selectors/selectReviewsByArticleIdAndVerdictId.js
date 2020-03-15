@@ -9,9 +9,8 @@ const selectReviewsByArticleIdAndVerdictId = createCachedSelector(
   (state, articleId) => articleId,
   (state, articleId, verdictId) => verdictId,
   (reviews, articleId, verdictId) =>
-    reviews.filter(
-      review => review.articleId === articleId && review.verdictId === verdictId
-    )
+    reviews && reviews.filter(review =>
+      review.articleId === articleId && review.verdictId === verdictId)
 )(mapArgsToCacheKey)
 
 export default selectReviewsByArticleIdAndVerdictId

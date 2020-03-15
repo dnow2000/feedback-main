@@ -10,7 +10,7 @@ const selectCurrentUserReviewByArticleId = createCachedSelector(
   selectCurrentUser,
   (state, articleId) => articleId,
   (reviews, user, articleId) =>
-    reviews.find(
+    reviews && reviews.find(
       review => review.articleId === articleId && review.userId === (user && user.id)
     )
 )(mapArgsToCacheKey)

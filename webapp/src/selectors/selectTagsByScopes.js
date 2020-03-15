@@ -8,6 +8,7 @@ const selectTagsByScopes = createCachedSelector(
   state => state.data.tags,
   (state, scopeTypes) => scopeTypes,
   (tags, scopeTypes) => {
+    if (!tags) return
     const filteredTags = tags.filter(tag =>
         tag.scopes.find(scope =>
             scopeTypes.includes(scope.type)

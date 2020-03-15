@@ -10,7 +10,7 @@ const selectCurrentUserVerdictByArticleId = createCachedSelector(
   selectCurrentUser,
   (state, articleId) => articleId,
   (verdicts, user, articleId) =>
-    verdicts.find(
+    verdicts && verdicts.find(
       verdict => verdict.articleId === articleId && verdict.userId === (user && user.id)
     )
 )(mapArgsToCacheKey)
