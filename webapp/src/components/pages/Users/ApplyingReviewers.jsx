@@ -8,9 +8,9 @@ import { userConfig } from 'utils/normalizers'
 export default () => {
 
   const config = useMemo(() => ({
+    ...userConfig,
     apiPath: "/users?roles=reviewer",
-    activityTag: "applying-reviewers",
-    ...userConfig
+    activityTag: "applying-reviewers"
   }), [])
 
   const renderItem = useCallback(item => <UserItem user={item} />, [])
@@ -19,8 +19,6 @@ export default () => {
     <Items
       cols={3}
       config={config}
-      hasMore={false}
-      isLoading={false}
       renderItem={renderItem}
     />
   )

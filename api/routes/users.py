@@ -40,7 +40,8 @@ def get_users():
                    includes=USER_INCLUDES,
                    page=request.args.get('page'),
                    paginate=10,
-                   query=query)
+                   query=query,
+                   with_total_data_count=True)
 
 
 @app.route("/users/<user_id>", methods=["GET"])
