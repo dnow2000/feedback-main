@@ -12,11 +12,14 @@ import { useQuery } from 'with-react-query'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import { parseSubmitErrors } from 'utils/errors'
+import requests from 'reducers/requests'
 import { verdictNormalizer } from 'utils/normalizers'
 
 import FormFields from './FormFields'
 import FormFooter from './FormFooter'
+
+
+const API_PATH = '/verdicts'
 
 
 export default () => {
@@ -70,16 +73,13 @@ export default () => {
 
   const handleSubmitVerdict = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
-    const apiPath = `/verdicts/${id || ''}`
+    const apiPath = `${API_PATH}/${id || ''}`
     return new Promise(resolve => {
       dispatch(requestData({
         apiPath,
         body: { ...formValues },
-        handleFail: (state, action) => {
-          const { payload } = action
-          const errors = parseSubmitErrors(payload.errors)
-          resolve(errors)
-        },
+        handleFail: (beforeState, action) =>
+          resolve(requests(beforeState.requests, action)[API_PATH].errors),
         handleSuccess: (state, action) => {
           const { payload: { datum } } = action
           const createdVerdictId = datum.id

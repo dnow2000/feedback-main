@@ -9,6 +9,8 @@ from repository.trendings import keep_not_saved_trendings
 from utils.config import IS_DEVELOPMENT
 from utils.rest import login_or_api_key_required
 
+TRENDINGS_PAGINATION = os.environ.get('TRENDINGS_PAGINATION', 10)
+
 
 @app.route('/trendings/<buzzsumo_id>', methods=['GET'])
 @login_or_api_key_required
@@ -60,8 +62,17 @@ def get_trendings():
         os.environ.get('TRENDINGS_PAGINATION', 10)
     ).items
 
+
+    total_data_count = len(not_saved_trendings)
+
     response = jsonify(paginated_trendings)
-    response.headers['Total-Data-Count'] = len(not_saved_trendings)
+    response.headers['Total-Data-Count'] = total_data_count
     response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
+
+    if page:
+        response.headers['Has-More'] = total_data_count > page * TRENDINGS_PAGINATION
+        response.headers['Access-Control-Expose-Headers'] += ',Has-More'
+
+    print(response.headers)
 
     return response

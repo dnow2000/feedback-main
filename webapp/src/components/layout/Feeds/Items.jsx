@@ -1,6 +1,6 @@
 import { getStateKeyFromConfig } from 'fetch-normalize-data'
 import PropTypes from 'prop-types'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
 import { requestData } from 'redux-thunk-data'
@@ -11,8 +11,6 @@ import { getItemsActivityTagFromConfig } from './Controls'
 
 const REACHABLE_THRESHOLD = -10
 const UNREACHABLE_THRESHOLD = -10000
-
-
 
 
 const selectItems = (state, config) =>
@@ -34,12 +32,12 @@ const Items = ({
   const dispatch = useDispatch()
 
 
-  const [hasMore, setHasMore] = useState(true)
-
   const [threshold, setThreshold] = useState(REACHABLE_THRESHOLD)
 
 
-  const { isPending } = useSelector(state => selectRequest(state, config)) || {}
+  const { headers, isPending, isSuccess } = useSelector(state =>
+    selectRequest(state, config)) || {}
+  const { hasMore=true } = headers || {}
 
   const items = useSelector(state => selectItems(state, config))
 
@@ -51,20 +49,8 @@ const Items = ({
       ...config,
       activityTag: getItemsActivityTagFromConfig(config),
       apiPath: apiPathWithPage,
-      handleFail: () => setHasMore(false),
-      handleSuccess: (state, action) => {
-        const { payload: { data, headers } } = action
-        const nextItems = selectItems(state, config)
-        const totalItemsCount = parseInt(headers['total-data-count'], 10)
-        // TEMPORARY WAITING THAT fetch-normalize-data
-        // passes directly the already updated state
-        // const currentItemsCount = nextItems.length
-        const currentItemsCount = nextItems.length + data.length
-        setHasMore(currentItemsCount < totalItemsCount)
-        setThreshold(REACHABLE_THRESHOLD)
-      }
     }))
-  }, [config, dispatch, setHasMore, setThreshold])
+  }, [config, dispatch])
 
 
   const handleLoadMore = useCallback(page => {
@@ -77,6 +63,11 @@ const Items = ({
     isPending,
     setThreshold
   ])
+
+
+  useEffect(() => {
+    if (isSuccess) setThreshold(REACHABLE_THRESHOLD)
+  }, [isSuccess])
 
 
   return (
@@ -103,8 +94,7 @@ const Items = ({
 }
 
 Items.defaultProps = {
-  cols: 2,
-  isPending: false,
+  cols: 2
 }
 
 Items.propTypes = {

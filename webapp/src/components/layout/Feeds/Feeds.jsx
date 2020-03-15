@@ -3,7 +3,7 @@ import React from 'react'
 import Controls from './Controls'
 import Items from './Items'
 
-const Feeds = ({ config, renderItem }) => (
+export default ({ config, renderItem }) => (
   <>
     <Controls config={config} />
     <Items
@@ -12,5 +12,3 @@ const Feeds = ({ config, renderItem }) => (
     />
   </>
 )
-
-export default Feeds

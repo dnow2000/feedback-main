@@ -69,4 +69,14 @@
       }
     }
   }
+
+  .to-signin {
+    text-align: center;
+    padding: 1rem;
+
+    a {
+      @extend .button;
+      @extend .is-secondary;
+    }
+  }
 }

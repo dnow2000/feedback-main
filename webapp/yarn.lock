@@ -5801,20 +5801,10 @@ fbjs@^1.0.0:
     setimmediate "^1.0.5"
     ua-parser-js "^0.7.18"
 
-fetch-normalize-data@1.10.0-timeout-3:
-  version "1.10.0-timeout-3"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.10.0-timeout-3.tgz#ea90f4f8133b5ea0699748f1d09deac04649354c"
-  integrity sha512-n/8Ltp7c8k6RcFmfNsj8ulJoE4YwDPu4gKiNrsjFkJWoJXW44RjrYnPNjBlg5d4+WqAIf95yQJRaVq1xB4+omA==
-  dependencies:
-    lodash.uniqby "^4.7.0"
-    re-reselect "^3.4.0"
-    reselect "^3.0.1"
-    uuid "^3.3.2"
-
-fetch-normalize-data@1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.9.0.tgz#432a685af22c5e7433dfa4e4489804bf2c4234f0"
-  integrity sha512-aZE/k28sGfsmA1g7c+tW8+LEScdY2r5R8IQA6B6C3elbiNl/vXIi+8CGXuPafkeG9i5YwHfxOzUYfBVX4x4xtw==
+fetch-normalize-data@1.10.0-timeout-5:
+  version "1.10.0-timeout-5"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.10.0-timeout-5.tgz#e24f88185941194d4a905a2fbf8aeccd3a271916"
+  integrity sha512-66MmnEj7K7uuCm0B+CKYLu5ItR2vmWZ9mBOIBeiPlwoYfhY3aBJwVZuk6PfKLxKHt0YmqGfP3AiYt37z0SmlCQ==
   dependencies:
     lodash.uniqby "^4.7.0"
     re-reselect "^3.4.0"
@@ -11869,12 +11859,12 @@ redux-react-modals@1.3.0:
     react-router-dom "^5.0.0"
     redux "^4.0.4"
 
-redux-thunk-data@1.10.0-timeout-3:
-  version "1.10.0-timeout-3"
-  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.10.0-timeout-3.tgz#4e51b6718280ef10213321638810c175d260ea5b"
-  integrity sha512-BROxDxUvC2EJ/no9m1EHvQq5kJlqKa+YiD1yUM4ghlqdtw/Ckzmn8SlRjv5/nSADP4HL1BTLzjSaY+9mXRpPDQ==
+redux-thunk-data@1.10.0-timeout-5:
+  version "1.10.0-timeout-5"
+  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.10.0-timeout-5.tgz#be6aae538d71eb954b1126bae8881ad0ec1a7ce7"
+  integrity sha512-NvuTSb9akoxLSwghNzQFlKV+eaxQGY71gk8/EwECPuszfuKPtE/vcQyIZeCtee6BAqG+Zder5Y/pJY6d82nXwA==
   dependencies:
-    fetch-normalize-data "1.10.0-timeout-3"
+    fetch-normalize-data "1.10.0-timeout-5"
 
 redux-thunk@^2.3.0:
   version "2.3.0"
@@ -14877,13 +14867,13 @@ with-react-formidable@2.1.1:
     react "^16.9.0"
     react-dom "^16.9.0"
 
-with-react-login@^1.12.0-rc1:
-  version "1.12.0-rc1"
-  resolved "https://registry.yarnpkg.com/with-react-login/-/with-react-login-1.12.0-rc1.tgz#79ae069af9f6b3432e573058b434f611863f5c0c"
-  integrity sha512-qVSiI+rKWkRBiNww5Vf9i1plS8Qp+VTOjGny/XRWumtaahrcEaxW7QdimymtZyabBQV47lyIl8cj2IKVXlK8dg==
+with-react-login@1.12.0-rc4:
+  version "1.12.0-rc4"
+  resolved "https://registry.yarnpkg.com/with-react-login/-/with-react-login-1.12.0-rc4.tgz#def3136d06eedbf66028661308fe3145f5c87749"
+  integrity sha512-rhQ1SLwaMTzgCEHK0iwsTmX5h1LcQKsq+fjlQuotBF0p0RAhXYfiqjLQIwjHZmukakj9eX3cS89m7v5VE4DopQ==
   dependencies:
     classnames "2.2.5"
-    fetch-normalize-data "1.9.0"
+    fetch-normalize-data "1.10.0-timeout-5"
     lodash.uniq "^4.5.0"
     prop-types "^15.7.2"
     react "^16.10.1"
@@ -14902,14 +14892,14 @@ with-react-query@1.4.0:
     react "^16.9.0"
     react-dom "^16.9.0"
 
-with-react-redux-login@1.13.0-rc3:
-  version "1.13.0-rc3"
-  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.13.0-rc3.tgz#5f9cd931ba8cff24ae4bb60a70be2ed62b8167e2"
-  integrity sha512-K+Y3hpRQaibZ3+v4qjueUCFdJOEq4OgMJtEotNvnUegh1s5rx+qTMD4eEI7N0ht5jePRHtSV3B8WrNMVI+rNug==
+with-react-redux-login@1.13.0-rc5:
+  version "1.13.0-rc5"
+  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.13.0-rc5.tgz#c1855165b23e778ab7cddde1d05531b079b94f05"
+  integrity sha512-DS0UbTvaBIUGRHJ0yFsH1SjckT0LAwdAoLDzbE6+IXQZewvb0HyzpnZLVvm26JVvpn9lQi0EBPB67k8M/WeH8Q==
   dependencies:
-    fetch-normalize-data "1.9.0"
+    fetch-normalize-data "1.10.0-timeout-5"
     react-redux "^7.1.1"
-    with-react-login "^1.12.0-rc1"
+    with-react-login "1.12.0-rc4"
 
 word-wrap@~1.2.3:
   version "1.2.3"

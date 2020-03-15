@@ -1,5 +1,4 @@
 import { getStateKeyFromConfig } from 'fetch-normalize-data'
-import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
@@ -15,7 +14,7 @@ export const getItemsActivityTagFromConfig = config =>
   `/${getStateKeyFromConfig(config)}-items`
 
 
-const Controls = ({ config }) => {
+export default ({ config }) => {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation()
@@ -55,13 +54,3 @@ const Controls = ({ config }) => {
     </div>
   )
 }
-
-
-Controls.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired
-  }).isRequired
-}
-
-export default Controls

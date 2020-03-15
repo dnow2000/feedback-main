@@ -27,13 +27,16 @@ export default () => {
 
 
   useEffect(() => {
-    const handleScroll = () => dispatch(
-      assignScroll({ isAtTop: isAtTopFromWindow() }))
+    const handleScroll = () => {
+      const nextIsAtTop = isAtTopFromWindow()
+      if (isAtTop !== nextIsAtTop) dispatch(
+        assignScroll({ isAtTop: nextIsAtTop }))
+    }
     document.addEventListener('scroll', handleScroll)
     return () => {
       document.removeEventListener('scroll', handleScroll)
     }
-  }, [dispatch])
+  }, [dispatch, isAtTop])
 
 
   return (

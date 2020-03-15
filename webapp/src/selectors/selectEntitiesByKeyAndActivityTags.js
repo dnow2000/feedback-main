@@ -8,6 +8,7 @@ export default createCachedSelector(
   (state, key) => state.data[key],
   (state, key, tags) => tags,
   (entities, tags) => {
+    if (!entities) return
     const tagsLength = tags.length
     return entities.filter(entity =>
       tagsLength === entity.__ACTIVITIES__.length

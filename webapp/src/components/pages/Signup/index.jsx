@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 import { Form } from 'react-final-form'
 import { useDispatch } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 
@@ -56,6 +57,11 @@ export default () => {
           onSubmit={handleSubmit}
           render={SignupForm}
         />
+        <div className="to-signin">
+          <NavLink to="/signin">
+            Already have an account ?
+          </NavLink>
+        </div>
       </div>
     </Main>
   )

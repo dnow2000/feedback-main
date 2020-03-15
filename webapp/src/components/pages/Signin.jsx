@@ -12,8 +12,10 @@ import TextField from 'components/layout/form/fields/TextField'
 import PasswordField from 'components/layout/form/fields/PasswordField'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import { parseSubmitErrors } from 'utils/errors'
+import requests from 'reducers/requests'
 
+
+const API_PATH = '/users/signin'
 
 export default () => {
   const dispatch = useDispatch()
@@ -27,13 +29,10 @@ export default () => {
   const handleFormSubmit = useCallback(formValues => {
     const formSubmitPromise = new Promise(resolve => {
       dispatch(requestData({
-        apiPath: '/users/signin',
+        apiPath: API_PATH,
         body: { ...formValues },
-        handleFail: (state, action) => {
-          const { payload } = action
-          const errors = parseSubmitErrors(payload.errors)
-          resolve(errors)
-        },
+        handleFail: (beforeState, action) =>
+          resolve(requests(beforeState.requests, action)[API_PATH].errors),
         handleSuccess: (state, action) => {
           resolve()
           const nextUrl = from

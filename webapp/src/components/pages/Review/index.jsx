@@ -9,7 +9,7 @@ import { useQuery } from 'with-react-query'
 import ArticleItem from 'components/layout/ArticleItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import { parseSubmitErrors } from 'utils/errors'
+import requests from 'reducers/requests'
 import { getCanSubmit } from 'utils/form'
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
@@ -17,6 +17,8 @@ import FormFooter from './FormFooter'
 import FormFields from './FormFields'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 
+
+const API_PATH = '/reviews'
 
 const Review = () => {
   const dispatch = useDispatch()
@@ -44,28 +46,25 @@ const Review = () => {
   const { isPending } = useSelector(state => state.requests['/reviews']) || {}
 
   const handleSubmitReview = useCallback(formValues => {
-    let apiPath = "/reviews"
+    let apiPath = API_PATH
     if (isModifiedEntity) {
       apiPath = `${apiPath}/${formReviewId}`
     }
     return new Promise(resolve => {
       dispatch(requestData({
-        activityTag: '/reviews',
         apiPath,
         body: { ...formValues },
-        handleFail: (state, action) => {
-          const { payload } = action
-          const errors = parseSubmitErrors(payload.errors)
-          resolve(errors)
-        },
-        handleSuccess: (state, action) => {
+        handleFail: (beforeState, action) =>
+          resolve(requests(beforeState.requests, action)[API_PATH].errors),
+        handleSuccess: (beforeState, action) => {
           const { payload: { datum } } = action
           const createdReviewId = datum.id
           resolve()
           const nextUrl = `/reviews/${createdReviewId}`
           history.push(nextUrl)
         },
-        method
+        method,
+        tag: API_PATH,
       }))
     })
   }, [dispatch, formReviewId, history, isModifiedEntity, method])

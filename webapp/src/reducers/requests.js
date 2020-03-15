@@ -3,21 +3,31 @@ const initialState = {}
 const DELETE_REQUEST = 'DELETE_REQUEST'
 
 
-export const arrayErrorsToErrorsByName = errors =>
+const arrayErrorsToErrorsByName = errors =>
   Object.values(errors).reduce((acc, error) =>
     ({ ...acc, ...error }), {})
+
+const parseHeaders = headers => ({
+  hasMore: headers['has-more'] === "False"
+    ? false
+    : true,
+  totalDataCount: headers['total-data-count']
+    ? parseInt(headers['total-data-count'], 10)
+    : null
+})
 
 
 export default (state = initialState, action) => {
   const { config={} } = action || {}
-  const key = config.tag || config.apiPath
+  const key = config.activityTag || config.apiPath
 
   if (/FAIL_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
     const nextState = {
       [key]: {
+        ...state[key],
         date: new Date().toISOString(),
         errors: arrayErrorsToErrorsByName(action.payload.errors),
-        headers: action.payload.headers,
+        headers: parseHeaders(action.payload.headers),
         isError: true,
         isPending: false,
         isSuccess: false,
@@ -29,12 +39,12 @@ export default (state = initialState, action) => {
   if (/REQUEST_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
     const nextState = {
       [key]: {
+        ...state[key],
         date: new Date().toISOString(),
         errors: null,
-        headers: null,
         isError: false,
         isPending: true,
-        isSuccess: false,
+        isSuccess: false
       }
     }
     return { ...state, ...nextState }
@@ -43,9 +53,10 @@ export default (state = initialState, action) => {
   if (/SUCCESS_DATA_(DELETE|GET|POST|PUT|PATCH)_(.*)/.test(action.type)) {
     const nextState = {
       [key]: {
+        ...state[key],
         date: new Date().toISOString(),
         errors: null,
-        headers: action.payload.headers,
+        headers: parseHeaders(action.payload.headers),
         isError: false,
         isPending: false,
         isSuccess: true
