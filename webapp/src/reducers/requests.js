@@ -7,7 +7,7 @@ const arrayErrorsToErrorsByName = errors =>
   Object.values(errors).reduce((acc, error) =>
     ({ ...acc, ...error }), {})
 
-const parseHeaders = headers => ({
+const parseHeaders = headers => headers && ({
   hasMore: headers['has-more'] === "False"
     ? false
     : true,
