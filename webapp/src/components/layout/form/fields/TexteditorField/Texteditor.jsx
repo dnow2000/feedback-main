@@ -53,7 +53,6 @@ class TextEditor extends PureComponent {
   }
 
   handleResetEditorState = rawString => {
-    console.log({rawString})
     const raw = JSON.parse(rawString)
     const contentState = convertFromRaw(raw)
     const nextEditorState = EditorState.createWithContent(contentState)

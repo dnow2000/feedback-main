@@ -134,6 +134,7 @@ export const selectEntitiesOptionsFromNameAndEntities = createCachedSelector(
   (name, entities, placeholder, labelKey, valueKey, titleKey) => titleKey || 'title',
   (name, entities, placeholder, labelKey, valueKey, titleKey, idKey) => idKey || 'id',
   (entities, labelKey, labelValue, titleKey, idKey) => {
+    if (!entities) return
     const entitiesOptions = entities.map(o => ({
       id: o && o[idKey],
       label: o && o[labelKey],
@@ -150,6 +151,7 @@ export const selectOptionsFromNameAndEntitiesAndPlaceholder = createCachedSelect
   selectEntitiesOptionsFromNameAndEntities,
   (name, entities, placeholder) => placeholder,
   (entitiesOptions, placeholder) => {
+    if (!entitiesOptions) return
 
     if (entitiesOptions.length === 1) {
       return entitiesOptions

@@ -7,4 +7,4 @@ import * as serviceWorker from 'workers/service'
 
 ReactDOM.render(<Root />, document.getElementById('root'))
 
-serviceWorker.unregister()
+serviceWorker.unregister() 
