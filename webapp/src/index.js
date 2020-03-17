@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react' 
 import ReactDOM from 'react-dom'
 
 import Root from 'components/Root'
@@ -7,4 +7,4 @@ import * as serviceWorker from 'workers/service'
 
 ReactDOM.render(<Root />, document.getElementById('root'))
 
-serviceWorker.unregister() 
+serviceWorker.unregister()
