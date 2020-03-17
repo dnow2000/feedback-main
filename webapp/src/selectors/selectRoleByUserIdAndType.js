@@ -1,10 +1,11 @@
 import createCachedSelector from 're-reselect'
 
-function mapArgsToCacheKey(state, roleType, userId) {
-  return `${roleType || ''} ${userId || ''}`
-}
 
-const selectRoleByUserIdAndType = createCachedSelector(
+const mapArgsToCacheKey = (state, roleType, userId) =>
+  `${roleType || ''} ${userId || ''}`
+
+
+export default createCachedSelector(
   state => state.data.roles,
   (state, userId) => userId,
   (state, userId, roleType) => roleType,
@@ -12,5 +13,3 @@ const selectRoleByUserIdAndType = createCachedSelector(
     roles && roles.find(role =>
       role.userId === userId && role.type === roleType)
 )(mapArgsToCacheKey)
-
-export default selectRoleByUserIdAndType

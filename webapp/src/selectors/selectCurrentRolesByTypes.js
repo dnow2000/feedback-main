@@ -9,7 +9,7 @@ const selectCurrentRolesByTypes = createCachedSelector(
   state => state.data.roles,
   selectCurrentUser,
   (state, types) => types,
-  (roles, currentUser, types) => types && currentUser && roles
+  (roles, currentUser, types) => types && currentUser && roles && roles
     .filter(role => role.userId === currentUser.id && types.includes(role.type))
 )(mapArgsToCacheKey)
 

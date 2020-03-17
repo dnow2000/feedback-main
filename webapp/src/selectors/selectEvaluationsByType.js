@@ -1,8 +1,9 @@
 import createCachedSelector from 're-reselect'
 
-function mapArgsToCacheKey(state, type) {
-  return type || ''
-}
+
+const mapArgsToCacheKey = (state, type) =>
+  type || ''
+
 
 export default createCachedSelector(
   state => state.data.evaluations,

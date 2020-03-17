@@ -1,10 +1,11 @@
 import createCachedSelector from 're-reselect'
 
-function mapArgsToCacheKey(state, scopeTypes) {
-  return (scopeTypes || []).map(scopeType => scopeType).join('')
-}
 
-const selectTagsByScopes = createCachedSelector(
+const mapArgsToCacheKey = (state, scopeTypes) =>
+  (scopeTypes || []).map(scopeType => scopeType).join('')
+
+
+export default createCachedSelector(
   state => state.data.tags,
   (state, scopeTypes) => scopeTypes,
   (tags, scopeTypes) => {
@@ -22,5 +23,3 @@ const selectTagsByScopes = createCachedSelector(
     })
     return filteredTags
 })(mapArgsToCacheKey)
-
-export default selectTagsByScopes

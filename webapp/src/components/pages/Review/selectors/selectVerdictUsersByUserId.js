@@ -8,7 +8,7 @@ export const selectVerdictUsersByUserId = createCachedSelector(
   state => state.data.verdictUsers,
   (state, userId) => userId,
   (verdictUsers, userId) =>
-    verdictUsers.filter(verdictUser => verdictUser.userId === userId)
+    verdictUsers && verdictUsers.filter(verdictUser => verdictUser.userId === userId)
 )(mapArgsToCacheKey)
 
 export default selectVerdictUsersByUserId
