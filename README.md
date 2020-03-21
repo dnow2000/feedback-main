@@ -17,8 +17,11 @@
   Then for everybody:
 
   ```bash
-    ./sf install
+    ./sf start
   ```
+
+
+##
 
 ## Deploy
 
