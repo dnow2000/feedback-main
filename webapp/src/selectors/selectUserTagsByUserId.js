@@ -3,6 +3,7 @@ import createCachedSelector from 're-reselect'
 
 const mapArgsToCacheKey = (state, userId) => userId || ''
 
+
 export default createCachedSelector(
   state => state.data.userTags,
   (state, userId) => userId,

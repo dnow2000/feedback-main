@@ -22,8 +22,10 @@ if [ -x "$(command -v realpath)" ]; then
   ROOT_PATH=$(realpath "$(dirname "$PRG")")
 fi
 
+RUN=""
+
 set -o allexport
-[[ -f $ROOT_PATH/.env ]] && source $ROOT_PATH/.env
+source $ROOT_PATH/.env
 set +o allexport
 
 # =============================================
@@ -60,9 +62,6 @@ while read; do
   done < $ROOT_PATH/params.txt
 done < $ROOT_PATH/params.txt
 
-set -o allexport
-[[ -f $ROOT_PATH/.env.$ENV ]] && source $ROOT_PATH/.env.$ENV
-set +o allexport
 
 if [[ "$TAG" != "not-set" ]] && [[ ! "$TAG" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
   echo "tag format should be Semantic Versioning compliant x.x.x"
@@ -83,7 +82,7 @@ DATABASE_PASSWORD=${APP_NAME}_password
 DATABASE_SERVICE=$APP_NAME-${DATABASE}db-$MODE
 DATABASE_USER=${APP_NAME}_user
 
-if [[ "$ENV" != "development" ]]; then
+if [[ "$ENV" != "not-set" ]]; then
 	SCALINGO_APP=$APP_NAME-api-$ENV
 fi
 
@@ -115,7 +114,7 @@ function confirm {
 }
 
 function ensure_remote {
-  if [[ "$ENV" == "development" ]]; then
+  if [[ "$ENV" == "not-set" ]]; then
     echo "$1"
     exit 3
   fi
@@ -194,7 +193,7 @@ elif [[ "$CMD" == "dump-db" ]]; then
 
 # Create schema_init.sql into alembic
 elif [[ "$CMD" == "schema-db" ]]; then
-  if [[ "$ENV" == "development" ]]; then
+  if [[ "$ENV" == "not-set" ]]; then
     RUN='docker exec $DATABASE_SERVICE bash -c "PGPASSWORD='$DATABASE_PASSWORD' pg_dump -h localhost -d '$DATABASE_NAME' --no-owner --no-privileges --schema-only -U '$DATABASE_USER' -F p > /var/lib/postgresql/schema_`date +%Y%m%d_%H%M%S`.pgdump"'
   else
     RUN="cd $ROOT_PATH;
@@ -334,7 +333,7 @@ elif [[ "$CMD" == "symlink" ]]; then
 # Connect to Postgresql database in command line
 elif [[ "$CMD" == psql ]]; then
 	COLUMNS=${COLUMNS:-''};
-	if [[ "$ENV" == "development" ]]; then
+	if [[ "$ENV" == "not-set" ]]; then
     RUN='docker exec -it $API_SERVICE bash -c "COLUMNS=\"'$COLUMNS'\" psql -U '$DB_NAME'_user '$DB_NAME' $*"'
 	else
 		scalingo -a $SCALINGO_APP pgsql-console
@@ -343,7 +342,7 @@ elif [[ "$CMD" == psql ]]; then
 
 # Open a python prompt in the specified environment
 elif [[ "$CMD" == python ]]; then
-	if [[ "$ENV" == "development" ]]; then
+	if [[ "$ENV" == "not-set" ]]; then
 		RUN='docker exec -it $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
@@ -356,7 +355,7 @@ elif [[ "$CMD" == python ]]; then
 
 # Run python scripts from api/scripts
 else
-  if [[ "$ENV" == "development" ]]; then
+  if [[ "$ENV" == "not-set" ]]; then
     RUN='docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"'
   else
     scalingo -a "$SCALINGO_APP" run 'python scripts/manager.py '"$CMD $*"''

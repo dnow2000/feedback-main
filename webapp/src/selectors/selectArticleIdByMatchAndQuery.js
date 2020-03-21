@@ -1,11 +1,12 @@
 import { selectEntityByKeyAndId } from 'redux-thunk-data'
 import createCachedSelector from 're-reselect'
 
-function mapArgsToCacheKey(state, match, query) {
-  return `${match.params.reviewId || ''}/${match.params.verdictId || ''}/${query.params.articleId || ''}`
-}
 
-export const selectArticleIdByMatchAndQuery = createCachedSelector(
+const mapArgsToCacheKey = (state, match, query) =>
+  `${match.params.reviewId || ''}/${match.params.verdictId || ''}/${query.params.articleId || ''}`
+  
+
+export default createCachedSelector(
   state => state.data.articles,
   (state, match) => selectEntityByKeyAndId(state, 'reviews', match.params.reviewId),
   (state, match) => selectEntityByKeyAndId(state, 'verdicts', match.params.verdictId),
@@ -15,5 +16,3 @@ export const selectArticleIdByMatchAndQuery = createCachedSelector(
     (verdict && verdict.articleId) ||
     queryArticleId
 )(mapArgsToCacheKey)
-
-export default selectArticleIdByMatchAndQuery
