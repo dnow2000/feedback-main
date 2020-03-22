@@ -62,7 +62,7 @@ export default (state = initialState, action) => {
         isSuccess: true
       }
     }
-    return Object.assign({}, state, nextState)
+    return { ...state, ...nextState }
   }
 
   if (action.type === DELETE_REQUEST) {
