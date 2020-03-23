@@ -39,9 +39,8 @@ export default ({
     history.push(next)
   }, [articleId, history, isCreatedEntity, onCancel])
 
-  const handleModifyClick = useCallback(() => {
-    history.push(modificationUrl)
-  }, [history, modificationUrl])
+  const handleModifyClick = useCallback(() =>
+    history.push(modificationUrl), [history, modificationUrl])
 
 
   return (
