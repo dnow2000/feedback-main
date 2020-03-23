@@ -20,12 +20,22 @@ const FormFooter = ({
     modificationUrl,
     readOnly
   } = formidable
+
+
   const { isPending } = useSelector(state =>
     state.requests['/reviews']) || {}
+
+
+  const handleCancelClick = useCallback(() => {
+    onCancel()
+    const next = isCreatedEntity ? '/articles' : `/reviews/${reviewId}`
+    history.push(next)
+  }, [onCancel, history, isCreatedEntity, reviewId])
 
   const handleModifyClick = useCallback(() => {
     history.push(modificationUrl)
   }, [history, modificationUrl])
+
 
   return (
     <div className="form-footer">
@@ -52,11 +62,7 @@ const FormFooter = ({
           <button
             className="is-secondary"
             id="cancel-review"
-            onClick={() => {
-              onCancel()
-              const next = isCreatedEntity ? '/articles' : `/reviews/${reviewId}`
-              history.push(next)
-            }}
+            onClick={handleCancelClick}
             type="button"
           >
             Cancel

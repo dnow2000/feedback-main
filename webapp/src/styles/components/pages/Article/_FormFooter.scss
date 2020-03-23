@@ -1,0 +1,17 @@
+.form-footer {
+
+  a {
+    @extend .button;
+    @extend .is-secondary;
+  }
+
+  button {
+    @extend .button;
+    @extend .is-secondary;
+
+    &[type="submit"] {
+      @extend .is-primary;
+      @extend .thin;
+    }
+  }
+}

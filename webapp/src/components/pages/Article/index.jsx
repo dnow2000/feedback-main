@@ -4,24 +4,22 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
-import { selectCurrentUser } from 'with-react-redux-login'
-
 
 import ArticleItem from 'components/layout/ArticleItem'
-import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
-import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 import { articleNormalizer } from 'utils/normalizers'
 import { getCanSubmit } from 'utils/form'
 import { scrapDecorator } from 'utils/scrap'
 
-import FormFieldsContainer from './FormFields/FormFieldsContainer'
-import FormFooterContainer from './FormFooter/FormFooterContainer'
+import FormFields from './FormFields'
+import FormFooter from './FormFooter'
+
 
 const API_PATH = '/articles'
+
 
 export default () => {
   const dispatch = useDispatch()
@@ -30,7 +28,6 @@ export default () => {
   const params = useParams()
   const { articleId } = params
   const {
-    creationUrl,
     isCreatedEntity,
     isModifiedEntity,
     method
@@ -42,16 +39,6 @@ export default () => {
   const article = useSelector(state =>
      selectEntityByKeyAndId(state, 'articles', articleId))
 
-  const currentUser = useSelector(selectCurrentUser)
-  const { id: currentUserId } = (currentUser || {})
-
-  const editorRole = useSelector(state =>
-    selectRoleByUserIdAndType(state, currentUserId, 'editor'))
-  const canCreateArticle = typeof editorRole !== 'undefined'
-
-
-  const handleCreateClick = useCallback(() =>
-    history.push(creationUrl), [creationUrl, history])
 
   const handleSubmit = useCallback(formValues => {
     let apiPath = API_PATH
@@ -85,8 +72,8 @@ export default () => {
         noValidate
         onSubmit={handleSubmit}
       >
-        <FormFieldsContainer validating={validating} />
-        <FormFooterContainer
+        <FormFields validating={validating} />
+        <FormFooter
           canSubmit={canSubmit}
           onCancel={reset}
         />
@@ -108,46 +95,31 @@ export default () => {
     <>
       <Header />
       <Main name="article">
-        <section className="section hero is-relative">
-          <h1 className="title">
-            {isCreatedEntity ? 'New Article' : 'Article'}
-          </h1>
+        <div className="container">
           {!isCreatedEntity && (
-            <div className="is-absolute b12 r8">
-              {canCreateArticle && (
-                <button
-                  className="button is-primary"
-                  onClick={handleCreateClick}
-                  type="button"
-                >
-                  New article
-                </button>
-              )}
-            </div>
+            <section>
+              <ArticleItem
+                article={article}
+                noControl
+              />
+            </section>
           )}
-        </section>
 
-        {articleId && (
-          <section className="section">
-            <ArticleItem article={article} />
+          <section>
+            <h2 className="subtitle">
+              <Icon name="ico-newspaper.svg" />
+              DETAILS
+            </h2>
+            <Form
+              decorators={[scrapDecorator]}
+              initialValues={article || false}
+              key={articleId}
+              onSubmit={handleSubmit}
+              render={renderForm}
+            />
           </section>
-        )}
-
-        <section className="section">
-          <h2 className="subtitle flex-columns items-center">
-            <Icon className="icon mr12" name="ico-newspaper.svg" />
-            DETAILS
-          </h2>
-          <Form
-            decorators={[scrapDecorator]}
-            initialValues={article || false}
-            key={articleId}
-            onSubmit={handleSubmit}
-            render={renderForm}
-          />
-        </section>
+        </div>
       </Main>
-      <Footer />
     </>
   )
 }
