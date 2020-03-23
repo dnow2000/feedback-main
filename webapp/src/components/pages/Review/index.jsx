@@ -69,7 +69,7 @@ const Review = () => {
     })
   }, [dispatch, formReviewId, history, isModifiedEntity, method])
 
-  const renderReviewFormSection = useCallback(formProps => {
+  const renderForm = useCallback(formProps => {
     const { form: { reset }, handleSubmit } = formProps
     const canSubmit = getCanSubmit({ isLoading: isPending, ...formProps })
     return (
@@ -137,7 +137,7 @@ const Review = () => {
             <Form
               initialValues={formInitialValues}
               onSubmit={handleSubmitReview}
-              render={renderReviewFormSection}
+              render={renderForm}
             />
           </section>
         </div>

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import Dotdotdot from 'react-dotdotdot'
@@ -45,10 +45,13 @@ const ArticleItem = ({
   const formatPublishedDate = useMemo(() =>
     getFormatPublishedDate(publishedDate), [publishedDate])
 
+
   const currentUser = useSelector(selectCurrentUser)
   const { id: currentUserId } = currentUser || {}
+
   const editorRole = useSelector(state =>
     selectRoleByUserIdAndType(state, currentUserId, 'editor'))
+
   const reviewerRole = useSelector(state =>
     selectRoleByUserIdAndType(state, currentUserId, 'reviewer'))
   const canReview = typeof reviewerRole !== 'undefined'
@@ -58,16 +61,21 @@ const ArticleItem = ({
     selectCurrentUserReviewByArticleId(state, articleId)) || {}
 
   const articleJoin = { key: 'articleId', value: articleId }
-
   const { id: verdictId } = useSelector(state =>
     selectEntitiesByKeyAndJoin(state, 'verdicts', articleJoin)[0]) || {}
-
   const articleImgSrc = externalThumbUrl ||
     (
       thumbCount
         ? `${API_THUMBS_URL}/articles/${articleId}`
         : `${ROOT_ASSETS_PATH}/loading_webshot.png`
     )
+
+
+  const handleClickEdit = useCallback(() => {
+    onClickEdit(articleId)
+  }, [articleId, onClickEdit])
+
+
   return (
     <article className="article-item">
       <div className="article-container">
@@ -76,7 +84,7 @@ const ArticleItem = ({
           <div className="article-date">
             <p >{formatPublishedDate}</p>
             {onClickEdit && (
-              <button className="article-edit" onClick={onClickEdit}>
+              <button className="article-edit" onClick={handleClickEdit}>
                 <Icon className="icon" name="ico-edit.svg" />
               </button>
               )

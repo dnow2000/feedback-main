@@ -5,7 +5,7 @@ import { compose } from 'redux'
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
-import ArticleContainer from 'components/pages/Article/ArticleContainer'
+import Article from 'components/pages/Article'
 import Articles from 'components/pages/Articles'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
@@ -28,9 +28,12 @@ const routes = [
     render: () => <Redirect to="/landing" />,
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
+    )(Article),
     exact: true,
     path: `/articles/:articleId${formPath}`,
-    render: () => <ArticleContainer />,
     title: 'Article',
   },
   {
