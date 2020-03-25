@@ -2,6 +2,7 @@ from sqlalchemy_api_handler import logger
 
 from sandboxes.scripts.creators.ci.create_article_tags import *
 from sandboxes.scripts.creators.ci.create_articles import *
+from sandboxes.scripts.creators.ci.create_claims import *
 from sandboxes.scripts.creators.ci.create_evaluations import *
 from sandboxes.scripts.creators.ci.create_tags import *
 from sandboxes.scripts.creators.ci.create_review_tags import *
@@ -16,6 +17,7 @@ from sandboxes.scripts.creators.ci.create_verdict_users import *
 
 def create_sandbox(with_capture=False):
     logger.info('create_ci_sandbox...')
+    create_claims()
     create_tags()
     create_scopes()
     create_users()
