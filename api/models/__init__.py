@@ -3,6 +3,7 @@ def import_models():
     from models.argument_argument import ArgumentArgument
     from models.article import Article
     from models.article_tag import ArticleTag
+    from models.claim import Claim
     from models.evaluation import Evaluation
     from models.image import Image
     from models.publication import Publication

@@ -4,6 +4,7 @@ from sqlalchemy_api_handler import logger
 from models.utils.db import db
 from models.article import Article
 from models.article_tag import ArticleTag
+from models.claim import Claim
 from models.evaluation import Evaluation
 from models.review import Review
 from models.review_tag import ReviewTag
@@ -37,6 +38,7 @@ def clean_all_database():
     Role.query.delete()
     UserSession.query.delete()
     User.query.delete()
+    Claim.query.delete()
     versioning_manager.activity_cls.query.delete()
     db.session.commit()
     logger.info("clean all the database...Done.")

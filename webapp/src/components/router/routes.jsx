@@ -7,6 +7,8 @@ import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import Article from 'components/pages/Article'
 import Articles from 'components/pages/Articles'
+import Claim from 'components/pages/Claim'
+import Claims from 'components/pages/Claims'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
@@ -41,6 +43,18 @@ const routes = [
     exact: true,
     path: '/articles',
     title: 'Articles',
+  },
+  {
+    component: Claim,
+    exact: true,
+    path: `/claims/:claimId${formPath}`,
+    title: 'Claim',
+  },
+  {
+    component: Claims,
+    exact: true,
+    path: '/claims',
+    title: 'Claims',
   },
   {
     component: withRedirectWhenLoggedIn(Landing),
