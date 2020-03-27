@@ -101,6 +101,7 @@ secret.py
 
 # Store
 static/object_store_data
+static/poynter_claims.csv
 
 # Test
 .hypothesis/

@@ -10,6 +10,7 @@ import TrendingItem from './TrendingItem'
 
 export default () => {
   const { search } = useLocation()
+  console.log({search})
 
   const config = useMemo(() => ({
     apiPath: `/trendings${search}`,

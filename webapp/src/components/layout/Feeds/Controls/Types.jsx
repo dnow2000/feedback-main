@@ -14,7 +14,7 @@ const Types = ({
 }) => {
 
   const handleOnChange = useCallback(event =>
-    onChange('types', event.target.value)
+    onChange('type', event.target.value)
   , [onChange])
 
   return (

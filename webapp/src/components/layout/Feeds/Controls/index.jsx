@@ -39,7 +39,7 @@ export default ({ config }) => {
   useEffect(() => {
     if (type) return
     history.push(getSearchFromUpdate({ type: 'article' }))
-  }, [history, type])
+  }, [getSearchFromUpdate, history, type])
 
 
   return (
