@@ -5,11 +5,14 @@ from urllib.parse import urlencode
 
 from utils.date import strftime
 
+
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
 BUZZSUMO_API_URL = "http://api.buzzsumo.com/search"
 
+
 if BUZZSUMO_API_KEY is None:
     logger.warning('BUZZSUMO_API_KEY is not defined in the env')
+
 
 def get_buzzsumo_url(buzzsumo_api_name, url_query):
     url_query_with_credentials = dict(
@@ -26,6 +29,7 @@ def get_buzzsumo_url(buzzsumo_api_name, url_query):
     )
 
     return url
+
 
 def get_content_with_buzzsumo_result(result):
     content = {

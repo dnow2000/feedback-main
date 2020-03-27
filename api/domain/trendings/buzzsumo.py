@@ -74,6 +74,24 @@ DEVELOPMENT_TRENDINGS = [{
 }]
 
 
+def get_buzzsumo_trending(id):
+    trending = None
+    if IS_DEVELOPMENT:
+        buzzsumo_id_number = int(id)
+        kept_trendings = [
+            trending for trending in DEVELOPMENT_TRENDINGS
+            if trending['buzzsumoId'] == buzzsumo_id_number
+        ]
+        if len(kept_trendings) > 0:
+            trending = kept_trendings[0]
+
+    #
+    # NEED TO WRITE THE PRODUCTIONBUZZSUMO GET API FROM ID
+    #
+
+    return trending
+
+
 def get_topic_with_theme(theme):
     if theme == 'climate':
         return 'global warming,climate change,ocean acidification,sea level rise,carbon dioxide,CO2,greenhouse gases'
@@ -82,7 +100,7 @@ def get_topic_with_theme(theme):
     return None
 
 
-def find_trendings(
+def find_buzzsumo_trendings(
     days=1,
     max_trendings=3,
     min_shares=10000,
