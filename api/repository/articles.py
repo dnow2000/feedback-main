@@ -4,10 +4,11 @@ from sqlalchemy_api_handler import ApiHandler
 from models.article import Article
 from models.article_tag import ArticleTag
 from models.tag import Tag
-from domain.content import get_buzzsumo_content,\
-                           get_newspaper_content
+
+from domain.article import  article_from_newspaper_url
 from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
+from domain.trendings.buzzsumo import article_from_buzzsumo_url
 from repository.activities import filter_by_activity_date_and_verb
 from utils.screenshotmachine import capture
 from storage.thumb import save_thumb
@@ -18,19 +19,19 @@ article_ts_filter = create_get_filter_matching_ts_query_in_any_model(
 )
 
 
-def resolve_content_with_url(url, **kwargs):
-    buzzsumo_content = get_buzzsumo_content(url, **kwargs)
+def resolve_with_url(url, **kwargs):
+    buzzsumo_article = article_from_buzzsumo_url(url, **kwargs)
 
     if buzzsumo_content:
         article = Article.query\
                          .filter_by(
-                             buzzsumoId=buzzsumo_content['buzzsumoId']
+                             buzzsumoId=buzzsumo_article['buzzsumoId']
                          )\
                          .first()
         if article:
             return article.as_dict()
 
-    newspaper_content = get_newspaper_content(url, **kwargs)
+    newspaper_article = article_from_newspaper_url(url, **kwargs)
     if newspaper_content is None:
         newspaper_content = {}
 
@@ -49,7 +50,7 @@ def update_article(article):
         save_thumb(article, thumb, 0, convert=False)
 
     if article.buzzsumoId:
-        buzzsumo_content = get_buzzsumo_content(article.url)
+        buzzsumo_content = article_from_buzzsumo_url(article.url)
         article.populate_from_dict(buzzsumo_content)
 
 

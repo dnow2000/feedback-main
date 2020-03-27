@@ -48,7 +48,10 @@ def get_trendings():
         theme=theme
     )
 
-    not_saved_trendings = keep_not_saved_trendings(trendings)
+    not_saved_trendings = keep_not_saved_trendings(
+        trendings,
+        trending_type
+    )
 
     not_saved_trendings = sorted(
         not_saved_trendings,

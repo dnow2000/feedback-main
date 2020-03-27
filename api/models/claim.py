@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Text
+from sqlalchemy import Column, String, Text
 from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
 
 class Claim(ApiHandler, Model):
-  text = Column(Text)
-  
+    sourceId = Column(String(128), unique=True)
+
+    text = Column(Text)

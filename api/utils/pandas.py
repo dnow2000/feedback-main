@@ -11,11 +11,11 @@ def get_indexes_dict(index_keys, index_values):
 
 
 def create_rows_from_data_frame(df, index_keys):
-    #print(df.to_dict('index').items())
-    index_df = df.to_dict('index')
-    index_items = df.to_dict('index').items()
+    index_items = list(df.to_dict('index').items())
     return [
-        OrderedDict({**get_indexes_dict(index_keys, index_values),
-                     **columns_dict})
+        OrderedDict({
+            **get_indexes_dict(index_keys, index_values),
+            **columns_dict
+        })
         for (index_values, columns_dict) in index_items
     ]

@@ -25,13 +25,13 @@ class Article(ApiHandler,
               VersionedMixin):
     authors = Column(Text)
 
-    buzzsumoId = Column(BigInteger, unique=True)
-
     isReviewable = Column(Boolean)
 
     isValidatedAsPeerPublication = Column(Boolean, nullable=False, default=False)
 
     publishedDate = Column(DateTime)
+
+    sourceId = Column(String(128), unique=True)
 
     summary = Column(Text)
 
