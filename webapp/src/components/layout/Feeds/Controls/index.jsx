@@ -49,10 +49,10 @@ export default ({ config }) => {
         selectedTheme={theme}
       />
       <div className="right">
-        <Types
+        {!location.pathname.startsWith('/verdicts') && (<Types
           onChange={handleChange}
           selectedType={type}
-        />
+        />)}
         <Days
           onChange={handleChange}
           selectedDays={days}

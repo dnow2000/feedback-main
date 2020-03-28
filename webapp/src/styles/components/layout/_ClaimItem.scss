@@ -4,4 +4,13 @@
   border-width: 1px;
   border-radius: 10px;
   padding: 1.25rem;
+
+  .claim-cta-container {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex:1;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
 }
