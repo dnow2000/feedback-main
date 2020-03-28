@@ -1,39 +1,38 @@
 import React, { useCallback, useMemo } from 'react'
-import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
+import { useQuery } from 'with-react-query'
 
-import ArticleItem from 'components/layout/ArticleItem'
 import Feeds from 'components/layout/Feeds/Feeds'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import { articleNormalizer } from 'utils/normalizers'
 
-const Articles = () => {
-  const history = useHistory()
+import SourceItem from './SourceItem'
+
+
+export default () => {
   const { search } = useLocation()
+  const { params: { type } } = useQuery(search)
+  const collectionName = `${type}s`
+
 
   const config = useMemo(() => ({
-    apiPath: `/articles${search}`,
+    apiPath: `/${collectionName}${search}`,
     normalizer: articleNormalizer
-  }), [search])
+  }), [collectionName, search])
 
-
-  const redirectToArticle = useCallback(articleId =>
-    history.push(`/articles/${articleId}`), [history])
 
   const renderItem = useCallback(item =>
-    <ArticleItem
-      article={item}
-      onClickEdit={redirectToArticle}
-    />, [redirectToArticle])
+    <SourceItem source={item} />, [])
 
 
   return (
     <>
       <Header />
-      <Main name="articles">
+      <Main name="sources">
         <div className="container">
-          <NavLink to="/articles/creation">
-            Créer un article
+          <NavLink to={`/${collectionName}/creation`}>
+            Créer un ${type}
           </NavLink>
           <br/>
           <br/>
@@ -49,6 +48,3 @@ const Articles = () => {
     </>
   )
 }
-
-
-export default Articles

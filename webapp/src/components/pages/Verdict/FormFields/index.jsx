@@ -29,7 +29,7 @@ export default () => {
   const location = useLocation()
   const params = useParams()
   const { verdictId } = params
-  const { params: { buzzsumoId } } = useQuery(location.search)
+  const { params: { sourceId } } = useQuery(location.search)
   const { readOnly } = useFormidable(location, params)
 
 
@@ -56,7 +56,7 @@ export default () => {
     selectEntitiesByKeyAndJoin(
       state,
       'trendings',
-      { key: 'buzzsumoId', value: buzzsumoId }
+      { key: 'sourceId', value: sourceId }
   )[0])
 
   const verdict = useSelector(state =>

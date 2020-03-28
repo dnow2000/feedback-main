@@ -55,7 +55,7 @@ def get_trendings():
 
     not_saved_trendings = sorted(
         not_saved_trendings,
-        key=lambda a: a['totalShares'],
+        key=lambda a: a.get('totalShares', 0),
         reverse=True
     )
 

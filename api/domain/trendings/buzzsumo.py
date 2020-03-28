@@ -25,6 +25,7 @@ DEVELOPMENT_TRENDINGS = [{
     'title': "Donald Trump buried a climate change report because 'I don't believe it'",
     'totalShares': 10000,
     'twitterShares': 1000,
+    'type': "article",
     'url': 'https://www.cnn.com/2018/11/26/politics/donald-trump-climate-change/index.html',
 }, {
     'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/180804095014-03-file-climate-change-super-tease.jpg',
@@ -36,6 +37,7 @@ DEVELOPMENT_TRENDINGS = [{
     'title': "Climate change will shrink US economy and kill thousands, government report warns",
     'totalShares': 354013,
     'twitterShares': 14228,
+    'type': "article",
     'url': 'https://www.cnn.com/2018/11/23/health/climate-change-report-bn/index.html',
 }, {
     'externalThumbUrl': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',
@@ -47,6 +49,7 @@ DEVELOPMENT_TRENDINGS = [{
     'title': "Patagonia’s CEO is donating company’s entire $10M Trump tax cut to fight climate change.",
     'totalShares': 1434478,
     'twitterShares': 9062,
+    'type': "article",
     'url': 'https://www.upworthy.com/patagonia-s-ceo-is-donating-company-s-entire-10-m-trump-tax-cut-to-fight-climate-change',
 }, {
     'externalThumbUrl': 'https://www.motherjones.com/wp-content/uploads/2018/12/trump-g20-120118.jpeg?w=1200&h=630&crop=1',
@@ -58,6 +61,7 @@ DEVELOPMENT_TRENDINGS = [{
     'title': "19 of 20 world leaders just pledged to fight climate change. Trump was the lone holdout.",
     'totalShares': 354013,
     'twitterShares': 14228,
+    'type': "article",
     'url': 'https://www.motherjones.com/environment/2018/12/trump-g20-climate-paris-accord-denial/',
 }, {
     'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
@@ -69,6 +73,7 @@ DEVELOPMENT_TRENDINGS = [{
     'title': "Trump signs $1.8 billion autism funding bill.",
     'totalShares': 354011,
     'twitterShares': 14248,
+    'type': "article",
     'url': 'https://abcnews.go.com/Health/trump-signs-18-billion-autism-cares-act/story?id=66002425',
 }, {
     'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
@@ -80,6 +85,7 @@ DEVELOPMENT_TRENDINGS = [{
     'title': "Hacer ejercicio, la mejor arma para luchar contra la depresión.",
     'totalShares': 351011,
     'twitterShares': 13248,
+    'type': "article",
     'url': 'https://www.menshealth.com/es/salud-bienestar/a26409675/depresion-ejercicio-ansiedad-prevenir/',
 }]
 
@@ -104,10 +110,9 @@ def buzzsumo_url_from(api_name, url_query):
 def get_buzzsumo_trending(id):
     trending = None
     if IS_DEVELOPMENT:
-        buzzsumo_id_number = int(id)
         kept_trendings = [
             trending for trending in DEVELOPMENT_TRENDINGS
-            if trending['buzzsumoId'] == buzzsumo_id_number
+            if trending['sourceId'] == id
         ]
         if len(kept_trendings) > 0:
             trending = kept_trendings[0]
@@ -137,6 +142,7 @@ def article_from_buzzsumo(result):
         'title': result['title'],
         'totalShares': result['total_shares'],
         'twitterShares': result['twitter_shares'],
+        'type': 'article',
         'url': result.get('og_url', '')
     }
 

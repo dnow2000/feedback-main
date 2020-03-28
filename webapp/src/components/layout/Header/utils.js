@@ -15,7 +15,7 @@ export const links = [
   },
   {
     label: () => 'To Assess',
-    path: '/articles',
+    path: '/sources',
     visible: () => visibleFor(['editor', 'reviewer'])
   },
   {

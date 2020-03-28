@@ -1,8 +1,11 @@
 import React from 'react'
 
-export default = ({ claim }) => {
-  
+export default ({ claim }) => {
+  const { text } = claim
+
   return (
-    null
+    <div className="claim-item">
+      {text}
+    </div>
   )
 }

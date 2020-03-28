@@ -10,12 +10,13 @@ import TrendingItem from './TrendingItem'
 
 export default () => {
   const { search } = useLocation()
-  console.log({search})
+
 
   const config = useMemo(() => ({
     apiPath: `/trendings${search}`,
-    resolve: trending => ({...trending, id: trending.buzzsumoId})
+    resolve: trending => ({ ...trending, id: trending.sourceId })
   }), [search])
+
 
   const renderItem = useCallback(item =>
     <TrendingItem trending={item} />, [])

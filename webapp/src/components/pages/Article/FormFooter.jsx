@@ -35,7 +35,7 @@ export default ({
 
   const handleCancelClick = useCallback(() => {
     onCancel()
-    const next = isCreatedEntity ? '/articles' : `/articles/${articleId}`
+    const next = isCreatedEntity ? '/sources?type=article' : `/articles/${articleId}`
     history.push(next)
   }, [articleId, history, isCreatedEntity, onCancel])
 

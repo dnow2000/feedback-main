@@ -28,7 +28,7 @@ export default ({ ...formProps }) => {
   const handleCancelClick = useCallback(() => {
     formReset()
     const next = isCreatedEntity
-      ? '/articles'
+      ? '/sources'
       : `/verdicts/${verdictId}`
     history.push(next)
   }, [formReset, history, isCreatedEntity, verdictId])
@@ -55,7 +55,7 @@ export default ({ ...formProps }) => {
         </button>
       )}
       {readOnly ? (
-        <NavLink className="button is-secondary" to="/articles">
+        <NavLink className="button is-secondary" to="/sources">
           Return
         </NavLink>
       ) : (

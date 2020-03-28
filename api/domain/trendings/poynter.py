@@ -11,6 +11,7 @@ POYNTER_CLAIMS_DIR = Path(os.path.dirname(os.path.realpath(__file__)))\
 
 def claim_from_poynter(datum, index):
     return {
+        'type': 'claim',
         'sourceId': 'poynter-{}'.format(index),
         'text': datum['What did you fact-check?']
     }
