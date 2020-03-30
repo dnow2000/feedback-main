@@ -8,6 +8,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 import ClaimItem from 'components/layout/ClaimItem'
 import ArticleItem from 'components/layout/ArticleItem'
 import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
+import selectCurrentUserAppearanceByClaimId from 'selectors/selectCurrentUserAppearanceByClaimId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 
 
@@ -34,13 +35,20 @@ export default ({ source }) => {
   const editorRole = useSelector(state =>
     selectRoleByUserIdAndType(state, currentUserId, 'editor'))
 
+  const testifierRole = useSelector(state =>
+    selectRoleByUserIdAndType(state, currentUserId, 'testifier'))
+
   const reviewerRole = useSelector(state =>
     selectRoleByUserIdAndType(state, currentUserId, 'reviewer'))
   const canReview = typeof reviewerRole !== 'undefined'
+  const canTestify = typeof testifierRole !== 'undefined'
   const canVerdict = typeof editorRole !== 'undefined'
 
   const { id: currentUserReviewId } = useSelector(state =>
     selectCurrentUserReviewByArticleId(state, id)) || {}
+
+    const { id: currentUserAppearanceId } = useSelector(state =>
+      selectCurrentUserAppearanceByClaimId(state, id)) || {}
 
   const sourceJoin = { key: `${type}Id`, value: id }
   const { id: verdictId } = useSelector(state =>
@@ -79,7 +87,19 @@ export default ({ source }) => {
               : `/reviews/creation?${type}Id=${id}`
           }
         >
-          {currentUserReviewId ? 'See' : 'Write'} a review
+          {currentUserReviewId ? 'See your' : 'Write a'} review
+        </NavLink>
+      )}
+      {canTestify && (
+        <NavLink
+          className={"button is-primary thin"}
+          to={
+            currentUserAppearanceId
+              ? `/appearances/${currentUserAppearanceId}`
+              : `/appearance/creation?${type}Id=${id}`
+          }
+        >
+          {currentUserAppearanceId ? 'See your' : 'Write an'} an appearance
         </NavLink>
       )}
     </Item>

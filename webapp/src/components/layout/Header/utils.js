@@ -14,9 +14,9 @@ export const links = [
     visible: visibleFor(['editor'])
   },
   {
-    label: () => 'To Assess',
+    label: () => 'Sources',
     path: '/sources',
-    visible: () => visibleFor(['editor', 'reviewer'])
+    visible: () => visibleFor(['editor', 'reviewer', 'witness'])
   },
   {
     label: () => 'Verified',

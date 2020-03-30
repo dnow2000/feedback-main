@@ -1,6 +1,8 @@
 from utils.config import IS_DEVELOPMENT
 
+
 def import_routes():
+    import routes.appearances
     import routes.articles
     import routes.claims
     import routes.evaluations

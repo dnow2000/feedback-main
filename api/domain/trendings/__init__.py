@@ -3,7 +3,11 @@ import sys
 from domain.trendings.buzzsumo import find_buzzsumo_trendings, \
                                       get_buzzsumo_trending
 from domain.trendings.poynter import find_poynter_trendings, \
-                                     get_poynter_trending
+                                     get_poynter_trending, \
+                                     load_data_frame
+
+
+load_data_frame()
 
 
 def find_article_trendings(*args, **kwargs):

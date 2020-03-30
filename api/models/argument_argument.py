@@ -7,6 +7,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class ArgumentArgument(ApiHandler,
                        Model):
 

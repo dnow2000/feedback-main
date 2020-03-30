@@ -16,6 +16,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           VersionedMixin
 from models.role import RoleType
 
+
 class Article(ApiHandler,
               Model,
               HasExternalThumbUrlMixin,

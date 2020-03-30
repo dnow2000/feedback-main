@@ -32,7 +32,7 @@ export default () => {
       <Main name="sources">
         <div className="container">
           <NavLink to={`/${collectionName}/creation`}>
-            Créer un ${type}
+            Créer un {type}
           </NavLink>
           <br/>
           <br/>
