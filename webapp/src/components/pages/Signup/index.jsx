@@ -7,6 +7,7 @@ import { resolveCurrentUser } from 'with-react-redux-login'
 
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
+import { orcidDecorator } from 'utils/orcid'
 
 import ApplicationTypeButtons from './ApplicationTypeButtons'
 import SignupForm from './SignupForm'
@@ -54,6 +55,7 @@ export default () => {
         </h1>
         {null && <ApplicationTypeButtons />}
         <Form
+          decorators={[orcidDecorator]}
           onSubmit={handleSubmit}
           render={SignupForm}
         />

@@ -7,6 +7,7 @@ def import_routes():
     import routes.claims
     import routes.evaluations
     import routes.images
+    import routes.orcid
     import routes.password
     import routes.reviews
     import routes.roles

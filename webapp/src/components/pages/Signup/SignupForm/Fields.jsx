@@ -93,6 +93,12 @@ const _ = ({ onImageChange }) => {
               <h2 className="field-separator-title">Publications</h2>
             </div>
             <TextField
+              id="orcid-id"
+              label="ORCID id"
+              name="orcidId"
+              sublabel="You can create one here: https://orcid.org"
+            />
+            <TextField
               id="publication-1"
               label="Publication 1"
               name="publication1"
@@ -110,12 +116,6 @@ const _ = ({ onImageChange }) => {
               label="Publication 3"
               name="publication3"
               placeholder="Link to qualifying publications."
-            />
-            <TextField
-              id="orcid-id"
-              label="ORCID id"
-              name="orcidId"
-              sublabel="You can create one here: https://orcid.org"
             />
           </>
         )}
