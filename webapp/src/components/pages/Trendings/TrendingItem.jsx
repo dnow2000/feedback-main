@@ -18,7 +18,9 @@ const ItemsByName = {
 
 export default ({ trending }) => {
   const {
-    sourceId,
+    source: {
+      id: sourceId
+    },
     type
   } = trending
   const dispatch = useDispatch()
@@ -26,7 +28,7 @@ export default ({ trending }) => {
 
 
   const itemProps = useMemo(() => ({ [type]: trending }), [trending, type])
-  
+
 
   const [isReviewable, setIsReviewable] = useState(undefined)
 

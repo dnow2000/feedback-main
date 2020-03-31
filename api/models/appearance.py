@@ -3,6 +3,7 @@ from sqlalchemy import BigInteger, \
                        Column, \
                        Enum, \
                        ForeignKey
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
@@ -35,6 +36,8 @@ class Appearance(ApiHandler, Model):
                         backref='appearances')
 
     sentiment = Column(Enum(SentimentType))
+
+    source = Column(JSON())
 
     userId = Column(BigInteger,
                     ForeignKey('user.id'),

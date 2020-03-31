@@ -19,7 +19,9 @@ DEVELOPMENT_TRENDINGS = [{
     'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/170708175538-05-trump-abroad-0708-super-tease.jpg',
     'facebookShares': 1000,
     'publishedDate': "Tue, 12 Mar 2019 01:02:00 GMT",
-    'sourceId': 'source-123',
+    'source': {
+        'id' : 'buzzsumo-123'
+    },
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
     'title': "Donald Trump buried a climate change report because 'I don't believe it'",
@@ -30,7 +32,9 @@ DEVELOPMENT_TRENDINGS = [{
 }, {
     'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/180804095014-03-file-climate-change-super-tease.jpg',
     'facebookShares': 178670,
-    'sourceId': 'source-1231',
+    'source': {
+        'id': 'buzzsumo-1231',
+    },
     'publishedDate': "Wed, 13 Mar 2019 01:02:00 GMT",
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
@@ -43,7 +47,9 @@ DEVELOPMENT_TRENDINGS = [{
     'externalThumbUrl': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',
     'facebookShares': 1423505,
     'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'sourceId': 'buzzsumo-1232',
+    'source': {
+        'id': 'buzzsumo-1232',
+    },
     'subdomain': 'www.upworthy.com',
     'tags': 'climate',
     'title': "Patagonia’s CEO is donating company’s entire $10M Trump tax cut to fight climate change.",
@@ -55,7 +61,9 @@ DEVELOPMENT_TRENDINGS = [{
     'externalThumbUrl': 'https://www.motherjones.com/wp-content/uploads/2018/12/trump-g20-120118.jpeg?w=1200&h=630&crop=1',
     'facebookShares': 178670,
     'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'sourceId': 'source-12321234',
+    'source': {
+        'id': 'buzzsumo-12321234'
+    },
     'subdomain': 'www.motherjones.com',
     'tags': 'climate',
     'title': "19 of 20 world leaders just pledged to fight climate change. Trump was the lone holdout.",
@@ -67,7 +75,9 @@ DEVELOPMENT_TRENDINGS = [{
     'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
     'facebookShares': 178650,
     'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'sourceId': 'buzzsumo-12321235',
+    'source': {
+        'id': 'buzzsumo-12321235',
+    },
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
     'title': "Trump signs $1.8 billion autism funding bill.",
@@ -79,7 +89,9 @@ DEVELOPMENT_TRENDINGS = [{
     'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
     'facebookShares': 138650,
     'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'sourceId': 'buzzsumo-121212',
+    'source': {
+        'id': 'buzzsumo-121212'
+    },
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
     'title': "Hacer ejercicio, la mejor arma para luchar contra la depresión.",
@@ -112,7 +124,7 @@ def get_buzzsumo_trending(id):
     if IS_DEVELOPMENT:
         kept_trendings = [
             trending for trending in DEVELOPMENT_TRENDINGS
-            if trending['sourceId'] == id
+            if trending['source']['id'] == id
         ]
         if len(kept_trendings) > 0:
             trending = kept_trendings[0]
@@ -137,8 +149,10 @@ def article_from_buzzsumo(result):
         'externalThumbUrl': result['thumbnail'],
         'facebookShares': result['total_facebook_shares'],
         'publishedDate': strftime(datetime.utcfromtimestamp(result['published_date'])),
-        'sourceId': 'buzzsumo-{}'.format(result['id']),
-        'subdomain': result['subdomain'],
+        'source': {
+            'id': 'buzzsumo-{}'.format(result['id']),
+            'subdomain': result['subdomain'],
+        },
         'title': result['title'],
         'totalShares': result['total_shares'],
         'twitterShares': result['twitter_shares'],

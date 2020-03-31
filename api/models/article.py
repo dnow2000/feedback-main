@@ -5,6 +5,7 @@ from sqlalchemy import BigInteger, \
                        DateTime, \
                        Text, \
                        String
+from sqlalchemy.dialects.postgresql import JSON
 from typing import Iterable
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
@@ -32,7 +33,7 @@ class Article(ApiHandler,
 
     publishedDate = Column(DateTime)
 
-    sourceId = Column(String(128), unique=True)
+    source = Column(JSON())
 
     summary = Column(Text)
 

@@ -38,7 +38,9 @@ def load_data_frame():
 def claim_from_poynter(datum, index):
     return {
         'type': 'claim',
-        'sourceId': 'poynter-{}'.format(index),
+        'source': {
+            'id': 'poynter-{}'.format(index)
+        },
         'text': datum['What did you fact-check?']
     }
 

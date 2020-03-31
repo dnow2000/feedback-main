@@ -1,4 +1,4 @@
-"""add sourceId to claim and article
+"""add source to claim and article
 
 Revision ID: 5277fc28c434
 Revises: 7adba0267df6
@@ -19,18 +19,14 @@ depends_on = None
 def upgrade():
     op.add_column(
         'article',
-        sa.Column('sourceId',
-            sa.String(128)
-        ),
+        sa.Column('source', sa.JSON()),
     )
     op.add_column(
         'claim',
-        sa.Column('sourceId',
-            sa.String(128)
-        ),
+        sa.Column('source', sa.JSON()),
     )
 
 
 def downgrade():
-    op.drop_column('article', 'sourceId')
-    op.drop_column('claim', 'sourceId')
+    op.drop_column('article', 'source')
+    op.drop_column('claim', 'source')

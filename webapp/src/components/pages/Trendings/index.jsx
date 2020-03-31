@@ -14,7 +14,7 @@ export default () => {
 
   const config = useMemo(() => ({
     apiPath: `/trendings${search}`,
-    resolve: trending => ({ ...trending, id: trending.sourceId })
+    resolve: trending => ({ ...trending, id: trending.source.id })
   }), [search])
 
 
