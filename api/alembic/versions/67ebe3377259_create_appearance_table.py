@@ -22,7 +22,7 @@ def upgrade():
         'appearance',
         sa.Column('claimId',
             sa.BigInteger(),
-            sa.ForeignKey('claim.claimId')
+            sa.ForeignKey('claim.id')
         ),
         sa.Column('id',
             sa.BigInteger(),
@@ -32,7 +32,7 @@ def upgrade():
         sa.Column('sentiment', sa.Enum(SentimentType)),
         sa.Column('userId',
             sa.BigInteger(),
-            sa.ForeignKey('user.userId')
+            sa.ForeignKey('user.id')
         )
     )
 
