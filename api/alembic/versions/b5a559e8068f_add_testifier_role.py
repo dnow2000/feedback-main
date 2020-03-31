@@ -25,21 +25,21 @@ temporary_enum = sa.Enum(*new_values, name='tmp_roletype')
 
 def upgrade():
     temporary_enum.create(op.get_bind(), checkfirst=False)
-    op.execute('ALTER TABLE appearance ALTER COLUMN name TYPE tmp_roletype'
-               ' USING name::text::tmp_roletype')
+    op.execute('ALTER TABLE role ALTER COLUMN type TYPE tmp_roletype'
+               ' USING type::text::tmp_roletype')
     previous_enum.drop(op.get_bind(), checkfirst=False)
     new_enum.create(op.get_bind(), checkfirst=False)
-    op.execute('ALTER TABLE appearance ALTER COLUMN name TYPE roletype'
-               ' USING name::text::roletype')
+    op.execute('ALTER TABLE role ALTER COLUMN type TYPE roletype'
+               ' USING type::text::roletype')
     temporary_enum.drop(op.get_bind(), checkfirst=False)
 
 
 def downgrade():
     temporary_enum.create(op.get_bind(), checkfirst=False)
-    op.execute('ALTER TABLE appearance ALTER COLUMN name TYPE tmp_roletype'
-               ' USING name::text::tmp_roletype')
+    op.execute('ALTER TABLE role ALTER COLUMN type TYPE tmp_roletype'
+               ' USING type::text::tmp_roletype')
     new_enum.drop(op.get_bind(), checkfirst=False)
     previous_enum.create(op.get_bind(), checkfirst=False)
-    op.execute('ALTER TABLE appearance ALTER COLUMN name TYPE roletype'
-               ' USING name::text::roletype')
+    op.execute('ALTER TABLE role ALTER COLUMN type TYPE roletype'
+               ' USING type::text::roletype')
     temporary_enum.drop(op.get_bind(), checkfirst=False)
