@@ -6,12 +6,12 @@ import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import Article from 'components/pages/Article'
-import Articles from 'components/pages/Articles'
 import Claim from 'components/pages/Claim'
 import Claims from 'components/pages/Claims'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
+import Sources from 'components/pages/Sources'
 import UserContainer from 'components/pages/User/UserContainer'
 import Users from 'components/pages/Users'
 import Verdict from 'components/pages/Verdict'
@@ -39,10 +39,10 @@ const routes = [
     title: 'Article',
   },
   {
-    component: withRequiredLogin(Articles),
+    component: withRequiredLogin(Sources),
     exact: true,
-    path: '/articles',
-    title: 'Articles',
+    path: '/sources',
+    title: 'Sources',
   },
   {
     component: Claim,

@@ -8,11 +8,13 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class ScopeType(enum.Enum):
     article = "article"
     review = "review"
     user = "user"
     verdict = "verdict"
+
 
 class Scope(ApiHandler, Model):
 

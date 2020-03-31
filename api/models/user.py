@@ -9,6 +9,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           NeedsValidationMixin
 from models.role import Role
 
+
 class User(ApiHandler,
            Model,
            HasExternalThumbUrlMixin,

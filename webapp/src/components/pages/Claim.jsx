@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import {useParams} from 'react-router-dom'
-import {requestData, selectEntityByKeyAndId} from 'redux-thunk-data'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 export default () => {
   const dispatch = useDispatch()
@@ -13,7 +13,7 @@ export default () => {
     dispatch(requestData({
       apiPath: `/claims/${claimId}`
     }))
-  }, [claimId])
+  }, [claimId, dispatch])
 
   return (
     <div>

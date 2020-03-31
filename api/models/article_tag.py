@@ -4,6 +4,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class ArticleTag(ApiHandler,
                  Model):
 

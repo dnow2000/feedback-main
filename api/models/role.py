@@ -8,6 +8,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class RoleType(enum.Enum):
     def as_dict(self):
         dict_value = {
@@ -19,6 +20,8 @@ class RoleType(enum.Enum):
     editor = "editor"
     guest = "guest"
     reviewer = "reviewer"
+    testifier = "testifier"
+
 
 class Role(ApiHandler, Model):
 

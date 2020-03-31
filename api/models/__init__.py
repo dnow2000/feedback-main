@@ -1,4 +1,5 @@
 def import_models():
+    from models.appearance import Appearance
     from models.argument import Argument
     from models.argument_argument import ArgumentArgument
     from models.article import Article

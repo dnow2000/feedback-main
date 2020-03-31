@@ -31,7 +31,6 @@ const Items = ({
 }) => {
   const dispatch = useDispatch()
 
-
   const [threshold, setThreshold] = useState(REACHABLE_THRESHOLD)
 
 
@@ -66,6 +65,10 @@ const Items = ({
 
 
   useEffect(() => {
+    handleGetItems(0)
+  }, [config, handleGetItems])
+
+  useEffect(() => {
     if (isSuccess) setThreshold(REACHABLE_THRESHOLD)
   }, [isSuccess])
 
@@ -75,6 +78,7 @@ const Items = ({
       className='items'
       hasMore={hasMore}
       loadMore={handleLoadMore}
+      key={config.apiPath}
       threshold={threshold}
       pageStart={0}
       useWindow
