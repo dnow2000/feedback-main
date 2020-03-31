@@ -24,8 +24,8 @@ def create_appearances():
       user=user
     ))
 
-    ApiHandler.save(*apperances)
+    ApiHandler.save(*appearances)
 
-    logger.info('created {} apperances'.format(len(apperances)))
+    logger.info('created {} appearances'.format(len(appearances)))
 
-    return apperances
+    return appearances

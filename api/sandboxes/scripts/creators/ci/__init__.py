@@ -20,10 +20,10 @@ from sandboxes.scripts.creators.ci.create_verdict_users import *
 def create_sandbox(with_capture=False):
     logger.info('create_ci_sandbox...')
     create_claims()
-    create_appearances()
     create_tags()
     create_scopes()
     create_users()
+    create_appearances()
     create_user_tags()
     create_roles()
     create_articles(with_capture=with_capture)
