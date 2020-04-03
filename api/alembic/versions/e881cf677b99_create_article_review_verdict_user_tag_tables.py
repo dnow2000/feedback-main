@@ -1,7 +1,7 @@
-"""create review verdict user tag tables
+"""create article review verdict user tag tables
 
 Revision ID: e881cf677b99
-Revises: 2201a3f6d9a0
+Revises: 0480e04f2307
 Create Date: 2020-04-03 14:07:42.833977
 
 """
@@ -11,8 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = 'e881cf677b99'
-down_revision = '2201a3f6d9a0'
-#down_revision = 'b5a559e8068f'
+down_revision = '0480e04f2307'
 branch_labels = None
 depends_on = None
 
@@ -29,7 +28,27 @@ def upgrade():
             unique=True
         ))
 
+    op.create_table('article_tag',
+        sa.Column('id',
+            sa.BigInteger(),
+            autoincrement=True,
+            primary_key=True
+        ),
+        sa.Column('articleId',
+                  sa.BigInteger(),
+                  sa.ForeignKey('article.id'),
+                  primary_key=True),
+        sa.Column('tagId',
+                  sa.BigInteger(),
+                  sa.ForeignKey('tag.id'),
+                  primary_key=True))
+
     op.create_table('review_tag',
+        sa.Column('id',
+            sa.BigInteger(),
+            autoincrement=True,
+            primary_key=True
+        ),
         sa.Column('reviewId',
                   sa.BigInteger(),
                   sa.ForeignKey('review.id'),
@@ -40,6 +59,11 @@ def upgrade():
                   primary_key=True))
 
     op.create_table('verdict_tag',
+        sa.Column('id',
+            sa.BigInteger(),
+            autoincrement=True,
+            primary_key=True
+        ),
         sa.Column('verdictId',
                   sa.BigInteger(),
                   sa.ForeignKey('verdict.id'),
@@ -50,6 +74,11 @@ def upgrade():
                   primary_key=True))
 
     op.create_table('user_tag',
+        sa.Column('id',
+            sa.BigInteger(),
+            autoincrement=True,
+            primary_key=True
+        ),
         sa.Column('userId',
                   sa.BigInteger(),
                   sa.ForeignKey('user.id'),
@@ -62,6 +91,7 @@ def upgrade():
 
 def downgrade():
     op.drop_table('tag')
+    op.drop_table('article_tag')
     op.drop_table('review_tag')
     op.drop_table('verdict_tag')
     op.drop_table('user_tag')

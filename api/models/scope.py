@@ -1,7 +1,8 @@
 import enum
-from sqlalchemy import BigInteger,\
-                       Column,\
-                       ForeignKey,\
+from sqlalchemy import BigInteger, \
+                       Column, \
+                       Enum, \
+                       ForeignKey, \
                        String
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
@@ -10,10 +11,10 @@ from models.utils.db import Model
 
 
 class ScopeType(enum.Enum):
-    article = "article"
-    review = "review"
-    user = "user"
-    verdict = "verdict"
+    ARTICLE = "article"
+    REVIEW = "review"
+    USER = "user"
+    VERDICT = "verdict"
 
 
 class Scope(ApiHandler,
@@ -28,5 +29,5 @@ class Scope(ApiHandler,
                        foreign_keys=[tagId],
                        backref='scopes')
 
-    type = Column(String(50),
+    type = Column(Enum(ScopeType),
                   nullable=True)
