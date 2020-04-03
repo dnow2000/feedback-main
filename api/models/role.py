@@ -35,5 +35,7 @@ class Role(ApiHandler, Model):
                         foreign_keys=[userId],
                         backref='roles')
 
-    type = Column(Enum(RoleType),
+    type = Column(
+                  #String(128),
+                  Enum(RoleType),
                   nullable=True)
