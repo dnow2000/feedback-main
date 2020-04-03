@@ -1,6 +1,7 @@
 import enum
 from sqlalchemy import BigInteger,\
                        Column,\
+                       Enum, \
                        ForeignKey,\
                        String
 from sqlalchemy.orm import relationship
@@ -16,11 +17,11 @@ class RoleType(enum.Enum):
         }
         return dict_value
 
-    admin = "admin"
-    editor = "editor"
-    guest = "guest"
-    reviewer = "reviewer"
-    testifier = "testifier"
+    ADMIN = "admin"
+    EDITOR = "editor"
+    GUEST = "guest"
+    REVIEWER = "reviewer"
+    TESTIFIER = "testifier"
 
 
 class Role(ApiHandler, Model):
@@ -34,5 +35,5 @@ class Role(ApiHandler, Model):
                         foreign_keys=[userId],
                         backref='roles')
 
-    type = Column(String(50),
+    type = Column(Enum(RoleType),
                   nullable=True)
