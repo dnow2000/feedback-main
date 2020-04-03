@@ -26,4 +26,11 @@ def upgrade():
 
 
 def downgrade():
-    pass
+    op.execute('DROP TABLE evaluation CASCADE')
+    op.execute('DROP TABLE role CASCADE')
+    op.execute('DROP TABLE verdict CASCADE')
+    op.execute('DROP TABLE review CASCADE')
+    op.execute('DROP TABLE article CASCADE')
+    op.execute('DROP TABLE "user" CASCADE')
+    op.execute('DROP TABLE activity')
+    op.execute('DROP TABLE transaction')

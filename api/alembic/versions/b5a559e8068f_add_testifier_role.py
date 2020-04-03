@@ -20,12 +20,12 @@ values = ('admin', 'editor', 'guest', 'reviewer', 'testifier')
 def upgrade():
     role_type = sa.Enum(*values, name='roletype')
     role_type.create(op.get_bind(), checkfirst=False)
-    op.execute('ALTER TABLE role ALTER COLUMN type TYPE character varying(128)'
+    op.execute('ALTER TABLE role ALTER COLUMN type TYPE roletype'
                ' USING type::text::roletype')
 
 
 def downgrade():
-    role_type = sa.Enum(*values, name='roletype')
+    role_type = sa.Enum(name='roletype')
     role_type.create(op.get_bind(), checkfirst=True)
     op.alter_column('role', 'type', existing_type=role_type, type_=sa.String(128))
     role_type.drop(op.get_bind(), checkfirst=False)

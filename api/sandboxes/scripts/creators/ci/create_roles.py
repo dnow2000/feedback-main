@@ -17,18 +17,17 @@ def create_roles():
             user.email
         ).group(1)
 
-
-        if user_type not in ['user', 'master']:
-            roles_by_name['{} {}'.format(user.email, user_type)] = Role(
-                type=user_type,
-                user=user
-            )
-        elif user_type == "master":
+        if user_type == "master":
             for role_type in RoleType:
                 roles_by_name['{} {}'.format(user.email, role_type)] = Role(
-                    type=role_type.value,
+                    type=role_type,
                     user=user
                 )
+        elif user_type != 'user':
+            roles_by_name['{} {}'.format(user.email, user_type)] = Role(
+                type=getattr(RoleType, user_type.upper()),
+                user=user
+            )
 
     ApiHandler.save(*roles_by_name.values())
 

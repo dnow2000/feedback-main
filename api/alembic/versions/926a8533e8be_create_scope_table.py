@@ -21,7 +21,6 @@ values = ('article', 'review', 'user', 'verdict')
 
 def upgrade():
     scope_type = sa.Enum(*values, name='scopetype')
-    #scope_type.create(op.get_bind(), checkfirst=True)
     op.create_table(
         'scope',
         sa.Column('id',
@@ -42,5 +41,5 @@ def upgrade():
 
 def downgrade():
     op.drop_table('scope')
-    scope_type = sa.Enum(*values, name='scopetype')
+    scope_type = sa.Enum(name='scopetype')
     scope_type.drop(op.get_bind(), checkfirst=False)

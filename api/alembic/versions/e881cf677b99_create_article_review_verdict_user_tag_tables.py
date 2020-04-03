@@ -90,8 +90,8 @@ def upgrade():
 
 
 def downgrade():
-    op.drop_table('tag')
     op.drop_table('article_tag')
     op.drop_table('review_tag')
     op.drop_table('verdict_tag')
     op.drop_table('user_tag')
+    op.drop_table('tag')
