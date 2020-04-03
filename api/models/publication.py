@@ -14,9 +14,10 @@ class Publication(ApiHandler,
                   HasExternalThumbUrlMixin,
                   SoftDeletableMixin,
                   VersionedMixin):
-    summary = Column(Text)
+                  
+    summary = Column(Text())
 
-    tags = Column(Text)
+    tags = Column(Text())
 
     title = Column(String(140))
 

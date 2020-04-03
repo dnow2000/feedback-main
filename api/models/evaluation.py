@@ -9,14 +9,14 @@ from models.utils.db import Model
 
 
 class EvaluationType(enum.Enum):
-    article = "article"
-    claim = "claim"
+    ARTICLE = "article"
+    CLAIM = "claim"
 
 
 class Evaluation(ApiHandler,
                  Model):
 
     label = Column(String(50), nullable=True)
-    info = Column(Text, nullable=True)
+    info = Column(Text(), nullable=True)
     type = Column(String(50), nullable=True)
-    value = Column(Integer, nullable=True)
+    value = Column(Integer(), nullable=True)

@@ -24,9 +24,10 @@ class RoleType(enum.Enum):
     TESTIFIER = "testifier"
 
 
-class Role(ApiHandler, Model):
+class Role(ApiHandler,
+           Model):
 
-    userId = Column(BigInteger,
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     nullable=False,
                     index=True)
@@ -35,7 +36,5 @@ class Role(ApiHandler, Model):
                         foreign_keys=[userId],
                         backref='roles')
 
-    type = Column(
-                  #String(128),
-                  Enum(RoleType),
+    type = Column(Enum(RoleType),
                   nullable=True)

@@ -16,12 +16,13 @@ class ScopeType(enum.Enum):
     verdict = "verdict"
 
 
-class Scope(ApiHandler, Model):
+class Scope(ApiHandler,
+            Model):
 
-    tagId = Column(BigInteger,
-                    ForeignKey('tag.id'),
-                    nullable=False,
-                    index=True)
+    tagId = Column(BigInteger(),
+                   ForeignKey('tag.id'),
+                   nullable=False,
+                   index=True)
 
     tag = relationship('Tag',
                        foreign_keys=[tagId],

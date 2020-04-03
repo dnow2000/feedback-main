@@ -15,8 +15,7 @@ class User(ApiHandler,
            HasExternalThumbUrlMixin,
            HasQualificationMixin,
            HasThumbMixin,
-           NeedsValidationMixin
-          ):
+           NeedsValidationMixin):
 
     email = Column(String(120), nullable=False, unique=True)
     password = Column(LargeBinary(60), nullable=False)

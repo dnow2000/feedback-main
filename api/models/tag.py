@@ -6,7 +6,12 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import \
 from models.utils.db import Model
 
 
-class Tag(ApiHandler, Model, SoftDeletableMixin):
-    info = Column(Text, nullable=True)
-    positivity = Column(Integer, nullable=True)
-    text = Column(Text, unique=True)
+class Tag(ApiHandler,
+          Model,
+          SoftDeletableMixin):
+          
+    info = Column(Text(), nullable=True)
+
+    positivity = Column(Integer(), nullable=True)
+
+    text = Column(Text(), unique=True)

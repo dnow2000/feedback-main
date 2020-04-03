@@ -25,8 +25,10 @@ class SentimentType(enum.Enum):
     }
 
 
-class Appearance(ApiHandler, Model):
-    claimId = Column(BigInteger,
+class Appearance(ApiHandler,
+                 Model):
+                 
+    claimId = Column(BigInteger(),
                     ForeignKey('claim.id'),
                     nullable=False,
                     index=True)
@@ -39,7 +41,7 @@ class Appearance(ApiHandler, Model):
 
     source = Column(JSON())
 
-    userId = Column(BigInteger,
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     nullable=False,
                     index=True)

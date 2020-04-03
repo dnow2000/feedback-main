@@ -25,19 +25,22 @@ class Article(ApiHandler,
               HasThumbMixin,
               SoftDeletableMixin,
               VersionedMixin):
-    authors = Column(Text)
+              
+    authors = Column(Text())
 
-    isReviewable = Column(Boolean)
+    isReviewable = Column(Boolean())
 
-    isValidatedAsPeerPublication = Column(Boolean, nullable=False, default=False)
+    isValidatedAsPeerPublication = Column(Boolean(),
+        nullable=False,
+        default=False)
 
-    publishedDate = Column(DateTime)
+    publishedDate = Column(DateTime())
 
     source = Column(JSON())
 
-    summary = Column(Text)
+    summary = Column(Text())
 
-    tags = Column(Text)
+    tags = Column(Text())
 
     theme = Column(String(140))
 

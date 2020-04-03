@@ -5,7 +5,9 @@ from sqlalchemy_api_handler import ApiHandler
 from models.utils.db import Model
 
 
-class Claim(ApiHandler, Model):
+class Claim(ApiHandler,
+            Model):
+            
     source = Column(JSON())
 
-    text = Column(Text)
+    text = Column(Text())

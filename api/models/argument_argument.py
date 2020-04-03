@@ -11,7 +11,7 @@ from models.utils.db import Model
 class ArgumentArgument(ApiHandler,
                        Model):
 
-    childArgumentId = Column(BigInteger,
+    childArgumentId = Column(BigInteger(),
                              ForeignKey('argument.id'),
                              index=True,
                              nullable=False)
@@ -20,7 +20,7 @@ class ArgumentArgument(ApiHandler,
                                  backref='parentArguments',
                                  foreign_keys=[childArgumentId])
 
-    parentArgumentId = Column(BigInteger,
+    parentArgumentId = Column(BigInteger(),
                               ForeignKey('argument.id'),
                               index=True,
                               nullable=False)

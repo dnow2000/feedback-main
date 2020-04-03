@@ -40,8 +40,8 @@ flask_app.url_map.strict_slashes = False
 
 flask_app.app_context().push()
 import_models()
-if IS_DEVELOPMENT:
-    install_models()
+#if IS_DEVELOPMENT:
+#    install_models()
 import utils.login_manager
 import utils.nltk_downloader
 import_routes()

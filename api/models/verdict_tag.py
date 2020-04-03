@@ -8,7 +8,7 @@ from models.utils.db import Model
 class VerdictTag(ApiHandler,
                  Model):
 
-    verdictId = Column(BigInteger,
+    verdictId = Column(BigInteger(),
                        ForeignKey('verdict.id'),
                        primary_key=True)
 
@@ -16,7 +16,7 @@ class VerdictTag(ApiHandler,
                            foreign_keys=[verdictId],
                            backref=backref("verdictTags"))
 
-    tagId = Column(BigInteger,
+    tagId = Column(BigInteger(),
                    ForeignKey('tag.id'),
                    primary_key=True)
 

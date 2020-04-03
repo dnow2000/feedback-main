@@ -16,7 +16,7 @@ class Review(ApiHandler,
              HasRatingMixin,
              SoftDeletableMixin):
 
-    articleId = Column(BigInteger,
+    articleId = Column(BigInteger(),
                        ForeignKey('article.id'),
                        nullable=False,
                        index=True)
@@ -25,9 +25,9 @@ class Review(ApiHandler,
                            foreign_keys=[articleId],
                            backref='reviews')
 
-    comment = Column(Text, nullable=True)
+    comment = Column(Text(), nullable=True)
 
-    evaluationId = Column(BigInteger,
+    evaluationId = Column(BigInteger(),
                           ForeignKey('evaluation.id'),
                           index=True)
 
@@ -35,7 +35,7 @@ class Review(ApiHandler,
                               foreign_keys=[evaluationId],
                               backref='reviews')
 
-    userId = Column(BigInteger,
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     nullable=False,
                     index=True)
