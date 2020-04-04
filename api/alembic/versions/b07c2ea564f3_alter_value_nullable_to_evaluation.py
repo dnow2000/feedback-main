@@ -21,4 +21,8 @@ def upgrade():
 
 
 def downgrade():
-    op.alter_column('evaluation', 'value', nullable=False)
+    op.execute('UPDATE evaluation SET value=999 WHERE value IS NULL')
+    op.alter_column('evaluation',
+        'value',
+        nullable=False
+    )

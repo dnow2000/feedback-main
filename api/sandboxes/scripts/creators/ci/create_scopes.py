@@ -18,26 +18,26 @@ def create_scopes():
         tag = Tag.query.filter_by(text=article_tag['text']).one()
         scopes_by_name["article {}".format(article_tag)] = Scope(
             tag=tag,
-            type=ScopeType.ARTICLE
+            type=ScopeType.article.value
         )
 
     for review_verdict_tag in REVIEW_VERDICT_TAGS:
         tag = Tag.query.filter_by(text=review_verdict_tag['text']).one()
         scopes_by_name["review {}".format(review_verdict_tag)] = Scope(
             tag=tag,
-            type=ScopeType.REVIEW
+            type=ScopeType.review.value
         )
 
         scopes_by_name["verdict {}".format(review_verdict_tag)] = Scope(
             tag=tag,
-            type=ScopeType.VERDICT
+            type=ScopeType.verdict.value
         )
 
     for user_tag in USER_TAGS:
         tag = Tag.query.filter_by(text=user_tag['text']).one()
         scopes_by_name["review {}".format(user_tag)] = Scope(
             tag=tag,
-            type=ScopeType.USER,
+            type=ScopeType.user.value,
         )
 
     ApiHandler.save(*scopes_by_name.values())

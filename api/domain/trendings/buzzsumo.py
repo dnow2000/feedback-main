@@ -16,87 +16,75 @@ if BUZZSUMO_API_KEY is None:
 
 
 DEVELOPMENT_TRENDINGS = [{
-    'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/170708175538-05-trump-abroad-0708-super-tease.jpg',
-    'facebookShares': 1000,
-    'publishedDate': "Tue, 12 Mar 2019 01:02:00 GMT",
-    'source': {
-        'id' : 'buzzsumo-123'
-    },
+    'id' : 123,
+    'published_date': 1585956625,
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
+    'thumbnail': 'https://cdn.cnn.com/cnnnext/dam/assets/170708175538-05-trump-abroad-0708-super-tease.jpg',
     'title': "Donald Trump buried a climate change report because 'I don't believe it'",
-    'totalShares': 10000,
-    'twitterShares': 1000,
+    'total_facebook_shares': 1000,
+    'total_shares': 10000,
+    'twitter_shares': 1000,
     'type': "article",
     'url': 'https://www.cnn.com/2018/11/26/politics/donald-trump-climate-change/index.html',
 }, {
-    'externalThumbUrl': 'https://cdn.cnn.com/cnnnext/dam/assets/180804095014-03-file-climate-change-super-tease.jpg',
-    'facebookShares': 178670,
-    'source': {
-        'id': 'buzzsumo-1231',
-    },
-    'publishedDate': "Wed, 13 Mar 2019 01:02:00 GMT",
+    'id': 1231,
+    'published_date': 1585956625,
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
+    'thumbnail': 'https://cdn.cnn.com/cnnnext/dam/assets/180804095014-03-file-climate-change-super-tease.jpg',
     'title': "Climate change will shrink US economy and kill thousands, government report warns",
-    'totalShares': 354013,
-    'twitterShares': 14228,
+    'total_facebook_shares': 178670,
+    'total_shares': 354013,
+    'twitter_shares': 14228,
     'type': "article",
     'url': 'https://www.cnn.com/2018/11/23/health/climate-change-report-bn/index.html',
 }, {
-    'externalThumbUrl': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',
-    'facebookShares': 1423505,
-    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'source': {
-        'id': 'buzzsumo-1232',
-    },
+    'id': 1232,
+    'published_date': 1585956625,
     'subdomain': 'www.upworthy.com',
     'tags': 'climate',
+    'thumbnail': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',
     'title': "Patagonia’s CEO is donating company’s entire $10M Trump tax cut to fight climate change.",
-    'totalShares': 1434478,
-    'twitterShares': 9062,
+    'total_facebook_shares': 1423505,
+    'total_shares': 1434478,
+    'twitter_shares': 9062,
     'type': "article",
     'url': 'https://www.upworthy.com/patagonia-s-ceo-is-donating-company-s-entire-10-m-trump-tax-cut-to-fight-climate-change',
 }, {
-    'externalThumbUrl': 'https://www.motherjones.com/wp-content/uploads/2018/12/trump-g20-120118.jpeg?w=1200&h=630&crop=1',
-    'facebookShares': 178670,
-    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'source': {
-        'id': 'buzzsumo-12321234'
-    },
+    'id': 12321234,
+    'published_date': 1585956625,
     'subdomain': 'www.motherjones.com',
     'tags': 'climate',
     'title': "19 of 20 world leaders just pledged to fight climate change. Trump was the lone holdout.",
-    'totalShares': 354013,
-    'twitterShares': 14228,
+    'thumbnail': 'https://www.motherjones.com/wp-content/uploads/2018/12/trump-g20-120118.jpeg?w=1200&h=630&crop=1',
+    'total_facebook_shares': 178670,
+    'total_shares': 354013,
+    'twitter_shares': 14228,
     'type': "article",
     'url': 'https://www.motherjones.com/environment/2018/12/trump-g20-climate-paris-accord-denial/',
 }, {
-    'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
-    'facebookShares': 178650,
-    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'source': {
-        'id': 'buzzsumo-12321235',
-    },
+    'id': 12321235,
+    'published_date': 1585956625,
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
+    'thumbnail': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
     'title': "Trump signs $1.8 billion autism funding bill.",
-    'totalShares': 354011,
-    'twitterShares': 14248,
+    'total_facebook_shares': 178650,
+    'total_shares': 354011,
+    'twitter_shares': 14248,
     'type': "article",
     'url': 'https://abcnews.go.com/Health/trump-signs-18-billion-autism-cares-act/story?id=66002425',
 }, {
-    'externalThumbUrl': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
-    'facebookShares': 138650,
-    'publishedDate': "Mon, 11 Mar 2019 05:02:00 GMT",
-    'source': {
-        'id': 'buzzsumo-121212'
-    },
+    'id': 121212,
+    'published_date': 1585956625,
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
+    'thumbnail': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
     'title': "Hacer ejercicio, la mejor arma para luchar contra la depresión.",
-    'totalShares': 351011,
-    'twitterShares': 13248,
+    'total_facebook_shares': 138650,
+    'total_shares': 351011,
+    'twitter_shares': 13248,
     'type': "article",
     'url': 'https://www.menshealth.com/es/salud-bienestar/a26409675/depresion-ejercicio-ansiedad-prevenir/',
 }]
@@ -193,26 +181,28 @@ def find_buzzsumo_trendings(
     if days:
         config["hours"] = int(days) * 24
 
-    url = buzzsumo_url_from("trends", config)
 
-    response = requests.get(url).json()
+    results = []
     trendings = []
     urls = set()
-
     trending_saved = 0
 
-    if 'results' not in response:
-        print('WARNING: EMPTY RESPONSE FROM BUZZSUMO ' + repr(response))
-        if IS_DEVELOPMENT:
-            return DEVELOPMENT_TRENDINGS
-        else:
-            return []
+    if IS_DEVELOPMENT:
+        results = DEVELOPMENT_TRENDINGS
+    else:
+        url = buzzsumo_url_from("trends", config)
 
-    for result in response['results']:
-        if result['total_shares'] < min_shares:
+        response = requests.get(url).json()
+        if 'results' not in response:
+            print('WARNING: EMPTY RESPONSE FROM BUZZSUMO ' + repr(response))
+        results = response['results']
+
+    for result in results:
+        trending = article_from_buzzsumo(result)
+
+        if trending['totalShares'] < min_shares:
             continue
 
-        trending = article_from_buzzsumo(result)
         if theme:
             trending['theme'] = theme.title()
 

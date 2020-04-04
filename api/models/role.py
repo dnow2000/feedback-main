@@ -17,11 +17,11 @@ class RoleType(enum.Enum):
         }
         return dict_value
 
-    ADMIN = "admin"
-    EDITOR = "editor"
-    GUEST = "guest"
-    REVIEWER = "reviewer"
-    TESTIFIER = "testifier"
+    admin = "admin"
+    editor = "editor"
+    guest = "guest"
+    reviewer = "reviewer"
+    testifier = "testifier"
 
 
 class Role(ApiHandler,

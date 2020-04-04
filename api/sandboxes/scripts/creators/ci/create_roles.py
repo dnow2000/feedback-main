@@ -20,12 +20,12 @@ def create_roles():
         if user_type == "master":
             for role_type in RoleType:
                 roles_by_name['{} {}'.format(user.email, role_type)] = Role(
-                    type=role_type,
+                    type=role_type.value,
                     user=user
                 )
         elif user_type != 'user':
             roles_by_name['{} {}'.format(user.email, user_type)] = Role(
-                type=getattr(RoleType, user_type.upper()),
+                type=getattr(RoleType, user_type).value,
                 user=user
             )
 

@@ -8,10 +8,14 @@ def keep_not_saved_trendings(trendings, trending_type):
 
     source_ids = [trending['source']['id'] for trending in trendings]
 
+    print(source_ids, model)
+
     saved_entities = model.query\
                              .filter(
                                  model.source['id'].in_(source_ids)
                              ).all()
+
+    print('DDD')
 
     saved_source_ids = [
         saved_entity.source['id']

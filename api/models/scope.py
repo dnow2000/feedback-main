@@ -11,10 +11,10 @@ from models.utils.db import Model
 
 
 class ScopeType(enum.Enum):
-    ARTICLE = "article"
-    REVIEW = "review"
-    USER = "user"
-    VERDICT = "verdict"
+    article = "article"
+    review = "review"
+    user = "user"
+    verdict = "verdict"
 
 
 class Scope(ApiHandler,
