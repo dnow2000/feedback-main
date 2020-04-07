@@ -9,6 +9,7 @@ from models.tag import Tag
 from models.user import User
 from models.verdict import Verdict
 
+
 def import_keywords():
     Article.__ts_vector__ = create_tsvector(
         cast(coalesce(Article.title, ''), TEXT),
@@ -16,7 +17,7 @@ def import_keywords():
     )
     Article.__table_args__ = (
         Index(
-            'idx_event_fts',
+            'idx_article_fts',
             Article.__ts_vector__,
             postgresql_using='gin'
         ),
@@ -27,7 +28,7 @@ def import_keywords():
     )
     Review.__table_args__ = (
         Index(
-            'idx_event_fts',
+            'idx_review_fts',
             Review.__ts_vector__,
             postgresql_using='gin'
         ),
@@ -38,7 +39,7 @@ def import_keywords():
     )
     Tag.__table_args__ = (
         Index(
-            'idx_event_fts',
+            'idx_tag_fts',
             Tag.__ts_vector__,
             postgresql_using='gin'
         ),
@@ -62,7 +63,7 @@ def import_keywords():
     )
     Verdict.__table_args__ = (
         Index(
-            'idx_event_fts',
+            'idx_verdict_fts',
             Verdict.__ts_vector__,
             postgresql_using='gin'
         ),
