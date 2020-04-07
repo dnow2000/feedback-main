@@ -33,6 +33,7 @@ export default ({ validating }) => {
 
   return (
     <>
+
       <TextField
         label="url"
         name="url"
@@ -41,6 +42,8 @@ export default ({ validating }) => {
         required
         validate={validateScrapField}
       />
+
+
       <TextField
         label="title"
         name="title"

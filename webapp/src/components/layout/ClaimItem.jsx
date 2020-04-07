@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default ({ children, claim }) => {
-  const { text } = claim
+  const { text } = claim || {}
 
   return (
     <div className="claim-item">

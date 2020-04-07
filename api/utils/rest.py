@@ -29,11 +29,11 @@ def listify(*args, **kwargs):
 
 def login_or_api_key_required(f):
     @wraps(f)
-    def wrapper(*args, **kwds):
+    def wrapper(*args, **kwargs):
         if not current_user.is_authenticated:
             api_errors = ApiErrors()
             api_errors.status_code = 403
             api_errors.add_error('global', "API key or login required")
             raise api_errors
-        return f(*args, **kwds)
+        return f(*args, **kwargs)
     return wrapper

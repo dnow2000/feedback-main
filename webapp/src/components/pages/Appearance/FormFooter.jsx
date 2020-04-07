@@ -49,7 +49,7 @@ export default ({
         <>
           {readOnly ? (
             <button
-              id="edit"
+              id="edit-article"
               onClick={handleModifyClick}
               type="button"
             >
@@ -57,7 +57,7 @@ export default ({
             </button>
           ) : (
             <button
-              id="cancel"
+              id="cancel-article"
               onClick={handleCancelClick}
               type="button"
             >
@@ -77,10 +77,10 @@ export default ({
             'is-loading': isPending,
           })}
           disabled={!canSubmit}
-          id="submit"
+          id="submit-appearance"
           type="submit"
         >
-          Save Article
+          Save Appearance
         </button>
       )}
     </div>

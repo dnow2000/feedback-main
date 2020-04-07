@@ -58,6 +58,8 @@ def find_poynter_trendings(
     ]
 
 
-def get_poynter_trending(id):
+def poynter_trending_from(source_id):
     df = getattr(sys.modules[__name__], 'df')
-    return claim_from_poynter(df.loc[id])
+    df_id = int(source_id.replace('poynter-', ''))
+    poynter = df.loc[df_id]
+    return claim_from_poynter(poynter, df_id)

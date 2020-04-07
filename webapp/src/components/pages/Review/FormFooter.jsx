@@ -43,14 +43,14 @@ const FormFooter = ({
         <>
           <NavLink
             className="is-secondary"
-            id="return-review"
+            id="return"
             to="/sources"
           >
             Return
           </NavLink>
           <button
             className="thin"
-            id="modification-review"
+            id="modification"
             onClick={handleModifyClick}
             type="button"
           >
@@ -61,7 +61,7 @@ const FormFooter = ({
         <>
           <button
             className="is-secondary"
-            id="cancel-review"
+            id="cancel"
             onClick={handleCancelClick}
             type="button"
           >
@@ -73,7 +73,7 @@ const FormFooter = ({
               'is-loading thin': isPending,
             })}
             disabled={!canSubmit}
-            id="create-review"
+            id="submit"
             type="submit"
           >
             Save review

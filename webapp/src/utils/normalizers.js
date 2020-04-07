@@ -14,6 +14,12 @@ export const userConfig = {
   stateKey: "users"
 }
 
+export const appearanceNormalizer = {
+  article: 'articles',
+  claim: 'claimes',
+  user: userConfig,
+}
+
 export const articleNormalizer = {
   articleTags: {
     normalizer: {

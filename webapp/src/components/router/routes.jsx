@@ -5,9 +5,8 @@ import { compose } from 'redux'
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
+import Appearance from 'components/pages/Appearance'
 import Article from 'components/pages/Article'
-import Claim from 'components/pages/Claim'
-import Claims from 'components/pages/Claims'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
@@ -45,16 +44,10 @@ const routes = [
     title: 'Sources',
   },
   {
-    component: Claim,
+    component: withRequiredLogin(Appearance),
     exact: true,
-    path: `/claims/:claimId${formPath}`,
-    title: 'Claim',
-  },
-  {
-    component: Claims,
-    exact: true,
-    path: '/claims',
-    title: 'Claims',
+    path: `/appearances/:appearanceId${formPath}`,
+    title: 'Appearance',
   },
   {
     component: withRedirectWhenLoggedIn(Landing),

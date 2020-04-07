@@ -93,23 +93,25 @@ export default () => {
   }, [currentUserVerdictPatch, dispatch, history, method])
 
 
+  useEffect(() =>
+    dispatch(requestData({ apiPath: '/evaluations' })), [dispatch])
+
+  useEffect(() =>
+    dispatch(requestData({ apiPath: '/tags' })), [dispatch])
+
   useEffect(() => {
-    dispatch(requestData({ apiPath: '/evaluations' }))
-    dispatch(requestData({ apiPath: '/tags' }))
+    if (isCreatedEntity) return
+    dispatch(requestData({
+      apiPath: `/verdicts/${verdictId}`,
+      isMergingDatum: true,
+      normalizer: verdictNormalizer,
+    }))
+  }, [dispatch, isCreatedEntity, verdictId])
 
-    if (!isCreatedEntity) {
-      dispatch(requestData({
-        apiPath: `/verdicts/${verdictId}`,
-        isMergingDatum: true,
-        normalizer: verdictNormalizer,
-      }))
-    }
-
-    if (sourceId) {
-      dispatch(requestData({ apiPath: `/trendings/${sourceId}`}))
-    }
-
-  }, [dispatch, isCreatedEntity, sourceId, verdictId])
+  useEffect(() => {
+    if (!sourceId) return
+    dispatch(requestData({ apiPath: `/trendings/${sourceId}`}))
+  }, [dispatch, sourceId])
 
   useEffect(() => {
     const { id } = currentUserVerdictPatch || {}

@@ -37,7 +37,9 @@ export default ({ trending }) => {
 
   const editorRole = useSelector(state =>
     selectRoleByUserIdAndType(state, currentUserId, 'editor'))
-  const canVerdict = typeof editorRole !== 'undefined'
+
+  const testifierRole = useSelector(state =>
+    selectRoleByUserIdAndType(state, currentUserId, 'testifier'))
 
 
   const handleSaveTrending = useCallback(trendingExtraData => () => {
@@ -71,7 +73,13 @@ export default ({ trending }) => {
       >
         Remove
       </button>
-      {canVerdict && (<NavLink
+      {testifierRole && (<NavLink
+        className="button is-primary thin"
+        to={`/appearances/creation?type=${type}&sourceId=${sourceId}`}
+      >
+        Look for appearances
+      </NavLink>)}
+      {editorRole && (<NavLink
         className="button is-primary thin"
         to={`/verdicts/creation?type=${type}&sourceId=${sourceId}`}
       >

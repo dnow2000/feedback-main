@@ -107,21 +107,16 @@ def buzzsumo_url_from(api_name, url_query):
     return url
 
 
-def get_buzzsumo_trending(id):
-    trending = None
+def buzzsumo_trending_from(source_id):
     if IS_DEVELOPMENT:
-        kept_trendings = [
-            trending for trending in DEVELOPMENT_TRENDINGS
-            if trending['source']['id'] == id
-        ]
-        if len(kept_trendings) > 0:
-            trending = kept_trendings[0]
-
+        for trending in DEVELOPMENT_TRENDINGS:
+            article = article_from_buzzsumo(trending)
+            if article['source']['id'] == source_id:
+                return article
     #
     # NEED TO WRITE THE PRODUCTIONBUZZSUMO GET API FROM ID
     #
 
-    return trending
 
 
 def topic_from(theme):

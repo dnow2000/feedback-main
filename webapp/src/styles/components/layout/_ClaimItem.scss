@@ -3,14 +3,10 @@
   border-color: $grey-light;
   border-width: 1px;
   border-radius: 10px;
+  color: black;
+  font-size: 1.25rem;
+  font-style: italic;
+  font-weight: $font-weight-semibold;
   padding: 1.25rem;
-
-  .claim-cta-container {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    flex:1;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
+  text-align: center;
 }
