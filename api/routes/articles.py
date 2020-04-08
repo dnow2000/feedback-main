@@ -67,8 +67,7 @@ def create_article():
 
     check_article_is_not_yet_saved(content)
 
-    article = Article()
-    article.populate_from_dict(content)
+    article = Article(**content)
 
     ApiHandler.save(article)
 

@@ -20,6 +20,10 @@ DEVELOPMENT_POYNTER_CLAIMS_DIR = Path(os.path.dirname(os.path.realpath(__file__)
 def load_data_frame():
     filepath_or_buffer = None
     if IS_DEVELOPMENT:
+        if not os.path.exists(DEVELOPMENT_POYNTER_CLAIMS_DIR):
+            file = open(DEVELOPMENT_POYNTER_CLAIMS_DIR, 'w')
+            file.write('When did you see the claim?,Country 1,Country 2,Country 3,Country 4,Organization,What did you fact-check?,Who said/posted it?,Link to the original piece,URL to fact-checked article (in your language),Language of your fact-check,Final rating,Explanation\n')
+            file.close()
         filepath_or_buffer = DEVELOPMENT_POYNTER_CLAIMS_DIR
     else:
         file = find_file_from_name(
