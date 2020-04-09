@@ -8,6 +8,7 @@ from tests.utils.clean import with_clean_all_database
 from tests.utils.TestClient import TestClient
 from utils.logger import deactivate_logger
 
+
 class Get:
     class Returns200:
         @with_clean_all_database

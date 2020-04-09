@@ -10,6 +10,7 @@ from models.utils.install import install_models
 from routes import import_routes
 from utils.config import IS_DEVELOPMENT
 
+
 flask_app = Flask(__name__, static_url_path='/static')
 
 flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')

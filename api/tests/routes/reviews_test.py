@@ -1,21 +1,22 @@
 import pytest
 
 from sandboxes.scripts.creators.ci import create_articles,\
-                                          Evaluations, \
-                                          Reviews, \
-                                          Roles, \
+                                          create_evaluations, \
+                                          create_reviews, \
+                                          create_roles, \
                                           create_users
 from sandboxes.scripts.utils.helpers import get_sandbox_role_email
 from tests.utils.clean import with_clean_all_database
 from tests.utils.TestClient import TestClient
 from utils.logger import deactivate_logger
 
+
 class Get:
     class Returns200:
         @with_clean_all_database
         def when_get_reviews_should_work_only_when_editor(self, app):
             create_users()
-            Roles()
+            create_roles()
             result = TestClient(app.test_client())\
                 .with_auth(email=get_sandbox_role_email('editor'))\
                 .get('/reviews')
@@ -29,10 +30,10 @@ class Get:
         def when_get_reviews_should_return_a_list_of_reviews(self, app):
             deactivate_logger('info')
             create_users()
-            Roles()
+            create_roles()
             create_articles()
-            Evaluations()
-            Reviews()
+            create_evaluations()
+            create_reviews()
             result = TestClient(app.test_client()) \
                 .with_auth(email=get_sandbox_role_email('editor')) \
                 .get('/reviews')
@@ -44,7 +45,7 @@ class Get:
         @with_clean_all_database
         def test_get_reviews_should_work_only_when_editor(self, app):
             create_users()
-            Roles()
+            create_roles()
             result = TestClient(app.test_client())\
                 .with_auth(email=get_sandbox_role_email('user'))\
                 .get('/reviews')

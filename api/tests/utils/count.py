@@ -1,6 +1,7 @@
 from sqlalchemy_api_handler import ApiHandler, logger
 
-from models.utils import import_models
+from models import import_models
+
 
 def assert_created_counts(**counts_by_model_name):
     models = import_models()

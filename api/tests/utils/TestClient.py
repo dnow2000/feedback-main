@@ -5,6 +5,7 @@ from flask.testing import FlaskClient
 
 from utils.credentials import PLAIN_DEFAULT_TESTING_PASSWORD
 
+
 class TestClient:
     WITH_DOC = False
     USER_TEST_ADMIN_EMAIL = "pctest.admin93.0@btmx.fr"

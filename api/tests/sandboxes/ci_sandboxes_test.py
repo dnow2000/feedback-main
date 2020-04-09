@@ -4,6 +4,7 @@ from sandboxes.scripts.create_sandbox import create_sandbox
 from tests.utils.count import assert_created_counts
 from utils.logger import deactivate_logger
 
+
 @pytest.mark.standalone
 def when_ci_sandbox_created_all_the_ci_objects(app):
     deactivate_logger('info')

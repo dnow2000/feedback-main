@@ -27,15 +27,15 @@ class SentimentType(enum.Enum):
 
 class Appearance(ApiHandler,
                  Model):
-                 
+
     claimId = Column(BigInteger(),
                     ForeignKey('claim.id'),
                     nullable=False,
                     index=True)
 
     claim = relationship('Claim',
-                        foreign_keys=[claimId],
-                        backref='appearances')
+                         foreign_keys=[claimId],
+                         backref='appearances')
 
     sentiment = Column(Enum(SentimentType))
 

@@ -7,10 +7,12 @@ from repository.articles import get_articles_query_with_keywords, \
                                 get_articles_keywords_join_query
 from tests.utils.clean import with_clean_all_database
 
+
 def filter_articles_with_keywords(keywords):
     query = get_articles_keywords_join_query(Article.query)
     query = get_articles_query_with_keywords(query, keywords)
     return query
+
 
 @pytest.mark.standalone
 @with_clean_all_database
