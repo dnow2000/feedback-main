@@ -2,6 +2,7 @@ import pytest
 from sqlalchemy_api_handler import ApiHandler
 
 from models.article import Article
+from models.article_tag import ArticleTag
 from models.tag import Tag
 from repository.articles import get_articles_query_with_keywords, \
                                 get_articles_keywords_join_query
@@ -172,7 +173,10 @@ def when_get_articles_with_keyword_tag_returns_result(app):
         title="Do we have enough quinoa for all the children ?"
     )
     tag1 = Tag(text="climate")
-    article_tag1 = create_article_tag(article1, tag1)
+    article_tag1 = ArticleTag(
+        article=article1,
+        tag=tag1
+    )
 
     ApiHandler.save(article1, article2, article_tag1)
 

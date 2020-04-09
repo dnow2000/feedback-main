@@ -35,7 +35,7 @@ def get_reviews():
     return listify(Review,
                    includes=REVIEW_INCLUDES,
                    query=query,
-                   page=request.args.get('page'),
+                   page=request.args.get('page', 1),
                    paginate=10)
 
 
