@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import React, { useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import {NavLink} from 'react-router-dom'
-import {requestData} from 'redux-thunk-data'
+import { requestData } from 'redux-thunk-data'
 
 export default () => {
   const dispatch = useDispatch()
@@ -12,8 +12,8 @@ export default () => {
     dispatch(requestData({
       apiPath: '/claims'
     }))
-  })
-  
+  }, [dispatch])
+
   return (
     <div>
       {
@@ -27,7 +27,7 @@ export default () => {
             </NavLink>
           )
         })
-      }      
+      }
     </div>
   )
 }

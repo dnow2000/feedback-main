@@ -4,9 +4,11 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
-class UserPublication(ApiHandler, Model):
 
-    userId = Column(BigInteger,
+class UserPublication(ApiHandler,
+                      Model):
+
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     primary_key=True)
 
@@ -14,7 +16,7 @@ class UserPublication(ApiHandler, Model):
                         foreign_keys=[userId],
                         backref=backref("userPublications"))
 
-    publicationId = Column(BigInteger,
+    publicationId = Column(BigInteger(),
                            ForeignKey('publication.id'),
                            primary_key=True)
 

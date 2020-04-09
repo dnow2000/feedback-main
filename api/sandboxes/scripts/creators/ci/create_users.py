@@ -65,7 +65,7 @@ def create_users():
 
     users_by_name = {}
 
-    user_types = [role_type.value for role_type in RoleType] + ['user', 'master']
+    user_types = [role_type.value for role_type in RoleType] + ['master', 'user']
 
     count = 0
     for user_type in user_types:

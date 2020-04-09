@@ -7,6 +7,7 @@ Create Date: 2019-01-11 14:13:44.412705
 """
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.sql import expression
 
 
 # revision identifiers, used by Alembic.
@@ -17,8 +18,15 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('article', 'isReviewable', existing_type=sa.BOOLEAN(), nullable=True)
+    op.alter_column('article',
+        'isReviewable',
+        existing_type=sa.BOOLEAN(),
+        nullable=True)
 
 
 def downgrade():
-    op.alter_column('article', 'isReviewable', existing_type=sa.BOOLEAN(), nullable=False, server_default=expression.false())
+    op.alter_column('article',
+        'isReviewable', 
+        existing_type=sa.BOOLEAN(),
+        nullable=False,
+        server_default=expression.false())

@@ -23,5 +23,7 @@ def upgrade():
     op.alter_column('review', 'evaluationId', nullable=True)
 
 def downgrade():
-    op.execute("UPDATE offerer SET address='' WHERE address IS NULL")
-    op.alter_column('offerer', 'address', nullable=False)
+    op.alter_column('article', 'title', nullable=False)
+    op.alter_column('article', 'authors', nullable=False)
+    op.alter_column('article', 'tags', nullable=False)
+    op.alter_column('review', 'evaluationId', nullable=False)

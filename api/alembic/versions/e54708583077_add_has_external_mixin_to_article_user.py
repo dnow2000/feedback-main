@@ -1,4 +1,4 @@
-"""add external mixin to article user
+"""add has external mixin to article user
 
 Revision ID: e54708583077
 Revises: fa8e24682add
@@ -22,4 +22,4 @@ def upgrade():
 
 def downgrade():
     op.drop_column('article', 'externalThumbUrl')
-    op.drop_column('review', 'externalThumbUrl')
+    op.drop_column('user', 'externalThumbUrl')

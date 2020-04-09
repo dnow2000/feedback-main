@@ -4,10 +4,11 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class VerdictUser(ApiHandler,
                   Model):
 
-    verdictId = Column(BigInteger,
+    verdictId = Column(BigInteger(),
                        ForeignKey('verdict.id'),
                        primary_key=True)
 
@@ -15,7 +16,7 @@ class VerdictUser(ApiHandler,
                            foreign_keys=[verdictId],
                            backref=backref("verdictUsers"))
 
-    userId = Column(BigInteger,
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     primary_key=True)
 

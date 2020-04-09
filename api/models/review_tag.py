@@ -4,10 +4,11 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.utils.db import Model
 
+
 class ReviewTag(ApiHandler,
                 Model):
 
-    reviewId = Column(BigInteger,
+    reviewId = Column(BigInteger(),
                       ForeignKey('review.id'),
                       primary_key=True)
 
@@ -15,7 +16,7 @@ class ReviewTag(ApiHandler,
                           foreign_keys=[reviewId],
                           backref=backref("reviewTags"))
 
-    tagId = Column(BigInteger,
+    tagId = Column(BigInteger(),
                    ForeignKey('tag.id'),
                    primary_key=True)
 

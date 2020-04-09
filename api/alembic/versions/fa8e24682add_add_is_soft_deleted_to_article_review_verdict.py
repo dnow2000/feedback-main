@@ -1,7 +1,7 @@
 """add is soft deleted to article review verdict
 
 Revision ID: fa8e24682add
-Revises: 2201a3f6d9a0
+Revises: cdff2c1e09b0
 Create Date: 2018-09-26 21:30:09.967552
 
 """
@@ -11,7 +11,7 @@ from sqlalchemy.sql import expression
 
 # revision identifiers, used by Alembic.
 revision = 'fa8e24682add'
-down_revision = '2201a3f6d9a0'
+down_revision = 'cdff2c1e09b0'
 branch_labels = None
 depends_on = None
 

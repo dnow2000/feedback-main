@@ -1,13 +1,14 @@
 import { getStateKeyFromConfig } from 'fetch-normalize-data'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { deleteData } from 'redux-thunk-data'
 import { useQuery } from 'with-react-query'
 
 import Days from './Days'
-import Themes from './Themes'
 import KeywordsBar from './KeywordsBar'
+import Themes from './Themes'
+import Types from './Types'
 
 
 export const getItemsActivityTagFromConfig = config =>
@@ -20,7 +21,7 @@ export default ({ config }) => {
   const location = useLocation()
   const {
     getSearchFromUpdate,
-    params: { days, keywords, theme }
+    params: { days, keywords, theme, type }
   } = useQuery(location.search)
 
   const handleChange =  useCallback((key, value) => {
@@ -35,6 +36,12 @@ export default ({ config }) => {
   }, [config, dispatch, getSearchFromUpdate, history])
 
 
+  useEffect(() => {
+    if (type) return
+    history.push(getSearchFromUpdate({ type: 'article' }))
+  }, [getSearchFromUpdate, history, type])
+
+
   return (
     <div className="controls">
       <Themes
@@ -42,6 +49,10 @@ export default ({ config }) => {
         selectedTheme={theme}
       />
       <div className="right">
+        {!location.pathname.startsWith('/verdicts') && (<Types
+          onChange={handleChange}
+          selectedType={type}
+        />)}
         <Days
           onChange={handleChange}
           selectedDays={days}

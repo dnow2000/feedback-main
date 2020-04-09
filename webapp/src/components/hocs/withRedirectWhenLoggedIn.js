@@ -19,7 +19,7 @@ export default withLogin({
       pathname === '/landing'||
       pathname === '/'
     ) {
-      history.push('/articles')
+      history.push('/sources')
     }
   },
   isRequired: false,

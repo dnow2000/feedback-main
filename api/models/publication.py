@@ -8,14 +8,16 @@ from models.utils.db import Model
 from models.mixins import HasExternalThumbUrlMixin, \
                           VersionedMixin
 
+
 class Publication(ApiHandler,
                   Model,
                   HasExternalThumbUrlMixin,
                   SoftDeletableMixin,
                   VersionedMixin):
-    summary = Column(Text)
+                  
+    summary = Column(Text())
 
-    tags = Column(Text)
+    tags = Column(Text())
 
     title = Column(String(140))
 

@@ -1,15 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
 import Dotdotdot from 'react-dotdotdot'
-import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
-import { selectCurrentUser } from 'with-react-redux-login'
 
 import Icon from 'components/layout/Icon'
 import articleType  from 'components/types/articleType'
-import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
-import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
+
 import { API_THUMBS_URL, ROOT_ASSETS_PATH } from 'utils/config'
 import { getFormatPublishedDate } from 'utils/moment'
 
@@ -23,7 +18,7 @@ const displaySocialScores = socialScore => {
 
 const ArticleItem = ({
   article,
-  noControl,
+  children,
   onClickEdit,
   withEditButton,
   withShares,
@@ -45,24 +40,6 @@ const ArticleItem = ({
   const formatPublishedDate = useMemo(() =>
     getFormatPublishedDate(publishedDate), [publishedDate])
 
-
-  const currentUser = useSelector(selectCurrentUser)
-  const { id: currentUserId } = currentUser || {}
-
-  const editorRole = useSelector(state =>
-    selectRoleByUserIdAndType(state, currentUserId, 'editor'))
-
-  const reviewerRole = useSelector(state =>
-    selectRoleByUserIdAndType(state, currentUserId, 'reviewer'))
-  const canReview = typeof reviewerRole !== 'undefined'
-  const canVerdict = typeof editorRole !== 'undefined'
-
-  const { id: currentUserReviewId } = useSelector(state =>
-    selectCurrentUserReviewByArticleId(state, articleId)) || {}
-
-  const articleJoin = { key: 'articleId', value: articleId }
-  const { id: verdictId } = useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'verdicts', articleJoin)[0]) || {}
   const articleImgSrc = externalThumbUrl ||
     (
       thumbCount
@@ -143,35 +120,9 @@ const ArticleItem = ({
             </div>
           </div>
         )}
-        {!noControl && (
-          <div className="article-cta-container">
-            {canVerdict && (
-              <NavLink
-                className="button is-primary thin"
-                to={
-                  verdictId
-                    ? `/verdicts/${verdictId}/modification`
-                    : `/verdicts/creation?articleId=${articleId}`
-                }
-              >
-                {verdictId
-                  ? 'Work on verdict'
-                  : 'Write your verdict'}
-              </NavLink>
-            )}
-            {canReview && (
-              <NavLink
-                className={"button is-primary thin"}
-                to={
-                  currentUserReviewId
-                    ? `/reviews/${currentUserReviewId}`
-                    : `/reviews/creation?articleId=${articleId}`
-                }
-              >
-                {currentUserReviewId ? 'See' : 'Write'} a review
-              </NavLink>
-            )}
-          </div>)}
+        <div className="article-cta-container">
+          {children}
+        </div>
       </div>
     </article>
   )
@@ -179,7 +130,6 @@ const ArticleItem = ({
 
 ArticleItem.defaultProps = {
   article: null,
-  noControl: false,
   onClickEdit: null,
   withEditButton: false,
   withShares: true,
@@ -188,7 +138,6 @@ ArticleItem.defaultProps = {
 
 ArticleItem.propTypes = {
   article: articleType,
-  noControl: PropTypes.bool,
   onClickEdit: PropTypes.func,
   withEditButton: PropTypes.bool,
   withShares: PropTypes.bool,

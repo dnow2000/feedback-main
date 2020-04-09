@@ -10,7 +10,7 @@ from models.article import Article
 from repository.articles import filter_articles_by_is_reviewable, \
                                 get_articles_keywords_join_query, \
                                 get_articles_query_with_keywords, \
-                                resolve_content_with_url
+                                resolve_with_url
 from routes.utils.includes import ARTICLE_INCLUDES
 from validation.articles import check_article_is_not_yet_saved
 from validation.roles import check_has_role
@@ -61,7 +61,7 @@ def create_article():
     check_has_role(current_user, 'editor')
 
     content = dict(
-       resolve_content_with_url(request.json['url']),
+       resolve_with_url(request.json['url']),
        **request.json
     )
 

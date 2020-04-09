@@ -5,6 +5,7 @@ from sqlalchemy import BigInteger, \
                        DateTime, \
                        Text, \
                        String
+from sqlalchemy.dialects.postgresql import JSON
 from typing import Iterable
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
@@ -16,6 +17,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           VersionedMixin
 from models.role import RoleType
 
+
 class Article(ApiHandler,
               Model,
               HasExternalThumbUrlMixin,
@@ -23,19 +25,22 @@ class Article(ApiHandler,
               HasThumbMixin,
               SoftDeletableMixin,
               VersionedMixin):
-    authors = Column(Text)
+              
+    authors = Column(Text())
 
-    buzzsumoId = Column(BigInteger, unique=True)
+    isReviewable = Column(Boolean())
 
-    isReviewable = Column(Boolean)
+    isValidatedAsPeerPublication = Column(Boolean(),
+        nullable=False,
+        default=False)
 
-    isValidatedAsPeerPublication = Column(Boolean, nullable=False, default=False)
+    publishedDate = Column(DateTime())
 
-    publishedDate = Column(DateTime)
+    source = Column(JSON())
 
-    summary = Column(Text)
+    summary = Column(Text())
 
-    tags = Column(Text)
+    tags = Column(Text())
 
     theme = Column(String(140))
 

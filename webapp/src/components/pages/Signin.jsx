@@ -37,7 +37,7 @@ export default () => {
           resolve()
           const nextUrl = from
             ? decodeURIComponent(from)
-            : '/articles'
+            : '/sources'
           history.push(nextUrl)
         },
         method: 'POST',

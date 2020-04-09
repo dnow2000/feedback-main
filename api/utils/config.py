@@ -15,7 +15,7 @@ version_file = open(os.path.join(API_ROOT_PATH, "version.txt"), "r")
 VERSION = version_file.read().rstrip()
 version_file.close()
 
-MACHINE_ENV = os.environ.get('MACHINE_ENV', 'development')
+MACHINE_ENV = os.environ.get('MACHINE_ENV', 'development') 
 IS_DEVELOPMENT = MACHINE_ENV == 'development'
 IS_PRODUCTION = MACHINE_ENV == 'production'
 

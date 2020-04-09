@@ -11,13 +11,13 @@ services:
                while true; do python app.py; done;"
     container_name: ${APP_NAME}-api-serve-development
     depends_on:
-      - postgres-serve-development
+      - apidb-serve-development
     env_file:
       - ./.env
     environment:
       - ENV=${ENV:-development}
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
-      - POSTGRES_URL=postgresql://${DB_NAME}_user:${DB_NAME}_password@postgres-serve-development/${DB_NAME}
+      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     image: $APP_NAME-api-serve-development
@@ -42,18 +42,18 @@ services:
     ports:
       - 80:80
 
-  postgres-serve-development:
+  apidb-serve-development:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
-    container_name: ${APP_NAME}-postgres-serve-development
+    container_name: ${APP_NAME}-apidb-serve-development
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_PASSWORD=${DB_NAME}_password
-      - POSTGRES_USER=${DB_NAME}_user
+      - POSTGRES_DB=${APP_NAME}_api
+      - POSTGRES_PASSWORD=${APP_NAME}_password
+      - POSTGRES_USER=${APP_NAME}_user
     image: postgres:10.1
     networks:
       - db_server_development_nw
     volumes:
-      - "./docker_data_serve-development/postgres:/var/lib/postgresql"
+      - "./docker_data_serve-development/apidb:/var/lib/postgresql"
 
 networks:
   db_server_development_nw:

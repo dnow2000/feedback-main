@@ -30,7 +30,7 @@ export default () => {
   const { isCreatedEntity, method, readOnly } = useFormidable(location, params)
   const query = useQuery(location.search)
   const { verdictId } = params
-  const { params: { buzzsumoId } } = query
+  const { params: { sourceId } } = query
   let title
   if (isCreatedEntity) {
     title = 'Create a verdict'
@@ -44,7 +44,7 @@ export default () => {
     selectEntitiesByKeyAndJoin(
       state,
       'trendings',
-      { key: 'buzzsumoId', value: buzzsumoId }
+      { key: 'sourceId', value: sourceId }
   )[0])
 
   const verdict = useSelector(state =>
@@ -105,11 +105,11 @@ export default () => {
       }))
     }
 
-    if (buzzsumoId) {
-      dispatch(requestData({ apiPath: `/trendings/${buzzsumoId}`}))
+    if (sourceId) {
+      dispatch(requestData({ apiPath: `/trendings/${sourceId}`}))
     }
 
-  }, [buzzsumoId, dispatch, isCreatedEntity, verdictId])
+  }, [dispatch, isCreatedEntity, sourceId, verdictId])
 
   useEffect(() => {
     const { id } = currentUserVerdictPatch || {}

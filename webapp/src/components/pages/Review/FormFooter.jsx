@@ -28,7 +28,7 @@ const FormFooter = ({
 
   const handleCancelClick = useCallback(() => {
     onCancel()
-    const next = isCreatedEntity ? '/articles' : `/reviews/${reviewId}`
+    const next = isCreatedEntity ? '/sources' : `/reviews/${reviewId}`
     history.push(next)
   }, [onCancel, history, isCreatedEntity, reviewId])
 
@@ -44,7 +44,7 @@ const FormFooter = ({
           <NavLink
             className="is-secondary"
             id="return-review"
-            to="/articles"
+            to="/sources"
           >
             Return
           </NavLink>

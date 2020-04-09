@@ -1,4 +1,4 @@
-"""Add publication and user_publication
+"""add publication and user_publication
 
 Revision ID: 868064337798
 Revises: 34b241d9501a

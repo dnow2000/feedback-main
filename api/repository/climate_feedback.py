@@ -8,7 +8,7 @@ from models.publication import Publication
 from models.review import Review
 from models.role import Role
 from models.user import User
-from repository.articles import resolve_content_with_url
+from repository.articles import resolve_with_url
 from utils.config import EMAIL_HOST
 
 
@@ -119,7 +119,7 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
                                  .first()
             if not publication:
                 publication = Article(**publication_dict)
-                publication.populate_from_dict(resolve_content_with_url(publication.url))
+                publication.populate_from_dict(resolve_with_url(publication.url))
                 UserArticle(article=publication, user=user)
 
 
@@ -180,7 +180,7 @@ def set_article_from_climate_feedback_evaluation_scrap(
     verdict_content = soup.find('div', class_="entry-content")
     article.url = verdict_content.find('a', class_="inline-btn")['href']
     article.title = soup.find('h1', class_="entry-title").text
-    article.populate_from_dict(resolve_content_with_url(article.url))
+    article.populate_from_dict(resolve_with_url(article.url))
 
     verdict_comment = verdict_content.find('p').text
     # verdict_comment += soup.find("h4", text="SUMMARY").nextSibling.text

@@ -8,7 +8,7 @@ from models.utils.db import Model
 class UserTag(ApiHandler,
               Model):
 
-    userId = Column(BigInteger,
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     primary_key=True)
 
@@ -16,7 +16,7 @@ class UserTag(ApiHandler,
                         foreign_keys=[userId],
                         backref=backref("userTags"))
 
-    tagId = Column(BigInteger,
+    tagId = Column(BigInteger(),
                    ForeignKey('tag.id'),
                    primary_key=True)
 

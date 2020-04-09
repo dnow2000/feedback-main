@@ -1,0 +1,9 @@
+.types {
+  @extend .select;
+
+  &:focus {
+    box-shadow: none !important;
+    outline:0px !important;
+    -webkit-appearance:none;
+  }
+}

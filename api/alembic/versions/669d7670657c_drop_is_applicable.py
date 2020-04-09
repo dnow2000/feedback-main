@@ -7,6 +7,7 @@ Create Date: 2020-01-14 23:16:14.095185
 """
 from alembic import op
 import sqlalchemy as sa
+from sqlalchemy.sql import expression
 
 
 # revision identifiers, used by Alembic.
@@ -23,5 +24,13 @@ def upgrade():
 
 
 def downgrade():
-    op.add_column('review', sa.Column('isApplicable', sa.BOOLEAN(), server_default=False, nullable=True))
-    op.add_column('verdict', sa.Column('isApplicable', sa.BOOLEAN(), server_default=False, nullable=True))
+    op.add_column('review',
+        sa.Column('isApplicable',
+            sa.BOOLEAN(),
+            nullable=True,
+            server_default=expression.false()))
+    op.add_column('verdict',
+        sa.Column('isApplicable',
+        sa.BOOLEAN(),
+        nullable=True,
+        server_default=expression.false()))

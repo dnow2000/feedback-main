@@ -16,7 +16,7 @@ class Verdict(ApiHandler,
               HasRatingMixin,
               SoftDeletableMixin):
 
-    articleId = Column(BigInteger,
+    articleId = Column(BigInteger(),
                        ForeignKey('article.id'),
                        nullable=False,
                        index=True)
@@ -25,9 +25,9 @@ class Verdict(ApiHandler,
                            foreign_keys=[articleId],
                            backref='verdicts')
 
-    comment = Column(Text, nullable=True)
+    comment = Column(Text(), nullable=True)
 
-    userId = Column(BigInteger,
+    userId = Column(BigInteger(),
                     ForeignKey('user.id'),
                     nullable=False,
                     index=True)

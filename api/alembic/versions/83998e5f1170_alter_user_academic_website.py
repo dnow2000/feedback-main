@@ -17,12 +17,14 @@ depends_on = None
 
 
 def upgrade():
-    op.alter_column('user', 'academicWebsite', existing_type=sa.String(length=30),
+    op.alter_column('user', 'academicWebsite',
+               existing_type=sa.String(length=30),
                type_=sa.String(length=220),
                existing_nullable=False)
 
 
 def downgrade():
-    op.alter_column('user', 'academicWebsite', existing_type=sa.String(length=220),
+    op.alter_column('user', 'academicWebsite',
+               existing_type=sa.String(length=220),
                type_=sa.String(length=30),
                existing_nullable=False)
