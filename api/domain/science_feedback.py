@@ -1,8 +1,7 @@
 def article_dict_from(row):
     return {
         'title': row['title'],
-        'url': row['url'],
-        'date': row['date']
+        'url': row['url']
     }
 
 

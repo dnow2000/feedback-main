@@ -7,6 +7,7 @@ from flask import current_app as app
 from models.article import Article
 from repository.articles import sync_articles
 
+
 @app.manager.option('-f',
                     '--from_date',
                     help='From Date')
