@@ -6,7 +6,6 @@ def request_api(url, headers=None):
 
     try:
         data = requests.get(url, headers=headers, timeout=5)
-        
         data.raise_for_status() # because HTTP errors are not raised by default
         data.encoding = 'UTF-8'
         data = data.json()
@@ -66,7 +65,7 @@ def reorganize_article_data_from_orcid_api(record):
                 for external_id in range(len(external_ids)):
                     if external_ids[external_id]['external-id-type'] == "doi":
                         doi = external_ids[external_id]['external-id-value']
-                        url = external_ids[external_id]['external-id-url']['value']
+                        url = "https://dx.doi.org/" + doi                           
 
             # 2/ the article's title
             title = str()
@@ -88,7 +87,7 @@ def reorganize_article_data_from_orcid_api(record):
                                  'publication_year': publication_year,
                                  'url':              url})
 
-    return article_list
+    return(article_list)
 
 
 def reorganize_person_data_from_orcid_api(record, article_list):
@@ -97,24 +96,27 @@ def reorganize_person_data_from_orcid_api(record, article_list):
                   'last_name':  record['person']['name']['family-name']['value'],
                   'articles':   article_list} 
 
-    return orcid_data
+    return(orcid_data)
 
 
 def record_from_orcid_id(orcid_id):
 
     content = dict()
 
-    url_orcid = 'https://pub.orcid.org/v3.0/{}/record'.format(str(orcid_id))
-    orcid_record, connection_check = request_api(url = url_orcid, 
-                                                 headers={"Accept": "application/json"})
+    url_orcid = 'https://pub.orcid.org/v3.0/{}/record'.format(orcid_id)
+
+    headers={"Accept": "application/json",
+            "Authorization": "OAuth 7d33792c-ca06-4905-84b1-b061e498731c"}
+
+    orcid_record, connection_check = request_api(url = url_orcid, headers=headers)
 
     if connection_check:
 
         article_list = reorganize_article_data_from_orcid_api(orcid_record)
         orcid_data = reorganize_person_data_from_orcid_api(orcid_record, article_list)
 
-        for article_index in range(len(orcid_data['articles'])):
+        for article_index in range(min(len(orcid_data['articles']), 3)):
             content.update({'publication' + str(article_index + 1) : \
                 orcid_data['articles'][article_index]['url']})
 
-    return content
+    return(content)
