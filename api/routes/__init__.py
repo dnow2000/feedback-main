@@ -8,6 +8,7 @@ def import_routes():
     import routes.evaluations
     import routes.images
     import routes.orcid
+    import routes.organizations
     import routes.password
     import routes.reviews
     import routes.roles
@@ -19,6 +20,7 @@ def import_routes():
     import routes.users
     import routes.verdicts
     import routes.verdict_users
+    import routes.wikidata
 
     import routes.health
     import routes.storage

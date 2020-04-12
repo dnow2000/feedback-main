@@ -7,6 +7,7 @@ def import_models():
     from models.claim import Claim
     from models.evaluation import Evaluation
     from models.image import Image
+    from models.organization import Organization
     from models.publication import Publication
     from models.review import Review
     from models.review_tag import ReviewTag
