@@ -11,9 +11,12 @@ from tests.utils.clean import with_clean_all_database
 @pytest.mark.standalone
 @with_clean_all_database
 def when_sync_all_is_a_success(app):
+    # given
+    max_records = 5
+
     # when
-    sync_all()
+    sync_all(max_records=max_records)
 
     # then
-    articles = Article.query.all()
-    assert len(articles) == 1
+    for model in [User, Article, Claim]:
+        assert len(model.query.all()) == max_records

@@ -1,4 +1,5 @@
 def article_dict_from(row):
+    print(row)
     return {
         'title': row['Claim checked (or Headline if no main claim)'],
         'url': row['Archive link']

@@ -13,8 +13,8 @@ def entity_from(name, entity_dict):
     return locals['{}_from'.format(name)](entity_dict)
 
 
-def sync(name):
-    rows = request_entity_rows(name)
+def sync(name, max_records=None):
+    rows = request_entity_rows(name, max_records=max_records)
 
     entities = []
     for row in rows:
@@ -25,6 +25,6 @@ def sync(name):
     ApiHandler.save(*entities)
 
 
-def sync_all():
+def sync_all(max_records=None):
     for name in ['reviewer', 'article', 'claim']:
-        sync(name)
+        sync(name, max_records=max_records)

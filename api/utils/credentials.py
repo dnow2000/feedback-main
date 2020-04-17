@@ -1,3 +1,5 @@
+import random
+import string
 from sqlalchemy_api_handler import ApiErrors, ApiHandler
 
 from models.user import User
@@ -38,3 +40,8 @@ def change_password(user, password):
     user.set_password(password)
     user = db.session.merge(user)
     ApiHandler.save(user)
+
+
+def random_password(length=12):
+    password_characters = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choice(password_characters) for i in range(length))
