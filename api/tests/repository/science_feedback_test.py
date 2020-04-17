@@ -3,6 +3,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.article import Article
 from models.claim import Claim
+from models.review import Review
 from models.user import User
 from repository.science_feedback import sync_all
 from tests.utils.clean import with_clean_all_database
@@ -18,5 +19,5 @@ def when_sync_all_is_a_success(app):
     sync_all(max_records=max_records)
 
     # then
-    for model in [User, Article, Claim]:
+    for model in [User, Article, Claim, Review]:
         assert len(model.query.all()) == max_records + 1

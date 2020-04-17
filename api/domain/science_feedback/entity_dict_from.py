@@ -1,5 +1,5 @@
 def article_dict_from(row):
-    print(row)
+    #print(row)
     return {
         'scienceFeedbackId': row['airtableId'],
         'title': row['Claim checked (or Headline if no main claim)'],
@@ -11,6 +11,13 @@ def claim_dict_from(row):
     return {
         'scienceFeedbackId': row['airtableId'],
         'text': row['Claim checked (or Headline if no main claim)']
+    }
+
+
+def review_dict_from(row):
+    print(row)
+    return {
+        'scienceFeedbackId': row['airtableId'],
     }
 
 

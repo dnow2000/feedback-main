@@ -16,7 +16,13 @@ branch_labels = None
 depends_on = None
 
 
-table_names = ['article', 'claim', 'user']
+table_names = [
+    'appearance',
+    'article',
+    'claim',  
+    'review',
+    'user'
+]
 
 
 def upgrade():

@@ -24,6 +24,14 @@ def request_claim_rows(max_records=None):
     )
 
 
+def request_review_rows(max_records=None):
+    return request_airtable_rows(
+        SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+        'Reviews / Fact-checks',
+        max_records=max_records
+    )
+
+
 def request_reviewer_rows(max_records=None):
     return request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,

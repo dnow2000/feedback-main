@@ -26,5 +26,5 @@ def sync(name, max_records=None):
 
 
 def sync_all(max_records=None):
-    for name in ['reviewer', 'article', 'claim']:
+    for name in ['reviewer', 'article', 'claim', 'review']:
         sync(name, max_records=max_records)
