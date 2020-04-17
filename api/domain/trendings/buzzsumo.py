@@ -145,7 +145,7 @@ def article_from_buzzsumo(result):
 
 
 def article_from_buzzsumo_url(url: str, **kwargs):
-    url = buzzsumo_url_from("articles", { "q": url })
+    url = buzzsumo_url_from("articles", { 'q': url })
     response = requests.get(url)
 
     json_file = response.json()
