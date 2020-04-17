@@ -19,4 +19,4 @@ def when_sync_all_is_a_success(app):
 
     # then
     for model in [User, Article, Claim]:
-        assert len(model.query.all()) == max_records
+        assert len(model.query.all()) == max_records + 1
