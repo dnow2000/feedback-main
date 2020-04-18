@@ -16,9 +16,10 @@ def sync(name, max_records=None):
     rows = request_entity_rows(name, max_records=max_records)
 
     entities = []
-    for row in rows:
+    for (index, row) in enumerate(rows):
         entity = entity_from(name, row)
-        entities.append(entity)
+        if entity:
+            entities.append(entity)
 
     ApiHandler.save(*entities)
 
