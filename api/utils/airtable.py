@@ -37,5 +37,5 @@ def request_airtable_rows(
 
     return [
         {'airtableId': record['id'], **record['fields']}
-        for record in result.json()['records']
+        for (index, record) in enumerate(result.json()['records'])
     ]

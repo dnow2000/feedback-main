@@ -13,7 +13,7 @@ from tests.utils.clean import with_clean_all_database
 @with_clean_all_database
 def when_sync_all_is_a_success(app):
     # given
-    max_records = 5
+    max_records = None
 
     # when
     sync_all(max_records=max_records)
