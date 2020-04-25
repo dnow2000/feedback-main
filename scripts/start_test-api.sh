@@ -1,4 +1,4 @@
-CONTAINER_NAMES=${2:-"api-test-api postgres-test-api"}
+CONTAINER_NAMES=${2:-"api-test-api apidb-test-api"}
 PYTEST_ARGS=$1
 
 echo $PYTEST_ARGS

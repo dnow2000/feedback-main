@@ -3,6 +3,7 @@ from sqlalchemy_api_handler import as_dict
 from utils.credentials import PLAIN_DEFAULT_TESTING_PASSWORD
 from utils.config import COMMAND_NAME, EMAIL_HOST
 
+
 def get_email(first_name, last_name, domain):
     return "{}.{}@{}".format(
         first_name.replace(' ', '').strip().lower(),
@@ -10,9 +11,11 @@ def get_email(first_name, last_name, domain):
         domain
     )
 
+
 def get_sandbox_role_email(role_type, index=0):
     email = "{}test.{}{}@{}".format(COMMAND_NAME, role_type, index, EMAIL_HOST)
     return email
+
 
 def get_password_from_email(email):
     chunks = email.split('.')
@@ -33,6 +36,7 @@ def get_password_from_email(email):
         minimal_password += ''.join(['x'])*(8-len(minimal_password))
     return minimal_password
 
+
 def get_user_helper(user):
     return dict(
         as_dict(user), **{
@@ -43,6 +47,7 @@ def get_user_helper(user):
 
 def pick_one(elements, pick_modulo):
     return elements[pick_modulo % len(elements)]
+
 
 def pick_every(elements, pick_modulo):
     # we keep len(elements) / modulo

@@ -4,7 +4,7 @@ from models.role import RoleType
 from models.user import User
 from sandboxes.scripts.utils.storage_utils import store_public_object_from_sandbox_assets
 from sandboxes.scripts.utils.helpers import get_sandbox_role_email, pick_one
-from utils.credentials import HASHED_DEFAULT_TESTING_PASSWORD
+from utils.credentials import get_hashed_default_password
 from utils.config import COMMAND_NAME
 
 USERS_BY_TYPE_COUNT = 3
@@ -63,6 +63,8 @@ TITLES = [
 def create_users():
     logger.info('create_users')
 
+    hashed_default_password = get_hashed_default_password()
+
     users_by_name = {}
 
     user_types = [role_type.value for role_type in RoleType] + ['master', 'user']
@@ -95,7 +97,7 @@ def create_users():
                 })
 
             user = User(**user_dict)
-            user.password = HASHED_DEFAULT_TESTING_PASSWORD
+            user.password = hashed_default_password
             users_by_name['{} {}'.format(user_type, role_index)] = user
 
             count += 1

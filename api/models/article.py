@@ -13,6 +13,7 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixi
 from models.utils.db import Model
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasThumbMixin, \
+                          HasScienceFeedbackMixin, \
                           HasSharesMixin, \
                           VersionedMixin
 from models.role import RoleType
@@ -21,11 +22,12 @@ from models.role import RoleType
 class Article(ApiHandler,
               Model,
               HasExternalThumbUrlMixin,
+              HasScienceFeedbackMixin,
               HasSharesMixin,
               HasThumbMixin,
               SoftDeletableMixin,
               VersionedMixin):
-              
+
     authors = Column(Text())
 
     isReviewable = Column(Boolean())

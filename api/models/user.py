@@ -5,6 +5,7 @@ from sqlalchemy_api_handler import ApiHandler
 from models.utils.db import Model
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
+                          HasScienceFeedbackMixin, \
                           HasThumbMixin, \
                           NeedsValidationMixin
 from models.role import Role
@@ -14,6 +15,7 @@ class User(ApiHandler,
            Model,
            HasExternalThumbUrlMixin,
            HasQualificationMixin,
+           HasScienceFeedbackMixin,
            HasThumbMixin,
            NeedsValidationMixin):
 

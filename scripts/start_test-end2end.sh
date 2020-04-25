@@ -1,4 +1,4 @@
-CONTAINER_NAMES=${1:-"api-test-end2end webapp-test-end2end nginx-test-end2end postgres-test-end2end"}
+CONTAINER_NAMES=${1:-"api-test-end2end webapp-test-end2end nginx-test-end2end apidb-test-end2end"}
 
 #export API_URL=http://nginx-test-end2end
 

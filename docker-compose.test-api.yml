@@ -11,7 +11,7 @@ services:
                while true; do python app.py; done;"
     container_name: ${APP_NAME}-api-test-api
     depends_on:
-      - postgres-test-api
+      - apidb-test-api
     env_file:
       - ./.env
     environment:
@@ -19,7 +19,7 @@ services:
       - GIT_TAG=$GIT_TAG
       - MODE=${MODE:-test-api}
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
-      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@postgres-test-api/${APP_NAME}
+      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-test-api/${APP_NAME}
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     networks:
@@ -27,9 +27,9 @@ services:
     volumes:
       - ./api:/opt/api
 
-  postgres-test-api:
+  apidb-test-api:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
-    container_name: ${APP_NAME}-postgres-test-api
+    container_name: ${APP_NAME}-apidb-test-api
     environment:
       - POSTGRES_DB=${APP_NAME}
       - POSTGRES_PASSWORDWORD=${APP_NAME}_password
@@ -38,7 +38,7 @@ services:
     networks:
       - db_test-api_nw
     volumes:
-      - "./docker_data_test-api/postgres:/var/lib/postgresql"
+      - "./docker_data_test-api/apidb:/var/lib/postgresql"
 
 networks:
   db_test-api_nw:

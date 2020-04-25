@@ -2,6 +2,7 @@ from postgresql_audit.flask import versioning_manager
 from sqlalchemy_api_handler import logger
 
 from models.utils.db import db
+from models.appearance import Appearance
 from models.article import Article
 from models.article_tag import ArticleTag
 from models.claim import Claim
@@ -23,6 +24,7 @@ def clean_all_database():
     """ Order of deletions matters because of foreign key constraints """
     logger.info("clean all the database...")
     Scope.query.delete()
+    Appearance.query.delete()
     ArticleTag.query.delete()
     ReviewTag.query.delete()
     UserTag.query.delete()
