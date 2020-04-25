@@ -21,7 +21,7 @@ nltk==3.4.5
 numpy==1.18.1
 oauth2client==4.1.3
 pandas==1.0.1
-Pillow==6.2.1
+Pillow>=6.2.2
 PostgreSQL-Audit==0.10.0
 psycopg2-binary==2.8.3
 pytest==4.0.0
