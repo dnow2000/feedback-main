@@ -1,23 +1,22 @@
 import os
 from sqlalchemy_api_handler import ApiHandler
 
-from domain.science_feedback import request_entity_rows
-from repository.science_feedback.entity_from import *
-from domain.science_feedback.request_entity_rows import *
-
-locals = locals()
+from domain.science_feedback import request_airtable_rows_for
+import repository.science_feedback.entity_from_row
 
 
-def entity_from(name, entity_dict):
-    return locals['{}_from'.format(name)](entity_dict)
+def entity_from_row_for(name, entity_dict):
+    function_name = '{}_from_row'.format(name)
+    entity_from_row_function = getattr(repository.science_feedback.entity_from_row, function_name)
+    return entity_from_row_function(entity_dict)
 
 
 def sync(name, max_records=None):
-    rows = request_entity_rows(name, max_records=max_records)
+    rows = request_airtable_rows_for(name, max_records=max_records)
 
     entities = []
-    for (index, row) in enumerate(rows):
-        entity = entity_from(name, row)
+    for row in rows:
+        entity = entity_from_row_for(name, row)
         if entity:
             entities.append(entity)
 

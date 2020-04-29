@@ -5,7 +5,7 @@ from models.user import User
 from utils.credentials import random_password
 
 
-def article_from(row):
+def article_from_row(row):
     if 'Archive link' not in row:
         return
 
@@ -18,7 +18,7 @@ def article_from(row):
     return Article.create_or_modify(article_dict, search_by=['scienceFeedbackId'])
 
 
-def claim_from(row):
+def claim_from_row(row):
     claim_dict = {
         'scienceFeedbackId': row['airtableId'],
         'text': row['Claim checked (or Headline if no main claim)']
@@ -27,13 +27,10 @@ def claim_from(row):
     return Claim.create_or_modify(claim_dict, search_by=['scienceFeedbackId'])
 
 
-def review_from(row):
+def review_from_row(row):
     user = User.query.filter_by(scienceFeedbackId=row['Review editor(s)'][0]).first()
     if not user:
         return
-
-
-    print('OUAI')
 
     review_dict = {
         'scienceFeedbackId': row['airtableId'],
@@ -53,7 +50,7 @@ def review_from(row):
     return Review.create_or_modify(review_dict, search_by=['scienceFeedbackId'])
 
 
-def reviewer_from(row):
+def reviewer_from_row(row):
     user_dict = {
         'email': row['Email'],
         'firstName': row['First name'],

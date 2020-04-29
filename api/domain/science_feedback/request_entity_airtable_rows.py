@@ -6,7 +6,7 @@ from utils.airtable import request_airtable_rows
 SCIENCE_FEEDBACK_AIRTABLE_BASE_ID = os.environ.get('SCIENCE_FEEDBACK_AIRTABLE_BASE_ID')
 
 
-def request_article_rows(max_records=None):
+def request_article_airtable_rows(max_records=None):
     return request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
         'Items for review / reviewed',
@@ -15,7 +15,7 @@ def request_article_rows(max_records=None):
     )
 
 
-def request_claim_rows(max_records=None):
+def request_claim_airtable_rows(max_records=None):
     return request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
         'Items for review / reviewed',
@@ -24,7 +24,7 @@ def request_claim_rows(max_records=None):
     )
 
 
-def request_review_rows(max_records=None):
+def request_review_airtable_rows(max_records=None):
     return request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
         'Reviews / Fact-checks',
@@ -32,7 +32,7 @@ def request_review_rows(max_records=None):
     )
 
 
-def request_reviewer_rows(max_records=None):
+def request_reviewer_airtable_rows(max_records=None):
     return request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
         'Reviewers',
