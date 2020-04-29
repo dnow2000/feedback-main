@@ -11,7 +11,7 @@ def entity_from_row_for(name, entity_dict):
     return entity_from_row_function(entity_dict)
 
 
-def sync(name, max_records=None):
+def sync_for(name, max_records=None):
     rows = request_airtable_rows_for(name, max_records=max_records)
 
     entities = []
@@ -23,6 +23,6 @@ def sync(name, max_records=None):
     ApiHandler.save(*entities)
 
 
-def sync_all(max_records=None):
+def sync(max_records=None):
     for name in ['reviewer', 'article', 'claim', 'review']:
-        sync(name, max_records=max_records)
+        sync_for(name, max_records=max_records)

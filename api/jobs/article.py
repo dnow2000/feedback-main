@@ -34,7 +34,7 @@ for clock_sync_article_config in clock_sync_article_configs:
     jobs.append({
         'function': create_clock_sync_articles(from_date, to_date),
         'kwargs': {
-            'id': 'clock_sync_articles_{}_{}'.format(from_date, to_date),
+            'id': 'articles {} {}'.format(from_date, to_date),
             'minute': '*/{}'.format(clock_sync_article_config['frequency'])
         }
     })

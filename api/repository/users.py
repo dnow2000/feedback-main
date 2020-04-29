@@ -47,3 +47,13 @@ def filter_users_with_roles(query, roles):
 def keep_users_with_no_role(query):
     query = query.filter(~User.roles.any())
     return query
+
+
+def sync_user(user):
+    """ TODO ORCID """
+    pass
+
+
+def sync():
+    """ TODO """
+    pass

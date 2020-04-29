@@ -43,28 +43,6 @@ def resolve_with_url(url, **kwargs):
     )
 
 
-def update_article(article):
-    if article.thumbCount == 0:
-        thumb = capture(article.url)
-        save_thumb(article, thumb, 0, convert=False)
-
-    if article.buzzsumoId:
-        buzzsumo_content = article_from_buzzsumo_url(article.url)
-        article.modify(buzzsumo_content)
-
-
-def sync_articles(from_date, to_date):
-    articles = filter_by_activity_date_and_verb(
-        Article.query,
-        from_date=from_date,
-        to_date=to_date,
-        verb='insert'
-    ).all()
-    for article in articles:
-        update_article(article)
-    ApiHandler.save(*articles)
-
-
 def get_articles_keywords_join_query(query):
     query = query.outerjoin(ArticleTag)\
                  .outerjoin(Tag)
@@ -83,3 +61,25 @@ def get_articles_query_with_keywords(query, keywords):
 def filter_articles_by_is_reviewable(query, is_reviewable):
     query = query.filter_by(isReviewable=is_reviewable)
     return query
+
+
+def sync_article(article):
+    if article.thumbCount == 0:
+        thumb = capture(article.url)
+        save_thumb(article, thumb, 0, convert=False)
+
+    if article.buzzsumoId:
+        buzzsumo_content = article_from_buzzsumo_url(article.url)
+        article.modify(buzzsumo_content)
+
+
+def sync(from_date, to_date):
+    articles = filter_by_activity_date_and_verb(
+        Article.query,
+        from_date=from_date,
+        to_date=to_date,
+        verb='insert'
+    ).all()
+    for article in articles:
+        sync_article(article)
+    ApiHandler.save(*articles)
