@@ -1,10 +1,9 @@
 def import_models():
     from models.appearance import Appearance
-    from models.argument import Argument
-    from models.argument_argument import ArgumentArgument
     from models.article import Article
     from models.article_tag import ArticleTag
     from models.claim import Claim
+    from models.claim_claim import ClaimClaim
     from models.evaluation import Evaluation
     from models.image import Image
     from models.organization import Organization

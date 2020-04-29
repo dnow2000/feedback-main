@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Text
 
+
 class HasQualificationMixin(object):
     academicWebsite = Column(String(220))
 

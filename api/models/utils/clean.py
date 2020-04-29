@@ -6,6 +6,7 @@ from models.appearance import Appearance
 from models.article import Article
 from models.article_tag import ArticleTag
 from models.claim import Claim
+from models.claim_claim import ClaimClaim
 from models.evaluation import Evaluation
 from models.review import Review
 from models.review_tag import ReviewTag
@@ -40,6 +41,7 @@ def clean_all_database():
     Role.query.delete()
     UserSession.query.delete()
     User.query.delete()
+    ClaimClaim.query.delete()
     Claim.query.delete()
     versioning_manager.activity_cls.query.delete()
     db.session.commit()
