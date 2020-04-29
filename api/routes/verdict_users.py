@@ -16,6 +16,6 @@ def create_verdict_user():
     check_has_role(current_user, 'editor')
 
     verdict_user = VerdictUser()
-    verdict_user.populate_from_dict(request.json)
+    verdict_user.modify(request.json)
     ApiHandler.save(verdict_user)
     return jsonify(as_dict(verdict_user)), 201

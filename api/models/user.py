@@ -64,7 +64,7 @@ class User(ApiHandler,
     def is_anonymous(self):
         return False
 
-    def populate_from_dict(self, dct):
+    def modify(self, dct):
         user_dict = dict({}, **dct)
 
         password = None
@@ -72,7 +72,7 @@ class User(ApiHandler,
             password = dct['password']
             del user_dict['password']
 
-        super(User, self).populate_from_dict(user_dict)
+        super(User, self).modify(user_dict)
 
         if password:
             self.set_password(password)

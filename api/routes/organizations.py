@@ -12,7 +12,7 @@ def create_organization():
 
     content = dict(wikidata_from(request.json['name']))
 
-    organization = Organization.create_or_update(content, 'entity')
+    organization = Organization.create_or_modify(content, 'entity')
 
     ApiHandler.save(organization)
 

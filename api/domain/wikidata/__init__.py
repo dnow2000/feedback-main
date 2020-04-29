@@ -4,6 +4,7 @@ from datetime import datetime
 
 from .property_name_by_code import props_dict
 
+
 API_URL = "https://www.wikidata.org/w/api.php?"
 
 

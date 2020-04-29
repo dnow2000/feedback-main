@@ -41,7 +41,7 @@ def create_verdict():
     check_has_role(current_user, 'editor')
 
     verdict = Verdict()
-    verdict.populate_from_dict(request.json)
+    verdict.modify(request.json)
     verdict.user = current_user
     ApiHandler.save(verdict)
     return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 201
@@ -55,6 +55,6 @@ def edit_verdict(verdict_id):
     check_has_role(current_user, 'editor')
 
     verdict = load_or_404(Verdict, verdict_id)
-    verdict.populate_from_dict(request.json)
+    verdict.modify(request.json)
     ApiHandler.save(verdict)
     return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 201

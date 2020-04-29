@@ -20,7 +20,7 @@ def create_image():
     image = Image()
 
     image_dict = { "name": request.files['thumb'].filename }
-    image.populate_from_dict(image_dict)
+    image.modify(image_dict)
 
     ApiHandler.save(image)
 

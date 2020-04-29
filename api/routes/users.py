@@ -57,6 +57,6 @@ def get_user(user_id):
 @login_or_api_key_required
 @expect_json_data
 def modify_profile():
-    current_user.populate_from_dict(request.json)
+    current_user.modify(request.json)
     ApiHandler.save(current_user)
     return jsonify(as_dict(current_user, includes=USER_INCLUDES)), 200

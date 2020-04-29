@@ -1,4 +1,3 @@
-from datetime import datetime, timedelta
 from sqlalchemy_api_handler import ApiHandler
 
 from models.article import Article
@@ -22,7 +21,7 @@ article_ts_filter = create_get_filter_matching_ts_query_in_any_model(
 def resolve_with_url(url, **kwargs):
     buzzsumo_article = article_from_buzzsumo_url(url, **kwargs)
 
-    if buzzsumo_content:
+    if buzzsumo_article:
         article = Article.query\
                          .filter_by(
                              buzzsumoId=buzzsumo_article['buzzsumoId']
@@ -32,15 +31,15 @@ def resolve_with_url(url, **kwargs):
             return article.as_dict()
 
     newspaper_article = article_from_newspaper_url(url, **kwargs)
-    if newspaper_content is None:
-        newspaper_content = {}
+    if newspaper_article is None:
+        newspaper_article = {}
 
-    if buzzsumo_content is None:
-        buzzsumo_content = {}
+    if buzzsumo_article is None:
+        buzzsumo_article = {}
 
     return dict(
-        newspaper_content,
-        **buzzsumo_content
+        newspaper_article,
+        **buzzsumo_article
     )
 
 
@@ -51,7 +50,7 @@ def update_article(article):
 
     if article.buzzsumoId:
         buzzsumo_content = article_from_buzzsumo_url(article.url)
-        article.populate_from_dict(buzzsumo_content)
+        article.modify(buzzsumo_content)
 
 
 def sync_articles(from_date, to_date):
@@ -64,15 +63,6 @@ def sync_articles(from_date, to_date):
     for article in articles:
         update_article(article)
     ApiHandler.save(*articles)
-
-
-def create_clock_sync_articles(from_date_minutes, to_date_minutes):
-    def clock_sync_articles():
-        now_date = datetime.utcnow()
-        from_date = now_date - timedelta(minutes=from_date_minutes)
-        to_date = now_date - timedelta(minutes=to_date_minutes)
-        sync_articles(from_date, to_date)
-    return clock_sync_articles
 
 
 def get_articles_keywords_join_query(query):

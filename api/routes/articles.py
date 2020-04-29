@@ -88,7 +88,7 @@ def modify_article(article_id):
     check_has_role(current_user, 'editor')
 
     article = load_or_404(Article, article_id)
-    article.populate_from_dict(request.json)
+    article.modify(request.json)
 
     ApiHandler.save(article)
 

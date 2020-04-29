@@ -54,7 +54,7 @@ def create_review():
     check_has_role(current_user, 'reviewer')
 
     review = Review()
-    review.populate_from_dict(request.json)
+    review.modify(request.json)
     review.user = current_user
 
     ApiHandler.save(review)
@@ -72,7 +72,7 @@ def edit_review(review_id):
     check_has_role(current_user, 'reviewer')
 
     review = load_or_404(Review, review_id)
-    review.populate_from_dict(request.json)
+    review.modify(request.json)
 
     ApiHandler.save(review)
 
