@@ -1,7 +1,7 @@
 {
-  "name": "Science Feedback",
-  "description": "Serveur API de Science Feedback",
-  "repository": "https://github.com/science-feedback/science-feedback-main",
+  "name": "Feedback",
+  "description": "Serveur API de Feedback",
+  "repository": "https://github.com/feedback-news/feedback-main",
   "addons": ["postgresql:free"],
   "formation": {
     "web": {

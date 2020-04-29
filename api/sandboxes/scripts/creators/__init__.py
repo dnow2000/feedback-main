@@ -1,1 +1,1 @@
-from sandboxes.scripts.creators import ci, cf
+from sandboxes.scripts.creators import ci

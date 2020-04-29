@@ -1,3 +1,4 @@
+import capitalize from 'lodash.capitalize'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -7,7 +8,7 @@ import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
 import Icon from 'components/layout/Icon'
 import VerdictItem from 'components/layout/VerdictItem'
-import { ROOT_ASSETS_PATH } from 'utils/config'
+import { APP_NAME, ROOT_ASSETS_PATH } from 'utils/config'
 
 
 const Landing = () => {
@@ -74,7 +75,7 @@ const Landing = () => {
             </div>
             <img src={`${ROOT_ASSETS_PATH}/community.png`} className="image" alt="Community" />
             <p className="p">
-              Science Feedback is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
+              {capitalize(APP_NAME)} is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
             </p>
             <NavLink className="cta" to="/signup">
               Join the community
@@ -120,7 +121,6 @@ const Landing = () => {
               <NavLink className="link" to="/">
                 Contact Us
               </NavLink>
-
             </div>
           </div>
         </section>

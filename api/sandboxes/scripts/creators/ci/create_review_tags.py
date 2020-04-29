@@ -5,6 +5,8 @@ from models.review import Review
 from models.review_tag import ReviewTag
 from models.tag import Tag
 from models.user import User
+from utils.config import APP_NAME, COMMAND_NAME, TLD
+
 
 def create_review_tags():
     logger.info('create_review_tags')
@@ -12,7 +14,7 @@ def create_review_tags():
     review_tags_by_name = {}
 
     article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
-    user = User.query.filter_by(email="sftest.reviewer0@sciencefeedback.co").one()
+    user = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     review = Review.query.filter_by(
         article=article,
         user=user
@@ -24,7 +26,7 @@ def create_review_tags():
     )
 
     article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
-    user = User.query.filter_by(email="sftest.reviewer0@sciencefeedback.co").one()
+    user = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     review = Review.query.filter_by(
         article=article,
         user=user
@@ -36,7 +38,7 @@ def create_review_tags():
     )
 
     article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
-    user = User.query.filter_by(email="sftest.reviewer1@sciencefeedback.co").one()
+    user = User.query.filter_by(email="{}test.reviewer1@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     review = Review.query.filter_by(
         article=article,
         user=user

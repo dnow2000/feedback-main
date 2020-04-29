@@ -2,8 +2,11 @@ import { createDataReducer } from 'redux-thunk-data'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import { APP_NAME } from 'utils/config'
+
+
 const dataPersistConfig = {
-  key: 'science-feedback-webapp-data',
+  key: `${APP_NAME}-webapp-data`,
   storage,
   whitelist: [],
 }

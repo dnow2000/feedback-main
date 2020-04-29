@@ -1,3 +1,4 @@
+import capitalize from 'lodash.capitalize'
 import { stringify } from 'query-string'
 import React, { useCallback } from 'react'
 import Dotdotdot from 'react-dotdotdot'
@@ -9,6 +10,7 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import Avatar from 'components/layout/Avatar'
 import selectTagsByUserId from 'selectors/selectTagsByUserId'
+import { APP_NAME } from 'utils/config'
 
 
 const mapArgsToCacheKey = (state, articleId, userId) => `${articleId || ''}/${userId || ''}`
@@ -47,7 +49,7 @@ export default ({ user }) => {
     body: `<div>Hello ${publicName},
       can you go %3ca href=${reviewUrl} target="_blank"> here </a>
     </div>`,
-    subject: `Science Feedback: you were asked by ${currentPublicName} to review an article`
+    subject: `${capitalize(APP_NAME)} you were asked by ${currentPublicName} to review an article`
   })
   const mailTo = `mailto:${email}?${mailToSearch}`
 

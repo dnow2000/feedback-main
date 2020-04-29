@@ -1,7 +1,7 @@
 from sqlalchemy_api_handler import as_dict
 
 from utils.credentials import PLAIN_DEFAULT_TESTING_PASSWORD
-from utils.config import COMMAND_NAME, EMAIL_HOST
+from utils.config import APP_NAME, COMMAND_NAME, TLD
 
 
 def get_email(first_name, last_name, domain):
@@ -13,7 +13,7 @@ def get_email(first_name, last_name, domain):
 
 
 def get_sandbox_role_email(role_type, index=0):
-    email = "{}test.{}{}@{}".format(COMMAND_NAME, role_type, index, EMAIL_HOST)
+    email = "{}test.{}{}@{}.{}".format(COMMAND_NAME, role_type, index, APP_NAME, TLD)
     return email
 
 

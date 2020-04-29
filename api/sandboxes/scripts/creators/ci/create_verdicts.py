@@ -4,6 +4,7 @@ from models.article import Article
 from models.evaluation import Evaluation
 from models.user import User
 from models.verdict import Verdict
+from utils.config import APP_NAME, COMMAND_NAME,TLD
 
 
 def create_verdicts():
@@ -11,7 +12,7 @@ def create_verdicts():
 
     verdicts_by_name = {}
     articles = Article.query.all()
-    user = User.query.filter_by(email="sftest.editor0@sciencefeedback.co").one()
+    user = User.query.filter_by(email="{}test.editor0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
 
     article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     evaluation_value = -2

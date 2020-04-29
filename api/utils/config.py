@@ -8,14 +8,13 @@ MODE = os.environ.get('MODE', 'serve-development')
 TLD = os.environ.get('TLD', '')
 WEBAPP_SUBDOMAIN = os.environ.get('WEBAPP_SUBDOMAIN', '')
 
-EMAIL_HOST = "{}.{}".format(APP_NAME, TLD)
 API_ROOT_PATH = Path(os.path.dirname(os.path.realpath(__file__))) / '..'
 
 version_file = open(os.path.join(API_ROOT_PATH, "version.txt"), "r")
 VERSION = version_file.read().rstrip()
 version_file.close()
 
-MACHINE_ENV = os.environ.get('MACHINE_ENV', 'development') 
+MACHINE_ENV = os.environ.get('MACHINE_ENV', 'development')
 IS_DEVELOPMENT = MACHINE_ENV == 'development'
 IS_PRODUCTION = MACHINE_ENV == 'production'
 

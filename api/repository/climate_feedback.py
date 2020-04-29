@@ -8,8 +8,10 @@ from models.publication import Publication
 from models.review import Review
 from models.role import Role
 from models.user import User
+from models.user_article import UserArticle
+from models.verdict import Verdict
 from repository.articles import resolve_with_url
-from utils.config import EMAIL_HOST
+from utils.config import COMMAND_NAME, APP_NAME, TLD
 
 
 def get_users_from_climate_feedback_community_scrap(users_max=3):
@@ -37,12 +39,12 @@ def get_users_from_climate_feedback_community_scrap(users_max=3):
 
         data = {
             "affiliation": expert_row.p.text.split(',')[1],
-            "email": "sftest.reviewer.cf{}@{}".format(expert_row_index, EMAIL_HOST),
+            "email": "{}test.reviewer.cf{}@{}.{}".format(COMMAND_NAME, expert_row_index, APP_NAME, TLD),
             "expertise": expertise,
             "externalThumbUrl": expert_row.img['src'],
             "firstName": first_name,
             "lastName": last_name,
-            "password": "sftest.Reviewer.cf{}".format(expert_row_index),
+            "password": "{}test.Reviewer.cf{}".format(COMMAND_NAME, expert_row_index),
             "title": expert_row.p.text.split(',')[0]
         }
 
@@ -115,7 +117,7 @@ def set_user_from_climate_feedback_user_scrap(user, path, store=None):
                 "url": publication_anchor['href']
             }
 
-            publication = Publication.query.filter_by(url=data['url'])\
+            publication = Publication.query.filter_by(url=publication_anchor['url'])\
                                  .first()
             if not publication:
                 publication = Article(**publication_dict)
@@ -216,8 +218,8 @@ def set_article_from_climate_feedback_evaluation_scrap(
             user = already_matching_created_users[0]
         else:
             user = User(
-                email="sftest.reviewer.cf{}@{}".format(len(store['users']), EMAIL_HOST),
-                password="sftest.Reviewer.cf{}".format(len(store['users'])),
+                email="{}test.reviewer.cf{}@{}.{}".format(COMMAND_NAME, len(store['users']), APP_NAME, TLD),
+                password="{}test.Reviewer.cf{}".format(COMMAND_NAME, len(store['users'])),
             )
             set_user_from_climate_feedback_user_scrap(user, reviewer_url, store)
             store['users'].append(user)

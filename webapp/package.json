@@ -1,5 +1,4 @@
 {
-  "name": "science-feedback-webapp",
   "version": "1.5.45",
   "private": true,
   "homepage": "/",
@@ -24,6 +23,7 @@
     "final-form": "^4.9.1",
     "final-form-calculate": "^1.2.1",
     "la-sass-vy": "1.0.1",
+    "lodash.capitalize": "^4.2.1",
     "lodash.get": "^4.4.2",
     "lodash.uniq": "^4.5.0",
     "moment": "^2.18.1",

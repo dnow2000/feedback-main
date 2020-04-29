@@ -23,15 +23,15 @@ Generic single-database configuration.
 
 1. Being updated with the migration
 ```
-sf alembic stamp head
+./${APP_NAME} alembic stamp head
 ```
 
 2. Create a boilerplate migration file
 ```
-sf alembic revision
+./${APP_NAME} alembic revision
 ```
 
 3. Once the migration file is ready
 ```
-sf alembic upgrade <id>
+./${APP_NAME} alembic upgrade <id>
 ```

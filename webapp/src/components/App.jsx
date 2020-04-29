@@ -1,12 +1,15 @@
+import capitalize from 'lodash.capitalize'
 import PropTypes from 'prop-types'
 import React from 'react'
 import Helmet from 'react-helmet'
 
 import {
+  APP_NAME,
   IS_DEVELOPMENT,
   ROOT_LOGO_ICONS_PATH,
   ROOT_PATH
 } from 'utils/config'
+
 
 const App = ({ children }) => (
   <>
@@ -39,7 +42,7 @@ const App = ({ children }) => (
       <link rel="icon" type="image/png" sizes="96x96" href={`${ROOT_LOGO_ICONS_PATH}/favicon-96x96.png`} />
       <link rel="icon" type="image/png" sizes="16x16" href={`${ROOT_LOGO_ICONS_PATH}/favicon-16x16.png`} />
       <link rel="manifest" href={`${ROOT_PATH}/manifest.json`} />
-      <title>Science Feedback</title>
+      <title>{capitalize(APP_NAME)} Webapp</title>
     </Helmet>
     {children}
   </>

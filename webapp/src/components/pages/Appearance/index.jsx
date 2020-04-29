@@ -15,7 +15,6 @@ import ArticleItem from 'components/layout/ArticleItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
-import { appearanceNormalizer } from 'utils/normalizers'
 import { getCanSubmit } from 'utils/form'
 import { scrapDecorator } from 'utils/scrap'
 

@@ -32,7 +32,7 @@ if [[ $# -gt 2 ]] && [[ "$1" == "-b" ]]; then
   BACKUP_PATH=$2
   shift 2
 else
-  BACKUP_PATH=~/science-feedback-main/api/db_dumps/
+  BACKUP_PATH=~/$APP_NAME-main/api/db_dumps/
   echo "Using default BACKUP_PATH."
 fi
 
