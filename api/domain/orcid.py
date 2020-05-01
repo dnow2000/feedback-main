@@ -1,37 +1,14 @@
 import requests
 import json
 
-
-def request_api(url, headers=None):
-
-    try:
-        data = requests.get(url, headers=headers, timeout=5)
-        data.raise_for_status() # because HTTP errors are not raised by default
-        data.encoding = 'UTF-8'
-        data = data.json()
-
-        connection_check = True
-        
-    except requests.HTTPError as e:
-        if e.response.status_code == 404:
-            print("ERROR: This ORCid or DOI does not exist ({}).".format(url))
-        else :
-            print("ERROR: Checking internet connection failed, status code {0}.".format(
-            e.response.status_code))
-        connection_check = False
-
-    except requests.ConnectionError:
-        print("ERROR: No internet connection available.")
-        connection_check = False
-
-    return(data, connection_check)
+from domain.crossref import get_article_from_doi
 
 
-def reorganize_article_data_from_orcid_api(record):
-
-    raw_article_list = record['activities-summary']['works']['group']
+def reorganize_articles_data(orcid_record):
 
     article_list = list()
+
+    raw_article_list = orcid_record['activities-summary']['works']['group']
 
     for article_index in range(len(raw_article_list)):
 
@@ -65,7 +42,7 @@ def reorganize_article_data_from_orcid_api(record):
                 for external_id in range(len(external_ids)):
                     if external_ids[external_id]['external-id-type'] == "doi":
                         doi = external_ids[external_id]['external-id-value']
-                        url = "https://dx.doi.org/" + doi                           
+                        url = "http://dx.doi.org/" + doi                           
 
             # 2/ the article's title
             title = str()
@@ -79,44 +56,44 @@ def reorganize_article_data_from_orcid_api(record):
             # 4/ the publication date
             publication_year = str()
             if raw_article_list[article_index]['work-summary'][duplicate_chosen]['publication-date']:
-                publication_year = raw_article_list[article_index]['work-summary'][duplicate_chosen]['publication-date']['year']['value']
+                publication_year = int(raw_article_list[article_index]['work-summary'][duplicate_chosen]['publication-date']['year']['value'])
 
             article_list.append({'doi':              doi, 
-                                 'title':            title,
-                                 'journal_name':     journal_name,
-                                 'publication_year': publication_year,
-                                 'url':              url})
+                                'title':            title,
+                                'journal_name':     journal_name,
+                                'publication_year': publication_year,
+                                'url':              url,
+                                'is_valid':         False})
 
     return(article_list)
 
 
-def reorganize_person_data_from_orcid_api(record, article_list):
-
-    orcid_data = {'first_name': record['person']['name']['given-names']['value'],
-                  'last_name':  record['person']['name']['family-name']['value'],
-                  'articles':   article_list} 
-
-    return(orcid_data)
+def reorganize_person_data(orcid_record):
+    first_name = orcid_record['person']['name']['given-names']['value']
+    last_name = orcid_record['person']['name']['family-name']['value']
+    return(first_name, last_name)
 
 
-def record_from_orcid_id(orcid_id):
+def get_articles_from_orcid_id(orcid_id):
 
-    content = dict()
+    articles = {"articles": list()}
 
     url_orcid = 'https://pub.orcid.org/v3.0/{}/record'.format(orcid_id)
-
     headers={"Accept": "application/json",
             "Authorization": "OAuth 7d33792c-ca06-4905-84b1-b061e498731c"}
+    response = requests.get(url_orcid, headers=headers)
 
-    orcid_record, connection_check = request_api(url = url_orcid, headers=headers)
+    if response.status_code == 200:
 
-    if connection_check:
+        orcid_record = json.loads(response.content.decode('utf-8'))
 
-        article_list = reorganize_article_data_from_orcid_api(orcid_record)
-        orcid_data = reorganize_person_data_from_orcid_api(orcid_record, article_list)
+        articles["articles"] = reorganize_articles_data(orcid_record)
+        first_name, last_name = reorganize_person_data(orcid_record)
 
-        for article_index in range(min(len(orcid_data['articles']), 3)):
-            content.update({'publication' + str(article_index + 1) : \
-                orcid_data['articles'][article_index]['url']})
+        for article_index in range(len(articles['articles'])):
 
-    return(content)
+            articles['articles'][article_index] = get_article_from_doi(articles['articles'][article_index]['doi'],
+                                                        articles['articles'][article_index], first_name, last_name)
+
+    return(articles)
+    
