@@ -4,6 +4,7 @@ from sqlalchemy_api_handler import ApiHandler
 from time import sleep
 from sqlalchemy.exc import OperationalError
 
+from models import import_models
 from models.utils.db import db
 from utils.health import check_database_health
 
@@ -13,6 +14,9 @@ flask_app = Flask(__name__)
 flask_app.secret_key = os.environ.get('FLASK_SECRET', '1%BCy22xV8c8+=dd')
 flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
 flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+flask_app.app_context().push()
+import_models()
 
 is_database_health_ok = False
 while is_database_health_ok == False:
