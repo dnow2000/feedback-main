@@ -22,7 +22,4 @@ def import_models():
     from models.verdict_user import VerdictUser
     from models.verdict_tag import VerdictTag
 
-    from models.keywords import import_keywords
-    import_keywords()
-
     return list(locals().values())

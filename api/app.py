@@ -5,6 +5,7 @@ from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
 from models import import_models
+from models.keywords import import_keywords
 from models.utils.db import db
 from models.utils.install import install_models
 from routes import import_routes
@@ -43,6 +44,7 @@ flask_app.app_context().push()
 import_models()
 if IS_DEVELOPMENT:
     install_models()
+import_keywords()
 import utils.login_manager
 import utils.nltk_downloader
 import_routes()
