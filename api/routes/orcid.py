@@ -1,6 +1,7 @@
-from flask import current_app as app, jsonify, request
+from flask import current_app as app, jsonify
 
 from domain.orcid import get_publications_from_orcid_id
+
 
 # SOME ORCID IDs TO TRY
 # Me (0 works):                        '0000-0002-8972-9425'
@@ -17,4 +18,7 @@ def get_orcid(orcid_id):
 
     publications = get_publications_from_orcid_id(orcid_id)
 
-    return jsonify(publications)
+    return jsonify({
+        'orcidId': orcid_id,
+        'publications': publications
+    })

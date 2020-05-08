@@ -39,13 +39,19 @@ def signout():
 
 @app.route('/users/signup', methods=['POST'])
 def signup():
+
+    print(request.form, request.form.get('publications')[0])
+
+
     check_thumb_in_request(files=request.files, form=request.form)
 
     user_dict = dict({}, **request.form)
     if 'thumb' in user_dict:
         del user_dict['thumb']
 
+
     publications = []
+    """
     for index in [1, 2, 3]:
         publication_key = 'publication{}'.format(index)
         if publication_key in request.form:
@@ -54,6 +60,13 @@ def signup():
             if not publication:
                 publication = Content(url=publication_url)
                 publications.append(publication)
+    """
+
+
+
+
+
+
 
     thumb = read_thumb(files=request.files, form=request.form)
     check_thumb_quality(thumb)
