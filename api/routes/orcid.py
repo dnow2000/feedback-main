@@ -14,13 +14,7 @@ from domain.orcid import get_articles_from_orcid_id
 
 @app.route('/orcid/<orcid_id>')
 def get_orcid(orcid_id):
-    articles = get_articles_from_orcid_id(orcid_id)
 
-    valid_articles = {"articles": [article for article in articles["articles"] if article['is_valid']]}
+    publications = get_articles_from_orcid_id(orcid_id)
 
-    articles_to_display = dict()
-    for article_index in range(min(len(valid_articles['articles']), 3)):
-        articles_to_display.update({'publication' + str(article_index + 1) : \
-            valid_articles['articles'][article_index]['url']})
-
-    return jsonify(articles_to_display)
+    return jsonify(publications)

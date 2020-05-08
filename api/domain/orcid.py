@@ -76,7 +76,7 @@ def reorganize_person_data(orcid_record):
 
 def get_articles_from_orcid_id(orcid_id):
 
-    articles = {"articles": list()}
+    publications = {"publications": list()}
 
     url_orcid = 'https://pub.orcid.org/v3.0/{}/record'.format(orcid_id)
     headers={"Accept": "application/json",
@@ -87,13 +87,13 @@ def get_articles_from_orcid_id(orcid_id):
 
         orcid_record = json.loads(response.content.decode('utf-8'))
 
-        articles["articles"] = reorganize_articles_data(orcid_record)
+        publications["publications"] = reorganize_articles_data(orcid_record)
         first_name, last_name = reorganize_person_data(orcid_record)
 
-        for article_index in range(len(articles['articles'])):
+        for article_index in range(len(publications['publications'])):
 
-            articles['articles'][article_index] = get_article_from_doi(articles['articles'][article_index]['doi'],
-                                                        articles['articles'][article_index], first_name, last_name)
+            publications['publications'][article_index] = get_article_from_doi(publications['publications'][article_index]['doi'],
+                                                        publications['publications'][article_index], first_name, last_name)
 
-    return(articles)
+    return(publications)
     
