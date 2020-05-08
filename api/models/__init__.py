@@ -11,10 +11,13 @@ def import_models():
     from models.review import Review
     from models.review_tag import ReviewTag
     from models.role import Role
+    from models.scene import Scene
+    from models.scene_tag import SceneTag
     from models.scope import Scope
     from models.tag import Tag
     from models.user import User
     from models.user_article import UserArticle
+    from models.user_scene import UserScene
     from models.user_publication import UserPublication
     from models.user_session import UserSession
     from models.user_tag import UserTag

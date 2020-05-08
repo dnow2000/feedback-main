@@ -10,7 +10,7 @@ from sqlalchemy_api_handler import ApiHandler
 from models.utils.db import Model
 
 
-class SentimentType(enum.Enum):
+class StanceType(enum.Enum):
     ENDORSEMENT = {
         'label': 'endorsement',
         'value': 1
@@ -28,24 +28,33 @@ class SentimentType(enum.Enum):
 class Appearance(ApiHandler,
                  Model):
 
+    sceneId = Column(BigInteger(),
+                     ForeignKey('scene.id'),
+                     nullable=False,
+                     index=True)
+
+    scene = relationship('Scene',
+                         foreign_keys=[sceneId],
+                         backref='appearances')
+
+
     claimId = Column(BigInteger(),
-                    ForeignKey('claim.id'),
-                    nullable=False,
-                    index=True)
+                     ForeignKey('claim.id'),
+                     nullable=False,
+                     index=True)
 
     claim = relationship('Claim',
                          foreign_keys=[claimId],
                          backref='appearances')
 
-    sentiment = Column(Enum(SentimentType))
+    stance = Column(Enum(StanceType))
 
-    source = Column(JSON())
 
-    userId = Column(BigInteger(),
-                    ForeignKey('user.id'),
-                    nullable=False,
-                    index=True)
+    testifierUserId = Column(BigInteger(),
+                             ForeignKey('user.id'),
+                             nullable=False,
+                             index=True)
 
-    user = relationship('User',
-                        foreign_keys=[userId],
-                        backref='appearances')
+    testifierUser = relationship('User',
+                                 foreign_keys=[testifierUserId],
+                                 backref='appearances')
