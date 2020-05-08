@@ -46,9 +46,10 @@ export const orcidDecorator = createDecorator(
       if (!record) {
         return {}
       }
-
-      console.log(record.values)
-      return Object.assign({}, record.values, formValues)
+      return {
+        ...record.values,
+        ...formValues
+      }
     }
   }
 )
