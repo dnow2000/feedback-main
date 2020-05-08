@@ -17,7 +17,7 @@ export default ({ publication }) => {
 
 
   return (
-    <div className="publication-field">
+    <div className="publication-item">
       <Icon
         name={is_valid ? 'tick.png' : 'cross.png'}
       />
@@ -33,7 +33,13 @@ export default ({ publication }) => {
         ))}
       </ul>
       <p className="publication-doi">
-        DOI: <a href={url} target="_blank">{doi}</a>
+        DOI: <a
+          href={url}
+          rel="noopener noreferrer"
+          target="_blank"
+          >
+            {doi}
+          </a>
       </p>
     </div>
   )

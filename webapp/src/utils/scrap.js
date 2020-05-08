@@ -23,9 +23,7 @@ export const getScrap = createSelector(
           values: null
         }
       }
-
-      const body = await response.json()
-      return { values: body }
+      return response.json()
 
     } catch (error) {
 
@@ -44,7 +42,7 @@ export const scrapDecorator = createDecorator(
     updates: async (url, urlKey, formValues)  => {
       const scrap = await getScrap(url)
       if (!scrap) return {}
-      return { ...scrap.values, ...formValues }
+      return { ...scrap, ...formValues }
     }
   }
 )
