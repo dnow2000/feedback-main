@@ -60,6 +60,7 @@ class Article(ApiHandler,
         return amount
 
 
+
 @as_dict.register(Article)
 def _(article, column=None, includes: Iterable = ()):
     article_dict = as_dict.registry[ApiHandler](article, includes=includes)

@@ -3,6 +3,7 @@ from utils.config import IS_DEVELOPMENT
 
 def import_routes():
     import routes.appearances
+    import routes.author_articles
     import routes.articles
     import routes.claims
     import routes.evaluations
@@ -16,10 +17,9 @@ def import_routes():
     import routes.sign
     import routes.tags
     import routes.trendings
-    import routes.user_articles
     import routes.users
     import routes.verdicts
-    import routes.verdict_users
+    import routes.verdict_reviewers
     import routes.wikidata
 
     import routes.health

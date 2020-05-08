@@ -14,10 +14,10 @@ def create_verdict_tags():
     verdict_tags = []
 
     article = Article.query.filter_by(url='https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says').one()
-    user = User.query.filter_by(email='{}test.editor0@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)).one()
+    editor = User.query.filter_by(email='{}test.editor0@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)).one()
     verdict = Verdict.query.filter_by(
         article=article,
-        user=user
+        editor=editor
     ).one()
     tag = Tag.query.filter_by(text='inaccurate').one()
     verdict_tags.append(VerdictTag(

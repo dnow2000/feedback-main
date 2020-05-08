@@ -27,14 +27,14 @@ class Verdict(ApiHandler,
 
     comment = Column(Text(), nullable=True)
 
-    userId = Column(BigInteger(),
-                    ForeignKey('user.id'),
-                    nullable=False,
-                    index=True)
+    editorId = Column(BigInteger(),
+                      ForeignKey('user.id'),
+                      nullable=False,
+                      index=True)
 
-    user = relationship('User',
-                        foreign_keys=[userId],
-                        backref='verdicts')
+    editor = relationship('User',
+                          foreign_keys=[editorId],
+                          backref='verdics')
 
     @property
     def reviews(self):

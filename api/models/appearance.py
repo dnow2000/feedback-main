@@ -7,6 +7,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
+from models.mixins import HasScienceFeedbackMixin
 from models.utils.db import Model
 
 
@@ -26,7 +27,8 @@ class StanceType(enum.Enum):
 
 
 class Appearance(ApiHandler,
-                 Model):
+                 Model,
+                 HasScienceFeedbackMixin):
 
     sceneId = Column(BigInteger(),
                      ForeignKey('scene.id'),
@@ -50,11 +52,11 @@ class Appearance(ApiHandler,
     stance = Column(Enum(StanceType))
 
 
-    testifierUserId = Column(BigInteger(),
-                             ForeignKey('user.id'),
-                             nullable=False,
-                             index=True)
+    testifierId = Column(BigInteger(),
+                         ForeignKey('user.id'),
+                         nullable=False,
+                         index=True)
 
-    testifierUser = relationship('User',
-                                 foreign_keys=[testifierUserId],
-                                 backref='appearances')
+    testifier = relationship('User',
+                             foreign_keys=[testifierId],
+                             backref='appearances')

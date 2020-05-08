@@ -5,16 +5,16 @@ from sqlalchemy_api_handler import ApiHandler
 from models.utils.db import Model
 
 
-class UserPublication(ApiHandler,
+class ReviewerPublication(ApiHandler,
                       Model):
 
-    userId = Column(BigInteger(),
-                    ForeignKey('user.id'),
-                    primary_key=True)
+    reviewerId = Column(BigInteger(),
+                            ForeignKey('user.id'),
+                            primary_key=True)
 
-    user = relationship('User',
-                        foreign_keys=[userId],
-                        backref=backref("userPublications"))
+    reviewer = relationship('User',
+                                foreign_keys=[reviewerId],
+                                backref=backref('reviewerPublications'))
 
     publicationId = Column(BigInteger(),
                            ForeignKey('publication.id'),
@@ -22,4 +22,4 @@ class UserPublication(ApiHandler,
 
     publication = relationship('Publication',
                                foreign_keys=[publicationId],
-                               backref=backref("userPublications"))
+                               backref=backref('reviewerPublications'))

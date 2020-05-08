@@ -18,6 +18,7 @@ class RoleType(enum.Enum):
         return dict_value
 
     admin = 'admin'
+    author = 'author'
     editor = 'editor'
     guest = 'guest'
     reviewer = 'reviewer'

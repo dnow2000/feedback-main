@@ -12,7 +12,7 @@ from tests.utils.clean import with_clean_all_database
 
 @pytest.mark.standalone
 @with_clean_all_database
-def when_sync_all_is_a_success(app):
+def when_sync_is_a_success(app):
     # when
     sync()
 

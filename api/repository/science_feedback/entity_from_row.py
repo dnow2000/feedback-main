@@ -18,6 +18,11 @@ def appearance_from_row(row):
         return
     appearance_dict['claim'] = claim
 
+    testifier = User.query.filter_by(scienceFeedbackId=row['Verified by'][0]).first()
+    if not testifier:
+        return
+    appearance_dict['testifier'] = user
+
     scene_dict = { 'url': row['url'] }
     scene = Scene.create_or_modify(scene_dict, search_by=['url'])
     appearance_dict['scene'] = scene

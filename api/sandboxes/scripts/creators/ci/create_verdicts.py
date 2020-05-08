@@ -19,9 +19,9 @@ def create_verdicts():
     verdicts.append(Verdict(
         article=article,
         comment='{"blocks":[{"key":"2l86g","text":"C\'est abusé, voici mon verdict lol","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}],"entityMap":{}}',
+        editor=user,
         evaluation=evaluation,
         rating=evaluation_value,
-        user=user
     ))
 
     ApiHandler.save(*verdicts)

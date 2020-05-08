@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from sqlalchemy_api_handler import ApiHandler
 
 from models import import_models
+from models.keywords import import_keywords
 from models.utils.db import db
 from models.utils.install import install_models
 from routes import import_routes
@@ -54,6 +55,7 @@ def app():
     flask_app.app_context().push()
     import_models()
     install_models()
+    import_keywords()
     import utils.login_manager
     import_routes()
 

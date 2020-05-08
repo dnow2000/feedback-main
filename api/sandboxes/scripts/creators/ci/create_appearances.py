@@ -12,21 +12,21 @@ def create_appearances():
 
     claim = Claim.query.filter_by(text='global warming is caused by solar cycle').one()
     scene = Scene.query.filter_by(title='Daily Mail inflates disagreement between scientists about data handling to make unsupported accusation of data manipulation').one()
-    user = User.query.filter_by(email="{}test.testifier0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
+    testifier = User.query.filter_by(email="{}test.testifier0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     appearances.append(Appearance(
         claim=claim,
         scene=scene,
         stance=StanceType.ENDORSEMENT,
-        testifierUser=user
+        testifier=testifier
     ))
 
     claim = Claim.query.filter_by(text='clem is the best parapentiste boy').one()
     scene = Scene.query.filter_by(title='Cocorico, Fred Poulet revient à la chanson').one()
-    user = User.query.filter_by(email="{}test.testifier1@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
+    testifier = User.query.filter_by(email="{}test.testifier1@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     appearances.append(Appearance(
         claim=claim,
         scene=scene,
-        testifierUser=user
+        testifier=testifier
     ))
 
     ApiHandler.save(*appearances)
