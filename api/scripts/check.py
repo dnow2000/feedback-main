@@ -6,7 +6,7 @@ from sqlalchemy.exc import OperationalError
 
 from models import import_models
 from models.utils.db import db
-from utils.health import check_database_health
+from repository.health import check_database_health
 
 SLEEP_TIME = 1
 
