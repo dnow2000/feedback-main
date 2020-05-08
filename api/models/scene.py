@@ -26,9 +26,9 @@ class SceneType(enum.Enum):
         }
         return dict_value
 
-    article = "article"
-    post = "post"
-    video = "video"
+    article = 'article'
+    post = 'post'
+    video = 'video'
 
 
 class Scene(ApiHandler,
@@ -41,7 +41,7 @@ class Scene(ApiHandler,
             VersionedMixin):
 
 
-    archiveUrl = Column(String(220), nullable=False, unique=True)
+    archiveUrl = Column(String(220), unique=True)
 
     authors = Column(Text())
 

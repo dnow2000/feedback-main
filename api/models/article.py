@@ -29,8 +29,8 @@ class Article(ApiHandler,
               VersionedMixin):
 
 
-    archiveUrl = Column(String(220), nullable=False, unique=True)
-    
+    archiveUrl = Column(String(220), unique=True)
+
     authors = Column(Text())
 
     isReviewable = Column(Boolean())

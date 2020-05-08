@@ -2,6 +2,7 @@ from models.appearance import Appearance
 from models.article import Article
 from models.claim import Claim
 from models.review import Review
+from models.scene import Scene
 from models.user import User
 from utils.config import APP_NAME, TLD
 from utils.credentials import random_password

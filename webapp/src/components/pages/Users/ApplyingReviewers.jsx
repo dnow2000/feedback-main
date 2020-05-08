@@ -9,7 +9,7 @@ export default () => {
 
   const config = useMemo(() => ({
     ...userConfig,
-    apiPath: "/users?roles=reviewer",
+    apiPath: "/users?applyingReviewers=true",
     activityTag: "applying-reviewers"
   }), [])
 

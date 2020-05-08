@@ -17,7 +17,7 @@ def create_appearances():
         claim=claim,
         scene=scene,
         stance=StanceType.ENDORSEMENT,
-        user=user
+        testifierUser=user
     ))
 
     claim = Claim.query.filter_by(text='clem is the best parapentiste boy').one()
@@ -26,7 +26,7 @@ def create_appearances():
     appearances.append(Appearance(
         claim=claim,
         scene=scene,
-        user=user
+        testifierUser=user
     ))
 
     ApiHandler.save(*appearances)
