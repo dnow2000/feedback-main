@@ -1,34 +1,34 @@
 import requests
 import json
 
-from domain.crossref import get_article_from_doi
+from domain.crossref import get_publication_from_doi
 
 
-def reorganize_articles_data(orcid_record):
+def reorganize_publications_data(orcid_record):
 
-    article_list = list()
+    publication_list = list()
 
-    raw_article_list = orcid_record['activities-summary']['works']['group']
+    raw_publication_list = orcid_record['activities-summary']['works']['group']
 
-    for article_index in range(len(raw_article_list)):
+    for publication_index in range(len(raw_publication_list)):
 
         # We keep only the person's works that are "journal-article", and not "conference-paper" or "other"...
-        if raw_article_list[article_index]['work-summary'][0]['type'] == 'journal-article':
+        if raw_publication_list[publication_index]['work-summary'][0]['type'] == 'journal-article':
 
             # There can have duplicate versions for the same article from different sources 
             # (Crossref, ResearchID, the person itself) so we first need to decide on which duplicate to select.
             # If there is only one information source, we take this:
             duplicate_chosen = 0
             # If there are multiple sources, we take first the Crossref or else the ResearchID:
-            if raw_article_list[article_index]['work-summary'][0]['type'] == 'journal-article':
-                if len(raw_article_list[article_index]['work-summary']) > 1:
-                    for duplicate_id in range(len(raw_article_list[article_index]['work-summary'])):
-                        if raw_article_list[article_index]['work-summary'][duplicate_id]['source']:
-                            if raw_article_list[article_index]['work-summary'][duplicate_id]['source']['source-name']['value'] == 'ResearcherID':
+            if raw_publication_list[publication_index]['work-summary'][0]['type'] == 'journal-article':
+                if len(raw_publication_list[publication_index]['work-summary']) > 1:
+                    for duplicate_id in range(len(raw_publication_list[publication_index]['work-summary'])):
+                        if raw_publication_list[publication_index]['work-summary'][duplicate_id]['source']:
+                            if raw_publication_list[publication_index]['work-summary'][duplicate_id]['source']['source-name']['value'] == 'ResearcherID':
                                 duplicate_chosen = duplicate_id
-                    for duplicate_id in range(len(raw_article_list[article_index]['work-summary'])):
-                        if raw_article_list[article_index]['work-summary'][duplicate_id]['source']:
-                            if raw_article_list[article_index]['work-summary'][duplicate_id]['source']['source-name']['value'] == 'Crossref':
+                    for duplicate_id in range(len(raw_publication_list[article_index]['work-summary'])):
+                        if raw_publication_list[publication_index]['work-summary'][duplicate_id]['source']:
+                            if raw_publication_list[publication_index]['work-summary'][duplicate_id]['source']['source-name']['value'] == 'Crossref':
                                 duplicate_chosen = duplicate_id
                 
 
@@ -37,7 +37,7 @@ def reorganize_articles_data(orcid_record):
             doi = str()
             url = str()
             # In the ORCid API, this value can be equal to None, but there also can be several external ids:
-            external_ids = raw_article_list[article_index]['external-ids']['external-id']
+            external_ids = raw_publication_list[publication_index]['external-ids']['external-id']
             if external_ids:
                 for external_id in range(len(external_ids)):
                     if external_ids[external_id]['external-id-type'] == "doi":
@@ -46,26 +46,27 @@ def reorganize_articles_data(orcid_record):
 
             # 2/ the article's title
             title = str()
-            title = raw_article_list[article_index]['work-summary'][duplicate_chosen]['title']['title']['value']
+            title = raw_publication_list[publication_index]['work-summary'][duplicate_chosen]['title']['title']['value']
 
             # 3/ the journal's name
             journal_name = str()
-            if raw_article_list[article_index]['work-summary'][duplicate_chosen]['journal-title']:
-                journal_name = raw_article_list[article_index]['work-summary'][duplicate_chosen]['journal-title']['value']
+            if raw_publication_list[publication_index]['work-summary'][duplicate_chosen]['journal-title']:
+                journal_name = raw_publication_list[publication_index]['work-summary'][duplicate_chosen]['journal-title']['value']
 
             # 4/ the publication date
             publication_year = str()
-            if raw_article_list[article_index]['work-summary'][duplicate_chosen]['publication-date']:
-                publication_year = int(raw_article_list[article_index]['work-summary'][duplicate_chosen]['publication-date']['year']['value'])
+            if raw_publication_list[publication_index]['work-summary'][duplicate_chosen]['publication-date']:
+                publication_year = int(raw_publication_list[publication_index]['work-summary'][duplicate_chosen]['publication-date']['year']['value'])
 
-            article_list.append({'doi':              doi, 
+            publication_list.append({'doi':              doi, 
                                 'title':            title,
                                 'journal_name':     journal_name,
                                 'publication_year': publication_year,
+                                'author_list':      [],
                                 'url':              url,
                                 'is_valid':         False})
 
-    return(article_list)
+    return(publication_list)
 
 
 def reorganize_person_data(orcid_record):
@@ -74,7 +75,7 @@ def reorganize_person_data(orcid_record):
     return(first_name, last_name)
 
 
-def get_articles_from_orcid_id(orcid_id):
+def get_publications_from_orcid_id(orcid_id):
 
     publications = {"publications": list()}
 
@@ -87,13 +88,13 @@ def get_articles_from_orcid_id(orcid_id):
 
         orcid_record = json.loads(response.content.decode('utf-8'))
 
-        publications["publications"] = reorganize_articles_data(orcid_record)
+        publications["publications"] = reorganize_publications_data(orcid_record)
         first_name, last_name = reorganize_person_data(orcid_record)
 
-        for article_index in range(len(publications['publications'])):
+        for publication_index in range(len(publications['publications'])):
 
-            publications['publications'][article_index] = get_article_from_doi(publications['publications'][article_index]['doi'],
-                                                        publications['publications'][article_index], first_name, last_name)
+            publications['publications'][publication_index] = get_publication_from_doi(publications['publications'][publication_index]['doi'],
+                                                        publications['publications'][publication_index], first_name, last_name)
 
     return(publications)
     

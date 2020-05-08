@@ -1,37 +1,39 @@
 import requests
+
 import json
 import time
 
 
-def reorganize_article_data(crossref_record):
+def reorganize_publication_data(crossref_record, doi):
 
-    raw_article = crossref_record['message']
+    raw_publication = crossref_record['message']
 
     title = str()
-    if raw_article['title']:
-        title = raw_article['title'][0]
+    if raw_publication['title']:
+        title = raw_publication['title'][0]
 
     journal_name = str()
-    if raw_article['container-title']:
-        journal_name = raw_article['container-title'][0]
+    if raw_publication['container-title']:
+        journal_name = raw_publication['container-title'][0]
 
     publication_year = str()
-    if raw_article['issued']:
-        publication_year = raw_article['issued']['date-parts'][0][0]
+    if raw_publication['issued']:
+        publication_year = raw_publication['issued']['date-parts'][0][0]
 
     author_list = list()
-    if raw_article['author']:
-        for author_index in range(len(raw_article['author'])):
+    if raw_publication['author']:
+        for author_index in range(len(raw_publication['author'])):
             # First test that 'given' and 'family' are both valid keys for this author dictionary:
-            if all(x in raw_article['author'][author_index] for x in ['given', 'family']):
-                author_list.append(raw_article['author'][author_index]['given'] + ' ' + 
-                                   raw_article['author'][author_index]['family'])
+            if all(x in raw_publication['author'][author_index] for x in ['given', 'family']):
+                author_list.append(raw_publication['author'][author_index]['given'] + ' ' + 
+                                   raw_publication['author'][author_index]['family'])
 
     url = str()
-    if raw_article['URL']:
-        url = raw_article['URL']
+    if raw_publication['URL']:
+        url = raw_publication['URL']
 
-    article = {
+    publication = {
+        'doi':              doi,
         'title':            title,
         'journal_name':     journal_name,
         'publication_year': publication_year,
@@ -40,7 +42,7 @@ def reorganize_article_data(crossref_record):
         'is_valid':         False
         }
 
-    return(article)
+    return(publication)
 
 
 def find_if_date_is_valid(publication_year):
@@ -67,7 +69,7 @@ def find_author_good_position(author_position, length_list):
     return False
 
 
-def get_article_from_doi(doi, article, first_name, last_name):
+def get_publication_from_doi(doi, publication, first_name, last_name):
 
     is_doi_valid = is_date_valid = is_author_in_list = is_author_good_position = False
 
@@ -79,17 +81,17 @@ def get_article_from_doi(doi, article, first_name, last_name):
             is_doi_valid = True
 
             crossref_record = json.loads(response.content.decode('utf-8'))
-            article = reorganize_article_data(crossref_record)
+            publication = reorganize_publication_data(crossref_record, doi)
 
-            is_date_valid = find_if_date_is_valid(article['publication_year'])
-            is_author_in_list, author_position = find_author_in_list_and_where(article['author_list'],
+            is_date_valid = find_if_date_is_valid(publication['publication_year'])
+            is_author_in_list, author_position = find_author_in_list_and_where(publication['author_list'],
                                                     first_name, last_name)
             if is_author_in_list:
                 is_author_good_position = find_author_good_position(author_position, 
-                                            len(article['author_list']))
+                                            len(publication['author_list']))
 
 
     if is_doi_valid and is_date_valid and is_author_in_list and is_author_good_position:
-        article['is_valid'] = True
+        publication['is_valid'] = True
 
-    return(article)
+    return(publication)
