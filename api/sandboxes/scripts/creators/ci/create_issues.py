@@ -2,22 +2,22 @@ def create_issues():
     # TODO
     issues = [
         {
-            "label": "Accuracy"
+            'label': 'Accuracy'
         },
         {
-            "label": "Explanation"
+            'label': 'Explanation'
         },
         {
-            "label": "Context"
+            'label': 'Context'
         },
         {
-            "label": "Representation of the scientific process"
+            'label': 'Representation of the scientific process'
         },
         {
-            "label": "Sources"
+            'label': 'Sources'
         },
         {
-            "label": "Precision or clarity of language"
+            'label': 'Precision or clarity of language'
         }
     ]
     return issues

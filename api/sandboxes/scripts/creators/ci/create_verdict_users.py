@@ -10,7 +10,7 @@ from utils.config import APP_NAME, COMMAND_NAME, TLD
 def create_verdict_users():
     logger.info('create_verdict_users')
 
-    verdict_users_by_name = {}
+    verdict_users = []
 
     article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     editor_user = User.query.filter_by(email="{}test.editor0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
@@ -19,13 +19,11 @@ def create_verdict_users():
         user=editor_user
     ).one()
     reviewer_user = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
-    verdict_users_by_name["Great Barrier / reviewer 0"] = VerdictUser(
+    verdict_users.append(VerdictUser(
         verdict=verdict,
         user=reviewer_user
-    )
+    ))
 
-    ApiHandler.save(*verdict_users_by_name.values())
+    ApiHandler.save(*verdict_users)
 
-    logger.info('created {} verdict_users_by_name'.format(len(verdict_users_by_name)))
-
-    return verdict_users_by_name
+    logger.info('created {} verdict_users_by_name'.format(len(verdict_users)))

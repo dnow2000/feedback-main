@@ -9,7 +9,11 @@ from sandboxes.scripts.creators.ci.create_tags import *
 from sandboxes.scripts.creators.ci.create_review_tags import *
 from sandboxes.scripts.creators.ci.create_reviews import *
 from sandboxes.scripts.creators.ci.create_roles import *
+from sandboxes.scripts.creators.ci.create_scenes import *
+from sandboxes.scripts.creators.ci.create_scene_tags import *
 from sandboxes.scripts.creators.ci.create_scopes import *
+from sandboxes.scripts.creators.ci.create_user_articles import *
+from sandboxes.scripts.creators.ci.create_user_scenes import *
 from sandboxes.scripts.creators.ci.create_user_tags import *
 from sandboxes.scripts.creators.ci.create_users import *
 from sandboxes.scripts.creators.ci.create_verdicts import *
@@ -26,8 +30,12 @@ def create_sandbox(with_capture=False):
     create_appearances()
     create_user_tags()
     create_roles()
+    create_scenes(with_capture=with_capture)
+    create_scene_tags()
     create_articles(with_capture=with_capture)
     create_article_tags()
+    create_user_articles()
+    create_user_scenes()
     create_evaluations()
     create_reviews()
     create_review_tags()
