@@ -1,26 +1,39 @@
 import React from 'react'
 
 
-export default class Publication extends React.Component {
-  render() {
-    let articleMark;
-    if (this.props.article.is_valid) {
-      articleMark = <img src={tick} className="articleMark" alt="tick" />;
-    } else {
-      articleMark = <img src={cross} className="articleMark" alt="cross" />;
-    }
-    return (
-      <div>
-        {articleMark}
-        <h3>
-          {this.props.article.title}
-        </h3>
-        <p>{this.props.article.journal_name} ({this.props.article.publication_year})</p>
-        <ul>
-          {this.props.article.author_list.map((value) => {return <li>{value}</li>})}
-        </ul>
-        <p>DOI: <a href={this.props.article.url} target="_blank">{this.props.article.doi}</a></p>
-      </div>
-    );
-  }
+import Icon from 'components/layout/Icon'
+
+
+export default ({ publication }) => {
+  const {
+    author_list,
+    doi,
+    is_valid,
+    journal_name,
+    publication_year,
+    title,
+    url
+  } = publication || {}
+
+  return (
+    <div className="publication-field">
+      <Icon
+        name={is_valid ? 'tick.png' : 'cross.png'}
+      />
+      <h3 className="publication-header">
+        {title}
+      </h3>
+      <p className="publication-info">{journal_name} ({publication_year})</p>
+      <ul className="publication-authors">
+        {(author_list || []).map(authorName => (
+          <li key={authorName}>
+            {authorName}
+          </li>
+        ))}
+      </ul>
+      <p className="publication-doi">
+        DOI: <a href={url} target="_blank">{doi}</a>
+      </p>
+    </div>
+  )
 }

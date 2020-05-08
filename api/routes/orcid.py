@@ -1,6 +1,6 @@
 from flask import current_app as app, jsonify, request
 
-from domain.orcid import get_articles_from_orcid_id
+from domain.orcid import get_publications_from_orcid_id
 
 # SOME ORCID IDs TO TRY
 # Me (0 works):                        '0000-0002-8972-9425'
@@ -15,6 +15,6 @@ from domain.orcid import get_articles_from_orcid_id
 @app.route('/orcid/<orcid_id>')
 def get_orcid(orcid_id):
 
-    publications = get_articles_from_orcid_id(orcid_id)
+    publications = get_publications_from_orcid_id(orcid_id)
 
     return jsonify(publications)

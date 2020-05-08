@@ -28,7 +28,7 @@ export default () => {
           publication={publication}
         />
       ))}
-      <PublicationField />
+      {/*<PublicationField isNew />*/}
     </>
   )
 }
