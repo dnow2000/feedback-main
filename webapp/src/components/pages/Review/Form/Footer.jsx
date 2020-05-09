@@ -41,7 +41,7 @@ export default ({ onCancel }) => {
 
 
   return (
-    <div className="form-footer">
+    <div className="footer">
       {readOnly ? (
         <>
           <NavLink
@@ -84,7 +84,6 @@ export default ({ onCancel }) => {
 
         </>
       )}
-
     </div>
   )
 }

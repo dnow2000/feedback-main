@@ -53,7 +53,7 @@ export default () => {
 
 
   return (
-    <div className="form-fields">
+    <div className="fields">
       <HiddenField
         name="articleId"
         type="hidden"
