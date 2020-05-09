@@ -55,7 +55,7 @@ export default ({ user }) => {
 
   const handleRemoveUser = useCallback(() => {
     dispatch(requestData({
-      apiPath: '/verdictUsers',
+      apiPath: '/verdictReviewers',
       body: {
         userId,
         verdictId

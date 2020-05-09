@@ -5,10 +5,10 @@ function mapArgsToCacheKey(state, userId) {
 }
 
 const selectPublicationsByUserId = createCachedSelector(
-  state => state.data.userArticles,
+  state => state.data.authorArticles,
   (state, userId) => userId,
-  (userArticles, userId) => userArticles.filter(userArticle =>
-    userArticle.userId === userId)
+  (authorArticles, userId) => authorArticles.filter(authorArticle =>
+    authorArticle.userId === userId)
 )(mapArgsToCacheKey)
 
 export default selectPublicationsByUserId

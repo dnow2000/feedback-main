@@ -11,7 +11,7 @@ import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
 import Sources from 'components/pages/Sources'
-import UserContainer from 'components/pages/User/UserContainer'
+import User from 'components/pages/User'
 import Users from 'components/pages/Users'
 import Verdict from 'components/pages/Verdict'
 import Verdicts from 'components/pages/Verdicts'
@@ -74,9 +74,12 @@ const routes = [
     title: 'Reviews',
   },
   {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ accessRoleTypes: ['admin', 'editor'] }),
+    )(User),
     exact: true,
     path: '/users/:userId',
-    render: () => <UserContainer />,
     title: 'User',
   },
   {

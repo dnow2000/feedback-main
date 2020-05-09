@@ -14,15 +14,15 @@ export default ({ review }) => {
     comment,
     id: reviewId,
     rating,
-    userId
+    reviewerId
   } = review
 
 
   const tags = useSelector(state => selectTagsByReviewId(state, reviewId))
 
-  const user = useSelector(state =>
-    selectEntityByKeyAndId(state, 'users', userId)) || {}
-  const { publicName } = user
+  const reviewer = useSelector(state =>
+    selectEntityByKeyAndId(state, 'users', reviewerId)) || {}
+  const { publicName } = reviewer
 
 
   return (
@@ -31,11 +31,11 @@ export default ({ review }) => {
         <div className="flex-columns items-center">
           <a
             className="anchor flex-columns items-center mr12"
-            href={`/users/${userId}`}
+            href={`/users/${reviewerId}`}
             id='see-user'
           >
             <div className='mr12'>
-              <Avatar user={user} />
+              <Avatar user={reviewer} />
             </div>
             <div className="mr12">
               {publicName}

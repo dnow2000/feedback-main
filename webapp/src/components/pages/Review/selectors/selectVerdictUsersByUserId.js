@@ -1,14 +1,11 @@
 import createCachedSelector from 're-reselect'
 
-function mapArgsToCacheKey(state, userId) {
-  return userId || ''
-}
 
-export const selectVerdictUsersByUserId = createCachedSelector(
-  state => state.data.verdictUsers,
+const mapArgsToCacheKey = (state, userId) => userId || ''
+
+export default createCachedSelector(
+  state => state.data.verdictReviewers,
   (state, userId) => userId,
-  (verdictUsers, userId) =>
-    verdictUsers && verdictUsers.filter(verdictUser => verdictUser.userId === userId)
+  (verdictReviewers, userId) =>
+    verdictReviewers && verdictReviewers.filter(verdictReviewer => verdictReviewer.userId === userId)
 )(mapArgsToCacheKey)
-
-export default selectVerdictUsersByUserId

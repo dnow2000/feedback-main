@@ -1,15 +1,17 @@
 import classnames from 'classnames'
-import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
+import { useForm } from 'react-final-form'
 import { useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useFormidable } from 'with-react-formidable'
 
-const FormFooter = ({
-  canSubmit,
-  onCancel
-}) => {
+import { getCanSubmit } from 'utils/form'
+
+
+export default ({ onCancel }) => {
+
+  const { getState: getFormProps, reset } = useForm()
   const history = useHistory()
   const location = useLocation()
   const params = useParams()
@@ -21,16 +23,17 @@ const FormFooter = ({
     readOnly
   } = formidable
 
-
   const { isPending } = useSelector(state =>
     state.requests['/reviews']) || {}
+  const canSubmit = getCanSubmit({ isLoading: isPending, ...getFormProps() })
 
 
   const handleCancelClick = useCallback(() => {
+    reset()
     onCancel()
     const next = isCreatedEntity ? '/sources' : `/reviews/${reviewId}`
     history.push(next)
-  }, [onCancel, history, isCreatedEntity, reviewId])
+  }, [onCancel, history, isCreatedEntity, reset, reviewId])
 
   const handleModifyClick = useCallback(() => {
     history.push(modificationUrl)
@@ -85,14 +88,3 @@ const FormFooter = ({
     </div>
   )
 }
-
-FormFooter.defaultProps = {
-  canSubmit: false
-}
-
-FormFooter.propTypes = {
-  canSubmit: PropTypes.bool,
-  onCancel: PropTypes.func.isRequired
-}
-
-export default FormFooter

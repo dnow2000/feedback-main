@@ -2,15 +2,15 @@ import createCachedSelector from 're-reselect'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 
-const mapArgsToCacheKey = (state, userId, claimId) =>
-  `${userId || ''}/${claimId || ''}`
+const mapArgsToCacheKey = (state, userId, claimId) => claimId || ''
 
 
 export default createCachedSelector(
   state => state.data.apperances,
   selectCurrentUser,
   (state, claimId) => claimId,
-  (apperances, user, claimId) =>
+  (apperances, currentUser, claimId) =>
     apperances && apperances.find(appearance =>
-      appearance.claimId === claimId && appearance.userId === (user && user.id))
+      appearance.claimId === claimId &&
+      appearance.testifierId === (currentUser && currentUser.id))
 )(mapArgsToCacheKey)

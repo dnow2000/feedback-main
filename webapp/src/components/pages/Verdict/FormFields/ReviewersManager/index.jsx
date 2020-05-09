@@ -8,9 +8,9 @@ import Feeds from 'components/layout/Feeds/Feeds'
 import Icon from 'components/layout/Icon'
 import ReviewItem from 'components/layout/ReviewItem'
 import UserItem from 'components/layout/UserItem'
-import selectUsersByVerdictId from 'selectors/selectUsersByVerdictId'
+import selectReviewersByVerdictId from 'selectors/selectReviewersByVerdictId'
 
-import VerdictUserItem from './VerdictUserItem'
+import verdictReviewerItem from './VerdictReviewerItem'
 
 
 const defaultSelectedUserIds = []  // XXX @colas branch to existing
@@ -30,8 +30,8 @@ export default ({ onChange }) => {
   const [selectedUserIds, setSelectedUserIds] = useState(defaultSelectedUserIds)
 
 
-  const verdictUsers = useSelector(state =>
-    selectUsersByVerdictId(state, verdictId))
+  const verdictReviewers = useSelector(state =>
+    selectReviewersByVerdictId(state, verdictId))
   const verdict = useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
   const { articleId } = verdict || {}
@@ -97,15 +97,15 @@ export default ({ onChange }) => {
 
       }
       {
-        (verdictUsers && verdictUsers.length > 0) && (
+        (verdictReviewers && verdictReviewers.length > 0) && (
           <>
             <h2 className="subtitle">
               {"Selected Reviewers"}
             </h2>
-            {verdictUsers.map(verdictUser => (
-              <VerdictUserItem
-                key={verdictUser.id}
-                user={verdictUser}
+            {verdictReviewers.map(verdictReviewer => (
+              <verdictReviewerItem
+                key={verdictReviewer.id}
+                user={verdictReviewer}
               />))}
           </>)
       }

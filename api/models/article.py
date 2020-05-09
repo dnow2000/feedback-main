@@ -74,7 +74,7 @@ def _(article, column=None, includes: Iterable = ()):
         reviews = article_dict['reviews']
         article_dict['reviews'] = [
             review for review in article_dict['reviews']
-            if review['userId'] == humanized_user_id
+            if review['reviewerId'] == humanized_user_id
         ]
         if len(article_dict['reviews']) == 1:
             article_dict['reviews'] = reviews
