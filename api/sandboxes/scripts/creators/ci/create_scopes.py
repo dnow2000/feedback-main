@@ -9,39 +9,34 @@ from sandboxes.scripts.utils.tags import ARTICLE_TAGS, \
 def create_scopes():
     logger.info('create_scopes')
 
-    scopes_by_name = {}
-
-
-
+    scopes = []
 
     for article_tag in ARTICLE_TAGS:
         tag = Tag.query.filter_by(text=article_tag['text']).one()
-        scopes_by_name["article {}".format(article_tag)] = Scope(
+        scopes.append(Scope(
             tag=tag,
             type=ScopeType.article.value
-        )
+        ))
 
     for review_verdict_tag in REVIEW_VERDICT_TAGS:
         tag = Tag.query.filter_by(text=review_verdict_tag['text']).one()
-        scopes_by_name["review {}".format(review_verdict_tag)] = Scope(
+        scopes.append(Scope(
             tag=tag,
             type=ScopeType.review.value
-        )
+        ))
 
-        scopes_by_name["verdict {}".format(review_verdict_tag)] = Scope(
+        scopes.append(Scope(
             tag=tag,
             type=ScopeType.verdict.value
-        )
+        ))
 
     for user_tag in USER_TAGS:
         tag = Tag.query.filter_by(text=user_tag['text']).one()
-        scopes_by_name["review {}".format(user_tag)] = Scope(
+        scopes.append(Scope(
             tag=tag,
             type=ScopeType.user.value,
-        )
+        ))
 
-    ApiHandler.save(*scopes_by_name.values())
+    ApiHandler.save(*scopes)
 
-    logger.info('created {} scopes'.format(len(scopes_by_name)))
-
-    return scopes_by_name
+    logger.info('created {} scopes'.format(len(scopes)))

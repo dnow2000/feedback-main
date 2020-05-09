@@ -18,16 +18,18 @@ const TAGS_NAME = 'tagIds'
 const TAGS_PLACEHOLDER = ''
 
 
-const FormFields = () => {
+export default () => {
   const location = useLocation()
   const params = useParams()
   const { readOnly } = useFormidable(location, params)
+
 
   const evaluations = useSelector(state =>
     selectEvaluationsByType(state, 'article'))
 
   const tags = useSelector(state =>
     selectTagsByScopes(state, ['review']))
+
 
   const evaluationOptions = selectOptionsFromNameAndEntitiesAndPlaceholder(
     EVALUATIONS_NAME,
@@ -49,10 +51,20 @@ const FormFields = () => {
     'positivity'
   )
 
+
   return (
-    <div className="form-fields">
+    <div className="fields">
       <HiddenField
         name="articleId"
+        type="hidden"
+      />
+      <HiddenField
+        name="reviewerId"
+        required
+        type="hidden"
+      />
+      <HiddenField
+        name="sceneId"
         type="hidden"
       />
       <TexteditorField
@@ -81,6 +93,3 @@ const FormFields = () => {
     </div>
   )
 }
-
-
-export default FormFields

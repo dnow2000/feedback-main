@@ -1,4 +1,4 @@
-.form-footer {
+.footer {
   align-items: center;
   background-color: $grey-lighter;
   display: flex;
@@ -9,23 +9,16 @@
   bottom: 0;
   position: fixed;
 
-  #cancel-review,
-  #return-review,
-  #cancel-article,
-  #cancel-verdict
+  #cancel,
+  #return
   {
     @extend .button;
     @extend .button.is-secondary;
     margin-right: 2rem
   }
 
-  #create-review,
-  #modification-review,
-  #edit-article,
-  #submit-verdict,
-  #edit-verdict
-  #create-own-review,
-  #see-own-review
+  #modification,
+  #submit,
   {
     @extend .button;
     @extend .button.is-primary;

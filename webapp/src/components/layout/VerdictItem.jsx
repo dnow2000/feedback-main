@@ -26,15 +26,15 @@ const selectTruncatedReviewers = createSelector(
   selectReviewsByArticleIdAndVerdictId,
   reviews => {
     if (!reviews) return
-    const users = reviews.map(r => r.user)
-    if (users.length <= MAX_AVATARS) {
-      return users
+    const reviewers = reviews.map(review => review.reviewer)
+    if (reviewers.length <= MAX_AVATARS) {
+      return reviewers
     }
-    const usersToShow = users.slice(0, MAX_AVATARS)
-    const fakeUser = {number: users.length - usersToShow.length}
+    const reviewersToShow = reviewers.slice(0, MAX_AVATARS)
+    const fakeReviewer = {number: reviewers.length - reviewersToShow.length}
     return [
-      ...usersToShow,
-      fakeUser
+      ...reviewersToShow,
+      fakeReviewer
     ]
   }
 )
@@ -43,8 +43,8 @@ const selectTruncatedReviewers = createSelector(
 export default ({ verdict }) => {
   const {
     articleId,
-    id: verdictId,
-    userId: editorId
+    editorId,
+    id: verdictId
   } = verdict
 
 
@@ -93,12 +93,12 @@ export default ({ verdict }) => {
           </div>
           <div className="reviewers-container">
             <p className="reviewer-title">Reviewers</p>
-            {(truncatedReviewers || []).map(user => (
+            {(truncatedReviewers || []).map(reviewer => (
               <Avatar
                 className="avatar reviewer-avatar"
-                key={user.id}
-                number={user.number}
-                user={user}
+                key={reviewer.id}
+                number={reviewer.number}
+                user={reviewer}
               />
             ))}
           </div>

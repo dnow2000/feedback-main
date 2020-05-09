@@ -27,25 +27,25 @@ class Verdict(ApiHandler,
 
     comment = Column(Text(), nullable=True)
 
-    userId = Column(BigInteger(),
-                    ForeignKey('user.id'),
-                    nullable=False,
-                    index=True)
+    editorId = Column(BigInteger(),
+                      ForeignKey('user.id'),
+                      nullable=False,
+                      index=True)
 
-    user = relationship('User',
-                        foreign_keys=[userId],
-                        backref='verdicts')
+    editor = relationship('User',
+                          foreign_keys=[editorId],
+                          backref='verdics')
 
     @property
     def reviews(self):
         Review = get_model_with_table_name('review')
-        verdict_user_ids = [
-            verdictUser.user.id
-            for verdictUser in self.verdictUsers
+        verdict_reviewer_ids = [
+            verdictReviewer.reviewer.id
+            for verdictReviewer in self.verdictReviewers
         ]
         reviews = Review.query.filter(
             (Review.articleId == self.articleId) &\
-            (Review.userId.in_(verdict_user_ids))
+            (Review.reviewerId.in_(verdict_reviewer_ids))
         ).all()
 
         return InstrumentedList(reviews)

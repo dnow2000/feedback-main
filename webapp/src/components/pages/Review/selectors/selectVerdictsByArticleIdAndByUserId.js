@@ -2,19 +2,16 @@ import createCachedSelector from 're-reselect'
 
 import selectVerdictsByArticleId from 'selectors/selectVerdictsByArticleId'
 
-import selectVerdictUsersByUserId from './selectVerdictUsersByUserId'
+import selectVerdictReviewersByUserId from './selectVerdictReviewersByUserId'
 
-function mapArgsToCacheKey(state, articleId) {
-  return articleId || ''
-}
 
-export const selectVerdictsByArticleIdAndByUserId = createCachedSelector(
+const mapArgsToCacheKey = (state, articleId) => articleId || ''
+
+export default createCachedSelector(
   selectVerdictsByArticleId,
-  (state, articleId, userId) => selectVerdictUsersByUserId(state, userId),
-  (verdicts, verdictUsers) =>
+  (state, articleId, userId) => selectVerdictReviewersByUserId(state, userId),
+  (verdicts, verdictReviewers) =>
     verdicts && verdicts.filter(verdict =>
-      verdictUsers.find(verdictUser =>
-        verdictUser.verdictId === verdict.id))
+      verdictReviewers.find(verdictReviewer =>
+        verdictReviewer.verdictId === verdict.id))
 )(mapArgsToCacheKey)
-
-export default selectVerdictsByArticleIdAndByUserId

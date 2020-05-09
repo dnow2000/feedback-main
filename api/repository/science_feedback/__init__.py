@@ -1,8 +1,20 @@
 import os
 from sqlalchemy_api_handler import ApiHandler
 
-from domain.science_feedback import request_airtable_rows_for
 import repository.science_feedback.entity_from_row
+from utils.airtable import request_airtable_rows
+
+
+SCIENCE_FEEDBACK_AIRTABLE_BASE_ID = os.environ.get('SCIENCE_FEEDBACK_AIRTABLE_BASE_ID')
+
+
+NAME_TO_AIRTABLE = {
+    'editor': 'Editors',
+    'reviewer': 'Reviewers',
+    'claim': 'Items for review / reviewed',
+    'appearance': 'Appearances',
+    'review': 'Reviews / Fact-checks',
+}
 
 
 def entity_from_row_for(name, entity_dict):
@@ -12,7 +24,11 @@ def entity_from_row_for(name, entity_dict):
 
 
 def sync_for(name, max_records=None):
-    rows = request_airtable_rows_for(name, max_records=max_records)
+    rows = request_airtable_rows(
+        SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+        NAME_TO_AIRTABLE[name],
+        max_records=max_records
+    )
 
     entities = []
     for row in rows:
@@ -24,5 +40,6 @@ def sync_for(name, max_records=None):
 
 
 def sync(max_records=None):
-    for name in ['reviewer', 'article', 'claim', 'review']:
+    for name in NAME_TO_AIRTABLE.keys():
+        print(name)
         sync_for(name, max_records=max_records)

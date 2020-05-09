@@ -5,10 +5,11 @@ from models.role import Role, RoleType
 from models.user import User
 from utils.config import APP_NAME, COMMAND_NAME, TLD
 
+
 def create_roles():
     logger.info('create_roles')
 
-    roles_by_name = {}
+    roles = []
 
     for user in User.query.all():
         regexp = r'{}test.(.[a-z]+).(.*)@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)
@@ -19,18 +20,16 @@ def create_roles():
 
         if user_type == "master":
             for role_type in RoleType:
-                roles_by_name['{} {}'.format(user.email, role_type)] = Role(
+                roles.append(Role(
                     type=role_type.value,
                     user=user
-                )
+                ))
         elif user_type != 'user':
-            roles_by_name['{} {}'.format(user.email, user_type)] = Role(
+            roles.append(Role(
                 type=getattr(RoleType, user_type).value,
                 user=user
-            )
+            ))
 
-    ApiHandler.save(*roles_by_name.values())
+    ApiHandler.save(*roles)
 
-    logger.info('created {} roles'.format(len(roles_by_name)))
-
-    return roles_by_name
+    logger.info('created {} roles'.format(len(roles)))

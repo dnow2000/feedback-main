@@ -8,7 +8,9 @@ export default createSelector(
     const filteredUsers = [...users]
 
     filteredUsers.sort(
-      (a1, a2) => moment(a2.dateCreated) - moment(a1.dateCreated)
+      (a1, a2) => moment(a2.dateCreated) > moment(a1.dateCreated)
+      ? 1
+      : -1
     )
 
     return filteredUsers

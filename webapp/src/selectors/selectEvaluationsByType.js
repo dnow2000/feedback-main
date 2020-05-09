@@ -12,6 +12,10 @@ export default createCachedSelector(
     if (!evaluations) return
     const filteredEvaluations = evaluations.filter(evaluation =>
       evaluation.type === type)
-    filteredEvaluations.sort((e1, e2) => e1.value >= e2.value)
+    filteredEvaluations.sort((e1, e2) =>
+      e1.value >= e2.value
+      ? 1
+      : -1
+    )
     return filteredEvaluations
 })(mapArgsToCacheKey)

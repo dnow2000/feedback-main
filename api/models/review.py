@@ -14,18 +14,25 @@ from models.mixins import HasScienceFeedbackMixin, \
 
 class Review(ApiHandler,
              Model,
-             HasScienceFeedbackMixin, 
+             HasScienceFeedbackMixin,
              HasRatingMixin,
              SoftDeletableMixin):
 
     articleId = Column(BigInteger(),
                        ForeignKey('article.id'),
-                       nullable=False,
                        index=True)
 
     article = relationship('Article',
                            foreign_keys=[articleId],
                            backref='reviews')
+
+    claimId = Column(BigInteger(),
+                     ForeignKey('claim.id'),
+                     index=True)
+
+    claim = relationship('Claim',
+                         foreign_keys=[claimId],
+                         backref='reviews')
 
     comment = Column(Text(), nullable=True)
 
@@ -37,20 +44,28 @@ class Review(ApiHandler,
                               foreign_keys=[evaluationId],
                               backref='reviews')
 
-    userId = Column(BigInteger(),
-                    ForeignKey('user.id'),
-                    nullable=False,
-                    index=True)
+    reviewerId = Column(BigInteger(),
+                        ForeignKey('user.id'),
+                        nullable=False,
+                        index=True)
 
-    user = relationship('User',
-                        foreign_keys=[userId],
-                        backref='reviews')
+    reviewer = relationship('User',
+                            foreign_keys=[reviewerId],
+                            backref='reviews')
+
+    sceneId = Column(BigInteger(),
+                     ForeignKey('scene.id'),
+                     index=True)
+
+    scene = relationship('Scene',
+                         foreign_keys=[sceneId],
+                         backref='reviews')
 
     @property
     def verdicts(self):
         Verdict = get_model_with_table_name('verdict')
-        VerdictUser = get_model_with_table_name('verdict_user')
-        verdict_users = VerdictUser.query.filter_by(userId=self.userId)
-        verdict_ids = [verdict_user.verdict.id for verdict_user in verdict_users]
+        VerdictReviewer = get_model_with_table_name('verdict_reviewer')
+        verdict_reviewers = VerdictReviewer.query.filter_by(reviewerId=self.reviewerId)
+        verdict_ids = [verdict_reviewer.verdict.id for verdict_reviewer in verdict_reviewers]
         verdicts = Verdict.query.filter(Verdict.id.in_(verdict_ids)).all()
         return InstrumentedList(verdicts)

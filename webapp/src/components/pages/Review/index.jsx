@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { Form } from 'react-final-form'
+import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
@@ -10,17 +10,17 @@ import ArticleItem from 'components/layout/ArticleItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
-import { getCanSubmit } from 'utils/form'
+
 import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
 
-import FormFooter from './FormFooter'
-import FormFields from './FormFields'
+import Form from './Form'
 import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
 
 
 const API_PATH = '/reviews'
 
-const Review = () => {
+
+export default () => {
   const dispatch = useDispatch()
   const location = useLocation()
   const params = useParams()
@@ -34,6 +34,7 @@ const Review = () => {
   const history = useHistory()
   const { params: { articleId: queryArticleId } } = useQuery(location.search)
 
+
   const review = useSelector(state =>
     selectEntityByKeyAndId(state, 'reviews', matchReviewId)) || {}
   const articleId = review.articleId || queryArticleId
@@ -43,7 +44,6 @@ const Review = () => {
   const formInitialValues = useSelector(state =>
     selectFormInitialValuesByArticleId(state, articleId))
 
-  const { isPending } = useSelector(state => state.requests['/reviews']) || {}
 
   const handleSubmitReview = useCallback(formValues => {
     let apiPath = API_PATH
@@ -53,7 +53,7 @@ const Review = () => {
     return new Promise(resolve => {
       dispatch(requestData({
         apiPath,
-        body: { ...formValues },
+        body: formValues,
         handleFail: (beforeState, action) =>
           resolve(requests(beforeState.requests, action)[API_PATH].errors),
         handleSuccess: (beforeState, action) => {
@@ -68,25 +68,6 @@ const Review = () => {
       }))
     })
   }, [dispatch, formReviewId, history, isModifiedEntity, method])
-
-  const renderForm = useCallback(formProps => {
-    const { form: { reset }, handleSubmit } = formProps
-    const canSubmit = getCanSubmit({ isLoading: isPending, ...formProps })
-    return (
-      <form
-        autoComplete="off"
-        disabled={isPending}
-        noValidate
-        onSubmit={handleSubmit}
-      >
-        <FormFields />
-        <FormFooter
-          canSubmit={canSubmit}
-          onCancel={reset}
-        />
-      </form>
-    )
-  }, [isPending])
 
 
   useEffect(() => {
@@ -134,10 +115,10 @@ const Review = () => {
             </section>)}
 
           <section>
-            <Form
+            <ReactFinalForm
               initialValues={formInitialValues}
               onSubmit={handleSubmitReview}
-              render={renderForm}
+              render={Form}
             />
           </section>
         </div>
@@ -145,6 +126,3 @@ const Review = () => {
     </>
   )
 }
-
-
-export default Review

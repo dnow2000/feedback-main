@@ -6,6 +6,7 @@ import { requestData } from 'redux-thunk-data'
 import PublicationsManager from './PublicationsManager'
 import selectPublicationsByUserId from './selectors/selectPublicationsByUserId'
 
+
 const mapStateToProps = (state, ownProps) => {
   const { user } = ownProps
   const { id: userId } = user || {}
@@ -14,15 +15,17 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   const { user } = ownProps
   const { id: userId } = user || {}
   return {
     requestGetPublications: () => user && dispatch(requestData({
-      apiPath: `userArticles/${userId}`
+      apiPath: `authorArticles/${userId}`
     }))
   }
 }
+
 
 export default compose(
   withRouter,

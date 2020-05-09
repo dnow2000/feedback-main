@@ -28,6 +28,9 @@ class Article(ApiHandler,
               SoftDeletableMixin,
               VersionedMixin):
 
+
+    archiveUrl = Column(String(220), unique=True)
+
     authors = Column(Text())
 
     isReviewable = Column(Boolean())
@@ -57,6 +60,7 @@ class Article(ApiHandler,
         return amount
 
 
+
 @as_dict.register(Article)
 def _(article, column=None, includes: Iterable = ()):
     article_dict = as_dict.registry[ApiHandler](article, includes=includes)
@@ -70,7 +74,7 @@ def _(article, column=None, includes: Iterable = ()):
         reviews = article_dict['reviews']
         article_dict['reviews'] = [
             review for review in article_dict['reviews']
-            if review['userId'] == humanized_user_id
+            if review['reviewerId'] == humanized_user_id
         ]
         if len(article_dict['reviews']) == 1:
             article_dict['reviews'] = reviews

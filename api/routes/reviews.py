@@ -67,7 +67,7 @@ def create_review():
 @app.route('/reviews/<review_id>', methods=['PATCH'])
 @login_or_api_key_required
 @expect_json_data
-def edit_review(review_id):
+def modify_review(review_id):
 
     check_has_role(current_user, 'reviewer')
 

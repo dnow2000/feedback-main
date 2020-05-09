@@ -1,16 +1,16 @@
 TAG_INCLUDES = [
-    "scopes"
+    'scopes'
 ]
 
 USER_INCLUDES = [
-    "-password",
-    "roles",
+    '-password',
+    'roles',
     {
-        "key": "userTags",
-        "includes": [
+        'key': 'userTags',
+        'includes': [
             {
-                "key": "tag",
-                "includes": TAG_INCLUDES
+                'key': 'tag',
+                'includes': TAG_INCLUDES
             }
         ]
     }
@@ -18,90 +18,90 @@ USER_INCLUDES = [
 
 ARTICLE_INCLUDES = [
     {
-        "key": "reviews",
-        "includes": [
+        'key': 'reviews',
+        'includes': [
             {
-                "key": "user",
-                "includes": USER_INCLUDES
+                'key': 'reviewer',
+                'includes': USER_INCLUDES
             }
         ]
     },
     {
-        "key": "verdicts",
-        "includes": [
+        'key': 'verdicts',
+        'includes': [
             {
-                "key": "user",
-                "includes": USER_INCLUDES
+                'key': 'editor',
+                'includes': USER_INCLUDES
             }
         ]
     },
     {
-        "key": "articleTags",
-        "includes": [
+        'key': 'articleTags',
+        'includes': [
             {
-                "key": "tag",
-                "includes": TAG_INCLUDES
+                'key': 'tag',
+                'includes': TAG_INCLUDES
             }
         ]
     }
 ]
 
 REVIEW_INCLUDES = [
-    "article",
-    "evaluation",
+    'article',
+    'evaluation',
     {
-        "key": "user",
-        "includes": USER_INCLUDES
+        'key': 'reviewer',
+        'includes': USER_INCLUDES
     },
     {
-        "key": "reviewTags",
-        "includes": [
+        'key': 'reviewTags',
+        'includes': [
             {
-                "key": "tag",
-                "includes": TAG_INCLUDES
+                'key': 'tag',
+                'includes': TAG_INCLUDES
             }
         ]
     },
     {
-        "key": "verdicts",
-        "includes": [
-            "verdictUsers"
+        'key': 'verdicts',
+        'includes': [
+            'verdictReviewers'
         ]
     }
 ]
 
-USER_ARTICLE_INCLUDES = [
+AUTHOR_ARTICLE_INCLUDES = [
     'article'
 ]
 
 VERDICT_INCLUDES = [
-    "article",
+    'article',
     {
-        "key": "user",
-        "includes": USER_INCLUDES
+        'key': 'editor',
+        'includes': USER_INCLUDES
     },
     {
-        "key": "reviews",
-        "includes": [
+        'key': 'reviews',
+        'includes': [
             'evaluation',
-            'user'
+            'reviewer'
         ]
     },
     {
-        "key": "verdictTags",
-        "includes": [
+        'key': 'verdictTags',
+        'includes': [
             {
-                "key": "tag",
-                "includes": TAG_INCLUDES
+                'key': 'tag',
+                'includes': TAG_INCLUDES
             }
         ]
     },
     {
-        "key": "verdictUsers",
-        "includes": [
+        'key': 'verdictReviewers',
+        'includes': [
             {
-                "key": "user",
-                "includes": USER_INCLUDES
+                'key': 'reviewer',
+                'includes': USER_INCLUDES
             }
         ]
     }

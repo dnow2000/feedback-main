@@ -93,11 +93,13 @@ export default () => {
   }, [currentUserVerdictPatch, dispatch, history, method])
 
 
-  useEffect(() =>
-    dispatch(requestData({ apiPath: '/evaluations' })), [dispatch])
+  useEffect(() => {
+    dispatch(requestData({ apiPath: '/evaluations' }))
+  }, [dispatch])
 
-  useEffect(() =>
-    dispatch(requestData({ apiPath: '/tags' })), [dispatch])
+  useEffect(() => {
+    dispatch(requestData({ apiPath: '/tags' }))
+  }, [dispatch])
 
   useEffect(() => {
     if (isCreatedEntity) return

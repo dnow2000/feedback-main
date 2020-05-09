@@ -1,42 +1,42 @@
 def create_qualifications():
     return [
         {
-            "label": "Accurate"
+            'label': 'Accurate'
         },
         {
-            "label": "Inaccurate"
+            'label': 'Inaccurate'
         },
         {
-            "label": "Insightful"
+            'label': 'Insightful'
         },
         {
-            "label": "Misleading"
+            'label': 'Misleading'
         },
         {
-            "label": "Biased"
+            'label': 'Biased'
         },
         {
-            "label": "Unbiased"
+            'label': 'Unbiased'
         },
         {
-            "label": "Imprecise"
+            'label': 'Imprecise'
         },
         {
-            "label": "Sound reasoning"
+            'label': 'Sound reasoning'
         },
         {
-            "label": "Flawed reasoning"
+            'label': 'Flawed reasoning'
         },
         {
-            "label": "Cherry Picking"
+            'label': 'Cherry Picking'
         },
         {
-            "label": "Alarmist"
+            'label': 'Alarmist'
         },
         {
-            "label": "Derogatory"
+            'label': 'Derogatory'
         },
         {
-            "label": "Inappropriate backing"
+            'label': 'Inappropriate backing'
         }
     ]

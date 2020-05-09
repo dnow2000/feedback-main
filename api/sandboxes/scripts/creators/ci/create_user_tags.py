@@ -9,25 +9,23 @@ from utils.config import APP_NAME, COMMAND_NAME, TLD
 def create_user_tags():
     logger.info('create user_tags')
 
-    user_tags_by_name = {}
+    user_tags = []
 
     user = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     tag = Tag.query.filter_by(text="coral").one()
-    user_tags_by_name["reviewer 0 / coral"] = UserTag(
+    user_tags.append(UserTag(
         user=user,
         tag=tag
-    )
+    ))
 
     user = User.query.filter_by(email="{}test.reviewer2@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     tag = Tag.query.filter_by(text="immunology").one()
-    user_tags_by_name["reviewer 2 / immunology"] = UserTag(
+    user_tags.append(UserTag(
         user=user,
         tag=tag
-    )
+    ))
 
 
-    ApiHandler.save(*user_tags_by_name.values())
+    ApiHandler.save(*user_tags)
 
-    logger.info('created {} user_tags_by_name'.format(len(user_tags_by_name)))
-
-    return user_tags_by_name
+    logger.info('created {} user_tags'.format(len(user_tags)))
