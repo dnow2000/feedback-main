@@ -17,7 +17,7 @@ def create_scene_tags():
         tag=tag
     ))
 
-    scene = Scene.query.filter_by(url='http://www.dailymail.co.uk/sciencetech/scene-4192182/World-leaders-duped-manipulated-global-warming-data.html').one()
+    scene = Scene.query.filter_by(url='http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html').one()
     tag = Tag.query.filter_by(text='climate').one()
     scene_tags.append(SceneTag(
         scene=scene,

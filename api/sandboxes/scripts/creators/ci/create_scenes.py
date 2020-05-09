@@ -28,7 +28,7 @@ def create_scenes(with_capture=False):
         summary='The Mail on Sunday today reveals astonishing evidence that the organisation that is the world’s leading source of climate data rushed to publish a landmark paper that exaggerated global warming and was timed to influence the historic Paris Agreement on climate change.',
         tags='data',
         title='Daily Mail inflates disagreement between scientists about data handling to make unsupported accusation of data manipulation',
-        url='http://www.dailymail.co.uk/sciencetech/scene-4192182/World-leaders-duped-manipulated-global-warming-data.html'
+        url='http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html'
     ))
 
     scenes.append(Scene(
