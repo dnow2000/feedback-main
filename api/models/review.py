@@ -20,12 +20,19 @@ class Review(ApiHandler,
 
     articleId = Column(BigInteger(),
                        ForeignKey('article.id'),
-                       #nullable=False,
                        index=True)
 
     article = relationship('Article',
                            foreign_keys=[articleId],
                            backref='reviews')
+
+    claimId = Column(BigInteger(),
+                     ForeignKey('claim.id'),
+                     index=True)
+
+    claim = relationship('Claim',
+                         foreign_keys=[claimId],
+                         backref='reviews')
 
     comment = Column(Text(), nullable=True)
 
@@ -48,7 +55,6 @@ class Review(ApiHandler,
 
     sceneId = Column(BigInteger(),
                      ForeignKey('scene.id'),
-                     nullable=False,
                      index=True)
 
     scene = relationship('Scene',

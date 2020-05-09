@@ -1,5 +1,4 @@
 from models.appearance import Appearance
-from models.article import Article
 from models.claim import Claim
 from models.review import Review
 from models.scene import Scene
@@ -9,23 +8,23 @@ from utils.credentials import random_password
 
 
 def appearance_from_row(row):
-    appearance_dict = {
-        'scienceFeedbackId': row['airtableId'],
-    }
-
     claim = Claim.query.filter_by(scienceFeedbackId=row['Item reviewed'][0]).first()
     if not claim:
         return
-    appearance_dict['claim'] = claim
 
     testifier = User.query.filter_by(scienceFeedbackId=row['Verified by'][0]).first()
     if not testifier:
         return
-    appearance_dict['testifier'] = user
 
-    scene_dict = { 'url': row['url'] }
+    scene_dict = {'url': row['url']}
     scene = Scene.create_or_modify(scene_dict, search_by=['url'])
-    appearance_dict['scene'] = scene
+
+    appearance_dict = {
+        'claim': claim,
+        'scene': scene,
+        'scienceFeedbackId': row['airtableId'],
+        'testifier': testifier
+    }
 
     return Appearance.create_or_modify(appearance_dict, search_by=['scienceFeedbackId'])
 
@@ -56,24 +55,19 @@ def editor_from_row(row):
 
 
 def review_from_row(row):
-    user = User.query.filter_by(scienceFeedbackId=row['Review editor(s)'][0]).first()
-    if not user:
+    reviewer = User.query.filter_by(scienceFeedbackId=row['Review editor(s)'][0]).first()
+    if not reviewer:
+        return
+
+    claim = Claim.query.filter_by(scienceFeedbackId=row['Items reviewed'][0]).first()
+    if not claim:
         return
 
     review_dict = {
+        'claim': claim,
         'scienceFeedbackId': row['airtableId'],
-        'user': user
+        'reviewer': reviewer
     }
-
-    reviewed_science_feedback_id = row['Items reviewed'][0]
-    article = Article.query.filter_by(scienceFeedbackId=reviewed_science_feedback_id).first()
-    if article:
-        review_dict['article'] = article
-    else:
-        claim = Claim.query.filter_by(scienceFeedbackId=reviewed_science_feedback_id).first()
-        if not claim:
-            return
-        review_dict['claim'] = claim
 
     return Review.create_or_modify(review_dict, search_by=['scienceFeedbackId'])
 
