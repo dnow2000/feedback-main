@@ -3,7 +3,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.content import Content
 from storage.thumb import save_thumb
-from utils.date import strftime, today
+from utils.date import strftime, TODAY
 from utils.screenshotmachine import capture
 
 
@@ -15,7 +15,7 @@ def create_contents(with_capture=False):
     contents.append(Content(
         authors='James Delingpole',
         is_reviewable=True,
-        publishedDate=strftime(today),
+        publishedDate=strftime(TODAY),
         summary='Like the thriving polar bear, like the recovering ice caps, like the doing-just-fine Pacific islands, the Great Barrier Reef has become a totem for the liberal-left not because it’s in any kind of danger but because it’s big and famous and photogenic and lots and lots of people would be really sad if it disappeared.',
         tags='great barrier;',
         theme='Climate',
@@ -25,7 +25,7 @@ def create_contents(with_capture=False):
 
     contents.append(Content(
         authors='David Rose',
-        summary='The Mail on Sunday today reveals astonishing evidence that the organisation that is the world’s leading source of climate data rushed to publish a landmark paper that exaggerated global warming and was timed to influence the historic Paris Agreement on climate change.',
+        summary='The Mail on Sunday TODAY reveals astonishing evidence that the organisation that is the world’s leading source of climate data rushed to publish a landmark paper that exaggerated global warming and was timed to influence the historic Paris Agreement on climate change.',
         tags='data',
         title='Daily Mail inflates disagreement between scientists about data handling to make unsupported accusation of data manipulation',
         url='http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html'
@@ -34,7 +34,7 @@ def create_contents(with_capture=False):
     contents.append(Content(
         authors='Chris Mooney',
         is_reviewable=True,
-        publishedDate=strftime(today + timedelta(days=-1)),
+        publishedDate=strftime(TODAY + timedelta(days=-1)),
         summary='A large research synthesis, published in one of the world’s most influential scientific journals, has detected a decline in the amount of dissolved oxygen in oceans around the world — a long-predicted result of climate change that could have severe consequences for marine organisms if it continues.',
         tags='ocean;oxygen',
         title='Scientists have just detected a major change to the Earth’s oceans linked to a warming climate',
@@ -63,7 +63,7 @@ def create_contents(with_capture=False):
     contents.append(Content(
         authors='Clarisse Fabre',
         is_reviewable=False,
-        publishedDate=strftime(today + timedelta(hours=-2)),
+        publishedDate=strftime(TODAY + timedelta(hours=-2)),
         summary='C’est l’histoire d’un garçon qui voulait être Iggy Pop. A Mulhouse, dans les années 1980, il s’imaginait torse nu, le pantalon taille basse, électrisant les foules et se roulant par terre. Mais le rêve post-punk s’est dissous dans les paillettes des combinaisons disco. Et Fred Poulet s’est mis à écrire des chansons, tout en gagnant sa vie comme peintre sur des tournages de film. « C’est pour continuer à rêver que j’écris depuis une trentaine d’années. C’est un peu l’histoire de ma vie », résume le chanteur, emmitouflé dans son imperméable. A 57 ans,il revendique « la désinvolture » comme attitude, au sens de la liberté et de l’élégance.',
         tags='KFC;OnEstChampion;',
         title='Cocorico, Fred Poulet revient à la chanson',

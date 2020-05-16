@@ -1,11 +1,13 @@
 from sqlalchemy_api_handler import as_dict
 
-from utils.credentials import PLAIN_DEFAULT_TESTING_PASSWORD
-from utils.config import APP_NAME, COMMAND_NAME, TLD
+from utils.config import APP_NAME, \
+                         COMMAND_NAME, \
+                         DEFAULT_USER_PASSWORD, \
+                         TLD
 
 
 def get_email(first_name, last_name, domain):
-    return "{}.{}@{}".format(
+    return '{}.{}@{}'.format(
         first_name.replace(' ', '').strip().lower(),
         last_name.replace(' ', '').strip().lower(),
         domain
@@ -13,7 +15,7 @@ def get_email(first_name, last_name, domain):
 
 
 def get_sandbox_role_email(role_type, index=0):
-    email = "{}test.{}{}@{}.{}".format(COMMAND_NAME, role_type, index, APP_NAME, TLD)
+    email = '{}test.{}{}@{}.{}'.format(COMMAND_NAME, role_type, index, APP_NAME, TLD)
     return email
 
 
@@ -24,11 +26,11 @@ def get_password_from_email(email):
     if not first_chunk_with_at_least_one_number[-1].isdigit():
         first_chunk_with_at_least_one_number += '0'
 
-    second_chunk_with_at_least_one_capital_letter = ".".join(
+    second_chunk_with_at_least_one_capital_letter = '.'.join(
         [chunks[1].capitalize()] + chunks[2:]
     ).split('@')[0]
 
-    minimal_password = "{}.{}".format(
+    minimal_password = '{}.{}'.format(
         first_chunk_with_at_least_one_number,
         second_chunk_with_at_least_one_capital_letter
     )
@@ -38,11 +40,7 @@ def get_password_from_email(email):
 
 
 def get_user_helper(user):
-    return dict(
-        as_dict(user), **{
-            "password": PLAIN_DEFAULT_TESTING_PASSWORD
-        }
-    )
+    return dict(as_dict(user), **{ 'password': DEFAULT_USER_PASSWORD })
 
 
 def pick_one(elements, pick_modulo):

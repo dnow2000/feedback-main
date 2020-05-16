@@ -3,6 +3,7 @@ from flask_login import current_user
 from flask import jsonify, request
 from sqlalchemy_api_handler import ApiErrors, get_result
 
+
 def expect_json_data(f):
     @wraps(f)
     def wrapper(*args, **kwds):

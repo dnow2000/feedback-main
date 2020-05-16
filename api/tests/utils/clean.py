@@ -1,6 +1,6 @@
 from functools import wraps
 
-from models.utils.clean import clean_all_database
+from repository.clean import clean_all_database
 
 
 def with_clean_all_database(f):

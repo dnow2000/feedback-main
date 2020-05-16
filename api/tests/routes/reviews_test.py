@@ -1,10 +1,9 @@
 import pytest
 
-from sandboxes.scripts.creators.ci import create_articles,\
+from sandboxes.scripts.creators.ci import create_contents,\
                                           create_evaluations, \
                                           create_reviews, \
                                           create_roles, \
-                                          create_contents, \
                                           create_users
 from sandboxes.scripts.utils.helpers import get_sandbox_role_email
 from tests.utils.clean import with_clean_all_database
@@ -32,7 +31,7 @@ class Get:
             deactivate_logger('info')
             create_users()
             create_roles()
-            create_articles()
+            create_contents()
             create_evaluations()
             create_contents()
             create_reviews()

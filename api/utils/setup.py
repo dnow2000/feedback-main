@@ -57,7 +57,7 @@ def setup(flask_app,
             flask_app.config['REMEMBER_COOKIE_SECURE'] = True
         login_manager = LoginManager()
         login_manager.init_app(flask_app)
-        import utils.login_manager
+        import repository.login_manager
 
     import utils.nltk_downloader
 

@@ -4,7 +4,7 @@ from models.review import Review
 from models.content import Content
 from models.user import User
 from utils.config import APP_NAME, TLD
-from utils.credentials import random_password
+from utils.random_token import create_random_password
 
 
 def appearance_from_row(row):
@@ -20,8 +20,8 @@ def appearance_from_row(row):
     content = Content.create_or_modify(content_dict, search_by=['url'])
 
     appearance_dict = {
-        'claim': claim,
-        'content': content,
+        'quotedClaim': claim,
+        'quotingContent': content,
         'scienceFeedbackId': row['airtableId'],
         'testifier': testifier
     }
@@ -42,10 +42,10 @@ def editor_from_row(row):
     first_name, last_name = row['Name'].split(' ')
     user_dict = {
         'email': '{}.{}@{}.{}'.format(
-                    first_name.lower(),
-                    last_name.lower(),
-                    APP_NAME,
-                    TLD),
+            first_name.lower(),
+            last_name.lower(),
+            APP_NAME,
+            TLD),
         'firstName': first_name,
         'lastName': last_name,
         'scienceFeedbackId': row['airtableId']
@@ -53,7 +53,7 @@ def editor_from_row(row):
 
     user = User.create_or_modify(user_dict, search_by=['scienceFeedbackId'])
     if not user.id:
-        user.set_password(random_password())
+        user.set_password(create_random_password())
 
     return user
 
@@ -86,6 +86,6 @@ def reviewer_from_row(row):
 
     user = User.create_or_modify(user_dict, search_by=['scienceFeedbackId'])
     if not user.id:
-        user.set_password(random_password())
+        user.set_password(create_random_password())
 
     return user

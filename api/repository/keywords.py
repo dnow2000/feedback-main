@@ -24,7 +24,7 @@ def import_keywords():
     )
     Content.__table_args__ = (
         Index(
-            'idx_article_fts',
+            'idx_content_fts',
             Content.__ts_vector__,
             postgresql_using='gin'
         ),

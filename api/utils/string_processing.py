@@ -9,6 +9,7 @@ from psycopg2.extras import DateTimeRange
 from utils.inflect import inflect_engine
 import utils.nltk_downloader
 
+
 DAY_FORMAT = "%Y-%m-%d"
 SCHEDULE_FORMAT = "%H:%M:%S.%f"
 DATE_FORMAT = DAY_FORMAT + "T" + SCHEDULE_FORMAT + "Z"
@@ -58,17 +59,21 @@ def get_format_timedelta_string (string):
     schedule_date = today_date + parse_timedelta(string)
     return schedule_date.strftime(SCHEDULE_FORMAT)
 
+
 def parse_datetime(string, **kwargs):
     return parse(string, languages=['fr'], **kwargs)
+
 
 def read_date(date_string):
     # remove centiseconds if they are not here
     date_format = DATE_FORMAT if '.' in date_string else DATE_FORMAT.split('.')[0] + "Z"
     return datetime.strptime(date_string, date_format)
 
+
 def trim_with_elipsis(string, length):
     length_wo_elipsis = length-1
     return string[:length_wo_elipsis] + (string[length_wo_elipsis:] and '…')
+
 
 def get_date_time_range(date_string, schedule_string, duration_string):
     # DETERMINE DAY MONTH YEAR
@@ -115,12 +120,15 @@ def get_date_time_range(date_string, schedule_string, duration_string):
     # RETURN
     return date_time_ranges
 
+
 def get_matched_string_index(target_string, strings):
     distances = map(lambda string:edit_distance(string, target_string), strings)
     return min(enumerate(distances), key=itemgetter(1))[0]
 
+
 def get_model_plural_name(obj):
     return inflect_engine.plural(obj.__class__.__name__.lower())
+
 
 def get_price_value(price_string):
     if isinstance(price_string, int):
@@ -130,8 +138,8 @@ def get_price_value(price_string):
         value_string = price_string.split('€')[0]
     if value_string.isdigit():
         return int(value_string)
-    else:
-        return 0
+    return 0
 
-def get_camel_string (string):
+
+def get_camel_string(string):
     return ''.join(word.capitalize() for word in string.split('_'))

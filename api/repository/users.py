@@ -1,4 +1,5 @@
 from sqlalchemy import and_
+from sqlalchemy_api_handler import ApiErrors, ApiHandler
 
 from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
@@ -6,11 +7,48 @@ from models.role import Role
 from models.tag import Tag
 from models.user import User
 from models.user_tag import UserTag
+from utils.config import DEFAULT_USER_PASSWORD
+
 
 user_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     User,
     Tag
 )
+
+def create_default_user():
+    default_user = User()
+    default_user.set_password(DEFAULT_USER_PASSWORD)
+    return default_user
+
+
+def get_user_with_credentials(identifier, password):
+    errors = ApiErrors()
+    errors.status_code = 401
+
+    if identifier is None:
+        errors.add_error('identifier', 'Identifier is missing.')
+    if password is None:
+        errors.add_error('password', 'Password is missing.')
+    errors.maybe_raise()
+
+    user = User.query.filter_by(email=identifier, actif='Y').first()
+
+    if not user:
+        errors.add_error('identifier', 'Wrong identifier')
+        raise errors
+    if not user.check_password(password):
+        errors.add_error('password', 'Wrong password')
+        raise errors
+
+    return user
+
+
+def change_password(user, password):
+    if type(user) != User:
+        user = User.query.filter_by(email=user).one()
+    user.set_password(password)
+    user = db.session.merge(user)
+    ApiHandler.save(user)
 
 
 def find_user_by_email(email):

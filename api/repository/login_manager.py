@@ -10,7 +10,7 @@ from models.user import User
 from repository.user_sessions import delete_user_session, \
                                      existing_user_session, \
                                      register_user_session
-from utils.credentials import get_user_with_credentials
+from repository.users import get_user_with_credentials
 
 
 @as_dict.register(LocalProxy)
