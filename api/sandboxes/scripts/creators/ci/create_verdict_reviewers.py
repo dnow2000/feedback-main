@@ -1,6 +1,6 @@
 from sqlalchemy_api_handler import ApiHandler, logger
 
-from models.article import Article
+from models.content import Content
 from models.verdict import Verdict
 from models.verdict_reviewer import VerdictReviewer
 from models.user import User
@@ -12,10 +12,10 @@ def create_verdict_reviewers():
 
     verdict_reviewers = []
 
-    article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
+    content = Content.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     editor = User.query.filter_by(email="{}test.editor0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     verdict = Verdict.query.filter_by(
-        article=article,
+        content=content,
         editor=editor
     ).one()
     reviewer = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()

@@ -4,7 +4,7 @@ from sandboxes.scripts.creators.ci import create_articles,\
                                           create_evaluations, \
                                           create_reviews, \
                                           create_roles, \
-                                          create_scenes, \
+                                          create_contents, \
                                           create_users
 from sandboxes.scripts.utils.helpers import get_sandbox_role_email
 from tests.utils.clean import with_clean_all_database
@@ -34,7 +34,7 @@ class Get:
             create_roles()
             create_articles()
             create_evaluations()
-            create_scenes()
+            create_contents()
             create_reviews()
             result = TestClient(app.test_client()) \
                 .with_auth(email=get_sandbox_role_email('editor')) \

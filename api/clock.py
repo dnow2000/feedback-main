@@ -4,7 +4,7 @@ from sqlalchemy_api_handler import ApiHandler
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 from jobs import jobs
-from models.utils.db import db
+from utils.db import db
 
 
 app = Flask(__name__)

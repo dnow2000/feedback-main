@@ -346,6 +346,15 @@ elif [[ "$CMD" == python ]]; then
 		exit
 	fi
 
+# Open a python prompt in the specified environment
+elif [[ "$CMD" == rm-db ]]; then
+	if [[ "$ENV" == "not-set" ]]; then
+		RUN='sudo rm -rf $ROOT_PATH/docker_data_$MODE/apidb'
+	else
+		echo 'rm-db only possible when ENV is not set'
+		exit
+	fi
+
 # =============================================
 # Python Scripts commands
 # =============================================

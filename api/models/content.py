@@ -1,5 +1,4 @@
 import enum
-from flask_login import current_user
 from sqlalchemy import BigInteger, \
                        Boolean, \
                        Column, \
@@ -11,15 +10,15 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-from models.utils.db import Model
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
                           HasSharesMixin, \
                           VersionedMixin
+from utils.db import Model
 
 
-class SceneType(enum.Enum):
+class ContentType(enum.Enum):
     def as_dict(self):
         dict_value = {
             'value': str(self.value),
@@ -31,7 +30,7 @@ class SceneType(enum.Enum):
     video = 'video'
 
 
-class Scene(ApiHandler,
+class Content(ApiHandler,
             Model,
             HasExternalThumbUrlMixin,
             HasScienceFeedbackMixin,
@@ -63,7 +62,7 @@ class Scene(ApiHandler,
 
     title = Column(String(140))
 
-    type = Enum(SceneType)
+    type = Enum(ContentType)
 
     url = Column(String(220), nullable=False, unique=True)
 

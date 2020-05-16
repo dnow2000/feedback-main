@@ -8,9 +8,9 @@ const mapArgsToCacheKey = (state, articleId) => articleId`
 export default createCachedSelector(
   state => state.data.reviews,
   selectCurrentUser,
-  (state, sceneId) => sceneId,
-  (reviews, currentUser, sceneId) =>
+  (state, contentId) => contentId,
+  (reviews, currentUser, contentId) =>
     reviews && reviews.find(review =>
-      review.sceneId === sceneId &&
+      review.contentId === contentId &&
       review.reviewerId === (currentUser && currentUser.id))
 )(mapArgsToCacheKey)

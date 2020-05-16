@@ -12,7 +12,7 @@ from routes.utils.includes import USER_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required
-from validation import check_has_role
+from validation.roles import check_has_role
 
 
 def make_user_query():

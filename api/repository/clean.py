@@ -1,22 +1,16 @@
 from postgresql_audit.flask import versioning_manager
 from sqlalchemy_api_handler import logger
 
-from models.utils.db import db
 from models.appearance import Appearance
-from models.author_article import AuthorArticle
-from models.author_scene import AuthorScene
-from models.article import Article
-from models.article_tag import ArticleTag
+from models.author_content import AuthorContent
 from models.claim import Claim
 from models.claim_claim import ClaimClaim
+from models.content import Content
+from models.content_tag import ContentTag
 from models.evaluation import Evaluation
-from models.publication import Publication
 from models.review import Review
-from models.reviewer_publication import ReviewerPublication
 from models.review_tag import ReviewTag
 from models.role import Role
-from models.scene import Scene
-from models.scene_tag import SceneTag
 from models.scope import Scope
 from models.tag import Tag
 from models.user import User
@@ -25,6 +19,7 @@ from models.user_session import UserSession
 from models.verdict import Verdict
 from models.verdict_tag import VerdictTag
 from models.verdict_reviewer import VerdictReviewer
+from utils.db import db
 
 
 def clean_all_database():
@@ -32,8 +27,7 @@ def clean_all_database():
     logger.info("clean all the database...")
     Scope.query.delete()
     Appearance.query.delete()
-    SceneTag.query.delete()
-    ArticleTag.query.delete()
+    ContentTag.query.delete()
     ReviewTag.query.delete()
     UserTag.query.delete()
     VerdictTag.query.delete()
@@ -43,12 +37,8 @@ def clean_all_database():
     Evaluation.query.delete()
     VerdictReviewer.query.delete()
     Verdict.query.delete()
-    ReviewerPublication.query.delete()
-    Publication.query.delete()
-    AuthorArticle.query.delete()
-    Article.query.delete()
-    AuthorScene.query.delete()
-    Scene.query.delete()
+    AuthorContent.query.delete()
+    Content.query.delete()
     Role.query.delete()
     UserSession.query.delete()
     User.query.delete()

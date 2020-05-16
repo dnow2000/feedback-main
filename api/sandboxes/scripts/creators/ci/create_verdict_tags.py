@@ -1,6 +1,6 @@
 from sqlalchemy_api_handler import ApiHandler, logger
 
-from models.article import Article
+from models.content import Content
 from models.tag import Tag
 from models.verdict import Verdict
 from models.verdict_tag import VerdictTag
@@ -13,10 +13,10 @@ def create_verdict_tags():
 
     verdict_tags = []
 
-    article = Article.query.filter_by(url='https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says').one()
+    content = Content.query.filter_by(url='https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says').one()
     editor = User.query.filter_by(email='{}test.editor0@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)).one()
     verdict = Verdict.query.filter_by(
-        article=article,
+        content=content,
         editor=editor
     ).one()
     tag = Tag.query.filter_by(text='inaccurate').one()

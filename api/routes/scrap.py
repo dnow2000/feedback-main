@@ -2,7 +2,7 @@ from newspaper.article import ArticleException
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiErrors
 
-from repository.articles import resolve_with_url
+from repository.contents import resolve_with_url
 
 
 @app.route('/scrap')

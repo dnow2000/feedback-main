@@ -1,23 +1,25 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
+from sqlalchemy_api_handler import ApiHandler, \
+                                   as_dict, \
+                                   dehumanize, \
+                                   load_or_404
 
 from models.verdict import Verdict
-from repository.verdicts import filter_verdicts_with_article_id
 from routes.utils.includes import VERDICT_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required
-from validation import check_has_role
+from validation.roles import check_has_role
 
 
 @app.route('/verdicts', methods=['GET'])
 def get_verdicts():
     query = Verdict.query
 
-    article_id = request.args.get('articleId')
-    if article_id is not None:
-        query = filter_verdicts_with_article_id(query, article_id)
+    content_id = request.args.get('contentId')
+    if content_id is not None:
+        query = query.filter_by(contentId=dehumanize(content_id))
 
     return listify(Verdict,
                    includes=VERDICT_INCLUDES,

@@ -2,10 +2,10 @@ from sqlalchemy import BigInteger, Column, ForeignKey
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from models.utils.db import Model
+from utils.db import Model
 
 
-class AuthorScene(ApiHandler,
+class AuthorContent(ApiHandler,
                 Model):
 
     authorUserId = Column(BigInteger(),
@@ -14,12 +14,12 @@ class AuthorScene(ApiHandler,
 
     authorUser = relationship('User',
                               foreign_keys=[authorUserId],
-                              backref=backref('authorScenes'))
+                              backref=backref('authorContents'))
 
-    sceneId = Column(BigInteger(),
-                     ForeignKey('scene.id'),
+    contentId = Column(BigInteger(),
+                     ForeignKey('content.id'),
                      primary_key=True)
 
-    scene = relationship('Scene',
-                         foreign_keys=[sceneId],
-                         backref=backref('authorScenes'))
+    content = relationship('Content',
+                         foreign_keys=[contentId],
+                         backref=backref('authorContents'))

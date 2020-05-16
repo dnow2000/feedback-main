@@ -2,7 +2,7 @@ import random
 import string
 from sqlalchemy_api_handler import ApiErrors, ApiHandler
 
-from models.utils.db import db, get_model_with_table_name
+from utils.db import db, get_model_with_table_name
 
 
 PLAIN_DEFAULT_TESTING_PASSWORD = 'user@AZERTY123'

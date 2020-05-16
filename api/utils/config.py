@@ -2,6 +2,7 @@ import os
 from logging import INFO as LOG_LEVEL_INFO
 from pathlib import Path
 
+
 APP_NAME = os.environ.get('APP_NAME', '')
 COMMAND_NAME = os.environ.get('COMMAND_NAME', '')
 MODE = os.environ.get('MODE', 'serve-development')

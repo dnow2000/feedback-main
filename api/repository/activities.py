@@ -1,6 +1,6 @@
 from postgresql_audit.flask import versioning_manager
 
-from models.utils.db import db
+from utils.db import db
 
 def filter_with_joined_activities(query):
     Activity = versioning_manager.activity_cls

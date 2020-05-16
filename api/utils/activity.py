@@ -2,7 +2,8 @@ from sqlalchemy import orm
 from sqlalchemy.exc import ProgrammingError
 from postgresql_audit.flask import versioning_manager
 
-from models.utils.db import db
+from utils.db import db
+
 
 def import_activity():
 

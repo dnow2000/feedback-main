@@ -44,44 +44,44 @@ def create_evaluations():
     ))
 
     evaluations.append(Evaluation(
-        info='No inaccuracies, fairly represents the state of scientific knowledge, well argued and documented, references are provided for key elements. The article provides insights to the reader about scientific mechanisms and implications, as well as limitations and important unknowns surrounding the evidence.',
+        info='No inaccuracies, fairly represents the state of scientific knowledge, well argued and documented, references are provided for key elements. The content provides insights to the reader about scientific mechanisms and implications, as well as limitations and important unknowns surrounding the evidence.',
         label='Very High',
-        type='article',
+        type='content',
         value=2
     ))
 
     evaluations.append(Evaluation(
-        info='The article does not contain scientific inaccuracies and its conclusion follows from the evidence provided. While more detail would have been useful, readers are still accurately informed of the science.',
+        info='The content does not contain scientific inaccuracies and its conclusion follows from the evidence provided. While more detail would have been useful, readers are still accurately informed of the science.',
         label='High',
-        type='article',
+        type='content',
         value=1
     ))
 
     evaluations.append(Evaluation(
         info='No significant errors, but not enough insight either to inform the reader.',
-        type='article',
+        type='content',
         label='Neutral',
         value=0
     ))
 
     evaluations.append(Evaluation(
-        info='The article contains significant scientific inaccuracies or misleading statements.',
+        info='The content contains significant scientific inaccuracies or misleading statements.',
         label='Low',
-        type='article',
+        type='content',
         value=-1
     ))
 
     evaluations.append(Evaluation(
-        info='The article contains major scientific inaccuracies for key facts supporting argumentation, and/or omits important information, and/or presents logical flaws in using information to reach conclusions.',
+        info='The content contains major scientific inaccuracies for key facts supporting argumentation, and/or omits important information, and/or presents logical flaws in using information to reach conclusions.',
         label='Very Low',
-        type='article',
+        type='content',
         value=-2
     ))
 
     evaluations.append(Evaluation(
-        info='The article does not build on scientifically verifiable information (e.g. it is mostly about policy, politics or opinions).',
+        info='The content does not build on scientifically verifiable information (e.g. it is mostly about policy, politics or opinions).',
         label='Not applicable',
-        type='article',
+        type='content',
         value=None
     ))
 

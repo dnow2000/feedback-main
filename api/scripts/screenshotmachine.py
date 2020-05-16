@@ -3,7 +3,7 @@ from pprint import pprint
 import traceback
 from flask import current_app as app
 
-from models.article import Article
+from models.content import Content
 from utils.screenshotmachine import capture
 from storage.thumb import save_thumb
 
@@ -14,11 +14,11 @@ from storage.thumb import save_thumb
 @app.manager.option('-i',
                     '--id',
                     help='Article id')
-def screenshotmachine(url, article_id):
+def screenshotmachine(url, content_id):
     try:
         thumb = capture(url)
-        article = Article.query.filter_by(id=article_id).one()
-        save_thumb(article, thumb, 0)
+        content = Content.query.filter_by(id=content_id).one()
+        save_thumb(content, thumb, 0)
     except Exception as e:
         print('ERROR: ' + str(e))
         traceback.print_tb(e.__traceback__)

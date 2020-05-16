@@ -3,7 +3,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasScienceFeedbackMixin
-from models.utils.db import Model
+from utils.db import Model
 
 
 class Claim(ApiHandler,

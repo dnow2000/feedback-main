@@ -1,24 +1,31 @@
-from sqlalchemy import Index, TEXT
+from sqlalchemy import func, Index, TEXT
 from sqlalchemy.sql.expression import cast
 from sqlalchemy.sql.functions import coalesce
 
-from domain.keywords import create_tsvector
-from models.article import Article
+from domain.keywords import LANGUAGE
+from models.content import Content
 from models.review import Review
 from models.tag import Tag
 from models.user import User
 from models.verdict import Verdict
 
 
+def create_tsvector(*args):
+    exp = args[0]
+    for e in args[1:]:
+        exp += ' ' + e
+    return func.to_tsvector(LANGUAGE, exp)
+
+
 def import_keywords():
-    Article.__ts_vector__ = create_tsvector(
-        cast(coalesce(Article.title, ''), TEXT),
-        cast(coalesce(Article.summary, ''), TEXT),
+    Content.__ts_vector__ = create_tsvector(
+        cast(coalesce(Content.title, ''), TEXT),
+        cast(coalesce(Content.summary, ''), TEXT),
     )
-    Article.__table_args__ = (
+    Content.__table_args__ = (
         Index(
             'idx_article_fts',
-            Article.__ts_vector__,
+            Content.__ts_vector__,
             postgresql_using='gin'
         ),
     )
@@ -52,7 +59,7 @@ def import_keywords():
     )
     User.__table_args__ = (
         Index(
-            'idx_event_fts',
+            'idx_user_fts',
             User.__ts_vector__,
             postgresql_using='gin'
         ),

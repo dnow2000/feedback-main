@@ -64,7 +64,7 @@ export default () => {
         type="hidden"
       />
       <HiddenField
-        name="sceneId"
+        name="contentId"
         type="hidden"
       />
       <TexteditorField

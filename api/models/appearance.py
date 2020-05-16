@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasScienceFeedbackMixin
-from models.utils.db import Model
+from utils.db import Model
 
 
 class StanceType(enum.Enum):
@@ -30,13 +30,13 @@ class Appearance(ApiHandler,
                  Model,
                  HasScienceFeedbackMixin):
 
-    sceneId = Column(BigInteger(),
-                     ForeignKey('scene.id'),
+    contentId = Column(BigInteger(),
+                     ForeignKey('content.id'),
                      nullable=False,
                      index=True)
 
-    scene = relationship('Scene',
-                         foreign_keys=[sceneId],
+    content = relationship('Content',
+                         foreign_keys=[contentId],
                          backref='appearances')
 
 

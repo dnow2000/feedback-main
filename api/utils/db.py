@@ -7,6 +7,7 @@ Model = db.Model
 
 versioning_manager.init(Model)
 
+
 def get_model_with_table_name(table_name):
     for model in Model._decl_class_registry.values():
         if not hasattr(model, '__table__'):

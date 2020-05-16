@@ -1,7 +1,7 @@
 from models.appearance import Appearance
 from models.claim import Claim
 from models.review import Review
-from models.scene import Scene
+from models.content import Content
 from models.user import User
 from utils.config import APP_NAME, TLD
 from utils.credentials import random_password
@@ -16,12 +16,12 @@ def appearance_from_row(row):
     if not testifier:
         return
 
-    scene_dict = {'url': row['url']}
-    scene = Scene.create_or_modify(scene_dict, search_by=['url'])
+    content_dict = {'url': row['url']}
+    content = Content.create_or_modify(content_dict, search_by=['url'])
 
     appearance_dict = {
         'claim': claim,
-        'scene': scene,
+        'content': content,
         'scienceFeedbackId': row['airtableId'],
         'testifier': testifier
     }
@@ -41,7 +41,11 @@ def claim_from_row(row):
 def editor_from_row(row):
     first_name, last_name = row['Name'].split(' ')
     user_dict = {
-        'email': '{}.{}@{}.{}'.format(first_name, last_name, APP_NAME, TLD),
+        'email': '{}.{}@{}.{}'.format(
+                    first_name.lower(),
+                    last_name.lower(),
+                    APP_NAME,
+                    TLD),
         'firstName': first_name,
         'lastName': last_name,
         'scienceFeedbackId': row['airtableId']

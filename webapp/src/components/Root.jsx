@@ -13,9 +13,10 @@ import { configureStore } from 'utils/store'
 
 import App from './App'
 
+
 const { store, persistor } = configureStore()
 
-const Root = () => (
+export default () => (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <BrowserRouter>
@@ -30,5 +31,3 @@ const Root = () => (
     </PersistGate>
   </Provider>
 )
-
-export default Root

@@ -3,7 +3,8 @@ from pprint import pprint
 import traceback
 from flask import current_app as app
 
-from models.utils.clean import clean_all_database
+from repository.clean import clean_all_database
+
 
 @app.manager.option('-t',
                     '--target',
