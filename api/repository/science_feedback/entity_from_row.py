@@ -8,20 +8,26 @@ from utils.random_token import create_random_password
 
 
 def appearance_from_row(row):
-    claim = Claim.query.filter_by(scienceFeedbackId=row['Item reviewed'][0]).first()
-    if not claim:
+    quoting_content_dict = {'url': row['url']}
+    quoting_content = Content.create_or_modify(quoting_content_dict, search_by=['url'])
+
+    quoted_claim = Claim.query.filter_by(scienceFeedbackId=row['Item reviewed'][0]).first()
+    quoted_content = None
+    if not quoted_claim:
+        quoted_content = Content.query.filter_by(scienceFeedbackId=row['Item reviewed'][0]).first()
+    if not quoted_claim and not quoted_content:
         return
 
+    if 'Verified by' not in row:
+        return
     testifier = User.query.filter_by(scienceFeedbackId=row['Verified by'][0]).first()
     if not testifier:
         return
 
-    content_dict = {'url': row['url']}
-    content = Content.create_or_modify(content_dict, search_by=['url'])
-
     appearance_dict = {
-        'quotedClaim': claim,
-        'quotingContent': content,
+        'quotedClaim': quoted_claim,
+        'quotedContent': quoted_content,
+        'quotingContent': quoting_content,
         'scienceFeedbackId': row['airtableId'],
         'testifier': testifier
     }

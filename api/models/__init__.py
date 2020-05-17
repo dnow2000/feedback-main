@@ -12,7 +12,6 @@ def import_models(with_creation=False):
     from models.appearance import Appearance
     from models.author_content import AuthorContent
     from models.claim import Claim
-    from models.claim_claim import ClaimClaim
     from models.content import Content
     from models.content_tag import ContentTag
     from models.evaluation import Evaluation
