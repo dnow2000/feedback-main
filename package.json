@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "redux-thunk-data": "1.10.1",
+    "with-react-redux-login": "1.13.1"
+  }
+}

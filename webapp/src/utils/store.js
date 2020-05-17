@@ -2,8 +2,11 @@ import { compose, createStore, applyMiddleware } from 'redux'
 import { persistStore } from 'redux-persist'
 import thunk from 'redux-thunk'
 
+import rootReducer from 'reducers'
+
 import { API_URL } from './config'
-import rootReducer from '../reducers'
+
+
 
 const buildStoreEnhancer = (middlewares = []) => {
   const enhancers = []
@@ -19,7 +22,8 @@ const buildStoreEnhancer = (middlewares = []) => {
   )
 }
 
-export const configureStore = (initialState = {}) => {
+
+export default (initialState = {}) => {
   const middlewares = [thunk.withExtraArgument({ rootUrl: API_URL })]
 
   const storeEnhancer = buildStoreEnhancer(middlewares)
@@ -30,5 +34,3 @@ export const configureStore = (initialState = {}) => {
 
   return { persistor, store }
 }
-
-export default configureStore

@@ -9,6 +9,7 @@ import selectEntitiesByKeyAndActivityTags from 'selectors/selectEntitiesByKeyAnd
 
 import { getItemsActivityTagFromConfig } from './Controls'
 
+
 const REACHABLE_THRESHOLD = -10
 const UNREACHABLE_THRESHOLD = -10000
 

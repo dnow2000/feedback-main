@@ -16,14 +16,21 @@ import App from './App'
 
 const { store, persistor } = configureStore()
 
+
 export default () => (
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <PersistGate
+      loading={null}
+      persistor={persistor}
+    >
       <BrowserRouter>
         <App>
           <Switch>
-            {routes &&
-              routes.map(obj => obj && <Route {...obj} key={obj.path} />)}
+            {routes.map(route => (
+              <Route
+                {...route}
+                key={route.path}
+              />)}
             <Route component={NotMatch} />
           </Switch>
         </App>

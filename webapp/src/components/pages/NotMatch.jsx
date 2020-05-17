@@ -1,70 +1,58 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
-const renderRedirecting = () => (
-  <span className="is-block">
-    {'Redirecting...'}
-  </span>
-)
 
-const renderTimer = timing => (
-  <span className="is-block">
-    {`Vous allez être automatiquement redirigé dans ${timing} secondes`}
-  </span>
-)
+const _ = ({ delay, location, redirect }) => {
+  const [timing, setTiming] = useState(delay)
 
-class NoMatch extends React.PureComponent {
-  constructor(props) {
-    super(props)
-    this.timer = null
-    this.state = { timing: props.delay }
-  }
 
-  componentDidMount() {
+  useEffect(() => {
     const timeout = 1000
-    this.timer = setInterval(() => {
-      this.setState(({ timing }) => ({ timing: timing - 1 }))
+    const timer = setInterval(() => {
+      setTiming(({ timing }) => ({ timing: timing - 1 }))
     }, timeout)
-  }
 
-  componentWillUnmount() {
-    if (this.timer) clearInterval(this.timer)
-    this.timer = null
-  }
+    return () => {
+      clearInterval(timer)
+    }
+  }, [timeout, setTiming])
 
-  redirectTo = () => {
-    const { redirect } = this.props
-    return <Redirect to={redirect} />
-  }
 
-  render() {
-    const { timing } = this.state
-    const { location } = this.props
-    if (timing < 0) return this.redirectTo()
-    return (
-      <div id="page-redirect">
-        <h3 className="title">
-          {`404 Not found ${location.pathname}`}
-        </h3>
-        <p className="content">
-          {timing > 0 && renderTimer(timing)}
-          {timing === 0 && renderRedirecting()}
-        </p>
-      </div>
-    )
-  }
+  if (timing < 0) return <Redirect to={redirect} />
+
+  return (
+    <div className="not-match">
+      <h3 className="title">
+        {`404 Not found ${location.pathname}`}
+      </h3>
+      <p className="content">
+        {timing > 0 && (
+          (
+            <span>
+              {`Vous allez être automatiquement redirigé dans ${timing} secondes`}
+            </span>
+          )
+        )}
+        {timing === 0 && (
+          <span>
+            {'Redirecting...'}
+          </span>
+        )}
+      </p>
+    </div>
+  )
 }
 
-NoMatch.defaultProps = {
-  delay: 5, // delay en seconds
+_.defaultProps = {
+  delay: 5,
   redirect: '/',
 }
 
-NoMatch.propTypes = {
+_.propTypes = {
   delay: PropTypes.number,
   location: PropTypes.object.isRequired,
   redirect: PropTypes.string,
 }
 
-export default NoMatch
+export default _
