@@ -14,8 +14,8 @@ def create_appearances():
     content = Content.query.filter_by(title='Daily Mail inflates disagreement between scientists about data handling to make unsupported accusation of data manipulation').one()
     testifier = User.query.filter_by(email="{}test.testifier0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     appearances.append(Appearance(
-        claim=claim,
-        content=content,
+        quotedClaim=claim,
+        quotingContent=content,
         stance=StanceType.ENDORSEMENT,
         testifier=testifier
     ))
@@ -24,8 +24,8 @@ def create_appearances():
     content = Content.query.filter_by(title='Cocorico, Fred Poulet revient à la chanson').one()
     testifier = User.query.filter_by(email="{}test.testifier1@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     appearances.append(Appearance(
-        claim=claim,
-        content=content,
+        quotedClaim=claim,
+        quotingContent=content,
         testifier=testifier
     ))
 

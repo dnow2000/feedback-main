@@ -31,7 +31,7 @@ def get_user_with_credentials(identifier, password):
         errors.add_error('password', 'Password is missing.')
     errors.maybe_raise()
 
-    user = User.query.filter_by(email=identifier, actif='Y').first()
+    user = User.query.filter_by(email=identifier).first()
 
     if not user:
         errors.add_error('identifier', 'Wrong identifier')

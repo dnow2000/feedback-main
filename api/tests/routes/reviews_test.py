@@ -33,7 +33,6 @@ class Get:
             create_roles()
             create_contents()
             create_evaluations()
-            create_contents()
             create_reviews()
             result = TestClient(app.test_client()) \
                 .with_auth(email=get_sandbox_role_email('editor')) \

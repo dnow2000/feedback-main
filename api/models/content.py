@@ -31,13 +31,13 @@ class ContentType(enum.Enum):
 
 
 class Content(ApiHandler,
-            Model,
-            HasExternalThumbUrlMixin,
-            HasScienceFeedbackMixin,
-            HasSharesMixin,
-            HasThumbMixin,
-            SoftDeletableMixin,
-            VersionedMixin):
+              Model,
+              HasExternalThumbUrlMixin,
+              HasScienceFeedbackMixin,
+              HasSharesMixin,
+              HasThumbMixin,
+              SoftDeletableMixin,
+              VersionedMixin):
 
 
     archiveUrl = Column(String(220), unique=True)

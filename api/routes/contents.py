@@ -11,7 +11,7 @@ from repository.contents import filter_contents_by_is_reviewable, \
                                 get_contents_keywords_join_query, \
                                 get_contents_query_with_keywords, \
                                 resolve_with_url
-from routes.utils.includes import ARTICLE_INCLUDES
+from routes.utils.includes import CONTENT_INCLUDES
 from validation.contents import check_content_is_not_yet_saved
 from validation.roles import check_has_role
 from utils.config import API_ROOT_PATH
@@ -39,10 +39,10 @@ def get_contents():
         query = get_contents_query_with_keywords(query, keywords)
 
     return listify(Content,
-                   includes=ARTICLE_INCLUDES,
+                   includes=CONTENT_INCLUDES,
                    query=query,
                    page=request.args.get('page', 1),
-                   paginate=os.environ.get('ARTICLES_PAGINATION', 10),
+                   paginate=os.environ.get('CONTENTS_PAGINATION', 10),
                    with_total_data_count=True)
 
 
@@ -50,7 +50,7 @@ def get_contents():
 @login_or_api_key_required
 def get_content(content_id):
     content = load_or_404(Content, content_id)
-    return jsonify(as_dict(content, includes=ARTICLE_INCLUDES)), 200
+    return jsonify(as_dict(content, includes=CONTENT_INCLUDES)), 200
 
 
 @app.route('/contents', methods=['POST'])
@@ -61,8 +61,8 @@ def create_content():
     check_has_role(current_user, 'editor')
 
     content = dict(
-       resolve_with_url(request.json['url']),
-       **request.json
+        resolve_with_url(request.json['url']),
+        **request.json
     )
 
     check_content_is_not_yet_saved(content)
@@ -77,7 +77,7 @@ def create_content():
                          shell=True,
                          cwd=API_ROOT_PATH)
 
-    return jsonify(as_dict(content, includes=ARTICLE_INCLUDES)), 201
+    return jsonify(as_dict(content, includes=CONTENT_INCLUDES)), 201
 
 
 @app.route('/contents/<content_id>', methods=['PATCH'])
@@ -92,7 +92,7 @@ def modify_content(content_id):
 
     ApiHandler.save(content)
 
-    return jsonify(as_dict(content, includes=ARTICLE_INCLUDES)), 201
+    return jsonify(as_dict(content, includes=CONTENT_INCLUDES)), 201
 
 
 @app.route('/contents/<content_id>', methods=['DELETE'])

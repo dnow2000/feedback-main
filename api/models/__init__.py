@@ -2,6 +2,7 @@
 # pylint: disable=W0641
 # pylint: disable=R0914
 
+from flask_sqlalchemy.model import DefaultMeta
 from repository.keywords import import_keywords
 from utils.activity import import_activity
 from utils.db import db
@@ -37,4 +38,4 @@ def import_models(with_creation=False):
 
     import_keywords()
 
-    return list(locals().values())
+    return [v for v in locals().values() if type(v) == DefaultMeta]

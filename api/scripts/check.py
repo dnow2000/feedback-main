@@ -8,18 +8,15 @@ from sqlalchemy.exc import OperationalError
 
 from models import import_models
 from repository.health import check_database_health
+from utils.setup import setup
 from utils.db import db
 
 
 SLEEP_TIME = 1
 
 FLASK_APP = Flask(__name__)
-FLASK_APP.secret_key = os.environ.get('FLASK_SECRET', '1%BCy22xV8c8+=dd')
-FLASK_APP.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-FLASK_APP.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-FLASK_APP.app_context().push()
-import_models()
+setup(FLASK_APP)
 
 is_database_health_ok = False
 while is_database_health_ok == False:

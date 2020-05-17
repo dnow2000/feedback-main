@@ -1,12 +1,12 @@
 # coding=utf-8
 from datetime import datetime, timedelta
+import inflect
 from operator import itemgetter
 import re
 from nltk import edit_distance
 from dateparser import parse
 from psycopg2.extras import DateTimeRange
 
-from utils.inflect import inflect_engine
 import utils.nltk_downloader
 
 
@@ -127,7 +127,7 @@ def get_matched_string_index(target_string, strings):
 
 
 def get_model_plural_name(obj):
-    return inflect_engine.plural(obj.__class__.__name__.lower())
+    return inflect.engine().plural(obj.__class__.__name__.lower())
 
 
 def get_price_value(price_string):

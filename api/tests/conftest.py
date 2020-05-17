@@ -38,7 +38,6 @@ def app():
 
     setup(flask_app,
           with_login_manager=True,
-          with_models_creation=True,
           with_routes=True)
 
     return flask_app

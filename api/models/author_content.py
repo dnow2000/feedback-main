@@ -6,7 +6,7 @@ from utils.db import Model
 
 
 class AuthorContent(ApiHandler,
-                Model):
+                    Model):
 
     authorUserId = Column(BigInteger(),
                           ForeignKey('user.id'),
@@ -17,9 +17,9 @@ class AuthorContent(ApiHandler,
                               backref=backref('authorContents'))
 
     contentId = Column(BigInteger(),
-                     ForeignKey('content.id'),
-                     primary_key=True)
+                       ForeignKey('content.id'),
+                       primary_key=True)
 
     content = relationship('Content',
-                         foreign_keys=[contentId],
-                         backref=backref('authorContents'))
+                           foreign_keys=[contentId],
+                           backref=backref('authorContents'))
