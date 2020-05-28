@@ -2,14 +2,15 @@ from flask_login import current_user, login_required, logout_user, login_user
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, as_dict
 
-from models.publication import Publication
+from models.content import Content
 from models.user import User
 from routes.utils.includes import USER_INCLUDES
-from utils.credentials import get_user_with_credentials
-from utils.login_manager import stamp_session, discard_session
+from repository.login_manager import stamp_session, discard_session
+from repository.users import get_user_with_credentials
 from storage.thumb import get_crop, read_thumb, save_thumb
 from validation.thumbs import check_thumb_in_request, \
                               check_thumb_quality
+
 
 @app.route("/users/current", methods=["GET"])
 @login_required
@@ -49,9 +50,9 @@ def signup():
         publication_key = 'publication{}'.format(index)
         if publication_key in request.form:
             publication_url = request.form[publication_key]
-            publication = Publication.query.filter_by(url=publication_url).first()
+            publication = Content.query.filter_by(url=publication_url).first()
             if not publication:
-                publication = Publication(url=publication_url)
+                publication = Content(url=publication_url)
                 publications.append(publication)
 
     thumb = read_thumb(files=request.files, form=request.form)

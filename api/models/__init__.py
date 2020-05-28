@@ -1,21 +1,25 @@
-def import_models():
+# pylint: disable=C0415
+# pylint: disable=W0641
+# pylint: disable=R0914
+
+from flask_sqlalchemy.model import DefaultMeta
+from repository.keywords import import_keywords
+from utils.activity import import_activity
+from utils.db import db
+
+
+def import_models(with_creation=False):
     from models.appearance import Appearance
-    from models.article import Article
-    from models.article_tag import ArticleTag
-    from models.author_article import AuthorArticle
-    from models.author_scene import AuthorScene
+    from models.author_content import AuthorContent
     from models.claim import Claim
-    from models.claim_claim import ClaimClaim
+    from models.content import Content
+    from models.content_tag import ContentTag
     from models.evaluation import Evaluation
     from models.image import Image
     from models.organization import Organization
-    from models.publication import Publication
     from models.review import Review
     from models.review_tag import ReviewTag
-    from models.reviewer_publication import ReviewerPublication
     from models.role import Role
-    from models.scene import Scene
-    from models.scene_tag import SceneTag
     from models.scope import Scope
     from models.tag import Tag
     from models.user import User
@@ -25,4 +29,12 @@ def import_models():
     from models.verdict_reviewer import VerdictReviewer
     from models.verdict_tag import VerdictTag
 
-    return list(locals().values())
+    if with_creation:
+        import_activity()
+        db.create_all()
+        db.engine.execute("CREATE INDEX IF NOT EXISTS idx_activity_objid ON activity(cast(changed_data->>'id' AS INT));")
+        db.session.commit()
+
+    import_keywords()
+
+    return [v for v in locals().values() if type(v) == DefaultMeta]

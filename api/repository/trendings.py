@@ -1,7 +1,7 @@
 import sys
 from sqlalchemy import and_, Integer
 
-from models.utils.db import get_model_with_table_name
+from utils.db import get_model_with_table_name
 
 
 def keep_not_saved_trendings(trendings, trending_type):

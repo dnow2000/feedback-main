@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from repository.articles import sync_articles
+from repository.contents import sync_contents
 
 
 def create_clock_sync_articles(from_date_minutes, to_date_minutes):

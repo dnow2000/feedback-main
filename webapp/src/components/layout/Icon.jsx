@@ -3,7 +3,8 @@ import React from 'react'
 
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
-export const Icon = ({ name, path, ...imgProps }) => (
+
+const _ = ({ name, path, ...imgProps }) => (
   <img
     {...imgProps}
     alt={name}
@@ -12,13 +13,13 @@ export const Icon = ({ name, path, ...imgProps }) => (
   />
 )
 
-Icon.defaultProps = {
+_.defaultProps = {
   path: ROOT_ASSETS_PATH
 }
 
-Icon.propTypes = {
+_.propTypes = {
   name: PropTypes.string.isRequired,
   path: PropTypes.string
 }
 
-export default Icon
+export default _

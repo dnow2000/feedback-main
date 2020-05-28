@@ -2,7 +2,7 @@ from sqlalchemy import BigInteger, Column
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy_api_handler import ApiHandler
 
-from models.utils.db import Model
+from utils.db import Model
 
 
 class UserSession(ApiHandler,

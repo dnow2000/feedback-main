@@ -16,7 +16,7 @@ USER_INCLUDES = [
     }
 ]
 
-ARTICLE_INCLUDES = [
+CONTENT_INCLUDES = [
     {
         'key': 'reviews',
         'includes': [
@@ -36,7 +36,7 @@ ARTICLE_INCLUDES = [
         ]
     },
     {
-        'key': 'articleTags',
+        'key': 'contentTags',
         'includes': [
             {
                 'key': 'tag',
@@ -47,7 +47,7 @@ ARTICLE_INCLUDES = [
 ]
 
 REVIEW_INCLUDES = [
-    'article',
+    'content',
     'evaluation',
     {
         'key': 'reviewer',
@@ -70,12 +70,12 @@ REVIEW_INCLUDES = [
     }
 ]
 
-AUTHOR_ARTICLE_INCLUDES = [
-    'article'
+AUTHOR_CONTENT_INCLUDES = [
+    'content'
 ]
 
 VERDICT_INCLUDES = [
-    'article',
+    'content',
     {
         'key': 'editor',
         'includes': USER_INCLUDES

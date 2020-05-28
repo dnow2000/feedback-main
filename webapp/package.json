@@ -22,7 +22,6 @@
     "eslint-config-prettier": "^3.3.0",
     "final-form": "^4.9.1",
     "final-form-calculate": "^1.2.1",
-    "la-sass-vy": "1.0.1",
     "lodash.capitalize": "^4.2.1",
     "lodash.get": "^4.4.2",
     "lodash.uniq": "^4.5.0",
@@ -55,7 +54,6 @@
     "redux-thunk-data": "1.10.0-timeout-6",
     "reselect": "^3.0.1",
     "whatwg-fetch": "2.0.3",
-    "with-query-router": "3.3.0",
     "with-react-formidable": "2.1.1",
     "with-react-query": "1.4.0",
     "with-react-redux-login": "1.13.0-rc6"

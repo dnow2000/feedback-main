@@ -7,7 +7,7 @@ from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 from sqlalchemy.orm.collections import InstrumentedList
-from models.utils.db import get_model_with_table_name, Model
+from utils.db import get_model_with_table_name, Model
 from models.mixins import HasRatingMixin
 
 
@@ -16,16 +16,23 @@ class Verdict(ApiHandler,
               HasRatingMixin,
               SoftDeletableMixin):
 
-    articleId = Column(BigInteger(),
-                       ForeignKey('article.id'),
-                       nullable=False,
+    comment = Column(Text(), nullable=True)
+
+    claimId = Column(BigInteger(),
+                     ForeignKey('claim.id'),
+                     index=True)
+
+    claim = relationship('Claim',
+                         backref='verdicts',
+                         foreign_keys=[claimId])
+
+    contentId = Column(BigInteger(),
+                       ForeignKey('content.id'),
                        index=True)
 
-    article = relationship('Article',
-                           foreign_keys=[articleId],
+    content = relationship('Content',
+                           foreign_keys=[contentId],
                            backref='verdicts')
-
-    comment = Column(Text(), nullable=True)
 
     editorId = Column(BigInteger(),
                       ForeignKey('user.id'),
@@ -44,7 +51,7 @@ class Verdict(ApiHandler,
             for verdictReviewer in self.verdictReviewers
         ]
         reviews = Review.query.filter(
-            (Review.articleId == self.articleId) &\
+            (Review.contentId == self.contentId) &\
             (Review.reviewerId.in_(verdict_reviewer_ids))
         ).all()
 

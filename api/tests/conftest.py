@@ -1,14 +1,9 @@
-import os
 import pytest
 from flask import Flask
 from flask_login import LoginManager
 from sqlalchemy_api_handler import ApiHandler
 
-from models import import_models
-from models.keywords import import_keywords
-from models.utils.db import db
-from models.utils.install import install_models
-from routes import import_routes
+from utils.setup import setup
 
 
 items_by_category = {'first': [], 'last': []}
@@ -39,24 +34,10 @@ def pytest_collection_modifyitems(config, items):
 @pytest.fixture(scope='session')
 def app():
     flask_app = Flask(__name__)
-
-    flask_app.config['SECRET_KEY'] = 'T5-5-3Yga;h;SAf2u3i'
-    flask_app.config['REMEMBER_COOKIE_HTTPONLY'] = False
-    flask_app.config['SESSION_COOKIE_HTTPONLY'] = False
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     flask_app.config['TESTING'] = True
 
-    login_manager = LoginManager()
-    login_manager.init_app(flask_app)
-    db.init_app(flask_app)
-    ApiHandler.set_db(db)
-
-    flask_app.app_context().push()
-    import_models()
-    install_models()
-    import_keywords()
-    import utils.login_manager
-    import_routes()
+    setup(flask_app,
+          with_login_manager=True,
+          with_routes=True)
 
     return flask_app

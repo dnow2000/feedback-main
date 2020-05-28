@@ -236,7 +236,7 @@ elif [[ "$CMD" == start ]]; then
          yarn start;'
   else
     RUN='cd $ROOT_PATH;
-         sh scripts/start_$MODE.sh $*;'
+         bash scripts/start_$MODE.sh $*;'
   fi
 
 # Stop development containers
@@ -343,6 +343,15 @@ elif [[ "$CMD" == python ]]; then
 		RUN='docker exec -it $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"'
 	else
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
+		exit
+	fi
+
+# Open a python prompt in the specified environment
+elif [[ "$CMD" == rm-db ]]; then
+	if [[ "$ENV" == "not-set" ]]; then
+		RUN='sudo rm -rf $ROOT_PATH/docker_data_$MODE/apidb'
+	else
+		echo 'rm-db only possible when ENV is not set'
 		exit
 	fi
 

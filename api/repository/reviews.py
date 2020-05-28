@@ -33,11 +33,6 @@ def save_tags(review, humanized_tag_ids):
         ApiHandler.save(*review_tags)
 
 
-def filter_reviews_with_article_id(query, article_id):
-    query = query.filter_by(articleId=dehumanize(article_id))
-    return query
-
-
 def get_reviews_join_query(query):
     query = query.outerjoin(ReviewTag) \
                  .outerjoin(Tag) \

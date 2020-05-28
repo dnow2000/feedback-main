@@ -2,6 +2,7 @@ import os
 from logging import INFO as LOG_LEVEL_INFO
 from pathlib import Path
 
+
 APP_NAME = os.environ.get('APP_NAME', '')
 COMMAND_NAME = os.environ.get('COMMAND_NAME', '')
 MODE = os.environ.get('MODE', 'serve-development')
@@ -29,3 +30,5 @@ elif IS_PRODUCTION:
 else:
     API_URL = 'https://api-{}.{}.{}'.format(MACHINE_ENV, APP_NAME, TLD)
     WEBAPP_URL = 'https://{}.{}.{}'.format(WEBAPP_SUBDOMAIN, APP_NAME, TLD)
+
+DEFAULT_USER_PASSWORD = 'user@AZERTY123'

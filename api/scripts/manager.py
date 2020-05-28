@@ -1,28 +1,11 @@
-import os
-from flask_script import Manager
 from flask import Flask
-from sqlalchemy_api_handler import ApiHandler
 
-from models.utils.db import db
-from scripts.utils.manager import install_scripts
+from utils.setup import setup
 
-flask_app = Flask(__name__)
 
-flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+3Q23!zbc+!Dd@')
-flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
-flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+FLASK_APP = Flask(__name__)
 
-db.init_app(flask_app)
-ApiHandler.set_db(db)
-
-def create_app(env=None):
-    flask_app.env = env
-    return flask_app
-
-flask_app.manager = Manager(create_app)
-
-flask_app.app_context().push()
-install_scripts()
+setup(FLASK_APP, with_scripts_manager=True)
 
 if __name__ == "__main__":
-    flask_app.manager.run()
+    FLASK_APP.manager.run()

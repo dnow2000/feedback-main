@@ -25,7 +25,7 @@ DEVELOPMENT_TRENDINGS = [{
     'total_facebook_shares': 1000,
     'total_shares': 10000,
     'twitter_shares': 1000,
-    'type': "article",
+    'type': 'article',
     'url': 'https://www.cnn.com/2018/11/26/politics/donald-trump-climate-change/index.html',
 }, {
     'id': 1231,
@@ -37,7 +37,7 @@ DEVELOPMENT_TRENDINGS = [{
     'total_facebook_shares': 178670,
     'total_shares': 354013,
     'twitter_shares': 14228,
-    'type': "article",
+    'type': 'article',
     'url': 'https://www.cnn.com/2018/11/23/health/climate-change-report-bn/index.html',
 }, {
     'id': 1232,
@@ -49,7 +49,7 @@ DEVELOPMENT_TRENDINGS = [{
     'total_facebook_shares': 1423505,
     'total_shares': 1434478,
     'twitter_shares': 9062,
-    'type': "article",
+    'type': 'content',
     'url': 'https://www.upworthy.com/patagonia-s-ceo-is-donating-company-s-entire-10-m-trump-tax-cut-to-fight-climate-change',
 }, {
     'id': 12321234,
@@ -61,7 +61,7 @@ DEVELOPMENT_TRENDINGS = [{
     'total_facebook_shares': 178670,
     'total_shares': 354013,
     'twitter_shares': 14228,
-    'type': "article",
+    'type': 'content',
     'url': 'https://www.motherjones.com/environment/2018/12/trump-g20-climate-paris-accord-denial/',
 }, {
     'id': 12321235,
@@ -73,7 +73,7 @@ DEVELOPMENT_TRENDINGS = [{
     'total_facebook_shares': 178650,
     'total_shares': 354011,
     'twitter_shares': 14248,
-    'type': "article",
+    'type': 'content',
     'url': 'https://abcnews.go.com/Health/trump-signs-18-billion-autism-cares-act/story?id=66002425',
 }, {
     'id': 121212,
@@ -85,7 +85,7 @@ DEVELOPMENT_TRENDINGS = [{
     'total_facebook_shares': 138650,
     'total_shares': 351011,
     'twitter_shares': 13248,
-    'type': "article",
+    'type': 'content',
     'url': 'https://www.menshealth.com/es/salud-bienestar/a26409675/depresion-ejercicio-ansiedad-prevenir/',
 }]
 
@@ -122,12 +122,12 @@ def buzzsumo_trending_from(source_id):
 def topic_from(theme):
     if theme == 'climate':
         return 'global warming,climate change,ocean acidification,sea level rise,carbon dioxide,CO2,greenhouse gases'
-    elif theme =='health':
+    if theme == 'health':
         return 'vaccine,vaccines,disease,diseases,health,healthy,virus,Natural Remedy,alternative medicine,homeopathy,anti-inflammatory,trans fat,trans fats,immune system,cardiovascular diseases,measles'
     return None
 
 
-def article_from_buzzsumo(result):
+def content_from_buzzsumo_result(result):
     return {
         'externalThumbUrl': result['thumbnail'],
         'facebookShares': result['total_facebook_shares'],
@@ -139,13 +139,13 @@ def article_from_buzzsumo(result):
         'title': result['title'],
         'totalShares': result['total_shares'],
         'twitterShares': result['twitter_shares'],
-        'type': 'article',
+        'type': 'content',
         'url': result.get('og_url', '')
     }
 
 
-def article_from_buzzsumo_url(url: str, **kwargs):
-    url = buzzsumo_url_from("articles", { 'q': url })
+def content_from_buzzsumo_url(url: str):
+    url = buzzsumo_url_from('articles', { 'q': url })
     response = requests.get(url)
 
     json_file = response.json()
@@ -154,15 +154,17 @@ def article_from_buzzsumo_url(url: str, **kwargs):
 
     results = json_file['results']
 
-    if len(results) == 1:
-        return article_from_buzzsumo(results[0])
+    if not len(results) == 1:
+        return None
+
+    return content_from_buzzsumo_result(results[0])
 
 
 def find_buzzsumo_trendings(
-    days=1,
-    max_trendings=3,
-    min_shares=10000,
-    theme=None,
+        days=1,
+        max_trendings=3,
+        min_shares=10000,
+        theme=None,
 ):
 
     config = {
@@ -193,7 +195,7 @@ def find_buzzsumo_trendings(
         results = response['results']
 
     for result in results:
-        trending = article_from_buzzsumo(result)
+        trending = content_from_buzzsumo_result(result)
 
         if trending['totalShares'] < min_shares:
             continue

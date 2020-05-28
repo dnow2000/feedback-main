@@ -13,16 +13,24 @@ import { configureStore } from 'utils/store'
 
 import App from './App'
 
+
 const { store, persistor } = configureStore()
 
-const Root = () => (
+
+export default () => (
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <PersistGate
+      loading={null}
+      persistor={persistor}
+    >
       <BrowserRouter>
         <App>
           <Switch>
-            {routes &&
-              routes.map(obj => obj && <Route {...obj} key={obj.path} />)}
+            {routes.map(route => (
+              <Route
+                {...route}
+                key={route.path}
+              />)}
             <Route component={NotMatch} />
           </Switch>
         </App>
@@ -30,5 +38,3 @@ const Root = () => (
     </PersistGate>
   </Provider>
 )
-
-export default Root

@@ -1,15 +1,15 @@
 import createCachedSelector from 're-reselect'
 
 
-const mapArgsToCacheKey = (state, sceneId, verdictId) =>
-  `${sceneId || ''}/${verdictId || ''}`
+const mapArgsToCacheKey = (state, contentId, verdictId) =>
+  `${contentId || ''}/${verdictId || ''}`
 
 
 export default createCachedSelector(
   state => state.data.reviews,
-  (state, sceneId) => sceneId,
-  (state, sceneId, verdictId) => verdictId,
-  (reviews, sceneId, verdictId) =>
+  (state, contentId) => contentId,
+  (state, contentId, verdictId) => verdictId,
+  (reviews, contentId, verdictId) =>
     reviews && reviews.filter(review =>
-      review.sceneId === sceneId && review.verdictId === verdictId)
+      review.contentId === contentId && review.verdictId === verdictId)
 )(mapArgsToCacheKey)

@@ -1,6 +1,6 @@
 from sqlalchemy_api_handler import ApiHandler, logger
 
-from models.article import Article
+from models.content import Content
 from models.review import Review
 from models.review_tag import ReviewTag
 from models.tag import Tag
@@ -13,10 +13,10 @@ def create_review_tags():
 
     review_tags = []
 
-    article = Article.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
+    content = Content.query.filter_by(url="https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says").one()
     reviewer = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     review = Review.query.filter_by(
-        article=article,
+        content=content,
         reviewer=reviewer
     ).one()
     tag = Tag.query.filter_by(text="accurate").one()
@@ -25,10 +25,10 @@ def create_review_tags():
         tag=tag
     ))
 
-    article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
+    content = Content.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
     reviewer = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     review = Review.query.filter_by(
-        article=article,
+        content=content,
         reviewer=reviewer
     ).one()
     tag = Tag.query.filter_by(text="imprecise / unclear").one()
@@ -37,10 +37,10 @@ def create_review_tags():
         tag=tag
     ))
 
-    article = Article.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
+    content = Content.query.filter_by(url="http://www.dailymail.co.uk/sciencetech/article-4192182/World-leaders-duped-manipulated-global-warming-data.html").one()
     reviewer = User.query.filter_by(email="{}test.reviewer1@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
     review = Review.query.filter_by(
-        article=article,
+        content=content,
         reviewer=reviewer
     ).one()
     tag = Tag.query.filter_by(text="imprecise / unclear").one()

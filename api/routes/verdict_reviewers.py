@@ -5,7 +5,7 @@ from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 from models.verdict_reviewer import VerdictReviewer
 from utils.rest import expect_json_data, \
                        login_or_api_key_required
-from validation import check_has_role
+from validation.roles import check_has_role
 
 
 @app.route('/verdictReviewers', methods=['POST'])

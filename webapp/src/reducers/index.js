@@ -6,12 +6,11 @@ import menu from './menu'
 import requests from './requests'
 import scroll from './scroll'
 
-const rootReducer = combineReducers({
+
+export default combineReducers({
   data,
   menu,
   modals,
   requests,
   scroll
 })
-
-export default rootReducer

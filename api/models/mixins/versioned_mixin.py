@@ -1,7 +1,7 @@
 from sqlalchemy import text
 from postgresql_audit.flask import versioning_manager
 
-from models.utils.db import db
+from utils.db import db
 
 class VersionedMixin(object):
     __versioned__ = {}

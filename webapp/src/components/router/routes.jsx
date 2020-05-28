@@ -6,7 +6,7 @@ import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import Appearance from 'components/pages/Appearance'
-import Article from 'components/pages/Article'
+import Content from 'components/pages/Content'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
@@ -22,7 +22,7 @@ import Trendings from 'components/pages/Trendings'
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
 
-const routes = [
+export default [
   {
     exact: true,
     path: '/',
@@ -32,10 +32,10 @@ const routes = [
     component: compose(
       withRequiredLogin,
       withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
-    )(Article),
+    )(Content),
     exact: true,
-    path: `/articles/:articleId${formPath}`,
-    title: 'Article',
+    path: `/contents/:contentId${formPath}`,
+    title: 'Content',
   },
   {
     component: withRequiredLogin(Sources),
@@ -139,5 +139,3 @@ const routes = [
     title: 'Trendings',
   },
 ]
-
-export default routes

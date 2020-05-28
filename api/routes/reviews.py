@@ -2,18 +2,18 @@ from flask_login import current_user
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, \
                                    as_dict, \
+                                   dehumanize, \
                                    load_or_404
 
 from models.review import Review
-from repository.reviews import filter_reviews_with_article_id, \
-                               get_reviews_join_query, \
+from repository.reviews import get_reviews_join_query, \
                                get_reviews_query_with_keywords, \
                                save_tags
 from routes.utils.includes import REVIEW_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required
-from validation import check_has_role
+from validation.roles import check_has_role
 
 
 @app.route('/reviews', methods=['GET'])
@@ -23,9 +23,9 @@ def get_reviews():
 
     query = Review.query
 
-    article_id = request.args.get('articleId')
-    if article_id is not None:
-        query = filter_reviews_with_article_id(query, article_id)
+    content_id = request.args.get('contentId')
+    if content_id is not None:
+        query = query.filter_by(contentId=dehumanize(content_id))
 
     keywords = request.args.get('keywords')
     if keywords is not None:

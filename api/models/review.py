@@ -7,7 +7,7 @@ from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-from models.utils.db import get_model_with_table_name, Model
+from utils.db import get_model_with_table_name, Model
 from models.mixins import HasScienceFeedbackMixin, \
                           HasRatingMixin
 
@@ -18,20 +18,20 @@ class Review(ApiHandler,
              HasRatingMixin,
              SoftDeletableMixin):
 
-    articleId = Column(BigInteger(),
-                       ForeignKey('article.id'),
-                       index=True)
-
-    article = relationship('Article',
-                           foreign_keys=[articleId],
-                           backref='reviews')
-
     claimId = Column(BigInteger(),
                      ForeignKey('claim.id'),
                      index=True)
 
     claim = relationship('Claim',
                          foreign_keys=[claimId],
+                         backref='reviews')
+
+    contentId = Column(BigInteger(),
+                     ForeignKey('content.id'),
+                     index=True)
+
+    content = relationship('Content',
+                         foreign_keys=[contentId],
                          backref='reviews')
 
     comment = Column(Text(), nullable=True)
@@ -52,14 +52,6 @@ class Review(ApiHandler,
     reviewer = relationship('User',
                             foreign_keys=[reviewerId],
                             backref='reviews')
-
-    sceneId = Column(BigInteger(),
-                     ForeignKey('scene.id'),
-                     index=True)
-
-    scene = relationship('Scene',
-                         foreign_keys=[sceneId],
-                         backref='reviews')
 
     @property
     def verdicts(self):

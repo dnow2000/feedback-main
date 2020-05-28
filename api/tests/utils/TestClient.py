@@ -3,7 +3,7 @@ from requests import Response
 from requests.auth import _basic_auth_str
 from flask.testing import FlaskClient
 
-from utils.credentials import PLAIN_DEFAULT_TESTING_PASSWORD
+from utils.config import DEFAULT_USER_PASSWORD
 
 
 class TestClient:
@@ -15,7 +15,7 @@ class TestClient:
         self.client = client
         self.auth_header = {}
 
-    def with_auth(self, email: str = None, password: str = PLAIN_DEFAULT_TESTING_PASSWORD):
+    def with_auth(self, email: str = None, password: str = DEFAULT_USER_PASSWORD):
         self.email = email
         if email is None:
             self.auth_header = {

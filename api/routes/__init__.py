@@ -1,14 +1,16 @@
+# pylint: disable=C0415
+# pylint: disable=W0611
+
 from utils.config import IS_DEVELOPMENT
 
 
 def import_routes():
     import routes.appearances
-    import routes.author_articles
-    import routes.articles
+    import routes.author_contents
     import routes.claims
+    import routes.contents
     import routes.evaluations
     import routes.images
-    import routes.orcid
     import routes.organizations
     import routes.password
     import routes.reviews
@@ -20,10 +22,11 @@ def import_routes():
     import routes.users
     import routes.verdicts
     import routes.verdict_reviewers
-    import routes.wikidata
 
     import routes.health
+    import routes.orcid
     import routes.storage
+    import routes.wikidata
 
     import utils.errorhandler
 

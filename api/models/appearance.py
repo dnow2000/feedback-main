@@ -8,7 +8,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasScienceFeedbackMixin
-from models.utils.db import Model
+from utils.db import Model
 
 
 class StanceType(enum.Enum):
@@ -30,24 +30,37 @@ class Appearance(ApiHandler,
                  Model,
                  HasScienceFeedbackMixin):
 
-    sceneId = Column(BigInteger(),
-                     ForeignKey('scene.id'),
-                     nullable=False,
-                     index=True)
+    quotedContentId = Column(BigInteger(),
+                             ForeignKey('content.id'),
+                             index=True)
 
-    scene = relationship('Scene',
-                         foreign_keys=[sceneId],
-                         backref='appearances')
+    quotedContent = relationship('Content',
+                                 foreign_keys=[quotedContentId],
+                                 backref='quotedFromAppearances')
 
+    quotedClaimId = Column(BigInteger(),
+                           ForeignKey('claim.id'),
+                           index=True)
 
-    claimId = Column(BigInteger(),
-                     ForeignKey('claim.id'),
-                     nullable=False,
-                     index=True)
+    quotedClaim = relationship('Claim',
+                               foreign_keys=[quotedClaimId],
+                               backref='quotedFromAppearances')
 
-    claim = relationship('Claim',
-                         foreign_keys=[claimId],
-                         backref='appearances')
+    quotingClaimId = Column(BigInteger(),
+                            ForeignKey('claim.id'),
+                            index=True)
+
+    quotingClaim = relationship('Content',
+                                foreign_keys=[quotingClaimId],
+                                backref='quotingToAppearances')
+
+    quotingContentId = Column(BigInteger(),
+                              ForeignKey('content.id'),
+                              index=True)
+
+    quotingContent = relationship('Content',
+                                  foreign_keys=[quotingContentId],
+                                  backref='quotingToAppearances')
 
     stance = Column(Enum(StanceType))
 

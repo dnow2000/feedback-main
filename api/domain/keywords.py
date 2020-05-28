@@ -4,18 +4,12 @@ from sqlalchemy import and_, func, TEXT
 from sqlalchemy.sql.expression import cast, or_
 from sqlalchemy.sql.functions import coalesce
 
+
 LANGUAGE = 'english'
 STOP_WORDS = set(stopwords.words(LANGUAGE))
 
 
-def create_tsvector(*args):
-    exp = args[0]
-    for e in args[1:]:
-        exp += ' ' + e
-    return func.to_tsvector(LANGUAGE, exp)
-
-
-def get_ts_queries_from_keywords_string(keywords_string):
+def ts_queries_from_keywords_string(keywords_string):
 
     keywords = word_tokenize(keywords_string)
     keywords_without_stop_words = [
@@ -40,7 +34,7 @@ def get_first_matching_any_ts_queries_at_column(query, ts_queries, column):
     return query.filter(ts_queries_filter).first()
 
 def get_first_matching_keywords_string_at_column(query, keywords_string, column):
-    ts_queries = get_ts_queries_from_keywords_string(keywords_string)
+    ts_queries = ts_queries_from_keywords_string(keywords_string)
     return get_first_matching_any_ts_queries_at_column(query, ts_queries, column)
 
 
@@ -62,7 +56,7 @@ def create_filter_matching_all_keywords_in_any_model(
         get_filter_matching_ts_query_in_any_model,
         keywords_string
 ):
-    ts_queries = get_ts_queries_from_keywords_string(keywords_string)
+    ts_queries = ts_queries_from_keywords_string(keywords_string)
     ts_filters = [
         get_filter_matching_ts_query_in_any_model(ts_query)
         for ts_query in ts_queries

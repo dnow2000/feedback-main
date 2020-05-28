@@ -3,7 +3,7 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import \
     SoftDeletableMixin
 
-from models.utils.db import Model
+from utils.db import Model
 
 
 class Tag(ApiHandler,

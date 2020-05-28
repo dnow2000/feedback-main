@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
+
 import Icon from 'components/layout/Icon'
 
-const KeywordsBar = ({
+
+const _ = ({
   onChange,
   selectedKeywords
 }) => {
@@ -53,9 +55,9 @@ const KeywordsBar = ({
 }
 
 
-KeywordsBar.propTypes = {
+_.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedKeywords: PropTypes.string
 }
 
-export default KeywordsBar
+export default _

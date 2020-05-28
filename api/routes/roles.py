@@ -4,9 +4,9 @@ from sqlalchemy_api_handler import ApiHandler, as_dict, load_or_404
 
 from models.role import Role, RoleType
 from models.user import User
-from models.utils.db import db
+from utils.db import db
 from utils.rest import login_or_api_key_required
-from validation import check_has_role
+from validation.roles import check_has_role
 
 
 @app.route('/roleTypes', methods=['GET'])

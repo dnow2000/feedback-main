@@ -4,6 +4,7 @@ from pprint import pprint
 
 from utils.test_utils import API_URL, req, req_with_auth
 
+
 @app.manager.command
 def get(url, authenticated=False):
     if authenticated:

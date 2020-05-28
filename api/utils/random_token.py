@@ -1,6 +1,13 @@
 import itertools
 import random
+import string
 from sqlalchemy_api_handler import humanize
+
+
+def create_random_password(length=12):
+    password_characters = string.ascii_letters + string.digits + string.punctuation
+    return ''.join(random.choice(password_characters) for i in range(length))
+
 
 def create_random_token(length=6):
     token = random.SystemRandom()
