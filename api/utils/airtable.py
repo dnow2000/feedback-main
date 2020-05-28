@@ -28,13 +28,18 @@ def request_airtable_rows(
     if max_records:
         url = '{}&maxRecords={}'.format(url, max_records)
 
-    headers = {'Authorization': 'Bearer {}'.format(token)}
-    result = requests.get(url, headers=headers)
+    headers = {'Authorization': 'Bearer {}'.format(token) }
 
-    # if result.status_code == 422:
-    #    print(result.text)
+    result = requests.get(url, headers=headers).json()
+    records = result['records']
+    offset = result.get('offset')
+    while offset:
+        url_with_offset = '{}&offset={}'.format(url, offset)
+        result = requests.get(url_with_offset, headers=headers).json()
+        offset = result.get('offset')
+        records += result['records']
 
     return [
         {'airtableId': record['id'], **record['fields']}
-        for (index, record) in enumerate(result.json()['records'])
+        for (index, record) in enumerate(records)
     ]

@@ -8,19 +8,24 @@ from utils.random_token import create_random_password
 
 
 def appearance_from_row(row):
+    reviewed_items = row.get('Item reviewed')
+    if not reviewed_items:
+        return
+
     quoting_content_dict = {'url': row['url']}
     quoting_content = Content.create_or_modify(quoting_content_dict, search_by=['url'])
 
-    quoted_claim = Claim.query.filter_by(scienceFeedbackId=row['Item reviewed'][0]).first()
+    quoted_claim = Claim.query.filter_by(scienceFeedbackId=reviewed_items[0]).first()
     quoted_content = None
     if not quoted_claim:
-        quoted_content = Content.query.filter_by(scienceFeedbackId=row['Item reviewed'][0]).first()
+        quoted_content = Content.query.filter_by(scienceFeedbackId=reviewed_items[0]).first()
     if not quoted_claim and not quoted_content:
         return
 
-    if 'Verified by' not in row:
+    science_feedback_testifier_ids = row.get('Verified by')
+    if not science_feedback_testifier_ids:
         return
-    testifier = User.query.filter_by(scienceFeedbackId=row['Verified by'][0]).first()
+    testifier = User.query.filter_by(scienceFeedbackId=science_feedback_testifier_ids[0]).first()
     if not testifier:
         return
 
@@ -36,9 +41,13 @@ def appearance_from_row(row):
 
 
 def claim_from_row(row):
+    text = row.get('Claim checked (or Headline if no main claim)')
+    if not text:
+        return
+
     claim_dict = {
         'scienceFeedbackId': row['airtableId'],
-        'text': row['Claim checked (or Headline if no main claim)']
+        'text': text
     }
 
     return Claim.create_or_modify(claim_dict, search_by=['scienceFeedbackId'])
@@ -65,7 +74,10 @@ def editor_from_row(row):
 
 
 def review_from_row(row):
-    reviewer = User.query.filter_by(scienceFeedbackId=row['Review editor(s)'][0]).first()
+    science_feedback_reviewer_ids = row.get('Review editor(s)')
+    if not science_feedback_reviewer_ids:
+        return
+    reviewer = User.query.filter_by(scienceFeedbackId=science_feedback_reviewer_ids[0]).first()
     if not reviewer:
         return
 

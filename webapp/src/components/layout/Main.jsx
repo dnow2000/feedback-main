@@ -2,21 +2,25 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import { Modal } from 'redux-react-modals'
 
-const Main = ({ children, name, Tag }) => (
+
+const _ = ({ children, name, Tag }) => (
   <Tag className={`main ${name}-main`}>
     <Modal name="main" />
     {children}
   </Tag>
 )
 
-Main.defaultProps = {
+
+_.defaultProps = {
   Tag: 'main',
 }
 
-Main.propTypes = {
+
+_.propTypes = {
   Tag: PropTypes.string,
   children: PropTypes.node.isRequired,
   name: PropTypes.string.isRequired,
 }
 
-export default Main
+
+export default _
