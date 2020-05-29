@@ -1,31 +1,33 @@
-.footer {
-  align-items: center;
-  background-color: $grey-lighter;
-  display: flex;
-  height: 6.25rem;
-  justify-content: center;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  position: fixed;
+.review {
+  .footer {
+    align-items: center;
+    background-color: $grey-lighter;
+    display: flex;
+    height: 6.25rem;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
 
-  #cancel,
-  #return
-  {
-    @extend .button;
-    @extend .button.is-secondary;
-    margin-right: 2rem
-  }
+    #cancel,
+    #return
+    {
+      @extend .button;
+      @extend .button.is-secondary;
+      margin-right: 2rem
+    }
 
-  #modification,
-  #submit,
-  {
-    @extend .button;
-    @extend .button.is-primary;
-    margin-right: 4rem
-  }
+    #modification,
+    #submit,
+    {
+      @extend .button;
+      @extend .button.is-primary;
+      margin-right: 4rem
+    }
 
-  .space {
-    width: 2rem;
+    .space {
+      width: 2rem;
+    }
   }
 }

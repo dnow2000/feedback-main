@@ -25,7 +25,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name='verdicts'>
+      <Main className='verdicts'>
         <div className="container">
           <section className='hero'>
             <h1 className='title'>

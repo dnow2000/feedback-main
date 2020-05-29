@@ -51,7 +51,10 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="signin" withHeader>
+      <Main
+        className="signin"
+        withHeader
+      >
         <section>
           <Form
             onSubmit={handleFormSubmit}

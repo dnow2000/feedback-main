@@ -48,7 +48,7 @@ export default () => {
 
 
   return (
-    <Main name="signup">
+    <Main className="signup">
       <div className="container">
         <h1 className="title">
           {`Get on board!`}

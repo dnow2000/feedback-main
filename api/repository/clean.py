@@ -4,10 +4,10 @@ from sqlalchemy_api_handler import logger
 from models.appearance import Appearance
 from models.author_content import AuthorContent
 from models.claim import Claim
-from models.claim_claim import ClaimClaim
 from models.content import Content
 from models.content_tag import ContentTag
 from models.evaluation import Evaluation
+from models.medium import Medium
 from models.review import Review
 from models.review_tag import ReviewTag
 from models.role import Role
@@ -41,8 +41,8 @@ def clean_all_database():
     Content.query.delete()
     Role.query.delete()
     UserSession.query.delete()
+    Medium.query.delete()
     User.query.delete()
-    ClaimClaim.query.delete()
     Claim.query.delete()
     versioning_manager.activity_cls.query.delete()
     db.session.commit()

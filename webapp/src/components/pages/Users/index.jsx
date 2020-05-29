@@ -5,10 +5,11 @@ import Main from 'components/layout/Main'
 
 import ApplyingReviewers from './ApplyingReviewers'
 
-const Users = () => (
+
+export default () => (
   <>
     <Header />
-    <Main name="users">
+    <Main className="users">
       <div className="container">
         <section>
           <h1 className="title">
@@ -21,5 +22,3 @@ const Users = () => (
     </Main>
   </>
 )
-
-export default Users

@@ -49,21 +49,21 @@ export default () => {
 
   const verdict = useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
-  const { articleId } = verdict || {}
+  const { contentId } = verdict || {}
 
-  const article = useSelector(state =>
-    selectEntityByKeyAndId(state, 'articles', articleId))
+  const content = useSelector(state =>
+    selectEntityByKeyAndId(state, 'contents', contentId))
   const {
-    externalThumbUrl: articleExternalThumUrl,
-    summary: articleSummary,
-    title: articleTitle,
-    url: articleUrl,
-  } = { ...trending, ...article}
+    externalThumbUrl: contentExternalThumUrl,
+    summary: contentSummary,
+    title: contentTitle,
+    url: contentUrl,
+  } = { ...trending, ...content}
   const currentUserVerdictPatch = {
-      articleExternalThumUrl,
-      articleSummary,
-      articleTitle,
-      articleUrl,
+      contentExternalThumUrl,
+      contentSummary,
+      contentTitle,
+      contentUrl,
       ...verdict
   }
 
@@ -139,7 +139,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="verdict">
+      <Main className="verdict">
         <div className="container">
           <section className="hero">
             <h1 className="title">

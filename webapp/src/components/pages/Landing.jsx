@@ -19,7 +19,7 @@ const Landing = () => {
   useEffect(() => {
     dispatch(requestData({
       apiPath: "/verdicts",
-      normalizer: { article: "articles" }
+      normalizer: { content: "contents" }
     }))
   }, [dispatch])
 
@@ -27,7 +27,9 @@ const Landing = () => {
   return (
     <>
       <Header />
-      <Main className="with-header" name="landing">
+      <Main
+        className="landing with-header"
+      >
         <section className="hero">
           <div className="container">
             <p className="h1">

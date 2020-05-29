@@ -99,7 +99,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="review">
+      <Main className="review">
         <div className="container">
           <h1 className="title">
             Content Review

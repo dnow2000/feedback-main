@@ -45,7 +45,7 @@ export default () => {
   } = useFormidable(location, params)
 
 
-  const { isPending } = useSelector(state => state.requests['/articles']) || {}
+  const { isPending } = useSelector(state => state.requests['/contents']) || {}
 
   const appearance = useSelector(state =>
     selectEntityByKeyAndId(state, 'appearances', appearanceId)) || {}
@@ -121,7 +121,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="article">
+      <Main className="content">
         <div className="container">
           <section>
             <h2 className="subtitle">

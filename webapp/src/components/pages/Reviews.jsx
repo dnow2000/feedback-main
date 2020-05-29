@@ -21,7 +21,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="reviews">
+      <Main className="reviews">
         <div className="container">
           <section>
             <Feeds

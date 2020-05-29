@@ -33,7 +33,7 @@ export default  () => {
   return (
     <>
       <Header />
-      <Main name="review">
+      <Main className="review">
         <section className="section hero">
           <h1 className="title">
             Profile

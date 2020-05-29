@@ -94,7 +94,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="content">
+      <Main className="content">
         <div className="container">
           {!isCreatedEntity && (
             <section>
