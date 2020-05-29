@@ -5,7 +5,7 @@ import { useQuery } from 'with-react-query'
 import Feeds from 'components/layout/Feeds/Feeds'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import { articleNormalizer } from 'utils/normalizers'
+import { contentNormalizer } from 'utils/normalizers'
 
 import SourceItem from './SourceItem'
 
@@ -18,7 +18,7 @@ export default () => {
 
   const config = useMemo(() => ({
     apiPath: `/${collectionName}${search}`,
-    normalizer: articleNormalizer
+    normalizer: contentNormalizer
   }), [collectionName, search])
 
 

@@ -5,14 +5,14 @@ import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 import { selectCurrentUser } from 'with-react-redux-login'
 
-import ArticleItem from 'components/layout/ArticleItem'
 import ClaimItem from 'components/layout/ClaimItem'
+import ContentItem from 'components/layout/ContentItem'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 
 
 const ItemsByName = {
-  ArticleItem,
-  ClaimItem
+  ClaimItem,
+  ContentItem
 }
 
 

@@ -6,15 +6,15 @@ import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import ArticleItem from 'components/layout/ArticleItem'
+import ContentItem from 'components/layout/ContentItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
 
-import { articleNormalizer, reviewNormalizer } from 'utils/normalizers'
+import { contentNormalizer, reviewNormalizer } from 'utils/normalizers'
 
 import Form from './Form'
-import selectFormInitialValuesByArticleId from './selectors/selectFormInitialValuesByArticleId'
+import selectFormInitialValuesByContentId from './selectors/selectFormInitialValuesByContentId'
 
 
 const API_PATH = '/reviews'
@@ -32,17 +32,17 @@ export default () => {
     method
   } = useFormidable(location, params)
   const history = useHistory()
-  const { params: { articleId: queryArticleId } } = useQuery(location.search)
+  const { params: { contentId: queryContentId } } = useQuery(location.search)
 
 
   const review = useSelector(state =>
     selectEntityByKeyAndId(state, 'reviews', matchReviewId)) || {}
-  const articleId = review.articleId || queryArticleId
-  const article = useSelector(state =>
-    selectEntityByKeyAndId(state, 'articles', articleId))
+  const contentId = review.contentId || queryContentId
+  const content = useSelector(state =>
+    selectEntityByKeyAndId(state, 'contents', contentId))
 
   const formInitialValues = useSelector(state =>
-    selectFormInitialValuesByArticleId(state, articleId))
+    selectFormInitialValuesByContentId(state, contentId))
 
 
   const handleSubmitReview = useCallback(formValues => {
@@ -81,12 +81,12 @@ export default () => {
       return
     }
 
-    if (!articleId) return
+    if (!contentId) return
 
     dispatch(requestData({
-      apiPath: `/articles/${articleId}`,
-      normalizer: articleNormalizer }))
-  }, [articleId, dispatch, isCreatedEntity, formReviewId])
+      apiPath: `/contents/${contentId}`,
+      normalizer: contentNormalizer }))
+  }, [contentId, dispatch, isCreatedEntity, formReviewId])
 
   useEffect(() => {
     const { id } = formInitialValues || {}
@@ -102,13 +102,13 @@ export default () => {
       <Main name="review">
         <div className="container">
           <h1 className="title">
-            Article Review
+            Content Review
           </h1>
 
-          {article && (
+          {content && (
             <section>
-              <ArticleItem
-                article={article}
+              <ContentItem
+                content={content}
                 noControl
                 withTheme
               />

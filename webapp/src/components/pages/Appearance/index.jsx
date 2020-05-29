@@ -11,7 +11,7 @@ import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
 import ClaimItem from 'components/layout/ClaimItem'
-import ArticleItem from 'components/layout/ArticleItem'
+import ContentItem from 'components/layout/ContentItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
@@ -23,7 +23,7 @@ import FormFooter from './FormFooter'
 
 
 const ItemsByName = {
-  ArticleItem,
+  ContentItem,
   ClaimItem
 }
 

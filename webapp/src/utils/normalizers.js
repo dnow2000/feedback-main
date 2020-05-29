@@ -23,12 +23,12 @@ export const appearanceNormalizer = {
 }
 
 
-export const articleNormalizer = {
-  articleTags: {
+export const contentNormalizer = {
+  contentTags: {
     normalizer: {
       tag: 'tags'
     },
-    stateKey: 'articleTags',
+    stateKey: 'contentTags',
   },
   reviews: {
     normalizer: {
@@ -58,7 +58,6 @@ export const itemReviewNormalizer = {
 }
 
 export const reviewNormalizer = {
-  article: 'articles',
   content: 'contents',
   verdicts: {
     normalizer: {
@@ -75,7 +74,7 @@ export const reviewNormalizer = {
 }
 
 export const verdictNormalizer = {
-  article: 'articles',
+  content: 'contents',
   reviews: {
     normalizer: {
       evaluation: 'evaluations',

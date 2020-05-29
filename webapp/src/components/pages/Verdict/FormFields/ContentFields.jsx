@@ -1,11 +1,10 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 
 import TextareaField from 'components/layout/form/fields/TextareaField'
 import TextField from 'components/layout/form/fields/TextField'
 
 
-const ArticleFields = () => (
+export default () => (
   <div>
     <TextField
       label="url"
@@ -25,13 +24,3 @@ const ArticleFields = () => (
     />
   </div>
 )
-
-
-ArticleFields.propTypes = {
-  form: PropTypes.shape({
-    isModifiedEntity: PropTypes.bool,
-    readOnly: PropTypes.bool,
-  }).isRequired,
-}
-
-export default ArticleFields

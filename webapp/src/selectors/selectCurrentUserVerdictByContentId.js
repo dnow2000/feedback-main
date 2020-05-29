@@ -2,15 +2,15 @@ import createCachedSelector from 're-reselect'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 
-const mapArgsToCacheKey = (state, articleId) => articleId
+const mapArgsToCacheKey = (state, contentId) => contentId
 
 
 export default createCachedSelector(
   state => state.data.verdicts,
   selectCurrentUser,
-  (state, articleId) => articleId,
-  (verdicts, currentUser, articleId) =>
+  (state, contentId) => contentId,
+  (verdicts, currentUser, contentId) =>
     verdicts && verdicts.find(verdict =>
-      verdict.articleId === articleId &&
+      verdict.contentId === contentId &&
       verdict.editorId === (currentUser && currentUser.id))
 )(mapArgsToCacheKey)

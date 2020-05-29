@@ -4,9 +4,9 @@ import { useSelector } from 'react-redux'
 import { selectEntityByKeyAndId } from 'redux-thunk-data'
 import { createSelector } from 'reselect'
 
-import ArticleItem from 'components/layout/ArticleItem'
 import Avatar from 'components/layout/Avatar'
-import selectReviewsByArticleIdAndVerdictId from 'selectors/selectReviewsByArticleIdAndVerdictId'
+import ContentItem from 'components/layout/ContentItem'
+import selectReviewsByContentIdAndVerdictId from 'selectors/selectReviewsByContentIdAndVerdictId'
 import ratings, {
   getBarSizeByValue,
   getColorClassName,
@@ -23,7 +23,7 @@ const colorClassName = getColorClassName(meanRating)
 
 const MAX_AVATARS = 5
 const selectTruncatedReviewers = createSelector(
-  selectReviewsByArticleIdAndVerdictId,
+  selectReviewsByContentIdAndVerdictId,
   reviews => {
     if (!reviews) return
     const reviewers = reviews.map(review => review.reviewer)
@@ -42,17 +42,17 @@ const selectTruncatedReviewers = createSelector(
 
 export default ({ verdict }) => {
   const {
-    articleId,
+    contentId,
     editorId,
     id: verdictId
   } = verdict
 
 
-  const article = useSelector(state =>
-    selectEntityByKeyAndId(state, 'articles', articleId))
+  const content = useSelector(state =>
+    selectEntityByKeyAndId(state, 'contents', contentId))
 
   const truncatedReviewers = useSelector(state =>
-    selectTruncatedReviewers(state, articleId, verdictId))
+    selectTruncatedReviewers(state, contentId, verdictId))
 
   const editor = useSelector(state =>
     selectEntityByKeyAndId(state, 'users', editorId))
@@ -60,9 +60,9 @@ export default ({ verdict }) => {
 
   return (
     <div className="verdict-item">
-      {article && (
-        <ArticleItem
-          article={article}
+      {content && (
+        <ContentItem
+          content={content}
           withShares={false}
         />)}
       <div className="verdict-bottom-container">

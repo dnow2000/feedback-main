@@ -5,8 +5,8 @@ import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import ArticleItem from 'components/layout/ArticleItem'
 import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
+import ContentItem from 'components/layout/ContentItem'
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
@@ -14,7 +14,7 @@ import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
 import selectTagsByScopes from 'selectors/selectTagsByScopes'
 
-import ArticleFields from './ArticleFields'
+import ContentFields from './ContentFields'
 import ReviewersManager from './ReviewersManager'
 
 
@@ -33,7 +33,7 @@ export default () => {
   const { readOnly } = useFormidable(location, params)
 
 
-  const [readOnlyArticle, setReadOnlyArticle] = useState(true)
+  const [readOnlyContent, setReadOnlyContent] = useState(true)
 
   const evaluations = useSelector(state =>
     selectEvaluationsByType(state, 'article'))
@@ -75,8 +75,8 @@ export default () => {
 
 
   const handleClickEdit = useCallback(() => {
-    setReadOnlyArticle(!readOnlyArticle)
-  }, [readOnlyArticle, setReadOnlyArticle])
+    setReadOnlyContent(!readOnlyContent)
+  }, [readOnlyContent, setReadOnlyContent])
 
 
   return (
@@ -86,15 +86,15 @@ export default () => {
         type="hidden"
       />
       <section className="article">
-        {readOnlyArticle
+        {readOnlyContent
           ? (
-            <ArticleItem
+            <ContentItem
               article={article || trending}
               noControl
               onClickEdit={handleClickEdit}
             />
           )
-          : <ArticleFields />
+          : <ContentFields />
         }
       </section>
       <section>

@@ -1,10 +1,9 @@
 .rating {
-  @extend .p6;
-
   background-color: $black;
   border-radius: 50%;
   color: white;
   height: 30px;
+  padding: 0.5rem;
   width: 30px;
 
   &.value--2 {

@@ -6,15 +6,15 @@ import { useQuery } from 'with-react-query'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import ClaimItem from 'components/layout/ClaimItem'
-import ArticleItem from 'components/layout/ArticleItem'
-import selectCurrentUserReviewByArticleId from 'selectors/selectCurrentUserReviewByArticleId'
+import ContentItem from 'components/layout/ContentItem'
+import selectCurrentUserReviewByContentId from 'selectors/selectCurrentUserReviewByContentId'
 import selectCurrentUserAppearanceByClaimId from 'selectors/selectCurrentUserAppearanceByClaimId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 
 
 const ItemsByName = {
-  ArticleItem,
-  ClaimItem
+  ClaimItem,
+  ContentItem
 }
 
 
@@ -45,7 +45,7 @@ export default ({ source }) => {
   const canVerdict = typeof editorRole !== 'undefined'
 
   const { id: currentUserReviewId } = useSelector(state =>
-    selectCurrentUserReviewByArticleId(state, id)) || {}
+    selectCurrentUserReviewByContentId(state, id)) || {}
 
     const { id: currentUserAppearanceId } = useSelector(state =>
       selectCurrentUserAppearanceByClaimId(state, id)) || {}
@@ -55,14 +55,14 @@ export default ({ source }) => {
     selectEntitiesByKeyAndJoin(state, 'verdicts', sourceJoin)[0]) || {}
 
 
-  const redirectToArticle = useCallback(id =>
+  const redirectToContent = useCallback(id =>
     history.push(`/${type}s/${id}`), [history, type])
 
 
   return (
     <Item
       {...itemProps}
-      onClickEdit={redirectToArticle}
+      onClickEdit={redirectToContent}
     >
       {canVerdict && (
         <NavLink

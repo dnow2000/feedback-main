@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import { Redirect } from 'react-router-dom'
 
@@ -16,7 +16,7 @@ const _ = ({ delay, location, redirect }) => {
     return () => {
       clearInterval(timer)
     }
-  }, [timeout, setTiming])
+  }, [setTiming])
 
 
   if (timing < 0) return <Redirect to={redirect} />

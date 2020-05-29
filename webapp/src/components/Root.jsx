@@ -9,7 +9,7 @@ import {
 
 import NotMatch from 'components/pages/NotMatch'
 import routes from 'components/router/routes'
-import { configureStore } from 'utils/store'
+import configureStore from 'utils/store'
 
 import App from './App'
 
@@ -30,7 +30,7 @@ export default () => (
               <Route
                 {...route}
                 key={route.path}
-              />)}
+              />))}
             <Route component={NotMatch} />
           </Switch>
         </App>
