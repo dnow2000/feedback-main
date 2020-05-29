@@ -196,9 +196,6 @@ elif [[ "$CMD" == "create-schema-sql" ]]; then
         ./scripts/scalingo/create_schema_sql.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
   fi
 
-  sed -i 's/SET statement_timeout = 0;//g' file
-
-
 # Dump database into pgdump file
 elif [[ "$CMD" == "env" ]]; then
   cat $ROOT_PATH/.env
