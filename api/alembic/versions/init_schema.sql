@@ -17,6 +17,16 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: evaluationtype; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.evaluationtype AS ENUM (
+    'claim',
+    'content'
+);
+
+
+--
 -- Name: roletype; Type: TYPE; Schema: public; Owner: -
 --
 
@@ -288,15 +298,6 @@ ALTER SEQUENCE public.activity_id_seq OWNED BY public.activity.id;
 
 
 --
--- Name: alembic_version; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.alembic_version (
-    version_num character varying(32) NOT NULL
-);
-
-
---
 -- Name: appearance; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -477,7 +478,7 @@ CREATE TABLE public.evaluation (
     id bigint NOT NULL,
     info text,
     label character varying(50),
-    type character varying(50),
+    type public.evaluationtype,
     value integer
 );
 
@@ -1141,14 +1142,6 @@ ALTER TABLE ONLY public.verdict_tag ALTER COLUMN id SET DEFAULT nextval('public.
 
 ALTER TABLE ONLY public.activity
     ADD CONSTRAINT activity_pkey PRIMARY KEY (id);
-
-
---
--- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.alembic_version
-    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
 
 
 --

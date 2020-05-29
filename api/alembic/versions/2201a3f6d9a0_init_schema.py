@@ -27,6 +27,7 @@ def upgrade():
 
 
 def downgrade():
+
     op.execute('DROP TABLE image CASCADE')
     op.execute('DROP TABLE evaluation CASCADE')
     evaluation_type = sa.Enum(name='evaluationtype')
@@ -58,9 +59,10 @@ def downgrade():
     op.execute('DROP TABLE "user" CASCADE')
     op.execute('DROP TABLE tag CASCADE')
     op.execute('DROP TABLE activity')
+    op.execute('DROP TABLE public.alembic_version')
+    op.execute('DROP TABLE transaction')
     op.execute('DROP FUNCTION audit_table(target_table regclass)')
     op.execute('DROP FUNCTION audit_table(target_table regclass, ignored_cols text[])')
     op.execute('DROP FUNCTION create_activity')
     op.execute('DROP FUNCTION jsonb_change_key_name(data jsonb, old_key text, new_key text)')
     op.execute('DROP FUNCTION jsonb_subtract(arg1 jsonb, arg2 jsonb) CASCADE')
-    op.execute('DROP TABLE transaction')
