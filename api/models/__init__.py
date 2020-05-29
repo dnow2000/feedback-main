@@ -16,6 +16,7 @@ def import_models(with_creation=False):
     from models.content_tag import ContentTag
     from models.evaluation import Evaluation
     from models.image import Image
+    from models.medium import Medium
     from models.organization import Organization
     from models.review import Review
     from models.review_tag import ReviewTag

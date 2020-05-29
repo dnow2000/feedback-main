@@ -229,6 +229,11 @@ elif [[ "$CMD" == restart ]]; then
   ./$COMMAND_NAME -m $MODE start --force-recreate $*
   exit
 
+# Erase docker shared volumes
+elif [[ "$CMD" == "rmdb" ]]; then
+  RUN='cd $ROOT_PATH;
+	     sudo rm -rf docker_data_$MODE/apidb;'
+
 # Start docker-compose up with adapted env variables or webapps with local env
 elif [[ "$CMD" == start ]]; then
   if [[ "$MODE" == "serve-webapp" ]]; then

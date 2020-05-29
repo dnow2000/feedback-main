@@ -1,14 +1,19 @@
-from sqlalchemy import Column, String, Text
-from sqlalchemy.dialects.postgresql import JSON
+from sqlalchemy import Column, \
+                       String
 from sqlalchemy_api_handler import ApiHandler
 
+from models.mixins.has_science_feedback_mixin import HasScienceFeedbackMixin
 from utils.db import Model
 
 
-class Organization(ApiHandler, Model):
+class Organization(ApiHandler,
+                   Model,
+                   HasScienceFeedbackMixin):
 
     entity = Column(String(16))
 
     label = Column(String(64))
 
     description = Column(String(128))
+
+    name = Column(String(256), nullable=False)
