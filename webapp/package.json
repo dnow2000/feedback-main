@@ -60,7 +60,7 @@
   },
   "devDependencies": {
     "eslint-plugin-jest": "^23.0.5",
-    "husky": "^3.0.9",
+    "husky": "^4.2.5",
     "license-reporter": "^1.2.2",
     "node-sass": "^4.9.4",
     "prettier-eslint-cli": "^5.0.0",
