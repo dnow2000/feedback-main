@@ -196,6 +196,9 @@ elif [[ "$CMD" == "create-schema-sql" ]]; then
         ./scripts/scalingo/create_schema_sql.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
   fi
 
+  SET row_security = off;
+
+
 # Dump database into pgdump file
 elif [[ "$CMD" == "env" ]]; then
   cat $ROOT_PATH/.env
