@@ -68,9 +68,9 @@ sleep 3
 DB_TUNNEL_PID=$!
 echo "Start backup process."
 mkdir -p "$BACKUP_PATH"
-FILE="$BACKUP_PATH"/`date +%Y%m%d_%H%M%S`.pgdump
+FILE="$BACKUP_PATH"/schema_init.pgdump
 PGPASSWORD="$PG_PASSWORD" pg_dump --host 127.0.0.1 --port 10000 --no-owner --schema-only --username "$PG_USER" --dbname "$PG_USER" -F c > $FILE
-pg_restore $FILE > ../alembic/versions/sql/`date +%Y%m%d_%H%M%S`.sql
+pg_restore $FILE > ../alembic/versions/schema_init.sql
 
 echo "$DB_TUNNEL_PID"
 # for some reason kill -2 does not work (network issues maybe)

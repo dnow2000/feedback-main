@@ -1,4 +1,4 @@
-"""schema init
+"""init schema
 
 Revision ID: 2201a3f6d9a0
 Revises:

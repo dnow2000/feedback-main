@@ -1,0 +1,48 @@
+"""init schema
+
+Revision ID: 2201a3f6d9a0
+Revises:
+Create Date: 2018-09-14 17:40:00.173286
+
+"""
+from pathlib import Path
+import os
+from alembic import op
+
+
+# revision identifiers, used by Alembic.
+revision = '2201a3f6d9a0'
+down_revision = None
+branch_labels = None
+depends_on = None
+
+
+def upgrade():
+    sql_file_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'schema_init.sql'
+
+    with open(sql_file_path, 'r') as sql_file:
+        data = sql_file.read()
+    op.execute(data)
+
+
+def downgrade():
+    op.execute('DROP TABLE evaluation CASCADE')
+    op.execute('DROP TABLE role CASCADE')
+    op.execute('DROP TABLE scope CASCADE')
+    op.execute('DROP TABLE appearance CASCADE')
+    op.execute('DROP TABLE verdict_reviewer CASCADE')
+    op.execute('DROP TABLE verdict_tag CASCADE')
+    op.execute('DROP TABLE verdict CASCADE')
+    op.execute('DROP TABLE review_tag CASCADE')
+    op.execute('DROP TABLE review CASCADE')
+    op.execute('DROP TABLE claim CASCADE')
+    op.execute('DROP TABLE author_content CASCADE')
+    op.execute('DROP TABLE content_tag CASCADE')
+    op.execute('DROP TABLE content CASCADE')
+    op.execute('DROP TABLE medium CASCADE')
+    op.execute('DROP TABLE organization CASCADE')
+    op.execute('DROP TABLE user_session CASCADE')
+    op.execute('DROP TABLE "user" CASCADE')
+    op.execute('DROP TABLE tag CASCADE')
+    op.execute('DROP TABLE activity')
+    op.execute('DROP TABLE transaction')

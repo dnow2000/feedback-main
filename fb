@@ -176,25 +176,24 @@ elif [[ "$CMD" == clean ]]; then
          sh scripts/clean.sh $MODE $TARGET;'
   fi
 
-# Create diff output between schema in staging & local backend
-elif [[ "$CMD" == "diff-schema" ]]; then
-  docker exec $POSTGRES_SERVICE pg_dump -d $POSTGRES_SERVICE -U $POSTGRES_USER -s > /tmp/$COMMAND_NAME_schema_local
-  scalingo -a $APP_NAME-api-staging run 'dbclient-fetcher postgresql 10.4 && pg_dump "$SCALINGO_POSTGRESQL_URL" -s' > /tmp/$COMMAND_NAME_schema_staging
-  diff /tmp/$COMMAND_NAME_schema_staging /tmp/$COMMAND_NAME_schema_local
-  exit
 
 # Dump database into pgdump file
-elif [[ "$CMD" == "dump-db" ]]; then
-  RUN='mkdir -p "$ROOT_PATH/db_dumps";
-       docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' -F c > "/var/lib/postgresql/`date +%Y%m%d_%H%M%S`.pgdump'
+elif [[ "$CMD" == "create-db-pgdump" ]]; then
+  FILE=db_$(date +"%Y_%m_%d__%H_%M_%S").pgdump
+  RUN='cd $ROOT_PATH;
+       docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' -F c > "/var/lib/postgresql/$FILE;
+       sudo mv docker_data_$MODE/${DATABASE}db/$FILE .;'
 
 # Create schema_init.sql into alembic
-elif [[ "$CMD" == "schema-db" ]]; then
+elif [[ "$CMD" == "create-schema-sql" ]]; then
   if [[ "$ENV" == "not-set" ]]; then
-    RUN='docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' --no-owner --no-privileges --schema-only -U '$POSTGRES_USER' -F p > /var/lib/postgresql/schema_`date +%Y%m%d_%H%M%S`.pgdump"'
+    FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
+    RUN='cd $ROOT_PATH;
+         docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' --no-owner --no-privileges --schema-only -U '$POSTGRES_USER' -F p > /var/lib/postgresql/$FILE";
+         sudo mv docker_data_$MODE/${DATABASE}db/$FILE .;'
   else
     RUN="cd $ROOT_PATH;
-        ./scripts/scalingo/schema_db.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
+        ./scripts/scalingo/create_schema_sql.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
   fi
 
 # Dump database into pgdump file
