@@ -6,7 +6,6 @@
 -- Dumped by pg_dump version 10.1
 
 
-
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
@@ -22,6 +21,10 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
 SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
 
 --
 -- Name: roletype; Type: TYPE; Schema: public; Owner: -
