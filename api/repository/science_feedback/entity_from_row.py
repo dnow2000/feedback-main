@@ -74,7 +74,11 @@ def author_from_row(row):
         'scienceFeedbackId': row['airtableId']
     }
 
-    return User.create_or_modify(user_dict, search_by=['scienceFeedbackId'])
+    user = User.create_or_modify(user_dict, search_by=['scienceFeedbackId'])
+    if not user.id:
+        user.set_password(create_random_password())
+
+    return user
 
 
 def claim_from_row(row):
@@ -141,6 +145,10 @@ def review_from_row(row):
 
 
 def social_from_row(row):
+
+    if 'url' not in row:
+        return
+
     organization_name = row['url'].replace('https://www.', '') \
                                   .split('/')[0] \
                                   .split('.')[0] \

@@ -77,6 +77,8 @@ class User(ApiHandler,
         if password:
             self.set_password(password)
 
+        return self
+
     def set_password(self, newpass):
         self.clearTextPassword = newpass
         self.password = bcrypt.hashpw(newpass.encode('utf-8'),

@@ -19,7 +19,7 @@ import repository
 def sync(name, from_date, to_date):
     try:
         sync_function = getattr(repository, name).sync
-        if name == 'article':
+        if name == 'contents':
             now_date =  datetime.utcnow()
             from_date = now_date - timedelta(minutes=int(from_date))
             to_date = now_date - timedelta(minutes=int(to_date))
