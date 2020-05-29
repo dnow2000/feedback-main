@@ -11,20 +11,20 @@ from domain.trendings.poynter import find_poynter_trendings, \
 load_data_frame()
 
 
-def find_article_trendings(*args, **kwargs):
-    return find_buzzsumo_trendings(*args, **kwargs)
-
-
 def find_claim_trendings(*args, **kwargs):
     return find_poynter_trendings(*args, **kwargs)
 
 
-def article_trending_from(*args, **kwargs):
-    return buzzsumo_trending_from(*args, **kwargs)
+def find_content_trendings(*args, **kwargs):
+    return find_buzzsumo_trendings(*args, **kwargs)
 
 
 def claim_trending_from(*args, **kwargs):
     return poynter_trending_from(*args, **kwargs)
+
+
+def content_trending_from(*args, **kwargs):
+    return buzzsumo_trending_from(*args, **kwargs)
 
 
 def find_trendings(trending_type, *args, **kwargs):

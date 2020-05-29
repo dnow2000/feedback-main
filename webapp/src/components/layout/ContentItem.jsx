@@ -57,7 +57,7 @@ const _ = ({
 
 
   return (
-    <content className="content-item">
+    <div className="content-item">
       <div className="content-container">
         <div className="content-header">
           {withTheme && theme && <p className="content-tag">{theme}</p>}
@@ -127,7 +127,7 @@ const _ = ({
           {children}
         </div>
       </div>
-    </content>
+    </div>
   )
 }
 

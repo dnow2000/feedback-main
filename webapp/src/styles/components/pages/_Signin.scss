@@ -1,10 +1,10 @@
 .signin {
+  align-items: center;
+  display: flex;
+  justify-content: center;
   max-width: 400px;
   margin: auto;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
   form {
     width: 355px;
@@ -34,5 +34,10 @@
     label {
       display: block;
     }
+  }
+
+  .submit {
+    @extend .button;
+    @extend .is-primary;
   }
 }

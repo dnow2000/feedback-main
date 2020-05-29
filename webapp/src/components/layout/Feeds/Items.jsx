@@ -25,7 +25,7 @@ const selectRequest = (state, config) =>
   state.requests[getItemsActivityTagFromConfig(config)]
 
 
-const Items = ({
+const _ = ({
   cols,
   config,
   renderItem
@@ -98,14 +98,14 @@ const Items = ({
   )
 }
 
-Items.defaultProps = {
+_.defaultProps = {
   cols: 2
 }
 
-Items.propTypes = {
+_.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
   renderItem: PropTypes.func.isRequired
 }
 
-export default Items
+export default _
