@@ -189,12 +189,22 @@ elif [[ "$CMD" == "create-schema-sql" ]]; then
   if [[ "$ENV" == "not-set" ]]; then
     FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
     RUN='cd $ROOT_PATH;
-         docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' --no-owner --no-privileges --schema-only -U '$POSTGRES_USER' -F p > /var/lib/postgresql/$FILE";
+         docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' --no-comments --no-owner --no-privileges --schema-only -U '$POSTGRES_USER' -F p > /var/lib/postgresql/$FILE";
          sudo mv docker_data_$MODE/${DATABASE}db/$FILE .;'
   else
     RUN="cd $ROOT_PATH;
         ./scripts/scalingo/create_schema_sql.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
   fi
+
+elif [[ "$CMD" == "create-init-schema-sql" ]]; then
+  if [ -f "$ROOT_PATH/api/alembic/versions/init_schema.sql" ]; then
+    confirm "Warning: remove previous init_schema.sql ?"
+    rm -f $ROOT_PATH/api/alembic/versions/init_schema.sql;
+  fi
+  FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
+  RUN='cd $ROOT_PATH;
+      ./$COMMAND_NAME create-schema-sql;
+      mv $FILE api/alembic/versions/init_schema.sql;'
 
 # Dump database into pgdump file
 elif [[ "$CMD" == "env" ]]; then

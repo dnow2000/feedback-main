@@ -71,7 +71,7 @@ services:
       - POSTGRES_DB=${APP_NAME}
       - POSTGRES_PASSWORDWORD=${APP_NAME}_password
       - POSTGRES_USER=${APP_NAME}_user
-    image: postgres:10.1
+    image: postgres:12.2
     networks:
       - db_test-end2end_nw
     volumes:

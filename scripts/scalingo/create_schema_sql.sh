@@ -69,7 +69,7 @@ DB_TUNNEL_PID=$!
 echo "Start backup process."
 mkdir -p "$BACKUP_PATH"
 FILE="$BACKUP_PATH"/schema_init.pgdump
-PGPASSWORD="$PG_PASSWORD" pg_dump --host 127.0.0.1 --port 10000 --no-owner --schema-only --username "$PG_USER" --dbname "$PG_USER" -F c > $FILE
+PGPASSWORD="$PG_PASSWORD" pg_dump --host 127.0.0.1 --port 10000 --no-comments --no-owner --schema-only --username "$PG_USER" --dbname "$PG_USER" -F c > $FILE
 pg_restore $FILE > ../alembic/versions/schema_init.sql
 
 echo "$DB_TUNNEL_PID"

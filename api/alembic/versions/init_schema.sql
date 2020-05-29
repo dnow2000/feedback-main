@@ -2,43 +2,25 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.1
--- Dumped by pg_dump version 10.1
+-- Dumped from database version 12.2 (Debian 12.2-2.pgdg100+1)
+-- Dumped by pg_dump version 12.2 (Debian 12.2-2.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS null;
-
-
-SET search_path = public, pg_catalog;
-
-SET default_tablespace = '';
-
-SET default_with_oids = false;
 
 --
 -- Name: roletype; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE roletype AS ENUM (
+CREATE TYPE public.roletype AS ENUM (
     'admin',
     'author',
     'editor',
@@ -52,7 +34,7 @@ CREATE TYPE roletype AS ENUM (
 -- Name: scopetype; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE scopetype AS ENUM (
+CREATE TYPE public.scopetype AS ENUM (
     'article',
     'review',
     'user',
@@ -64,7 +46,7 @@ CREATE TYPE scopetype AS ENUM (
 -- Name: stancetype; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE stancetype AS ENUM (
+CREATE TYPE public.stancetype AS ENUM (
     'ENDORSEMENT',
     'NEUTRAL',
     'REFUSAL'
@@ -75,7 +57,7 @@ CREATE TYPE stancetype AS ENUM (
 -- Name: audit_table(regclass); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION audit_table(target_table regclass) RETURNS void
+CREATE FUNCTION public.audit_table(target_table regclass) RETURNS void
     LANGUAGE sql
     AS $$
 SELECT audit_table(target_table, ARRAY[]::text[]);
@@ -86,7 +68,7 @@ $$;
 -- Name: audit_table(regclass, text[]); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION audit_table(target_table regclass, ignored_cols text[]) RETURNS void
+CREATE FUNCTION public.audit_table(target_table regclass, ignored_cols text[]) RETURNS void
     LANGUAGE plpgsql
     AS $$
 DECLARE
@@ -135,9 +117,9 @@ $$;
 -- Name: create_activity(); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION create_activity() RETURNS trigger
+CREATE FUNCTION public.create_activity() RETURNS trigger
     LANGUAGE plpgsql SECURITY DEFINER
-    SET search_path TO pg_catalog, public
+    SET search_path TO 'pg_catalog', 'public'
     AS $$
 DECLARE
     audit_row activity;
@@ -226,7 +208,7 @@ $$;
 -- Name: jsonb_change_key_name(jsonb, text, text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION jsonb_change_key_name(data jsonb, old_key text, new_key text) RETURNS jsonb
+CREATE FUNCTION public.jsonb_change_key_name(data jsonb, old_key text, new_key text) RETURNS jsonb
     LANGUAGE sql IMMUTABLE
     AS $$
     SELECT ('{'||string_agg(to_json(CASE WHEN key = old_key THEN new_key ELSE key END)||':'||value, ',')||'}')::jsonb
@@ -241,7 +223,7 @@ $$;
 -- Name: jsonb_subtract(jsonb, jsonb); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION jsonb_subtract(arg1 jsonb, arg2 jsonb) RETURNS jsonb
+CREATE FUNCTION public.jsonb_subtract(arg1 jsonb, arg2 jsonb) RETURNS jsonb
     LANGUAGE sql
     AS $$
 SELECT
@@ -257,8 +239,8 @@ $$;
 -- Name: -; Type: OPERATOR; Schema: public; Owner: -
 --
 
-CREATE OPERATOR - (
-    PROCEDURE = jsonb_subtract,
+CREATE OPERATOR public.- (
+    FUNCTION = public.jsonb_subtract,
     LEFTARG = jsonb,
     RIGHTARG = jsonb
 );
@@ -266,13 +248,13 @@ CREATE OPERATOR - (
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: activity; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE activity (
+CREATE TABLE public.activity (
     id bigint NOT NULL,
     schema_name text,
     table_name text,
@@ -290,7 +272,7 @@ CREATE TABLE activity (
 -- Name: activity_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE activity_id_seq
+CREATE SEQUENCE public.activity_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -302,21 +284,30 @@ CREATE SEQUENCE activity_id_seq
 -- Name: activity_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE activity_id_seq OWNED BY activity.id;
+ALTER SEQUENCE public.activity_id_seq OWNED BY public.activity.id;
+
+
+--
+-- Name: alembic_version; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.alembic_version (
+    version_num character varying(32) NOT NULL
+);
 
 
 --
 -- Name: appearance; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE appearance (
+CREATE TABLE public.appearance (
     id bigint NOT NULL,
     "scienceFeedbackId" character varying(32),
     "quotedClaimId" bigint,
     "quotedContentId" bigint,
     "quotingClaimId" bigint,
     "quotingContentId" bigint,
-    stance stancetype,
+    stance public.stancetype,
     "testifierId" bigint NOT NULL
 );
 
@@ -325,7 +316,7 @@ CREATE TABLE appearance (
 -- Name: appearance_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE appearance_id_seq
+CREATE SEQUENCE public.appearance_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -337,14 +328,14 @@ CREATE SEQUENCE appearance_id_seq
 -- Name: appearance_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE appearance_id_seq OWNED BY appearance.id;
+ALTER SEQUENCE public.appearance_id_seq OWNED BY public.appearance.id;
 
 
 --
 -- Name: author_content; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE author_content (
+CREATE TABLE public.author_content (
     id bigint NOT NULL,
     "authorId" bigint NOT NULL,
     "contentId" bigint NOT NULL
@@ -355,7 +346,7 @@ CREATE TABLE author_content (
 -- Name: author_content_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE author_content_id_seq
+CREATE SEQUENCE public.author_content_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -367,14 +358,14 @@ CREATE SEQUENCE author_content_id_seq
 -- Name: author_content_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE author_content_id_seq OWNED BY author_content.id;
+ALTER SEQUENCE public.author_content_id_seq OWNED BY public.author_content.id;
 
 
 --
 -- Name: claim; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE claim (
+CREATE TABLE public.claim (
     id bigint NOT NULL,
     "scienceFeedbackId" character varying(32),
     source json,
@@ -386,7 +377,7 @@ CREATE TABLE claim (
 -- Name: claim_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE claim_id_seq
+CREATE SEQUENCE public.claim_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -398,14 +389,14 @@ CREATE SEQUENCE claim_id_seq
 -- Name: claim_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE claim_id_seq OWNED BY claim.id;
+ALTER SEQUENCE public.claim_id_seq OWNED BY public.claim.id;
 
 
 --
 -- Name: content; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE content (
+CREATE TABLE public.content (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     "externalThumbUrl" character varying(220),
@@ -433,7 +424,7 @@ CREATE TABLE content (
 -- Name: content_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE content_id_seq
+CREATE SEQUENCE public.content_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -445,14 +436,14 @@ CREATE SEQUENCE content_id_seq
 -- Name: content_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE content_id_seq OWNED BY content.id;
+ALTER SEQUENCE public.content_id_seq OWNED BY public.content.id;
 
 
 --
 -- Name: content_tag; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE content_tag (
+CREATE TABLE public.content_tag (
     id bigint NOT NULL,
     "contentId" bigint NOT NULL,
     "tagId" bigint NOT NULL
@@ -463,7 +454,7 @@ CREATE TABLE content_tag (
 -- Name: content_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE content_tag_id_seq
+CREATE SEQUENCE public.content_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -475,14 +466,14 @@ CREATE SEQUENCE content_tag_id_seq
 -- Name: content_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE content_tag_id_seq OWNED BY content_tag.id;
+ALTER SEQUENCE public.content_tag_id_seq OWNED BY public.content_tag.id;
 
 
 --
 -- Name: evaluation; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE evaluation (
+CREATE TABLE public.evaluation (
     id bigint NOT NULL,
     info text,
     label character varying(50),
@@ -495,7 +486,7 @@ CREATE TABLE evaluation (
 -- Name: evaluation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE evaluation_id_seq
+CREATE SEQUENCE public.evaluation_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -507,14 +498,14 @@ CREATE SEQUENCE evaluation_id_seq
 -- Name: evaluation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE evaluation_id_seq OWNED BY evaluation.id;
+ALTER SEQUENCE public.evaluation_id_seq OWNED BY public.evaluation.id;
 
 
 --
 -- Name: image; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE image (
+CREATE TABLE public.image (
     id bigint NOT NULL,
     "thumbCount" integer NOT NULL,
     name character varying(140)
@@ -525,7 +516,7 @@ CREATE TABLE image (
 -- Name: image_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE image_id_seq
+CREATE SEQUENCE public.image_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -537,14 +528,14 @@ CREATE SEQUENCE image_id_seq
 -- Name: image_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE image_id_seq OWNED BY image.id;
+ALTER SEQUENCE public.image_id_seq OWNED BY public.image.id;
 
 
 --
 -- Name: medium; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE medium (
+CREATE TABLE public.medium (
     id bigint NOT NULL,
     "scienceFeedbackId" character varying(32),
     name character varying(256) NOT NULL,
@@ -557,7 +548,7 @@ CREATE TABLE medium (
 -- Name: medium_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE medium_id_seq
+CREATE SEQUENCE public.medium_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -569,14 +560,14 @@ CREATE SEQUENCE medium_id_seq
 -- Name: medium_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE medium_id_seq OWNED BY medium.id;
+ALTER SEQUENCE public.medium_id_seq OWNED BY public.medium.id;
 
 
 --
 -- Name: organization; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE organization (
+CREATE TABLE public.organization (
     id bigint NOT NULL,
     "scienceFeedbackId" character varying(32),
     entity character varying(16),
@@ -590,7 +581,7 @@ CREATE TABLE organization (
 -- Name: organization_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE organization_id_seq
+CREATE SEQUENCE public.organization_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -602,14 +593,14 @@ CREATE SEQUENCE organization_id_seq
 -- Name: organization_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE organization_id_seq OWNED BY organization.id;
+ALTER SEQUENCE public.organization_id_seq OWNED BY public.organization.id;
 
 
 --
 -- Name: review; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE review (
+CREATE TABLE public.review (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     rating double precision,
@@ -626,7 +617,7 @@ CREATE TABLE review (
 -- Name: review_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE review_id_seq
+CREATE SEQUENCE public.review_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -638,14 +629,14 @@ CREATE SEQUENCE review_id_seq
 -- Name: review_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE review_id_seq OWNED BY review.id;
+ALTER SEQUENCE public.review_id_seq OWNED BY public.review.id;
 
 
 --
 -- Name: review_tag; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE review_tag (
+CREATE TABLE public.review_tag (
     id bigint NOT NULL,
     "reviewId" bigint NOT NULL,
     "tagId" bigint NOT NULL
@@ -656,7 +647,7 @@ CREATE TABLE review_tag (
 -- Name: review_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE review_tag_id_seq
+CREATE SEQUENCE public.review_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -668,17 +659,17 @@ CREATE SEQUENCE review_tag_id_seq
 -- Name: review_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE review_tag_id_seq OWNED BY review_tag.id;
+ALTER SEQUENCE public.review_tag_id_seq OWNED BY public.review_tag.id;
 
 
 --
 -- Name: role; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE role (
+CREATE TABLE public.role (
     id bigint NOT NULL,
     "userId" bigint NOT NULL,
-    type roletype
+    type public.roletype
 );
 
 
@@ -686,7 +677,7 @@ CREATE TABLE role (
 -- Name: role_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE role_id_seq
+CREATE SEQUENCE public.role_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -698,17 +689,17 @@ CREATE SEQUENCE role_id_seq
 -- Name: role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE role_id_seq OWNED BY role.id;
+ALTER SEQUENCE public.role_id_seq OWNED BY public.role.id;
 
 
 --
 -- Name: scope; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE scope (
+CREATE TABLE public.scope (
     id bigint NOT NULL,
     "tagId" bigint NOT NULL,
-    type scopetype
+    type public.scopetype
 );
 
 
@@ -716,7 +707,7 @@ CREATE TABLE scope (
 -- Name: scope_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE scope_id_seq
+CREATE SEQUENCE public.scope_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -728,14 +719,14 @@ CREATE SEQUENCE scope_id_seq
 -- Name: scope_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE scope_id_seq OWNED BY scope.id;
+ALTER SEQUENCE public.scope_id_seq OWNED BY public.scope.id;
 
 
 --
 -- Name: tag; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE tag (
+CREATE TABLE public.tag (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     info text,
@@ -748,7 +739,7 @@ CREATE TABLE tag (
 -- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE tag_id_seq
+CREATE SEQUENCE public.tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -760,14 +751,14 @@ CREATE SEQUENCE tag_id_seq
 -- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE tag_id_seq OWNED BY tag.id;
+ALTER SEQUENCE public.tag_id_seq OWNED BY public.tag.id;
 
 
 --
 -- Name: transaction; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE transaction (
+CREATE TABLE public.transaction (
     id bigint NOT NULL,
     native_transaction_id bigint,
     issued_at timestamp without time zone,
@@ -780,7 +771,7 @@ CREATE TABLE transaction (
 -- Name: transaction_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE transaction_id_seq
+CREATE SEQUENCE public.transaction_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -792,14 +783,14 @@ CREATE SEQUENCE transaction_id_seq
 -- Name: transaction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE transaction_id_seq OWNED BY transaction.id;
+ALTER SEQUENCE public.transaction_id_seq OWNED BY public.transaction.id;
 
 
 --
 -- Name: user; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE "user" (
+CREATE TABLE public."user" (
     id bigint NOT NULL,
     "externalThumbUrl" character varying(220),
     "academicWebsite" character varying(220),
@@ -821,7 +812,7 @@ CREATE TABLE "user" (
 -- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE user_id_seq
+CREATE SEQUENCE public.user_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -833,14 +824,14 @@ CREATE SEQUENCE user_id_seq
 -- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE user_id_seq OWNED BY "user".id;
+ALTER SEQUENCE public.user_id_seq OWNED BY public."user".id;
 
 
 --
 -- Name: user_session; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_session (
+CREATE TABLE public.user_session (
     id bigint NOT NULL,
     "userId" bigint NOT NULL,
     uuid uuid NOT NULL
@@ -851,7 +842,7 @@ CREATE TABLE user_session (
 -- Name: user_session_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE user_session_id_seq
+CREATE SEQUENCE public.user_session_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -863,14 +854,14 @@ CREATE SEQUENCE user_session_id_seq
 -- Name: user_session_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE user_session_id_seq OWNED BY user_session.id;
+ALTER SEQUENCE public.user_session_id_seq OWNED BY public.user_session.id;
 
 
 --
 -- Name: user_tag; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE user_tag (
+CREATE TABLE public.user_tag (
     id bigint NOT NULL,
     "userId" bigint NOT NULL,
     "tagId" bigint NOT NULL
@@ -881,7 +872,7 @@ CREATE TABLE user_tag (
 -- Name: user_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE user_tag_id_seq
+CREATE SEQUENCE public.user_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -893,14 +884,14 @@ CREATE SEQUENCE user_tag_id_seq
 -- Name: user_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE user_tag_id_seq OWNED BY user_tag.id;
+ALTER SEQUENCE public.user_tag_id_seq OWNED BY public.user_tag.id;
 
 
 --
 -- Name: verdict; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE verdict (
+CREATE TABLE public.verdict (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     rating double precision,
@@ -915,7 +906,7 @@ CREATE TABLE verdict (
 -- Name: verdict_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE verdict_id_seq
+CREATE SEQUENCE public.verdict_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -927,14 +918,14 @@ CREATE SEQUENCE verdict_id_seq
 -- Name: verdict_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE verdict_id_seq OWNED BY verdict.id;
+ALTER SEQUENCE public.verdict_id_seq OWNED BY public.verdict.id;
 
 
 --
 -- Name: verdict_reviewer; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE verdict_reviewer (
+CREATE TABLE public.verdict_reviewer (
     id bigint NOT NULL,
     "verdictId" bigint NOT NULL,
     "reviewerId" bigint NOT NULL
@@ -945,7 +936,7 @@ CREATE TABLE verdict_reviewer (
 -- Name: verdict_reviewer_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE verdict_reviewer_id_seq
+CREATE SEQUENCE public.verdict_reviewer_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -957,14 +948,14 @@ CREATE SEQUENCE verdict_reviewer_id_seq
 -- Name: verdict_reviewer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE verdict_reviewer_id_seq OWNED BY verdict_reviewer.id;
+ALTER SEQUENCE public.verdict_reviewer_id_seq OWNED BY public.verdict_reviewer.id;
 
 
 --
 -- Name: verdict_tag; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE verdict_tag (
+CREATE TABLE public.verdict_tag (
     id bigint NOT NULL,
     "verdictId" bigint NOT NULL,
     "tagId" bigint NOT NULL
@@ -975,7 +966,7 @@ CREATE TABLE verdict_tag (
 -- Name: verdict_tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE verdict_tag_id_seq
+CREATE SEQUENCE public.verdict_tag_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -987,176 +978,184 @@ CREATE SEQUENCE verdict_tag_id_seq
 -- Name: verdict_tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE verdict_tag_id_seq OWNED BY verdict_tag.id;
+ALTER SEQUENCE public.verdict_tag_id_seq OWNED BY public.verdict_tag.id;
 
 
 --
 -- Name: activity id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY activity ALTER COLUMN id SET DEFAULT nextval('activity_id_seq'::regclass);
+ALTER TABLE ONLY public.activity ALTER COLUMN id SET DEFAULT nextval('public.activity_id_seq'::regclass);
 
 
 --
 -- Name: appearance id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance ALTER COLUMN id SET DEFAULT nextval('appearance_id_seq'::regclass);
+ALTER TABLE ONLY public.appearance ALTER COLUMN id SET DEFAULT nextval('public.appearance_id_seq'::regclass);
 
 
 --
 -- Name: author_content id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY author_content ALTER COLUMN id SET DEFAULT nextval('author_content_id_seq'::regclass);
+ALTER TABLE ONLY public.author_content ALTER COLUMN id SET DEFAULT nextval('public.author_content_id_seq'::regclass);
 
 
 --
 -- Name: claim id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY claim ALTER COLUMN id SET DEFAULT nextval('claim_id_seq'::regclass);
+ALTER TABLE ONLY public.claim ALTER COLUMN id SET DEFAULT nextval('public.claim_id_seq'::regclass);
 
 
 --
 -- Name: content id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content ALTER COLUMN id SET DEFAULT nextval('content_id_seq'::regclass);
+ALTER TABLE ONLY public.content ALTER COLUMN id SET DEFAULT nextval('public.content_id_seq'::regclass);
 
 
 --
 -- Name: content_tag id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content_tag ALTER COLUMN id SET DEFAULT nextval('content_tag_id_seq'::regclass);
+ALTER TABLE ONLY public.content_tag ALTER COLUMN id SET DEFAULT nextval('public.content_tag_id_seq'::regclass);
 
 
 --
 -- Name: evaluation id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY evaluation ALTER COLUMN id SET DEFAULT nextval('evaluation_id_seq'::regclass);
+ALTER TABLE ONLY public.evaluation ALTER COLUMN id SET DEFAULT nextval('public.evaluation_id_seq'::regclass);
 
 
 --
 -- Name: image id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY image ALTER COLUMN id SET DEFAULT nextval('image_id_seq'::regclass);
+ALTER TABLE ONLY public.image ALTER COLUMN id SET DEFAULT nextval('public.image_id_seq'::regclass);
 
 
 --
 -- Name: medium id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY medium ALTER COLUMN id SET DEFAULT nextval('medium_id_seq'::regclass);
+ALTER TABLE ONLY public.medium ALTER COLUMN id SET DEFAULT nextval('public.medium_id_seq'::regclass);
 
 
 --
 -- Name: organization id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY organization ALTER COLUMN id SET DEFAULT nextval('organization_id_seq'::regclass);
+ALTER TABLE ONLY public.organization ALTER COLUMN id SET DEFAULT nextval('public.organization_id_seq'::regclass);
 
 
 --
 -- Name: review id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review ALTER COLUMN id SET DEFAULT nextval('review_id_seq'::regclass);
+ALTER TABLE ONLY public.review ALTER COLUMN id SET DEFAULT nextval('public.review_id_seq'::regclass);
 
 
 --
 -- Name: review_tag id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review_tag ALTER COLUMN id SET DEFAULT nextval('review_tag_id_seq'::regclass);
+ALTER TABLE ONLY public.review_tag ALTER COLUMN id SET DEFAULT nextval('public.review_tag_id_seq'::regclass);
 
 
 --
 -- Name: role id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY role ALTER COLUMN id SET DEFAULT nextval('role_id_seq'::regclass);
+ALTER TABLE ONLY public.role ALTER COLUMN id SET DEFAULT nextval('public.role_id_seq'::regclass);
 
 
 --
 -- Name: scope id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope ALTER COLUMN id SET DEFAULT nextval('scope_id_seq'::regclass);
+ALTER TABLE ONLY public.scope ALTER COLUMN id SET DEFAULT nextval('public.scope_id_seq'::regclass);
 
 
 --
 -- Name: tag id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY tag ALTER COLUMN id SET DEFAULT nextval('tag_id_seq'::regclass);
+ALTER TABLE ONLY public.tag ALTER COLUMN id SET DEFAULT nextval('public.tag_id_seq'::regclass);
 
 
 --
 -- Name: transaction id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY transaction ALTER COLUMN id SET DEFAULT nextval('transaction_id_seq'::regclass);
+ALTER TABLE ONLY public.transaction ALTER COLUMN id SET DEFAULT nextval('public.transaction_id_seq'::regclass);
 
 
 --
 -- Name: user id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "user" ALTER COLUMN id SET DEFAULT nextval('user_id_seq'::regclass);
+ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 
 
 --
 -- Name: user_session id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_session ALTER COLUMN id SET DEFAULT nextval('user_session_id_seq'::regclass);
+ALTER TABLE ONLY public.user_session ALTER COLUMN id SET DEFAULT nextval('public.user_session_id_seq'::regclass);
 
 
 --
 -- Name: user_tag id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_tag ALTER COLUMN id SET DEFAULT nextval('user_tag_id_seq'::regclass);
+ALTER TABLE ONLY public.user_tag ALTER COLUMN id SET DEFAULT nextval('public.user_tag_id_seq'::regclass);
 
 
 --
 -- Name: verdict id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict ALTER COLUMN id SET DEFAULT nextval('verdict_id_seq'::regclass);
+ALTER TABLE ONLY public.verdict ALTER COLUMN id SET DEFAULT nextval('public.verdict_id_seq'::regclass);
 
 
 --
 -- Name: verdict_reviewer id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_reviewer ALTER COLUMN id SET DEFAULT nextval('verdict_reviewer_id_seq'::regclass);
+ALTER TABLE ONLY public.verdict_reviewer ALTER COLUMN id SET DEFAULT nextval('public.verdict_reviewer_id_seq'::regclass);
 
 
 --
 -- Name: verdict_tag id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_tag ALTER COLUMN id SET DEFAULT nextval('verdict_tag_id_seq'::regclass);
+ALTER TABLE ONLY public.verdict_tag ALTER COLUMN id SET DEFAULT nextval('public.verdict_tag_id_seq'::regclass);
 
 
 --
 -- Name: activity activity_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY activity
+ALTER TABLE ONLY public.activity
     ADD CONSTRAINT activity_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: alembic_version alembic_version_pkc; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.alembic_version
+    ADD CONSTRAINT alembic_version_pkc PRIMARY KEY (version_num);
 
 
 --
 -- Name: appearance appearance_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance
+ALTER TABLE ONLY public.appearance
     ADD CONSTRAINT appearance_pkey PRIMARY KEY (id);
 
 
@@ -1164,7 +1163,7 @@ ALTER TABLE ONLY appearance
 -- Name: author_content author_content_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY author_content
+ALTER TABLE ONLY public.author_content
     ADD CONSTRAINT author_content_pkey PRIMARY KEY (id, "authorId", "contentId");
 
 
@@ -1172,7 +1171,7 @@ ALTER TABLE ONLY author_content
 -- Name: claim claim_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY claim
+ALTER TABLE ONLY public.claim
     ADD CONSTRAINT claim_pkey PRIMARY KEY (id);
 
 
@@ -1180,7 +1179,7 @@ ALTER TABLE ONLY claim
 -- Name: content content_archiveUrl_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content
+ALTER TABLE ONLY public.content
     ADD CONSTRAINT "content_archiveUrl_key" UNIQUE ("archiveUrl");
 
 
@@ -1188,7 +1187,7 @@ ALTER TABLE ONLY content
 -- Name: content content_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content
+ALTER TABLE ONLY public.content
     ADD CONSTRAINT content_pkey PRIMARY KEY (id);
 
 
@@ -1196,7 +1195,7 @@ ALTER TABLE ONLY content
 -- Name: content_tag content_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content_tag
+ALTER TABLE ONLY public.content_tag
     ADD CONSTRAINT content_tag_pkey PRIMARY KEY (id, "contentId", "tagId");
 
 
@@ -1204,7 +1203,7 @@ ALTER TABLE ONLY content_tag
 -- Name: content content_url_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content
+ALTER TABLE ONLY public.content
     ADD CONSTRAINT content_url_key UNIQUE (url);
 
 
@@ -1212,7 +1211,7 @@ ALTER TABLE ONLY content
 -- Name: evaluation evaluation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY evaluation
+ALTER TABLE ONLY public.evaluation
     ADD CONSTRAINT evaluation_pkey PRIMARY KEY (id);
 
 
@@ -1220,7 +1219,7 @@ ALTER TABLE ONLY evaluation
 -- Name: image image_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY image
+ALTER TABLE ONLY public.image
     ADD CONSTRAINT image_pkey PRIMARY KEY (id);
 
 
@@ -1228,7 +1227,7 @@ ALTER TABLE ONLY image
 -- Name: medium medium_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY medium
+ALTER TABLE ONLY public.medium
     ADD CONSTRAINT medium_pkey PRIMARY KEY (id);
 
 
@@ -1236,7 +1235,7 @@ ALTER TABLE ONLY medium
 -- Name: organization organization_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY organization
+ALTER TABLE ONLY public.organization
     ADD CONSTRAINT organization_pkey PRIMARY KEY (id);
 
 
@@ -1244,7 +1243,7 @@ ALTER TABLE ONLY organization
 -- Name: review review_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review
+ALTER TABLE ONLY public.review
     ADD CONSTRAINT review_pkey PRIMARY KEY (id);
 
 
@@ -1252,7 +1251,7 @@ ALTER TABLE ONLY review
 -- Name: review_tag review_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review_tag
+ALTER TABLE ONLY public.review_tag
     ADD CONSTRAINT review_tag_pkey PRIMARY KEY (id, "reviewId", "tagId");
 
 
@@ -1260,7 +1259,7 @@ ALTER TABLE ONLY review_tag
 -- Name: role role_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY role
+ALTER TABLE ONLY public.role
     ADD CONSTRAINT role_pkey PRIMARY KEY (id);
 
 
@@ -1268,7 +1267,7 @@ ALTER TABLE ONLY role
 -- Name: scope scope_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope
+ALTER TABLE ONLY public.scope
     ADD CONSTRAINT scope_pkey PRIMARY KEY (id);
 
 
@@ -1276,7 +1275,7 @@ ALTER TABLE ONLY scope
 -- Name: tag tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY tag
+ALTER TABLE ONLY public.tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
 
 
@@ -1284,7 +1283,7 @@ ALTER TABLE ONLY tag
 -- Name: tag tag_text_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY tag
+ALTER TABLE ONLY public.tag
     ADD CONSTRAINT tag_text_key UNIQUE (text);
 
 
@@ -1292,7 +1291,7 @@ ALTER TABLE ONLY tag
 -- Name: transaction transaction_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY transaction
+ALTER TABLE ONLY public.transaction
     ADD CONSTRAINT transaction_pkey PRIMARY KEY (id);
 
 
@@ -1300,7 +1299,7 @@ ALTER TABLE ONLY transaction
 -- Name: user user_email_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "user"
+ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_email_key UNIQUE (email);
 
 
@@ -1308,7 +1307,7 @@ ALTER TABLE ONLY "user"
 -- Name: user user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "user"
+ALTER TABLE ONLY public."user"
     ADD CONSTRAINT user_pkey PRIMARY KEY (id);
 
 
@@ -1316,7 +1315,7 @@ ALTER TABLE ONLY "user"
 -- Name: user_session user_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_session
+ALTER TABLE ONLY public.user_session
     ADD CONSTRAINT user_session_pkey PRIMARY KEY (id);
 
 
@@ -1324,7 +1323,7 @@ ALTER TABLE ONLY user_session
 -- Name: user_session user_session_uuid_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_session
+ALTER TABLE ONLY public.user_session
     ADD CONSTRAINT user_session_uuid_key UNIQUE (uuid);
 
 
@@ -1332,7 +1331,7 @@ ALTER TABLE ONLY user_session
 -- Name: user_tag user_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_tag
+ALTER TABLE ONLY public.user_tag
     ADD CONSTRAINT user_tag_pkey PRIMARY KEY (id, "userId", "tagId");
 
 
@@ -1340,7 +1339,7 @@ ALTER TABLE ONLY user_tag
 -- Name: user user_validationToken_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY "user"
+ALTER TABLE ONLY public."user"
     ADD CONSTRAINT "user_validationToken_key" UNIQUE ("validationToken");
 
 
@@ -1348,7 +1347,7 @@ ALTER TABLE ONLY "user"
 -- Name: verdict verdict_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict
+ALTER TABLE ONLY public.verdict
     ADD CONSTRAINT verdict_pkey PRIMARY KEY (id);
 
 
@@ -1356,7 +1355,7 @@ ALTER TABLE ONLY verdict
 -- Name: verdict_reviewer verdict_reviewer_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_reviewer
+ALTER TABLE ONLY public.verdict_reviewer
     ADD CONSTRAINT verdict_reviewer_pkey PRIMARY KEY (id, "verdictId", "reviewerId");
 
 
@@ -1364,7 +1363,7 @@ ALTER TABLE ONLY verdict_reviewer
 -- Name: verdict_tag verdict_tag_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_tag
+ALTER TABLE ONLY public.verdict_tag
     ADD CONSTRAINT verdict_tag_pkey PRIMARY KEY (id, "verdictId", "tagId");
 
 
@@ -1372,366 +1371,367 @@ ALTER TABLE ONLY verdict_tag
 -- Name: idx_activity_objid; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX idx_activity_objid ON activity USING btree ((((changed_data ->> 'id'::text))::integer));
+CREATE INDEX idx_activity_objid ON public.activity USING btree ((((changed_data ->> 'id'::text))::integer));
 
 
 --
 -- Name: ix_appearance_quotedClaimId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_appearance_quotedClaimId" ON appearance USING btree ("quotedClaimId");
+CREATE INDEX "ix_appearance_quotedClaimId" ON public.appearance USING btree ("quotedClaimId");
 
 
 --
 -- Name: ix_appearance_quotedContentId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_appearance_quotedContentId" ON appearance USING btree ("quotedContentId");
+CREATE INDEX "ix_appearance_quotedContentId" ON public.appearance USING btree ("quotedContentId");
 
 
 --
 -- Name: ix_appearance_quotingClaimId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_appearance_quotingClaimId" ON appearance USING btree ("quotingClaimId");
+CREATE INDEX "ix_appearance_quotingClaimId" ON public.appearance USING btree ("quotingClaimId");
 
 
 --
 -- Name: ix_appearance_quotingContentId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_appearance_quotingContentId" ON appearance USING btree ("quotingContentId");
+CREATE INDEX "ix_appearance_quotingContentId" ON public.appearance USING btree ("quotingContentId");
 
 
 --
 -- Name: ix_appearance_testifierId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_appearance_testifierId" ON appearance USING btree ("testifierId");
+CREATE INDEX "ix_appearance_testifierId" ON public.appearance USING btree ("testifierId");
 
 
 --
 -- Name: ix_medium_organizationId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_medium_organizationId" ON medium USING btree ("organizationId");
+CREATE INDEX "ix_medium_organizationId" ON public.medium USING btree ("organizationId");
 
 
 --
 -- Name: ix_review_claimId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_review_claimId" ON review USING btree ("claimId");
+CREATE INDEX "ix_review_claimId" ON public.review USING btree ("claimId");
 
 
 --
 -- Name: ix_review_contentId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_review_contentId" ON review USING btree ("contentId");
+CREATE INDEX "ix_review_contentId" ON public.review USING btree ("contentId");
 
 
 --
 -- Name: ix_review_evaluationId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_review_evaluationId" ON review USING btree ("evaluationId");
+CREATE INDEX "ix_review_evaluationId" ON public.review USING btree ("evaluationId");
 
 
 --
 -- Name: ix_review_reviewerId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_review_reviewerId" ON review USING btree ("reviewerId");
+CREATE INDEX "ix_review_reviewerId" ON public.review USING btree ("reviewerId");
 
 
 --
 -- Name: ix_role_userId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_role_userId" ON role USING btree ("userId");
+CREATE INDEX "ix_role_userId" ON public.role USING btree ("userId");
 
 
 --
 -- Name: ix_scope_tagId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_scope_tagId" ON scope USING btree ("tagId");
+CREATE INDEX "ix_scope_tagId" ON public.scope USING btree ("tagId");
 
 
 --
 -- Name: ix_transaction_native_transaction_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX ix_transaction_native_transaction_id ON transaction USING btree (native_transaction_id);
+CREATE INDEX ix_transaction_native_transaction_id ON public.transaction USING btree (native_transaction_id);
 
 
 --
 -- Name: ix_verdict_claimId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_verdict_claimId" ON verdict USING btree ("claimId");
+CREATE INDEX "ix_verdict_claimId" ON public.verdict USING btree ("claimId");
 
 
 --
 -- Name: ix_verdict_contentId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_verdict_contentId" ON verdict USING btree ("contentId");
+CREATE INDEX "ix_verdict_contentId" ON public.verdict USING btree ("contentId");
 
 
 --
 -- Name: ix_verdict_editorId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_verdict_editorId" ON verdict USING btree ("editorId");
+CREATE INDEX "ix_verdict_editorId" ON public.verdict USING btree ("editorId");
 
 
 --
 -- Name: content audit_trigger_delete; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER audit_trigger_delete AFTER DELETE ON content REFERENCING OLD TABLE AS old_table FOR EACH STATEMENT WHEN ((current_setting('session_replication_role'::text) <> 'local'::text)) EXECUTE PROCEDURE create_activity();
+CREATE TRIGGER audit_trigger_delete AFTER DELETE ON public.content REFERENCING OLD TABLE AS old_table FOR EACH STATEMENT WHEN ((current_setting('session_replication_role'::text) <> 'local'::text)) EXECUTE FUNCTION public.create_activity();
 
 
 --
 -- Name: content audit_trigger_insert; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER audit_trigger_insert AFTER INSERT ON content REFERENCING NEW TABLE AS new_table FOR EACH STATEMENT WHEN ((current_setting('session_replication_role'::text) <> 'local'::text)) EXECUTE PROCEDURE create_activity();
+CREATE TRIGGER audit_trigger_insert AFTER INSERT ON public.content REFERENCING NEW TABLE AS new_table FOR EACH STATEMENT WHEN ((current_setting('session_replication_role'::text) <> 'local'::text)) EXECUTE FUNCTION public.create_activity();
 
 
 --
 -- Name: content audit_trigger_update; Type: TRIGGER; Schema: public; Owner: -
 --
 
-CREATE TRIGGER audit_trigger_update AFTER UPDATE ON content REFERENCING OLD TABLE AS old_table NEW TABLE AS new_table FOR EACH STATEMENT WHEN ((current_setting('session_replication_role'::text) <> 'local'::text)) EXECUTE PROCEDURE create_activity();
+CREATE TRIGGER audit_trigger_update AFTER UPDATE ON public.content REFERENCING OLD TABLE AS old_table NEW TABLE AS new_table FOR EACH STATEMENT WHEN ((current_setting('session_replication_role'::text) <> 'local'::text)) EXECUTE FUNCTION public.create_activity();
 
 
 --
 -- Name: activity activity_transaction_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY activity
-    ADD CONSTRAINT activity_transaction_id_fkey FOREIGN KEY (transaction_id) REFERENCES transaction(id);
+ALTER TABLE ONLY public.activity
+    ADD CONSTRAINT activity_transaction_id_fkey FOREIGN KEY (transaction_id) REFERENCES public.transaction(id);
 
 
 --
 -- Name: appearance appearance_quotedClaimId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance
-    ADD CONSTRAINT "appearance_quotedClaimId_fkey" FOREIGN KEY ("quotedClaimId") REFERENCES claim(id);
+ALTER TABLE ONLY public.appearance
+    ADD CONSTRAINT "appearance_quotedClaimId_fkey" FOREIGN KEY ("quotedClaimId") REFERENCES public.claim(id);
 
 
 --
 -- Name: appearance appearance_quotedContentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance
-    ADD CONSTRAINT "appearance_quotedContentId_fkey" FOREIGN KEY ("quotedContentId") REFERENCES content(id);
+ALTER TABLE ONLY public.appearance
+    ADD CONSTRAINT "appearance_quotedContentId_fkey" FOREIGN KEY ("quotedContentId") REFERENCES public.content(id);
 
 
 --
 -- Name: appearance appearance_quotingClaimId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance
-    ADD CONSTRAINT "appearance_quotingClaimId_fkey" FOREIGN KEY ("quotingClaimId") REFERENCES claim(id);
+ALTER TABLE ONLY public.appearance
+    ADD CONSTRAINT "appearance_quotingClaimId_fkey" FOREIGN KEY ("quotingClaimId") REFERENCES public.claim(id);
 
 
 --
 -- Name: appearance appearance_quotingContentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance
-    ADD CONSTRAINT "appearance_quotingContentId_fkey" FOREIGN KEY ("quotingContentId") REFERENCES content(id);
+ALTER TABLE ONLY public.appearance
+    ADD CONSTRAINT "appearance_quotingContentId_fkey" FOREIGN KEY ("quotingContentId") REFERENCES public.content(id);
 
 
 --
 -- Name: appearance appearance_testifierId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY appearance
-    ADD CONSTRAINT "appearance_testifierId_fkey" FOREIGN KEY ("testifierId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.appearance
+    ADD CONSTRAINT "appearance_testifierId_fkey" FOREIGN KEY ("testifierId") REFERENCES public."user"(id);
 
 
 --
 -- Name: author_content author_content_authorId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY author_content
-    ADD CONSTRAINT "author_content_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.author_content
+    ADD CONSTRAINT "author_content_authorId_fkey" FOREIGN KEY ("authorId") REFERENCES public."user"(id);
 
 
 --
 -- Name: author_content author_content_contentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY author_content
-    ADD CONSTRAINT "author_content_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES content(id);
+ALTER TABLE ONLY public.author_content
+    ADD CONSTRAINT "author_content_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES public.content(id);
 
 
 --
 -- Name: content_tag content_tag_contentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content_tag
-    ADD CONSTRAINT "content_tag_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES content(id);
+ALTER TABLE ONLY public.content_tag
+    ADD CONSTRAINT "content_tag_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES public.content(id);
 
 
 --
 -- Name: content_tag content_tag_tagId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY content_tag
-    ADD CONSTRAINT "content_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES tag(id);
+ALTER TABLE ONLY public.content_tag
+    ADD CONSTRAINT "content_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES public.tag(id);
 
 
 --
 -- Name: medium medium_organizationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY medium
-    ADD CONSTRAINT "medium_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES organization(id);
+ALTER TABLE ONLY public.medium
+    ADD CONSTRAINT "medium_organizationId_fkey" FOREIGN KEY ("organizationId") REFERENCES public.organization(id);
 
 
 --
 -- Name: review review_claimId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review
-    ADD CONSTRAINT "review_claimId_fkey" FOREIGN KEY ("claimId") REFERENCES claim(id);
+ALTER TABLE ONLY public.review
+    ADD CONSTRAINT "review_claimId_fkey" FOREIGN KEY ("claimId") REFERENCES public.claim(id);
 
 
 --
 -- Name: review review_contentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review
-    ADD CONSTRAINT "review_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES content(id);
+ALTER TABLE ONLY public.review
+    ADD CONSTRAINT "review_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES public.content(id);
 
 
 --
 -- Name: review review_evaluationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review
-    ADD CONSTRAINT "review_evaluationId_fkey" FOREIGN KEY ("evaluationId") REFERENCES evaluation(id);
+ALTER TABLE ONLY public.review
+    ADD CONSTRAINT "review_evaluationId_fkey" FOREIGN KEY ("evaluationId") REFERENCES public.evaluation(id);
 
 
 --
 -- Name: review review_reviewerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review
-    ADD CONSTRAINT "review_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.review
+    ADD CONSTRAINT "review_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES public."user"(id);
 
 
 --
 -- Name: review_tag review_tag_reviewId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review_tag
-    ADD CONSTRAINT "review_tag_reviewId_fkey" FOREIGN KEY ("reviewId") REFERENCES review(id);
+ALTER TABLE ONLY public.review_tag
+    ADD CONSTRAINT "review_tag_reviewId_fkey" FOREIGN KEY ("reviewId") REFERENCES public.review(id);
 
 
 --
 -- Name: review_tag review_tag_tagId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY review_tag
-    ADD CONSTRAINT "review_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES tag(id);
+ALTER TABLE ONLY public.review_tag
+    ADD CONSTRAINT "review_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES public.tag(id);
 
 
 --
 -- Name: role role_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY role
-    ADD CONSTRAINT "role_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.role
+    ADD CONSTRAINT "role_userId_fkey" FOREIGN KEY ("userId") REFERENCES public."user"(id);
 
 
 --
 -- Name: scope scope_tagId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY scope
-    ADD CONSTRAINT "scope_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES tag(id);
+ALTER TABLE ONLY public.scope
+    ADD CONSTRAINT "scope_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES public.tag(id);
 
 
 --
 -- Name: user_tag user_tag_tagId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_tag
-    ADD CONSTRAINT "user_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES tag(id);
+ALTER TABLE ONLY public.user_tag
+    ADD CONSTRAINT "user_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES public.tag(id);
 
 
 --
 -- Name: user_tag user_tag_userId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY user_tag
-    ADD CONSTRAINT "user_tag_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.user_tag
+    ADD CONSTRAINT "user_tag_userId_fkey" FOREIGN KEY ("userId") REFERENCES public."user"(id);
 
 
 --
 -- Name: verdict verdict_claimId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict
-    ADD CONSTRAINT "verdict_claimId_fkey" FOREIGN KEY ("claimId") REFERENCES claim(id);
+ALTER TABLE ONLY public.verdict
+    ADD CONSTRAINT "verdict_claimId_fkey" FOREIGN KEY ("claimId") REFERENCES public.claim(id);
 
 
 --
 -- Name: verdict verdict_contentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict
-    ADD CONSTRAINT "verdict_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES content(id);
+ALTER TABLE ONLY public.verdict
+    ADD CONSTRAINT "verdict_contentId_fkey" FOREIGN KEY ("contentId") REFERENCES public.content(id);
 
 
 --
 -- Name: verdict verdict_editorId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict
-    ADD CONSTRAINT "verdict_editorId_fkey" FOREIGN KEY ("editorId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.verdict
+    ADD CONSTRAINT "verdict_editorId_fkey" FOREIGN KEY ("editorId") REFERENCES public."user"(id);
 
 
 --
 -- Name: verdict_reviewer verdict_reviewer_reviewerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_reviewer
-    ADD CONSTRAINT "verdict_reviewer_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES "user"(id);
+ALTER TABLE ONLY public.verdict_reviewer
+    ADD CONSTRAINT "verdict_reviewer_reviewerId_fkey" FOREIGN KEY ("reviewerId") REFERENCES public."user"(id);
 
 
 --
 -- Name: verdict_reviewer verdict_reviewer_verdictId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_reviewer
-    ADD CONSTRAINT "verdict_reviewer_verdictId_fkey" FOREIGN KEY ("verdictId") REFERENCES verdict(id);
+ALTER TABLE ONLY public.verdict_reviewer
+    ADD CONSTRAINT "verdict_reviewer_verdictId_fkey" FOREIGN KEY ("verdictId") REFERENCES public.verdict(id);
 
 
 --
 -- Name: verdict_tag verdict_tag_tagId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_tag
-    ADD CONSTRAINT "verdict_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES tag(id);
+ALTER TABLE ONLY public.verdict_tag
+    ADD CONSTRAINT "verdict_tag_tagId_fkey" FOREIGN KEY ("tagId") REFERENCES public.tag(id);
 
 
 --
 -- Name: verdict_tag verdict_tag_verdictId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY verdict_tag
-    ADD CONSTRAINT "verdict_tag_verdictId_fkey" FOREIGN KEY ("verdictId") REFERENCES verdict(id);
+ALTER TABLE ONLY public.verdict_tag
+    ADD CONSTRAINT "verdict_tag_verdictId_fkey" FOREIGN KEY ("verdictId") REFERENCES public.verdict(id);
 
 
 --
 -- PostgreSQL database dump complete
 --
+
