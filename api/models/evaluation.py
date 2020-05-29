@@ -1,7 +1,8 @@
 import enum
-from sqlalchemy import Column,\
-                       Integer,\
-                       String,\
+from sqlalchemy import Column, \
+                       Enum, \
+                       Integer, \
+                       String, \
                        Text
 from sqlalchemy_api_handler import ApiHandler
 
@@ -20,6 +21,6 @@ class Evaluation(ApiHandler,
 
     label = Column(String(50))
 
-    type = Column(String(50))
+    type = Column(Enum(EvaluationType), nullable=True)
 
     value = Column(Integer())

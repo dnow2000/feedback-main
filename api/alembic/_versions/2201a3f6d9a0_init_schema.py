@@ -18,7 +18,7 @@ depends_on = None
 
 
 def upgrade():
-    sql_file_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'schema_init.sql'
+    sql_file_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'init_schema.sql'
 
     with open(sql_file_path, 'r') as sql_file:
         data = sql_file.read()
