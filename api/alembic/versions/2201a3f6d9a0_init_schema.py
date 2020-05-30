@@ -20,14 +20,12 @@ depends_on = None
 
 def upgrade():
     sql_file_path = Path(os.path.dirname(os.path.realpath(__file__))) / 'init_schema.sql'
-
     with open(sql_file_path, 'r') as sql_file:
         data = sql_file.read()
     op.execute(data)
 
 
 def downgrade():
-
     op.execute('DROP TABLE image CASCADE')
     op.execute('DROP TABLE evaluation CASCADE')
     evaluation_type = sa.Enum(name='evaluationtype')
@@ -59,7 +57,6 @@ def downgrade():
     op.execute('DROP TABLE "user" CASCADE')
     op.execute('DROP TABLE tag CASCADE')
     op.execute('DROP TABLE activity')
-    op.execute('DROP TABLE public.alembic_version')
     op.execute('DROP TABLE transaction')
     op.execute('DROP FUNCTION audit_table(target_table regclass)')
     op.execute('DROP FUNCTION audit_table(target_table regclass, ignored_cols text[])')

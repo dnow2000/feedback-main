@@ -202,9 +202,10 @@ elif [[ "$CMD" == "create-init-schema-sql" ]]; then
     rm -f $ROOT_PATH/api/alembic/versions/init_schema.sql;
   fi
   FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
-  RUN='cd $ROOT_PATH;
-      ./$COMMAND_NAME -e $ENV create-schema-sql;
-      mv $FILE api/alembic/versions/init_schema.sql;'
+  ./$COMMAND_NAME -e $ENV create-schema-sql;
+  RUN="cd $ROOT_PATH;
+       mv $FILE api/alembic/versions/init_schema.sql;
+       sed -i \"s/SELECT pg_catalog.set_config('search_path', '', false);/SET search_path = public, pg_catalog;/g\" api/alembic/versions/init_schema.sql;"
 
 # Dump database into pgdump file
 elif [[ "$CMD" == "env" ]]; then
