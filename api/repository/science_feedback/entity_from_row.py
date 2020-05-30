@@ -62,11 +62,11 @@ def appearance_from_row(row):
 def author_from_row(row):
     chunks = row['Name'].split(' ')
     first_name = chunks[0]
-    last_name = ' '.join(chunks[1:])
+    last_name = ' '.join(chunks[1:]).replace('\'', '')
     user_dict = {
         'email': '{}.{}@{}.{}'.format(
-            first_name,
-            last_name,
+            first_name.lower(),
+            last_name.lower(),
             APP_NAME,
             TLD),
         'firstName': first_name,
@@ -95,7 +95,9 @@ def claim_from_row(row):
 
 
 def editor_from_row(row):
-    first_name, last_name = row['Name'].split(' ')
+    chunks = row['Name'].split(' ')
+    first_name = chunks[0]
+    last_name = ' '.join(chunks[1:]).replace('\'', '')
     user_dict = {
         'email': '{}.{}@{}.{}'.format(
             first_name.lower(),
@@ -107,7 +109,7 @@ def editor_from_row(row):
         'scienceFeedbackId': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by=['scienceFeedbackId'])
+    user = User.create_or_modify(user_dict, search_by=['email'])
     if not user.id:
         user.set_password(create_random_password())
 
