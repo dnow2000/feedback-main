@@ -22,6 +22,8 @@ export default () => {
 
 
   const currentUser = useSelector(selectCurrentUser)
+  const showMenu = typeof currentUser != 'undefined' && !isSignPathname
+  const showSignin = !currentUser && !isSignPathname
 
   const isAtTop = useSelector(state => state.scroll.isAtTop)
 
@@ -47,17 +49,16 @@ export default () => {
         </div>
 
         <div className="flex-auto" />
-        {currentUser && !isSignPathname ? (
+        {showMenu && (
           <>
             <Navigations />
             <Menu />
           </>
-        ) : (
-          !isSignPathname && (
-            <NavLink className="button" to="/signin">
-              Sign in
-            </NavLink>
-          )
+        )}
+        {showSignin && (
+          <NavLink className="button" to="/signin">
+            Sign in
+          </NavLink>
         )}
       </div>
     </header>

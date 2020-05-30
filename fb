@@ -156,6 +156,7 @@ function exit_success_restoring_branch {
 if [[ "$CMD" == "alembic" ]]; then
   RUN='docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. alembic '"$*"'"'
 
+
 # Connect to API container
 elif [[ "$CMD" == bash ]]; then
 	if [[ "$PLATFORM" == "not-set" ]]; then
@@ -184,7 +185,8 @@ elif [[ "$CMD" == "create-db-pgdump" ]]; then
        docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' -F c > "/var/lib/postgresql/$FILE;
        sudo mv docker_data_$MODE/${DATABASE}db/$FILE .;'
 
-# Create schema_init.sql into alembic
+
+# Create a current schema sql of the postgres db
 elif [[ "$CMD" == "create-schema-sql" ]]; then
   if [[ "$ENV" == "not-set" ]]; then
     FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
@@ -196,6 +198,7 @@ elif [[ "$CMD" == "create-schema-sql" ]]; then
         ./scripts/scalingo/create_schema_sql.sh -a $SCALINGO_APP -b $ROOT_PATH/docker_data_$MODE "
   fi
 
+# Create schema_init.sql into alembic
 elif [[ "$CMD" == "create-init-schema-sql" ]]; then
   if [ -f "$ROOT_PATH/api/alembic/versions/init_schema.sql" ]; then
     confirm "Warning: remove previous init_schema.sql ?"
@@ -207,6 +210,7 @@ elif [[ "$CMD" == "create-init-schema-sql" ]]; then
        mv $FILE api/alembic/versions/init_schema.sql;
        sed -i \"s/SELECT pg_catalog.set_config('search_path', '', false);/SET search_path = public, pg_catalog;/g\" api/alembic/versions/init_schema.sql;"
 
+
 # Dump database into pgdump file
 elif [[ "$CMD" == "env" ]]; then
   cat $ROOT_PATH/.env
@@ -216,15 +220,35 @@ elif [[ "$CMD" == "env" ]]; then
   done < $ROOT_PATH/params.txt
   exit;
 
+
 # Kill ALL docker containersy/
 elif [[ "$CMD" == "kill-all-containers" ]]; then
   confirm "Warning: all your docker containers are going to be killed ?"
   RUN='docker kill $(docker ps -q)'
 
+
 # Build the docker images
 elif [[ "$CMD" == build ]]; then
   RUN='cd $ROOT_PATH;
        docker-compose -f docker-compose.$MODE.yml build $*;'
+
+
+# Create a ngrok tunnel of localhost:80 api
+elif [[ "$CMD" == "ngrok" ]]; then
+ if [[ "$SERVICE" == "not-set" ]]; then
+   screen -S api-ngrok -dm
+   screen -r api-ngrok -X stuff "./$COMMAND_NAME -s api ngrok\n"
+   screen -S webapp-ngrok -dm
+   screen -r webapp-ngrok -X stuff "./$COMMAND_NAME -s webapp ngrok\n"
+ fi
+ PORT=80
+ SUBDOMAIN=$NGROK_API_SUBDOMAIN
+ if [[ "$SERVICE" == "webapp" ]]; then
+   PORT=3000
+   SUBDOMAIN=$NGROK_WEBAPP_SUBDOMAIN
+ fi
+ RUN='ngrok http -subdomain=$SUBDOMAIN $PORT'
+
 
 # Pull and build the docker images from no cache
 elif [[ "$CMD" == rebuild ]]; then
@@ -233,26 +257,42 @@ elif [[ "$CMD" == rebuild ]]; then
   ./$COMMAND_NAME -m $MODE build --no-cache $*
   exit
 
+
 # Restart docker-compose up with forcing recreation and unmounting volumes
 elif [[ "$CMD" == restart ]]; then
-  docker-compose -f docker-compose.$MODE.yml down --volumes $*
-  ./$COMMAND_NAME -m $MODE start --force-recreate $*
-  exit
+  if [[ "$MODE" == "serve-webapp" ]]; then
+    API_URL=''
+    if [[ "$PLATFORM" == ngrok ]];then
+      API_URL='https://$NGROK_API_SUBDOMAIN.ngrok.io'
+    fi
+    RUN='cd $ROOT_PATH/webapp;
+         API_URL=$API_URL yarn start;'
+  else
+    docker-compose -f docker-compose.$MODE.yml down --volumes $*
+    ./$COMMAND_NAME -m $MODE start --force-recreate $*
+    exit
+  fi
 
 # Erase docker shared volumes
 elif [[ "$CMD" == "rmdb" ]]; then
   RUN='cd $ROOT_PATH;
 	     sudo rm -rf docker_data_$MODE/apidb;'
 
+
 # Start docker-compose up with adapted env variables or webapps with local env
 elif [[ "$CMD" == start ]]; then
   if [[ "$MODE" == "serve-webapp" ]]; then
+    API_URL=''
+    if [[ "$PLATFORM" == ngrok ]];then
+      API_URL='https://$NGROK_API_SUBDOMAIN.ngrok.io'
+    fi
     RUN='cd $ROOT_PATH/webapp;
-         yarn start;'
+         API_URL=$API_URL yarn start;'
   else
     RUN='cd $ROOT_PATH;
          bash scripts/start_$MODE.sh $*;'
   fi
+
 
 # Stop development containers
 elif [[ "$CMD" == stop ]]; then
@@ -289,6 +329,7 @@ elif [[ "$CMD" == "tag" ]]; then
     echo "You need to specify a tag."
     exit
   fi
+
 
 # Deploy all components using main repo
 elif [[ "$CMD" == "deploy" ]]; then
@@ -334,6 +375,7 @@ elif [[ "$CMD" == "install" ]]; then
   RUN='cd $ROOT_PATH/webapp;
 			 yarn;'
 
+
 # Create symlink to use "$(echo $COMMAND_NAME)" command (admin rights may be needed)
 elif [[ "$CMD" == "symlink" ]]; then
 	RUN='cd /usr/local/bin && ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME'
@@ -352,6 +394,7 @@ elif [[ "$CMD" == psql ]]; then
     exit
   fi
 
+
 # Open a python prompt in the specified environment
 elif [[ "$CMD" == python ]]; then
 	if [[ "$ENV" == "not-set" ]]; then
@@ -360,6 +403,7 @@ elif [[ "$CMD" == python ]]; then
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
 		exit
 	fi
+
 
 # Open a python prompt in the specified environment
 elif [[ "$CMD" == rm-db ]]; then

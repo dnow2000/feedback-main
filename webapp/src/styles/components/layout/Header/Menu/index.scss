@@ -1,8 +1,10 @@
+@import 'Signout.scss';
+
 .menu {
   display: none;
   z-index: 3001; // needed to go above the fixed CTA button on home page
   position: fixed;
-  top: rem(32px);
+  top: 2rem;
   left: 54%;
   right: 0;
   bottom: 0;
@@ -22,17 +24,15 @@
 
   .items {
     background: white;
-    border-radius: 12px;
+    border-radius: 0.75rem;
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
     color: black;
-    max-width: rem(400px);
-    padding-bottom: rem(12px);
-    padding-left: rem(12px);
-    padding-right: rem(12px);
-    padding-top: rem(12px);
+    margin-right: 0.25rem;
+    max-width: 25rem;
+    padding: 0.75rem;
     position: absolute;
-    right: rem(4px);
-    top: rem(50px);
+    right: 0.25rem;
+    top: 3.125rem;
     z-index: 100;
     width: calc(100% - 1rem);
 
@@ -48,14 +48,14 @@
     }
 
     &::before {
-      right: 32px;
-      border: 11px solid transparent;
+      right: 1.5rem;
+      border: 0.75rem solid transparent;
       border-bottom-color: $grey-light;
     }
 
     &::after {
-      right: 34px;
-      border: 10px solid transparent;
+      right: 1.625rem;
+      border: 0.625rem solid transparent;
       border-bottom-color: white;
     }
 
@@ -76,15 +76,15 @@
         display: block;
         font-weight: 500;
         padding-bottom: 1rem;
-        padding-left: rem(12px);
-        padding-right: rem(12px);
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
         padding-top: 1rem;
         text-decoration: none;
         transition: transform 250ms ease-out;
 
         &:hover,
         &:focus {
-          transform: translateX(6px);
+          transform: translateX(0.375rem);
         }
 
         &.current {

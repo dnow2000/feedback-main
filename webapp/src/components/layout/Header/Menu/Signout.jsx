@@ -8,7 +8,7 @@ import { reinitializeData, requestData } from 'redux-thunk-data'
 import { closeMenu } from 'reducers/menu'
 
 
-const Signout = ({ children }) => {
+const _ = ({ children }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
@@ -28,19 +28,22 @@ const Signout = ({ children }) => {
 
 
   return (
-    <button onClick={handleSignoutClick}>
+    <button
+      className="signout"
+      onClick={handleSignoutClick}
+    >
       {children}
     </button>
   )
 }
 
 
-Signout.defaultProps = {
+_.defaultProps = {
   children: null
 }
 
-Signout.propTypes = {
+_.propTypes = {
   children: PropTypes.node
 }
 
-export default Signout
+export default _

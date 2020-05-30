@@ -1,5 +1,5 @@
 import classnames from 'classnames'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 import { selectCurrentUser } from 'with-react-redux-login'
@@ -24,12 +24,15 @@ export default () => {
   const isMenuActive = useSelector(state => state.menu.isActive)
 
 
+  const handleCloseMenu = useCallback(() => dispatch(closeMenu()), [dispatch])
+
+
   return (
     <>
       <UserAvatar />
       <div
         className={classnames({ showing: isMenuActive }, 'menu')}
-        onClick={() => dispatch(closeMenu())}
+        onClick={handleCloseMenu}
         onKeyDown={null}
         role="button"
         tabIndex="0"
