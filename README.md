@@ -21,19 +21,32 @@
   ```
 
 
+## Migration
+
+  For a new revision:
+  ```bash
+    ./fb alembic revision
+  ```
+
 ## Deploy
 
-En premier lieu:
- - bien vérifier qu'on a, en local, **main** à jour par rapport à **master**
- - de là on peut poser un tag `./fb -t I.P.S. tag` (pour savoir le tag précédent, il suffit de faire un `git tag` dans main)
- - réaliser le déploiement lorsque les tests de chaque mode sont bien **verts**
+  Check the repo is updated with the last **master**. Then:
 
-Par exemple pour déployer la version 3.0.1 pour l'environnement staging :
-**(Attention de ne pas déployer sur la production sans concertation !)**
-```bash
-./fb -e staging -t 3.0.1 deploy
-```
+  ```bash
+    ./fb -t I.P.S. tag
+  ```
 
-A la fin de l'opération, une fenêtre de votre navigateur s'ouvrira sur le workflow en cours.
+  Do a `git tag` if you want to know the current tag. After having checked that the ci worked, as an example:
 
-Après avoir livré en ovh, ne pas oublier de livrer ensuite sur les environements de demo et d'integration.
+  ```bash
+    ./fb -e staging -t 3.0.1 deploy
+  ```
+
+### first deploy
+  In development mode, create the init_schema.sql that will be the first revision in your scalingo alembic stacks:
+
+  ```bash
+    ./fb create-init-schema;
+    git commit -m "created init_schema.sql";
+    git push
+  ```
