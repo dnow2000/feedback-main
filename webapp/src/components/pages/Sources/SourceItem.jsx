@@ -66,7 +66,6 @@ export default ({ source }) => {
     >
       {canVerdict && (
         <NavLink
-          className="button is-primary thin"
           to={
             verdictId
               ? `/verdicts/${verdictId}/modification`
@@ -80,7 +79,6 @@ export default ({ source }) => {
       )}
       {canReview && (
         <NavLink
-          className={"button is-primary thin"}
           to={
             currentUserReviewId
               ? `/reviews/${currentUserReviewId}`
@@ -92,14 +90,13 @@ export default ({ source }) => {
       )}
       {canTestify && (
         <NavLink
-          className={"button is-primary thin"}
           to={
             currentUserAppearanceId
               ? `/appearances/${currentUserAppearanceId}`
               : `/appearance/creation?${type}Id=${id}`
           }
         >
-          {currentUserAppearanceId ? 'See your' : 'Write an'} an appearance
+          {currentUserAppearanceId ? 'See your' : 'Write an'} appearance
         </NavLink>
       )}
     </Item>

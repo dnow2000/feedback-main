@@ -1,14 +1,17 @@
 import React from 'react'
 
+import Ctas from 'components/layout/Ctas'
+
+
 export default ({ children, claim }) => {
   const { text } = claim || {}
 
   return (
     <div className="claim-item">
       {text}
-      <div className="claim-cta-container">
+      <Ctas>
         {children}
-      </div>
+      </Ctas>
     </div>
   )
 }

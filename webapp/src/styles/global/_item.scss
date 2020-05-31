@@ -1,6 +1,10 @@
 .item {
   border: $border;
+  border-color: $grey-light;
   border-radius: $border-radius;
+  border-style: solid;
+  border-width: 1px;
   box-shadow: none;
   padding: 1.25rem;
+  position: relative;
 }

@@ -1,12 +1,12 @@
 .claim-item {
-  border-style: solid;
-  border-color: $grey-light;
-  border-width: 1px;
-  border-radius: 10px;
+  @extend .item;
+
   color: black;
+  align-items: center;
+  display: flex;
   font-size: 1.25rem;
   font-style: italic;
   font-weight: $font-weight-semibold;
-  padding: 1.25rem;
+  min-height: 5rem;
   text-align: center;
 }

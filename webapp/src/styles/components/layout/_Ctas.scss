@@ -1,0 +1,37 @@
+.ctas {
+  @extend .button;
+  @extend .is-undressed;
+
+  min-width: 1rem;
+  padding: 0;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 1000;
+
+  .ctas-container {
+    @extend .item;
+
+    background: white;
+    border-radius: 0;
+    display: none;
+    left: 0;
+    min-width: 12.5rem;
+    padding: 0.5rem;
+    position: absolute;
+    text-align: left;
+    top: 75%;
+
+
+
+    &.is-visible {
+      display: inherit;
+    }
+
+    a {
+      @extend .anchor;
+
+      display: block;
+    }
+  }
+}
