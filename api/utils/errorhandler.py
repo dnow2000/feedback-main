@@ -42,9 +42,10 @@ def internal_error(exception):
     app.logger.error('500 on %s %s — %s',
                      request.method, request.url, oneline_stack)
     api_errors = ApiErrors()
-    api_errors.add_error('global',
-               "Il semble que nous ayons des problèmes techniques :("
-                + " On répare ça au plus vite.")
+    api_errors.add_error(
+        'global',
+        'It seems whe have troubles with our server... We will fix soon as we can !'
+    )
     return jsonify([api_errors.errors]), 500
 
 

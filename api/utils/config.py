@@ -11,7 +11,7 @@ WEBAPP_SUBDOMAIN = os.environ.get('WEBAPP_SUBDOMAIN', '')
 
 API_ROOT_PATH = Path(os.path.dirname(os.path.realpath(__file__))) / '..'
 
-version_file = open(os.path.join(API_ROOT_PATH, "version.txt"), "r")
+version_file = open(os.path.join(API_ROOT_PATH, 'version.txt'), 'r')
 VERSION = version_file.read().rstrip()
 version_file.close()
 

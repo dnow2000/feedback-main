@@ -12,6 +12,17 @@ import UserAvatar from './UserAvatar'
 import { links } from '../utils'
 
 
+const otherMenuLinks = [
+  /*
+  {
+    label: () => 'My account',
+    path: '/account',
+    visible: (currentRoles, currentUser) => currentUser
+  }
+  */
+]
+
+
 export default () => {
   const dispatch = useDispatch()
   const location = useLocation()
@@ -47,11 +58,14 @@ export default () => {
           role="button"
           tabIndex="0"
         >
-          {links &&
-            links.filter(({ disabled }) => !disabled)
-                 .map(({ external, label, target, path, visible }) => (
-              visible(currentRoles) && (
-                <div className="item navigation" key={label}>
+          {otherMenuLinks.concat(links)
+                  .filter(({ disabled }) => !disabled)
+                  .map(({ className, external, label, target, path, visible }) => (
+              visible(currentRoles, currentUser) && (
+                <div
+                  className={className || 'item'}
+                  key={label}
+                >
                   {path === location.pathname ? (
                     <div className="link current">
                       {label(currentRoles)}
@@ -59,11 +73,11 @@ export default () => {
                   ) : (
                     <NavLink
                       className="block link"
-                      id={`see-${path}`}
                       external={external}
-                      onClick={() => dispatch(closeMenu())}
-                      to={path}
+                      id={`see-${path}`}
+                      onClick={handleCloseMenu}
                       target={target}
+                      to={path}
                     >
                       {label(currentRoles)}
                     </NavLink>

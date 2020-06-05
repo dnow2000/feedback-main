@@ -15,7 +15,7 @@ TRENDINGS_PAGINATION = os.environ.get('TRENDINGS_PAGINATION', 10)
 @app.route('/trendings/<source_id>', methods=['GET'])
 @login_or_api_key_required
 def get_trending(source_id):
-    trending_type = request.args.get('type', 'article')
+    trending_type = request.args.get('type', 'content')
 
     trending = trending_from(trending_type, source_id)
 
@@ -33,7 +33,7 @@ def get_trendings():
     theme = request.args.get('theme')
     days = request.args.get('days')
     page = int(request.args.get('page', 1))
-    trending_type = request.args.get('type', 'article')
+    trending_type = request.args.get('type', 'content')
 
     trendings = find_trendings(
         trending_type,

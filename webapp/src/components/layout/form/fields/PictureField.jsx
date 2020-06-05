@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Field } from 'react-final-form'
+import { Field, useForm } from 'react-final-form'
 import Dropzone from 'react-dropzone'
 import AvatarEditor from 'react-avatar-editor'
 
@@ -32,6 +32,10 @@ class PictureField extends PureComponent {
     }
   }
 
+  handleDrop = dropped => {
+    this.setState({ image: dropped[0] })
+  }
+
   handleFileAttached = event => {
     this.setState({
       image: event.target.files[0],
@@ -41,10 +45,6 @@ class PictureField extends PureComponent {
   handleScale = event => {
     const scale = parseFloat(event.target.value)
     this.setState({ scale })
-  }
-
-  handleDrop = dropped => {
-    this.setState({ image: dropped[0] })
   }
 
   handleImageChange = () => {
@@ -118,12 +118,12 @@ class PictureField extends PureComponent {
                     {...getInputProps()}
                   />
                   <AvatarEditor
+                    border={0}
                     image={image || `${ROOT_ASSETS_PATH}/drag.png`}
                     onImageChange={this.handleImageChange}
                     ref={this.avatarRef}
                     scale={scale}
                     style={{ width: '100%', height: '100%' }}
-                    border={0}
                   />
                 </div>
               )}
@@ -152,7 +152,6 @@ class PictureField extends PureComponent {
           render={this.renderField}
           validate={composeValidators(validate, getRequiredValidate(required))}
         />
-
       </>
     )
   }

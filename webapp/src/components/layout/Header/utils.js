@@ -7,6 +7,7 @@ const visibleFor = roleTypes =>
     (currentRoles || []).map(cr => cr.type).includes(roleType))
   }
 
+
 export const links = [
   {
     label: () => 'Trending news',
@@ -30,4 +31,4 @@ export const links = [
     path: '/users',
     visible: visibleFor(['admin', 'editor'])
   },
-]
+].map(link => ({ className: 'item navigation', ...link }))

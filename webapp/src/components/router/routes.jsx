@@ -5,6 +5,7 @@ import { compose } from 'redux'
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
+import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
 import Landing from 'components/pages/Landing'
@@ -22,11 +23,24 @@ import Trendings from 'components/pages/Trendings'
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
 
+
 export default [
   {
     exact: true,
     path: '/',
     render: () => <Redirect to="/landing" />,
+  },
+  {
+    component: withRequiredLogin(Account),
+    exact: true,
+    path: `/account`,
+    title: 'Account',
+  },
+  {
+    component: withRequiredLogin(Appearance),
+    exact: true,
+    path: `/appearances/:appearanceId${formPath}`,
+    title: 'Appearance',
   },
   {
     component: compose(
@@ -42,12 +56,6 @@ export default [
     exact: true,
     path: '/sources',
     title: 'Sources',
-  },
-  {
-    component: withRequiredLogin(Appearance),
-    exact: true,
-    path: `/appearances/:appearanceId${formPath}`,
-    title: 'Appearance',
   },
   {
     component: withRedirectWhenLoggedIn(Landing),

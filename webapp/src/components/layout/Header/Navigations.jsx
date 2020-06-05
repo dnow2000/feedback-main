@@ -15,8 +15,8 @@ export default () => {
 
   return (
     <div className="navigations">
-      {links &&
-        links.filter(({ disabled }) => !disabled)
+      {(links || [])
+             .filter(({ disabled }) => !disabled)
              .map(({ external, label, target, path, visible }) => (
           visible(currentRoles) && (
             <div className="navigation" key={label}>

@@ -5,6 +5,7 @@ import swiftclient
 
 from utils.config import IS_DEVELOPMENT
 
+
 def get_storage_base_url():
     return os.environ.get('OBJECT_STORAGE_URL')
 
