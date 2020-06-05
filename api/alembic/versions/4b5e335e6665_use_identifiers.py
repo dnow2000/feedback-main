@@ -21,6 +21,7 @@ SCIENCE_FEEDBACK_TABLE_NAMES = [
     'claim',
     'content',
     'medium',
+    'organization',
     'review',
     'user'
 ]
