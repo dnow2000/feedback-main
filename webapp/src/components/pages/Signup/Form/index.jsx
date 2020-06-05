@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { scrollToInput } from 'utils/scroll'
 
 import Fields from './Fields'
-import Footer from './Footer'
+import Submit from './Submit'
 
 
 const API_PATH = '/users/signup'
@@ -58,7 +58,7 @@ export default ({ errors: formErrors, form, handleSubmit, ...formProps }) => {
       onSubmit={handleSubmitWithScrollToFormError}
     >
       <Fields onImageChange={handleImageChange} />
-      <Footer {...formProps} />
+      <Submit {...formProps} />
       {globalError !== null && (
         <span>
           {globalError}

@@ -119,14 +119,9 @@ export default [
     title: 'Signin',
   },
   {
-    exact: true,
-    path: '/signup',
-    render: () => <Redirect to="/signup/reviewer" />,
-  },
-  {
     component: withRedirectWhenLoggedIn(Signup),
     exact: true,
-    path: '/signup/:roleType(reviewer|editor)',
+    path: '/signup/(apply)?/:roleType(reviewer|editor)?',
     title: 'Signup',
   },
   {

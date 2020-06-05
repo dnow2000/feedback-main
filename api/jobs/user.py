@@ -1,6 +1,7 @@
 from repository.users import sync
 
-jobs = [{
+
+JOBS = [{
     'function': sync,
     'kwargs': {
         'id': 'user',

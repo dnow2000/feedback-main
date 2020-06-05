@@ -4,6 +4,7 @@ const {
   NODE_ENV,
   REACT_APP_NAME,
   REACT_APP_API_URL,
+  REACT_APP_MACHINE_ENV,
   REACT_APP_THUMBS_URL,
   REACT_APP_VERSION
 } = process.env
@@ -13,7 +14,7 @@ export const VERSION = REACT_APP_VERSION || ''
 
 export const IS_DEBUG = true
 export const IS_DEVELOPMENT = NODE_ENV === 'development'
-export const IS_PRODUCTION = !IS_DEVELOPMENT
+export const IS_TESTING = NODE_ENV !== 'development' && REACT_APP_MACHINE_ENV === 'testing'
 
 const LOCALHOST_API_URL = 'http://localhost'
 export const API_URL = REACT_APP_API_URL || LOCALHOST_API_URL

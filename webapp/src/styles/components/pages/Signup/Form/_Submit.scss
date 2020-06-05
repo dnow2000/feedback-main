@@ -1,0 +1,27 @@
+.signup {
+  .submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+
+    .button {
+      width: 315px;
+      height: 53px;
+      border-radius: 26.5px;
+      box-shadow: 0 2px 4px 0 rgba(0, 92, 255, 0.33);
+      background-color: $primary;
+
+      .title {
+        font-size: $font-size-big;
+        font-stretch: normal;
+        font-style: normal;
+        font-weight: $font-weight-bold;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+        color: $white;
+      }
+    }
+  }
+}

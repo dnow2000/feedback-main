@@ -1,7 +1,7 @@
 from repository.science_feedback import sync
 
 
-jobs = [{
+JOBS = [{
     'function': sync,
     'kwargs': {
         'id': 'science_feedback_airtable',

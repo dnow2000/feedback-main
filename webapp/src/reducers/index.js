@@ -5,6 +5,7 @@ import data from './data'
 import menu from './menu'
 import requests from './requests'
 import scroll from './scroll'
+import transition from './transition'
 
 
 export default combineReducers({
@@ -12,5 +13,6 @@ export default combineReducers({
   menu,
   modals,
   requests,
-  scroll
+  scroll,
+  transition
 })

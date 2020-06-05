@@ -1,18 +1,21 @@
 import classnames from 'classnames'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 import { getCanSubmit } from 'utils/form'
 
 
 export default ({ ...formProps }) => {
+  const { roleType } = useParams()
+
   const { isPending } = useSelector(state =>
     state.requests['/users/signup']) || {}
 
   const canSubmit = getCanSubmit({ isLoading: isPending, ...formProps }) || true
 
   return (
-    <footer className="field submit">
+    <div className="submit">
       <button
         className={classnames(
           'button is-primary',
@@ -22,9 +25,11 @@ export default ({ ...formProps }) => {
         type="submit"
       >
         <span className="title">
-          Send an application
+          {roleType
+            ? 'Send an application'
+            : 'Submit'}
         </span>
       </button>
-    </footer>
+    </div>
   )
 }
