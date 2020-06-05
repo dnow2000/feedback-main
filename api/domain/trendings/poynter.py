@@ -1,5 +1,5 @@
 import os
-from pathlib import Path, PurePath
+from pathlib import Path
 from pandas import read_csv
 import sys
 
@@ -10,7 +10,7 @@ from utils.pandas import create_rows_from_data_frame
 
 
 GOOGLE_DRIVE_ID = os.environ.get('DATA_GOOGLE_DRIVE_ID')
-GOOGLE_SERVICE_ACCOUNT_CREDENTIALS = os.environ.get("DATA_GOOGLE_SERVICE_ACCOUNT_CREDENTIALS") \
+GOOGLE_SERVICE_ACCOUNT_CREDENTIALS = os.environ.get('DATA_GOOGLE_SERVICE_ACCOUNT_CREDENTIALS') \
                                    .replace('\'', '')
 
 DEVELOPMENT_POYNTER_CLAIMS_DIR = Path(os.path.dirname(os.path.realpath(__file__)))\
@@ -41,20 +41,15 @@ def load_data_frame():
 
 def claim_from_poynter(datum, index):
     return {
-        'type': 'claim',
         'source': {
             'id': 'poynter-{}'.format(index)
         },
-        'text': datum['What did you fact-check?']
+        'text': datum['What did you fact-check?'],
+        'type': 'claim'
     }
 
 
-def find_poynter_trendings(
-    days=1,
-    max_trendings=3,
-    min_shares=10000,
-    theme=None,
-):
+def find_poynter_trendings():
     df = getattr(sys.modules[__name__], 'df')
     return [
         claim_from_poynter(row, index)

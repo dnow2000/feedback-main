@@ -9,7 +9,7 @@ from utils.config import IS_DEVELOPMENT
 
 
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
-BUZZSUMO_API_URL = "http://api.buzzsumo.com/search"
+BUZZSUMO_API_URL = 'http://api.buzzsumo.com/search'
 
 if BUZZSUMO_API_KEY is None:
     logger.warning('BUZZSUMO_API_KEY is not defined in the env')
@@ -21,7 +21,7 @@ DEVELOPMENT_TRENDINGS = [{
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
     'thumbnail': 'https://cdn.cnn.com/cnnnext/dam/assets/170708175538-05-trump-abroad-0708-super-tease.jpg',
-    'title': "Donald Trump buried a climate change report because 'I don't believe it'",
+    'title': 'Donald Trump buried a climate change report because \'I don\'t believe it\'',
     'total_facebook_shares': 1000,
     'total_shares': 10000,
     'twitter_shares': 1000,
@@ -33,7 +33,7 @@ DEVELOPMENT_TRENDINGS = [{
     'subdomain': 'www.cnn.com',
     'tags': 'climate',
     'thumbnail': 'https://cdn.cnn.com/cnnnext/dam/assets/180804095014-03-file-climate-change-super-tease.jpg',
-    'title': "Climate change will shrink US economy and kill thousands, government report warns",
+    'title': 'Climate change will shrink US economy and kill thousands, government report warns',
     'total_facebook_shares': 178670,
     'total_shares': 354013,
     'twitter_shares': 14228,
@@ -45,7 +45,7 @@ DEVELOPMENT_TRENDINGS = [{
     'subdomain': 'www.upworthy.com',
     'tags': 'climate',
     'thumbnail': 'https://i.upworthy.com/nugget/5bff1e29b170e900100c4204/Marcario-091a0002863efe8fda745bafe6178f1c.jpg?ixlib=rails-2.1.3&w=1200&h=624',
-    'title': "Patagonia’s CEO is donating company’s entire $10M Trump tax cut to fight climate change.",
+    'title': 'Patagonia’s CEO is donating company’s entire $10M Trump tax cut to fight climate change.',
     'total_facebook_shares': 1423505,
     'total_shares': 1434478,
     'twitter_shares': 9062,
@@ -56,7 +56,7 @@ DEVELOPMENT_TRENDINGS = [{
     'published_date': 1585956625,
     'subdomain': 'www.motherjones.com',
     'tags': 'climate',
-    'title': "19 of 20 world leaders just pledged to fight climate change. Trump was the lone holdout.",
+    'title': '19 of 20 world leaders just pledged to fight climate change. Trump was the lone holdout.',
     'thumbnail': 'https://www.motherjones.com/wp-content/uploads/2018/12/trump-g20-120118.jpeg?w=1200&h=630&crop=1',
     'total_facebook_shares': 178670,
     'total_shares': 354013,
@@ -69,7 +69,7 @@ DEVELOPMENT_TRENDINGS = [{
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
     'thumbnail': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
-    'title': "Trump signs $1.8 billion autism funding bill.",
+    'title': 'Trump signs $1.8 billion autism funding bill.',
     'total_facebook_shares': 178650,
     'total_shares': 354011,
     'twitter_shares': 14248,
@@ -81,7 +81,7 @@ DEVELOPMENT_TRENDINGS = [{
     'subdomain': 'www.motherjones.com',
     'tags': 'health',
     'thumbnail': 'https://pbs.twimg.com/media/EFwWN1kWsAAt76T?format=jpg&name=small',
-    'title': "Hacer ejercicio, la mejor arma para luchar contra la depresión.",
+    'title': 'Hacer ejercicio, la mejor arma para luchar contra la depresión.',
     'total_facebook_shares': 138650,
     'total_shares': 351011,
     'twitter_shares': 13248,
@@ -98,7 +98,7 @@ def buzzsumo_url_from(api_name, url_query):
 
     url_location_search_with_credentials = urlencode(url_query_with_credentials)
 
-    url = "{}/{}.json?{}".format(
+    url = '{}/{}.json?{}'.format(
         BUZZSUMO_API_URL,
         api_name,
         url_location_search_with_credentials
@@ -110,9 +110,9 @@ def buzzsumo_url_from(api_name, url_query):
 def buzzsumo_trending_from(source_id):
     if IS_DEVELOPMENT:
         for trending in DEVELOPMENT_TRENDINGS:
-            article = article_from_buzzsumo(trending)
-            if article['source']['id'] == source_id:
-                return article
+            content = content_from_buzzsumo_result(trending)
+            if content['source']['id'] == source_id:
+                return content
     #
     # NEED TO WRITE THE PRODUCTIONBUZZSUMO GET API FROM ID
     #
@@ -133,6 +133,7 @@ def content_from_buzzsumo_result(result):
         'facebookShares': result['total_facebook_shares'],
         'publishedDate': strftime(datetime.utcfromtimestamp(result['published_date'])),
         'source': {
+            'buzzsumoId': result['id'],
             'id': 'buzzsumo-{}'.format(result['id']),
             'subdomain': result['subdomain'],
         },
@@ -145,7 +146,7 @@ def content_from_buzzsumo_result(result):
 
 
 def content_from_buzzsumo_url(url: str):
-    url = buzzsumo_url_from('articles', { 'q': url })
+    url = buzzsumo_url_from('articles', {'q': url})
     response = requests.get(url)
 
     json_file = response.json()
@@ -168,15 +169,15 @@ def find_buzzsumo_trendings(
 ):
 
     config = {
-        "count": max_trendings * 2,
-        "search_type": "trending_now"
+        'count': max_trendings * 2,
+        'search_type': 'trending_now'
     }
 
     topic = topic_from(theme)
     if topic:
-        config["topic"] = topic
+        config['topic'] = topic
     if days:
-        config["hours"] = int(days) * 24
+        config['hours'] = int(days) * 24
 
 
     results = []
@@ -187,7 +188,7 @@ def find_buzzsumo_trendings(
     if IS_DEVELOPMENT:
         results = DEVELOPMENT_TRENDINGS
     else:
-        url = buzzsumo_url_from("trends", config)
+        url = buzzsumo_url_from('trends', config)
 
         response = requests.get(url).json()
         if 'results' not in response:

@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from sqlalchemy_api_handler import ApiHandler
 
 from models.content import Content
@@ -13,7 +14,7 @@ from utils.screenshotmachine import capture
 from storage.thumb import save_thumb
 
 
-content_ts_filter = create_get_filter_matching_ts_query_in_any_model(
+CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(
     Content,
     Tag
 )
@@ -23,10 +24,10 @@ def resolve_with_url(url, **kwargs):
     buzzsumo_content = content_from_buzzsumo_url(url, **kwargs)
 
     if buzzsumo_content:
+        buzzsumo_query = Content.source['buzzsumoId'].astext == \
+                         buzzsumo_content['source']['buzzsumoId']
         content = Content.query\
-                         .filter_by(
-                             buzzsumoId=buzzsumo_content['buzzsumoId']
-                         )\
+                         .filter_by(buzzsumo_query)\
                          .first()
         if content:
             return content.as_dict()
@@ -52,7 +53,7 @@ def get_contents_keywords_join_query(query):
 
 def get_contents_query_with_keywords(query, keywords):
     keywords_filter = create_filter_matching_all_keywords_in_any_model(
-        content_ts_filter,
+        CONTENT_TS_FILTER,
         keywords
     )
     query = query.filter(keywords_filter)
@@ -65,16 +66,23 @@ def filter_contents_by_is_reviewable(query, is_reviewable):
 
 
 def sync_content(content):
+    print(content.url)
     if content.thumbCount == 0:
         thumb = capture(content.url)
         save_thumb(content, thumb, 0, convert=False)
 
-    if content.buzzsumoId:
+    if content.source and 'buzzsumoId' in content.source:
         buzzsumo_content = content_from_buzzsumo_url(content.url)
         content.modify(buzzsumo_content)
 
 
-def sync(from_date, to_date):
+def sync(from_date=None, to_date=None):
+    now_date = datetime.utcnow()
+    if from_date is None:
+        from_date = now_date - timedelta(minutes=100)
+    if to_date is None:
+        to_date = now_date - timedelta(minutes=0)
+
     contents = filter_by_activity_date_and_verb(
         Content.query,
         from_date=from_date,
