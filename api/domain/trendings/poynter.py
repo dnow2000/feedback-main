@@ -41,9 +41,7 @@ def load_data_frame():
 
 def claim_from_poynter(datum, index):
     return {
-        'source': {
-            'id': 'poynter-{}'.format(index)
-        },
+        'poynterIdentifier': str(index),
         'text': datum['What did you fact-check?'],
         'type': 'claim'
     }
@@ -57,8 +55,8 @@ def find_poynter_trendings():
     ]
 
 
-def poynter_trending_from(source_id):
+def poynter_trending_from_identifier(identifier):
     df = getattr(sys.modules[__name__], 'df')
-    df_id = int(source_id.replace('poynter-', ''))
+    df_id = int(identifier)
     poynter = df.loc[df_id]
     return claim_from_poynter(poynter, df_id)

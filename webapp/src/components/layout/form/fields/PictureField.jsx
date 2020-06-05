@@ -1,7 +1,7 @@
 import classnames from 'classnames'
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Field, useForm } from 'react-final-form'
+import { Field } from 'react-final-form'
 import Dropzone from 'react-dropzone'
 import AvatarEditor from 'react-avatar-editor'
 

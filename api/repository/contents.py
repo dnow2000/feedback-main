@@ -5,10 +5,10 @@ from models.content import Content
 from models.content_tag import ContentTag
 from models.tag import Tag
 
-from domain.content import  content_from_newspaper_url
+from domain.content import newspaper_from_url
 from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
-from domain.trendings.buzzsumo import content_from_buzzsumo_url
+from domain.trendings.buzzsumo import buzzsumo_trending_from_url
 from repository.activities import filter_by_activity_date_and_verb
 from utils.screenshotmachine import capture
 from storage.thumb import save_thumb
@@ -21,28 +21,23 @@ CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(
 
 
 def resolve_with_url(url, **kwargs):
-    buzzsumo_content = content_from_buzzsumo_url(url, **kwargs)
+    trending = buzzsumo_trending_from_url(url, **kwargs)
 
-    if buzzsumo_content:
-        buzzsumo_query = Content.source['buzzsumoId'].astext == \
-                         buzzsumo_content['source']['buzzsumoId']
+    if trending:
         content = Content.query\
-                         .filter_by(buzzsumo_query)\
+                         .filter_by(buzzsumoIdentifier=trending['buzzsumoIdentifier'])\
                          .first()
         if content:
             return content.as_dict()
 
-    newspaper_content = content_from_newspaper_url(url, **kwargs)
-    if newspaper_content is None:
-        newspaper_content = {}
+    newspaper = newspaper_from_url(url, **kwargs)
+    if newspaper is None:
+        newspaper = {}
 
-    if buzzsumo_content is None:
-        buzzsumo_content = {}
+    if trending is None:
+        content = {}
 
-    return dict(
-        newspaper_content,
-        **buzzsumo_content
-    )
+    return dict(newspaper, **trending)
 
 
 def get_contents_keywords_join_query(query):
@@ -66,14 +61,13 @@ def filter_contents_by_is_reviewable(query, is_reviewable):
 
 
 def sync_content(content):
-    print(content.url)
     if content.thumbCount == 0:
         thumb = capture(content.url)
         save_thumb(content, thumb, 0, convert=False)
 
-    if content.source and 'buzzsumoId' in content.source:
-        buzzsumo_content = content_from_buzzsumo_url(content.url)
-        content.modify(buzzsumo_content)
+    if content.buzzsumoIdentifier:
+        trending = buzzsumo_trending_from_url(content.url)
+        content.modify(trending)
 
 
 def sync(from_date=None, to_date=None):

@@ -15,7 +15,7 @@ const API_PATH = '/users'
 export default () => {
   const dispatch = useDispatch()
 
-  const { firstName, lastName, email, ...other } = useSelector(selectCurrentUser) || {}
+  const { firstName, lastName, email } = useSelector(selectCurrentUser) || {}
   const initialValues = {
     email,
     firstName,

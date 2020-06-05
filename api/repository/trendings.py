@@ -1,24 +1,26 @@
-import sys
 from sqlalchemy import and_, Integer
 
 from utils.db import get_model_with_table_name
 
 
-def keep_not_saved_trendings(trendings, trending_type):
-    model = get_model_with_table_name(trending_type)
+def keep_not_saved_trendings(trendings, table_name):
+    model = get_model_with_table_name(table_name)
 
-    source_ids = [trending['source']['id'] for trending in trendings]
+    identifier_key = 'buzzsumoIdentifier' if table_name == 'content' \
+                                          else 'poynterIdentifier'
 
-    saved_entities = model.query \
-                             .filter(model.source['id'].astext.in_(source_ids)) \
-                             .all()
+    already_saved_identifiers = [trending[identifier_key] for trending in trendings]
+    is_already_saved_query = getattr(model, identifier_key).in_(already_saved_identifiers)
+    already_saved_entities = model.query \
+                          .filter(is_already_saved_query) \
+                          .all()
 
     saved_source_ids = [
-        saved_entity.source['id']
-        for saved_entity in saved_entities
+        getattr(saved_entity, identifier_key)
+        for saved_entity in already_saved_entities
     ]
 
     return [
         trending for trending in trendings
-        if trending['source']['id'] not in saved_source_ids
+        if trending[identifier_key] not in saved_source_ids
     ]

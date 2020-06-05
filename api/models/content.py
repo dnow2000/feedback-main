@@ -6,7 +6,6 @@ from sqlalchemy import BigInteger, \
                        Enum, \
                        Text, \
                        String
-from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
@@ -44,6 +43,8 @@ class Content(ApiHandler,
 
     authors = Column(Text())
 
+    buzzsumoIdentifier = Column(String(16))
+
     isReviewable = Column(Boolean())
 
     isValidatedAsPeerPublication = Column(Boolean(),
@@ -51,8 +52,6 @@ class Content(ApiHandler,
                                           default=False)
 
     publishedDate = Column(DateTime())
-
-    source = Column(JSON())
 
     summary = Column(Text())
 

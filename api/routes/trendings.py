@@ -33,10 +33,10 @@ def get_trendings():
     theme = request.args.get('theme')
     days = request.args.get('days')
     page = int(request.args.get('page', 1))
-    trending_type = request.args.get('type', 'content')
+    table_name = request.args.get('type', 'content')
 
     trendings = find_trendings(
-        trending_type,
+        table_name,
         days=days,
         max_trendings=50,
         min_shares=200,
@@ -45,7 +45,7 @@ def get_trendings():
 
     not_saved_trendings = keep_not_saved_trendings(
         trendings,
-        trending_type
+        table_name
     )
 
     not_saved_trendings = sorted(

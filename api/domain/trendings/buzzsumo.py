@@ -93,7 +93,7 @@ DEVELOPMENT_TRENDINGS = [{
 def buzzsumo_url_from(api_name, url_query):
     url_query_with_credentials = dict(
         url_query,
-        **{ 'api_key': BUZZSUMO_API_KEY }
+        **{'api_key': BUZZSUMO_API_KEY}
     )
 
     url_location_search_with_credentials = urlencode(url_query_with_credentials)
@@ -107,12 +107,12 @@ def buzzsumo_url_from(api_name, url_query):
     return url
 
 
-def buzzsumo_trending_from(source_id):
+def buzzsumo_trending_from_identifier(identifier):
     if IS_DEVELOPMENT:
         for trending in DEVELOPMENT_TRENDINGS:
-            content = content_from_buzzsumo_result(trending)
-            if content['source']['id'] == source_id:
-                return content
+            buzzsumo_trending = buzzsumo_trending_from_result(trending)
+            if buzzsumo_trending['buzzsumoIdentifier'] == identifier:
+                return buzzsumo_trending
     #
     # NEED TO WRITE THE PRODUCTIONBUZZSUMO GET API FROM ID
     #
@@ -127,16 +127,12 @@ def topic_from(theme):
     return None
 
 
-def content_from_buzzsumo_result(result):
+def buzzsumo_trending_from_result(result):
     return {
+        'buzzsumoIdentifier': result['id'],
         'externalThumbUrl': result['thumbnail'],
         'facebookShares': result['total_facebook_shares'],
         'publishedDate': strftime(datetime.utcfromtimestamp(result['published_date'])),
-        'source': {
-            'buzzsumoId': result['id'],
-            'id': 'buzzsumo-{}'.format(result['id']),
-            'subdomain': result['subdomain'],
-        },
         'title': result['title'],
         'totalShares': result['total_shares'],
         'twitterShares': result['twitter_shares'],
@@ -145,7 +141,7 @@ def content_from_buzzsumo_result(result):
     }
 
 
-def content_from_buzzsumo_url(url: str):
+def buzzsumo_trending_from_url(url: str):
     url = buzzsumo_url_from('articles', {'q': url})
     response = requests.get(url)
 
@@ -158,7 +154,7 @@ def content_from_buzzsumo_url(url: str):
     if not len(results) == 1:
         return None
 
-    return content_from_buzzsumo_result(results[0])
+    return buzzsumo_trending_from_result(results[0])
 
 
 def find_buzzsumo_trendings(
@@ -196,7 +192,7 @@ def find_buzzsumo_trendings(
         results = response['results']
 
     for result in results:
-        trending = content_from_buzzsumo_result(result)
+        trending = buzzsumo_trending_from_result(result)
 
         if trending['totalShares'] < min_shares:
             continue

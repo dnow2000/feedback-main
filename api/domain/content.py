@@ -1,20 +1,18 @@
-import requests
-
 from newspaper import Article as NewspaperArticle
 
 
-def content_from_newspaper_url(url: str, **kwargs):
-    newspaper_content = NewspaperArticle(
+def newspaper_from_url(url: str, **kwargs):
+    newspaper = NewspaperArticle(
         url,
         language=kwargs.get('language', 'en')
     )
-    newspaper_content.download()
-    newspaper_content.parse()
-    newspaper_content.nlp()
+    newspaper.download()
+    newspaper.parse()
+    newspaper.nlp()
 
     return {
-        'authors': ' '.join(newspaper_content.authors),
-        'summary': newspaper_content.summary,
-        'tags': ' '.join(newspaper_content.keywords),
-        'title': newspaper_content.title,
+        'authors': ' '.join(newspaper.authors),
+        'summary': newspaper.summary,
+        'tags': ' '.join(newspaper.keywords),
+        'title': newspaper.title,
     }

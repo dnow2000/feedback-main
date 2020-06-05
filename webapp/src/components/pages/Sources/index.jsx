@@ -29,7 +29,7 @@ export default () => {
   return (
     <>
       <Header />
-      <Main name="sources">
+      <Main className="sources">
         <div className="container">
           <NavLink to={`/${collectionName}/creation`}>
             Créer un {type}

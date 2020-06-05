@@ -1,5 +1,4 @@
 from sqlalchemy import Column, String, Text
-from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasScienceFeedbackMixin
@@ -10,6 +9,6 @@ class Claim(ApiHandler,
             Model,
             HasScienceFeedbackMixin):
 
-    source = Column(JSON())
+    poynterIdentifier = Column(String(8))
 
     text = Column(Text())

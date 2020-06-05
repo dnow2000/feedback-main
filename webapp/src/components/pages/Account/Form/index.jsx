@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react'
-import { useForm } from 'react-final-form'
 
 import PictureField from 'components/layout/form/fields/PictureField'
 import TextField from 'components/layout/form/fields/TextField'

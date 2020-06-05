@@ -3,7 +3,6 @@ from sqlalchemy import BigInteger, \
                        Column, \
                        Enum, \
                        ForeignKey
-from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
