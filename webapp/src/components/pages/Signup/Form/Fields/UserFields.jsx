@@ -1,14 +1,27 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useForm } from 'react-final-form'
 import { useParams } from 'react-router-dom'
 
-import CheckboxField from 'components/layout/form/fields/CheckboxField'
 import PasswordField from 'components/layout/form/fields/PasswordField'
 import PictureField from 'components/layout/form/fields/PictureField'
 import TextField from 'components/layout/form/fields/TextField'
 
 
-export default ({ onImageChange }) => {
+export default () => {
   const { roleType } = useParams()
+  const { batch, change } = useForm()
+
+  const emailSublabel = roleType
+    ? 'Official email from your research institution, it will not be displayed publicly.'
+    : 'It will not be displayed publicly.'
+
+
+  const handleImageChange = useCallback((thumb, croppingRect) => {
+    batch(() => {
+      change('thumb', thumb)
+      change('croppingRect', croppingRect)
+    })
+  }, [batch, change])
 
   return (
     <>
@@ -17,7 +30,7 @@ export default ({ onImageChange }) => {
           id="thumb"
           label="Photo"
           name="thumb"
-          onImageChange={onImageChange}
+          onImageChange={handleImageChange}
           required
         />
         <div className="names">
@@ -43,7 +56,7 @@ export default ({ onImageChange }) => {
         name="email"
         placeholder="john.doe@gmail.com"
         required
-        sublabel={(roleType === 'reviewer' ? 'Official email from your research institution, ' : '') + 'it will not be displayed publicly.'}
+        sublabel={emailSublabel}
         type="email"
       />
       <PasswordField

@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import React from 'react'
 import { Route } from 'react-router-dom'
 
@@ -8,9 +7,9 @@ import TouFields from './TouFields'
 import UserFields from './UserFields'
 
 
-const _ = ({ onImageChange }) => (
+export default () => (
   <div className="fields">
-    <UserFields onImageChange={onImageChange} />
+    <UserFields />
     <Route
       component={ScienceFields}
       exact
@@ -25,9 +24,3 @@ const _ = ({ onImageChange }) => (
     <TouFields />
   </div>
 )
-
-_.propTypes = {
-  onImageChange: PropTypes.func.isRequired
-}
-
-export default _

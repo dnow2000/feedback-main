@@ -1,4 +1,3 @@
-import requests
 import inflect
 from sqlalchemy import Column,\
                        Integer

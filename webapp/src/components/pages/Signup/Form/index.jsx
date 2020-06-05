@@ -11,25 +11,15 @@ import Submit from './Submit'
 const API_PATH = '/users/signup'
 
 
-export default ({ errors: formErrors, form, handleSubmit, ...formProps }) => {
+export default ({ errors: formErrors, form, handleSubmit }) => {
+  const { getRegisteredFields } = form
   const history = useHistory()
-  const { batch, change, getRegisteredFields } = form
-
-
   const {
     errors: requestErrors,
     isError: isRequestError,
     isSuccess: isRequestSuccess
   } = useSelector(state => state.requests[API_PATH]) || {}
   const { global: globalError } = requestErrors || {}
-
-
-  const handleImageChange = useCallback((thumb, croppingRect) => {
-    batch(() => {
-      change('thumb', thumb)
-      change('croppingRect', croppingRect)
-    })
-  }, [batch, change])
 
   const handleSubmitWithScrollToFormError = useCallback(event => {
       handleSubmit(event)
@@ -57,8 +47,8 @@ export default ({ errors: formErrors, form, handleSubmit, ...formProps }) => {
       noValidate
       onSubmit={handleSubmitWithScrollToFormError}
     >
-      <Fields onImageChange={handleImageChange} />
-      <Submit {...formProps} />
+      <Fields />
+      <Submit />
       {globalError !== null && (
         <span>
           {globalError}
