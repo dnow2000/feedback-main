@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 
-const CreateArticle = ({
+export default ({
   formidable: { creationUrl }
   history: { push }
 }) => {
@@ -21,5 +21,3 @@ const CreateArticle = ({
     </button>
   )
 }
-
-export default CreateArticle

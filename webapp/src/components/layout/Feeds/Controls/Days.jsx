@@ -10,7 +10,7 @@ export const trendingMaxDays = [
 ]
 
 
-const Days = ({
+const _ = ({
   selectedDays='1',
   onChange
 }) => {
@@ -37,9 +37,9 @@ const Days = ({
   )
 }
 
-Days.propTypes = {
+_.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedDays: PropTypes.string
 }
 
-export default Days
+export default _

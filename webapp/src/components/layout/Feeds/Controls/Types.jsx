@@ -3,12 +3,12 @@ import React, { useCallback } from 'react'
 
 
 export const options = [
-  { label: 'Article', value: 'article' },
   { label: 'Claim', value: 'claim' },
+  { label: 'Content', value: 'content' }
 ]
 
 
-const Types = ({
+const _ = ({
   selectedType='article',
   onChange
 }) => {
@@ -35,9 +35,9 @@ const Types = ({
   )
 }
 
-Types.propTypes = {
+_.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedType: PropTypes.string
 }
 
-export default Types
+export default _

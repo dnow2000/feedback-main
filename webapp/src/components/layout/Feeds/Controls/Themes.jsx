@@ -10,7 +10,7 @@ const trendingThemes = [
 ]
 
 
-const Themes = ({
+const _ = ({
   onChange,
   selectedTheme='all'
 }) => {
@@ -35,9 +35,9 @@ const Themes = ({
   )
 }
 
-Themes.propTypes = {
+_.propTypes = {
   onChange: PropTypes.func.isRequired,
   selectedTheme: PropTypes.string
 }
 
-export default Themes
+export default _
