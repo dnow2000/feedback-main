@@ -37,10 +37,9 @@ def upgrade():
                             sa.String(16)))
 
     for table_name in SCIENCE_FEEDBACK_TABLE_NAMES:
-        op.drop_column(table_name, 'scienceFeedbackId')
-        op.add_column(table_name,
-                      sa.Column('scienceFeedbackIdentifier',
-                                sa.String(32)))
+        op.alter_column(table_name,
+                        'scienceFeedbackId',
+                        new_column_name='scienceFeedbackIdentifier')
 
 
 def downgrade():
@@ -51,7 +50,6 @@ def downgrade():
     op.drop_column('content', 'buzzsumoIdentifier')
 
     for table_name in SCIENCE_FEEDBACK_TABLE_NAMES:
-        op.drop_column(table_name, 'scienceFeedbackIdentifier')
-        op.add_column(table_name,
-                      sa.Column('scienceFeedbackId',
-                                sa.String(32)))
+        op.alter_column(table_name,
+                        'scienceFeedbackIdentifier',
+                        new_column_name='scienceFeedbackId')
