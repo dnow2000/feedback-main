@@ -303,7 +303,7 @@ ALTER SEQUENCE public.activity_id_seq OWNED BY public.activity.id;
 
 CREATE TABLE public.appearance (
     id bigint NOT NULL,
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     "quotedClaimId" bigint,
     "quotedContentId" bigint,
     "quotingClaimId" bigint,
@@ -368,7 +368,7 @@ ALTER SEQUENCE public.author_content_id_seq OWNED BY public.author_content.id;
 
 CREATE TABLE public.claim (
     id bigint NOT NULL,
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     source json,
     text text
 );
@@ -401,7 +401,7 @@ CREATE TABLE public.content (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     "externalThumbUrl" character varying(220),
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     "facebookShares" bigint,
     "redditShares" bigint,
     "totalShares" bigint,
@@ -538,7 +538,7 @@ ALTER SEQUENCE public.image_id_seq OWNED BY public.image.id;
 
 CREATE TABLE public.medium (
     id bigint NOT NULL,
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     name character varying(256) NOT NULL,
     "organizationId" bigint,
     url character varying(300)
@@ -570,7 +570,7 @@ ALTER SEQUENCE public.medium_id_seq OWNED BY public.medium.id;
 
 CREATE TABLE public.organization (
     id bigint NOT NULL,
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     entity character varying(16),
     label character varying(64),
     description character varying(128),
@@ -605,7 +605,7 @@ CREATE TABLE public.review (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     rating double precision,
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     "claimId" bigint,
     comment text,
     "contentId" bigint,
@@ -799,7 +799,7 @@ CREATE TABLE public."user" (
     expertise text,
     "orcidId" character varying(220),
     title character varying(220),
-    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackId" character varying(32),
     "thumbCount" integer NOT NULL,
     "validationToken" character varying(27),
     email character varying(120) NOT NULL,
@@ -1727,4 +1727,3 @@ ALTER TABLE ONLY public.verdict_tag
 --
 -- PostgreSQL database dump complete
 --
-
