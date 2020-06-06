@@ -98,6 +98,16 @@
       &:last-child {
         border: 0;
       }
+
+      &.item-signout {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        .version {
+          color: $grey-dark;
+          font-size: $font-size-small;
+        }
+      }
     }
   }
 }

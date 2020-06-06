@@ -6,10 +6,12 @@ import { selectCurrentUser } from 'with-react-redux-login'
 
 import { closeMenu } from 'reducers/menu'
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
+import { VERSION } from 'utils/config'
 
 import Signout from './Signout'
 import UserAvatar from './UserAvatar'
 import { links } from '../utils'
+
 
 
 const otherMenuLinks = [
@@ -85,10 +87,13 @@ export default () => {
                 </div>
               )))}
           {currentUser && (
-            <div className="item">
+            <div className="item item-signout">
               <Signout>
                 Logout
               </Signout>
+              <div className="version">
+                {`v${VERSION}`}
+              </div>
             </div>
           )}
         </div>
