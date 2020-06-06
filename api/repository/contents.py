@@ -21,15 +21,19 @@ CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(
 
 
 def content_from_url(url, **kwargs):
+    content = Content.create_or_modify(
+        {'url': url},
+        search_by='url')
+
     trending = buzzsumo_trending_from_url(url, **kwargs)
     if trending:
-        return Content.create_or_modify(trending, search_by=trending['buzzsumoIdentifier'])
+        return content.modify(trending)
 
     newspaper = newspaper_from_url(url, **kwargs)
     if newspaper:
-        return Content(**newspaper)
+        return content.modify(newspaper)
 
-    return Content(url=url)
+    return content
 
 
 def get_contents_keywords_join_query(query):
@@ -60,9 +64,7 @@ def filter_contents_by_is_reviewable(query, is_reviewable):
 
 def sync_content(content):
     content = content_from_url(content.url)
-    print(as_dict(content))
     if not content.externalThumbUrl and content.thumbCount == 0:
-        print('capture...')
         thumb = capture(content.url)
         save_thumb(content, thumb, 0, convert=False)
     ApiHandler.save(content)
