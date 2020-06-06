@@ -6,14 +6,14 @@ from sqlalchemy_api_handler import ApiHandler
 from models.content import Content
 from models.content_tag import ContentTag
 from models.tag import Tag
-from repository.contents import get_contents_query_with_keywords, \
+from repository.contents import keep_contents_with_keywords, \
                                 get_contents_keywords_join_query
 from tests.utils.clean import with_clean_all_database
 
 
 def filter_contents_with_keywords(keywords):
     query = get_contents_keywords_join_query(Content.query)
-    query = get_contents_query_with_keywords(query, keywords)
+    query = keep_contents_with_keywords(query, keywords)
     return query
 
 

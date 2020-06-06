@@ -1,17 +1,17 @@
 from newspaper.article import ArticleException
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiErrors
+from sqlalchemy_api_handler import ApiErrors, as_dict
 
-from repository.contents import resolve_with_url
+from repository.contents import content_from_url
 
 
 @app.route('/scrap')
 def get_scrap():
     try:
-        content = resolve_with_url(request.args.get('url'))
+        content = content_from_url(request.args.get('url'))
     except ArticleException:
         api_errors = ApiErrors()
         api_errors.add_error('url', 'url is invalid')
         raise api_errors
 
-    return jsonify(content)
+    return jsonify(as_dict(content))

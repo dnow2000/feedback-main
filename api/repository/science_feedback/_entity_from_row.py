@@ -8,6 +8,7 @@ from models.content import Content
 from models.medium import Medium
 from models.organization import Organization
 from models.user import User
+from repository.contents import content_from_url
 from utils.config import APP_NAME, TLD
 from utils.random_token import create_random_password
 
@@ -17,10 +18,8 @@ def appearance_from_row(row):
     if not reviewed_items:
         return
 
-    quoting_content = Content.create_or_modify(
-        {'url': row['url']},
-        search_by=['url']
-    )
+    quoting_content = content_from_url(row['url'])
+
     medium_science_feedback_ids = row.get('Outlet')
     if medium_science_feedback_ids:
         medium = Medium.query.filter_by(

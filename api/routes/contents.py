@@ -7,10 +7,11 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    load_or_404
 
 from models.content import Content
-from repository.contents import filter_contents_by_is_reviewable, \
+from repository.contents import content_from_url, \
+                                filter_contents_by_is_reviewable, \
                                 get_contents_keywords_join_query, \
-                                get_contents_query_with_keywords, \
-                                resolve_with_url
+                                keep_contents_with_keywords, \
+                                keep_contents_with_minimal_datum
 from routes.utils.includes import CONTENT_INCLUDES
 from validation.contents import check_content_is_not_yet_saved
 from validation.roles import check_has_role
@@ -25,18 +26,18 @@ from utils.rest import expect_json_data, \
 def get_contents():
     query = Content.query
 
-    reviewable = request.args.get('reviewable')
+    query = keep_contents_with_minimal_datum(query)
 
+    reviewable = request.args.get('reviewable')
     if reviewable == 'true':
         query = filter_contents_by_is_reviewable(query, True)
     elif reviewable == 'false':
         query = filter_contents_by_is_reviewable(query, False)
 
-
     keywords = request.args.get('keywords')
     if keywords is not None:
         query = get_contents_keywords_join_query(query)
-        query = get_contents_query_with_keywords(query, keywords)
+        query = keep_contents_with_keywords(query, keywords)
 
     return listify(Content,
                    includes=CONTENT_INCLUDES,
@@ -60,22 +61,18 @@ def create_content():
 
     check_has_role(current_user, 'editor')
 
-    content = dict(
-        resolve_with_url(request.json['url']),
-        **request.json
-    )
+    content = content_from_url(request.json['url'])
+    content.modify(**request.json)
 
     check_content_is_not_yet_saved(content)
-
-    content = Content(**content)
 
     ApiHandler.save(content)
 
     # TODO: put it in a celery pipe
-    p = subprocess.Popen('PYTHONPATH="." python scripts/manager.py screenshotmachine'
-                         + ' --url ' + str(content.url) + ' --id ' + str(content.id),
-                         shell=True,
-                         cwd=API_ROOT_PATH)
+    subprocess.Popen('PYTHONPATH="." python scripts/manager.py screenshotmachine'
+                     + ' --url ' + str(content.url) + ' --id ' + str(content.id),
+                     shell=True,
+                     cwd=API_ROOT_PATH)
 
     return jsonify(as_dict(content, includes=CONTENT_INCLUDES)), 201
 
