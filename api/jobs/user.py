@@ -5,6 +5,7 @@ JOBS = [{
     'function': sync,
     'kwargs': {
         'id': 'user',
-        'minute': '*/60'
+        'hour': '*/1',
+        'minute': '1'
     }
 }]

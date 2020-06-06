@@ -1,7 +1,7 @@
 from flask import Flask
 from apscheduler.schedulers.blocking import BlockingScheduler
 
-from jobs import jobs
+from jobs import JOBS
 from utils.setup import setup
 
 
@@ -12,7 +12,7 @@ setup(FLASK_APP)
 if __name__ == '__main__':
     SCHEDULER = BlockingScheduler()
 
-    for job in jobs:
+    for job in JOBS:
         SCHEDULER.add_job(
             job['function'],
             'cron',
