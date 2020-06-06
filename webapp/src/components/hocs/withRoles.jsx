@@ -5,6 +5,7 @@ import { useFormidable } from 'with-react-formidable'
 
 import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
+
 export default (config = {
   accessRoleTypes: [],
   creationRoleTypes: [],
