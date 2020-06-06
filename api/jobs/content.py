@@ -14,23 +14,23 @@ def create_clock_sync_contents(from_date_minutes, to_date_minutes):
 
 # everything in minutes
 CLOCK_SYNC_CONTENT_CONFIGS = [
-    # contents inserted since 1.7h - 0, do it every 10 minutes
+    # contents inserted since 1.7h - 0, do it every 20 minutes
     {
         'from_date': 100,
         'to_date': 0,
-        'frequency': {'minute': '*/10'}
+        'frequency': {'minute': '*/20'}
     },
-    # contents inserted since 17h - 1.7h, do it every hours
+    # contents inserted since 17h - 1.7h, do it every 2 hours
     {
         'from_date': 1000,
         'to_date': 100,
-        'frequency': {'hour': '*/1', 'minute': '1'}
+        'frequency': {'hour': '*/2', 'minute': '1'}
     },
-    # contents inserted since 7days - 17h, do it every days
+    # contents inserted since 7days - 17h, do it every 7 days
     {
         'from_date': 10000,
         'to_date': 1000,
-        'frequency': {'day': '*/1', 'hour': '0', 'minute': '1'}
+        'frequency': {'day': '*/7', 'hour': '0', 'minute': '1'}
     },
     # contents inserted since 70days - 7days, do it every 2 monthes
     {
