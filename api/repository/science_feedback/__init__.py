@@ -44,4 +44,5 @@ def sync_for(name, max_records=None):
 
 def sync(max_records=None):
     for name in NAME_TO_AIRTABLE:
+        print(name)
         sync_for(name, max_records=max_records)

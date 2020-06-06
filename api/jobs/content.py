@@ -52,9 +52,8 @@ for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     from_date = clock_sync_content_config['from_date']
     to_date = clock_sync_content_config['to_date']
     JOBS.append({
-        'function': create_clock_sync_contents(from_date, to_date),
-        'kwargs': {
-            'id': 'contents {} {}'.format(from_date, to_date),
-            **clock_sync_content_config['frequency']
-        }
+        'func': create_clock_sync_contents(from_date, to_date),
+        'id': 'contents {} {}'.format(from_date, to_date),
+        'trigger': 'cron',
+        **clock_sync_content_config['frequency']
     })

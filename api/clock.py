@@ -13,10 +13,6 @@ if __name__ == '__main__':
     SCHEDULER = BlockingScheduler()
 
     for job in JOBS:
-        SCHEDULER.add_job(
-            job['function'],
-            'cron',
-            **job['kwargs']
-        )
+        SCHEDULER.add_job(**job)
 
     SCHEDULER.start()

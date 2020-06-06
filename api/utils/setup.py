@@ -31,6 +31,7 @@ def setup(flask_app,
         flask_app.config['DEBUG'] = True
 
     db.init_app(flask_app)
+    db.app = flask_app
     ApiHandler.set_db(db)
 
     @flask_app.teardown_request

@@ -81,7 +81,7 @@ def author_from_row(row):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by=['scienceFeedbackIdentifier'])
+    user = User.create_or_modify(user_dict, search_by=['email'])
     if not user.id:
         user.set_password(create_random_password())
 
@@ -186,7 +186,7 @@ def reviewer_from_row(row):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by=['scienceFeedbackIdentifier'])
+    user = User.create_or_modify(user_dict, search_by=['email'])
     if not user.id:
         user.set_password(create_random_password())
 
