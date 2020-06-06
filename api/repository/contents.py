@@ -23,6 +23,8 @@ CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(
 def resolve_with_url(url, **kwargs):
     trending = buzzsumo_trending_from_url(url, **kwargs)
 
+
+
     if trending:
         content = Content.query\
                          .filter_by(buzzsumoIdentifier=trending['buzzsumoIdentifier'])\
@@ -35,9 +37,21 @@ def resolve_with_url(url, **kwargs):
         newspaper = {}
 
     if trending is None:
-        content = {}
+        trending = {}
 
     return dict(newspaper, **trending)
+
+
+def content_from_url(url, **kwargs):
+    trending = buzzsumo_trending_from_url(url, **kwargs)
+    if trending:
+        return Content.create_or_modify(trending, search_by=trending['buzzsumoIdentifier'])
+
+    newspaper = newspaper_from_url(url, **kwargs)
+    if newspaper:
+        return Content(**newspaper)
+
+    return Content(url=url)
 
 
 def get_contents_keywords_join_query(query):

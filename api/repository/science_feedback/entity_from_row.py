@@ -18,33 +18,45 @@ def appearance_from_row(row):
         return
 
     quoting_content_dict = {'url': row['url']}
-    quoting_content = Content.create_or_modify(quoting_content_dict, search_by=['url'])
+
+    
+
+
+    quoting_content = Content.create_or_modify(
+        quoting_content_dict,
+        search_by=['url']
+    )
     medium_science_feedback_ids = row.get('Outlet')
     if medium_science_feedback_ids:
-        medium = Medium.query.filter_by(scienceFeedbackIdentifier=medium_science_feedback_ids[0]).first()
+        medium = Medium.query.filter_by(
+            scienceFeedbackIdentifier=medium_science_feedback_ids[0]).first()
         quoting_content.mediumId = medium.id
 
     author_science_feedback_ids = row.get('Authors')
     if author_science_feedback_ids:
         for author_science_feedback_id in author_science_feedback_ids:
-            author = User.query.filter_by(scienceFeedbackIdentifier=author_science_feedback_id).first()
+            author = User.query.filter_by(
+                scienceFeedbackIdentifier=author_science_feedback_id).first()
             author_content = AuthorContent.create_or_modify({
                 'authorId': humanize(author.id),
                 'contentId': humanize(quoting_content.id)
             }, search_by=['authorId', 'contentId'])
             quoting_content.authorContents = quoting_content.authorContents + [author_content]
 
-    quoted_claim = Claim.query.filter_by(scienceFeedbackIdentifier=reviewed_items[0]).first()
+    quoted_claim = Claim.query.filter_by(
+        scienceFeedbackIdentifier=reviewed_items[0]).first()
     quoted_content = None
     if not quoted_claim:
-        quoted_content = Content.query.filter_by(scienceFeedbackIdentifier=reviewed_items[0]).first()
+        quoted_content = Content.query.filter_by(
+            scienceFeedbackIdentifier=reviewed_items[0]).first()
     if not quoted_claim and not quoted_content:
         return
 
     testifier_science_feedback_ids = row.get('Verified by')
     if not testifier_science_feedback_ids:
         return
-    testifier = User.query.filter_by(scienceFeedbackIdentifier=testifier_science_feedback_ids[0]).first()
+    testifier = User.query.filter_by(
+        scienceFeedbackIdentifier=testifier_science_feedback_ids[0]).first()
     if not testifier:
         return
 
@@ -129,11 +141,13 @@ def review_from_row(row):
     science_feedback_reviewer_ids = row.get('Review editor(s)')
     if not science_feedback_reviewer_ids:
         return
-    reviewer = User.query.filter_by(scienceFeedbackIdentifier=science_feedback_reviewer_ids[0]).first()
+    reviewer = User.query.filter_by(
+        scienceFeedbackIdentifier=science_feedback_reviewer_ids[0]).first()
     if not reviewer:
         return
 
-    claim = Claim.query.filter_by(scienceFeedbackIdentifier=row['Items reviewed'][0]).first()
+    claim = Claim.query.filter_by(
+        scienceFeedbackIdentifier=row['Items reviewed'][0]).first()
     if not claim:
         return
 

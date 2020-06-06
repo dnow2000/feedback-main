@@ -15,4 +15,5 @@ def newspaper_from_url(url: str, **kwargs):
         'summary': newspaper.summary,
         'tags': ' '.join(newspaper.keywords),
         'title': newspaper.title,
+        'url': url
     }
