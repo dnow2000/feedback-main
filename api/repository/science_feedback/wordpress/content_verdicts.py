@@ -1,32 +1,16 @@
-from sqlalchemy_api_handler import humanize, logger
+from sqlalchemy_api_handler import humanize
 
-from domain.climate_feedback.feedbacks import scrap_feedbacks, reviewer_from_url
-from domain.climate_feedback.reviewers import scrap_reviewers
-from models.author_content import AuthorContent
+from domain.science_feedback.wordpress.feedbacks import scrap_feedbacks
+from domain.science_feedback.wordpress.reviewers import reviewer_from_url                                                    reviewer_from_url
+from models.user import User
 from models.review import Review
 from models.role import Role
-from models.user import User
 from models.verdict import Verdict
 from models.verdict_user import VerdictUser
 from repository.contents import content_from_url
 
 
-def users_from_scrap(users_max=3):
-    reviewers = scrap_reviewers(reviewers_max=users_max)
-    users = []
-    for reviewer in reviewers:
-        user = User.create_or_modify(reviewer, search_by=['firstName', 'lastName'])
-        for publication in reviewer['publications']:
-            content = content_from_url(publication['url'])
-            content.tags = 'isValidatedAsPeerPublication'
-            author_content = AuthorContent.create_or_modify({
-                'authorId': humanize(user.id),
-                'contentId': humanize(content.id)
-            }, search_by=['authorId', 'contentId'])
-            user.authorContents = user.authorContents + [author_content]
-    return users
-
-def verdicts_from_scrap(verdicts_max=3):
+def content_verdicts_from_scrap(verdicts_max=3):
     feedbacks = scrap_feedbacks(feedbacks_max=verdicts_max)
     verdicts = []
     for feedback in feedbacks:

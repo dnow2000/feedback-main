@@ -41,7 +41,7 @@ class Verdict(ApiHandler,
 
     editor = relationship('User',
                           foreign_keys=[editorId],
-                          backref='verdics')
+                          backref='verdicts')
 
     @property
     def reviews(self):

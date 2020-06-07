@@ -17,9 +17,9 @@ class VerdictReviewer(ApiHandler,
                            backref=backref('verdictReviewers'))
 
     reviewerId = Column(BigInteger(),
-                            ForeignKey('user.id'),
-                            primary_key=True)
+                        ForeignKey('user.id'),
+                        primary_key=True)
 
     reviewer = relationship('User',
-                                foreign_keys=[reviewerId],
-                                backref=backref('verdictReviewers'))
+                            foreign_keys=[reviewerId],
+                            backref=backref('verdictReviewers'))

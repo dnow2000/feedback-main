@@ -3,7 +3,6 @@ import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useHistory, useLocation } from 'react-router-dom'
 import { deleteData } from 'redux-thunk-data'
-import { useQuery } from 'with-react-query'
 
 import Days from './Days'
 import KeywordsBar from './KeywordsBar'
@@ -18,48 +17,45 @@ export const getItemsActivityTagFromConfig = config =>
 export default ({ config }) => {
   const dispatch = useDispatch()
   const history = useHistory()
-  const location = useLocation()
-  const {
-    getSearchFromUpdate,
-    params: { days, keywords, theme, type }
-  } = useQuery(location.search)
+  const { pathname, search } = useLocation()
+  const url = useMemo(() =>
+    new URL(`${ROOT_PATH}${pathname}${search}`), [pathname, search])
 
   const handleChange =  useCallback((key, value) => {
-    const isEmptyValue =
-      typeof value === 'undefined' ||
-      value === ''
-    const nextValue = isEmptyValue
-      ? null
-      : value
-    history.push(getSearchFromUpdate({ [key]: nextValue }))
+    const isEmptyValue = typeof value === 'undefined' || value === ''
+    const nextValue = isEmptyValue ? null : value
+    url.searchParams.set(key, nextValue)
+    if (url.search === search) return
     dispatch(deleteData(null, { tags: [getItemsActivityTagFromConfig(config)] }))
-  }, [config, dispatch, getSearchFromUpdate, history])
+    setTimeout(() => history.push(`${url.pathname}${url.search}`))
+  }, [config, dispatch, history, search, url])
 
 
   useEffect(() => {
     if (type) return
-    history.push(getSearchFromUpdate({ type: 'content' }))
-  }, [getSearchFromUpdate, history, type])
+    url.searchParams.set('type', 'content')
+    history.push(`${url.pathname}${url.search}`)
+  }, [history, type, url])
 
 
   return (
     <div className="controls">
       <Themes
         onChange={handleChange}
-        selectedTheme={theme}
+        selectedTheme={url.searchParams.get('theme')}
       />
       <div className="right">
         {!location.pathname.startsWith('/verdicts') && (<Types
           onChange={handleChange}
-          selectedType={type}
+          selectedType={url.searchParams.get('type')}
         />)}
         <Days
           onChange={handleChange}
-          selectedDays={days}
+          selectedDays={url.searchParams.get('days')}
         />
         <KeywordsBar
           onChange={handleChange}
-          selectedKeywords={keywords}
+          selectedKeywords={url.searchParams.get('keywords')}
         />
       </div>
     </div>
