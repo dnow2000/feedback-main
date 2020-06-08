@@ -8,6 +8,7 @@ from models.content import Content
 from models.medium import Medium
 from models.organization import Organization
 from models.user import User
+from models.verdict import Verdict
 from utils.config import APP_NAME, TLD
 from utils.random_token import create_random_password
 
@@ -18,7 +19,7 @@ def appearance_from_row(row):
         return
 
     quoting_content = Content.create_or_modify(
-        {'url': row['url']},
+        {'url': row['url'].strip()},
         search_by=['url']
     )
     medium_science_feedback_ids = row.get('Outlet')
@@ -63,7 +64,7 @@ def appearance_from_row(row):
         'testifier': testifier
     }
 
-    return Appearance.create_or_modify(appearance_dict, search_by=['scienceFeedbackIdentifier'])
+    return Appearance.create_or_modify(appearance_dict, search_by='scienceFeedbackIdentifier')
 
 
 def author_from_row(row):
@@ -98,7 +99,7 @@ def claim_from_row(row):
         'text': text
     }
 
-    return Claim.create_or_modify(claim_dict, search_by=['scienceFeedbackIdentifier'])
+    return Claim.create_or_modify(claim_dict, search_by='scienceFeedbackIdentifier')
 
 
 def editor_from_row(row):
@@ -116,7 +117,7 @@ def editor_from_row(row):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by=['email'])
+    user = User.create_or_modify(user_dict, search_by='email')
     if not user.id:
         user.set_password(create_random_password())
 
@@ -129,7 +130,7 @@ def outlet_from_row(row):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    return Medium.create_or_modify(medium_dict, search_by=['scienceFeedbackIdentifier'])
+    return Medium.create_or_modify(medium_dict, search_by='scienceFeedbackIdentifier')
 
 
 def review_from_row(row):
@@ -152,14 +153,25 @@ def review_from_row(row):
         'reviewer': reviewer
     }
 
-    return Review.create_or_modify(review_dict, search_by=['scienceFeedbackIdentifier'])
+    return Review.create_or_modify(review_dict, search_by='scienceFeedbackIdentifier')
+
+
+def reviewer_from_row(row):
+    user_dict = {
+        'email': row['Email'],
+        'firstName': row['First name'],
+        'lastName': row['Last name'],
+        'scienceFeedbackIdentifier': row['airtableId']
+    }
+
+    user = User.create_or_modify(user_dict, search_by='email')
+    if not user.id:
+        user.set_password(create_random_password())
+
+    return user
 
 
 def social_from_row(row):
-
-    if 'url' not in row:
-        return
-
     organization_name = row['url'].replace('https://www.', '') \
                                   .split('/')[0] \
                                   .split('.')[0] \
@@ -175,19 +187,27 @@ def social_from_row(row):
         'url': row['url']
     }
 
-    return Medium.create_or_modify(medium_dict, search_by=['scienceFeedbackIdentifier'])
+    return Medium.create_or_modify(medium_dict, search_by='scienceFeedbackIdentifier')
 
 
-def reviewer_from_row(row):
-    user_dict = {
-        'email': row['Email'],
-        'firstName': row['First name'],
-        'lastName': row['Last name'],
-        'scienceFeedbackIdentifier': row['airtableId']
+def verdict_from_row(row):
+    science_feedback_editor_ids = row.get('Review editor(s)')
+    if not science_feedback_editor_ids:
+        return
+    editor = User.query.filter_by(scienceFeedbackIdentifier=science_feedback_editor_ids[0]).first()
+    if not editor:
+        return
+
+    claim = Claim.query.filter_by(scienceFeedbackIdentifier=row['Items reviewed'][0]).first()
+    if not claim:
+        return
+
+    verdict_dict = {
+        'claim': claim,
+        'editor': editor,
+        'scienceFeedbackIdentifier': row['airtableId'],
+        'scienceFeedbackUrl': row['Review url'],
+        'title': row['Review headline']
     }
 
-    user = User.create_or_modify(user_dict, search_by=['email'])
-    if not user.id:
-        user.set_password(create_random_password())
-
-    return user
+    return Verdict.create_or_modify(verdict_dict, search_by='scienceFeedbackIdentifier')

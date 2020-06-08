@@ -13,13 +13,13 @@ class VerdictTag(ApiHandler,
                        primary_key=True)
 
     verdict = relationship('Verdict',
-                           foreign_keys=[verdictId],
-                           backref=backref("verdictTags"))
+                           backref=backref('verdictTags'),
+                           foreign_keys=[verdictId])
 
     tagId = Column(BigInteger(),
                    ForeignKey('tag.id'),
                    primary_key=True)
 
     tag = relationship('Tag',
-                       foreign_keys=[tagId],
-                       backref=backref("verdictTags"))
+                       backref=backref('verdictTags'),
+                       foreign_keys=[tagId])
