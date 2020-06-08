@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
+import Feeds from 'components/layout/Feeds'
 import Header from 'components/layout/Header'
-import Feeds from 'components/layout/Feeds/Feeds'
 import Main from 'components/layout/Main'
 
 import TrendingItem from './TrendingItem'

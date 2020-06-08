@@ -4,7 +4,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 
-import Feeds from 'components/layout/Feeds/Feeds'
+import Feeds from 'components/layout/Feeds'
 import Icon from 'components/layout/Icon'
 import ReviewItem from 'components/layout/ReviewItem'
 import UserItem from 'components/layout/UserItem'

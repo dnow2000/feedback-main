@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import Feeds from 'components/layout/Feeds/Feeds'
+import Feeds from 'components/layout/Feeds'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import ReviewItem from 'components/layout/ReviewItem'
