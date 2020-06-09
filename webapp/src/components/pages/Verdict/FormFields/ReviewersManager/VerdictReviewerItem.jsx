@@ -78,9 +78,13 @@ export default ({ user }) => {
             </div>
             <div className="flex-start items-center">
               {
-                tags.map(({ text }) => (
-                  <Dotdotdot className="tag fs12" clamp={60} key={text}>
-                    #{text}
+                tags.map(({ id, label }) => (
+                  <Dotdotdot
+                    className="tag fs12"
+                    clamp={60}
+                    key={id}
+                  >
+                    #{label}
                   </Dotdotdot>
                 ))
               }

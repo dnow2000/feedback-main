@@ -14,7 +14,6 @@ def import_models(with_creation=False):
     from models.claim import Claim
     from models.content import Content
     from models.content_tag import ContentTag
-    from models.evaluation import Evaluation
     from models.image import Image
     from models.medium import Medium
     from models.organization import Organization

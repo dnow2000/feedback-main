@@ -3,7 +3,6 @@ from sqlalchemy_api_handler import logger
 from sandboxes.scripts.creators.ci.create_appearances import *
 from sandboxes.scripts.creators.ci.create_author_contents import *
 from sandboxes.scripts.creators.ci.create_claims import *
-from sandboxes.scripts.creators.ci.create_evaluations import *
 from sandboxes.scripts.creators.ci.create_tags import *
 from sandboxes.scripts.creators.ci.create_review_tags import *
 from sandboxes.scripts.creators.ci.create_reviews import *
@@ -30,7 +29,6 @@ def create_sandbox(with_capture=False):
     create_content_tags()
     create_author_contents()
     create_appearances()
-    create_evaluations()
     create_reviews()
     create_review_tags()
     create_verdicts()

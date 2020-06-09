@@ -6,14 +6,14 @@ from sandboxes.scripts.creators.ci import create_contents,\
                                           create_roles, \
                                           create_users
 from sandboxes.scripts.utils.helpers import get_sandbox_role_email
-from tests.utils.clean import with_clean_all_database
+from tests.utils.clean import with_clean
 from tests.utils.TestClient import TestClient
 from utils.logger import deactivate_logger
 
 
 class Get:
     class Returns200:
-        @with_clean_all_database
+        @with_clean
         def when_get_reviews_should_work_only_when_editor(self, app):
             create_users()
             create_roles()
@@ -26,7 +26,7 @@ class Get:
                 .get('/reviews')
             assert result.status_code == 200
 
-        @with_clean_all_database
+        @with_clean
         def when_get_reviews_should_return_a_list_of_reviews(self, app):
             deactivate_logger('info')
             create_users()
@@ -42,7 +42,7 @@ class Get:
             assert len(reviews) == 3
 
     class Returns400:
-        @with_clean_all_database
+        @with_clean
         def test_get_reviews_should_work_only_when_editor(self, app):
             create_users()
             create_roles()

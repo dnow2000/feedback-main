@@ -3,7 +3,7 @@ from pprint import pprint
 import traceback
 from flask import current_app as app
 
-from repository.clean import clean_all_database
+from repository.clean import clean as clean_database
 
 
 @app.manager.option('-t',
@@ -13,7 +13,7 @@ from repository.clean import clean_all_database
 def clean(target):
     try:
         if target == "database":
-            clean_all_database()
+            clean_database()
     except Exception as e:
         print('ERROR: ' + str(e))
         traceback.print_tb(e.__traceback__)

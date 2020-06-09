@@ -1,5 +1,5 @@
 import os
-from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler import ApiHandler, logger
 
 import repository.science_feedback.airtable.entity_from_row as entity_from_row
 from utils.airtable import request_airtable_rows
@@ -16,7 +16,7 @@ NAME_TO_AIRTABLE = {
     'social': 'Social Media Influent.',
     'outlet': 'Outlets',
     'appearance': 'Appearances',
-    'review': 'Reviews / Fact-checks',
+    'verdict': 'Reviews / Fact-checks',
 }
 
 
@@ -43,6 +43,7 @@ def sync_for(name, max_records=None):
 
 
 def sync(max_records=None):
-    for name in NAME_TO_AIRTABLE:
-        print(name)
+    logger.info('sync science feedback airtable data...')
+    for name in NAME_TO_AIRTABLE.keys():
         sync_for(name, max_records=max_records)
+    logger.info('sync science feedback airtable data...Done.')

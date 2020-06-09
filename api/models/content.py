@@ -63,7 +63,7 @@ class Content(ApiHandler,
 
     type = Enum(ContentType)
 
-    url = Column(String(300), nullable=False, unique=True)
+    url = Column(String(512), nullable=False, unique=True)
 
     def get_score(self):
         amount = 0

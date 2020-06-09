@@ -11,15 +11,15 @@ def create_user_tags():
 
     user_tags = []
 
-    user = User.query.filter_by(email="{}test.reviewer0@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
-    tag = Tag.query.filter_by(text="coral").one()
+    user = User.query.filter_by(email='{}test.reviewer0@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)).one()
+    tag = Tag.query.filter_by(label='Coral').one()
     user_tags.append(UserTag(
         user=user,
         tag=tag
     ))
 
-    user = User.query.filter_by(email="{}test.reviewer2@{}.{}".format(COMMAND_NAME, APP_NAME, TLD)).one()
-    tag = Tag.query.filter_by(text="immunology").one()
+    user = User.query.filter_by(email='{}test.reviewer2@{}.{}'.format(COMMAND_NAME, APP_NAME, TLD)).one()
+    tag = Tag.query.filter_by(label='Immunology').one()
     user_tags.append(UserTag(
         user=user,
         tag=tag

@@ -8,7 +8,7 @@ from models.content_tag import ContentTag
 from models.tag import Tag
 from repository.contents import keep_contents_with_keywords, \
                                 get_contents_keywords_join_query
-from tests.utils.clean import with_clean_all_database
+from tests.utils.clean import with_clean
 
 
 def filter_contents_with_keywords(keywords):
@@ -18,7 +18,7 @@ def filter_contents_with_keywords(keywords):
 
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_get_contents_with_one_complete_keyword_returns_result(app):
     # given
     content1 = Content(
@@ -46,7 +46,7 @@ def when_get_contents_with_one_complete_keyword_returns_result(app):
     assert content1 in contents
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_get_contents_with_one_truncated_keyword_returns_result(app):
     # given
     content1 = Content(
@@ -74,7 +74,7 @@ def when_get_contents_with_one_truncated_keyword_returns_result(app):
     assert content1 in contents
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_get_contents_with_one_close_around_keyword_returns_result(app):
     # given
     content1 = Content(
@@ -102,7 +102,7 @@ def when_get_contents_with_one_close_around_keyword_returns_result(app):
     assert content1 in contents
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_get_contents_with_one_far_around_keyword_returns_no_result(app):
     # given
     content1 = Content(
@@ -129,7 +129,7 @@ def when_get_contents_with_one_far_around_keyword_returns_no_result(app):
     assert len(contents) == 0
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_get_contents_with_several_around_keywords_returns_result(app):
     # given
     content1 = Content(
@@ -157,7 +157,7 @@ def when_get_contents_with_several_around_keywords_returns_result(app):
     assert content1 in contents
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_get_contents_with_keyword_tag_returns_result(app):
     # given
     content1 = Content(

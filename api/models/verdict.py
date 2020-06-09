@@ -8,13 +8,15 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 from sqlalchemy.orm.collections import InstrumentedList
 from utils.db import get_model_with_table_name, Model
-from models.mixins import HasRatingMixin
+from models.mixins import HasRatingMixin, \
+                          HasScienceFeedbackMixin
 
 
 class Verdict(ApiHandler,
               Model,
               HasRatingMixin,
-              SoftDeletableMixin):
+              SoftDeletableMixin,
+              HasScienceFeedbackMixin):
 
     comment = Column(Text(), nullable=True)
 

@@ -19,7 +19,9 @@ export default createCachedSelector(
       if (tag2.positivity !== tag1.positivity) {
         return tag2.positivity - tag1.positivity
       }
-      return tag1.text > tag2.text
+      return tag1.label > tag2.label
+        ? 1
+        : -1
     })
     return filteredTags
 })(mapArgsToCacheKey)

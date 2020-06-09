@@ -1,12 +1,12 @@
 from functools import wraps
 
-from repository.clean import clean_all_database
+from repository.clean import clean
 
 
-def with_clean_all_database(f):
+def with_clean(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        clean_all_database()
+        clean()
         return f(*args, **kwargs)
 
     return decorated_function

@@ -36,14 +36,6 @@ class Review(ApiHandler,
                            backref='reviews',
                            foreign_keys=[contentId])
 
-    evaluationId = Column(BigInteger(),
-                          ForeignKey('evaluation.id'),
-                          index=True)
-
-    evaluation = relationship('Evaluation',
-                              foreign_keys=[evaluationId],
-                              backref='reviews')
-
     reviewerId = Column(BigInteger(),
                         ForeignKey('user.id'),
                         nullable=False,

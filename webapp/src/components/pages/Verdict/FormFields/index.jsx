@@ -48,7 +48,7 @@ export default () => {
     CHECKBOXES_TAGS_NAME,
     tags,
     CHECKBOXES_TAGS_PLACEHOLDER,
-    'text'
+    'label'
   )
 
 

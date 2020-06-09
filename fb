@@ -169,7 +169,7 @@ elif [[ "$CMD" == "bash" ]]; then
 
 # Clean all type of data
 elif [[ "$CMD" == "clean" ]]; then
-  TARGET=$1
+  TARGET=${1:-database}
   if [[ "$TARGET" == "storage" ]]; then
     RUN='cd $ROOT_PATH;
          sudo rm -rf api/static/object_store_data;'

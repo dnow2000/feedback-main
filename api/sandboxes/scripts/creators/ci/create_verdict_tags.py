@@ -19,11 +19,17 @@ def create_verdict_tags():
         content=content,
         editor=editor
     ).one()
-    tag = Tag.query.filter_by(text='inaccurate').one()
+    conclusion_tag = Tag.query.filter_by(label='Inaccurate', type='conclusion').one()
     verdict_tags.append(VerdictTag(
         verdict=verdict,
-        tag=tag
+        tag=conclusion_tag
     ))
+    evaluation_tag = Tag.query.filter_by(type='evaluation', value=-1).one()
+    verdict_tags.append(VerdictTag(
+        verdict=verdict,
+        tag=evaluation_tag
+    ))
+
 
     ApiHandler.save(*verdict_tags)
 

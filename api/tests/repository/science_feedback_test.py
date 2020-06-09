@@ -9,11 +9,11 @@ from models.content import Content
 from models.review import Review
 from models.user import User
 from repository.science_feedback import sync
-from tests.utils.clean import with_clean_all_database
+from tests.utils.clean import with_clean
 
 
 @pytest.mark.standalone
-@with_clean_all_database
+@with_clean
 def when_sync_is_a_success(app):
     # when
     sync()

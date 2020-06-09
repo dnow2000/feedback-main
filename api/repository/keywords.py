@@ -42,7 +42,7 @@ def import_keywords():
     )
 
     Tag.__ts_vector__ = create_tsvector(
-        cast(coalesce(Tag.text, ''), TEXT),
+        cast(coalesce(Tag.label, ''), TEXT),
     )
     Tag.__table_args__ = (
         Index(

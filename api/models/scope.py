@@ -11,10 +11,11 @@ from utils.db import Model
 
 
 class ScopeType(enum.Enum):
-    article = "article"
-    review = "review"
-    user = "user"
-    verdict = "verdict"
+    claim = 'claim'
+    content = 'content'
+    review = 'review'
+    user = 'user'
+    verdict = 'verdict'
 
 
 class Scope(ApiHandler,
@@ -29,5 +30,4 @@ class Scope(ApiHandler,
                        foreign_keys=[tagId],
                        backref='scopes')
 
-    type = Column(Enum(ScopeType),
-                  nullable=True)
+    type = Column(Enum(ScopeType))
