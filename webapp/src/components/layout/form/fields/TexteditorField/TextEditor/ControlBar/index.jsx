@@ -3,7 +3,8 @@ import React from 'react'
 
 import ImageAddButtonContainer from './ImageAddButton/ImageAddButtonContainer'
 
-export const ControlBar = ({
+
+const _ = ({
   getEditorState,
   setEditorState
 }) => (
@@ -19,9 +20,9 @@ export const ControlBar = ({
   </div>
 )
 
-ControlBar.propTypes = {
+_.propTypes = {
   getEditorState: PropTypes.func.isRequired,
   setEditorState: PropTypes.func.isRequired
 }
 
-export default ControlBar
+export default _

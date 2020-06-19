@@ -13,7 +13,7 @@ import {
 import FieldError from '../FieldError'
 
 
-class CheckboxField extends PureComponent {
+class _ extends PureComponent {
 
   renderField = ({ input, meta }) => {
     const {
@@ -74,7 +74,8 @@ class CheckboxField extends PureComponent {
   }
 }
 
-CheckboxField.defaultProps = {
+
+_.defaultProps = {
   autoComplete: false,
   className: '',
   disabled: false,
@@ -90,7 +91,7 @@ CheckboxField.defaultProps = {
   validate: null,
 }
 
-CheckboxField.propTypes = {
+_.propTypes = {
   autoComplete: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -107,4 +108,4 @@ CheckboxField.propTypes = {
   validate: PropTypes.func,
 }
 
-export default CheckboxField
+export default _

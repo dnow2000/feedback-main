@@ -21,13 +21,16 @@ const _ = ({ name, validator }) => (
   />
 )
 
+
 _.defaultProps = {
   validator: noop,
 }
+
 
 _.propTypes = {
   name: PropTypes.string.isRequired,
   validator: PropTypes.func,
 }
+
 
 export default _

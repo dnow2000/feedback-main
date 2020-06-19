@@ -14,7 +14,7 @@ import {
 import FieldError from '../FieldError'
 
 
-const TextareaField = ({
+const _ = ({
   autoComplete,
   className,
   disabled,
@@ -79,7 +79,7 @@ const TextareaField = ({
   />
 )
 
-TextareaField.defaultProps = {
+_.defaultProps = {
   autoComplete: false,
   className: '',
   disabled: false,
@@ -93,7 +93,7 @@ TextareaField.defaultProps = {
   validating: false,
 }
 
-TextareaField.propTypes = {
+_.propTypes = {
   autoComplete: PropTypes.bool,
   className: PropTypes.string,
   disabled: PropTypes.bool,
@@ -108,4 +108,4 @@ TextareaField.propTypes = {
   validating: PropTypes.bool,
 }
 
-export default TextareaField
+export default _
