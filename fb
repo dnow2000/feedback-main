@@ -307,6 +307,11 @@ elif [[ "$CMD" == "tag" ]]; then
   if [[ "$TAG" != "not-set" ]]; then
     TAG_VERSION="v$TAG"
 
+    if $(git tag --list | grep -q $TAG_VERSION); then
+      echo "$TAG already exists."
+      exit
+    fi
+
     cd "$ROOT_PATH"/api
     echo "$TAG_VERSION" > version.txt
 

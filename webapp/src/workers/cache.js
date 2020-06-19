@@ -68,14 +68,15 @@ function registerValidSW(swUrl, config) {
               // but the previous service worker will still serve the older
               // content until all client tabs are closed.
               console.log(
-                'New content is available and will be used when all ' +
-                  'tabs for this page are closed. See https://bit.ly/CRA-PWA.'
+                'The application has been updated. It is now going to be relaunched with the last version.'
               )
-
               // Execute callback
               if (config && config.onUpdate) {
                 config.onUpdate(registration)
               }
+              const keys = await window.caches.keys()
+              await Promise.all(keys.map(key => window.caches.delete(key)))
+              window.location.reload(true)
             } else {
               // At this point, everything has been precached.
               // It's the perfect time to display a
