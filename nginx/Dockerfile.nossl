@@ -9,3 +9,4 @@ COPY conf.d /etc/nginx/conf.d
 
 COPY templates/nossl.conf.template /etc/nginx/templates/nossl.conf.template
 RUN export MODE=$MODE && envsubst '\$MODE' < /etc/nginx/templates/nossl.conf.template > /etc/nginx/conf.d/nossl.conf
+RUN rm -f /etc/nginx/templates/nossl.conf.template
