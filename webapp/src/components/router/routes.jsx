@@ -8,6 +8,7 @@ import withRoles from 'components/hocs/withRoles'
 import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
+import Covid from 'components/pages/Covid'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
@@ -29,6 +30,12 @@ export default [
     exact: true,
     path: '/',
     render: () => <Redirect to="/landing" />,
+  },
+  {
+    component: Covid,
+    exact: true,
+    path: '/covid',
+    title: 'Covid'
   },
   {
     component: withRequiredLogin(Account),

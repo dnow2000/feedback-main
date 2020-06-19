@@ -11,7 +11,7 @@ import VerdictItem from 'components/layout/VerdictItem'
 import { APP_NAME, ROOT_ASSETS_PATH } from 'utils/config'
 
 
-const Landing = () => {
+export default () => {
   const dispatch = useDispatch()
 
   const verdicts = useSelector(state => state.data.verdicts)
@@ -87,42 +87,73 @@ const Landing = () => {
 
         <section className="footer">
           <div className="container is-footer">
+
             <div className="logo-container">
               <img src={`${ROOT_ASSETS_PATH}/logo_footer.png`} className="image" alt="Community" />
             </div>
+
             <div className="links-container-big">
               <p className="h3">Community</p>
-              <NavLink className="link" to="/">
-                Climate reviewers
-              </NavLink>
-              <NavLink className="link" to="/">
-                Health reviewers
-              </NavLink>
-              <NavLink className="link" to="/signup">
+              <a
+                className="link"
+                href="https://climatefeedback.org/community/"
+                rel="noopener noreferrer"
+                target="_blank">
+                Climate Reviewers
+              </a>
+              <a
+                className="link"
+                href="https://healthfeedback.org/community/"
+                rel="noopener noreferrer"
+                target="_blank">
+                Health Reviewers
+              </a>
+              <a
+                className="link"
+                href="https://sciencefeedback.co/for-scientists/"
+                rel="noopener noreferrer"
+                target="_blank">
                 Apply to become a reviewer
-              </NavLink>
+              </a>
             </div>
+
             <div className="links-container-big">
               <p className="h3">Organization</p>
-              <NavLink className="link" to="/">
+              <a
+                className="link"
+                href="https://sciencefeedback.co/about/"
+                rel="noopener noreferrer"
+                target="_blank">
                 About
-              </NavLink>
-              <NavLink className="link" to="/">
+              </a>
+              <a
+                className="link"
+                href="https://sciencefeedback.co/donate/"
+                rel="noopener noreferrer"
+                target="_blank">
                 Support us
-              </NavLink>
-              <NavLink className="link" to="/">
+              </a>
+              <a
+                className="link"
+                href="https://sciencefeedback.co/community-standards/"
+                rel="noopener noreferrer"
+                target="_blank">
                 Community standards
-              </NavLink>
-
+              </a>
             </div>
+
             <div className="links-container-small">
               <p className="h3">Contact Us</p>
               <NavLink className="link" to="/">
                 Press
               </NavLink>
-              <NavLink className="link" to="/">
+              <a
+                className="link"
+                href="https://sciencefeedback.co/contact-us/"
+                rel="noopener noreferrer"
+                target="_blank">
                 Contact Us
-              </NavLink>
+              </a>
             </div>
           </div>
         </section>
@@ -130,5 +161,3 @@ const Landing = () => {
     </>
   )
 }
-
-export default Landing
