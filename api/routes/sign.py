@@ -12,32 +12,32 @@ from validation.thumbs import check_thumb_in_request, \
                               check_thumb_quality
 
 
-@app.route("/users/current", methods=["GET"])
+@app.route('/users/current', methods=['GET'])
 @login_required
 def get_current_user():
     return jsonify(as_dict(current_user, includes=USER_INCLUDES))
 
 
-@app.route("/users/signin", methods=["POST"])
+@app.route('/users/signin', methods=['POST'])
 def signin():
     json = request.get_json()
-    identifier = json.get("identifier")
-    password = json.get("password")
+    identifier = json.get('identifier')
+    password = json.get('password')
     user = get_user_with_credentials(identifier, password)
     login_user(user, remember=True)
     stamp_session(user)
     return jsonify(as_dict(user, includes=USER_INCLUDES)), 200
 
 
-@app.route("/users/signout", methods=["GET"])
+@app.route('/users/signout', methods=['GET'])
 @login_required
 def signout():
     discard_session()
     logout_user()
-    return jsonify({"global": "Disconnected"})
+    return jsonify({'global': 'Disconnected'})
 
 
-@app.route("/users/signup", methods=["POST"])
+@app.route('/users/signup', methods=['POST'])
 def signup():
     check_thumb_in_request(files=request.files, form=request.form)
 

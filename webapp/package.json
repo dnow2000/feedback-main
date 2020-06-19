@@ -57,7 +57,7 @@
     "whatwg-fetch": "2.0.3",
     "with-react-formidable": "2.1.1",
     "with-react-query": "1.4.0",
-    "with-react-redux-login": "1.13.0-rc6"
+    "with-react-redux-login": "1.14.4"
   },
   "devDependencies": {
     "eslint-plugin-jest": "^23.0.5",

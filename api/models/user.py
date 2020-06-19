@@ -19,13 +19,16 @@ class User(ApiHandler,
            HasThumbMixin,
            NeedsValidationMixin):
 
+    clearTextPassword = None
+
     email = Column(String(120), nullable=False, unique=True)
-    password = Column(LargeBinary(60), nullable=False)
 
     firstName = Column(String(30))
+
     lastName = Column(String(30))
 
-    clearTextPassword = None
+    password = Column(LargeBinary(60), nullable=False)
+
 
     def check_password(self, passwordToCheck):
         return bcrypt.hashpw(passwordToCheck.encode('utf-8'), self.password) == self.password
