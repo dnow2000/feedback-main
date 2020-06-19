@@ -11,7 +11,7 @@ import VerdictItem from 'components/layout/VerdictItem'
 import { APP_NAME, ROOT_ASSETS_PATH } from 'utils/config'
 
 
-const Landing = () => {
+export default () => {
   const dispatch = useDispatch()
 
   const verdicts = useSelector(state => state.data.verdicts)
@@ -161,5 +161,3 @@ const Landing = () => {
     </>
   )
 }
-
-export default Landing
