@@ -21,6 +21,15 @@ TAGS = [
 
 for tag in TAGS:
     tag.update({
-        'scopeTypes': ['review', 'verdict'],
-        'type': 'issue'
+        'scopes': [
+            {
+                '__SEARCH_BY__': 'type',
+                'type': 'REVIEW',
+            },
+            {
+                '__SEARCH_BY__': 'type',
+                'type': 'VERDICT'
+            }
+        ],
+        'type': 'ISSUE'
     })

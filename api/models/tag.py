@@ -12,16 +12,16 @@ from utils.db import Model
 
 
 class SourceName(enum.Enum):
-    claim = 'claim'
-    content = 'content'
+    CLAIM = 'claim'
+    CONTENT = 'content'
 
 
 class TagType(enum.Enum):
-    conclusion = 'conclusion'
-    detail = 'detail'
-    evaluation = 'evaluation'
-    issue = 'issue'
-    qualification = 'qualification'
+    CONCLUSION = 'conclusion'
+    DETAIL = 'detail'
+    EVALUATION = 'evaluation'
+    ISSUE = 'issue'
+    QUALIFICATION = 'qualification'
 
 
 class Tag(ApiHandler,

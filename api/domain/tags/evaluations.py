@@ -4,10 +4,10 @@ TAGS = [
         'label':  'Very High',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': 2
     },
     {
@@ -15,10 +15,10 @@ TAGS = [
         'label': 'High',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'claim',
+        'source': 'CLAIM',
         'value': 1
     },
     {
@@ -26,10 +26,10 @@ TAGS = [
         'label': 'Neutral',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'claim',
+        'source': 'CLAIM',
         'value': 0
     },
     {
@@ -37,10 +37,10 @@ TAGS = [
         'label': 'Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'claim',
+        'source': 'CLAIM',
         'value': -1
     },
     {
@@ -48,10 +48,10 @@ TAGS = [
         'label': 'Very Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'claim',
+        'source': 'CLAIM',
         'value': -2
     },
     {
@@ -59,10 +59,10 @@ TAGS = [
         'label': 'Very High',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': 2
     },
     {
@@ -70,10 +70,10 @@ TAGS = [
         'label': 'High',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': 1
     },
     {
@@ -81,10 +81,10 @@ TAGS = [
         'label': 'Neutral',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': 0
     },
     {
@@ -92,10 +92,10 @@ TAGS = [
         'label': 'Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': -1
     },
     {
@@ -103,10 +103,10 @@ TAGS = [
         'label': 'Very Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': -2
     },
     {
@@ -114,15 +114,17 @@ TAGS = [
         'label': 'Not applicable',
         'scopes': [
             {
-                'type': 'review'
+                'type': 'REVIEW'
             }
         ],
-        'source': 'content',
+        'source': 'CONTENT',
         'value': None
     }
 ]
 
 for tag in TAGS:
     tag.update({
-        'type': 'evaluation'
+        'type': 'EVALUATION'
     })
+    for scope in tag['scopes']:
+        scope['__SEARCH_BY__'] = 'type'

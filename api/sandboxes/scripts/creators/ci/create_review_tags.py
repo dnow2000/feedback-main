@@ -19,12 +19,12 @@ def create_review_tags():
         content=content,
         reviewer=reviewer
     ).one()
-    qualification_tag = Tag.query.filter_by(label='Accurate', type='qualification').one()
+    qualification_tag = Tag.query.filter_by(label='Accurate', type='QUALIFICATION').one()
     review_tags.append(ReviewTag(
         review=review,
         tag=qualification_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=1).one()
+    evaluation_tag = Tag.query.filter_by(source='CONTENT', type='EVALUATION', value=1).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=evaluation_tag
@@ -37,12 +37,12 @@ def create_review_tags():
         content=content,
         reviewer=reviewer
     ).one()
-    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear', type='qualification').one()
+    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear', type='QUALIFICATION').one()
     review_tags.append(ReviewTag(
         review=review,
         tag=qualification_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=-1).one()
+    evaluation_tag = Tag.query.filter_by(source='CONTENT', type='EVALUATION', value=-1).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=evaluation_tag
@@ -55,12 +55,12 @@ def create_review_tags():
         content=content,
         reviewer=reviewer
     ).one()
-    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear', type='qualification').one()
+    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear', type='QUALIFICATION').one()
     review_tags.append(ReviewTag(
         review=review,
         tag=qualification_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=-2).one()
+    evaluation_tag = Tag.query.filter_by(source='CONTENT', type='EVALUATION', value=-2).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=evaluation_tag

@@ -59,7 +59,7 @@ def get_content(content_id):
 @expect_json_data
 def create_content():
 
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     content = content_from_url(request.json['url'])
     content.modify(**request.json)
@@ -82,7 +82,7 @@ def create_content():
 @expect_json_data
 def modify_content(content_id):
 
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     content = load_or_404(Content, content_id)
     content.modify(request.json)
@@ -96,7 +96,7 @@ def modify_content(content_id):
 @login_or_api_key_required
 def soft_delete_content(content_id):
 
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     content = load_or_404(Content, content_id)
     content.soft_delete()

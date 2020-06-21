@@ -93,6 +93,6 @@ TAGS = [
 
 for tag in TAGS:
     tag.update({
-        'scopeTypes': ['review'],
-        'type': 'qualification'
+        'scopes': [{'__SEARCH_BY__': 'type', 'type': 'REVIEW'}],
+        'type': 'QUALIFICATION'
     })

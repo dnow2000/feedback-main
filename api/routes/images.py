@@ -13,7 +13,7 @@ from storage.thumb import save_thumb
 @login_or_api_key_required
 def create_image():
 
-    check_has_role(current_user, 'reviewer')
+    check_has_role(current_user, 'REVIEWER')
 
     thumb = check_and_read_files_thumb(request.files)
 

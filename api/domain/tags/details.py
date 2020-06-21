@@ -68,5 +68,5 @@ TAGS = [
 
 for tag in TAGS:
     tag.update({
-        'type': 'detail'
+        'type': 'DETAIL'
     })

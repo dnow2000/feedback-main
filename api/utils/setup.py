@@ -1,4 +1,6 @@
 # pylint: disable=C0415
+# pylint: disable=R0913
+# pylint: disable=R1719
 # pylint: disable=W0611
 # pylint: disable=W0612
 # pylint: disable=W0613
@@ -14,6 +16,7 @@ from routes import import_routes
 from scripts import install_scripts
 from utils.config import IS_DEVELOPMENT
 from utils.db import db
+from utils.encoder import EnumJSONEncoder
 
 
 def setup(flask_app,
@@ -31,8 +34,9 @@ def setup(flask_app,
         flask_app.config['DEBUG'] = True
 
     db.init_app(flask_app)
-    db.app = flask_app
     ApiHandler.set_db(db)
+
+    flask_app.json_encoder = EnumJSONEncoder
 
     @flask_app.teardown_request
     def remove_db_session(exc):

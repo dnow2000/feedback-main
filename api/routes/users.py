@@ -5,7 +5,7 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    load_or_404
 
 from models.user import User
-from repository.users import filter_users_with_roles, \
+from repository.users import keep_users_with_roles, \
                              get_users_join_query, \
                              get_users_query_with_keywords
 from routes.utils.includes import USER_INCLUDES
@@ -23,13 +23,13 @@ def make_user_query():
 @app.route("/users", methods=["GET"])
 @login_required
 def get_users():
-    check_has_role(current_user, 'admin')
+    check_has_role(current_user, 'ADMIN')
 
     query = User.query
 
     roles = request.args.get('roles')
     if roles is not None:
-        query = filter_users_with_roles(query, roles.split(','))
+        query = keep_users_with_roles(query, roles.split(','))
 
     keywords = request.args.get('keywords')
     if keywords is not None:
@@ -47,7 +47,7 @@ def get_users():
 @app.route("/users/<user_id>", methods=["GET"])
 @login_required
 def get_user(user_id):
-    check_has_role(current_user, 'admin')
+    check_has_role(current_user, 'ADMIN')
 
     user = load_or_404(User, user_id)
     return jsonify(as_dict(user, includes=USER_INCLUDES)), 200
