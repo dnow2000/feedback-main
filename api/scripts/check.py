@@ -1,9 +1,9 @@
 # pylint: disable=W0611
 
 import os
+from time import sleep
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
-from time import sleep
 from sqlalchemy.exc import OperationalError
 
 from models import import_models
@@ -18,8 +18,9 @@ FLASK_APP = Flask(__name__)
 
 setup(FLASK_APP)
 
-is_database_health_ok = False
-while is_database_health_ok == False:
+
+IS_DATABASE_HEALTH_OK = False
+while IS_DATABASE_HEALTH_OK == False:
     try:
         db.init_app(FLASK_APP)
         ApiHandler.set_db(db)
@@ -34,8 +35,8 @@ while is_database_health_ok == False:
         continue
     print('Connection to postgres db is okay.')
     sleep(SLEEP_TIME)
-    is_database_health_ok = check_database_health()[0]
-    if not is_database_health_ok:
+    IS_DATABASE_HEALTH_OK = check_database_health()[0]
+    if not IS_DATABASE_HEALTH_OK:
         print('Could not check database health... Retry in {}s...'.format(SLEEP_TIME))
     else:
         print('Database health is ok.')
