@@ -1,16 +1,63 @@
 .footer {
-  align-items: center;
-  background-color: $black-ter;
+  height: 18.75rem;
   color: $white;
+  background-color: $turquoise-dark;
+
   display: flex;
-  padding: rem(36px);
+  flex-direction: row;
+  align-items: baseline;
+  align-items: flex-start;
+  justify-content: center;
 
-  .left {
-    margin-bottom: rem(8px);
+  margin: auto;
 
-    .contact {
-      color: $primary;
-      text-decoration: none;
+  padding: 2.5rem;
+  padding-bottom: 6.25rem;
+  padding-top: 3.75rem;
+
+  .logo-container {
+    flex: 3;
+    padding-right: 2rem;
+    
+    .logo-element {
+      width: 100%;
+      max-width: 13rem;
     }
+  }
+
+  .links-container-big {
+    display: flex;
+    flex: 4;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-left: 2.5rem;
+  }
+  
+  .links-container-small {
+    display: flex;
+    flex: 2;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .link {
+    color: $white;
+    font-weight: 200;
+    margin-bottom: 1.625rem;
+    opacity: 1;
+    text-decoration: none;
+    transition: 0.2;
+  
+    &:hover {
+      opacity: 0.8;
+      transition: 0.2;
+    }
+  }
+  
+  .h3 {
+    color: $white;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.625rem;
   }
 }

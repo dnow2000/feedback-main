@@ -1,8 +1,8 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 
 import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
+import Footer from 'components/layout/Footer'
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
 
@@ -100,118 +100,8 @@ export default () => (
           </p>
         </div>
       </section>
-
-      <section>
-        <div className="container">
-          <div className="section-title has-border-top">
-            <p className="h2">
-              Join the effort
-            </p>
-          </div>
-          <p className="p">
-            If you’d like to help us make the Internet a more reliable source of credible information during this pandemic and beyond, please join our effort! Here are a few ways:
-            <ul>
-              <li>
-                <a
-                  href="https://airtable.com/shrqvgrtdOvat4bkR"
-                  rel="noopener noreferrer"
-                  target="_blank">Fill out this form</a> to join our network of citizen scientists which works to identify repetitions of false claims.
-              </li>
-              <li>
-                <a
-                  href="mailto:info@feedback.news"
-                  rel="noopener noreferrer"
-                  target="_blank">Email us</a> if you are a web developer and want to help write code for our platform (Postgres DB, Python/Flask backend, React front-end).
-              </li>
-              <li>
-                <a
-                  href="https://sciencefeedback.co/donate/"
-                  rel="noopener noreferrer"
-                  target="_blank">Donate</a> to support this project.
-              </li>
-            </ul>
-          </p>
-        </div>
-      </section>
-
-      <section className="footer">
-        <div className="container is-footer">
-
-          <div className="logo-container">
-            <img src={`${ROOT_ASSETS_PATH}/logo_footer.png`} className="image" alt="Community" />
-          </div>
-
-          <div className="links-container-big">
-            <p className="h3">Community</p>
-            <a
-              className="link"
-              href="https://climatefeedback.org/community/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Climate Reviewers
-            </a>
-            <a
-              className="link"
-              href="https://healthfeedback.org/community/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Health Reviewers
-            </a>
-            <a
-              className="link"
-              href="https://sciencefeedback.co/for-scientists/"
-              rel="noopener noreferrer"
-              target="_blank">
-              Apply to become a reviewer
-            </a>
-          </div>
-
-          <div className="links-container-big">
-            <p className="h3">Organization</p>
-            <a
-              className="link"
-              href="https://sciencefeedback.co/about/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              About
-            </a>
-            <a
-              className="link"
-              href="https://sciencefeedback.co/donate/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Support us
-            </a>
-            <a
-              className="link"
-              href="https://sciencefeedback.co/community-standards/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Community standards
-            </a>
-          </div>
-
-          <div className="links-container-small">
-            <p className="h3">Contact Us</p>
-            <NavLink className="link" to="/">
-              Press
-            </NavLink>
-            <a
-              className="link"
-              href="https://sciencefeedback.co/contact-us/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              Contact Us
-            </a>
-          </div>
-        </div>
-      </section>
     </Main>
+
+    <Footer />
   </>
 )
