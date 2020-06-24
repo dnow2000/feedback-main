@@ -2,14 +2,15 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
-const Footer = () => (
+
+export default () => (
   <div className="footer">
 
     <div className="logo-container">
-      <img 
+      <img
         src={`${ROOT_ASSETS_PATH}/logo_footer.png`}
-        className="logo-element" 
-        alt="Community" 
+        className="logo-element"
+        alt="Community"
       />
     </div>
 
@@ -73,17 +74,15 @@ const Footer = () => (
       <NavLink className="link" to="/">
         Press
       </NavLink>
-      <a 
-        className="link" 
-        href="https://sciencefeedback.co/contact-us/" 
+      <a
+        className="link"
+        href="https://sciencefeedback.co/contact-us/"
         rel="noopener noreferrer"
         target="_blank"
       >
         Contact Us
       </a>
     </div>
-    
+
   </div>
 )
-
-export default Footer
