@@ -26,16 +26,12 @@ def load_data_frame():
             file.close()
         filepath_or_buffer = DEVELOPMENT_POYNTER_CLAIMS_DIR
     else:
-        file = find_file_from_name(
-            'poynter_claims.csv',
-            drive_id=GOOGLE_DRIVE_ID,
-            parent_folder_id=GOOGLE_DRIVE_ID,
-            service_account_string=GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
-        )
-        filepath_or_buffer = get_file_media(
-            file.get('id'),
-            service_account_string=GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
-        )
+        file = find_file_from_name('poynter_claims.csv',
+                                   drive_id=GOOGLE_DRIVE_ID,
+                                   parent_folder_id=GOOGLE_DRIVE_ID,
+                                   service_account_string=GOOGLE_SERVICE_ACCOUNT_CREDENTIALS)
+        filepath_or_buffer = get_file_media(file.get('id'),
+                                            service_account_string=GOOGLE_SERVICE_ACCOUNT_CREDENTIALS)
     setattr(sys.modules[__name__], 'df', read_csv(filepath_or_buffer))
 
 
@@ -48,6 +44,8 @@ def claim_from_poynter(datum, index):
 
 
 def find_poynter_trendings():
+    if not hasattr(sys.modules[__name__], 'df'):
+        load_data_frame()
     df = getattr(sys.modules[__name__], 'df')
     return [
         claim_from_poynter(row, index)
@@ -56,6 +54,8 @@ def find_poynter_trendings():
 
 
 def poynter_trending_from_identifier(identifier):
+    if not hasattr(sys.modules[__name__], 'df'):
+        load_data_frame()
     df = getattr(sys.modules[__name__], 'df')
     df_id = int(identifier)
     poynter = df.loc[df_id]
