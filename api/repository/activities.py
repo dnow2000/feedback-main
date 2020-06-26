@@ -2,6 +2,7 @@ from postgresql_audit.flask import versioning_manager
 
 from utils.db import db
 
+
 def filter_with_joined_activities(query):
     Activity = versioning_manager.activity_cls
     model = query._bind_mapper().class_
@@ -12,12 +13,11 @@ def filter_with_joined_activities(query):
                  .filter(is_on_table)
     return query
 
-def filter_by_activity_date_and_verb(
-    query,
-    from_date=None,
-    to_date=None,
-    verb=None
-):
+
+def filter_by_activity_date_and_verb(query,
+                                     from_date=None,
+                                     to_date=None,
+                                     verb=None):
     Activity = versioning_manager.activity_cls
     query = filter_with_joined_activities(query)
 

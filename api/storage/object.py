@@ -18,7 +18,7 @@ def swift_con():
     options = {
         'region_name': os.environ.get('OVH_REGION_NAME')
     }
-    auth_version = '2'
+    auth_version = '3'
     return swiftclient.Connection(user=user,
                                   key=key,
                                   authurl=auth_url,
