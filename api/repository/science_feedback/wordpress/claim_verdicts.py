@@ -1,7 +1,7 @@
 from sqlalchemy_api_handler import humanize
 
 from domain.science_feedback.wordpress.claim_review import claim_review_from_url
-from models.tag import Tag
+from models.tag import Tag, TagType
 from models.verdict import Verdict
 from models.verdict_tag import VerdictTag
 from utils.asynchronous import map_asynchronous
@@ -26,7 +26,10 @@ def claim_verdicts_from_airtable(max_verdicts=None):
             continue
 
         for conclusion in claim_review['conclusions']:
-            tag = Tag.create_or_modify({'label': conclusion}, search_by='label')
+            tag = Tag.create_or_modify({
+                'label': conclusion,
+                'type': TagType.CONCLUSION
+            }, search_by=['label', 'type'])
             verdict_tag = VerdictTag.create_or_modify({
                 'tagId': humanize(tag.id),
                 'verdictId': humanize(verdict.id)
