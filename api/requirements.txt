@@ -27,6 +27,7 @@ psycopg2-binary==2.8.3
 pytest==4.0.0
 pytest-flask==0.14.0
 pytest-mock==1.10.0
+python-keystoneclient==4.1.0
 python-swiftclient==3.10.0
 requests[security]==2.20.1
 simplejson==3.16.0
