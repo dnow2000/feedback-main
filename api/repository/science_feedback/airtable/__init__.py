@@ -1,7 +1,8 @@
+# pylint: disable=C0415
+
 import os
 from sqlalchemy_api_handler import ApiHandler, logger
 
-import repository.science_feedback.airtable.entity_from_row as entity_from_row
 from utils.airtable import request_airtable_rows
 
 
@@ -21,6 +22,7 @@ NAME_TO_AIRTABLE = {
 
 
 def entity_from_row_for(name, entity_dict, index):
+    import repository.science_feedback.airtable.entity_from_row as entity_from_row
     function_name = '{}_from_row'.format(name)
     entity_from_row_function = getattr(entity_from_row, function_name)
     return entity_from_row_function(entity_dict, index)

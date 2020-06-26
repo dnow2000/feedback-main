@@ -159,9 +159,9 @@ if [[ "$CMD" == "alembic" ]]; then
 
 # Connect to API container
 elif [[ "$CMD" == "bash" ]]; then
-	if [[ "$PLATFORM" == "not-set" ]]; then
+	if [[ "$ENV" == "not-set" && "$PLATFORM" == "not-set" ]]; then
 		RUN='docker exec -it $API_SERVICE bash'
-	elif [[ "$PLATFORM" == "scalingo" ]]; then
+	elif [ "$ENV" != "not-set" ] || [ "$PLATFORM" == "scalingo" ]; then
 		scalingo -a "$SCALINGO_APP" run "bash"
 		exit
 	fi
