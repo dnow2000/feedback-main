@@ -62,30 +62,26 @@ def read_thumb(files=None, form=None):
             raise ApiErrors({'thumbUrl': ["Th L'adresse saisie n'est pas valide"]})
 
 
-def save_thumb(
-        model_with_thumb,
-        thumb,
-        image_index,
-        image_type=None,
-        convert=True,
-        crop=None,
-        symlink_path=None,
-        need_save=True,
-        store_thumb: Callable = store_public_object
-):
+def save_thumb(model_with_thumb,
+               thumb,
+               image_index,
+               image_type=None,
+               convert=True,
+               crop=None,
+               symlink_path=None,
+               need_save=True,
+               store_thumb: Callable = store_public_object):
     new_thumb = thumb
 
     if convert:
         crop_params = crop if crop is not None else DO_NOT_CROP
         new_thumb = standardize_image(thumb, crop_params)
 
-    store_thumb(
-        'thumbs',
-        model_with_thumb.get_thumb_storage_id(image_index),
-        new_thumb,
-        'image/' + (image_type or 'jpeg'),
-        symlink_path=symlink_path
-    )
+    store_thumb('thumbs',
+                model_with_thumb.get_thumb_storage_id(image_index),
+                new_thumb,
+                'image/' + (image_type or 'jpeg'),
+                symlink_path=symlink_path)
 
     model_with_thumb.thumbCount = model_with_thumb.thumbCount + 1
 
