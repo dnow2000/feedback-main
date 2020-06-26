@@ -4,9 +4,11 @@ import { Field } from 'react-final-form'
 
 import FieldError from '../FieldError'
 
+
 const noop = () => {}
 
-const HiddenField = ({ name, validator }) => (
+
+const _ = ({ name, validator }) => (
   <Field
     name={name}
     validate={validator}
@@ -19,13 +21,13 @@ const HiddenField = ({ name, validator }) => (
   />
 )
 
-HiddenField.defaultProps = {
+_.defaultProps = {
   validator: noop,
 }
 
-HiddenField.propTypes = {
+_.propTypes = {
   name: PropTypes.string.isRequired,
   validator: PropTypes.func,
 }
 
-export default HiddenField
+export default _

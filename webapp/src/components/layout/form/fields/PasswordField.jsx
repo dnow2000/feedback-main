@@ -14,7 +14,8 @@ const DEFAULT_ERROR_MESSAGE =
   'Password should contain at least 12 characters, one number, one capital letter, one lower case and one from any of _-&?~#|^@=+.$,<>%*!:;'
 const validatePasswordField = createValidatePasswordField(DEFAULT_ERROR_MESSAGE)
 
-const PasswordField = props => {
+
+export default props => {
   const [hidden, setHidden] = useState(true)
   const status = hidden ? '' : '-close'
 
@@ -41,5 +42,3 @@ const PasswordField = props => {
     />
   )
 }
-
-export default PasswordField

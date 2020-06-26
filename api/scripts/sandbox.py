@@ -11,13 +11,9 @@ from sandboxes.scripts.help_testcafe import print_all_testcafe_helpers
                     '--name',
                     help='Sandbox name',
                     default="ci")
-@app.manager.option('-c',
-                    '--capture',
-                    help='Capture screenshot',
-                    default=False)
-def sandbox(name, capture):
+def sandbox(name):
     try:
-        create_sandbox(name, with_capture=capture)
+        create_sandbox(name)
     except Exception as e:
         print('ERROR: ' + str(e))
         traceback.print_tb(e.__traceback__)

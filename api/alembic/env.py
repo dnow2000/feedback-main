@@ -25,7 +25,6 @@ target_metadata = None
 
 # SPECIAL CONFIG REMOVE TRANSITION and GET URL FROM DATABASE URL
 def include_object(object, name, type_, reflected, compare_to):
-    print(type, name)
     if type_ == "table" and name in ('alembic_version', 'transaction', 'activity'):
         return False
     else:

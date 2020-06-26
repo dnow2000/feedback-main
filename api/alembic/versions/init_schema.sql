@@ -442,7 +442,7 @@ CREATE TABLE public.content (
     summary text,
     tags text,
     theme character varying(140),
-    title character varying(140),
+    title character varying(512),
     url character varying(512) NOT NULL
 );
 
@@ -1691,4 +1691,3 @@ ALTER TABLE ONLY public.verdict_tag
 --
 -- PostgreSQL database dump complete
 --
-

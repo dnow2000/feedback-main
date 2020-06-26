@@ -1,19 +1,20 @@
 from sqlalchemy import and_
-from sqlalchemy_api_handler import ApiErrors, ApiHandler
+from sqlalchemy_api_handler import ApiErrors, ApiHandler, logger
+
 
 from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
                             create_get_filter_matching_ts_query_in_any_model
+from domain.user import store_user_thumb_from_sandbox
 from models.role import Role
 from models.tag import Tag
 from models.user import User
 from models.user_tag import UserTag
-from utils.config import DEFAULT_USER_PASSWORD
+from utils.config import DEFAULT_USER_PASSWORD, IS_DEVELOPMENT
+from utils.db import db
 
 
-user_ts_filter = create_get_filter_matching_ts_query_in_any_model(
-    User,
-    Tag
-)
+user_ts_filter = create_get_filter_matching_ts_query_in_any_model(User,
+                                                                  Tag)
 
 def create_default_user():
     default_user = User()
@@ -88,10 +89,12 @@ def keep_users_with_no_role(query):
 
 
 def sync_user(user):
-    """ TODO ORCID """
-    pass
+    if IS_DEVELOPMENT:
+        store_user_thumb_from_sandbox(user)
 
 
 def sync():
-    """ TODO """
-    pass
+    logger.info('sync users data...')
+    for user in User.query.all():
+        sync_user(user)
+    logger.info('sync users data...Done.')

@@ -53,7 +53,7 @@ class Content(ApiHandler,
 
     theme = Column(String(140))
 
-    title = Column(String(140))
+    title = Column(String(512))
 
     type = Enum(ContentType)
 

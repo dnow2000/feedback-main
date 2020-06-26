@@ -20,10 +20,10 @@ NAME_TO_AIRTABLE = {
 }
 
 
-def entity_from_row_for(name, entity_dict):
+def entity_from_row_for(name, entity_dict, index):
     function_name = '{}_from_row'.format(name)
     entity_from_row_function = getattr(entity_from_row, function_name)
-    return entity_from_row_function(entity_dict)
+    return entity_from_row_function(entity_dict, index)
 
 
 def sync_for(name, max_records=None):
@@ -34,8 +34,8 @@ def sync_for(name, max_records=None):
     )
 
     entities = []
-    for row in rows:
-        entity = entity_from_row_for(name, row)
+    for (index, row) in enumerate(rows):
+        entity = entity_from_row_for(name, row, index)
         if entity:
             entities.append(entity)
 
