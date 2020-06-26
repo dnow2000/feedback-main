@@ -40,7 +40,7 @@ def get_verdict(verdict_id):
 @expect_json_data
 def create_verdict():
 
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     verdict = Verdict()
     verdict.modify(request.json)
@@ -54,7 +54,7 @@ def create_verdict():
 @expect_json_data
 def edit_verdict(verdict_id):
 
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     verdict = load_or_404(Verdict, verdict_id)
     verdict.modify(request.json)

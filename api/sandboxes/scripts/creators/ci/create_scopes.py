@@ -14,14 +14,14 @@ def create_scopes():
         tag = Tag.query.filter_by(label=article_tag['label']).one()
         scopes.append(Scope(
             tag=tag,
-            type=ScopeType.content.value
+            type=ScopeType.CONTENT
         ))
 
     for user_tag in USER_TAGS:
         tag = Tag.query.filter_by(label=user_tag['label']).one()
         scopes.append(Scope(
             tag=tag,
-            type=ScopeType.user.value,
+            type=ScopeType.USER
         ))
 
     ApiHandler.save(*scopes)

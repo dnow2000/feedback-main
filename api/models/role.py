@@ -11,18 +11,12 @@ from utils.db import Model
 
 
 class RoleType(enum.Enum):
-    def as_dict(self):
-        dict_value = {
-            'value': str(self.value),
-        }
-        return dict_value
-
-    admin = 'admin'
-    author = 'author'
-    editor = 'editor'
-    guest = 'guest'
-    reviewer = 'reviewer'
-    testifier = 'testifier'
+    ADMIN = 'admin'
+    AUTHOR = 'author'
+    EDITOR = 'editor'
+    GUEST = 'guest'
+    REVIEWER = 'reviewer'
+    TESTIFIER = 'testifier'
 
 
 class Role(ApiHandler,

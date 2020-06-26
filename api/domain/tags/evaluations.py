@@ -1,13 +1,17 @@
+from models.scope import ScopeType
+from models.tag import SourceName, TagType
+
+
 TAGS = [
     {
         'info': 'It describes an observation in a way that is consistent with available data and does not leave out any relevant element of context or it is a theory that has been well tested in scientific studies and generates expected observations that are confirmed by actual observations',
         'label':  'Very High',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': 2
     },
     {
@@ -15,10 +19,10 @@ TAGS = [
         'label': 'High',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'claim',
+        'source': SourceName.CLAIM,
         'value': 1
     },
     {
@@ -26,10 +30,10 @@ TAGS = [
         'label': 'Neutral',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'claim',
+        'source': SourceName.CLAIM,
         'value': 0
     },
     {
@@ -37,10 +41,10 @@ TAGS = [
         'label': 'Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'claim',
+        'source': SourceName.CLAIM,
         'value': -1
     },
     {
@@ -48,10 +52,10 @@ TAGS = [
         'label': 'Very Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'claim',
+        'source': SourceName.CLAIM,
         'value': -2
     },
     {
@@ -59,10 +63,10 @@ TAGS = [
         'label': 'Very High',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': 2
     },
     {
@@ -70,10 +74,10 @@ TAGS = [
         'label': 'High',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': 1
     },
     {
@@ -81,10 +85,10 @@ TAGS = [
         'label': 'Neutral',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': 0
     },
     {
@@ -92,10 +96,10 @@ TAGS = [
         'label': 'Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': -1
     },
     {
@@ -103,10 +107,10 @@ TAGS = [
         'label': 'Very Low',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': -2
     },
     {
@@ -114,15 +118,15 @@ TAGS = [
         'label': 'Not applicable',
         'scopes': [
             {
-                'type': 'review'
+                'type': ScopeType.REVIEW
             }
         ],
-        'source': 'content',
+        'source': SourceName.CONTENT,
         'value': None
     }
 ]
 
 for tag in TAGS:
-    tag.update({
-        'type': 'evaluation'
-    })
+    tag['type'] = TagType.EVALUATION
+    for scope in tag['scopes']:
+        scope['__SEARCH_BY__'] = 'type'

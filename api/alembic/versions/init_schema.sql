@@ -17,12 +17,11 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: evaluationtype; Type: TYPE; Schema: public; Owner: -
+-- Name: organizationtype; Type: TYPE; Schema: public; Owner: -
 --
 
-CREATE TYPE public.evaluationtype AS ENUM (
-    'claim',
-    'content'
+CREATE TYPE public.organizationtype AS ENUM (
+    'COMPANY'
 );
 
 
@@ -31,12 +30,12 @@ CREATE TYPE public.evaluationtype AS ENUM (
 --
 
 CREATE TYPE public.roletype AS ENUM (
-    'admin',
-    'author',
-    'editor',
-    'guest',
-    'reviewer',
-    'testifier'
+    'ADMIN',
+    'AUTHOR',
+    'EDITOR',
+    'GUEST',
+    'REVIEWER',
+    'TESTIFIER'
 );
 
 
@@ -45,10 +44,21 @@ CREATE TYPE public.roletype AS ENUM (
 --
 
 CREATE TYPE public.scopetype AS ENUM (
-    'article',
-    'review',
-    'user',
-    'verdict'
+    'CLAIM',
+    'CONTENT',
+    'REVIEW',
+    'USER',
+    'VERDICT'
+);
+
+
+--
+-- Name: sourcename; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.sourcename AS ENUM (
+    'CLAIM',
+    'CONTENT'
 );
 
 
@@ -60,6 +70,19 @@ CREATE TYPE public.stancetype AS ENUM (
     'ENDORSEMENT',
     'NEUTRAL',
     'REFUSAL'
+);
+
+
+--
+-- Name: tagtype; Type: TYPE; Schema: public; Owner: -
+--
+
+CREATE TYPE public.tagtype AS ENUM (
+    'CONCLUSION',
+    'DETAIL',
+    'EVALUATION',
+    'ISSUE',
+    'QUALIFICATION'
 );
 
 
@@ -303,7 +326,8 @@ ALTER SEQUENCE public.activity_id_seq OWNED BY public.activity.id;
 
 CREATE TABLE public.appearance (
     id bigint NOT NULL,
-    "scienceFeedbackId" character varying(32),
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     "quotedClaimId" bigint,
     "quotedContentId" bigint,
     "quotingClaimId" bigint,
@@ -368,8 +392,9 @@ ALTER SEQUENCE public.author_content_id_seq OWNED BY public.author_content.id;
 
 CREATE TABLE public.claim (
     id bigint NOT NULL,
-    "scienceFeedbackId" character varying(32),
-    source json,
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
+    "poynterIdentifier" character varying(8),
     text text
 );
 
@@ -401,7 +426,8 @@ CREATE TABLE public.content (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     "externalThumbUrl" character varying(220),
-    "scienceFeedbackId" character varying(32),
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     "facebookShares" bigint,
     "redditShares" bigint,
     "totalShares" bigint,
@@ -409,15 +435,15 @@ CREATE TABLE public.content (
     "thumbCount" integer NOT NULL,
     "archiveUrl" character varying(220),
     authors text,
+    "buzzsumoIdentifier" character varying(16),
     "isReviewable" boolean,
     "isValidatedAsPeerPublication" boolean NOT NULL,
     "publishedDate" timestamp without time zone,
-    source json,
     summary text,
     tags text,
     theme character varying(140),
     title character varying(140),
-    url character varying(300) NOT NULL
+    url character varying(512) NOT NULL
 );
 
 
@@ -471,38 +497,6 @@ ALTER SEQUENCE public.content_tag_id_seq OWNED BY public.content_tag.id;
 
 
 --
--- Name: evaluation; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.evaluation (
-    id bigint NOT NULL,
-    info text,
-    label character varying(50),
-    type public.evaluationtype,
-    value integer
-);
-
-
---
--- Name: evaluation_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.evaluation_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: evaluation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.evaluation_id_seq OWNED BY public.evaluation.id;
-
-
---
 -- Name: image; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -538,7 +532,8 @@ ALTER SEQUENCE public.image_id_seq OWNED BY public.image.id;
 
 CREATE TABLE public.medium (
     id bigint NOT NULL,
-    "scienceFeedbackId" character varying(32),
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     name character varying(256) NOT NULL,
     "organizationId" bigint,
     url character varying(300)
@@ -570,7 +565,8 @@ ALTER SEQUENCE public.medium_id_seq OWNED BY public.medium.id;
 
 CREATE TABLE public.organization (
     id bigint NOT NULL,
-    "scienceFeedbackId" character varying(32),
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     entity character varying(16),
     label character varying(64),
     description character varying(128),
@@ -605,11 +601,11 @@ CREATE TABLE public.review (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     rating double precision,
-    "scienceFeedbackId" character varying(32),
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     "claimId" bigint,
     comment text,
     "contentId" bigint,
-    "evaluationId" bigint,
     "reviewerId" bigint NOT NULL
 );
 
@@ -731,8 +727,11 @@ CREATE TABLE public.tag (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     info text,
+    label character varying(128),
     positivity integer,
-    text text
+    source public.sourcename,
+    type public.tagtype,
+    value integer
 );
 
 
@@ -799,13 +798,14 @@ CREATE TABLE public."user" (
     expertise text,
     "orcidId" character varying(220),
     title character varying(220),
-    "scienceFeedbackId" character varying(32),
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     "thumbCount" integer NOT NULL,
     "validationToken" character varying(27),
     email character varying(120) NOT NULL,
-    password bytea NOT NULL,
     "firstName" character varying(30),
-    "lastName" character varying(30)
+    "lastName" character varying(30),
+    password bytea NOT NULL
 );
 
 
@@ -896,6 +896,8 @@ CREATE TABLE public.verdict (
     id bigint NOT NULL,
     "isSoftDeleted" boolean NOT NULL,
     rating double precision,
+    "scienceFeedbackIdentifier" character varying(32),
+    "scienceFeedbackUrl" character varying(512),
     comment text,
     "claimId" bigint,
     "contentId" bigint,
@@ -1022,13 +1024,6 @@ ALTER TABLE ONLY public.content ALTER COLUMN id SET DEFAULT nextval('public.cont
 --
 
 ALTER TABLE ONLY public.content_tag ALTER COLUMN id SET DEFAULT nextval('public.content_tag_id_seq'::regclass);
-
-
---
--- Name: evaluation id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.evaluation ALTER COLUMN id SET DEFAULT nextval('public.evaluation_id_seq'::regclass);
 
 
 --
@@ -1201,14 +1196,6 @@ ALTER TABLE ONLY public.content
 
 
 --
--- Name: evaluation evaluation_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.evaluation
-    ADD CONSTRAINT evaluation_pkey PRIMARY KEY (id);
-
-
---
 -- Name: image image_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1270,14 +1257,6 @@ ALTER TABLE ONLY public.scope
 
 ALTER TABLE ONLY public.tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (id);
-
-
---
--- Name: tag tag_text_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.tag
-    ADD CONSTRAINT tag_text_key UNIQUE (text);
 
 
 --
@@ -1421,13 +1400,6 @@ CREATE INDEX "ix_review_claimId" ON public.review USING btree ("claimId");
 --
 
 CREATE INDEX "ix_review_contentId" ON public.review USING btree ("contentId");
-
-
---
--- Name: ix_review_evaluationId; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX "ix_review_evaluationId" ON public.review USING btree ("evaluationId");
 
 
 --
@@ -1605,14 +1577,6 @@ ALTER TABLE ONLY public.review
 
 
 --
--- Name: review review_evaluationId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.review
-    ADD CONSTRAINT "review_evaluationId_fkey" FOREIGN KEY ("evaluationId") REFERENCES public.evaluation(id);
-
-
---
 -- Name: review review_reviewerId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1727,3 +1691,4 @@ ALTER TABLE ONLY public.verdict_tag
 --
 -- PostgreSQL database dump complete
 --
+

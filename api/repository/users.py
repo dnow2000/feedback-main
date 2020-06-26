@@ -76,7 +76,7 @@ def get_users_query_with_keywords(query, keywords):
     return query
 
 
-def filter_users_with_roles(query, roles):
+def keep_users_with_roles(query, roles):
     roles_filter = and_(*[User.roles.any(Role.type == role) for role in roles])
     query = query.filter(roles_filter)
     return query

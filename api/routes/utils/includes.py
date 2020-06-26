@@ -48,7 +48,6 @@ CONTENT_INCLUDES = [
 
 REVIEW_INCLUDES = [
     'content',
-    'evaluation',
     {
         'key': 'reviewer',
         'includes': USER_INCLUDES

@@ -1,3 +1,6 @@
+from models.tag import TagType
+
+
 TAGS = [
     {
         'info': 'the statement of fact is consistent with available observations/data',
@@ -66,6 +69,4 @@ TAGS = [
 ]
 
 for tag in TAGS:
-    tag.update({
-        'type': 'conclusion'
-    })
+    tag['type'] = TagType.CONCLUSION

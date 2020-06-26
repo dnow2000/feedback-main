@@ -13,7 +13,7 @@ from validation.roles import check_has_role
 @expect_json_data
 def create_verdict_reviewer():
 
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     verdict_reviewer = VerdictReviewer()
     verdict_reviewer.modify(request.json)

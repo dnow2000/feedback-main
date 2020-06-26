@@ -1,3 +1,7 @@
+from models.scope import ScopeType
+from models.tag import TagType
+
+
 TAGS = [
     {
         'info': 'free from factual errors, describes reality in a way that is consistent with available data/observations',
@@ -93,6 +97,6 @@ TAGS = [
 
 for tag in TAGS:
     tag.update({
-        'scopeTypes': ['review'],
-        'type': 'qualification'
+        'scopes': [{'__SEARCH_BY__': 'type', 'type': ScopeType.REVIEW}],
+        'type': TagType.QUALIFICATION
     })

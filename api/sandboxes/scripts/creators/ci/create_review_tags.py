@@ -3,7 +3,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 from models.content import Content
 from models.review import Review
 from models.review_tag import ReviewTag
-from models.tag import Tag
+from models.tag import SourceName, Tag, TagType
 from models.user import User
 from utils.config import APP_NAME, COMMAND_NAME, TLD
 
@@ -19,12 +19,15 @@ def create_review_tags():
         content=content,
         reviewer=reviewer
     ).one()
-    qualification_tag = Tag.query.filter_by(label='Accurate', type='qualification').one()
+    qualification_tag = Tag.query.filter_by(label='Accurate',
+                                            type=TagType.QUALIFICATION).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=qualification_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=1).one()
+    evaluation_tag = Tag.query.filter_by(source=SourceName.CONTENT,
+                                         type=TagType.EVALUATION,
+                                         value=1).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=evaluation_tag
@@ -37,12 +40,15 @@ def create_review_tags():
         content=content,
         reviewer=reviewer
     ).one()
-    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear', type='qualification').one()
+    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear',
+                                            type=TagType.QUALIFICATION).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=qualification_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=-1).one()
+    evaluation_tag = Tag.query.filter_by(source=SourceName.CONTENT,
+                                         type=TagType.EVALUATION,
+                                         value=-1).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=evaluation_tag
@@ -55,12 +61,15 @@ def create_review_tags():
         content=content,
         reviewer=reviewer
     ).one()
-    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear', type='qualification').one()
+    qualification_tag = Tag.query.filter_by(label='Imprecise / Unclear',
+                                            type=TagType.QUALIFICATION).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=qualification_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=-2).one()
+    evaluation_tag = Tag.query.filter_by(source=SourceName.CONTENT,
+                                         type=TagType.EVALUATION,
+                                         value=-2).one()
     review_tags.append(ReviewTag(
         review=review,
         tag=evaluation_tag

@@ -1,7 +1,6 @@
 import pytest
 
 from sandboxes.scripts.creators.ci import create_contents,\
-                                          create_evaluations, \
                                           create_reviews, \
                                           create_roles, \
                                           create_users
@@ -32,7 +31,6 @@ class Get:
             create_users()
             create_roles()
             create_contents()
-            create_evaluations()
             create_reviews()
             result = TestClient(app.test_client()) \
                 .with_auth(email=get_sandbox_role_email('editor')) \

@@ -6,10 +6,11 @@ from sqlalchemy_api_handler import ApiHandler
 from utils.setup import setup
 
 
-items_by_category = {'first': [], 'last': []}
+ITEMS_BY_CATEGORY = {'first': [], 'last': []}
+
 
 def _sort_alphabetically(category):
-    return sorted(items_by_category[category], key=lambda item: item.location)
+    return sorted(ITEMS_BY_CATEGORY[category], key=lambda item: item.location)
 
 
 def pytest_collection_modifyitems(config, items):
@@ -19,13 +20,13 @@ def pytest_collection_modifyitems(config, items):
     """
     for item in items:
         if 'standalone' in item.keywords:
-            items_by_category['last'].append(item)
+            ITEMS_BY_CATEGORY['last'].append(item)
         else:
-            items_by_category['first'].append(item)
+            ITEMS_BY_CATEGORY['first'].append(item)
 
     print('\n************************************************************')
     print('*                                                          *')
-    print('*  %s tests are still depending on the execution order     *' % len(items_by_category['first']))
+    print('*  %s tests are still depending on the execution order     *' % len(ITEMS_BY_CATEGORY['first']))
     print('*                                                          *')
     print('************************************************************')
     items[:] = _sort_alphabetically('first') + _sort_alphabetically('last')

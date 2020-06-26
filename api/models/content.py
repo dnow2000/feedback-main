@@ -18,15 +18,9 @@ from utils.db import Model
 
 
 class ContentType(enum.Enum):
-    def as_dict(self):
-        dict_value = {
-            'value': str(self.value),
-        }
-        return dict_value
-
-    article = 'article'
-    post = 'post'
-    video = 'video'
+    ARTICLE = 'article'
+    POST = 'post'
+    VIDEO = 'video'
 
 
 class Content(ApiHandler,

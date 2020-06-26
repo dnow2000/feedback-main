@@ -1,7 +1,7 @@
 from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.content import Content
-from models.tag import Tag
+from models.tag import SourceName, Tag
 from models.verdict import Verdict
 from models.verdict_tag import VerdictTag
 from models.user import User
@@ -19,12 +19,14 @@ def create_verdict_tags():
         content=content,
         editor=editor
     ).one()
-    conclusion_tag = Tag.query.filter_by(label='Inaccurate', type='conclusion').one()
+    conclusion_tag = Tag.query.filter_by(label='Inaccurate', type='CONCLUSION').one()
     verdict_tags.append(VerdictTag(
         verdict=verdict,
         tag=conclusion_tag
     ))
-    evaluation_tag = Tag.query.filter_by(type='evaluation', value=-1).one()
+    evaluation_tag = Tag.query.filter_by(source=SourceName.CONTENT,
+                                         type='EVALUATION',
+                                         value=-1).one()
     verdict_tags.append(VerdictTag(
         verdict=verdict,
         tag=evaluation_tag

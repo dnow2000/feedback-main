@@ -18,15 +18,15 @@ def create_roles():
             user.email
         ).group(1)
 
-        if user_type == "master":
+        if user_type == 'master':
             for role_type in RoleType:
                 roles.append(Role(
-                    type=role_type.value,
+                    type=role_type,
                     user=user
                 ))
         elif user_type != 'user':
             roles.append(Role(
-                type=getattr(RoleType, user_type).value,
+                type=getattr(RoleType, user_type.upper()),
                 user=user
             ))
 

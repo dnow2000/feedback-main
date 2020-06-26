@@ -19,7 +19,7 @@ from validation.roles import check_has_role
 @app.route('/reviews', methods=['GET'])
 @login_or_api_key_required
 def get_reviews():
-    check_has_role(current_user, 'editor')
+    check_has_role(current_user, 'EDITOR')
 
     query = Review.query
 
@@ -51,7 +51,7 @@ def get_review(review_id):
 @expect_json_data
 def create_review():
 
-    check_has_role(current_user, 'reviewer')
+    check_has_role(current_user, 'REVIEWER')
 
     review = Review()
     review.modify(request.json)
@@ -69,7 +69,7 @@ def create_review():
 @expect_json_data
 def modify_review(review_id):
 
-    check_has_role(current_user, 'reviewer')
+    check_has_role(current_user, 'REVIEWER')
 
     review = load_or_404(Review, review_id)
     review.modify(request.json)

@@ -9,7 +9,7 @@ def keep_not_saved_trendings(trendings, table_name):
     identifier_key = 'buzzsumoIdentifier' if table_name == 'content' \
                                           else 'poynterIdentifier'
 
-    already_saved_identifiers = [trending[identifier_key] for trending in trendings]
+    already_saved_identifiers = [str(trending[identifier_key]) for trending in trendings]
     is_already_saved_query = getattr(model, identifier_key).in_(already_saved_identifiers)
     already_saved_entities = model.query \
                           .filter(is_already_saved_query) \
