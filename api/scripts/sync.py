@@ -6,6 +6,7 @@ from flask import current_app as app
 
 import repository.sync as syncs_by_name
 
+
 @app.manager.option('-n',
                     '--name',
                     help='Name')
