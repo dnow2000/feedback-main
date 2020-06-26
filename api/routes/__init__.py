@@ -24,6 +24,7 @@ def import_routes():
 
     import routes.health
     import routes.orcid
+    import routes.test_buzzsumo_id
     import routes.storage
     import routes.wikidata
 

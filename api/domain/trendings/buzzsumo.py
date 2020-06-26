@@ -157,6 +157,33 @@ def buzzsumo_trending_from_url(url: str):
     return buzzsumo_trending_from_result(results[0])
 
 
+def shares_from_buzzsumo_url(buzzsumo_id):
+
+    url = buzzsumo_url_from('shares', {'article_id': buzzsumo_id})
+    response = requests.get(url)
+
+    json_file = response.json()
+
+    if 'results' not in json_file:
+        return []
+
+    results = json_file['results']
+
+    if len(results) == 0:
+        return []
+
+    media_items = list()
+
+    for result in results:
+        if 'username' in result:
+            media_items.append({
+                "name": result['username'],
+                "url": "https://twitter.com/" + result['username']
+            })
+
+    return media_items
+
+
 def find_buzzsumo_trendings(
         days=1,
         max_trendings=3,
