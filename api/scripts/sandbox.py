@@ -23,6 +23,7 @@ def sandbox(name, capture):
         traceback.print_tb(e.__traceback__)
         pprint(vars(e))
 
+
 @app.manager.command
 def sandbox_to_testcafe():
     try:

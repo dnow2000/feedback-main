@@ -4,8 +4,7 @@ from pprint import pprint
 import traceback
 from flask import current_app as app
 
-import repository
-
+import repository.sync as syncs_by_name
 
 @app.manager.option('-n',
                     '--name',
@@ -18,7 +17,7 @@ import repository
                     help='To Date')
 def sync(name, from_date, to_date):
     try:
-        sync_function = getattr(repository, name).sync
+        sync_function = getattr(syncs_by_name, name).sync
         if name == 'contents':
             now_date =  datetime.utcnow()
             from_date = now_date - timedelta(minutes=int(from_date))
