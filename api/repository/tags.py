@@ -18,6 +18,5 @@ def sync():
     for tag_dict in TAGS:
         tag = Tag.create_or_modify(tag_dict, search_by=['label', 'type'])
         tags.append(tag)
-
     ApiHandler.save(*tags)
     logger.info('sync tags data...Done.')

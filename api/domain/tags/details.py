@@ -1,3 +1,6 @@
+from models.tag import TagType
+
+
 TAGS = [
     {
         'info': 'it is a statement of fact in direct contradiction with available observations/data',
@@ -67,6 +70,4 @@ TAGS = [
 ]
 
 for tag in TAGS:
-    tag.update({
-        'type': 'DETAIL'
-    })
+    tag['type'] = TagType.DETAIL

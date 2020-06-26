@@ -1,9 +1,15 @@
+import enum
 from sqlalchemy import Column, \
+                       Enum, \
                        String
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins.has_science_feedback_mixin import HasScienceFeedbackMixin
 from utils.db import Model
+
+
+class OrganizationType(enum.Enum):
+    COMPANY = 'company'
 
 
 class Organization(ApiHandler,
@@ -17,3 +23,5 @@ class Organization(ApiHandler,
     description = Column(String(128))
 
     name = Column(String(256), nullable=False)
+
+    type = Column(Enum(OrganizationType))

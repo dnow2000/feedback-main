@@ -26,7 +26,7 @@ def create_roles():
                 ))
         elif user_type != 'user':
             roles.append(Role(
-                type=user_type.upper(),
+                type=getattr(RoleType, user_type.upper()),
                 user=user
             ))
 

@@ -1,4 +1,4 @@
-"""alter tag types to capitalized keys
+"""alter tag types to capitalized names
 
 Revision ID: 88eae550c5b5
 Revises: a2f0115197e6
@@ -23,12 +23,14 @@ class PreviousTagType(enum.Enum):
     issue = 'issue'
     qualification = 'qualification'
 
+
 class TagType(enum.Enum):
     CONCLUSION = 'conclusion'
     DETAIL = 'detail'
     EVALUATION = 'evaluation'
     ISSUE = 'issue'
     QUALIFICATION = 'qualification'
+
 
 previous_enum = sa.Enum(PreviousTagType, name='tagtype')
 new_enum = sa.Enum(TagType, name='tagtype')

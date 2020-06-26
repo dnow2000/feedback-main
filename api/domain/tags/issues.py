@@ -1,3 +1,7 @@
+from models.scope import ScopeType
+from models.tag import TagType
+
+
 TAGS = [
     {
         'label': 'Accuracy'
@@ -24,12 +28,12 @@ for tag in TAGS:
         'scopes': [
             {
                 '__SEARCH_BY__': 'type',
-                'type': 'REVIEW',
+                'type': ScopeType.REVIEW,
             },
             {
                 '__SEARCH_BY__': 'type',
-                'type': 'VERDICT'
+                'type': ScopeType.VERDICT
             }
         ],
-        'type': 'ISSUE'
+        'type': TagType.ISSUE
     })

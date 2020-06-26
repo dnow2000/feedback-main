@@ -1,4 +1,4 @@
-"""alter scope types to capitalized keys
+"""alter scope types to capitalized names
 
 Revision ID: dd951773fcb0
 Revises: 88eae550c5b5
@@ -24,12 +24,14 @@ class PreviousScopeType(enum.Enum):
     user = 'user'
     verdict = 'verdict'
 
+
 class ScopeType(enum.Enum):
     CLAIM = 'claim'
     CONTENT = 'content'
     REVIEW = 'review'
     USER = 'user'
     VERDICT = 'verdict'
+
 
 previous_enum = sa.Enum(PreviousScopeType, name='scopetype')
 new_enum = sa.Enum(ScopeType, name='scopetype')
