@@ -54,14 +54,6 @@ def setup(flask_app,
     flask_app.app_context().push()
     import_models(with_creation=with_models_creation)
 
-    if with_jobs:
-        from apscheduler.schedulers.blocking import BlockingScheduler
-        jobs = import_jobs()
-        scheduler = BlockingScheduler()
-        for job in jobs:
-            scheduler.add_job(**job)
-        flask_app.scheduler = scheduler
-
     if with_login_manager:
         from flask_login import LoginManager
         flask_app.config['SESSION_COOKIE_HTTPONLY'] = not flask_app.config['TESTING']
@@ -79,6 +71,14 @@ def setup(flask_app,
 
     if with_routes:
         import_routes()
+
+    if with_jobs:
+        from apscheduler.schedulers.blocking import BlockingScheduler
+        jobs = import_jobs()
+        scheduler = BlockingScheduler()
+        for job in jobs:
+            scheduler.add_job(**job)
+        flask_app.scheduler = scheduler
 
     if with_scripts_manager:
         from flask_script import Manager
