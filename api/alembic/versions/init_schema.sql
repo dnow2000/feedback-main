@@ -570,7 +570,8 @@ CREATE TABLE public.organization (
     entity character varying(16),
     label character varying(64),
     description character varying(128),
-    name character varying(256) NOT NULL
+    name character varying(256) NOT NULL,
+    type public.organizationtype
 );
 
 
@@ -1691,3 +1692,4 @@ ALTER TABLE ONLY public.verdict_tag
 --
 -- PostgreSQL database dump complete
 --
+
