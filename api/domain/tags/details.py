@@ -70,4 +70,7 @@ TAGS = [
 ]
 
 for tag in TAGS:
-    tag['type'] = TagType.DETAIL
+    tag.update({
+        'id': '__NEXT_ID_IF_NOT_EXISTS__',
+        'type': TagType.DETAIL
+    })

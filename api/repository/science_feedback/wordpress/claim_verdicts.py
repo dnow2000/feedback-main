@@ -27,13 +27,15 @@ def claim_verdicts_from_airtable(max_verdicts=None):
 
         for conclusion in claim_review['conclusions']:
             tag = Tag.create_or_modify({
+                '__SEARCH_BY__': ['label', 'type'],
                 'label': conclusion,
                 'type': TagType.CONCLUSION
-            }, search_by=['label', 'type'])
+            })
             verdict_tag = VerdictTag.create_or_modify({
+                '__SEARCH_BY__': ['tagId', 'verdictId'],
                 'tagId': humanize(tag.id),
                 'verdictId': humanize(verdict.id)
-            }, search_by=['tagId', 'verdictId'])
+            })
             verdict.verdictTags = verdict.verdictTags + [verdict_tag]
 
     return verdicts

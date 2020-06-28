@@ -28,7 +28,7 @@ TAGS = [
     },
     {
         'info': 'it overstates the confidence scientists actually have in the theory or it slightly distorts what can be predicted based on the theory',
-        'label': 'Mostly Correct',
+        'label': 'Mostly Accurate',
         'value': 1
     },
     {
@@ -69,4 +69,7 @@ TAGS = [
 ]
 
 for tag in TAGS:
-    tag['type'] = TagType.CONCLUSION
+    tag.update({
+        'id': '__NEXT_ID_IF_NOT_EXISTS__',
+        'type': TagType.CONCLUSION
+    })
