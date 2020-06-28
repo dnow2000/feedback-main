@@ -10,13 +10,17 @@ def users_from_scrap(users_max=3):
     reviewers = scrap_reviewers(reviewers_max=users_max)
     users = []
     for reviewer in reviewers:
-        user = User.create_or_modify(reviewer, search_by=['firstName', 'lastName'])
+        user = User.create_or_modify({
+            '__SEARCH_BY__': ['firstName', 'lastName'],
+            **reviewer
+        })
         for publication in reviewer['publications']:
             content = content_from_url(publication['url'])
             content.tags = 'isValidatedAsPeerPublication'
             author_content = AuthorContent.create_or_modify({
+                '__SEARCH_BY__': ['authorId', 'contentId'],
                 'authorId': humanize(user.id),
                 'contentId': humanize(content.id)
-            }, search_by=['authorId', 'contentId'])
+            })
             user.authorContents = user.authorContents + [author_content]
     return users

@@ -21,9 +21,10 @@ CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(
 
 
 def content_from_url(url, **kwargs):
-    content = Content.create_or_modify(
-        {'url': url},
-        search_by='url')
+    content = Content.create_or_modify({
+        '__SEARCH_BY__': 'url',
+        'url': url
+    })
 
     trending = buzzsumo_trending_from_url(url, **kwargs)
     if trending:

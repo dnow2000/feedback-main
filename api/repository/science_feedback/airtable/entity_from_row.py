@@ -20,9 +20,10 @@ def appearance_from_row(row, unused_index=None):
     if not reviewed_items:
         return None
 
-    quoting_content = Content.create_or_modify(
-        {'url': row['url'].strip()},
-        search_by=['url'])
+    quoting_content = Content.create_or_modify({
+        '__SEARCH_BY__': 'url',
+        'url': row['url'].strip()
+    })
     medium_science_feedback_ids = row.get('Outlet')
     if medium_science_feedback_ids:
         medium = Medium.query.filter_by(
@@ -35,9 +36,10 @@ def appearance_from_row(row, unused_index=None):
             author = User.query.filter_by(
                 scienceFeedbackIdentifier=author_science_feedback_id).first()
             author_content = AuthorContent.create_or_modify({
+                '__SEARCH_BY__': ['authorId', 'contentId'],
                 'authorId': humanize(author.id),
                 'contentId': humanize(quoting_content.id)
-            }, search_by=['authorId', 'contentId'])
+            })
             quoting_content.authorContents = quoting_content.authorContents + [author_content]
 
     quoted_claim = Claim.query.filter_by(
@@ -67,6 +69,7 @@ def appearance_from_row(row, unused_index=None):
                                                .replace('-', ' ')
 
     appearance_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'quotedClaim': quoted_claim,
         'quotedContent': quoted_content,
         'quotingContent': quoting_content,
@@ -74,7 +77,7 @@ def appearance_from_row(row, unused_index=None):
         'testifier': testifier
     }
 
-    return Appearance.create_or_modify(appearance_dict, search_by='scienceFeedbackIdentifier')
+    return Appearance.create_or_modify(appearance_dict)
 
 
 def author_from_row(row, index=None):
@@ -84,6 +87,7 @@ def author_from_row(row, index=None):
     last_name = 'Author{}'.format(index) if IS_DEVELOPMENT \
                 else ' '.join(chunks[1:]).replace('\'', '')
     user_dict = {
+        '__SEARCH_BY__': 'email',
         'email': '{}.{}@{}.{}'.format(
             first_name.lower(),
             last_name.lower(),
@@ -94,14 +98,15 @@ def author_from_row(row, index=None):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by='email')
+    user = User.create_or_modify(user_dict)
     if not user.id:
         user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
 
     role = Role.create_or_modify({
+        '__SEARCH_BY__': ['type', 'userId'],
         'type': RoleType.AUTHOR,
         'userId': humanize(user.id)
-    }, search_by=['type', 'userId'])
+    })
     user.role = role
 
     return user
@@ -113,11 +118,12 @@ def claim_from_row(row, unused_index=None):
         return None
 
     claim_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'scienceFeedbackIdentifier': row['airtableId'],
         'text': text
     }
 
-    return Claim.create_or_modify(claim_dict, search_by='scienceFeedbackIdentifier')
+    return Claim.create_or_modify(claim_dict)
 
 
 def editor_from_row(row, index=None):
@@ -127,6 +133,7 @@ def editor_from_row(row, index=None):
     last_name = 'Editor{}'.format(index) if IS_DEVELOPMENT \
                 else ' '.join(chunks[1:]).replace('\'', '')
     user_dict = {
+        '__SEARCH_BY__': 'email',
         'email': '{}.{}@{}.{}'.format(
             first_name.lower(),
             last_name.lower(),
@@ -137,14 +144,15 @@ def editor_from_row(row, index=None):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by='email')
+    user = User.create_or_modify(user_dict)
     if not user.id:
         user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
 
     role = Role.create_or_modify({
+        '__SEARCH_BY__': ['type', 'userId'],
         'type': RoleType.EDITOR,
         'userId': humanize(user.id)
-    }, search_by=['type', 'userId'])
+    })
     user.role = role
 
     return user
@@ -152,11 +160,12 @@ def editor_from_row(row, index=None):
 
 def outlet_from_row(row, unused_index=None):
     medium_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'name': row['Name'],
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    return Medium.create_or_modify(medium_dict, search_by='scienceFeedbackIdentifier')
+    return Medium.create_or_modify(medium_dict)
 
 
 def review_from_row(row, unused_index=None):
@@ -174,12 +183,13 @@ def review_from_row(row, unused_index=None):
         return None
 
     review_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'claim': claim,
         'scienceFeedbackIdentifier': row['airtableId'],
         'reviewer': reviewer
     }
 
-    return Review.create_or_modify(review_dict, search_by='scienceFeedbackIdentifier')
+    return Review.create_or_modify(review_dict)
 
 
 def reviewer_from_row(row, index=None):
@@ -188,6 +198,7 @@ def reviewer_from_row(row, index=None):
     last_name = 'Reviewer{}'.format(index) if IS_DEVELOPMENT \
                 else row['Last name']
     user_dict = {
+        '__SEARCH_BY__': 'email',
         'email': '{}.{}@{}.{}'.format(
             first_name.lower(),
             last_name.lower(),
@@ -198,14 +209,15 @@ def reviewer_from_row(row, index=None):
         'scienceFeedbackIdentifier': row['airtableId']
     }
 
-    user = User.create_or_modify(user_dict, search_by='email')
+    user = User.create_or_modify(user_dict)
     if not user.id:
         user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
 
     role = Role.create_or_modify({
+        '__SEARCH_BY__': ['type', 'userId'],
         'type': RoleType.REVIEWER,
         'userId': humanize(user.id)
-    }, search_by=['type', 'userId'])
+    })
     user.role = role
 
     return user
@@ -219,18 +231,20 @@ def social_from_row(row, unused_index=None):
                                   .split('/')[0] \
                                   .split('.')[0] \
                                   .title()
-    organization = Organization.create_or_modify(
-        {'name': organization_name},
-        search_by='name')
+    organization = Organization.create_or_modify({
+        '__SEARCH_BY__': 'name',
+        'name': organization_name
+    })
 
     medium_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'name': row['Name'],
         'organization': organization,
         'scienceFeedbackIdentifier': row['airtableId'],
         'url': row['url']
     }
 
-    return Medium.create_or_modify(medium_dict, search_by='scienceFeedbackIdentifier')
+    return Medium.create_or_modify(medium_dict)
 
 
 def verdict_from_row(row, unused_index=None):
@@ -246,6 +260,7 @@ def verdict_from_row(row, unused_index=None):
         return None
 
     verdict_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'claim': claim,
         'editor': editor,
         'scienceFeedbackIdentifier': row['airtableId'],
@@ -253,4 +268,4 @@ def verdict_from_row(row, unused_index=None):
         'title': row['Review headline']
     }
 
-    return Verdict.create_or_modify(verdict_dict, search_by='scienceFeedbackIdentifier')
+    return Verdict.create_or_modify(verdict_dict)

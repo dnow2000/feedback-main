@@ -129,4 +129,4 @@ TAGS = [
 for tag in TAGS:
     tag['type'] = TagType.EVALUATION
     for scope in tag['scopes']:
-        scope['__SEARCH_BY__'] = 'type'
+        scope['__SEARCH_BY__'] = ['tagId', 'type']

@@ -27,11 +27,11 @@ for tag in TAGS:
     tag.update({
         'scopes': [
             {
-                '__SEARCH_BY__': 'type',
+                '__SEARCH_BY__': ['tagId', 'type'],
                 'type': ScopeType.REVIEW,
             },
             {
-                '__SEARCH_BY__': 'type',
+                '__SEARCH_BY__': ['tagId', 'type'],
                 'type': ScopeType.VERDICT
             }
         ],
