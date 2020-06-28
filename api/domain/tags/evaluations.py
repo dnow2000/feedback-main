@@ -127,6 +127,16 @@ TAGS = [
 ]
 
 for tag in TAGS:
-    tag['type'] = TagType.EVALUATION
+    tag.update({
+        'id': '__NEXT_ID_IF_NOT_EXISTS__',
+        'type': TagType.EVALUATION
+    })
     for scope in tag['scopes']:
-        scope['__SEARCH_BY__'] = ['tagId', 'type']
+        scope.update({
+            '__SEARCH_BY__': ['tagId', 'type'],
+            'tagId': {
+                'humanized': True,
+                'key': 'id',
+                'type': '__PARENT__'
+            },
+        })

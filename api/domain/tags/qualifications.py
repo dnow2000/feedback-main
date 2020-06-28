@@ -97,8 +97,14 @@ TAGS = [
 
 for tag in TAGS:
     tag.update({
+        'id': '__NEXT_ID_IF_NOT_EXISTS__',
         'scopes': [{
             '__SEARCH_BY__': ['tagId', 'type'],
+            'tagId': {
+                'humanized': True,
+                'key': 'id',
+                'type': '__PARENT__'
+            },
             'type': ScopeType.REVIEW
         }],
         'type': TagType.QUALIFICATION
