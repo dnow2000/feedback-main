@@ -9,6 +9,7 @@ import { ROOT_ASSETS_PATH } from 'utils/config'
 export default () => (
   <>
     <Header />
+    
     <Main className="covid with-header">
       <section className="hero">
         <div className="container">
@@ -99,6 +100,7 @@ export default () => (
         </div>
       </section>
     </Main>
+    
     <Footer />
   </>
 )
