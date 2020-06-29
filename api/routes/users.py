@@ -8,7 +8,7 @@ from models.user import User
 from repository.users import keep_users_with_roles, \
                              get_users_join_query, \
                              get_users_query_with_keywords
-from routes.utils.includes import USER_INCLUDES
+from utils.includes import USER_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required

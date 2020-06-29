@@ -17,12 +17,12 @@ export const links = [
   {
     label: () => 'Sources',
     path: '/sources',
-    visible: () => visibleFor(['editor', 'reviewer', 'witness'])
+    visible: () => visibleFor(['editor', 'reviewer', 'testifier'])
   },
   {
     label: () => 'Verified',
     path: '/verdicts',
-    visible: visibleFor(['editor'])
+    visible: () => true
   },
   {
     label: currentRoles => currentRoles.admin

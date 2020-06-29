@@ -4,10 +4,10 @@ from sqlalchemy_api_handler import ApiHandler, as_dict
 
 from models.content import Content
 from models.user import User
-from routes.utils.includes import USER_INCLUDES
 from repository.login_manager import stamp_session, discard_session
 from repository.users import get_user_with_credentials
 from storage.thumb import get_crop, read_thumb, save_thumb
+from utils.includes import USER_INCLUDES
 from validation.thumbs import check_thumb_in_request, \
                               check_thumb_quality
 

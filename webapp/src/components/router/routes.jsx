@@ -8,7 +8,8 @@ import withRoles from 'components/hocs/withRoles'
 import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
-import Covid from 'components/pages/CovidV0'
+import CovidV0 from 'components/pages/CovidV0'
+import Exploration from 'components/pages/Exploration'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
@@ -32,10 +33,10 @@ export default [
     render: () => <Redirect to="/landing" />,
   },
   {
-    component: Covid,
+    component: CovidV0,
     exact: true,
-    path: '/covid',
-    title: 'Covid'
+    path: '/covid-19',
+    title: 'Covid-19'
   },
   {
     component: withRequiredLogin(Account),
@@ -57,6 +58,12 @@ export default [
     exact: true,
     path: `/contents/:contentId${formPath}`,
     title: 'Content',
+  },
+  {
+    component: withRequiredLogin(Exploration),
+    exact: true,
+    path: '/exploration/:collectionName?/:entityId([A-Za-z0-9]{2,})?',
+    title: 'Exploration'
   },
   {
     component: withRequiredLogin(Sources),

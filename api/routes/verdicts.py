@@ -6,7 +6,7 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    load_or_404
 
 from models.verdict import Verdict
-from routes.utils.includes import VERDICT_INCLUDES
+from utils.includes import VERDICT_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required

@@ -9,7 +9,7 @@ from models.review import Review
 from repository.reviews import get_reviews_join_query, \
                                get_reviews_query_with_keywords, \
                                save_tags
-from routes.utils.includes import REVIEW_INCLUDES
+from utils.includes import REVIEW_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required

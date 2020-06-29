@@ -1854,6 +1854,11 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"@yomguithereal/helpers@^1.0.0", "@yomguithereal/helpers@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@yomguithereal/helpers/-/helpers-1.0.1.tgz#167da902817355e4feceda0c64280dd0b133f8a8"
+  integrity sha512-FhhWmGYCi5XWIC6kSfpcxkkuabi8koiH1CebrrqMZgK0WYdRdinWla/qLCeiqVSuT+iNOxQUMhhsSDbdgSsqjw==
+
 abab@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
@@ -1923,6 +1928,11 @@ acorn@^7.1.1:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.2.0.tgz#17ea7e40d7c8640ff54a694c889c26f31704effe"
   integrity sha512-apwXVmYVpQ34m/i71vrApRrRKCWQnZZF1+npOD0WV5xZFfwWOmKGQ2RWlfdy9vWITsenisM8M0Qeq8agcFHNiQ==
+
+add@^2.0.6:
+  version "2.0.6"
+  resolved "https://registry.yarnpkg.com/add/-/add-2.0.6.tgz#248f0a9f6e5a528ef2295dbeec30532130ae2235"
+  integrity sha1-JI8Kn25aUo7yKV2+7DBTITCuIjU=
 
 address@1.1.2, address@^1.0.1:
   version "1.1.2"
@@ -3676,6 +3686,13 @@ chai@^4.1.2:
     get-func-name "^2.0.0"
     pathval "^1.1.0"
     type-detect "^4.0.5"
+
+"chainsaw@>=0.0.7 <0.1":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/chainsaw/-/chainsaw-0.0.9.tgz#11a05102d1c4c785b6d0415d336d5a3a1612913e"
+  integrity sha1-EaBRAtHEx4W20EFdM21aOhYSkT4=
+  dependencies:
+    traverse ">=0.3.0 <0.4"
 
 chalk@2.4.2, chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0, chalk@^2.4.0, chalk@^2.4.1, chalk@^2.4.2:
   version "2.4.2"
@@ -6641,6 +6658,52 @@ graphlib@^2.1.5:
   dependencies:
     lodash "^4.17.15"
 
+graphology-indices@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/graphology-indices/-/graphology-indices-0.8.0.tgz#42ff8704da565c692f7224c897653507aa1a78ac"
+  integrity sha512-uyoRm/zN30nddan6BuMvybeb2DS+TZN1gAF7qmAPFKLtW8EDtgwHByQt+24xlTWuibnDiPVP/UPpCMrSAWFbDQ==
+  dependencies:
+    graphology-types "^0.16.0"
+    graphology-utils "^1.7.0"
+    mnemonist "^0.35.0"
+
+graphology-metrics@1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/graphology-metrics/-/graphology-metrics-1.6.1.tgz#a2333ce4a8c90a2903a2deafcfb42cf6681c6f85"
+  integrity sha512-0VkKC80GI3OWH/I7DwwroHBB9ACyNk5O3h9ni4TvLRGevSalWNASDF5F87jrVwk08ZJcndJ8cFe5BYY3+EPluQ==
+  dependencies:
+    graphology-shortest-path "^1.0.1"
+    graphology-utils "^1.3.1"
+    lodash "^4.17.11"
+
+graphology-shortest-path@^1.0.1:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/graphology-shortest-path/-/graphology-shortest-path-1.3.3.tgz#f34722f8e3db5f11c17ac4e04d1c2fdfa44eae95"
+  integrity sha512-0mI0rEX3PiOUHdiF6eG9lwDCn5zDuSWvuvwqFhWUgcyQMpT0hzuFGXQkveF74x+2KGucKVZCL895EuHfsPYzWQ==
+  dependencies:
+    "@yomguithereal/helpers" "^1.0.1"
+    graphology-indices "^0.8.0"
+    graphology-types "^0.16.0"
+    graphology-utils "^1.7.0"
+    mnemonist "^0.36.1"
+
+graphology-types@^0.15.1:
+  version "0.15.5"
+  resolved "https://registry.yarnpkg.com/graphology-types/-/graphology-types-0.15.5.tgz#d6b3618f974c8f882b0a779f7ec68a2f1106c2d2"
+  integrity sha512-2NONgcQ0KmzMoiLAOkk4AkyhrQsA4dfJKyGOMYUfz2sNBAR/VK3oPcalCg3ID7zDd4XSqE3rMtEt+G3KcUaLew==
+
+graphology-types@^0.16.0:
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/graphology-types/-/graphology-types-0.16.0.tgz#37896c4c82117a247c97a16219629215f1a596b4"
+  integrity sha512-iBGyPuMHlmHdXaB0cu/vllkPJ3myf063ZICY90zDxYQrJYZ3Dm4h2+dLM3Kof+CVJzM4HGg96ZFZ8HS6C7LgCQ==
+
+graphology-utils@^1.3.1, graphology-utils@^1.4.0, graphology-utils@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/graphology-utils/-/graphology-utils-1.7.0.tgz#0541855ffd0e5c011fd2b9f961b769bac23845b6"
+  integrity sha512-g94E5O1FTws4E81AVKnCmxinDN1KRO7Zpysqd/j7Xjy2Qjs7DOnB3XHZUaS/Yk6D74LorBp7NJY5685IEkAh6g==
+  dependencies:
+    graphology-types "^0.15.1"
+
 growly@^1.3.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/growly/-/growly-1.3.0.tgz#f10748cbe76af964b7c96c93c6bcc28af120c081"
@@ -6763,6 +6826,13 @@ hash.js@^1.0.0, hash.js@^1.0.3:
   dependencies:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
+
+"hashish@>=0.0.2 <0.1":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/hashish/-/hashish-0.0.4.tgz#6d60bc6ffaf711b6afd60e426d077988014e6554"
+  integrity sha1-bWC8b/r3Ebav1g5CbQd5iAFOZVQ=
+  dependencies:
+    traverse ">=0.2.4"
 
 he@1.2.x:
   version "1.2.0"
@@ -9274,6 +9344,20 @@ mixin-object@^2.0.1:
   dependencies:
     minimist "^1.2.5"
 
+mnemonist@^0.35.0:
+  version "0.35.0"
+  resolved "https://registry.yarnpkg.com/mnemonist/-/mnemonist-0.35.0.tgz#318fb69b79b98309a97ebf7f1d9f5873c3d86605"
+  integrity sha512-dewrFCpMv4jfEIxZLZufkxieuib2Q7bkZviiDyQnsDzNkkk7e1YV93tdY8sgwe+XuFQ5e+CJ+kR8qQ3jbzF9KQ==
+  dependencies:
+    obliterator "^1.6.1"
+
+mnemonist@^0.36.1:
+  version "0.36.1"
+  resolved "https://registry.yarnpkg.com/mnemonist/-/mnemonist-0.36.1.tgz#9d8aa39e7db23ccb3735861d1081fc3faea4f180"
+  integrity sha512-PXrJJ5MRu++lfoZN1z/DjQhlMrrNgmHKb+DVFqGy/lCn9hMTZwXKC6aaKKwtqd6lwwak3HOonqo3D1fhQzfwaQ==
+  dependencies:
+    obliterator "^1.6.1"
+
 moment-duration-format-commonjs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/moment-duration-format-commonjs/-/moment-duration-format-commonjs-1.0.0.tgz#dc5de612e6d6ff41f774d03772a139a363563bc3"
@@ -9775,6 +9859,11 @@ object.values@^1.1.0:
     es-abstract "^1.17.0-next.1"
     function-bind "^1.1.1"
     has "^1.0.3"
+
+obliterator@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/obliterator/-/obliterator-1.6.1.tgz#dea03e8ab821f6c4d96a299e17aef6a3af994ef3"
+  integrity sha512-9WXswnqINnnhOG/5SLimUlzuU1hFJUc8zkwyD59Sd+dPOMf05PmnYG/d6Q7HZ+KmgkZJa1PxRso6QdM3sTNHig==
 
 obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
@@ -11800,6 +11889,11 @@ react-side-effect@^1.1.0:
   dependencies:
     shallowequal "^1.0.1"
 
+react-sigma@^1.2.34:
+  version "1.2.34"
+  resolved "https://registry.yarnpkg.com/react-sigma/-/react-sigma-1.2.34.tgz#053f28e88c072b2f1bc0ab6f3a1ad34d53c58371"
+  integrity sha512-GYyZptmLLR+Q9AqjC8cKo6xxoyrhXz1dCrhYHRP26xZQA0oAkiNrWA4g8X7VsGn1uanqmrmR5IaLM20FZrObKA==
+
 react-transition-group@^4.3.0:
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.1.tgz#63868f9325a38ea5ee9535d828327f85773345c9"
@@ -12273,6 +12367,13 @@ remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
   integrity sha1-wkvOKig62tW8P1jg1IJJuSN52O8=
+
+remove@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/remove/-/remove-0.1.5.tgz#095ffd827d65c9f41ad97d33e416a75811079955"
+  integrity sha1-CV/9gn1lyfQa2X0z5BanWBEHmVU=
+  dependencies:
+    seq ">= 0.3.5"
 
 renderkid@^2.0.1:
   version "2.0.3"
@@ -12770,6 +12871,14 @@ send@0.17.1:
     range-parser "~1.2.1"
     statuses "~1.5.0"
 
+"seq@>= 0.3.5":
+  version "0.3.5"
+  resolved "https://registry.yarnpkg.com/seq/-/seq-0.3.5.tgz#ae02af3a424793d8ccbf212d69174e0c54dffe38"
+  integrity sha1-rgKvOkJHk9jMvyEtaRdODFTf/jg=
+  dependencies:
+    chainsaw ">=0.0.7 <0.1"
+    hashish ">=0.0.2 <0.1"
+
 serialize-javascript@^1.7.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/serialize-javascript/-/serialize-javascript-1.9.1.tgz#cfc200aef77b600c47da9bb8149c943e798c2fdb"
@@ -12884,6 +12993,16 @@ shellwords@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/shellwords/-/shellwords-0.1.1.tgz#d6b9181c1a48d397324c84871efbcfc73fc0654b"
   integrity sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww==
+
+sigma@^2.0.0-alpha32:
+  version "2.0.0-alpha32"
+  resolved "https://registry.yarnpkg.com/sigma/-/sigma-2.0.0-alpha32.tgz#06a28ee416a8b0320546d7ba1a9536a3da4b7e45"
+  integrity sha512-exfi5tvHXimucX1566uDysie6Kq3qYgwz+S+8lzg4yK6egPrMAGx3cVxSok0UqiQD0575Xmp5cfccCgTUkcLxg==
+  dependencies:
+    "@yomguithereal/helpers" "^1.0.0"
+    events "^3.0.0"
+    graphology-metrics "1.6.1"
+    graphology-utils "^1.4.0"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"
@@ -14186,6 +14305,16 @@ tr46@^1.0.1:
   integrity sha1-qLE/1r/SSJUZZ0zN5VujaTtwbQk=
   dependencies:
     punycode "^2.1.0"
+
+traverse@>=0.2.4:
+  version "0.6.6"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
+  integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
+
+"traverse@>=0.3.0 <0.4":
+  version "0.3.9"
+  resolved "https://registry.yarnpkg.com/traverse/-/traverse-0.3.9.tgz#717b8f220cc0bb7b44e40514c22b2e8bbc70d8b9"
+  integrity sha1-cXuPIgzAu3tE5AUUwisui7xw2Lk=
 
 tree-kill@^1.1.0:
   version "1.2.2"
