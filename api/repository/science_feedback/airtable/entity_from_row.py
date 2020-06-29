@@ -107,7 +107,7 @@ def author_from_row(row, index=None):
         'type': RoleType.AUTHOR,
         'userId': humanize(user.id)
     })
-    user.role = role
+    user.roles = user.roles + [role]
 
     return user
 
@@ -153,7 +153,7 @@ def editor_from_row(row, index=None):
         'type': RoleType.EDITOR,
         'userId': humanize(user.id)
     })
-    user.role = role
+    user.roles = user.roles + [role]
 
     return user
 
@@ -218,7 +218,7 @@ def reviewer_from_row(row, index=None):
         'type': RoleType.REVIEWER,
         'userId': humanize(user.id)
     })
-    user.role = role
+    user.roles = user.roles + [role]
 
     return user
 
