@@ -13,7 +13,10 @@ def label_from(entity):
     return node_id_from(entity)
 
 
-def graph_from_entity(entity, node_ids=None, graph=None):
+def graph_from_entity(entity,
+                      limit=None,
+                      node_ids=None,
+                      graph=None):
     if not graph:
         graph = {
             'nodes': [],
@@ -23,6 +26,9 @@ def graph_from_entity(entity, node_ids=None, graph=None):
         seed(1)
 
     node_id = node_id_from(entity)
+
+    if limit and len(node_ids) > limit:
+        return graph
 
     if node_id not in node_ids:
         node = {
