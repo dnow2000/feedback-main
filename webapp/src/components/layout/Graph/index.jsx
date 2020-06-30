@@ -6,7 +6,7 @@ import {
 } from 'react-sigma'
 
 
-import Nodes from './Nodes'
+import ForeignObjectNodes from './ForeignObjectNodes'
 
 
 export default ({ graph }) => {
@@ -17,7 +17,7 @@ export default ({ graph }) => {
           graph={graph}
           renderer="svg"
         >
-          <Nodes />
+          <ForeignObjectNodes />
           <RelativeSize initialSize={10}/>
           <ForceAtlas2/>
         </Sigma>
