@@ -1,9 +1,6 @@
 import * as d3 from 'd3-selection'
 import { Component } from 'react'
 
-import { ROOT_ASSETS_PATH } from 'utils/config'
-
-
 
 class _ extends Component {
   constructor(props) {
