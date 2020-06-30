@@ -2,7 +2,7 @@ import * as d3 from 'd3-selection'
 import { Component } from 'react'
 
 
-class _ extends Component {
+export default class _ extends Component {
   constructor(props) {
       super(props)
       d3.select('#sigma-group-nodes')
@@ -21,6 +21,3 @@ class _ extends Component {
     return null
   }
 }
-
-
-export default _
