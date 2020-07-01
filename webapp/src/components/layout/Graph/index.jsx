@@ -1,14 +1,12 @@
 
 import { scaleLinear } from 'd3-scale'
 import { UndirectedGraph } from 'graphology'
-import circularLayout from 'graphology-layout/circular'
-import complete from 'graphology-generators/classic/complete'
-import randomLayout from 'graphology-layout/random'
+import circlepackLayout from 'graphology-layout/circlepack'
+import forceAtlas2 from "graphology-layout-forceatlas2"
 import { WebGLRenderer } from 'sigma'
 import { animateNodes } from 'sigma/animate'
 import extent from 'simple-statistics/src/extent'
 import React, { useEffect, useRef } from 'react'
-
 
 
 export default ({ graph }) => {
@@ -25,6 +23,7 @@ export default ({ graph }) => {
     const yScale = scaleLinear().domain(yExtent).range([0, 1])
 
     const undirectedGraph = new UndirectedGraph()
+
     nodes.forEach(node => {
       const undirectedNode = {
         ...node,
@@ -34,47 +33,31 @@ export default ({ graph }) => {
       }
       undirectedGraph.addNode(node.id, undirectedNode)
     })
+
     edges.forEach(edge => {
       undirectedGraph.addEdge(edge.source,
                               edge.target,
                               { color: "#ccc" })
     })
+
     const renderer = new WebGLRenderer(undirectedGraph, graphRef.current)
 
     /*
-    const g = complete(UndirectedGraph, {order: 10})
-    randomLayout.assign(g)
-
-    g.nodes().forEach(node => {
-      const attr = g.getNodeAttributes(node)
-      g.mergeNodeAttributes(node, {
-        label: 'foo',
-        size: Math.max(4, Math.random() * 10),
-        color: 'black'
-      })
+    const layout = forceAtlas2(undirectedGraph, {
+      iterations: 100,
+      settings: forceAtlas2.inferSettings(undirectedGraph),
     })
-
-    const renderer = new WebGLRenderer(g, graphRef.current)
-    window.graph = g;
-    window.renderer = renderer;
-    window.camera = renderer.camera;
+    animateNodes(undirectedGraph,
+                 layout,
+                 { duration: 2000 })
     */
 
-
-    const initial = {}
-
-    nodes.forEach(node => {
-      initial[node.id] = {
-        x: node.x,
-        y: node.y,
-      }
+    const layout = forceAtlas2.assign(undirectedGraph, {
+      iterations: 100,
+      settings: forceAtlas2.inferSettings(undirectedGraph),
     })
 
-    const circle = circularLayout(undirectedGraph)
 
-    let state: boolean = false
-
-    animateNodes(undirectedGraph, circle, { duration: 2000 })
 
   }, [graph, graphRef])
 
