@@ -6,7 +6,11 @@ import { requestData } from 'redux-thunk-data'
 import Graph from 'components/layout/Graph'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-
+import {
+  componentAccessor,
+  heightAccessor,
+  widthAccessor
+} from 'utils/exploration'
 
 export default () => {
   const dispatch = useDispatch()
@@ -28,7 +32,12 @@ export default () => {
       <Header />
       <Main className="exploration with-header">
         <div className="container">
-          <Graph graph={graphs[0]}/>
+          <Graph
+            componentAccessor={componentAccessor}
+            heightAccessor={heightAccessor}
+            graph={graphs[0]}
+            widthAccessor={widthAccessor}
+          />
         </div>
       </Main>
     </>
