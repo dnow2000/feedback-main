@@ -1,14 +1,13 @@
 .graph {
   @extend .item;
 
+  box-sizing: border-box;
   height: calc(100vh - #{$header-height} - 1rem);
+  padding: 0;
+  position: relative;
 
-  div {
+  canvas {
     height: 100% !important;
-
-    canvas {
-      bottom: 1rem;
-      top: 1rem;
-    }
+    width: 100% !important;
   }
 }

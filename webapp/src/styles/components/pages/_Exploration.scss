@@ -1,3 +1,11 @@
 .exploration {
   padding-bottom: 0;
+
+  .graph {
+    position: relative;
+
+    .enter {
+      position: absolute;
+    }
+  }
 }
