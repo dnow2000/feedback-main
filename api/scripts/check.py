@@ -6,7 +6,6 @@ from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy.exc import OperationalError
 
-from models import import_models
 from utils.setup import setup
 from utils.db import db
 
