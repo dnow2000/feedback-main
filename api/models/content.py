@@ -4,8 +4,10 @@ from sqlalchemy import BigInteger, \
                        Column, \
                        DateTime, \
                        Enum, \
+                       ForeignKey, \
                        Text, \
                        String
+from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
@@ -44,6 +46,14 @@ class Content(ApiHandler,
     isValidatedAsPeerPublication = Column(Boolean(),
                                           nullable=False,
                                           default=False)
+
+    mediumId = Column(BigInteger(),
+                      ForeignKey('medium.id'),
+                      index=True)
+
+    medium = relationship('Medium',
+                          foreign_keys=[mediumId],
+                          backref='contents')
 
     publishedDate = Column(DateTime())
 
