@@ -1,4 +1,5 @@
 import classnames from 'classnames'
+import arrayMutators from 'final-form-arrays'
 import React, { useCallback } from 'react'
 import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -10,6 +11,7 @@ import { resolveCurrentUser } from 'with-react-redux-login'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
 import { orcidDecorator } from 'utils/orcid'
+
 
 import ApplicationBar from './ApplicationBar'
 import Form from './Form'
@@ -33,10 +35,13 @@ export default () => {
     body.append('croppingRect[y]', croppingRect.y)
     body.append('croppingRect[height]', croppingRect.height)
     Object.keys(formValues).forEach(key => {
+      let value = formValues[key]
       if (key === 'thumb' || key === 'croppingRect') {
         return
+      } else if (typeof value === 'object') {
+        value = JSON.stringify(value)
       }
-      body.append(key, formValues[key])
+      body.append(key, value)
     })
 
     return new Promise(resolve => {
@@ -55,6 +60,7 @@ export default () => {
   const renderReactFinalForm = useCallback(() => (
     <ReactFinalForm
       decorators={[orcidDecorator]}
+      mutators={arrayMutators}
       onSubmit={handleSubmit}
       render={Form}
     />

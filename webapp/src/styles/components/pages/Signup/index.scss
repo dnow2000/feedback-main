@@ -1,10 +1,8 @@
-@import './ApplicationBar.scss';
-@import "./Form/index.scss";
+@import 'ApplicationBar.scss';
+@import "Form/index.scss";
+
 
 .signup {
-  //align-items: center;
-  //display: flex;
-  //justify-content: center;
 
   .title {
     color: $primary;

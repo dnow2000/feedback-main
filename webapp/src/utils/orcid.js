@@ -5,7 +5,7 @@ import { API_URL } from './config'
 import { isEmpty } from './form'
 
 
-export const getRecord = createSelector(
+export const getOrcid = createSelector(
   orcidId => orcidId,
   async orcidId => {
 
@@ -23,9 +23,7 @@ export const getRecord = createSelector(
           values: null
         }
       }
-
-      const body = await response.json()
-      return { values: body }
+      return response.json()
 
     } catch (error) {
 
@@ -42,11 +40,11 @@ export const orcidDecorator = createDecorator(
   {
     field: 'orcidId',
     updates: async (orcidId, urlKey, formValues)  => {
-      const record = await getRecord(orcidId)
-      if (!record) {
+      const orcid = await getOrcid(orcidId)
+      if (!orcid) {
         return {}
       }
-      return Object.assign({}, record.values, formValues)
+      return {...orcid, ...formValues }
     }
   }
 )
