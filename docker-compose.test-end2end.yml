@@ -1,6 +1,19 @@
 version: '3.2'
 
 services:
+  apidb-test-end2end:
+    command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
+    container_name: ${APP_NAME}-apidb-test-end2end
+    environment:
+      - POSTGRES_DB=${APP_NAME}
+      - POSTGRES_PASSWORDWORD=${APP_NAME}_password
+      - POSTGRES_USER=${APP_NAME}_user
+    image: postgres:12.2
+    networks:
+      - db_test-end2end_nw
+    volumes:
+      - "./docker_data_test-end2end/apidb:/var/lib/postgresql"
+
   api-test-end2end:
     build:
       context: ./api
@@ -35,7 +48,8 @@ services:
     command: >
       bash -c "set -x;
                source ~/.profile;
-               ln -sf /lib/node/node_modules /opt/webapp/node_modules;
+               ln -sf /lib/node/node_modules /opt/webapp;
+               cp /lib/node/yarn.lock /opt/webapp/yarn.lock;
                cd /opt/webapp;
                yarn start;"
     container_name: ${APP_NAME}-webapp-test-end2end
@@ -44,7 +58,6 @@ services:
     environment:
       - API_URL=http://nginx-test-end2end:80
       - ENV=${ENV:-development}
-      - GIT_TAG=${GIT_TAG}
       - ROOT_PATH=http://localhost:3000
     networks:
       - db_test-end2end_nw
@@ -64,18 +77,7 @@ services:
     networks:
       - web_test-end2end_nw
 
-  apidb-test-end2end:
-    command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
-    container_name: ${APP_NAME}-apidb-test-end2end
-    environment:
-      - POSTGRES_DB=${APP_NAME}
-      - POSTGRES_PASSWORDWORD=${APP_NAME}_password
-      - POSTGRES_USER=${APP_NAME}_user
-    image: postgres:12.2
-    networks:
-      - db_test-end2end_nw
-    volumes:
-      - "./docker_data_test-end2end/apidb:/var/lib/postgresql"
+
 
 networks:
   db_test-end2end_nw:

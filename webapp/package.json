@@ -67,6 +67,7 @@
     "with-react-redux-login": "1.14.4"
   },
   "devDependencies": {
+    "cypress": "^3.8.0",
     "eslint-plugin-jest": "^23.0.5",
     "husky": "^4.2.5",
     "license-reporter": "^1.2.2",
@@ -75,8 +76,7 @@
     "prettier-stylelint": "^0.4.2",
     "stylelint": "^11.1.1",
     "stylelint-config-standard": "^19.0.0",
-    "stylelint-scss": "^3.12.0",
-    "testcafe": "1.6.0"
+    "stylelint-scss": "^3.12.0"
   },
   "scripts": {
     "build": "scripts/build.sh",
@@ -84,7 +84,7 @@
     "format:js": "prettier-eslint --write '{src,tests}/**/*.{js,jsx}'",
     "licenses": "node_modules/.bin/license-reporter save --json licenses.json",
     "start": "scripts/start.sh",
-    "test:end2end": "testcafe 'chrome:headless' tests"
+    "test:end2end": "node_modules/.bin/cypress run"
   },
   "browserslist": {
     "production": [
