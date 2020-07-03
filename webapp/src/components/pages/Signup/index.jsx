@@ -60,6 +60,7 @@ export default () => {
   const renderReactFinalForm = useCallback(() => (
     <ReactFinalForm
       decorators={[orcidDecorator]}
+      mutators={arrayMutators}
       onSubmit={handleSubmit}
       render={Form}
     />
