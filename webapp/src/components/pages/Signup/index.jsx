@@ -1,17 +1,10 @@
-<<<<<<< HEAD
 import classnames from 'classnames'
+import arrayMutators from 'final-form-arrays'
 import React, { useCallback } from 'react'
 import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
-=======
-import arrayMutators from 'final-form-arrays'
-import React, { useCallback } from 'react'
-import { Form as ReactFinalForm } from 'react-final-form'
-import { useDispatch } from 'react-redux'
-import { NavLink } from 'react-router-dom'
->>>>>>> submit signup with publication
 import { requestData } from 'redux-thunk-data'
 import { resolveCurrentUser } from 'with-react-redux-login'
 
@@ -19,11 +12,8 @@ import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
 import { orcidDecorator } from 'utils/orcid'
 
-<<<<<<< HEAD
+
 import ApplicationBar from './ApplicationBar'
-=======
-import ApplicationTypeButtons from './ApplicationTypeButtons'
->>>>>>> submit signup with publication
 import Form from './Form'
 
 
@@ -82,16 +72,6 @@ export default () => {
         <h1 className="title">
           {`Get on board!`}
         </h1>
-<<<<<<< HEAD
-=======
-        {null && <ApplicationTypeButtons />}
-        <ReactFinalForm
-          decorators={[orcidDecorator]}
-          mutators={arrayMutators}
-          onSubmit={handleSubmit}
-          render={Form}
-        />
->>>>>>> submit signup with publication
         <div className="to-signin">
           <NavLink to="/signin">
             (Or already have an account ?)

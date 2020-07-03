@@ -1,19 +1,8 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-@import './ApplicationBar.scss';
-@import "./Form/index.scss";
-=======
-@import "SignupForm/index.scss";
-=======
+@import 'ApplicationBar.scss';
 @import "Form/index.scss";
->>>>>>> submit signup with publication
 
->>>>>>> integrated publication item
 
 .signup {
-  //align-items: center;
-  //display: flex;
-  //justify-content: center;
 
   .title {
     color: $primary;

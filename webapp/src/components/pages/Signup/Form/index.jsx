@@ -11,12 +11,8 @@ import Submit from './Submit'
 const API_PATH = '/users/signup'
 
 
-<<<<<<< HEAD:webapp/src/components/pages/Signup/Form/index.jsx
 export default ({ errors: formErrors, form, handleSubmit }) => {
   const { getRegisteredFields } = form
-=======
-export default ({ errors: formErrors, form, handleSubmit, ...formProps }) => {
->>>>>>> submit signup with publication:webapp/src/components/pages/Signup/Form/index.jsx
   const history = useHistory()
   const {
     errors: requestErrors,
