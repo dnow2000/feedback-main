@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-import ImageAddButtonContainer from './ImageAddButton/ImageAddButtonContainer'
+import ImageAddButton from './ImageAddButton'
 
 
 const _ = ({
@@ -13,7 +13,7 @@ const _ = ({
       (Select a piece of text to add bold, italics or a hypertext link)
     </div>
     <div className="auto" />
-    <ImageAddButtonContainer
+    <ImageAddButton
       getEditorState={getEditorState}
       setEditorState={setEditorState}
     />
