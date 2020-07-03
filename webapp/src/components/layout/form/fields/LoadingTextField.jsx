@@ -3,7 +3,7 @@ import React from 'react'
 
 import TextField from './TextField'
 
-export const LoadingTextField = props => {
+const _ = props => {
   const { validating } = props
   return (
     <>
@@ -13,12 +13,12 @@ export const LoadingTextField = props => {
   )
 }
 
-LoadingTextField.defaultProps = {
+_.defaultProps = {
   validating: false
 }
 
-LoadingTextField.propTypes = {
+_.propTypes = {
   validating: PropTypes.bool
 }
 
-export default LoadingTextField
+export default _

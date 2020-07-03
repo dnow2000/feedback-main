@@ -6,7 +6,7 @@ import { Field } from 'react-final-form'
 import Checkboxes from './Checkboxes'
 import FieldError from '../../FieldError'
 
-export const CheckboxesField = ({
+export const _ = ({
   disabled,
   label,
   name,
@@ -50,7 +50,7 @@ export const CheckboxesField = ({
   />
 )
 
-CheckboxesField.defaultProps = {
+_.defaultProps = {
   disabled: false,
   label: null,
   name: null,
@@ -59,7 +59,7 @@ CheckboxesField.defaultProps = {
   required: false
 }
 
-CheckboxesField.propTypes = {
+_.propTypes = {
   disabled: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
@@ -68,4 +68,4 @@ CheckboxesField.propTypes = {
   required: PropTypes.bool
 }
 
-export default CheckboxesField
+export default _

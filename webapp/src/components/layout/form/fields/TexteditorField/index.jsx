@@ -15,7 +15,7 @@ import Texteditor from './Texteditor'
 import FieldError from '../../FieldError'
 
 
-export class TexteditorField extends PureComponent {
+export class _ extends PureComponent {
   constructor () {
     super()
     this.state = {
@@ -114,7 +114,7 @@ export class TexteditorField extends PureComponent {
   }
 }
 
-TexteditorField.defaultProps = {
+_.defaultProps = {
   className: '',
   label: '',
   maxLength: 1000,
@@ -124,7 +124,7 @@ TexteditorField.defaultProps = {
   validate: null
 }
 
-TexteditorField.propTypes = {
+_.propTypes = {
   label: PropTypes.string,
   maxLength: PropTypes.number,
   name: PropTypes.string.isRequired,
@@ -134,4 +134,4 @@ TexteditorField.propTypes = {
   validate: PropTypes.func
 }
 
-export default TexteditorField
+export default _

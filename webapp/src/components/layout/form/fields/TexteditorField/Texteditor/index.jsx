@@ -8,7 +8,7 @@ import {
 import PropTypes from 'prop-types'
 import React, { PureComponent } from 'react'
 
-import ControlBar from './ControlBar/ControlBar'
+import ControlBar from './ControlBar'
 import ImageDropzone from './ImageDropzone'
 import {
   AlignmentTool,
@@ -17,7 +17,8 @@ import {
   plugins,
 } from './plugins'
 
-class TextEditor extends PureComponent {
+
+class _ extends PureComponent {
   constructor (props) {
     super(props)
     const { value } = props
@@ -163,7 +164,7 @@ class TextEditor extends PureComponent {
   }
 }
 
-TextEditor.defaultProps = {
+_.defaultProps = {
   initialRawString: null,
   maxLength: null,
   onChange: null,
@@ -172,7 +173,7 @@ TextEditor.defaultProps = {
   value: null
 }
 
-TextEditor.propTypes = {
+_.propTypes = {
   initialRawString: PropTypes.string,
   maxLength: PropTypes.number,
   onChange: PropTypes.func,
@@ -181,4 +182,4 @@ TextEditor.propTypes = {
   value: PropTypes.string,
 }
 
-export default TextEditor
+export default _

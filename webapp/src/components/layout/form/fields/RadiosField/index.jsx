@@ -6,7 +6,7 @@ import { Field } from 'react-final-form'
 import Radios from './Radios'
 import FieldError from '../../FieldError'
 
-export const RadiosField = ({
+export const _ = ({
   disabled,
   label,
   name,
@@ -48,7 +48,7 @@ export const RadiosField = ({
   />
 )
 
-RadiosField.defaultProps = {
+_.defaultProps = {
   disabled: false,
   label: null,
   name: null,
@@ -57,7 +57,7 @@ RadiosField.defaultProps = {
   required: false
 }
 
-RadiosField.propTypes = {
+_.propTypes = {
   disabled: PropTypes.bool,
   label: PropTypes.string,
   name: PropTypes.string,
@@ -66,4 +66,4 @@ RadiosField.propTypes = {
   required: PropTypes.bool
 }
 
-export default RadiosField
+export default _

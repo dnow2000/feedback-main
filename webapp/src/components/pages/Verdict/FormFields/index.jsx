@@ -5,11 +5,11 @@ import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import CheckboxesField from 'components/layout/form/fields/CheckboxesField/CheckboxesField'
+import CheckboxesField from 'components/layout/form/fields/CheckboxesField'
 import ContentItem from 'components/layout/ContentItem'
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
-import TexteditorField from 'components/layout/form/fields/TexteditorField/TexteditorField'
+import TexteditorField from 'components/layout/form/fields/TexteditorField'
 import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
 import selectTagsByScopes from 'selectors/selectTagsByScopes'
