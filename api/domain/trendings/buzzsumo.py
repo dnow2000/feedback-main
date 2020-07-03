@@ -8,6 +8,8 @@ from utils.date import strftime
 from utils.config import IS_DEVELOPMENT
 
 
+IS_DEVELOPMENT = False
+
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
 BUZZSUMO_API_URL = 'http://api.buzzsumo.com/search'
 
@@ -164,20 +166,15 @@ def shares_from_buzzsumo_url(buzzsumo_id):
 
     json_file = response.json()
 
-    if 'results' not in json_file:
-        return []
-
-    results = json_file['results']
-
-    if len(results) == 0:
-        return []
-
     media_items = list()
 
-    for result in results:
+    if 'results' not in json_file or len(json_file['results']) == 0:
+        return media_items
+
+    for result in json_file['results']:
         if 'username' in result:
             media_items.append({
-                "name": result['username'],
+                "username": result['username'],
                 "url": "https://twitter.com/" + result['username']
             })
 

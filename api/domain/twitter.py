@@ -4,5 +4,5 @@ BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
 BUZZSUMO_API_URL = 'http://api.buzzsumo.com/search'
 
 
-def tweets_from_name_and_quoted_url():
+def tweets_from_username_and_quoted_url():
   pass
