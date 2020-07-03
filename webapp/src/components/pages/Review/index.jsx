@@ -71,9 +71,6 @@ export default () => {
 
 
   useEffect(() => {
-    dispatch(requestData({ apiPath: '/evaluations' }))
-    dispatch(requestData({ apiPath: '/tags?scopes=review' }))
-
     if (!isCreatedEntity) {
       dispatch(requestData({
         apiPath: `/reviews/${formReviewId}`,
@@ -94,6 +91,11 @@ export default () => {
       history.push(`/reviews/${id}?modification`)
     }
   }, [formInitialValues, history, isCreatedEntity])
+
+  useEffect(() => {
+    dispatch(requestData({ apiPath: '/tags?type=EVALUATION' }))
+    dispatch(requestData({ apiPath: '/tags?scopes=REVIEW' }))
+  }, [dispatch])
 
 
   return (

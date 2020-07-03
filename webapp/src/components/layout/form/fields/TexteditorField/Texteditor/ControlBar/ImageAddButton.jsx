@@ -12,9 +12,9 @@ import { imagePlugin } from '../plugins'
 const { addImage } = imagePlugin
 
 
-const _ = () => {
-  const { getEditorState, setEditorState } = this.props
+const _ = ({ getEditorState, setEditorState }) => {
   const dispatch = useDispatch()
+
 
   const { isPending } = useSelector(state =>
     state.requests['/images']) || []
@@ -30,7 +30,7 @@ const _ = () => {
   }, [getEditorState, setEditorState])
 
 
-  const requesPostImage = useCallback((image, handleSuccess, handleFail) => {
+  const requesPostImage = useCallback(image => {
     const body = new FormData()
     body.append('thumb', image)
     dispatch(requestData({
@@ -43,7 +43,7 @@ const _ = () => {
 
   const handleUploadClick = useCallback(event => {
     const image = event.target.files[0]
-    requesPostImage(image, this.handleUploadSuccess)
+    requesPostImage(image)
   }, [requesPostImage])
 
 
@@ -60,7 +60,6 @@ const _ = () => {
         id="image-add-button"
         hidden
         onChange={handleUploadClick}
-        ref={element => { this.input = element }}
         type="file"
       />
     </label>
