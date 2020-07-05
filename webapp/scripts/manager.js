@@ -5,12 +5,20 @@ const program = require('commander')
 const env = require('node-env-file')
 const path = require('path')
 
-
+const config = {...process.env}
 const envDir = path.join(__dirname, '/../../.env')
-let envConfig = ''
 if (fs.existsSync(envDir)) {
   env(envDir)
-  envConfig = String(fs.readFileSync(envDir))
+  Object.assign(config, String(fs.readFileSync(envDir))
+                .split('\n')
+                .slice(0, -1)
+                .reduce((agg, item) => {
+                  const chunks = item.split('=')
+                  const key = chunks[0]
+                  const value = chunks.slice(1).join('=')
+                  agg[key] = value
+                  return agg
+                }, {}))
 }
 
 
@@ -26,7 +34,8 @@ const { end2end, symlink, unsymlink } = program
 
 if (end2end) {
   const { task } = program
-  const envOption = envConfig.split('\n').slice(0, -1).join(',')
+  const { APP_NAME, COMMAND_NAME, TLD } = config
+  const envOption = `APP_NAME=${APP_NAME},COMMAND_NAME=${COMMAND_NAME},TLD=${TLD}`
   const command = `NODE_ENV=development ./node_modules/.bin/cypress ${task} --env=${envOption}`
   childProcess.execSync(command, { stdio: [0, 1, 2] })
 }

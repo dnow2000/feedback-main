@@ -54,6 +54,8 @@ services:
     container_name: ${APP_NAME}-webapp-test-end2end
     depends_on:
       - api-test-end2end
+    env_file:
+      - ./.env
     environment:
       - API_URL=http://nginx-test-end2end:80
       - ENV=${ENV:-development}
