@@ -12,6 +12,7 @@ RUN apt-get update \
        libxss1 \
        lsb-release \
        xdg-utils \
+       xvfb \
        yarn \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

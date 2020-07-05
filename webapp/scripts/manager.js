@@ -5,47 +5,37 @@ const program = require('commander')
 const env = require('node-env-file')
 const path = require('path')
 
-const fileDir = path.join(__dirname, '/../env_file')
-if (fs.existsSync(fileDir)) {
-  env(fileDir)
+const config = {...process.env}
+const envDir = path.join(__dirname, '/../../.env')
+if (fs.existsSync(envDir)) {
+  env(envDir)
+  Object.assign(config, String(fs.readFileSync(envDir))
+                .split('\n')
+                .slice(0, -1)
+                .reduce((agg, item) => {
+                  const chunks = item.split('=')
+                  const key = chunks[0]
+                  const value = chunks.slice(1).join('=')
+                  agg[key] = value
+                  return agg
+                }, {}))
 }
+
 
 program
   .version('0.1.0')
 
-  .option('symlink', 'symlink')
-  .option('-d, --dir [type]', 'Module dir')
-  .option('-n, --name [type]', 'Module name')
-
-  .option('unsymlink', 'unsymlink')
-  .option('-n, --name [type]', 'Module name')
-  .option('-v, --version [type]', 'Module version')
-
-  .option('testcafe', 'testcafe')
-  .option('-b, --browser [type]', 'Define browser', 'chrome:headless')
-  .option('-d, --debug', 'Debug', false)
-  .option('-f, --file [type]', 'Define file', '')
+  .option('end2end', 'end2end')
+  .option('-t, --task [type]', 'open or run', 'open')
 
   .parse(process.argv)
 
-const { symlink, testcafe, unsymlink } = program
+const { end2end, symlink, unsymlink } = program
 
-if (symlink) {
-  const { dir, name } = program
-  const modulePath = path.join(dir, name)
-  const command = `cd node_modules && rm -rf ${name} && ln -sf ${modulePath} ${name} && cd ${modulePath} && yarn run watch`
-  childProcess.execSync(command, { stdio: [0, 1, 2] })
-}
-
-if (testcafe) {
-  const { browser, debug, file } = program
-  const debugOption = debug ? '-d' : ''
-  const command = `NODE_ENV=development ./node_modules/.bin/testcafe ${browser} ${debugOption} testcafe/${file}`
-  childProcess.execSync(command, { stdio: [0, 1, 2] })
-}
-
-if (unsymlink) {
-  const { name, version } = program
-  const command = `cd node_modules && rm -rf ${name} && cd ../ && rm yarn.lock && yarn install ${name}@${version}`
+if (end2end) {
+  const { task } = program
+  const { APP_NAME, COMMAND_NAME, TLD } = config
+  const envOption = `APP_NAME=${APP_NAME},COMMAND_NAME=${COMMAND_NAME},TLD=${TLD}`
+  const command = `NODE_ENV=development ./node_modules/.bin/cypress ${task} --env=${envOption}`
   childProcess.execSync(command, { stdio: [0, 1, 2] })
 }

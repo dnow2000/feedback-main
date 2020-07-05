@@ -16,31 +16,16 @@ services:
       - ./.env
     environment:
       - ENV=${ENV:-development}
+      - MODE=serve-development
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
       - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
-    image: $APP_NAME-api-serve-development
     networks:
-      - db_server_development_nw
-      - web_server_development_nw
+      - db_serve-development_nw
+      - web_serve-development_nw
     volumes:
       - ./api:/opt/api
-
-  nginx-serve-development:
-    build:
-      args:
-        - MODE=serve-development
-      context: ./nginx
-      dockerfile: ./Dockerfile.nossl
-    container_name: ${APP_NAME}-nginx-serve-development
-    depends_on:
-      - api-serve-development
-    image: $APP_NAME-nginx-serve-development
-    networks:
-      - web_server_development_nw
-    ports:
-      - 80:80
 
   apidb-serve-development:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
@@ -51,14 +36,28 @@ services:
       - POSTGRES_USER=${APP_NAME}_user
     image: postgres:12.2
     networks:
-      - db_server_development_nw
+      - db_serve-development_nw
     volumes:
       - "./docker_data_serve-development/apidb:/var/lib/postgresql"
 
+  nginx-serve-development:
+    build:
+      args:
+        - MODE=serve-development
+      context: ./nginx
+      dockerfile: ./Dockerfile.nossl
+    container_name: ${APP_NAME}-nginx-serve-development
+    depends_on:
+      - api-serve-development
+    networks:
+      - web_serve-development_nw
+    ports:
+      - 80:80
+
 networks:
-  db_server_development_nw:
+  db_serve-development_nw:
     driver: bridge
-  web_server_development_nw:
+  web_serve-development_nw:
     driver: bridge
 
 volumes:

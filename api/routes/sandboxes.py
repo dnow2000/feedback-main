@@ -1,7 +1,7 @@
 from flask import current_app as app, jsonify
 from sqlalchemy_api_handler import ApiErrors
 
-from sandboxes.scripts import getters
+import sandboxes.getters as getters
 
 
 @app.route('/sandboxes/<getter_name>', methods=['GET'])

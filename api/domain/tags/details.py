@@ -71,6 +71,7 @@ TAGS = [
 
 for tag in TAGS:
     tag.update({
+        '__SEARCH_BY__': ['label', 'type'],
         'id': '__NEXT_ID_IF_NOT_EXISTS__',
         'type': TagType.DETAIL
     })

@@ -7,8 +7,7 @@ services:
       dockerfile: ./Dockerfile
     command: >
       bash -c "set -x;
-               cd /opt/api;
-               while true; do python app.py; done;"
+               sleep infinity;"
     container_name: ${APP_NAME}-api-test-api
     depends_on:
       - apidb-test-api
@@ -16,10 +15,9 @@ services:
       - ./.env
     environment:
       - ENV=${ENV:-development}
-      - GIT_TAG=$GIT_TAG
-      - MODE=${MODE:-test-api}
+      - MODE=test-api
       - OBJECT_STORAGE_URL=$OBJECT_STORAGE_URL
-      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-test-api/${APP_NAME}
+      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-test-api/${APP_NAME}_api
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     networks:
@@ -31,8 +29,8 @@ services:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
     container_name: ${APP_NAME}-apidb-test-api
     environment:
-      - POSTGRES_DB=${APP_NAME}
-      - POSTGRES_PASSWORDWORD=${APP_NAME}_password
+      - POSTGRES_DB=${APP_NAME}_api
+      - POSTGRES_PASSWORD=${APP_NAME}_password
       - POSTGRES_USER=${APP_NAME}_user
     image: postgres:12.2
     networks:

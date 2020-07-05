@@ -4,7 +4,7 @@ if [[ "$1" == "--force-recreate" ]]; then
   FORCE_RECREATE=$1
   DETACHED=-d
   PYTEST_ARGS=$2
-elif [[$# -gt 1]]; then
+elif [[ $# -gt 1 ]]; then
   DETACHED='-d ${1:-"api-test-api apidb-test-api"}'
   PYTEST_ARGS=$2
 else
