@@ -5,47 +5,28 @@ const program = require('commander')
 const env = require('node-env-file')
 const path = require('path')
 
-const fileDir = path.join(__dirname, '/../env_file')
-if (fs.existsSync(fileDir)) {
-  env(fileDir)
+
+const envDir = path.join(__dirname, '/../../.env')
+let envConfig = ''
+if (fs.existsSync(envDir)) {
+  env(envDir)
+  envConfig = String(fs.readFileSync(envDir))
 }
+
 
 program
   .version('0.1.0')
 
-  .option('symlink', 'symlink')
-  .option('-d, --dir [type]', 'Module dir')
-  .option('-n, --name [type]', 'Module name')
-
-  .option('unsymlink', 'unsymlink')
-  .option('-n, --name [type]', 'Module name')
-  .option('-v, --version [type]', 'Module version')
-
-  .option('testcafe', 'testcafe')
-  .option('-b, --browser [type]', 'Define browser', 'chrome:headless')
-  .option('-d, --debug', 'Debug', false)
-  .option('-f, --file [type]', 'Define file', '')
+  .option('end2end', 'end2end')
 
   .parse(process.argv)
 
-const { symlink, testcafe, unsymlink } = program
+const { end2end, symlink, unsymlink } = program
 
-if (symlink) {
-  const { dir, name } = program
-  const modulePath = path.join(dir, name)
-  const command = `cd node_modules && rm -rf ${name} && ln -sf ${modulePath} ${name} && cd ${modulePath} && yarn run watch`
-  childProcess.execSync(command, { stdio: [0, 1, 2] })
-}
-
-if (testcafe) {
+if (end2end) {
   const { browser, debug, file } = program
   const debugOption = debug ? '-d' : ''
-  const command = `NODE_ENV=development ./node_modules/.bin/testcafe ${browser} ${debugOption} testcafe/${file}`
-  childProcess.execSync(command, { stdio: [0, 1, 2] })
-}
-
-if (unsymlink) {
-  const { name, version } = program
-  const command = `cd node_modules && rm -rf ${name} && cd ../ && rm yarn.lock && yarn install ${name}@${version}`
+  const envOption = envConfig.split('\n').slice(0, -1).join(',')
+  const command = `NODE_ENV=development ./node_modules/.bin/cypress open --env=${envOption}`
   childProcess.execSync(command, { stdio: [0, 1, 2] })
 }

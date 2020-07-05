@@ -83,6 +83,7 @@
     "eject": "react-scripts eject",
     "format:js": "prettier-eslint --write '{src,tests}/**/*.{js,jsx}'",
     "licenses": "node_modules/.bin/license-reporter save --json licenses.json",
+    "manage": "scripts/manager.js",
     "start": "scripts/start.sh",
     "test:end2end": "node_modules/.bin/cypress run"
   },
