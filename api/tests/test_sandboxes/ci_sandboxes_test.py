@@ -20,7 +20,7 @@ def when_ci_sandbox_created_all_the_ci_objects(app):
         ReviewerPublication=0,
         ReviewTag=3,
         Role=36,
-        Scope=43,
+        Scope=41,
         Content=6,
         ContentTag=5,
         User=24,
