@@ -1,6 +1,6 @@
 import re
 
-from sandboxes.scripts.utils.storage_utils import store_public_object_from_sandbox_assets
+from sandboxes.storage_utils import store_public_object_from_sandbox_assets
 from utils.config import APP_NAME, \
                          COMMAND_NAME, \
                          TLD

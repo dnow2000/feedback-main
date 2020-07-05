@@ -9,7 +9,7 @@ from models.content import Content
 from models.review import Review
 from models.user import User
 from repository.science_feedback import sync
-from tests.utils.clean import with_clean
+from tests.decorators import with_clean
 
 
 @pytest.mark.standalone

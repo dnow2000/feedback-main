@@ -1,11 +1,11 @@
 import pytest
 from sqlalchemy_api_handler import logger
 
-from sandboxes.scripts.creators.ci import create_contents, \
-                                          create_users
-from sandboxes.scripts.utils.helpers import get_sandbox_role_email
-from tests.utils.clean import with_clean
-from tests.utils.TestClient import TestClient
+from sandboxes.creators.ci import create_contents, \
+                                  create_users
+from sandboxes.helpers import get_sandbox_role_email
+from tests.decorators import with_clean
+from tests.TestClient import TestClient
 from utils.logger import deactivate_logger
 
 

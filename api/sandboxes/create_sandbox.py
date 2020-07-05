@@ -1,5 +1,6 @@
 from repository.clean import clean
-from sandboxes.scripts import creators
+import sandboxes.creators as creators
+
 
 def create_sandbox(name, **kwargs):
     clean()

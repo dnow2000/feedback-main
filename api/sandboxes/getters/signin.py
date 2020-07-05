@@ -2,7 +2,7 @@ from models.user import User
 from repository.users import keep_users_with_no_role, \
                              keep_users_with_roles
 
-from sandboxes.scripts.utils.helpers import get_user_helper
+from sandboxes.helpers import get_user_helper
 
 
 def get_existing_user_with_no_role():

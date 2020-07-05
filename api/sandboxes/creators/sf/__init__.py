@@ -8,8 +8,8 @@ def create_sandbox():
     from repository.science_feedback import sync as sync_science_feedback
     from repository.users import sync as sync_users
 
-    logger.info('create_ci_sandbox...')
+    logger.info('create_sf_sandbox...')
     sync_tags()
     sync_science_feedback()
     sync_users()
-    logger.info('create_ci_sandbox...Done.')
+    logger.info('create_sf_sandbox...Done.')

@@ -8,7 +8,7 @@ from models.content_tag import ContentTag
 from models.tag import Tag
 from repository.contents import keep_contents_with_keywords, \
                                 get_contents_keywords_join_query
-from tests.utils.clean import with_clean
+from tests.decorators import with_clean
 
 
 def filter_contents_with_keywords(keywords):
@@ -174,7 +174,7 @@ def when_get_contents_with_keyword_tag_returns_result(app):
         tags=None,
         title="Do we have enough quinoa for all the children ?"
     )
-    tag1 = Tag(text="climate")
+    tag1 = Tag(label="Climate")
     content_tag1 = ContentTag(
         content=content1,
         tag=tag1

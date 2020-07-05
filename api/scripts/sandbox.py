@@ -3,14 +3,14 @@ from pprint import pprint
 import traceback
 from flask import current_app as app
 
-from sandboxes.scripts.create_sandbox import create_sandbox
-from sandboxes.scripts.help_testcafe import print_all_testcafe_helpers
+from sandboxes.create_sandbox import create_sandbox
+from sandboxes.help_end2end import print_all_end2end_helpers
 
 
 @app.manager.option('-n',
                     '--name',
                     help='Sandbox name',
-                    default="ci")
+                    default='sf')
 def sandbox(name):
     try:
         create_sandbox(name)
@@ -21,9 +21,9 @@ def sandbox(name):
 
 
 @app.manager.command
-def sandbox_to_testcafe():
+def sandbox_to_end2end():
     try:
-        print_all_testcafe_helpers()
+        print_all_end2end_helpers()
     except Exception as e:
         print('ERROR: ' + str(e))
         traceback.print_tb(e.__traceback__)

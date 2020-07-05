@@ -6,17 +6,19 @@ from storage.object import store_public_object
 from utils.string_processing import get_model_plural_name
 from storage.thumb import save_thumb
 
+
 MIMES_BY_FOLDER = {
-    "spreadsheets": "application/CSV",
-    "thumbs": "image/jpeg",
-    "zips": "application/zip"
+    'spreadsheets': 'application/CSV',
+    'thumbs': 'image/jpeg',
+    'zips': 'application/zip'
 }
+
 
 def store_public_object_from_sandbox_assets(folder, public_object, thumb_id, index=0):
     dir_path = Path(os.path.dirname(os.path.realpath(__file__)))
     plural_model_name = get_model_plural_name(public_object)
     thumb_path = dir_path\
-                 / '..' / '..' / folder / plural_model_name\
+                 / folder / plural_model_name\
                  / str(thumb_id)
 
     with open(thumb_path, mode='rb') as thumb_file:

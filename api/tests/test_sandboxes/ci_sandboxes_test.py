@@ -1,7 +1,7 @@
 import pytest
 
-from sandboxes.scripts.create_sandbox import create_sandbox
-from tests.utils.count import assert_created_counts
+from sandboxes.create_sandbox import create_sandbox
+from tests.test_sandboxes import assert_created_counts
 from utils.logger import deactivate_logger
 
 

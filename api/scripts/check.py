@@ -20,7 +20,6 @@ setup(FLASK_APP)
 IS_DATABASE_HEALTH_OK = False
 while not IS_DATABASE_HEALTH_OK:
     try:
-        #FLASK_APP.app_context().push()
         db.create_all()
         db.session.commit()
     except OperationalError as e:

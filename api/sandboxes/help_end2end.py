@@ -1,8 +1,9 @@
 import json
 
-from sandboxes.scripts import getters
+import sandboxes.getters as getters
 
-def get_testcafe_helpers(module_name):
+
+def get_end2end_helpers(module_name):
     module = getattr(getters, module_name)
     items = [
         (key.split('get_')[1].upper(), getattr(module, key)())
@@ -12,12 +13,12 @@ def get_testcafe_helpers(module_name):
     return dict(items)
 
 
-def print_testcafe_helpers(module_name):
+def print_end2end_helpers(module_name):
     print('\n{} :'.format(module_name))
-    print(json.dumps(get_testcafe_helpers(module_name), indent=2))
+    print(json.dumps(get_end2end_helpers(module_name), indent=2))
 
 
-def print_all_testcafe_helpers():
+def print_all_end2end_helpers():
     module_names = [
         m for m in dir(getters)
         if type(getattr(getters, m)).__name__ == 'module'
@@ -25,4 +26,4 @@ def print_all_testcafe_helpers():
     for module_name in module_names:
         if module_name == 'sandboxes':
             continue
-        print_testcafe_helpers(module_name)
+        print_end2end_helpers(module_name)
