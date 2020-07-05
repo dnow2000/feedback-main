@@ -85,7 +85,7 @@
     "licenses": "node_modules/.bin/license-reporter save --json licenses.json",
     "manage": "scripts/manager.js",
     "start": "scripts/start.sh",
-    "test:end2end": "node_modules/.bin/cypress run"
+    "test:end2end": "yarn run manage end2end --task=run"
   },
   "browserslist": {
     "production": [

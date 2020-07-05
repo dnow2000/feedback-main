@@ -15,6 +15,7 @@
 *~
 
 # tests
+cypress/screenshots
 cypress/videos
 
 npm-debug.log*
