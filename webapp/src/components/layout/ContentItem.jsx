@@ -62,7 +62,7 @@ const _ = ({
         <div className="content-header">
           {withTheme && theme && <p className="content-tag">{theme}</p>}
           <div className="content-date">
-            <p >{formatPublishedDate}</p>
+            <p>{formatPublishedDate}</p>
             {onClickEdit && (
               <button className="content-edit" onClick={handleClickEdit}>
                 <Icon className="icon" name="ico-edit.svg" />

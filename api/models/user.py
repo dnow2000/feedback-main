@@ -29,7 +29,6 @@ class User(ApiHandler,
 
     password = Column(LargeBinary(60), nullable=False)
 
-
     def check_password(self, passwordToCheck):
         return bcrypt.hashpw(passwordToCheck.encode('utf-8'), self.password) == self.password
 
@@ -41,7 +40,7 @@ class User(ApiHandler,
         if self.email:
             errors.check_email('email', self.email)
         if self.id is None\
-           and User.query.filter_by(email=self.email).count()>0:
+           and User.query.filter_by(email=self.email).count() > 0:
             errors.add_error('email', 'Un compte lié à cet email existe déjà')
         return errors
 

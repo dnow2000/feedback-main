@@ -7,29 +7,27 @@ import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
 import { verdictNormalizer } from 'utils/normalizers'
 
-
 export default () => {
   const { search } = useLocation()
 
+  const config = useMemo(
+    () => ({
+      apiPath: `/verdicts${search}`,
+      normalizer: verdictNormalizer,
+    }),
+    [search]
+  )
 
-  const config = useMemo(() => ({
-    apiPath: `/verdicts${search}`,
-    normalizer: verdictNormalizer
-  }), [search])
-
-
-  const renderItem = useCallback(item =>
-    <VerdictItem verdict={item} />, [])
-
+  const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
 
   return (
     <>
       <Header />
-      <Main className='verdicts'>
+      <Main className="verdicts">
         <div className="container">
-          <section className='hero'>
-            <h1 className='title'>
-              VERDICTS
+          <section className="hero">
+            <h1 className="title">
+              {'VERDICTS'}
             </h1>
           </section>
 

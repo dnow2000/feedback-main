@@ -16,7 +16,6 @@ export default ({ ...formProps }) => {
   const { verdictId } = params
   const { isCreatedEntity, readOnly } = useFormidable(location, params)
 
-
   const { isPending } = useSelector(state =>
     state.requests['/verdicts']) || {}
   const canSubmit = !isPending && (
@@ -42,7 +41,7 @@ export default ({ ...formProps }) => {
           id="edit-verdict"
           to={`/verdicts/${verdictId}?modification`}
         >
-          Edit Verdict
+          {'Edit Verdict'}
         </NavLink>
       ) : (
         <button
@@ -51,12 +50,15 @@ export default ({ ...formProps }) => {
           onClick={handleCancelClick}
           type="button"
         >
-          Cancel
+          {'Cancel'}
         </button>
       )}
       {readOnly ? (
-        <NavLink className="button is-secondary" to="/sources">
-          Return
+        <NavLink
+          className="button is-secondary"
+          to="/sources"
+        >
+          {'Return'}
         </NavLink>
       ) : (
         <button
