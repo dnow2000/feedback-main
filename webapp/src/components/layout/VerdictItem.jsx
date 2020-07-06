@@ -1,109 +1,91 @@
-import classnames from 'classnames'
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { selectEntityByKeyAndId } from 'redux-thunk-data'
-import { createSelector } from 'reselect'
+import classnames from "classnames"
+import PropTypes from "prop-types"
+import React, { useCallback } from "react"
+import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
-import Avatar from 'components/layout/Avatar'
-import ContentItem from 'components/layout/ContentItem'
-import selectReviewsByContentIdAndVerdictId from 'selectors/selectReviewsByContentIdAndVerdictId'
-import ratings, {
-  getBarSizeByValue,
-  getColorClassName,
-  getMeanRating,
-  RATING_VALUES,
-  round
-} from 'utils/ratings'
+import { selectEntityByKeyAndId } from "redux-thunk-data"
 
+const VerdictItem = ({ className, verdict }) => {
+  const { claimId, editor, id, title: headline } = verdict
+  const claim = useSelector(
+    (state) => selectEntityByKeyAndId(state, "claims", claimId),
+    [claimId]
+  )
 
-const barSizeByValue = getBarSizeByValue(ratings)
-const meanRating = getMeanRating(ratings)
-const colorClassName = getColorClassName(meanRating)
+  const verdictTag = useSelector(
+    state => selectEntityByKeyAndId(state, 'verdictTags', id),
+    [id]
+  )
 
+  const tag = useSelector(
+    state => selectEntityByKeyAndId(state, 'tags', verdictTag.tagId),
+    [verdictTag]
+  )
 
-const MAX_AVATARS = 5
-const selectTruncatedReviewers = createSelector(
-  selectReviewsByContentIdAndVerdictId,
-  reviews => {
-    if (!reviews) return
-    const reviewers = reviews.map(review => review.reviewer)
-    if (reviewers.length <= MAX_AVATARS) {
-      return reviewers
-    }
-    const reviewersToShow = reviewers.slice(0, MAX_AVATARS)
-    const fakeReviewer = {number: reviewers.length - reviewersToShow.length}
-    return [
-      ...reviewersToShow,
-      fakeReviewer
-    ]
-  }
-)
+  const history = useHistory()
 
-
-export default ({ verdict }) => {
-  const {
-    contentId,
-    editorId,
-    id: verdictId
-  } = verdict
-
-
-  const content = useSelector(state =>
-    selectEntityByKeyAndId(state, 'contents', contentId))
-
-  const truncatedReviewers = useSelector(state =>
-    selectTruncatedReviewers(state, contentId, verdictId))
-
-  const editor = useSelector(state =>
-    selectEntityByKeyAndId(state, 'users', editorId))
-
+  const handleClick = useCallback(() => history.push(`/verdicts/${id}`), [
+    history,
+    id,
+  ])
 
   return (
-    <div className="verdict-item">
-      {content && (
-        <ContentItem
-          content={content}
-          withShares={false}
-        />)}
-      <div className="verdict-bottom-container">
-        <div className="mean-container">
-          <div className={classnames("mean", colorClassName)}>
-            {meanRating}
-          </div>
-        </div>
-        <div className="counts-container">
-          {RATING_VALUES.map(value => {
-            const width = round(barSizeByValue[value], 2)
-            return (
-              <div
-                className={classnames("bar", `bar-${value}`)}
-                key={value}
-                style={{width: `${width}px`}}
-              />
-            )
-          })}
-        </div>
-        <div className="users-container">
-          <div className="editor-container">
-            <p className="editor-title">Editor</p>
-            <Avatar
-              className="avatar editor-avatar"
-              user={editor}
-            />
-          </div>
-          <div className="reviewers-container">
-            <p className="reviewer-title">Reviewers</p>
-            {(truncatedReviewers || []).map(reviewer => (
-              <Avatar
-                className="avatar reviewer-avatar"
-                key={reviewer.id}
-                number={reviewer.number}
-                user={reviewer}
-              />
-            ))}
-          </div>
-        </div>
+    <div
+      className={classnames("verdict-item", className)}
+      onClick={handleClick}
+    >
+      <div className="text-muted">
+        {`editor: ${editor.firstName} ${editor.lastName}`}
+      </div>
+      <br />
+      <h4>
+        {headline}
+      </h4>
+      <br />
+      <p>
+        <span>
+          {'Original claim:'}
+        </span>
+        <i>
+          {`"${claim.text}"`}
+        </i>
+      </p>
+      <br />
+      <div className="tags">
+        <span className="tag text-center">
+          {tag.label}
+        </span>
       </div>
     </div>
   )
 }
+
+VerdictItem.defaultProps = {
+  className: null
+}
+
+VerdictItem.propTypes = {
+  className: PropTypes.string,
+  verdict: PropTypes.shape({
+    claim: PropTypes.shape({
+      text: PropTypes.string.isRequired
+    }),
+    title: PropTypes.string,
+    claimId: PropTypes.string,
+    editor: PropTypes.shape({
+      firstName: PropTypes.string.isRequired,
+      lastName: PropTypes.string.isRequired,
+    }),
+    id: PropTypes.string,
+    verdictTags: PropTypes.arrayOf(
+      PropTypes.shape({
+        tag: PropTypes.shape({
+          label: PropTypes.string,
+        }),
+      })
+    ),
+  }).isRequired
+}
+
+export default VerdictItem
