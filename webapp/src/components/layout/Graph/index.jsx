@@ -1,37 +1,20 @@
-
-import { scaleLinear } from 'd3-scale'
 import { UndirectedGraph } from 'graphology'
-import circlepackLayout from 'graphology-layout/circlepack'
 import forceAtlas2 from "graphology-layout-forceatlas2"
 import { WebGLRenderer } from 'sigma'
-import { animateNodes } from 'sigma/animate'
-import extent from 'simple-statistics/src/extent'
 import React, { useEffect, useRef } from 'react'
 
 
 export default ({ children, graph, onNodeEnter }) => {
   const graphRef = useRef()
+  const tooltipRef = useRef()
 
   useEffect(() => {
     if (!graph) return
     const { edges, nodes } = graph
-    //const nodeSizeExtent = extent(nodes.map(node => node.size))
-    //const xExtent = extent(nodes.map(node => node.x))
-    //const yExtent = extent(nodes.map(node => node.y))
-    //const nodeSizeScale = scaleLinear().domain(nodeSizeExtent).range([3, 15])
-    //const xScale = scaleLinear().domain(xExtent).range([0, 1])
-    //const yScale = scaleLinear().domain(yExtent).range([0, 1])
-
     const undirectedGraph = new UndirectedGraph()
 
     nodes.forEach(node => {
-      const undirectedNode = {
-        ...node,
-        //size: nodeSizeScale(node.size),
-        //x: xScale(node.x),
-        //y: yScale(node.y)
-      }
-      undirectedGraph.addNode(node.id, undirectedNode)
+      undirectedGraph.addNode(node.id, node)
     })
 
     edges.forEach(edge => {
@@ -43,18 +26,17 @@ export default ({ children, graph, onNodeEnter }) => {
     const renderer = new WebGLRenderer(undirectedGraph, graphRef.current)
 
     renderer.on('enterNode', ({ node: nodeId }) => {
-      if (onNodeEnter) {
-        onNodeEnter(undirectedGraph.getNodeAttributes(nodeId),
-                    { undirectedGraph, renderer})
-      }
+      const node = undirectedGraph.getNodeAttributes(nodeId)
+      tooltipRef.current.style.top = `${(graphRef.current.clientHeight/2) - node.y}px`
+      tooltipRef.current.style.left = `${(graphRef.current.clientWidth/2) + node.x}px`
     })
 
-    const layout = forceAtlas2.assign(undirectedGraph, {
+    forceAtlas2.assign(undirectedGraph, {
       iterations: 100,
       settings: forceAtlas2.inferSettings(undirectedGraph),
     })
 
-  }, [graph, graphRef, onNodeEnter])
+  }, [graph, graphRef, onNodeEnter, tooltipRef])
 
 
   return (
@@ -62,7 +44,12 @@ export default ({ children, graph, onNodeEnter }) => {
       className="graph"
       ref={graphRef}
     >
-      {children}
+      <div
+        className="tooltip"
+        ref={tooltipRef}
+      >
+        Hello Sigma !
+      </div>
     </div>
   )
 }
