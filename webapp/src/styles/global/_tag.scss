@@ -1,12 +1,36 @@
 .tag {
-  background-color: $primary;
   border-radius: 18px;
-  color: white;
   font-weight: 500;
   height: 16px;
   max-width: 100px;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+  padding: 0.1rem 0.7rem;
+  background-color: $grey-light;
+  color: $white;
+
+  &.correct {
+    background-color: lighten($green, 40%);
+    color: $green;
+  }
+
+  &.partially-correct {
+    background-color: lighten($bluegreen, 30%);
+    color: $bluegreen;
+  }
+
+  &.inaccurate {
+    background-color: lighten($orange, 30%);
+    color: $orange;
+  }
+
+  &.incorrect {
+    background-color: lighten($red, 30%);
+    color: $red;
+  }
+
+  &.social-tag {
+    color: $grey-darker;
+    font-weight: lighter !important;
+  }
 
   &:not(:last-child) {
     margin-right: 4px;

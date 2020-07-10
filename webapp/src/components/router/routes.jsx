@@ -21,6 +21,7 @@ import Verdicts from 'components/pages/Verdicts'
 import Signin from 'components/pages/Signin'
 import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
+import CovidV1 from 'components/pages/Covid-19-v1'
 
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
@@ -30,13 +31,19 @@ export default [
   {
     exact: true,
     path: '/',
-    render: () => <Redirect to="/landing" />,
+    render: () => <Redirect to="/covid-19-v1" />,
   },
   {
     component: CovidV0,
     exact: true,
     path: '/covid-19',
     title: 'Covid-19'
+  },
+  {
+    component: CovidV1,
+    exact: true,
+    path: '/covid-19-v1',
+    title: 'Covid-19-v1'
   },
   {
     component: withRequiredLogin(Account),
@@ -129,7 +136,7 @@ export default [
     title: 'Verdict',
   },
   {
-    component: withRequiredLogin(Verdicts),
+    component: Verdicts,
     exact: true,
     path: '/verdicts',
     title: 'Verdicts',

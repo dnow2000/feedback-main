@@ -1,13 +1,10 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 
-
-import Icon from 'components/layout/Icon'
-
-
 const _ = ({
   onChange,
-  selectedKeywords
+  selectedKeywords,
+  layout = 'horizontal'
 }) => {
   const inputRef = useRef()
 
@@ -34,30 +31,33 @@ const _ = ({
 
 
   return (
-    <div className="keywords-bar">
-      <input
-        className="keywords-input"
-        defaultValue={value}
-        name="keywords"
-        onChange={event => setValue(event.target.value)}
-        placeholder="Type your search"
-        ref={inputRef}
-      />
-      <button
-        className="is-inner-input"
-        onClick={handleKeywordsClick}
-        type="button"
-      >
-        <Icon className="icon" name="loupe.svg" />
-      </button>
-    </div>
+    <>
+      <div className={`keywords-bar ${layout}`}>
+        <input
+          className="keywords-input"
+          defaultValue={value}
+          name="keywords"
+          onChange={event => setValue(event.target.value)}
+          placeholder="Type your search"
+          ref={inputRef}
+        />
+        <button
+          className="button is-primary thin box-shadow"
+          onClick={handleKeywordsClick}
+          type="button"
+        >
+          {'Find out truth'}
+        </button>
+      </div>
+    </>
   )
 }
 
 
 _.propTypes = {
   onChange: PropTypes.func.isRequired,
-  selectedKeywords: PropTypes.string
+  selectedKeywords: PropTypes.string,
+  layout: PropTypes.string
 }
 
 export default _

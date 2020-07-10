@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useHistory } from 'react-router-dom'
 
 import Items from 'components/layout/Feeds/Items'
 import Header from 'components/layout/Header'
@@ -7,8 +7,11 @@ import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
 import { verdictNormalizer } from 'utils/normalizers'
 
+import KeywordsBar from 'components/layout/Feeds/Controls/KeywordsBar'
+
 export default () => {
   const { search } = useLocation()
+  const history = useHistory()
 
   const config = useMemo(
     () => ({
@@ -20,16 +23,25 @@ export default () => {
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
 
+  const handleKeywordsChange = useCallback(
+    (key, value) => { history.push(`/verdicts?keywords=${value}`) },
+    [history]
+  )
+
   return (
     <>
       <Header />
       <Main className="verdicts">
         <div className="container">
           <section className="hero">
-            <h1 className="title">
+            <h3 className="text-center">
               {'VERDICTS'}
-            </h1>
+            </h3>
           </section>
+
+          <KeywordsBar
+            onChange={handleKeywordsChange}
+          />
 
           <section>
             <Items
