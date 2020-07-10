@@ -22,12 +22,24 @@ export default () => {
   const graphs = useSelector(state => state.data.graphs) || []
 
 
-  const handleNodeEnter = useCallback(node => {
+  const handleNodeEnter = useCallback((node, { undirectedGraph, renderer }) => {
     if (!node) return
-    console.log(node.x, node.y)
-    const { clientHeight, clientWidth } = enterRef.current.parentElement.querySelector('.sigma-nodes')
+    console.log({node, undirectedGraph, renderer})
+    const canvas = enterRef.current.parentElement.querySelector('.sigma-nodes')
+    const { clientHeight, clientWidth, height, width } = canvas
+    const rect = canvas.getBoundingClientRect()
+    const scaleX = canvas.width / rect.width    // relationship bitmap vs. element for X
+    const scaleY = canvas.height / rect.height
+
+    console.log({scaleX, clientWidth, width}, rect.width, node.x)
+
     enterRef.current.style.top = `${(clientHeight / 2.) - node.y}px`
     enterRef.current.style.left = `${(clientWidth / 2.) + node.x}px`
+
+    //enterRef.current.style.top = `${(clientHeight / 2.) - node.y}px`
+    //enterRef.current.style.left = `${(clientWidth / 2.) + node.x}px`
+    //enterRef.current.style.top = `${node.y}px`
+    //enterRef.current.style.left = `${node.x}px`
 
     setEnterElement(componentAccessor(node))
   }, [enterRef, setEnterElement])
@@ -50,14 +62,7 @@ export default () => {
           <Graph
             graph={graphs[0]}
             onNodeEnter={handleNodeEnter}
-          >
-            <div
-              className="enter"
-              ref={enterRef}
-            >
-              {enterElement}
-            </div>
-          </Graph>
+          />
         </div>
       </Main>
     </>
