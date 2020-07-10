@@ -9,9 +9,11 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 import KeywordsBar from 'components/layout/Feeds/Controls/KeywordsBar'
 
+
 export default () => {
   const { search } = useLocation()
   const history = useHistory()
+
 
   const config = useMemo(
     () => ({
@@ -28,6 +30,7 @@ export default () => {
     [history]
   )
 
+
   return (
     <>
       <Header />
@@ -39,9 +42,7 @@ export default () => {
             </h3>
           </section>
 
-          <KeywordsBar
-            onChange={handleKeywordsChange}
-          />
+          <KeywordsBar onChange={handleKeywordsChange} />
 
           <section>
             <Items

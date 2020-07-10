@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from 'react'
-import { useSelector } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
 
 import Main from 'components/layout/Main'
@@ -15,7 +14,6 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 export default () => {
   const history = useHistory()
-  const verdicts = useSelector(({ data }) => data.verdicts)
   const { search } = useLocation()
 
 
@@ -29,16 +27,16 @@ export default () => {
 
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
-  
+
   const handleKeywordsChange = useCallback(
-    (key, value) => { history.push(`/verdicts?keywords=${value}`) },
+    (key, value) => history.push(`/verdicts?keywords=${value}`),
     [history]
   )
 
 
   return (
     <>
-      <Header />
+      <Header withMenu />
       <Main className="landing with-header">
         <section className="hero">
           <div className="container">
