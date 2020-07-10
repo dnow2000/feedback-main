@@ -8,7 +8,7 @@ import { selectEntityByKeyAndId } from "redux-thunk-data"
 
 import Avatar from 'components/layout/Avatar'
 
-const VerdictItem = ({ className, verdict }) => {
+const _ = ({ className, verdict }) => {
   const history = useHistory()
   const { claimId, editor, id, title: headline } = verdict
 
@@ -29,10 +29,10 @@ const VerdictItem = ({ className, verdict }) => {
   )
 
 
-  const handleClick = useCallback(() => history.push(`/verdicts/${id}`), [
-    history,
-    id,
-  ])
+  const handleClick = useCallback(
+    () => history.push(`/verdicts/${id}/appearances`),
+    [history, id]
+  )
 
 
   return (
@@ -92,11 +92,13 @@ const VerdictItem = ({ className, verdict }) => {
   )
 }
 
-VerdictItem.defaultProps = {
+
+_.defaultProps = {
   className: null
 }
 
-VerdictItem.propTypes = {
+
+_.propTypes = {
   className: PropTypes.string,
   verdict: PropTypes.shape({
     claim: PropTypes.shape({
@@ -119,4 +121,4 @@ VerdictItem.propTypes = {
   }).isRequired
 }
 
-export default VerdictItem
+export default _

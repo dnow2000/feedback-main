@@ -23,7 +23,8 @@ import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
 
 
-const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
+const entityMatch = '[A-Za-z0-9]{2,}'
+const formPath = `(${entityMatch}|creation)/:modification(modification)?`
 
 
 export default [
@@ -115,6 +116,12 @@ export default [
     exact: true,
     path: '/users',
     title: 'Users',
+  },
+  {
+    component: withRequiredLogin(Verdict),
+    exact: true,
+    path: `/verdicts/:verdictId(${entityMatch})/appearances`,
+    title: 'Verdict',
   },
   {
     component: compose(
