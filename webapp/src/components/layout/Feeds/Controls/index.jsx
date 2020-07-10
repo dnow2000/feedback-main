@@ -45,25 +45,28 @@ export default ({ config }) => {
 
 
   return (
-    <div className="controls">
-      <Themes
+    <>
+      <KeywordsBar
         onChange={handleChange}
-        selectedTheme={url.searchParams.get('theme')}
+        selectedKeywords={url.searchParams.get('keywords')}
       />
-      <div className="right">
-        {!pathname.startsWith('/verdicts') && (<Types
+      <div className="search-spacing" />
+      <div className="controls">
+        <Themes
           onChange={handleChange}
-          selectedType={type}
-        />)}
-        <Days
-          onChange={handleChange}
-          selectedDays={url.searchParams.get('days')}
+          selectedTheme={url.searchParams.get('theme')}
         />
-        <KeywordsBar
-          onChange={handleChange}
-          selectedKeywords={url.searchParams.get('keywords')}
-        />
+        <div className="right">
+          {!pathname.startsWith('/verdicts') && (<Types
+            onChange={handleChange}
+            selectedType={type}
+          />)}
+          <Days
+            onChange={handleChange}
+            selectedDays={url.searchParams.get('days')}
+          />
+        </div>
       </div>
-    </div>
+    </>
   )
 }

@@ -6,6 +6,8 @@ import { useSelector } from "react-redux"
 
 import { selectEntityByKeyAndId } from "redux-thunk-data"
 
+import Avatar from 'components/layout/Avatar'
+
 const VerdictItem = ({ className, verdict }) => {
   const { claimId, editor, id, title: headline } = verdict
   const claim = useSelector(
@@ -35,26 +37,52 @@ const VerdictItem = ({ className, verdict }) => {
       className={classnames("verdict-item", className)}
       onClick={handleClick}
     >
-      <div className="text-muted">
-        {`editor: ${editor.firstName} ${editor.lastName}`}
+      <h4>
+        {`"${claim.text}"`}
+      </h4>
+      <div className="verdict-editor-container">
+        <Avatar
+          className="avatar editor-avatar"
+          user={editor}
+        />
+        <strong>
+          {`${editor.firstName} ${editor.lastName}`}
+        </strong>
+        <span className="text-muted">
+          &nbsp;{'checked it'}
+        </span>
+        <strong>
+          &nbsp;{`${3} days ago`}
+        </strong>
       </div>
       <br />
-      <h4>
-        {headline}
-      </h4>
+      <hr className="text-muted w-25" />
       <br />
       <p>
-        <span>
-          {'Original claim:'}
-        </span>
         <i>
           {`"${claim.text}"`}
         </i>
       </p>
       <br />
       <div className="tags">
-        <span className="tag text-center">
+        <span className={`tag text-center ${tag.label.toLowerCase()}`}>
           {tag.label}
+        </span>
+        <span className="tag text-center social-tag">
+          <strong className="text-primary">
+            {'34'}
+          </strong>
+          <span>
+            {' Links'}
+          </span>
+        </span>
+        <span className="tag text-center social-tag">
+          <strong className="text-primary">
+            {'42k'}
+          </strong>
+          <span>
+            {' Shares'}
+          </span>
         </span>
       </div>
     </div>

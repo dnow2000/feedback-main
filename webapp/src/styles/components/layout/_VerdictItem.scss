@@ -1,9 +1,31 @@
 .verdict-item {
   @extend .item;
 
+  cursor: pointer;
+
   .content-item {
     padding: 0;
     border: 0;
+  }
+
+  .verdict-editor-container {
+    display: flex;
+    flex-direction: row;
+    margin: 0.75rem 0;
+    align-items: center;
+    font-size: 0.8em;
+
+    .avatar {
+      margin: 0;
+      margin-right: 0.5rem;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  hr {
+    border: none;
+    border-top: 1px solid $grey-light;
   }
 
   .verdict-bottom-container {

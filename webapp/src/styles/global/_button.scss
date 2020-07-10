@@ -69,6 +69,10 @@
     background-color: $primary;
     border-color: transparent;
     color: $white;
+
+    &.box-shadow {
+      box-shadow: 0 1px 20px $primary;
+    }
   }
 
   &.is-secondary {
