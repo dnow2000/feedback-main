@@ -5,10 +5,10 @@ import { compose } from 'redux'
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
+import About from 'components/pages/About'
 import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
-import CovidV0 from 'components/pages/CovidV0'
 import Exploration from 'components/pages/Exploration'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
@@ -21,7 +21,6 @@ import Verdicts from 'components/pages/Verdicts'
 import Signin from 'components/pages/Signin'
 import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
-import CovidV1 from 'components/pages/Covid-19-v1'
 
 
 const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
@@ -31,19 +30,19 @@ export default [
   {
     exact: true,
     path: '/',
-    render: () => <Redirect to="/covid-19-v1" />,
+    render: () => <Redirect to="/landing" />,
   },
   {
-    component: CovidV0,
+    component: About,
     exact: true,
-    path: '/covid-19',
-    title: 'Covid-19'
+    path: '/about',
+    title: 'About'
   },
   {
-    component: CovidV1,
+    component: Landing,
     exact: true,
-    path: '/covid-19-v1',
-    title: 'Covid-19-v1'
+    path: '/landing',
+    title: 'Landing'
   },
   {
     component: withRequiredLogin(Account),
@@ -77,12 +76,6 @@ export default [
     exact: true,
     path: '/sources',
     title: 'Sources',
-  },
-  {
-    component: withRedirectWhenLoggedIn(Landing),
-    exact: true,
-    path: '/landing',
-    title: 'Landing',
   },
   {
     component: compose(

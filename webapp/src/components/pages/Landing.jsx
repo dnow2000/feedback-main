@@ -1,45 +1,63 @@
-import capitalize from 'lodash.capitalize'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { NavLink } from 'react-router-dom'
-import { requestData } from 'redux-thunk-data'
+import React, { useCallback, useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { useLocation, useHistory } from 'react-router-dom'
 
 import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
 import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
+import Items from 'components/layout/Feeds/Items'
 import VerdictItem from 'components/layout/VerdictItem'
-import { APP_NAME, ROOT_ASSETS_PATH } from 'utils/config'
+import KeywordsBar from 'components/layout/Feeds/Controls/KeywordsBar'
+
+import { verdictNormalizer } from 'utils/normalizers'
 
 
 export default () => {
-  const dispatch = useDispatch()
+  const history = useHistory()
+  const verdicts = useSelector(({ data }) => data.verdicts)
+  const { search } = useLocation()
 
-  const verdicts = useSelector(state => state.data.verdicts)
 
-  useEffect(() => {
-    dispatch(requestData({
-      apiPath: "/verdicts",
-      normalizer: { content: "contents" }
-    }))
-  }, [dispatch])
+  const config = useMemo(
+    () => ({
+      apiPath: `/verdicts${search}`,
+      normalizer: verdictNormalizer,
+    }),
+    [search]
+  )
+
+
+  const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
+  
+  const handleKeywordsChange = useCallback(
+    (key, value) => { history.push(`/verdicts?keywords=${value}`) },
+    [history]
+  )
 
 
   return (
     <>
       <Header />
-      <Main
-        className="landing with-header"
-      >
+      <Main className="landing with-header">
         <section className="hero">
           <div className="container">
             <p className="h1">
-              <b>2000</b> articles fact-checked<br />
-              by <b>14450</b> Scientists
+              <b>
+                {'2000'}
+              </b>
+              {' articles fact-checked'}
+              <br />
+              {'by '}
+              <b>
+                {'14450'}
+              </b>
+              {' Scientists'}
             </p>
-            <NavLink className="cta white" to="/signup">
-              Join the community
-            </NavLink>
+            <KeywordsBar
+              layout='vertical'
+              onChange={handleKeywordsChange}
+            />
           </div>
         </section>
 
@@ -47,46 +65,24 @@ export default () => {
           <div className="container">
             <div className="section-title">
               <span className="icon-container">
-                <Icon className="icon" name="ico-review.svg" />
+                <Icon
+                  className="icon"
+                  name="ico-review.svg"
+                />
               </span>
-              <p className="h2">
-                Latest Reviews
-              </p>
+              <h3>
+                {'Recent Claims'}
+              </h3>
               <div className="items">
-                {(verdicts || []).map(verdict => (
-                    <div
-                      className="item-container"
-                      key={verdict.id}
-                    >
-                      <VerdictItem verdict={verdict} />
-                    </div>
-                ))}
+                <Items
+                  config={config}
+                  renderItem={renderItem}
+                />
               </div>
             </div>
           </div>
         </section>
-
-        <section>
-          <div className="container">
-            <div className="section-title has-border-top">
-              <span className="icon-container">
-                <Icon className="icon" name="ico-dna.svg" />
-              </span>
-              <p className="h2">
-                Who we are
-              </p>
-            </div>
-            <img src={`${ROOT_ASSETS_PATH}/community.png`} className="image" alt="Community" />
-            <p className="p">
-              {capitalize(APP_NAME)} is a platform that empowers community of experts to assess the credibility of influential information online and provide feedback to editors, platforms and readers
-            </p>
-            <NavLink className="cta" to="/signup">
-              Join the community
-            </NavLink>
-          </div>
-        </section>
       </Main>
-
       <Footer />
     </>
   )
