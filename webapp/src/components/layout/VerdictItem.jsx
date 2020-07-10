@@ -9,7 +9,10 @@ import { selectEntityByKeyAndId } from "redux-thunk-data"
 import Avatar from 'components/layout/Avatar'
 
 const VerdictItem = ({ className, verdict }) => {
+  const history = useHistory()
   const { claimId, editor, id, title: headline } = verdict
+
+
   const claim = useSelector(
     (state) => selectEntityByKeyAndId(state, "claims", claimId),
     [claimId]
@@ -25,12 +28,12 @@ const VerdictItem = ({ className, verdict }) => {
     [verdictTag]
   )
 
-  const history = useHistory()
 
   const handleClick = useCallback(() => history.push(`/verdicts/${id}`), [
     history,
     id,
   ])
+
 
   return (
     <div
@@ -38,7 +41,7 @@ const VerdictItem = ({ className, verdict }) => {
       onClick={handleClick}
     >
       <h4>
-        {`"${claim.text}"`}
+        {`"${headline || claim.text}"`}
       </h4>
       <div className="verdict-editor-container">
         <Avatar

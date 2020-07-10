@@ -10,10 +10,16 @@ const visibleFor = roleTypes =>
 
 export const links = [
   {
+    label: () => 'About',
+    path: '/about',
+    visible: () => true
+  },
+  {
     label: () => 'Trending news',
     path: '/trendings',
     visible: visibleFor(['editor'])
   },
+  /*
   {
     label: () => 'Sources',
     path: '/sources',
@@ -31,4 +37,6 @@ export const links = [
     path: '/users',
     visible: visibleFor(['admin', 'editor'])
   },
-].map(link => ({ className: 'item navigation', ...link }))
+  */
+].filter(link => !link.disabled)
+ .map(link => ({ className: 'item navigation', ...link }))
