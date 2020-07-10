@@ -22,7 +22,6 @@ def keep_tags_with_type(query, tag_type_key):
 def sync():
     logger.info('sync tags data...')
     tags = []
-    print('TAGS is {}'.format(TAGS))
     for tag_dict in TAGS:
         tag = Tag.create_or_modify({
             '__SEARCH_BY__': ['label', 'type'],

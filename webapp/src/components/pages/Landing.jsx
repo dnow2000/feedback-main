@@ -36,7 +36,7 @@ export default () => {
 
   return (
     <>
-      <Header withMenu />
+      <Header withLinks />
       <Main className="landing with-header">
         <section className="hero">
           <div className="container">

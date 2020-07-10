@@ -36,7 +36,7 @@ export default () => {
 
   return (
     <>
-      <Header />
+      <Header withLinks />
       <Main className="verdict">
         <div className="container">
           HERE IS THE QUENTON CONTENT

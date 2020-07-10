@@ -19,7 +19,7 @@ const pathnamesWithoutSignin = [
 ]
 
 
-export default ({ withMenu=false }) => {
+export default ({ withLinks=false }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const withSignin = pathnamesWithoutSignin.includes(location.pathname)
@@ -52,7 +52,7 @@ export default ({ withMenu=false }) => {
         </div>
 
         <div className="flex-auto" />
-        {withMenu && (
+        {withLinks && (
           <>
             <Navigations />
             <Menu />
