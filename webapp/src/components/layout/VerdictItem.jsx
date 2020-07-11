@@ -6,11 +6,12 @@ import { useSelector } from "react-redux"
 
 import { selectEntityByKeyAndId } from "redux-thunk-data"
 
-import Avatar from 'components/layout/Avatar'
+import Icon from 'components/layout/Icon'
+
 
 const _ = ({ className, verdict }) => {
   const history = useHistory()
-  const { claimId, editor, id, title: headline } = verdict
+  const { claimId, id, medium, title: headline } = verdict
 
 
   const claim = useSelector(
@@ -44,12 +45,12 @@ const _ = ({ className, verdict }) => {
         {`"${headline || claim.text}"`}
       </h4>
       <div className="verdict-editor-container">
-        <Avatar
+        <Icon
           className="avatar editor-avatar"
-          user={editor}
+          path={medium.logoUrl}
         />
         <strong>
-          {`${editor.firstName} ${editor.lastName}`}
+          {`${medium.name}`}
         </strong>
         <span className="text-muted">
           &nbsp;{'checked it'}
@@ -106,11 +107,11 @@ _.propTypes = {
     }),
     title: PropTypes.string,
     claimId: PropTypes.string,
-    editor: PropTypes.shape({
-      firstName: PropTypes.string.isRequired,
-      lastName: PropTypes.string.isRequired,
-    }),
     id: PropTypes.string,
+    medium: PropTypes.shape({
+      logoUrl: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
     verdictTags: PropTypes.arrayOf(
       PropTypes.shape({
         tag: PropTypes.shape({

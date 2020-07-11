@@ -259,8 +259,9 @@ def verdict_from_row(row, unused_index=None):
     if not claim:
         return None
 
-    medium = Medium.query.filter_by(name='Science Feedback')
 
+    medium = Medium.query.filter_by(url='/'.join(row['Review url'].split('/')[0:3])).first()
+    print(medium, '/'.join(row['Review url'].split('/')[0:3]))
 
     verdict_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',

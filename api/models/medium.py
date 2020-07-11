@@ -13,6 +13,8 @@ class Medium(ApiHandler,
              Model,
              HasScienceFeedbackMixin):
 
+    logoUrl = Column(String(512))
+
     name = Column(String(256), nullable=False)
 
     organizationId = Column(BigInteger(),

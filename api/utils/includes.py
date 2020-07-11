@@ -101,6 +101,7 @@ VERDICT_INCLUDES = [
         'key': 'claim',
         'includes': CLAIM_INCLUDES
     },
+    'medium',
     {
         'key': 'reviews',
         'includes': [
