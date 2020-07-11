@@ -10,7 +10,7 @@ export default () => (
   <>
     <Header />
 
-    <Main className="covid-v0 with-header">
+    <Main className="about with-header">
       <section className="hero">
         <div className="container">
           <p className="h1">

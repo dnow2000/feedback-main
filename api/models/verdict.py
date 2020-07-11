@@ -45,6 +45,14 @@ class Verdict(ApiHandler,
                           foreign_keys=[editorId],
                           backref='verdicts')
 
+    mediumId = Column(BigInteger(),
+                      ForeignKey('medium.id'),
+                      index=True)
+
+    medium = relationship('Medium',
+                          foreign_keys=[mediumId],
+                          backref='verdicts')
+
     @property
     def reviews(self):
         Review = get_model_with_table_name('review')

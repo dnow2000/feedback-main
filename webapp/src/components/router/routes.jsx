@@ -5,10 +5,10 @@ import { compose } from 'redux'
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
+import About from 'components/pages/About'
 import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
-import CovidV0 from 'components/pages/CovidV0'
 import Exploration from 'components/pages/Exploration'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
@@ -23,7 +23,8 @@ import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
 
 
-const formPath = '([A-Za-z0-9]{2,}|creation)/:modification(modification)?'
+const entityMatch = '[A-Za-z0-9]{2,}'
+const formPath = `(${entityMatch}|creation)/:modification(modification)?`
 
 
 export default [
@@ -33,10 +34,16 @@ export default [
     render: () => <Redirect to="/landing" />,
   },
   {
-    component: CovidV0,
+    component: About,
     exact: true,
-    path: '/covid-19',
-    title: 'Covid-19'
+    path: '/about',
+    title: 'About'
+  },
+  {
+    component: Landing,
+    exact: true,
+    path: '/landing',
+    title: 'Landing'
   },
   {
     component: withRequiredLogin(Account),
@@ -70,12 +77,6 @@ export default [
     exact: true,
     path: '/sources',
     title: 'Sources',
-  },
-  {
-    component: withRedirectWhenLoggedIn(Landing),
-    exact: true,
-    path: '/landing',
-    title: 'Landing',
   },
   {
     component: compose(
@@ -117,6 +118,12 @@ export default [
     title: 'Users',
   },
   {
+    component: withRequiredLogin(Verdict),
+    exact: true,
+    path: `/verdicts/:verdictId(${entityMatch})/appearances`,
+    title: 'Verdict',
+  },
+  {
     component: compose(
       withRequiredLogin,
       withRoles({
@@ -129,7 +136,7 @@ export default [
     title: 'Verdict',
   },
   {
-    component: withRequiredLogin(Verdicts),
+    component: Verdicts,
     exact: true,
     path: '/verdicts',
     title: 'Verdicts',

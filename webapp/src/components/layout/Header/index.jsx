@@ -12,18 +12,21 @@ import Menu from './Menu'
 import Navigations from './Navigations'
 
 
-const signPathnames = ['/signin', '/signup']
+const pathnamesWithoutSignin = [
+  '/landing',
+  '/signin',
+  '/signup'
+]
 
 
-export default () => {
+export default ({ withLinks=false }) => {
   const dispatch = useDispatch()
   const location = useLocation()
-  const isSignPathname = signPathnames.includes(location.pathname)
+  const withSignin = pathnamesWithoutSignin.includes(location.pathname)
 
 
   const currentUser = useSelector(selectCurrentUser)
-  const showMenu = typeof currentUser != 'undefined' && !isSignPathname
-  const showSignin = !currentUser && !isSignPathname
+  const showSignin = !currentUser && !withSignin
 
   const isAtTop = useSelector(state => state.scroll.isAtTop)
 
@@ -49,7 +52,7 @@ export default () => {
         </div>
 
         <div className="flex-auto" />
-        {showMenu && (
+        {withLinks && (
           <>
             <Navigations />
             <Menu />

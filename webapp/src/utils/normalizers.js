@@ -75,6 +75,12 @@ export const reviewNormalizer = {
 
 export const verdictNormalizer = {
   content: 'contents',
+  claim: {
+    normalizer: {
+      quotedFromAppearances: "appearances",
+    },
+    stateKey: "claims",
+  },
   reviews: {
     normalizer: {
       evaluation: 'evaluations',

@@ -1,7 +1,7 @@
 .footer {
   height: 18.75rem;
-  color: $white;
-  background-color: $turquoise-dark;
+  color: $grey-dark;
+  background-color: $grey-lighter;
 
   display: flex;
   flex-direction: row;
@@ -18,7 +18,7 @@
   .logo-container {
     flex: 3;
     padding-right: 2rem;
-    
+
     .logo-element {
       width: 100%;
       max-width: 13rem;
@@ -32,30 +32,30 @@
     align-items: flex-start;
     padding-left: 2.5rem;
   }
-  
+
   .links-container-small {
     display: flex;
     flex: 2;
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .link {
-    color: $white;
+    color: $grey-dark;
     font-weight: 200;
     margin-bottom: 1.625rem;
     opacity: 1;
     text-decoration: none;
     transition: 0.2;
-  
+
     &:hover {
       opacity: 0.8;
       transition: 0.2;
     }
   }
-  
+
   .h3 {
-    color: $white;
+    color: $grey-dark;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.625rem;

@@ -13,30 +13,31 @@ export default () => {
   const currentRoles = useSelector(state =>
     selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']))
 
+  const visibleLinks = (links || []).filter(({ visible }) =>
+      visible(currentRoles))
+
+
   return (
     <div className="navigations">
-      {(links || [])
-             .filter(({ disabled }) => !disabled)
-             .map(({ external, label, target, path, visible }) => (
-          visible(currentRoles) && (
-            <div className="navigation" key={label}>
-              {path === location.pathname ? (
-                <div className="current">
-                  {label(currentRoles)}
-                </div>
-              ) : (
-                <NavLink
-                  className="anchor"
-                  id={`see-${path}`}
-                  external={external}
-                  to={path}
-                  target={target}
-                >
-                  {label(currentRoles)}
-                </NavLink>
-              )}
+      {visibleLinks.map(({ external, label, path, target }) => (
+        <div className="navigation" key={label}>
+          {path === location.pathname ? (
+            <div className="current">
+              {label(currentRoles)}
             </div>
-          )))}
+          ) : (
+            <NavLink
+              className="anchor"
+              id={`see-${path}`}
+              external={external}
+              to={path}
+              target={target}
+            >
+              {label(currentRoles)}
+            </NavLink>
+          )}
+        </div>
+      ))}
     </div>
   )
 }

@@ -28,7 +28,7 @@ export default () => {
 
   return (
     <>
-      <Header />
+      <Header withLinks />
       <Main className="sources">
         <div className="container">
           {/*<NavLink to={`/${collectionName}/creation`}>

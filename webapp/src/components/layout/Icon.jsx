@@ -9,7 +9,7 @@ const _ = ({ name, path, ...imgProps }) => (
     {...imgProps}
     alt={name}
     className={imgProps.className || 'icon'}
-    src={`${path}/${name}`}
+    src={`${path}${name ? `/${name}` : ''}`}
   />
 )
 
