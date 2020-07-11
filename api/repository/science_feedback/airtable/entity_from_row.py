@@ -259,10 +259,14 @@ def verdict_from_row(row, unused_index=None):
     if not claim:
         return None
 
+    medium = Medium.query.filter_by(name='Science Feedback')
+
+
     verdict_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',
         'claim': claim,
         'editor': editor,
+        'medium': medium,
         'scienceFeedbackIdentifier': row['airtableId'],
         'scienceFeedbackUrl': row['Review url'],
         'title': row['Review headline']

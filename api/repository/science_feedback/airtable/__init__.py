@@ -3,6 +3,7 @@
 import os
 from sqlalchemy_api_handler import ApiHandler, logger
 
+from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
 from utils.airtable import request_airtable_rows
 
 
@@ -46,6 +47,9 @@ def sync_for(name, max_records=None):
 
 def sync(max_records=None):
     logger.info('sync science feedback airtable data...')
-    for name in NAME_TO_AIRTABLE.keys():
+
+    create_or_modify_sf_organization_and_media()
+
+    for name in NAME_TO_AIRTABLE:
         sync_for(name, max_records=max_records)
     logger.info('sync science feedback airtable data...Done.')
