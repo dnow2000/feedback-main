@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useLocation, useParams } from 'react-router-dom'
+import { Route, Switch, useLocation, useParams } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
+import { entityMatch, formPath } from 'components/router'
 import { verdictNormalizer } from 'utils/normalizers'
+
+import Appearances from './Appearances'
+import EditorDashboard from './EditorDashboard'
 
 
 export default () => {
@@ -31,15 +35,23 @@ export default () => {
   }, [dispatch, isCreatedEntity, verdictId])
 
 
-
-
-
   return (
     <>
       <Header withLinks />
       <Main className="verdict">
         <div className="container">
-          HERE IS THE QUENTON CONTENT
+          <Switch location={location}>
+            <Route
+              component={EditorDashboard}
+              exact
+              path={`/verdicts/:verdictId${formPath}`}
+            />
+            <Route
+              component={Appearances}
+              exact
+              path={`/verdicts/:verdictId(${entityMatch})/appearances`}
+            />
+          </Switch>
         </div>
       </Main>
     </>

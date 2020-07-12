@@ -5,7 +5,6 @@ from sqlalchemy_api_handler.utils.get_result import paginate_obj
 
 from domain.trendings import find_trendings, trending_from
 from repository.trendings import keep_not_saved_trendings
-from utils.config import IS_DEVELOPMENT
 from utils.rest import login_or_api_key_required
 
 

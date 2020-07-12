@@ -23,11 +23,11 @@ import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
 
 
-const entityMatch = '[A-Za-z0-9]{2,}'
-const formPath = `(${entityMatch}|creation)/:modification(modification)?`
+export const entityMatch = '[A-Za-z0-9]{2,}'
+export const formPath = `(${entityMatch}|creation)/:modification(modification)?`
 
 
-export default [
+export const routes = [
   {
     exact: true,
     path: '/',

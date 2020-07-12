@@ -21,7 +21,7 @@ export default () => {
 
   const visibleLinks = useSelector(state =>
     selectVisibleLinksByComponentName(state, 'Menu'))
-  const showMenu = visibleLinks.filter(({componentNames}) =>
+  const showMenu = currentUser || visibleLinks.filter(({componentNames}) =>
     componentNames === ['Menu']).length
 
   const isMenuActive = useSelector(state => state.menu.isActive)

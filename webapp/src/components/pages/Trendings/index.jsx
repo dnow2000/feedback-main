@@ -24,7 +24,7 @@ export default () => {
 
   return (
     <>
-      <Header />
+      <Header withLinks />
       <Main className="trendings">
         <div className="container">
           <section>

@@ -53,15 +53,15 @@ export default ({ withLinks=false }) => {
 
         <div className="flex-auto" />
         {withLinks && (
-          <>
+          <div className="right-content">
             <Navigations />
             <Menu />
-          </>
-        )}
-        {showSignin && (
-          <NavLink className="button" to="/signin">
-            Sign in
-          </NavLink>
+            {showSignin && (
+              <NavLink className="button" to="/signin">
+                Sign in
+              </NavLink>
+            )}
+          </div>
         )}
       </div>
     </header>

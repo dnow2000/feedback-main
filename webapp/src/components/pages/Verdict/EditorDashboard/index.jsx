@@ -10,8 +10,6 @@ import {
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import Header from 'components/layout/Header'
-import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -138,21 +136,16 @@ export default () => {
 
   return (
     <>
-      <Header />
-      <Main className="verdict">
-        <div className="container">
-          <section className="hero">
-            <h1 className="title">
-              {title}
-            </h1>
-          </section>
-          <Form
-            initialValues={currentUserVerdictPatch}
-            onSubmit={handleSubmitVerdict}
-            render={renderForm}
-          />
-        </div>
-      </Main>
+      <section className="hero">
+        <h1 className="title">
+          {title}
+        </h1>
+      </section>
+      <Form
+        initialValues={currentUserVerdictPatch}
+        onSubmit={handleSubmitVerdict}
+        render={renderForm}
+      />
     </>
   )
 }
