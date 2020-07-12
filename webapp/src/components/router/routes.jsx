@@ -40,12 +40,6 @@ export default [
     title: 'About'
   },
   {
-    component: Landing,
-    exact: true,
-    path: '/landing',
-    title: 'Landing'
-  },
-  {
     component: withRequiredLogin(Account),
     exact: true,
     path: `/account`,
@@ -73,10 +67,10 @@ export default [
     title: 'Exploration'
   },
   {
-    component: withRequiredLogin(Sources),
+    component: Landing,
     exact: true,
-    path: '/sources',
-    title: 'Sources',
+    path: '/landing',
+    title: 'Landing'
   },
   {
     component: compose(
@@ -95,6 +89,33 @@ export default [
     exact: true,
     path: '/reviews',
     title: 'Reviews',
+  },
+  {
+    component: withRedirectWhenLoggedIn(Signin),
+    exact: true,
+    path: '/signin',
+    title: 'Signin',
+  },
+  {
+    component: withRedirectWhenLoggedIn(Signup),
+    exact: true,
+    path: '/signup/(apply)?/:roleType(reviewer|editor)?',
+    title: 'Signup',
+  },
+  {
+    component: withRequiredLogin(Sources),
+    exact: true,
+    path: '/sources',
+    title: 'Sources',
+  },
+  {
+    component: compose(
+      withRequiredLogin,
+      withRoles({ accessRoleTypes: ['editor'] })
+    )(Trendings),
+    exact: true,
+    path: '/trendings',
+    title: 'Trendings',
   },
   {
     component: compose(
@@ -140,26 +161,5 @@ export default [
     exact: true,
     path: '/verdicts',
     title: 'Verdicts',
-  },
-  {
-    component: withRedirectWhenLoggedIn(Signin),
-    exact: true,
-    path: '/signin',
-    title: 'Signin',
-  },
-  {
-    component: withRedirectWhenLoggedIn(Signup),
-    exact: true,
-    path: '/signup/(apply)?/:roleType(reviewer|editor)?',
-    title: 'Signup',
-  },
-  {
-    component: compose(
-      withRequiredLogin,
-      withRoles({ accessRoleTypes: ['editor'] })
-    )(Trendings),
-    exact: true,
-    path: '/trendings',
-    title: 'Trendings',
-  },
+  }
 ]

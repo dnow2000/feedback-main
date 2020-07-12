@@ -18,9 +18,7 @@ const ItemsByName = {
 
 export default ({ trending }) => {
   const {
-    source: {
-      id: sourceId
-    },
+    id: sourceId,
     type
   } = trending
   const dispatch = useDispatch()

@@ -35,30 +35,22 @@ def get_trendings():
     page = int(request.args.get('page', 1))
     table_name = request.args.get('type', 'content')
 
-    trendings = find_trendings(
-        table_name,
-        days=days,
-        max_trendings=50,
-        min_shares=200,
-        theme=theme
-    )
+    trendings = find_trendings(table_name,
+                               days=days,
+                               max_trendings=50,
+                               min_shares=200,
+                               theme=theme)
 
-    not_saved_trendings = keep_not_saved_trendings(
-        trendings,
-        table_name
-    )
+    not_saved_trendings = keep_not_saved_trendings(trendings,
+                                                   table_name)
 
-    not_saved_trendings = sorted(
-        not_saved_trendings,
-        key=lambda a: a.get('totalShares', 0),
-        reverse=True
-    )
+    not_saved_trendings = sorted(not_saved_trendings,
+                                 key=lambda a: a.get('totalShares', 0),
+                                 reverse=True)
 
-    paginated_trendings = paginate_obj(
-        not_saved_trendings,
-        page,
-        os.environ.get('TRENDINGS_PAGINATION', 10)
-    ).items
+    paginated_trendings = paginate_obj(not_saved_trendings,
+                                       page,
+                                       os.environ.get('TRENDINGS_PAGINATION', 10)).items
 
     total_data_count = len(not_saved_trendings)
 

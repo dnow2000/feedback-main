@@ -8,8 +8,6 @@ from utils.date import strftime
 from utils.config import IS_DEVELOPMENT
 
 
-IS_DEVELOPMENT = False
-
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
 BUZZSUMO_API_URL = 'http://api.buzzsumo.com/search'
 
@@ -181,12 +179,10 @@ def shares_from_buzzsumo_url(buzzsumo_id):
     return media_items
 
 
-def find_buzzsumo_trendings(
-        days=1,
-        max_trendings=3,
-        min_shares=10000,
-        theme=None,
-):
+def find_buzzsumo_trendings(days=1,
+                            max_trendings=3,
+                            min_shares=10000,
+                            theme=None):
 
     config = {
         'count': max_trendings * 2,
@@ -204,6 +200,7 @@ def find_buzzsumo_trendings(
     trendings = []
     urls = set()
     trending_saved = 0
+
 
     if IS_DEVELOPMENT:
         results = DEVELOPMENT_TRENDINGS

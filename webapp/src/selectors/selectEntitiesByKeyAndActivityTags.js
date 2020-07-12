@@ -1,8 +1,9 @@
 import createCachedSelector from 're-reselect'
 
-function mapArgsToCacheKey(state, key, tags) {
-  return `${key} ${tags.map(tag => tag).join(' ')}`
-}
+
+const mapArgsToCacheKey = (state, key, tags) =>
+  `${key} ${tags.map(tag => tag).join(' ')}`
+
 
 export default createCachedSelector(
   (state, key) => state.data[key],

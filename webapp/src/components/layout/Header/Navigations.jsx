@@ -2,28 +2,26 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
-
-import { links } from './utils'
+import selectVisibleLinksByComponentName from 'selectors/selectVisibleLinksByComponentName'
 
 
 export default () => {
   const location = useLocation()
 
-  const currentRoles = useSelector(state =>
-    selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']))
-
-  const visibleLinks = (links || []).filter(({ visible }) =>
-      visible(currentRoles))
+  const visibleLinks = useSelector(state =>
+    selectVisibleLinksByComponentName(state, 'Navigations'))
 
 
   return (
     <div className="navigations">
       {visibleLinks.map(({ external, label, path, target }) => (
-        <div className="navigation" key={label}>
+        <div
+          className="navigation"
+          key={label}
+        >
           {path === location.pathname ? (
             <div className="current">
-              {label(currentRoles)}
+              {label}
             </div>
           ) : (
             <NavLink
@@ -33,7 +31,7 @@ export default () => {
               to={path}
               target={target}
             >
-              {label(currentRoles)}
+              {label}
             </NavLink>
           )}
         </div>
