@@ -148,6 +148,7 @@ export const routes = [
     component: compose(
       withRequiredLogin,
       withRoles({
+        accessRoleTypes: ['editor'],
         creationRoleTypes: ['editor'],
         modificationRoleTypes: ['editor']
       }),

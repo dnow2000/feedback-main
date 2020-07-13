@@ -17,18 +17,23 @@ export default (config = {
     const params = useParams()
     const {
       getReadOnlyUrl,
+      id,
       isCreatedEntity,
       isModifiedEntity
     } = useFormidable(location, params)
+
 
     const [canRenderChildren, setCanRenderChildren] = useState(false)
 
     const accessRoles = useSelector(state =>
       selectCurrentRolesByTypes(state, config.accessRoleTypes))
+
     const creationRoles = useSelector(state =>
       selectCurrentRolesByTypes(state, config.creationRoleTypes))
+
     const modificationRoles = useSelector(state =>
       selectCurrentRolesByTypes(state, config.modificationRoleTypes))
+
 
     useEffect(() => {
       if (canRenderChildren) {
@@ -57,7 +62,11 @@ export default (config = {
             setCanRenderChildren(true)
             return
           }
-          history.push(getReadOnlyUrl())
+          let redirectUrl = getReadOnlyUrl()
+          if (id) {
+            redirectUrl = redirectUrl.replace(`/${id}`, '')
+          }
+          history.push(redirectUrl)
         }
         setCanRenderChildren(true)
       }
@@ -68,10 +77,12 @@ export default (config = {
       modificationRoles,
       getReadOnlyUrl,
       history,
+      id,
       isCreatedEntity,
       isModifiedEntity,
       setCanRenderChildren
     ])
+
 
     if (!canRenderChildren) {
       return null

@@ -5,7 +5,7 @@ import TextField from 'components/layout/form/fields/TextField'
 
 
 export default () => (
-  <div>
+  <>
     <TextField
       label="url"
       name="articleUrl"
@@ -22,5 +22,5 @@ export default () => (
       required
       rows={5}
     />
-  </div>
+  </>
 )

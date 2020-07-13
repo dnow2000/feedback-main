@@ -14,11 +14,12 @@ const _ = ({ name, path, ...imgProps }) => (
 )
 
 _.defaultProps = {
+  name: '',
   path: ROOT_ASSETS_PATH
 }
 
 _.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   path: PropTypes.string
 }
 

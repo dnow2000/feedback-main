@@ -38,7 +38,7 @@ const _ = ({ className, verdict }) => {
 
   return (
     <div
-      className={classnames("verdict-item", className)}
+      className={classnames('verdict-item', className)}
       onClick={handleClick}
     >
       <h4>

@@ -4,8 +4,8 @@ import { useLocation, useParams } from 'react-router-dom'
 import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 
-import Feeds from 'components/layout/Feeds'
 import Icon from 'components/layout/Icon'
+import Items from 'components/layout/Feeds/Items'
 import ReviewItem from 'components/layout/ReviewItem'
 import UserItem from 'components/layout/UserItem'
 import selectReviewersByVerdictId from 'selectors/selectReviewersByVerdictId'
@@ -112,7 +112,7 @@ export default ({ onChange }) => {
       <h2 className="subtitle">
         {"Recruit Reviewers"}
       </h2>
-      <Feeds
+      <Items
         cols={2}
         config={config}
         renderItem={renderItem}

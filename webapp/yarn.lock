@@ -14020,10 +14020,10 @@ widest-line@^2.0.0:
   dependencies:
     string-width "^2.1.1"
 
-with-react-formidable@2.1.1:
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/with-react-formidable/-/with-react-formidable-2.1.1.tgz#8c4a71c4f4f81a0217c84c4ac6c6bf7bc877ce3a"
-  integrity sha512-WFCVGtflKOcA7gAAy6naS8CxUCblcZwpgPb0VAXZVb645uwn0aGto88oY5la7xyUJX7NdDGQ5YnMIuLW4Qf2cQ==
+with-react-formidable@2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/with-react-formidable/-/with-react-formidable-2.1.5.tgz#cbea27bc6a7d99d6d793089705ca2fa729a6be65"
+  integrity sha512-n/KbTzl4pb77yaQNpOdnPqKlnI6a/RHljU54RLgwy7t/SnQEYS5hF3SAPnJapRxOy41yRFJSOYTFZL2ZmqVs9Q==
   dependencies:
     pluralize "^8.0.0"
     prop-types "^15.6.2"

@@ -41,7 +41,7 @@ const selectTruncatedReviewers = createSelector(
 )
 
 
-const VerdictItem = ({ verdict }) => {
+const _ = ({ verdict }) => {
   const {
     contentId,
     editorId,
@@ -113,7 +113,7 @@ const VerdictItem = ({ verdict }) => {
   )
 }
 
-VerdictItem.propTypes = {
+_.propTypes = {
   verdict: PropTypes.shape({
     contentId: PropTypes.number,
     editorId: PropTypes.number,
@@ -121,4 +121,4 @@ VerdictItem.propTypes = {
   }).isRequired
 }
 
-export default VerdictItem;
+export default _

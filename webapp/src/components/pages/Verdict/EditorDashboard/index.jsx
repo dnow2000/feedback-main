@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react'
-import { Form } from 'react-final-form'
+import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import {
@@ -8,13 +8,11 @@ import {
   selectEntitiesByKeyAndJoin
 } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
-import { useQuery } from 'with-react-query'
 
+import useLocationURL from 'components/uses/useLocationURL'
 import requests from 'reducers/requests'
-import { verdictNormalizer } from 'utils/normalizers'
 
-import FormFields from './FormFields'
-import FormFooter from './FormFooter'
+import Form from './Form'
 
 
 const API_PATH = '/verdicts'
@@ -26,9 +24,9 @@ export default () => {
   const location = useLocation()
   const params = useParams()
   const { isCreatedEntity, method, readOnly } = useFormidable(location, params)
-  const query = useQuery(location.search)
+  const locationURL = useLocationURL()
+  const sourceId = locationURL.searchParams.get('sourceId')
   const { verdictId } = params
-  const { params: { sourceId } } = query
   let title
   if (isCreatedEntity) {
     title = 'Create a verdict'
@@ -51,6 +49,7 @@ export default () => {
 
   const content = useSelector(state =>
     selectEntityByKeyAndId(state, 'contents', contentId))
+
   const {
     externalThumbUrl: contentExternalThumUrl,
     summary: contentSummary,
@@ -65,11 +64,8 @@ export default () => {
       ...verdict
   }
 
-  const { isPending } = useSelector(state =>
-    state.requests['/verdicts']) || {}
 
-
-  const handleSubmitVerdict = useCallback(formValues => {
+  const handleSubmit = useCallback(formValues => {
     const { id } = currentUserVerdictPatch || {}
     const apiPath = `${API_PATH}/${id || ''}`
     return new Promise(resolve => {
@@ -92,23 +88,6 @@ export default () => {
 
 
   useEffect(() => {
-    dispatch(requestData({ apiPath: '/evaluations' }))
-  }, [dispatch])
-
-  useEffect(() => {
-    dispatch(requestData({ apiPath: '/tags' }))
-  }, [dispatch])
-
-  useEffect(() => {
-    if (isCreatedEntity) return
-    dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}`,
-      isMergingDatum: true,
-      normalizer: verdictNormalizer,
-    }))
-  }, [dispatch, isCreatedEntity, verdictId])
-
-  useEffect(() => {
     if (!sourceId) return
     dispatch(requestData({ apiPath: `/trendings/${sourceId}`}))
   }, [dispatch, sourceId])
@@ -121,19 +100,6 @@ export default () => {
   })
 
 
-  const renderForm = useCallback(({ handleSubmit, ...formProps }) => (
-    <form
-      autoComplete="off"
-      className="form"
-      disabled={isPending}
-      noValidate
-      onSubmit={handleSubmit}
-    >
-      <FormFields />
-      <FormFooter {...formProps} />
-    </form>
-  ), [isPending])
-
   return (
     <>
       <section className="hero">
@@ -141,10 +107,10 @@ export default () => {
           {title}
         </h1>
       </section>
-      <Form
+      <ReactFinalForm
         initialValues={currentUserVerdictPatch}
-        onSubmit={handleSubmitVerdict}
-        render={renderForm}
+        onSubmit={handleSubmit}
+        render={Form}
       />
     </>
   )
