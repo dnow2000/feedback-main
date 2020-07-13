@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
-import { useQuery } from 'with-react-query'
 
 import ContentItem from 'components/layout/ContentItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
+import useLocationURL from 'components/uses/useLocationURL'
 import requests from 'reducers/requests'
 
 import { contentNormalizer, reviewNormalizer } from 'utils/normalizers'
@@ -32,7 +32,8 @@ export default () => {
     method
   } = useFormidable(location, params)
   const history = useHistory()
-  const { params: { contentId: queryContentId } } = useQuery(location.search)
+  const locationURL = useLocationURL()
+  const queryContentId = locationURL.searchParams.get('contentId')
 
 
   const review = useSelector(state =>

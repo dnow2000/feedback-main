@@ -7982,11 +7982,6 @@ lodash.get@^4.4.2:
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
 
-lodash.invert@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/lodash.invert/-/lodash.invert-4.3.0.tgz#8ffe20d4b616f56bea8f1aa0c6ebd80dcf742aee"
-  integrity sha1-j/4g1LYW9WvqjxqgxuvYDc90Ku4=
-
 lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
@@ -10683,15 +10678,6 @@ query-string@^4.1.0:
   resolved "https://registry.yarnpkg.com/query-string/-/query-string-4.3.4.tgz#bbb693b9ca915c232515b228b1a02b609043dbeb"
   integrity sha1-u7aTucqRXCMlFbIosaArYJBD2+s=
   dependencies:
-    object-assign "^4.1.0"
-    strict-uri-encode "^1.0.0"
-
-query-string@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/query-string/-/query-string-5.1.1.tgz#a78c012b71c17e05f2e3fa2319dd330682efb3cb"
-  integrity sha512-gjWOsm2SoGlgLEdAGt7a6slVOk9mGiXmPFMqrEhLQ68rhQuBnpfs3+EmlvqKyxnCo9/PPlF+9MtY02S1aFg+Jw==
-  dependencies:
-    decode-uri-component "^0.2.0"
     object-assign "^4.1.0"
     strict-uri-encode "^1.0.0"
 
@@ -14027,18 +14013,6 @@ with-react-formidable@2.1.5:
   dependencies:
     pluralize "^8.0.0"
     prop-types "^15.6.2"
-    react "^16.9.0"
-    react-dom "^16.9.0"
-
-with-react-query@1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/with-react-query/-/with-react-query-1.4.0.tgz#8f492d26fa6248cc9520b2b515335c0dff9b74b4"
-  integrity sha512-jEmOj5z/fSICpUTKjeOojDtfpEXlSmA12CQoyAj79CM2P1Hy86hLWsrYUxaj2bo6XXZXtZxz4AERKZM51uUXUQ==
-  dependencies:
-    classnames "2.2.5"
-    lodash.invert "^4.3.0"
-    lodash.uniq "^4.5.0"
-    query-string "^5.1.1"
     react "^16.9.0"
     react-dom "^16.9.0"
 

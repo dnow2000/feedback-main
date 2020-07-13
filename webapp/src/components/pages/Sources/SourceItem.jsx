@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { NavLink, useHistory, useLocation } from 'react-router-dom'
+import { NavLink, useHistory } from 'react-router-dom'
 import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
-import { useQuery } from 'with-react-query'
 import { selectCurrentUser } from 'with-react-redux-login'
 
 import ClaimItem from 'components/layout/ClaimItem'
 import ContentItem from 'components/layout/ContentItem'
+import useLocationURL from 'components/uses/useLocationURL'
 import selectCurrentUserReviewByContentId from 'selectors/selectCurrentUserReviewByContentId'
 import selectCurrentUserAppearanceByClaimId from 'selectors/selectCurrentUserAppearanceByClaimId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
@@ -20,8 +20,8 @@ const ItemsByName = {
 
 export default ({ source }) => {
   const history = useHistory()
-  const { search } = useLocation()
-  const { params: { type } } = useQuery(search)
+  const locationURL = useLocationURL()
+  const type = locationURL.searchParams.get('type')
   const { id } = source
   const Item = ItemsByName[`${type[0].toUpperCase()}${type.slice(1)}Item`]
 

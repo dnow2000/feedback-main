@@ -61,7 +61,6 @@
     "sigma": "^2.0.0-alpha32",
     "whatwg-fetch": "2.0.3",
     "with-react-formidable": "2.1.5",
-    "with-react-query": "1.4.0",
     "with-react-redux-login": "1.14.4"
   },
   "devDependencies": {

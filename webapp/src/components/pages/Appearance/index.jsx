@@ -8,12 +8,12 @@ import {
   selectEntitiesByKeyAndJoin
 } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
-import { useQuery } from 'with-react-query'
 
 import ClaimItem from 'components/layout/ClaimItem'
 import ContentItem from 'components/layout/ContentItem'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
+import useLocationURL from 'components/uses/useLocationURL'
 import requests from 'reducers/requests'
 import { getCanSubmit } from 'utils/form'
 import { scrapDecorator } from 'utils/scrap'
@@ -34,7 +34,9 @@ export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation()
-  const { params: { sourceId, type } } = useQuery(location.search)
+  const locationURL = useLocationURL()
+  const sourceId = locationURL.searchParams.get('sourceId')
+  const type = locationURL.searchParams.get('type')
   const Item = ItemsByName[`${type[0].toUpperCase()}${type.slice(1)}Item`]
   const params = useParams()
   const { appearanceId } = params

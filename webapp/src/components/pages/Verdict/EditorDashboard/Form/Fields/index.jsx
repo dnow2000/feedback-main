@@ -3,13 +3,13 @@ import { useSelector } from 'react-redux'
 import { useLocation, useParams } from 'react-router-dom'
 import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
-import { useQuery } from 'with-react-query'
 
 import CheckboxesField from 'components/layout/form/fields/CheckboxesField'
 import ContentItem from 'components/layout/ContentItem'
 import HiddenField from 'components/layout/form/fields/HiddenField'
 import SelectField from 'components/layout/form/fields/SelectField'
 import TexteditorField from 'components/layout/form/fields/TexteditorField'
+import useLocationURL from 'components/uses/useLocationURL'
 import { selectOptionsFromNameAndEntitiesAndPlaceholder } from 'utils/form'
 import selectEvaluationsByType from 'selectors/selectEvaluationsByType'
 import selectTagsByScopes from 'selectors/selectTagsByScopes'
@@ -29,7 +29,8 @@ export default () => {
   const location = useLocation()
   const params = useParams()
   const { verdictId } = params
-  const { params: { sourceId } } = useQuery(location.search)
+  const locationURL = useLocationURL()
+  const { sourceId } = locationURL.searchParams.get('sourceId')
   const { readOnly } = useFormidable(location, params)
 
 
