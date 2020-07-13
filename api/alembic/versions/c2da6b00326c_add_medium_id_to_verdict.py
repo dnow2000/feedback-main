@@ -17,7 +17,7 @@ depends_on = None
 
 
 def upgrade():
-    op.add_column('content',
+    op.add_column('verdict',
                   sa.Column('mediumId',
                             sa.BigInteger(),
                             sa.ForeignKey('medium.id')))
