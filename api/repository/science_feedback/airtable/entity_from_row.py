@@ -261,7 +261,6 @@ def verdict_from_row(row, unused_index=None):
 
 
     medium = Medium.query.filter_by(url='/'.join(row['Review url'].split('/')[0:3])).first()
-    print(medium, '/'.join(row['Review url'].split('/')[0:3]))
 
     verdict_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',
