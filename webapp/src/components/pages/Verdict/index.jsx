@@ -9,8 +9,8 @@ import Main from 'components/layout/Main'
 import { entityMatch, formPath } from 'components/router'
 import { verdictNormalizer } from 'utils/normalizers'
 
-import Appearances from './Appearances'
 import EditorDashboard from './EditorDashboard'
+import TestifierDashboard from './TestifierDashboard'
 
 
 export default () => {
@@ -47,9 +47,14 @@ export default () => {
               path={`/verdicts/:verdictId${formPath}`}
             />
             <Route
-              component={Appearances}
+              component={TestifierDashboard}
               exact
               path={`/verdicts/:verdictId(${entityMatch})/appearances`}
+            />
+            <Route
+              component={TestifierDashboard}
+              exact
+              path={`/verdicts/:verdictId(${entityMatch})/appearances/:appearanceId${formPath}`}
             />
           </Switch>
         </div>

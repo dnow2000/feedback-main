@@ -15,7 +15,7 @@ import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import useLocationURL from 'components/uses/useLocationURL'
 import requests from 'reducers/requests'
-import { getCanSubmit } from 'utils/form'
+import { canSubmitFromFormState } from 'utils/form'
 import { scrapDecorator } from 'utils/scrap'
 
 import FormFields from './FormFields'
@@ -85,7 +85,7 @@ export default () => {
 
   const renderForm = useCallback(formProps => {
     const { form: { reset }, handleSubmit, validating } = formProps
-    const canSubmit = getCanSubmit({ isLoading: isPending, ...formProps })
+    const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...formProps })
     return (
       <form
         autoComplete="off"

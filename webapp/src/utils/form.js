@@ -49,9 +49,9 @@ const createValidateRequiredField = error => value => {
 const validateRequiredField = createValidateRequiredField('This field is obligatory')
 
 
-export const getCanSubmit = config => {
+export const canSubmitFromFormState = config => {
   if (!config) {
-    throw new Error('getCanSubmit: Missing arguments')
+    throw new Error('canSubmitFromFormState: Missing arguments')
   }
   const { isLoading, ...reactFinalFormProps } = config
   // https://github.com/final-form/final-form#formstate

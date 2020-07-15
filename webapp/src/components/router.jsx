@@ -145,6 +145,12 @@ export const routes = [
     title: 'Verdict',
   },
   {
+    component: withRequiredLogin(Verdict),
+    exact: true,
+    path: `/verdicts/:verdictId(${entityMatch})/appearances/:appearanceId${formPath}`,
+    title: 'Verdict',
+  },
+  {
     component: compose(
       withRequiredLogin,
       withRoles({

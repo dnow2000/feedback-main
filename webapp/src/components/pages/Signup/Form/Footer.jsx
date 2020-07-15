@@ -2,7 +2,7 @@ import classnames from 'classnames'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { getCanSubmit } from 'utils/form'
+import { canSubmitFromFormState } from 'utils/form'
 
 
 export default ({ ...formProps }) => {
@@ -10,7 +10,7 @@ export default ({ ...formProps }) => {
     state.requests['/users/signup']) || {}
 
 
-  const canSubmit = getCanSubmit({ isLoading: isPending, ...formProps }) || true
+  const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...formProps }) || true
 
 
   return (

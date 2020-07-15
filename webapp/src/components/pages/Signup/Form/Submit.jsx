@@ -4,7 +4,7 @@ import { useForm } from 'react-final-form'
 import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
-import { getCanSubmit } from 'utils/form'
+import { canSubmitFromFormState } from 'utils/form'
 
 
 export default () => {
@@ -16,7 +16,7 @@ export default () => {
     state.requests['/users/signup']) || {}
 
 
-  const canSubmit = getCanSubmit({ isLoading: isPending, ...getState() }) || true
+  const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...getState() }) || true
 
 
   return (

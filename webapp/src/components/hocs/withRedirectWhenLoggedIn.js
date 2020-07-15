@@ -16,10 +16,9 @@ export default withLogin({
     if (
       pathname === '/signin'||
       pathname === '/signup'||
-      pathname === '/landing'||
       pathname === '/'
     ) {
-      history.push('/sources')
+      history.push('/landing')
     }
   },
   isRequired: false,

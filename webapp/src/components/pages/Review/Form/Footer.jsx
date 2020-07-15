@@ -6,7 +6,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useFormidable } from 'with-react-formidable'
 
-import { getCanSubmit } from 'utils/form'
+import { canSubmitFromFormState } from 'utils/form'
 
 
 export default ({ onCancel }) => {
@@ -25,7 +25,7 @@ export default ({ onCancel }) => {
 
   const { isPending } = useSelector(state =>
     state.requests['/reviews']) || {}
-  const canSubmit = getCanSubmit({ isLoading: isPending, ...getFormProps() })
+  const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...getFormProps() })
 
 
   const handleCancelClick = useCallback(() => {

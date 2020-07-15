@@ -5,7 +5,7 @@ import { useHistory, useLocation, useParams } from 'react-router-dom'
 import { NavLink } from 'react-router-dom'
 import { useFormidable } from 'with-react-formidable'
 
-import { getCanSubmit } from 'utils/form'
+import { canSubmitFromFormState } from 'utils/form'
 
 
 export default ({ ...formProps }) => {
@@ -20,7 +20,7 @@ export default ({ ...formProps }) => {
     state.requests['/verdicts']) || {}
   const canSubmit = !isPending && (
     isCreatedEntity ||
-    getCanSubmit(formProps)
+    canSubmitFromFormState(formProps)
   )
 
 

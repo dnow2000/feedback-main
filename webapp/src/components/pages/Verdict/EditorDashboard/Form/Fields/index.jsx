@@ -30,7 +30,7 @@ export default () => {
   const params = useParams()
   const { verdictId } = params
   const locationURL = useLocationURL()
-  const { sourceId } = locationURL.searchParams.get('sourceId')
+  const sourceId = locationURL.searchParams.get('sourceId')
   const { readOnly } = useFormidable(location, params)
 
 
