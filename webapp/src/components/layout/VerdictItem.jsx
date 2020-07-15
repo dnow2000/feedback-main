@@ -1,12 +1,13 @@
-import classnames from "classnames"
-import PropTypes from "prop-types"
-import React, { useCallback } from "react"
-import { useHistory } from "react-router-dom"
-import { useSelector } from "react-redux"
-
-import { selectEntityByKeyAndId } from "redux-thunk-data"
+import classnames from 'classnames'
+import PropTypes from 'prop-types'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import Icon from 'components/layout/Icon'
+import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
+
 
 
 const _ = ({ className, verdict }) => {
@@ -15,19 +16,14 @@ const _ = ({ className, verdict }) => {
 
 
   const claim = useSelector(
-    (state) => selectEntityByKeyAndId(state, "claims", claimId),
+    state => selectEntityByKeyAndId(state, 'claims', claimId),
     [claimId]
-  )
+  ) || {}
 
-  const verdictTag = useSelector(
-    state => selectEntityByKeyAndId(state, 'verdictTags', id),
+  const conclusionTag = useSelector(
+    state => selectConclusionTagByVerdictId(state, id),
     [id]
-  )
-
-  const tag = useSelector(
-    state => selectEntityByKeyAndId(state, 'tags', verdictTag.tagId),
-    [verdictTag]
-  )
+  ) || {}
 
 
   const handleClick = useCallback(
@@ -69,8 +65,8 @@ const _ = ({ className, verdict }) => {
       </p>
       <br />
       <div className="tags">
-        <span className={`tag text-center ${tag.label.toLowerCase()}`}>
-          {tag.label}
+        <span className={`tag text-center ${(conclusionTag.label || '').toLowerCase()}`}>
+          {conclusionTag.label}
         </span>
         <span className="tag text-center social-tag">
           <strong className="text-primary">

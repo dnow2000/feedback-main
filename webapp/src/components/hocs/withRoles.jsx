@@ -9,7 +9,8 @@ import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 export default (config = {
   accessRoleTypes: [],
   creationRoleTypes: [],
-  modificationRoleTypes: []
+  modificationRoleTypes: [],
+  readOnlyRoleTypes: []
 }) => WrappedComponent =>
   props => {
     const history = useHistory()
@@ -34,6 +35,9 @@ export default (config = {
     const modificationRoles = useSelector(state =>
       selectCurrentRolesByTypes(state, config.modificationRoleTypes))
 
+    const readOnlyRoles = useSelector(state =>
+      selectCurrentRolesByTypes(state, config.readOnlyRoleTypes))
+
 
     useEffect(() => {
       if (canRenderChildren) {
@@ -57,6 +61,13 @@ export default (config = {
       }
 
       if (!isCreatedEntity && !isModifiedEntity) {
+        if (readOnlyRoles) {
+          if (readOnlyRoles.length) {
+            setCanRenderChildren(true)
+            return
+          }
+        }
+
         if (accessRoles) {
           if (accessRoles.length) {
             setCanRenderChildren(true)
@@ -80,6 +91,7 @@ export default (config = {
       id,
       isCreatedEntity,
       isModifiedEntity,
+      readOnlyRoles,
       setCanRenderChildren
     ])
 
