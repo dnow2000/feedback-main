@@ -113,12 +113,14 @@ export default () => {
           </button>
         </div>
       ) }
+
       { appearances && appearances.map(appearance => (
         <AppearanceItem
           appearance={appearance}
           key={appearance.id}
         />
       )) }
+
       <div className="show-more">
         <button
           className="button is-primary is-outlined thin"
@@ -127,6 +129,30 @@ export default () => {
         >
           {'Show more'}
         </button>
+      </div>
+
+      <div className="appearance-graph-container">
+        <h4>
+          {'Virality'}
+        </h4>
+        <div className="appearance-virality-graph-group">
+          <img
+            alt="virality-graph"
+            src="http://localhost:80/static/assets/claim_page_graph_1.png"
+          />
+        </div>
+      </div>
+
+      <div className="appearance-graph-container">
+        <h4>
+          {'Propagation'}
+        </h4>
+        <div className="appearance-propagation-graph-group">
+          <img
+            alt="propagation-graph"
+            src="http://localhost:80/static/assets/claim_page_graph_2.png"
+          />
+        </div>
       </div>
     </>
   )
