@@ -8,6 +8,7 @@ import withRoles from 'components/hocs/withRoles'
 import About from 'components/pages/About'
 import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
+import Appearances from 'components/pages/Appearances'
 import Content from 'components/pages/Content'
 import Exploration from 'components/pages/Exploration'
 import Landing from 'components/pages/Landing'
@@ -49,6 +50,12 @@ export default [
     exact: true,
     path: `/account`,
     title: 'Account',
+  },
+  {
+    component: Appearances,
+    exact: true,
+    path: '/verdicts/:verdictId/appearances',
+    title: 'Appearance',
   },
   {
     component: withRequiredLogin(Appearance),
@@ -118,13 +125,12 @@ export default [
   },
   {
     component: compose(
-      // withRequiredLogin,
+      withRequiredLogin,
       withRoles({
         creationRoleTypes: ['editor'],
         modificationRoleTypes: ['editor']
       }),
     )(Verdict),
-    // component: Verdict,
     exact: true,
     path: `/verdicts/:verdictId${formPath}`,
     title: 'Verdict',

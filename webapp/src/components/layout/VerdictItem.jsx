@@ -3,6 +3,7 @@ import PropTypes from "prop-types"
 import React, { useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
+import { selectCurrentUser } from 'with-react-redux-login'
 
 import { selectEntityByKeyAndId } from "redux-thunk-data"
 
@@ -28,8 +29,11 @@ const VerdictItem = ({ className, verdict }) => {
     [verdictTag]
   )
 
+  const currentUser = useSelector(selectCurrentUser)
+  const url = currentUser ? `/verdicts/${id}` : `/verdicts/${id}/appearances`
+
   const handleClick = useCallback(
-    () => history.push(`/verdicts/${id}`),
+    () => history.push(url),
     [history, id]
   )
 

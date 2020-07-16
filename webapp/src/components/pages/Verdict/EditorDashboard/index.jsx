@@ -10,7 +10,6 @@ import {
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import requests from 'reducers/requests'
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -21,7 +20,7 @@ import FormFooter from './FormFooter'
 const API_PATH = '/verdicts'
 
 
-export default withRequiredLogin(() => {
+export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation()
@@ -152,4 +151,4 @@ export default withRequiredLogin(() => {
       />
     </>
   )
-})
+}

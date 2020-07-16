@@ -53,9 +53,8 @@ const _ = ({ withMenu=false }) => {
           <Logo type="header" />
         </div>
 
-        <div className="flex-auto" />
         {withMenu && (
-          <div>
+          <div className="right-content">
             <Navigations />
             <Menu />
           </div>
