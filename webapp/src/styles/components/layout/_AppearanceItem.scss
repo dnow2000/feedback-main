@@ -1,0 +1,32 @@
+.appearance-item-container {
+  &:not(:last-child) {
+    margin-bottom: 1em;
+  }
+
+  display: flex;
+  align-items: stretch;
+  min-height: 100px;
+  border: solid 1px $grey-light;
+  border-radius: 10px;
+  overflow: hidden;
+
+  .appearance-item-img {
+    min-width: 98px;
+    max-width: 20%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .appearance-data {
+    padding: 1em 1.1em;
+
+    .appearance-source {
+      margin-bottom: 1em;
+    }
+
+    .appearance-url {
+      font-size: 0.8em;
+      color: $primary;
+    }
+  }
+}

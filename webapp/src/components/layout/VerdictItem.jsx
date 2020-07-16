@@ -49,10 +49,12 @@ const _ = ({ className, verdict }) => {
           {`${medium.name}`}
         </strong>
         <span className="text-muted">
-          &nbsp;{'checked it'}
+          &nbsp;
+          {'checked it'}
+          &nbsp;
         </span>
         <strong>
-          &nbsp;{`${3} days ago`}
+          {`${3} days ago`}
         </strong>
       </div>
       <br />

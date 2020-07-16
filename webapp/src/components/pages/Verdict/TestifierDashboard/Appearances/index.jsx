@@ -1,62 +1,24 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
-import { Form as ReactFinalForm } from 'react-final-form'
-import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useParams, NavLink } from 'react-router-dom'
-import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
-import { closeModal, showModal } from 'redux-react-modals'
+import React, { useCallback } from 'react'
 
-import requests from 'reducers/requests'
-
-import AppearanceItem from './AppearanceItem'
-import Form from './Form'
+import AppearanceItem from 'components/layout/AppearanceItem'
 
 
 export default ({ appearances }) => {
-  const dispatch = useDispatch()
-  const history = useHistory()
-  const { appearanceId, verdictId } = useParams()
+  const linkCount = appearances?.length
+  const shareCount = appearances
+                      ?.map(appearance => appearance.quotingContent.totalShares)
+                      ?.reduce((a, b) => a + b, 0)
 
+  const handleTabClick = useCallback(event => {
+    const tabPane = document.getElementById('verdict-tab-pane')
+    Array.prototype.map.call(tabPane.children, tab => tab.classList.remove('active'))
+    event.target.classList.add('active')
+    // TODO: hide and show different tabs
+  }, [])
 
-  const verdict =  useSelector(state =>
-    selectEntityByKeyAndId(state, 'verdicts', verdictId))
-  const { claimId } = verdict || {}
-  const claim = useSelector(state =>
-    selectEntityByKeyAndId(state, 'claims', claimId))
-  const { id: quotedClaimId } = claim || {}
-
-
-  const initialValues = useMemo(() => ({
-    quotedClaimId
-  }), [quotedClaimId])
-
-
-  const handleFormSubmit = useCallback(formValues =>
-    new Promise(resolve =>
-      dispatch(requestData({
-        apiPath: '/appearances',
-        body: formValues,
-        handleFail: (beforeState, action) =>
-          resolve(requests(beforeState.requests, action)['/appearances'].errors),
-        handleSuccess: () => {
-          resolve()
-          dispatch(closeModal('main'))
-          history.push(`/verdicts/${verdictId}/appearances`)
-        },
-        method: 'POST'
-      }))), [dispatch, history, verdictId])
-
-  useEffect(() => {
-    if (appearanceId === 'creation') {
-      dispatch(showModal(
-        'main',
-        <ReactFinalForm
-          initialValues={initialValues}
-          onSubmit={handleFormSubmit}
-          render={Form}
-        />, { isUnclosable: true }))
-        return
-    }
-  }, [appearanceId, dispatch, handleFormSubmit, initialValues])
+  const showMore = useCallback(event => {
+    console.log(`show more ${event}`)
+  }, [])
 
 
   if (!appearances.length) {
@@ -69,23 +31,47 @@ export default ({ appearances }) => {
 
   return (
     <div className="appearances">
-      <NavLink
-        className="add"
-        type="button"
-        to={`/verdicts/${verdictId}/appearances/creation`}
-      >
-        + Add a new appearance
-      </NavLink>
-      <div className="title">
-        Appears in:
-      </div>
+      {/*<Add />*/}
+      { appearances &&  (
+        <div
+          className='tab-pane'
+          id='verdict-tab-pane'
+        >
+          <button
+            className='tab active'
+            id='links'
+            onClick={handleTabClick}
+            type='button'
+          >
+            {`${linkCount} Links`}
+          </button>
+          <button
+            className='tab'
+            id='shares'
+            onClick={handleTabClick}
+            type='button'
+          >
+            {`${shareCount || '42'} Shares`}
+          </button>
+        </div>
+      ) }
 
-      {appearances.map(appearance => (
+      { appearances && appearances.map(appearance => (
         <AppearanceItem
           appearance={appearance}
           key={appearance.id}
         />
-      ))}
+      )) }
+
+      <div className="show-more">
+        <button
+          className="button is-primary is-outlined thin"
+          onClick={showMore}
+          type='button'
+        >
+          {'Show more'}
+        </button>
+      </div>
     </div>
   )
 }

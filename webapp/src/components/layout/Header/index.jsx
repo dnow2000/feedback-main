@@ -45,7 +45,7 @@ export default ({ withLinks=false }) => {
 
 
   return (
-    <header className={classnames("header", { 'is-blurred': !isAtTop })}>
+    <header className={classnames('header', { 'is-blurred': !isAtTop })}>
       <div className="container">
         <div className="left-content">
           <Logo type="header" />
@@ -57,7 +57,10 @@ export default ({ withLinks=false }) => {
             <Navigations />
             <Menu />
             {showSignin && (
-              <NavLink className="button" to="/signin">
+              <NavLink
+                className="button"
+                to="/signin"
+              >
                 Sign in
               </NavLink>
             )}
