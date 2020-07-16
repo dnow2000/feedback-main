@@ -1,5 +1,7 @@
 .button {
   border-radius: 1.5rem;
+  border-width: 1px;
+  border-style: solid;
   cursor: pointer;
   font-weight: 400;
   font-size: 1rem;
@@ -67,11 +69,15 @@
 
   &.is-primary {
     background-color: $primary;
-    border-color: transparent;
+    border-color: $primary;
     color: $white;
 
     &.box-shadow {
       box-shadow: 0 1px 20px $primary;
+    }
+
+    &.is-outlined {
+      color: $primary
     }
   }
 

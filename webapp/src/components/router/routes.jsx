@@ -118,12 +118,13 @@ export default [
   },
   {
     component: compose(
-      withRequiredLogin,
+      // withRequiredLogin,
       withRoles({
         creationRoleTypes: ['editor'],
         modificationRoleTypes: ['editor']
       }),
     )(Verdict),
+    // component: Verdict,
     exact: true,
     path: `/verdicts/:verdictId${formPath}`,
     title: 'Verdict',

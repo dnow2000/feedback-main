@@ -1,5 +1,6 @@
-import classnames from 'classnames'
 import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
+import classnames from 'classnames'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
 import { selectCurrentUser } from 'with-react-redux-login'
@@ -8,8 +9,8 @@ import Logo from 'components/layout/Logo'
 import { assignScroll } from 'reducers/scroll'
 import { isAtTopFromWindow } from 'utils/scroll'
 
-import Menu from './Menu'
-import Navigations from './Navigations'
+import Menu from 'components/layout/Header/Menu'
+import Navigations from 'components/layout/Header/Navigations'
 
 
 const pathnamesWithoutSignin = [
@@ -19,7 +20,7 @@ const pathnamesWithoutSignin = [
 ]
 
 
-export default ({ withMenu=false }) => {
+const _ = ({ withMenu=false }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const withSignin = pathnamesWithoutSignin.includes(location.pathname)
@@ -27,6 +28,7 @@ export default ({ withMenu=false }) => {
 
   const currentUser = useSelector(selectCurrentUser)
   const showSignin = !currentUser && !withSignin
+
 
   const isAtTop = useSelector(state => state.scroll.isAtTop)
 
@@ -53,17 +55,26 @@ export default ({ withMenu=false }) => {
 
         <div className="flex-auto" />
         {withMenu && (
-          <>
+          <div>
             <Navigations />
             <Menu />
-          </>
+          </div>
         )}
         {showSignin && (
-          <NavLink className="button" to="/signin">
-            Sign in
+          <NavLink
+            className="button"
+            to="/signin"
+          >
+            {'Sign in'}
           </NavLink>
         )}
       </div>
     </header>
   )
 }
+
+_.propTypes = {
+  withMenu: PropTypes.bool.isRequired
+}
+
+export default _

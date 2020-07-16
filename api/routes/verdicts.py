@@ -29,7 +29,7 @@ def get_verdicts():
 
 
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
-@login_or_api_key_required
+# @login_or_api_key_required
 def get_verdict(verdict_id):
     verdict = load_or_404(Verdict, verdict_id)
     return jsonify(as_dict(verdict, includes=VERDICT_INCLUDES)), 200
