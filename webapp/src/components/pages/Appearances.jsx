@@ -24,7 +24,7 @@ export default () => {
   useEffect(() => {
     if (isCreatedEntity) return
     dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}`,
+      apiPath: `/verdicts/${verdictId}/appearances`,
       isMergingDatum: true,
       normalizer: verdictNormalizer,
     }))
