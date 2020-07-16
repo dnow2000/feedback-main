@@ -10,8 +10,7 @@ import {
 import { useFormidable } from 'with-react-formidable'
 import { useQuery } from 'with-react-query'
 
-import Header from 'components/layout/Header'
-import Main from 'components/layout/Main'
+import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import requests from 'reducers/requests'
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -22,7 +21,7 @@ import FormFooter from './FormFooter'
 const API_PATH = '/verdicts'
 
 
-export default () => {
+export default withRequiredLogin(() => {
   const dispatch = useDispatch()
   const history = useHistory()
   const location = useLocation()
@@ -49,16 +48,19 @@ export default () => {
 
   const verdict = useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
+
   const { contentId } = verdict || {}
 
   const content = useSelector(state =>
     selectEntityByKeyAndId(state, 'contents', contentId))
+
   const {
     externalThumbUrl: contentExternalThumUrl,
     summary: contentSummary,
     title: contentTitle,
     url: contentUrl,
   } = { ...trending, ...content}
+
   const currentUserVerdictPatch = {
       contentExternalThumUrl,
       contentSummary,
@@ -138,21 +140,16 @@ export default () => {
 
   return (
     <>
-      <Header />
-      <Main className="verdict">
-        <div className="container">
-          <section className="hero">
-            <h1 className="title">
-              {title}
-            </h1>
-          </section>
-          <Form
-            initialValues={currentUserVerdictPatch}
-            onSubmit={handleSubmitVerdict}
-            render={renderForm}
-          />
-        </div>
-      </Main>
+      <section className="hero">
+        <h1 className="title">
+          {title}
+        </h1>
+      </section>
+      <Form
+        initialValues={currentUserVerdictPatch}
+        onSubmit={handleSubmitVerdict}
+        render={renderForm}
+      />
     </>
   )
-}
+})

@@ -1,0 +1,39 @@
+$sizes: (
+  0,
+  1,
+  2,
+  3,
+  4,
+  5
+);
+
+$positions: (
+  't': top,
+  'r': right,
+  'b': bottom,
+  'l': left
+);
+
+@each $margin-or-padding, $m-or-t in (margin: 'm', padding: 'p') {
+  @each $size in $sizes {
+    .#{$m-or-t}-#{$size} {
+      #{$margin-or-padding}: #{$size}em !important;
+    }
+
+    .#{$m-or-t}x-#{$size} {
+      #{$margin-or-padding}-top: #{$size}em !important;
+      #{$margin-or-padding}-bottom: #{$size}em !important;
+    }
+
+    .#{$m-or-t}y-#{$size} {
+      #{$margin-or-padding}-left: #{$size}em !important;
+      #{$margin-or-padding}-right: #{$size}em !important;
+    }
+
+    @each $key, $position in $positions {
+      .#{$m-or-t}#{$key}-#{$size} {
+        #{$margin-or-padding}-#{$position}: #{$size}em !important;
+      }
+    }
+  }
+}

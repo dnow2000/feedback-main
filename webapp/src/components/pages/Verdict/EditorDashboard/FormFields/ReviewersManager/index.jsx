@@ -23,7 +23,8 @@ export default ({ onChange }) => {
 
 
   const config = useMemo(() => ({
-    apiPath: `/users${search}`
+    apiPath: `/users${search}`,
+    isMergingDatum: true
   }), [search])
 
 
@@ -34,7 +35,7 @@ export default ({ onChange }) => {
     selectReviewersByVerdictId(state, verdictId))
   const verdict = useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
-  const { articleId } = verdict || {}
+  const { articleId } = verdict || {}
 
   const reviews = useSelector(state =>
     selectEntitiesByKeyAndJoin(
