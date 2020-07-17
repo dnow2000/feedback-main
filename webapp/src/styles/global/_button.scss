@@ -67,11 +67,17 @@
 
   &.is-primary {
     background-color: $primary;
-    border-color: transparent;
+    border: solid 1px $primary;
     color: $white;
 
     &.box-shadow {
       box-shadow: 0 1px 20px $primary;
+    }
+
+    &.is-outlined {
+      background-color: transparent;
+      box-shadow: none;
+      color: $primary;
     }
   }
 

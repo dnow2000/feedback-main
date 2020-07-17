@@ -2,85 +2,69 @@
 
 
 .appearances {
-  .container {
-    .info-board-editor-container {
-      display: flex;
-      flex-direction: row;
-      margin: 0.75rem 0;
-      align-items: center;
-      font-size: 0.8em;
+  // .container {
+  //   .info-board-editor-container {
+  //     display: flex;
+  //     flex-direction: row;
+  //     margin: 0.75rem 0;
+  //     align-items: center;
+  //     font-size: 0.8em;
 
-      .avatar {
-        margin: 0;
-        margin-right: 0.5rem;
-        width: 20px;
-        height: 20px;
+  //     .avatar {
+  //       margin: 0;
+  //       margin-right: 0.5rem;
+  //       width: 20px;
+  //       height: 20px;
+  //     }
+
+  //   }
+
+  .tab-pane {
+    display: flex;
+    flex-flow: horizontal;
+    align-items: center;
+    margin-bottom: 1em;
+
+    .tab {
+      appearance: none;
+      background-color: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: $grey-darker;
+      padding: 0.6em 0;
+      font-size: 1.1em;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border 0.5s;
+
+      &:not(:last-child) {
+        margin-right: 1em;
       }
 
-    }
+      &:focus {
+        outline: none;
+      }
 
-    .info-board-button-group {
-      display: flex;
-      flex-flow: horizontal;
-      align-item: center;
-
-      .tag {
-        display: flex;
-        align-items: center;
-        height: 2rem;
-        padding: 0;
-        padding-left: 1rem;
-        padding-right: 1rem;
+      &.active, &:hover {
+        border-color: $primary;
       }
     }
+  }
 
-    .tab-pane {
-      display: flex;
-      flex-flow: horizontal;
-      align-items: center;
+  .show-more {
+    display: flex;
+    margin-bottom: 1em;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .appearance-graph-container {
+    h4 {
+      color: $grey-darker;
+      font-size: 1.1em;
+      font-weight: 600;
+      margin-top: 1em;
       margin-bottom: 1em;
-
-      .tab {
-        appearance: none;
-        background-color: transparent;
-        border: none;
-        border-bottom: 2px solid transparent;
-        color: $grey-darker;
-        padding: 0.6em 0;
-        font-size: 1.1em;
-        font-weight: 600;
-        cursor: pointer;
-        transition: border 0.5s;
-
-        &:not(:last-child) {
-          margin-right: 1em;
-        }
-
-        &:focus {
-          outline: none;
-        }
-
-        &.active, &:hover {
-          border-color: $primary;
-        }
-      }
-    }
-
-    .show-more {
-      display: flex;
-      margin-bottom: 1em;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .appearance-graph-container {
-      h4 {
-        color: $grey-darker;
-        font-size: 1.1em;
-        font-weight: 600;
-        margin-top: 1em;
-        margin-bottom: 1em;
-      }
     }
   }
 }

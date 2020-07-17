@@ -24,7 +24,7 @@ export default ({ appearances }) => {
   if (!appearances.length) {
     return (
       <div>
-        does not appear anywhere
+        {'Does not appear anywhere'}
       </div>
     )
   }

@@ -9,7 +9,6 @@ import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
 
 
-
 const _ = ({ className, verdict }) => {
   const history = useHistory()
   const { claimId, id, medium, title: headline } = verdict

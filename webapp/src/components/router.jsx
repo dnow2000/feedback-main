@@ -139,7 +139,7 @@ export const routes = [
     title: 'Users',
   },
   {
-    component: withRequiredLogin(Verdict),
+    component: Verdict,
     exact: true,
     path: `/verdicts/:verdictId(${entityMatch})/appearances`,
     title: 'Verdict',
