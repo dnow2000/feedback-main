@@ -5,6 +5,7 @@ import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
 import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppearancesByQuotedClaimId'
+import { verdictNormalizer } from 'utils/normalizers'
 
 import Appearances from './Appearances'
 
@@ -22,25 +23,24 @@ export default () => {
 
   useEffect(() => {
     dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}`,
-      normalizer: {
-        claim: {
-          normalizer: {
-            quotedFromAppearances: 'appearances'
-          },
-          stateKey: 'claims',
-        }
-      }
+      apiPath: `/verdicts/${verdictId}/appearances`,
+      normalizer: verdictNormalizer
     }))
   }, [dispatch, verdictId])
 
 
   return (
     <>
-      {verdict && <VerdictItem verdict={verdict} />}
+      {verdict && (
+        <VerdictItem
+          verdict={verdict}
+          withLinksShares={false}
+        />
+      )}
       {quotedFromAppearances &&
         <Appearances
-          appearances={quotedFromAppearances} />}
+          appearances={quotedFromAppearances}
+        />}
     </>
   )
 }

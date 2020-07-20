@@ -1,38 +1,49 @@
-.tag {
-  border-radius: 18px;
-  font-weight: 500;
-  height: 16px;
-  max-width: 100px;
-  padding: 0.1rem 0.7rem;
-  background-color: $grey-light;
-  color: $white;
+.tags {
+  display: flex;
+  align-items: center;
+  flex-direction: horizontal;
 
-  &.correct {
-    background-color: lighten($green, 40%);
-    color: $green;
-  }
+  .tag {
+    border-radius: 18px;
+    border: 1px solid $grey-light;
+    font-weight: 500;
+    height: 2rem;
+    padding: 0 0.7rem;
+    background-color: $grey-light;
+    color: $white;
+    line-height: 2rem;
 
-  &.partially-correct {
-    background-color: lighten($bluegreen, 30%);
-    color: $bluegreen;
-  }
+    &.correct {
+      background-color: lighten($green, 40%);
+      border-color: lighten($green, 40%);
+      color: $green;
+    }
 
-  &.inaccurate {
-    background-color: lighten($orange, 30%);
-    color: $orange;
-  }
+    &.partially-correct {
+      background-color: lighten($bluegreen, 30%);
+      border-color: lighten($bluegreen, 30%);
+      color: $bluegreen;
+    }
 
-  &.incorrect {
-    background-color: lighten($red, 30%);
-    color: $red;
-  }
+    &.inaccurate {
+      background-color: lighten($orange, 30%);
+      border-color: lighten($orange, 30%);
+      color: $orange;
+    }
 
-  &.social-tag {
-    color: $grey-darker;
-    font-weight: lighter !important;
-  }
+    &.incorrect {
+      background-color: lighten($red, 30%);
+      border-color: lighten($red, 30%);
+      color: $red;
+    }
 
-  &:not(:last-child) {
-    margin-right: 4px;
+    &.social-tag {
+      color: $grey-darker;
+      font-weight: lighter !important;
+    }
+
+    &:not(:last-child) {
+      margin-right: 4px;
+    }
   }
 }

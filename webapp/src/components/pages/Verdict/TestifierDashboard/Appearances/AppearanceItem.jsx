@@ -10,9 +10,15 @@ export default ({ appearance }) => {
 
   return (
     <div className="appearance-item">
-      <span className="domain"> {domain} </span> <a
+      <span className="domain">
+        {domain}
+      </span>
+      <a
         className="link"
-        href={url}>{url}</a>
+        href={url}
+      >
+        {url}
+      </a>
     </div>
   )
 }

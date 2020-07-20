@@ -63,7 +63,6 @@ class Appearance(ApiHandler,
 
     stance = Column(Enum(StanceType))
 
-
     testifierId = Column(BigInteger(),
                          ForeignKey('user.id'),
                          nullable=False,
