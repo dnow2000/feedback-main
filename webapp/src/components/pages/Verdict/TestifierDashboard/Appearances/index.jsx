@@ -18,9 +18,9 @@ export default ({ appearances }) => {
     // TODO: hide and show different tabs
   }, [])
 
-  const showMore = useCallback(event => {
-    console.log(`show more ${event}`)
-  }, [])
+  //const showMore = useCallback(event => {
+  //  console.log(`show more ${event}`)
+  //}, [])
 
 
   if (!appearances.length) {
