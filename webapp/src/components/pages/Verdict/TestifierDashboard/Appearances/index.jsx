@@ -69,6 +69,7 @@ export default ({ appearances }) => {
         />
       )) }
 
+      {/*
       <div className="show-more">
         <button
           className="button is-primary is-outlined thin"
@@ -78,6 +79,7 @@ export default ({ appearances }) => {
           {'Show more'}
         </button>
       </div>
+      */}
     </div>
   )
 }

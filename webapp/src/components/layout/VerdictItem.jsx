@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { useCallback, Fragment } from 'react'
+import React, { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { selectEntityByKeyAndId } from 'redux-thunk-data'
@@ -39,8 +39,8 @@ const _ = ({ className, verdict, withLinksShares }) => {
   )
 
   const links = withLinksShares ? (
-    <Fragment>
-      { linkCount && (
+    <>
+      { linkCount && false && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { linkCount }
@@ -50,7 +50,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           </span>
         </span>
       ) }
-      { shareCount && (
+      { shareCount && false && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(shareCount) }
@@ -60,7 +60,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           </span>
         </span>
       ) }
-    </Fragment>
+    </>
   ) : (
     <button
       className="button is-primary is-outlined thin"
