@@ -2,6 +2,8 @@ import React, { useCallback } from 'react'
 
 import AppearanceItem from 'components/layout/AppearanceItem'
 
+import { numberShortener } from 'utils/shorteners'
+
 
 export default ({ appearances }) => {
   const linkCount = appearances?.length
@@ -37,22 +39,26 @@ export default ({ appearances }) => {
           className='tab-pane'
           id='verdict-tab-pane'
         >
-          <button
-            className='tab active'
-            id='links'
-            onClick={handleTabClick}
-            type='button'
-          >
-            {`${linkCount} Links`}
-          </button>
-          <button
-            className='tab'
-            id='shares'
-            onClick={handleTabClick}
-            type='button'
-          >
-            {`${shareCount || '42'} Shares`}
-          </button>
+          { linkCount && (
+            <button
+              className='tab active'
+              id='links'
+              onClick={handleTabClick}
+              type='button'
+            >
+              {`${linkCount} Links`}
+            </button>
+          ) }
+          { shareCount && (
+            <button
+              className='tab'
+              id='shares'
+              onClick={handleTabClick}
+              type='button'
+            >
+              {`${numberShortener(shareCount)} Shares`}
+            </button>
+          ) }
         </div>
       ) }
 

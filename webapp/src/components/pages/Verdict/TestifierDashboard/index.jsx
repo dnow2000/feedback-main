@@ -31,7 +31,12 @@ export default () => {
 
   return (
     <>
-      {verdict && <VerdictItem verdict={verdict} />}
+      {verdict && (
+        <VerdictItem
+          verdict={verdict}
+          withLinksShares={false}
+        />
+      )}
       {quotedFromAppearances &&
         <Appearances
           appearances={quotedFromAppearances}
