@@ -40,7 +40,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
 
   const links = withLinksShares ? (
     <>
-      { linkCount && false && (
+      { false && linkCount && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { linkCount }
@@ -50,7 +50,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           </span>
         </span>
       ) }
-      { shareCount && false && (
+      {  false && shareCount && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(shareCount) }
