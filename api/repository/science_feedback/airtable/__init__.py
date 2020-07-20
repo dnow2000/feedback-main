@@ -4,6 +4,7 @@ import os
 from sqlalchemy_api_handler import ApiHandler, logger
 
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
+from repository.science_feedback.airtable.get_shares_from_buzzsumo import get_shares_from_buzzsumo
 from utils.airtable import request_airtable_rows
 
 
@@ -53,3 +54,7 @@ def sync(max_records=None):
     for name in NAME_TO_AIRTABLE:
         sync_for(name, max_records=max_records)
     logger.info('sync science feedback airtable data...Done.')
+
+    logger.info('get the Buzzsumo shares...')
+    get_shares_from_buzzsumo()
+    logger.info('get the Buzzsumo shares...Done.')
