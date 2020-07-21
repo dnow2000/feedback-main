@@ -3,21 +3,23 @@
     margin-bottom: 1em;
   }
 
-  display: flex;
   align-items: stretch;
-  min-height: 100px;
   border: solid 1px $grey-light;
   border-radius: 10px;
+  display: flex;
+  min-height: 100px;
   overflow: hidden;
 
   .appearance-item-img {
-    min-width: 98px;
     max-width: 20%;
+    min-width: 130px;
     object-fit: cover;
     object-position: center center;
+    width: 130px;
   }
 
   .appearance-data {
+    overflow: hidden;
     padding: 1em 1.1em;
 
     .appearance-source {
@@ -25,8 +27,8 @@
     }
 
     .appearance-url {
-      font-size: 0.8em;
       color: $primary;
+      font-size: 0.8em;
     }
   }
 }

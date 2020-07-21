@@ -2,22 +2,9 @@
 
 
 .appearances {
-  // .container {
-  //   .info-board-editor-container {
-  //     display: flex;
-  //     flex-direction: row;
-  //     margin: 0.75rem 0;
-  //     align-items: center;
-  //     font-size: 0.8em;
-
-  //     .avatar {
-  //       margin: 0;
-  //       margin-right: 0.5rem;
-  //       width: 20px;
-  //       height: 20px;
-  //     }
-
-  //   }
+  &.empty {
+    @extend .text-center;
+  }
 
   .tab-pane {
     display: flex;
@@ -52,10 +39,18 @@
   }
 
   .show-more {
-    display: flex;
-    margin-bottom: 1em;
     align-items: center;
+    display: flex;
     justify-content: center;
+    margin-bottom: 1em;
+
+    button {
+      @extend .button;
+      @extend .is-outlined;
+      @extend .is-primary;
+      @extend .text-primary;
+      @extend .thin;
+    }
   }
 
   .appearance-graph-container {

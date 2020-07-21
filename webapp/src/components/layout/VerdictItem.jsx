@@ -50,7 +50,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           </span>
         </span>
       ) }
-      {  false && shareCount && (
+      {  false && numberShortener(shareCount) && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(shareCount) }
@@ -62,10 +62,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
       ) }
     </>
   ) : (
-    <button
-      className="button is-primary is-outlined thin"
-      type='button'
-    >
+    <button type='button'>
       {'Read full review'}
     </button>
   )
@@ -85,7 +82,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           path={medium.logoUrl}
         />
         <strong>
-          {`${medium.name}`}
+          { medium.name }
         </strong>
         <span className="text-muted">
           &nbsp;
@@ -106,9 +103,9 @@ const _ = ({ className, verdict, withLinksShares }) => {
       </p>
       <br />
       <div className="tags">
-        <span className={`tag text-center ${(conclusionTag.label || '').toLowerCase()}`}>
+        { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label || '').toLowerCase()}`}>
           {conclusionTag.label}
-        </span>
+        </span> }
         { links }
       </div>
     </div>

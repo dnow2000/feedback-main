@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react'
 
 import AppearanceItem from 'components/layout/AppearanceItem'
+import Loader from 'components/layout/LoadMore'
 
 import { numberShortener } from 'utils/shorteners'
 
@@ -18,18 +19,32 @@ export default ({ appearances }) => {
     // TODO: hide and show different tabs
   }, [])
 
-  //const showMore = useCallback(event => {
-  //  console.log(`show more ${event}`)
-  //}, [])
+  const showMoreButton = useCallback(props => (
+    <div className="show-more">
+      <button
+        type='button'
+        {...props}
+      >
+        {props.text}
+      </button>
+    </div>
+  ), [])
 
+  const renderItem = useCallback(item => (
+    <AppearanceItem
+      appearance={item}
+      key={item.id}
+    />
+  ), [])
 
   if (!appearances.length) {
     return (
-      <div>
+      <div className='appearances empty'>
         {'Does not appear anywhere'}
       </div>
     )
   }
+
 
   return (
     <div className="appearances">
@@ -49,7 +64,7 @@ export default ({ appearances }) => {
               {`${linkCount} Links`}
             </button>
           ) }
-          { shareCount && (
+          { numberShortener(shareCount) && (
             <button
               className='tab'
               id='shares'
@@ -62,24 +77,15 @@ export default ({ appearances }) => {
         </div>
       ) }
 
-      { appearances && appearances.map(appearance => (
-        <AppearanceItem
-          appearance={appearance}
-          key={appearance.id}
+      { appearances && (
+        <Loader
+          Button={showMoreButton}
+          items={appearances}
+          loadLessText='Show less'
+          loadMoreText='Show more'
+          renderItem={renderItem}
         />
-      )) }
-
-      {/*
-      <div className="show-more">
-        <button
-          className="button is-primary is-outlined thin"
-          onClick={showMore}
-          type='button'
-        >
-          {'Show more'}
-        </button>
-      </div>
-      */}
+      ) }
     </div>
   )
 }

@@ -1,12 +1,12 @@
 .footer {
+  background-color: $blue-darker;
+  color: $grey-lighter;
   height: 18.75rem;
-  color: $grey-dark;
-  background-color: $grey-lighter;
 
-  display: flex;
-  flex-direction: row;
   align-items: baseline;
   align-items: flex-start;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
 
   margin: auto;
@@ -41,7 +41,7 @@
   }
 
   .link {
-    color: $grey-dark;
+    color: inherit;
     font-weight: 200;
     margin-bottom: 1.625rem;
     opacity: 1;
@@ -55,7 +55,7 @@
   }
 
   .h3 {
-    color: $grey-dark;
+    color: $blue-dark;
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.625rem;

@@ -1,17 +1,17 @@
 .tags {
-  display: flex;
   align-items: center;
+  display: flex;
   flex-direction: horizontal;
 
   .tag {
+    background-color: $grey-light;
     border-radius: 18px;
     border: 1px solid $grey-light;
+    color: $white;
     font-weight: 500;
     height: 2rem;
-    padding: 0 0.7rem;
-    background-color: $grey-light;
-    color: $white;
     line-height: 2rem;
+    padding: 0 0.7rem;
 
     &.correct {
       background-color: lighten($green, 40%);
@@ -45,5 +45,13 @@
     &:not(:last-child) {
       margin-right: 4px;
     }
+  }
+
+  button {
+    @extend .button;
+    @extend .is-outlined;
+    @extend .is-primary;
+    @extend .text-primary;
+    @extend .thin;
   }
 }
