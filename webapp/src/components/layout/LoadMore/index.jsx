@@ -30,10 +30,12 @@ const Loader = ({
   return(
     <>
       { items.slice(0, currentVisible).map(item => renderItem(item)) }
-      <Button
-        onClick={loadMore}
-        text={buttonText}
-      />
+      { items.length > visible && (
+        <Button
+          onClick={loadMore}
+          text={buttonText}
+        />
+      ) }
     </>
   )
 }
