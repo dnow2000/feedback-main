@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 
-const Loader = ({
+const _ = ({
   visible,
   items,
   renderItem,
@@ -40,14 +40,14 @@ const Loader = ({
   )
 }
 
-Loader.defaultProps = {
+_.defaultProps = {
   items: [],
   loadLessText: 'Load less',
   loadMoreText: 'Load more',
   visible: 4
 }
 
-Loader.propTypes = {
+_.propTypes = {
   Button: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(PropTypes.any),
   loadLessText: PropTypes.string,
@@ -56,4 +56,4 @@ Loader.propTypes = {
   visible: PropTypes.number
 }
 
-export default Loader
+export default _

@@ -1,5 +1,8 @@
 .button {
   border-radius: 1.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
   cursor: pointer;
   font-weight: 400;
   font-size: 1rem;
@@ -14,10 +17,6 @@
 
   &:focus {
     outline: none;
-  }
-
-  &:not(.is-outlined) {
-    border-width: 0;
   }
 
   &:focus:not(:active) {
@@ -67,17 +66,11 @@
 
   &.is-primary {
     background-color: $primary;
-    border: solid 1px $primary;
+    border-color: $primary;
     color: $white;
 
     &.box-shadow {
       box-shadow: 0 1px 20px $primary;
-    }
-
-    &.is-outlined {
-      background-color: transparent;
-      box-shadow: none;
-      color: $primary;
     }
   }
 

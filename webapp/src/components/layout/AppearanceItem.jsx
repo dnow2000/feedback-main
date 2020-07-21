@@ -7,7 +7,7 @@ import { API_URL } from 'utils/config'
 const _ = ({ appearance: { quotingContent } }) => {
   const { id, externalThumbUrl, title, url } = quotingContent
   const { hostname } = new URL(url)
-  const backUpThumbUrl = `${API_URL}/static/logo.png`
+  const thumbUrl = externalThumbUrl || `${API_URL}/static/logo.png`
 
 
   return (
@@ -17,11 +17,13 @@ const _ = ({ appearance: { quotingContent } }) => {
       rel='noopener noreferrer'
       target='_blank'
     >
-      {externalThumbUrl && <img
-        alt={id}
-        className='appearance-item-img'
-        src={externalThumbUrl || backUpThumbUrl}
-      />
+      { thumbUrl && (
+        <img
+          alt={id}
+          className='appearance-item-img'
+          src={thumbUrl}
+        />
+      ) }
       <div className="appearance-data">
         <h4 className='appearance-title'>
           {title}

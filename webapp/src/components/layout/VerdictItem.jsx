@@ -62,10 +62,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
       ) }
     </>
   ) : (
-    <button
-      className="button is-primary is-outlined thin"
-      type='button'
-    >
+    <button type='button'>
       {'Read full review'}
     </button>
   )

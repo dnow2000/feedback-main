@@ -3,32 +3,32 @@
     margin-bottom: 1em;
   }
 
-  display: flex;
   align-items: stretch;
-  min-height: 100px;
   border: solid 1px $grey-light;
   border-radius: 10px;
+  display: flex;
+  min-height: 100px;
   overflow: hidden;
 
   .appearance-item-img {
-    width: 130px;
-    min-width: 130px;
     max-width: 20%;
+    min-width: 130px;
     object-fit: cover;
     object-position: center center;
+    width: 130px;
   }
 
   .appearance-data {
-    padding: 1em 1.1em;
     overflow: hidden;
+    padding: 1em 1.1em;
 
     .appearance-source {
       margin-bottom: 1em;
     }
 
     .appearance-url {
-      font-size: 0.8em;
       color: $primary;
+      font-size: 0.8em;
     }
   }
 }

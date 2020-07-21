@@ -22,7 +22,6 @@ export default ({ appearances }) => {
   const showMoreButton = useCallback(props => (
     <div className="show-more">
       <button
-        className='button is-primary is-outlined thin'
         type='button'
         {...props}
       >
@@ -40,7 +39,7 @@ export default ({ appearances }) => {
 
   if (!appearances.length) {
     return (
-      <div className='text-center'>
+      <div className='appearances empty'>
         {'Does not appear anywhere'}
       </div>
     )
