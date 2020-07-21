@@ -17,7 +17,7 @@ const _ = ({ appearance: { quotingContent } }) => {
       rel='noopener noreferrer'
       target='_blank'
     >
-      <img
+      {externalThumbUrl && <img
         alt={id}
         className='appearance-item-img'
         src={externalThumbUrl || backUpThumbUrl}
