@@ -1,11 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { API_URL } from 'utils/config'
+
 
 const _ = ({ appearance: { quotingContent } }) => {
   const { id, externalThumbUrl, title, url } = quotingContent
   const { hostname } = new URL(url)
-  const backUpThumbUrl = 'http://localhost:80/static/logo.png'
+  const backUpThumbUrl = `${API_URL}/static/logo.png`
 
 
   return (
