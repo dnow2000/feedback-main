@@ -4,9 +4,14 @@
   padding-bottom: 100px;
 
   .container {
+    @extend .col-gap-100;
+    @extend .col-tablet-80;
+    @extend .col-desktop-66;
+
     margin-left: auto;
     margin-right: auto;
-    width: 65%;
+    padding-left: 1rem;
+    padding-right: 1rem;
     max-width: 1024px;
 
     section {

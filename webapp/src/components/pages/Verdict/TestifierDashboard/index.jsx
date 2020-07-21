@@ -31,16 +31,16 @@ export default () => {
 
   return (
     <>
-      {verdict && (
+      { verdict && (
         <VerdictItem
           verdict={verdict}
           withLinksShares={false}
         />
-      )}
-      {quotedFromAppearances &&
+      ) }
+      { quotedFromAppearances && (
         <Appearances
           appearances={quotedFromAppearances}
-        />}
+        />) }
     </>
   )
 }

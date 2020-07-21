@@ -5,6 +5,7 @@ import PropTypes from 'prop-types'
 const _ = ({ appearance: { quotingContent } }) => {
   const { id, externalThumbUrl, title, url } = quotingContent
   const { hostname } = new URL(url)
+  const backUpThumbUrl = 'http://localhost:80/static/logo.png'
 
 
   return (
@@ -17,7 +18,7 @@ const _ = ({ appearance: { quotingContent } }) => {
       <img
         alt={id}
         className='appearance-item-img'
-        src={externalThumbUrl}
+        src={externalThumbUrl || backUpThumbUrl}
       />
       <div className="appearance-data">
         <h4 className='appearance-title'>
@@ -35,7 +36,6 @@ const _ = ({ appearance: { quotingContent } }) => {
     </a>
   )
 }
-
 
 _.propTypes = {
   appearance: PropTypes.shape({
