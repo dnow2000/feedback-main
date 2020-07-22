@@ -18,7 +18,7 @@ class Verdict(ApiHandler,
               SoftDeletableMixin,
               HasScienceFeedbackMixin):
 
-    comment = Column(Text(), nullable=True)
+    comment = Column(Text())
 
     claimId = Column(BigInteger(),
                      ForeignKey('claim.id'),

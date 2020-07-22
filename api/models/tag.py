@@ -28,11 +28,11 @@ class Tag(ApiHandler,
           Model,
           SoftDeletableMixin):
 
-    info = Column(Text(), nullable=True)
+    info = Column(Text())
 
     label = Column(String(128))
 
-    positivity = Column(Integer(), nullable=True)
+    positivity = Column(Integer())
 
     source = Column(Enum(SourceName))
 

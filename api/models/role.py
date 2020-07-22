@@ -31,5 +31,4 @@ class Role(ApiHandler,
                         foreign_keys=[userId],
                         backref='roles')
 
-    type = Column(Enum(RoleType),
-                  nullable=True)
+    type = Column(Enum(RoleType))
