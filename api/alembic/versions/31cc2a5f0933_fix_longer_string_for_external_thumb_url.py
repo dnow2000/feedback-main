@@ -28,8 +28,7 @@ def upgrade():
 
     op.alter_column('content', 'archiveUrl',
                     existing_type=sa.String(length=220),
-                    type_=sa.String(length=512),
-                    existing_unique=True)
+                    type_=sa.String(length=512))
 
 
 def downgrade():
@@ -44,5 +43,4 @@ def downgrade():
 
     op.alter_column('content', 'archiveUrl',
                     existing_type=sa.String(length=512),
-                    type_=sa.String(length=220),
-                    existing_unique=True)
+                    type_=sa.String(length=220))
