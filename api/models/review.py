@@ -26,7 +26,7 @@ class Review(ApiHandler,
                          foreign_keys=[claimId],
                          backref='reviews')
 
-    comment = Column(Text(), nullable=True)
+    comment = Column(Text())
 
     contentId = Column(BigInteger(),
                        ForeignKey('content.id'),
