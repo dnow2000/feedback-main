@@ -1,6 +1,7 @@
 from sqlalchemy import BigInteger,\
                        Column,\
                        ForeignKey,\
+                       String,\
                        Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import InstrumentedList
@@ -52,7 +53,7 @@ class Verdict(ApiHandler,
                           foreign_keys=[mediumId],
                           backref='verdicts')
 
-    title = Column(Text(), nullable=True)
+    title = Column(String(512), nullable=True)
 
     @property
     def reviews(self):

@@ -19,7 +19,7 @@ depends_on = None
 def upgrade():
     op.add_column('verdict',
                   sa.Column('title',
-                            sa.Text()))
+                            sa.String()))
 
 
 def downgrade():
