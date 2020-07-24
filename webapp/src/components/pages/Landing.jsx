@@ -1,5 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
+import { requestData } from 'redux-thunk-data'
 
 import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
@@ -15,6 +17,7 @@ import { verdictNormalizer } from 'utils/normalizers'
 export default () => {
   const history = useHistory()
   const { search } = useLocation()
+  const dispatch = useDispatch()
 
 
   const config = useMemo(
@@ -31,6 +34,13 @@ export default () => {
   const handleKeywordsChange = useCallback(
     (key, value) => history.push(`/verdicts?keywords=${value}`),
     [history]
+  )
+
+  const showMore = useCallback(() => {
+      dispatch(requestData({...config}))
+      history.push('/verdicts')
+    },
+    [history, config, dispatch]
   )
 
 
@@ -71,12 +81,20 @@ export default () => {
               <h3>
                 {'Recent Claims'}
               </h3>
-              <div className="items">
+              <div className="verdict-items">
                 <Items
                   config={config}
                   loadMore={false}
                   renderItem={renderItem}
                 />
+                <div className="show-more">
+                  <button
+                    onClick={showMore}
+                    type="button"
+                  >
+                    {'Show more'}
+                  </button>
+                </div>
               </div>
             </div>
           </div>

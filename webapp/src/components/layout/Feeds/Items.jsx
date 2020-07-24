@@ -68,7 +68,7 @@ const _ = ({
 
   useEffect(() => {
     handleGetItems(0)
-  }, [config, handleGetItems])
+  }, [config, handleGetItems, loadMore])
 
   useEffect(() => {
     if (isSuccess) setThreshold(REACHABLE_THRESHOLD)
@@ -100,12 +100,14 @@ const _ = ({
 }
 
 _.defaultProps = {
-  cols: 2
+  cols: 2,
+  loadMore: true
 }
 
 _.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
+  loadMore: PropTypes.bool,
   renderItem: PropTypes.func.isRequired
 }
 

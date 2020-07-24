@@ -39,6 +39,21 @@
       justify-content: center;
       max-width: 64rem;
       margin: auto;
+
+      .show-more {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1em;
+
+        a {
+          @extend .button;
+          @extend .is-outlined;
+          @extend .is-primary;
+          @extend .text-primary;
+          @extend .thin;
+        }
+      }
     }
 
     .section-title {

@@ -33,7 +33,7 @@ def get_verdicts():
     return listify(Verdict,
                    includes=VERDICT_INCLUDES,
                    page=request.args.get('page', 1),
-                   paginate=4,
+                   paginate=2,
                    query=query)
 
 
