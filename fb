@@ -316,7 +316,7 @@ elif [[ "$CMD" == "tag" ]]; then
     echo "$TAG_VERSION" > version.txt
 
     cd "$ROOT_PATH"
-    git add .
+    git add api/version.txt
 
     cd "$ROOT_PATH"/webapp
     yarn version --new-version "$TAG"
