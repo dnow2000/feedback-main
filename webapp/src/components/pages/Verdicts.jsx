@@ -13,6 +13,7 @@ import KeywordsBar from 'components/layout/Feeds/Controls/KeywordsBar'
 export default () => {
   const { search } = useLocation()
   const history = useHistory()
+  const keywords = (new URLSearchParams(search)).get('keywords')
 
 
   const config = useMemo(
@@ -44,9 +45,16 @@ export default () => {
 
           <KeywordsBar onChange={handleKeywordsChange} />
 
+          { keywords !== null && keywords !== 'undefined' && (
+            <h3 className="keywords">
+              {`Search results for "${keywords}"`}
+            </h3>
+          )}
+
           <section>
             <Items
               config={config}
+              loadMore
               renderItem={renderItem}
             />
           </section>
