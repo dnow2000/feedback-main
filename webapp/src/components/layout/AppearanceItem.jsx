@@ -12,7 +12,7 @@ const _ = ({ appearance: { quotingContent } }) => {
 
   return (
     <a
-      className="anchor appearance-item-container"
+      className="appearance-item"
       href={url}
       rel='noopener noreferrer'
       target='_blank'

@@ -1,21 +1,25 @@
-.appearance-item-container {
+.appearance-item {
+  @extend .anchor;
+
+  align-items: stretch;
+  border: solid 1px $grey-light;
+  border-radius: $border-radius;
+  display: flex;
+  min-height: 8rem;
+  text-align: left;
+  overflow: hidden;
+
+
   &:not(:last-child) {
     margin-bottom: 1em;
   }
 
-  align-items: stretch;
-  border: solid 1px $grey-light;
-  border-radius: 10px;
-  display: flex;
-  min-height: 100px;
-  overflow: hidden;
-
   .appearance-item-img {
     max-width: 20%;
-    min-width: 130px;
+    min-width: 8.125rem;
     object-fit: cover;
     object-position: center center;
-    width: 130px;
+    width: 8.125rem;
   }
 
   .appearance-data {
