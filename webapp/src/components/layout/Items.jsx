@@ -28,8 +28,8 @@ const selectRequest = (state, config) =>
 const _ = ({
   cols,
   config,
-  loadMore,
-  renderItem
+  renderItem,
+  shouldLoadMore
 }) => {
   const dispatch = useDispatch()
 
@@ -78,7 +78,7 @@ const _ = ({
       className='items'
       hasMore={hasMore}
       key={config.apiPath}
-      loadMore={loadMore && handleLoadMore}
+      loadMore={shouldLoadMore && handleLoadMore}
       pageStart={0}
       threshold={threshold}
       useWindow
@@ -97,16 +97,19 @@ const _ = ({
   )
 }
 
+
 _.defaultProps = {
   cols: 2,
-  loadMore: true
+  shouldLoadMore: true
 }
+
 
 _.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
-  loadMore: PropTypes.bool,
-  renderItem: PropTypes.func.isRequired
+  renderItem: PropTypes.func.isRequired,
+  shouldLoadMore: PropTypes.bool,
 }
+
 
 export default _

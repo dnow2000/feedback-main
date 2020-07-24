@@ -56,8 +56,6 @@ export default () => {
             }}
           />
 
-
-
           <section>
             <Items
               config={config}

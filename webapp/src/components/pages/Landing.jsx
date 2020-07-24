@@ -83,8 +83,8 @@ export default () => {
               <div className="verdict-items">
                 <Items
                   config={config}
-                  loadMore={showMoreStatus}
                   renderItem={renderItem}
+                  shouldLoadMore={showMoreStatus}
                 />
                 <div className="show-more">
                   <button
