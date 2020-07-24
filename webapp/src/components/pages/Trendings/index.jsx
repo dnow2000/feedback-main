@@ -1,15 +1,18 @@
-import React, { useCallback, useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useCallback, useEffect,  useMemo } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import Feeds from 'components/layout/Feeds'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
+import useLocationURL from 'components/uses/useLocationURL'
 
 import TrendingItem from './TrendingItem'
 
 
 export default () => {
+  const history = useHistory()
   const { search } = useLocation()
+  const locationURL = useLocationURL()
 
 
   const config = useMemo(() => ({
@@ -20,6 +23,13 @@ export default () => {
 
   const renderItem = useCallback(item =>
     <TrendingItem trending={item} />, [])
+
+
+  useEffect(() => {
+    if (locationURL.searchParams.get('type')) return
+    locationURL.searchParams.set('type', 'content')
+    history.push(`${locationURL.pathname}${locationURL.search}`)
+  }, [history, locationURL])
 
 
   return (

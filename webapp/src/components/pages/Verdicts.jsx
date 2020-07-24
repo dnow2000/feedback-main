@@ -1,20 +1,18 @@
 import React, { useCallback, useMemo } from 'react'
-import { useLocation, useHistory } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
-import Items from 'components/layout/Feeds/Items'
+import Controls from 'components/layout/Controls'
 import Header from 'components/layout/Header'
+import Items from 'components/layout/Items'
+import KeywordsBar from 'components/layout/KeywordsBar'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
 import { verdictNormalizer } from 'utils/normalizers'
 
-import KeywordsBar from 'components/layout/Feeds/Controls/KeywordsBar'
 
 
 export default () => {
   const { search } = useLocation()
-  const history = useHistory()
-  const keywords = (new URLSearchParams(search)).get('keywords')
-
 
   const config = useMemo(
     () => ({
@@ -25,11 +23,6 @@ export default () => {
   )
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
-
-  const handleKeywordsChange = useCallback(
-    (key, value) => { history.push(`/verdicts?keywords=${value}`) },
-    [history]
-  )
 
 
   return (
@@ -43,13 +36,27 @@ export default () => {
             </h3>
           </section>
 
-          <KeywordsBar onChange={handleKeywordsChange} />
+          <Controls
+            config={config}
+            render={({ handleChange, locationURL }) => {
+              const keywords = locationURL.searchParams.get('keywords')
+              return (
+                <>
+                  <KeywordsBar
+                    onChange={handleChange}
+                    selectedKeywords={keywords}
+                  />
+                  { keywords !== null && keywords !== 'undefined' && (
+                    <h3 className="keywords">
+                      {`Search results for "${keywords}"`}
+                    </h3>
+                  )}
+                </>
+              )
+            }}
+          />
 
-          { keywords !== null && keywords !== 'undefined' && (
-            <h3 className="keywords">
-              {`Search results for "${keywords}"`}
-            </h3>
-          )}
+
 
           <section>
             <Items

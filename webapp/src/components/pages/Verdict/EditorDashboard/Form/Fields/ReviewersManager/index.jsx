@@ -5,7 +5,7 @@ import { selectEntitiesByKeyAndJoin, selectEntityByKeyAndId } from 'redux-thunk-
 
 
 import Icon from 'components/layout/Icon'
-import Items from 'components/layout/Feeds/Items'
+import Items from 'components/layout/Items'
 import ReviewItem from 'components/layout/ReviewItem'
 import UserItem from 'components/layout/UserItem'
 import selectReviewersByVerdictId from 'selectors/selectReviewersByVerdictId'

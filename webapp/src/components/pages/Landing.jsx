@@ -1,13 +1,14 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 
-import Main from 'components/layout/Main'
+import Controls from 'components/layout/Controls'
 import Header from 'components/layout/Header'
 import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
-import Items from 'components/layout/Feeds/Items'
+import Items from 'components/layout/Items'
+import KeywordsBar from 'components/layout/KeywordsBar'
+import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
-import KeywordsBar from 'components/layout/Feeds/Controls/KeywordsBar'
 
 import { verdictNormalizer } from 'utils/normalizers'
 
@@ -27,11 +28,6 @@ export default () => {
 
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
-
-  const handleKeywordsChange = useCallback(
-    (key, value) => history.push(`/verdicts?keywords=${value}`),
-    [history]
-  )
 
   const showMore = useCallback(() => {
       setShowMoreStatus(true)
@@ -59,9 +55,15 @@ export default () => {
               </b>
               {' Scientists'}
             </p>
-            <KeywordsBar
-              layout='vertical'
-              onChange={handleKeywordsChange}
+            <Controls
+              config={config}
+              pathnameOnChange={'/verdicts'}
+              render={({handleChange, locationURL}) => (
+                <KeywordsBar
+                  layout='vertical'
+                  onChange={handleChange}
+                />
+              )}
             />
           </div>
         </section>
