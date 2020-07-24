@@ -13,7 +13,7 @@ import { numberShortener } from 'utils/shorteners'
 
 const _ = ({ asLink, className, verdict, withLinksShares }) => {
   const history = useHistory()
-  const { claimId, id, medium, title: headline, scienceFeedbackUrl: review_url } = verdict
+  const { claimId, id, medium, title: headline, scienceFeedbackUrl: reviewUrl } = verdict
 
 
   const claim = useSelector(
@@ -34,15 +34,15 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
   ) || {}
 
   const handleClick = useCallback(() => {
-    if (!asLink || !linkCount) return
+    if (!asLink) return
     history.push(`/verdicts/${id}/appearances`)
-  }, [asLink, history, id, linkCount])
+  }, [asLink, history, id])
 
   const ViewReviewButton = () => {
-    if (review_url) {
+    if (reviewUrl) {
       return (
         <a
-          href={review_url}
+          href={reviewUrl}
           rel='noopener noreferrer'
           target="_blank"
         >
