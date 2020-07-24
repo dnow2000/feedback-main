@@ -33,7 +33,7 @@ export default () => {
     [history]
   )
 
-  const showMore = useCallback(() => {
+  const handleShowMore = useCallback(() => {
       setShowMoreStatus(true)
       history.push('/verdicts')
     },
@@ -86,7 +86,7 @@ export default () => {
                 />
                 <div className="show-more">
                   <button
-                    onClick={showMore}
+                    onClick={handleShowMore}
                     type='button'
                   >
                     {'Show more'}
