@@ -30,7 +30,7 @@ export default () => {
 
 
   return (
-    <>
+    <div className='testifier-dashboard'>
       { verdict && (
         <VerdictItem
           asLink={false}
@@ -42,6 +42,6 @@ export default () => {
         <Appearances
           appearances={quotedFromAppearances}
         />) }
-    </>
+    </div>
   )
 }

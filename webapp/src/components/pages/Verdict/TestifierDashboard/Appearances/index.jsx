@@ -13,6 +13,7 @@ export default ({ appearances }) => {
                       ?.reduce((a, b) => a + b, 0)
 
   const handleTabClick = useCallback(event => {
+    if (false) return
     const tabPane = document.getElementById('verdict-tab-pane')
     Array.prototype.map.call(tabPane.children, tab => tab.classList.remove('active'))
     event.target.classList.add('active')
