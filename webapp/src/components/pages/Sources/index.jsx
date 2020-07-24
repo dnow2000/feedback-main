@@ -1,5 +1,5 @@
-import React, { useCallback, useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useCallback, useEffect, useMemo } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 
 import Feeds from 'components/layout/Feeds'
 import Header from 'components/layout/Header'
@@ -11,6 +11,7 @@ import SourceItem from './SourceItem'
 
 
 export default () => {
+  const history = useHistory()
   const { search } = useLocation()
   const locationURL = useLocationURL()
   const type = locationURL.searchParams.get('type')
@@ -25,6 +26,13 @@ export default () => {
 
   const renderItem = useCallback(item =>
     <SourceItem source={item} />, [])
+
+
+  useEffect(() => {
+    if (locationURL.searchParams.get('type')) return
+    locationURL.searchParams.set('type', 'content')
+    history.push(`${locationURL.pathname}${locationURL.search}`)
+  }, [history, locationURL])
 
 
   return (

@@ -1,7 +1,9 @@
 .verdict-item {
   @extend .item;
 
-  cursor: pointer;
+  &.clickable {
+    cursor: pointer;
+  }
 
   .content-item {
     padding: 0;

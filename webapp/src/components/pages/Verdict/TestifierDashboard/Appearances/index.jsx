@@ -54,7 +54,7 @@ export default ({ appearances }) => {
           className='tab-pane'
           id='verdict-tab-pane'
         >
-          { linkCount && (
+          { linkCount > 0 && (
             <button
               className='tab active'
               id='links'
@@ -64,7 +64,7 @@ export default ({ appearances }) => {
               {`${linkCount} Links`}
             </button>
           ) }
-          { numberShortener(shareCount) && (
+          { shareCount > 0 && (
             <button
               className='tab'
               id='shares'

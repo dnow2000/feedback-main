@@ -11,9 +11,9 @@ import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppear
 import { numberShortener } from 'utils/shorteners'
 
 
-const _ = ({ className, verdict, withLinksShares }) => {
+const _ = ({ asLink, className, verdict, withLinksShares }) => {
   const history = useHistory()
-  const { claimId, id, medium, title: headline } = verdict
+  const { claimId, id, medium, title: headline, scienceFeedbackUrl: review_url } = verdict
 
 
   const claim = useSelector(
@@ -33,14 +33,29 @@ const _ = ({ className, verdict, withLinksShares }) => {
     [id]
   ) || {}
 
-  const handleClick = useCallback(
-    () => history.push(`/verdicts/${id}/appearances`),
-    [history, id]
+  const handleClick = useCallback(() => {
+    if (!asLink) return
+    history.push(`/verdicts/${id}/appearances`)
+  }, [history, id, asLink]
   )
+
+  const ViewReviewButton = () => {
+    if (review_url) {
+      return (
+        <a
+          href={review_url}
+          rel='noopener noreferrer'
+          target="_blank"
+        >
+          {'Read full review'}
+        </a>
+      )
+    }
+  }
 
   const links = withLinksShares ? (
     <>
-      { false && linkCount && (
+      { linkCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { linkCount }
@@ -50,7 +65,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           </span>
         </span>
       ) }
-      {  false && numberShortener(shareCount) && (
+      {  shareCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(shareCount) }
@@ -61,17 +76,15 @@ const _ = ({ className, verdict, withLinksShares }) => {
         </span>
       ) }
     </>
-  ) : (
-    <button type='button'>
-      {'Read full review'}
-    </button>
-  )
+  ) : <ViewReviewButton />
 
 
   return (
     <div
-      className={classnames('verdict-item', className)}
+      className={classnames('verdict-item', className, { 'clickable': asLink })}
       onClick={handleClick}
+      role="link"
+      tabIndex={id}
     >
       <h4>
         {`"${headline || claim.text}"`}
@@ -114,24 +127,27 @@ const _ = ({ className, verdict, withLinksShares }) => {
 
 
 _.defaultProps = {
+  asLink: true,
   className: null,
   withLinksShares: true
 }
 
 
 _.propTypes = {
+  asLink: PropTypes.bool,
   className: PropTypes.string,
   verdict: PropTypes.shape({
     claim: PropTypes.shape({
       text: PropTypes.string.isRequired
     }),
-    title: PropTypes.string,
     claimId: PropTypes.string,
     id: PropTypes.string,
     medium: PropTypes.shape({
       logoUrl: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
+    scienceFeedbackUrl: PropTypes.string,
+    title: PropTypes.string,
     verdictTags: PropTypes.arrayOf(
       PropTypes.shape({
         tag: PropTypes.shape({

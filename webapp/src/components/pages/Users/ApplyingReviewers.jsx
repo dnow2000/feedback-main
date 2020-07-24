@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react'
 
-import Items from 'components/layout/Feeds/Items'
-import UserItem from 'components/layout//UserItem'
+import Items from 'components/layout/Items'
+import UserItem from 'components/layout/UserItem'
 import { userConfig } from 'utils/normalizers'
 
 

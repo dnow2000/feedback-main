@@ -67,6 +67,7 @@ def import_keywords():
 
     Verdict.__ts_vector__ = create_tsvector(
         cast(coalesce(Verdict.comment, ''), TEXT),
+        cast(coalesce(Verdict.title, ''), TEXT),
     )
     Verdict.__table_args__ = (
         Index(

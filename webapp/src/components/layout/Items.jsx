@@ -28,12 +28,12 @@ const selectRequest = (state, config) =>
 const _ = ({
   cols,
   config,
-  renderItem
+  renderItem,
+  shouldLoadMore
 }) => {
   const dispatch = useDispatch()
 
   const [threshold, setThreshold] = useState(REACHABLE_THRESHOLD)
-
 
   const { headers, isPending, isSuccess } = useSelector(state =>
     selectRequest(state, config)) || {}
@@ -52,7 +52,6 @@ const _ = ({
     }))
   }, [config, dispatch])
 
-
   const handleLoadMore = useCallback(page => {
     if (isPending || !hasMore) return
     setThreshold(UNREACHABLE_THRESHOLD)
@@ -67,7 +66,7 @@ const _ = ({
 
   useEffect(() => {
     handleGetItems(0)
-  }, [config, handleGetItems])
+  }, [config, handleGetItems, loadMore])
 
   useEffect(() => {
     if (isSuccess) setThreshold(REACHABLE_THRESHOLD)
@@ -78,10 +77,10 @@ const _ = ({
     <InfiniteScroll
       className='items'
       hasMore={hasMore}
-      loadMore={handleLoadMore}
       key={config.apiPath}
-      threshold={threshold}
+      loadMore={shouldLoadMore && handleLoadMore}
       pageStart={0}
+      threshold={threshold}
       useWindow
     >
       {
@@ -98,14 +97,19 @@ const _ = ({
   )
 }
 
+
 _.defaultProps = {
-  cols: 2
+  cols: 2,
+  shouldLoadMore: true
 }
+
 
 _.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
-  renderItem: PropTypes.func.isRequired
+  renderItem: PropTypes.func.isRequired,
+  shouldLoadMore: PropTypes.bool,
 }
+
 
 export default _
