@@ -34,10 +34,9 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
   ) || {}
 
   const handleClick = useCallback(() => {
-    if (!asLink) return
+    if (!asLink || !linkCount) return
     history.push(`/verdicts/${id}/appearances`)
-  }, [history, id, asLink]
-  )
+  }, [asLink, history, id, linkCount])
 
   const ViewReviewButton = () => {
     if (review_url) {
