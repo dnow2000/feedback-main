@@ -74,6 +74,7 @@ export default () => {
               <div className="items">
                 <Items
                   config={config}
+                  loadMore={false}
                   renderItem={renderItem}
                 />
               </div>
