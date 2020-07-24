@@ -46,7 +46,7 @@
         justify-content: center;
         margin-bottom: 1em;
 
-        a {
+        button {
           @extend .button;
           @extend .is-outlined;
           @extend .is-primary;

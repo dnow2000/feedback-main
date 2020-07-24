@@ -35,7 +35,6 @@ const _ = ({
 
   const [threshold, setThreshold] = useState(REACHABLE_THRESHOLD)
 
-
   const { headers, isPending, isSuccess } = useSelector(state =>
     selectRequest(state, config)) || {}
   const { hasMore=true } = headers || {}
@@ -52,7 +51,6 @@ const _ = ({
       apiPath: apiPathWithPage,
     }))
   }, [config, dispatch])
-
 
   const handleLoadMore = useCallback(page => {
     if (isPending || !hasMore) return
