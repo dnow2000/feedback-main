@@ -6,7 +6,6 @@
 # pylint: disable=W0612
 # pylint: disable=W0613
 import os
-
 from sqlalchemy_api_handler import ApiHandler
 from jobs import import_jobs
 from models import import_models
@@ -32,6 +31,7 @@ def setup(flask_app,
     if with_debug:
         flask_app.config['DEBUG'] = True
 
+    db.app = flask_app
     db.init_app(flask_app)
     ApiHandler.set_db(db)
 
@@ -78,7 +78,7 @@ def setup(flask_app,
         jobs = import_jobs()
         scheduler = BackgroundScheduler()
         for job in jobs:
-            scheduler.add_job(**job)
+            scheduler.add_job(**job, replace_existing=True)
         flask_app.scheduler = scheduler
 
     if with_scripts_manager:

@@ -92,7 +92,6 @@ def sync_user(user):
     if IS_DEVELOPMENT:
         store_user_thumb_from_sandbox(user)
 
-
 def sync():
     logger.info('sync users data...')
     for user in User.query.all():
