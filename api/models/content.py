@@ -39,7 +39,7 @@ class Content(ApiHandler,
 
     authors = Column(Text())
 
-    buzzsumoIdentifier = Column(String(16))
+    buzzsumoIdentifier = Column(BigInteger())
 
     isReviewable = Column(Boolean())
 
