@@ -1,7 +1,7 @@
 """fix_longer_string_for_external_thumb_url
 
 Revision ID: 31cc2a5f0933
-Revises: 5387a3a8437e
+Revises: 5f6909210e52
 Create Date: 2020-07-22 14:40:00.213468
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '31cc2a5f0933'
-down_revision = '5387a3a8437e'
+down_revision = '5f6909210e52'
 branch_labels = None
 depends_on = None
 
