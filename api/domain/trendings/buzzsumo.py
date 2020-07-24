@@ -128,7 +128,7 @@ def topic_from(theme):
 
 
 def buzzsumo_trending_from_result(result):
-    trending = {
+    return {
         'buzzsumoIdentifier': result['id'],
         'externalThumbUrl': result['thumbnail'],
         'facebookShares': result['total_facebook_shares'],
@@ -138,10 +138,6 @@ def buzzsumo_trending_from_result(result):
         'twitterShares': result['twitter_shares'],
         'type': 'content'
     }
-    url = result.get('og_url')
-    if url:
-        trending['url'] = url
-    return trending
 
 
 def buzzsumo_trending_from_url(url: str):
