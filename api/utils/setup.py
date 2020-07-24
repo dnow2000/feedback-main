@@ -74,9 +74,9 @@ def setup(flask_app,
         import_routes()
 
     if with_jobs:
-        from apscheduler.schedulers.blocking import BlockingScheduler
+        from apscheduler.schedulers.background import BackgroundScheduler
         jobs = import_jobs()
-        scheduler = BlockingScheduler()
+        scheduler = BackgroundScheduler()
         for job in jobs:
             scheduler.add_job(**job)
         flask_app.scheduler = scheduler

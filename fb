@@ -179,6 +179,11 @@ elif [[ "$CMD" == "clean" ]]; then
   fi
 
 
+# Launch the python clock process locally
+elif [[ "$CMD" == "clock" ]]; then
+    RUN='docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python clock.py"'
+
+
 # Dump database into pgdump file
 elif [[ "$CMD" == "create-db-pgdump" ]]; then
   FILE=db_$(date +"%Y_%m_%d__%H_%M_%S").pgdump
