@@ -26,7 +26,6 @@ def get_verdicts():
         query = query.filter_by(contentId=dehumanize(content_id))
 
     if keywords is not None:
-        print('Searching for keywords {}'.format(keywords))
         query = get_verdicts_join_query(query)
         query = keep_verdict_with_keywords(query, keywords)
 

@@ -33,6 +33,7 @@ export default () => {
     <>
       { verdict && (
         <VerdictItem
+          asLink={false}
           verdict={verdict}
           withLinksShares={false}
         />

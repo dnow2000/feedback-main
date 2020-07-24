@@ -1,9 +1,12 @@
 import React, { useCallback, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useLocation, useHistory } from 'react-router-dom'
+import { requestData } from 'redux-thunk-data'
 
 import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
 import Footer from 'components/layout/Footer'
+import Controls from 'components/layout/Feeds/Controls'
 import Icon from 'components/layout/Icon'
 import Items from 'components/layout/Feeds/Items'
 import VerdictItem from 'components/layout/VerdictItem'
@@ -15,6 +18,7 @@ import { verdictNormalizer } from 'utils/normalizers'
 export default () => {
   const history = useHistory()
   const { search } = useLocation()
+  const dispatch = useDispatch()
   const [showMoreStatus, setShowMoreStatus] = useState(false)
 
   const config = useMemo(
@@ -35,6 +39,10 @@ export default () => {
 
   const showMore = useCallback(() => {
       setShowMoreStatus(true)
+      dispatch(requestData({
+        apiPath: '/verdicts',
+        normalizer: verdictNormalizer
+      }), [dispatch])
       history.push('/verdicts')
     },
     [history]

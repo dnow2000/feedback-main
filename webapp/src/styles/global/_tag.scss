@@ -47,7 +47,7 @@
     }
   }
 
-  button {
+  button, a {
     @extend .button;
     @extend .is-outlined;
     @extend .is-primary;
