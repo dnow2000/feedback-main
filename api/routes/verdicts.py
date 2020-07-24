@@ -6,6 +6,8 @@ from sqlalchemy_api_handler import ApiHandler, \
                                    load_or_404
 
 from models.verdict import Verdict
+from repository.verdicts import get_verdicts_join_query, \
+                                keep_verdict_with_keywords
 from utils.includes import VERDICT_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
@@ -18,13 +20,20 @@ def get_verdicts():
     query = Verdict.query
 
     content_id = request.args.get('contentId')
+    keywords = request.args.get('keywords')
+
     if content_id is not None:
         query = query.filter_by(contentId=dehumanize(content_id))
+
+    if keywords is not None:
+        print('Searching for keywords {}'.format(keywords))
+        query = get_verdicts_join_query(query)
+        query = keep_verdict_with_keywords(query, keywords)
 
     return listify(Verdict,
                    includes=VERDICT_INCLUDES,
                    page=request.args.get('page', 1),
-                   paginate=10,
+                   paginate=4,
                    query=query)
 
 

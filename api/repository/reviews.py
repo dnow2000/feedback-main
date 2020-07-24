@@ -13,6 +13,7 @@ review_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     User
 )
 
+
 def save_tags(review, humanized_tag_ids):
     tag_ids = [dehumanize(humanized_tag_id) for humanized_tag_id in humanized_tag_ids]
 

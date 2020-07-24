@@ -28,6 +28,7 @@ const selectRequest = (state, config) =>
 const _ = ({
   cols,
   config,
+  loadMore,
   renderItem
 }) => {
   const dispatch = useDispatch()
@@ -78,10 +79,10 @@ const _ = ({
     <InfiniteScroll
       className='items'
       hasMore={hasMore}
-      loadMore={handleLoadMore}
       key={config.apiPath}
-      threshold={threshold}
+      loadMore={loadMore && handleLoadMore}
       pageStart={0}
+      threshold={threshold}
       useWindow
     >
       {
