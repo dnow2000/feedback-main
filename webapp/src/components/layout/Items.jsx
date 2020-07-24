@@ -66,7 +66,7 @@ const _ = ({
 
   useEffect(() => {
     handleGetItems(0)
-  }, [config, handleGetItems, loadMore])
+  }, [config, handleGetItems, shouldLoadMore])
 
   useEffect(() => {
     if (isSuccess) setThreshold(REACHABLE_THRESHOLD)
