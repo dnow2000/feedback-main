@@ -1,7 +1,5 @@
-import React, { useCallback, useMemo } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { useCallback, useMemo, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { requestData } from 'redux-thunk-data'
 
 import Main from 'components/layout/Main'
 import Header from 'components/layout/Header'
@@ -17,8 +15,7 @@ import { verdictNormalizer } from 'utils/normalizers'
 export default () => {
   const history = useHistory()
   const { search } = useLocation()
-  const dispatch = useDispatch()
-
+  const [showMoreStatus, setShowMoreStatus] = useState(false)
 
   const config = useMemo(
     () => ({
@@ -37,10 +34,10 @@ export default () => {
   )
 
   const showMore = useCallback(() => {
-      dispatch(requestData({...config}))
+      setShowMoreStatus(true)
       history.push('/verdicts')
     },
-    [history, config, dispatch]
+    [history]
   )
 
 
@@ -84,13 +81,13 @@ export default () => {
               <div className="verdict-items">
                 <Items
                   config={config}
-                  loadMore={false}
+                  loadMore={showMoreStatus}
                   renderItem={renderItem}
                 />
                 <div className="show-more">
                   <button
                     onClick={showMore}
-                    type="button"
+                    type='button'
                   >
                     {'Show more'}
                   </button>

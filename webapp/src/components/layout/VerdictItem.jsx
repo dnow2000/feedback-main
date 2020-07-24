@@ -40,7 +40,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
 
   const links = withLinksShares ? (
     <>
-      { false && linkCount && (
+      { linkCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { linkCount }
@@ -50,7 +50,7 @@ const _ = ({ className, verdict, withLinksShares }) => {
           </span>
         </span>
       ) }
-      {  false && numberShortener(shareCount) && (
+      {  shareCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(shareCount) }
@@ -72,6 +72,8 @@ const _ = ({ className, verdict, withLinksShares }) => {
     <div
       className={classnames('verdict-item', className)}
       onClick={handleClick}
+      role="link"
+      tabIndex={id}
     >
       <h4>
         {`"${headline || claim.text}"`}

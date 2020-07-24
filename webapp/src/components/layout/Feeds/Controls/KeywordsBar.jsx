@@ -46,7 +46,7 @@ const _ = ({
           onClick={handleKeywordsClick}
           type="button"
         >
-          {'Find out truth'}
+          {'Search'}
         </button>
       </div>
     </>
