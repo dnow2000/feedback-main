@@ -4,6 +4,8 @@
 .appearances {
   &.empty {
     @extend .text-center;
+
+    padding: 2rem;
   }
 
   .tab-pane {
