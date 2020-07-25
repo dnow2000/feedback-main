@@ -24,14 +24,18 @@ def content_from_url(url, **kwargs):
         'url': url
     })
 
+    print('for url', url)
     trending = buzzsumo_trending_from_url(url, **kwargs)
     if trending:
+        print('trending ok')
         return content.modify(trending)
 
     newspaper = newspaper_from_url(url, **kwargs)
     if newspaper:
+        print('newspaper ok')
         return content.modify(newspaper)
 
+    print('nothing')
     return content
 
 

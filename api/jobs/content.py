@@ -1,4 +1,6 @@
 from datetime import datetime, timedelta
+from apscheduler.triggers.date import DateTrigger
+
 from repository.contents import sync
 
 
@@ -12,6 +14,13 @@ def create_clock_sync_contents(from_date_minutes, to_date_minutes):
 
 # everything in minutes
 CLOCK_SYNC_CONTENT_CONFIGS = [
+    {
+        'from_date': 100000,
+        'to_date': 0,
+        'trigger': DateTrigger(run_date=datetime.now()),
+    },
+
+    """
     # contents inserted since 1.7h - 0, do it every 20 minutes
     {
         'from_date': 100,
@@ -42,6 +51,7 @@ CLOCK_SYNC_CONTENT_CONFIGS = [
         'to_date': 100000,
         'frequency': {'year': '*/2', 'month': '1', 'day': '1', 'hour': '0', 'minute': '1'}
     },
+    """
 ]
 
 JOBS = []
@@ -52,6 +62,6 @@ for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     JOBS.append({
         'func': create_clock_sync_contents(from_date, to_date),
         'id': 'sync content {} {}'.format(from_date, to_date),
-        'trigger': 'cron',
+        #'trigger': 'cron',
         **clock_sync_content_config['frequency']
     })
