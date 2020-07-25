@@ -2,7 +2,7 @@ import bcrypt
 from sqlalchemy import Column, LargeBinary, String
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import Model
+from utils.db import db
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasScienceFeedbackMixin, \
@@ -12,7 +12,7 @@ from models.role import Role
 
 
 class User(ApiHandler,
-           Model,
+           db.Model,
            HasExternalThumbUrlMixin,
            HasQualificationMixin,
            HasScienceFeedbackMixin,

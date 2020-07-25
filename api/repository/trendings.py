@@ -1,10 +1,9 @@
 from sqlalchemy import and_, Integer
-
-from utils.db import get_model_with_table_name
+from sqlalchemy_api_handler import ApiHandler
 
 
 def keep_not_saved_trendings(trendings, table_name):
-    model = get_model_with_table_name(table_name)
+    model = ApiHandler.model_from_table_name(table_name)
 
     identifier_key = 'buzzsumoIdentifier' if table_name == 'content' \
                                           else 'poynterIdentifier'

@@ -7,7 +7,7 @@ from sqlalchemy import BigInteger, \
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import Model
+from utils.db import db
 
 
 class ScopeType(enum.Enum):
@@ -19,7 +19,7 @@ class ScopeType(enum.Enum):
 
 
 class Scope(ApiHandler,
-            Model):
+            db.Model):
 
     tagId = Column(BigInteger(),
                    ForeignKey('tag.id'),

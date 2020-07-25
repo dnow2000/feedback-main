@@ -1,17 +1,10 @@
+import os
 from flask_sqlalchemy import SQLAlchemy
 from postgresql_audit.flask import versioning_manager
 
 
-db = SQLAlchemy()
+db = SQLAlchemy(engine_options={
+    'pool_size': int(os.environ.get('DATABASE_POOL_SIZE', 3)),
+})
 
-Model = db.Model
-
-versioning_manager.init(Model)
-
-
-def get_model_with_table_name(table_name):
-    for model in Model._decl_class_registry.values():
-        if not hasattr(model, '__table__'):
-            continue
-        if model.__tablename__ == table_name:
-            return model
+versioning_manager.init(db.Model)

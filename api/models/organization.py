@@ -5,7 +5,7 @@ from sqlalchemy import Column, \
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins.has_science_feedback_mixin import HasScienceFeedbackMixin
-from utils.db import Model
+from utils.db import db
 
 
 class OrganizationType(enum.Enum):
@@ -13,7 +13,7 @@ class OrganizationType(enum.Enum):
 
 
 class Organization(ApiHandler,
-                   Model,
+                   db.Model,
                    HasScienceFeedbackMixin):
 
     entity = Column(String(16))

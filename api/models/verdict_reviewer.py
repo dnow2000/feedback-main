@@ -2,11 +2,11 @@ from sqlalchemy import BigInteger, Column, ForeignKey
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import Model
+from utils.db import db
 
 
 class VerdictReviewer(ApiHandler,
-                      Model):
+                      db.Model):
 
     verdictId = Column(BigInteger(),
                        ForeignKey('verdict.id'),

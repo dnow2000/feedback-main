@@ -16,7 +16,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           HasScienceFeedbackMixin, \
                           HasSharesMixin, \
                           VersionedMixin
-from utils.db import Model
+from utils.db import db
 
 
 class ContentType(enum.Enum):
@@ -26,7 +26,7 @@ class ContentType(enum.Enum):
 
 
 class Content(ApiHandler,
-              Model,
+              db.Model,
               HasExternalThumbUrlMixin,
               HasScienceFeedbackMixin,
               HasSharesMixin,

@@ -6,7 +6,6 @@ from sqlalchemy_api_handler import ApiHandler, \
 
 from domain.graph import graph_from_entity
 from models.verdict import Verdict
-from utils.db import get_model_with_table_name
 
 
 @app.route('/graphs', methods=['GET'])
@@ -21,7 +20,7 @@ def get_graphs():
 @app.route('/graphs/<collection_name>/<entity_id>', methods=['GET'])
 def get_graph(collection_name, entity_id):
     table_name = inflect.engine().singular_noun(collection_name)
-    model = get_model_with_table_name(table_name)
+    model = ApiHandler.model_from_table_name(table_name)
     entity = load_or_404(model, entity_id)
     graph = graph_from_entity(entity)
     return jsonify(graph), 200

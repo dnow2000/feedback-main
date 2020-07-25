@@ -7,7 +7,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasScienceFeedbackMixin
-from utils.db import Model
+from utils.db import db
 
 
 class StanceType(enum.Enum):
@@ -26,7 +26,7 @@ class StanceType(enum.Enum):
 
 
 class Appearance(ApiHandler,
-                 Model,
+                 db.Model,
                  HasScienceFeedbackMixin):
 
     quotedClaimId = Column(BigInteger(),

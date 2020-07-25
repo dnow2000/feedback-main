@@ -7,13 +7,13 @@ from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-from utils.db import get_model_with_table_name, Model
+from utils.db import db
 from models.mixins import HasScienceFeedbackMixin, \
                           HasRatingMixin
 
 
 class Review(ApiHandler,
-             Model,
+             db.Model,
              HasScienceFeedbackMixin,
              HasRatingMixin,
              SoftDeletableMixin):
@@ -47,8 +47,8 @@ class Review(ApiHandler,
 
     @property
     def verdicts(self):
-        Verdict = get_model_with_table_name('verdict')
-        VerdictReviewer = get_model_with_table_name('verdict_reviewer')
+        Verdict = ApiHandler.model_from_table_name('verdict')
+        VerdictReviewer = ApiHandler.model_from_table_name('verdict_reviewer')
         verdict_reviewers = VerdictReviewer.query.filter_by(reviewerId=self.reviewerId)
         verdict_ids = [verdict_reviewer.verdict.id for verdict_reviewer in verdict_reviewers]
         verdicts = Verdict.query.filter(Verdict.id.in_(verdict_ids)).all()

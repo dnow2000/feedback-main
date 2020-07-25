@@ -7,7 +7,7 @@ from sqlalchemy import BigInteger,\
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import Model
+from utils.db import db
 
 
 class RoleType(enum.Enum):
@@ -20,7 +20,7 @@ class RoleType(enum.Enum):
 
 
 class Role(ApiHandler,
-           Model):
+           db.Model):
 
     userId = Column(BigInteger(),
                     ForeignKey('user.id'),

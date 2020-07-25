@@ -6,11 +6,11 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins.has_science_feedback_mixin import HasScienceFeedbackMixin
-from utils.db import Model
+from utils.db import db
 
 
 class Medium(ApiHandler,
-             Model,
+             db.Model,
              HasScienceFeedbackMixin):
 
     logoUrl = Column(String(512))

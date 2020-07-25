@@ -8,7 +8,7 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import \
     SoftDeletableMixin
 
-from utils.db import Model
+from utils.db import db
 
 
 class SourceName(enum.Enum):
@@ -25,7 +25,7 @@ class TagType(enum.Enum):
 
 
 class Tag(ApiHandler,
-          Model,
+          db.Model,
           SoftDeletableMixin):
 
     info = Column(Text())
