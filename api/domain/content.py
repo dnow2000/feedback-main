@@ -19,5 +19,5 @@ def newspaper_from_url(url: str, **kwargs):
     except ArticleException as error:
         if 'failed with 410 Client Error' in str(error):
             return {
-                'isGone': True
+                'urlGone': True
             }
