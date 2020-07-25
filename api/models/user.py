@@ -2,13 +2,13 @@ import bcrypt
 from sqlalchemy import Column, LargeBinary, String
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import db
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasScienceFeedbackMixin, \
                           HasThumbMixin, \
                           NeedsValidationMixin
 from models.role import Role
+from utils.db import db
 
 
 class User(ApiHandler,

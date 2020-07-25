@@ -63,5 +63,5 @@ for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
         'func': create_clock_sync_contents(from_date, to_date),
         'id': 'sync content {} {}'.format(from_date, to_date),
         #'trigger': 'cron',
-        **clock_sync_content_config['frequency']
+        #**clock_sync_content_config['frequency']
     })
