@@ -3,4 +3,4 @@ from sqlalchemy import Column,\
 
 
 class HasExternalThumbUrlMixin(object):
-    externalThumbUrl = Column(String(512))
+    externalThumbUrl = Column(String(1024))

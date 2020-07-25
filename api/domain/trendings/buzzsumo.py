@@ -129,7 +129,7 @@ def topic_from(theme):
 
 def buzzsumo_trending_from_result(result):
     return {
-        'buzzsumoIdentifier': result['id'],
+        'buzzsumoIdentifier': int(result['id']),
         'externalThumbUrl': result['thumbnail'],
         'facebookShares': result['total_facebook_shares'],
         'publishedDate': strftime(datetime.utcfromtimestamp(result['published_date'])),
@@ -171,8 +171,8 @@ def shares_from_buzzsumo_url(buzzsumo_id):
     for result in json_file['results']:
         if 'username' in result:
             media_items.append({
-                "username": result['username'],
-                "url": "https://twitter.com/" + result['username']
+                'username': result['username'],
+                'url': 'https://twitter.com/{}'.format(result['username'])
             })
 
     return media_items
