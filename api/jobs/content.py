@@ -19,6 +19,8 @@ CLOCK_SYNC_CONTENT_CONFIGS = [
         'to_date': 0,
         'trigger': DateTrigger(run_date=datetime.now()),
     },
+]
+
 
     """
     # contents inserted since 1.7h - 0, do it every 20 minutes
@@ -52,7 +54,6 @@ CLOCK_SYNC_CONTENT_CONFIGS = [
         'frequency': {'year': '*/2', 'month': '1', 'day': '1', 'hour': '0', 'minute': '1'}
     },
     """
-]
 
 JOBS = []
 
