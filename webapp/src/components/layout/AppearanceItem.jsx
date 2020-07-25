@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { API_URL } from 'utils/config'
+import { API_THUMBS_URL, API_URL } from 'utils/config'
 
 
 const _ = ({ appearance: { quotingContent } }) => {
-  const { id, externalThumbUrl, title, url } = quotingContent
+  const { id: contentId, externalThumbUrl, thumbCount, title, url } = quotingContent
   const { hostname } = new URL(url)
-  const thumbUrl = externalThumbUrl || `${API_URL}/static/logo.png`
+  const thumbUrl = thumbCount > 0
+    ? `${API_THUMBS_URL}/contents/${contentId}`
+    : (externalThumbUrl || `${API_URL}/static/logo.png`)
 
 
   return (
@@ -19,7 +21,7 @@ const _ = ({ appearance: { quotingContent } }) => {
     >
       { thumbUrl && (
         <img
-          alt={id}
+          alt={contentId}
           className='appearance-item-img'
           src={thumbUrl}
         />
