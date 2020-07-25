@@ -11,7 +11,7 @@ export default createCachedSelector(
                                                   'verdictTags',
                                                   { key: 'verdictId', value: verdictId }),
   (tags, verdictTags) => {
-    if (tags) return
+    if (!tags) return
     const verdictTagIds = verdictTags.map(vt => vt.tagId)
     return tags.find(tag => tag.type === 'conclusion' && verdictTagIds.includes(tag.id))
   }
