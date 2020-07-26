@@ -24,13 +24,11 @@ const _ = ({ appearance: { quotingContent } }) => {
       rel='noopener noreferrer'
       target='_blank'
     >
-      { thumbUrl && (
-        <Img
-          alt={contentId}
-          className='appearance-item-img'
-          src={[thumbUrl, proxyThumbUrl, FALLBACK_THUMB_URL]}
-        />
-      ) }
+      <Img
+        alt={contentId}
+        className='appearance-item-img'
+        src={[thumbUrl, proxyThumbUrl, FALLBACK_THUMB_URL]}
+      />
       <div className="appearance-data">
         <h4 className='appearance-title'>
           {title}
