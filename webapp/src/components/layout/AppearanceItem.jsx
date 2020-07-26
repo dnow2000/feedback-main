@@ -1,7 +1,11 @@
 import React from 'react'
+import { Img } from 'react-image'
 import PropTypes from 'prop-types'
 
 import { API_THUMBS_URL, API_URL } from 'utils/config'
+
+
+const FALLBACK_THUMB_URL = `${API_URL}/static/logo.png`
 
 
 const _ = ({ appearance: { quotingContent } }) => {
@@ -9,7 +13,8 @@ const _ = ({ appearance: { quotingContent } }) => {
   const { hostname } = new URL(url)
   const thumbUrl = thumbCount > 0
     ? `${API_THUMBS_URL}/contents/${contentId}`
-    : (externalThumbUrl || `${API_URL}/static/logo.png`)
+    : externalThumbUrl
+  const proxyThumbUrl = `${API_URL}/images?url=${encodeURIComponent(thumbUrl)}`
 
 
   return (
@@ -20,10 +25,10 @@ const _ = ({ appearance: { quotingContent } }) => {
       target='_blank'
     >
       { thumbUrl && (
-        <img
+        <Img
           alt={contentId}
           className='appearance-item-img'
-          src={thumbUrl}
+          src={[thumbUrl, proxyThumbUrl, FALLBACK_THUMB_URL]}
         />
       ) }
       <div className="appearance-data">

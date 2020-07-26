@@ -5,11 +5,9 @@ from models.tag import Tag
 from repository.tags import keep_tags_with_scopes, \
                             keep_tags_with_type
 from utils.includes import TAG_INCLUDES
-from utils.rest import login_or_api_key_required
 
 
 @app.route('/tags', methods=['GET'])
-@login_or_api_key_required
 def get_tags():
     query = Tag.query
 
