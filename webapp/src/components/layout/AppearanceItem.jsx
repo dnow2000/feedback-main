@@ -1,21 +1,12 @@
 import React from 'react'
-import { Img } from 'react-image'
 import PropTypes from 'prop-types'
 
-import { API_THUMBS_URL, API_URL } from 'utils/config'
-
-
-const FALLBACK_THUMB_URL = `${API_URL}/static/logo.png`
+import ThumbImg from 'components/layout/ThumbImg'
 
 
 const _ = ({ appearance: { quotingContent } }) => {
-  const { id: contentId, externalThumbUrl, thumbCount, title, url } = quotingContent
+  const { title, url } = quotingContent
   const { hostname } = new URL(url)
-  const thumbUrl = thumbCount > 0
-    ? `${API_THUMBS_URL}/contents/${contentId}`
-    : externalThumbUrl
-  const proxyThumbUrl = `${API_URL}/images?url=${encodeURIComponent(thumbUrl)}`
-
 
   return (
     <a
@@ -24,10 +15,10 @@ const _ = ({ appearance: { quotingContent } }) => {
       rel='noopener noreferrer'
       target='_blank'
     >
-      <Img
-        alt={contentId}
+      <ThumbImg
         className='appearance-item-img'
-        src={[thumbUrl, proxyThumbUrl, FALLBACK_THUMB_URL]}
+        collectionName='contents'
+        {...quotingContent}
       />
       <div className="appearance-data">
         <h4 className='appearance-title'>

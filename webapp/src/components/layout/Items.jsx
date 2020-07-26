@@ -53,14 +53,15 @@ const _ = ({
   }, [config, dispatch])
 
   const handleLoadMore = useCallback(page => {
-    if (isPending || !hasMore) return
+    if (isPending || !hasMore || !shouldLoadMore) return
     setThreshold(UNREACHABLE_THRESHOLD)
     handleGetItems(page)
   }, [
     hasMore,
     handleGetItems,
     isPending,
-    setThreshold
+    setThreshold,
+    shouldLoadMore
   ])
 
 
@@ -78,7 +79,7 @@ const _ = ({
       className='items'
       hasMore={hasMore}
       key={config.apiPath}
-      loadMore={shouldLoadMore && handleLoadMore}
+      loadMore={handleLoadMore}
       pageStart={0}
       threshold={threshold}
       useWindow
