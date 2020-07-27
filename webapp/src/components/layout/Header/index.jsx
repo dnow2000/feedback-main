@@ -51,17 +51,22 @@ export default ({ withLinks=false }) => {
           <Logo type="header" />
         </div>
 
-        <div className="flex-auto" />
         {withLinks && (
           <div className="right-content">
             <Navigations />
+            <a
+              className='support-us'
+              href='https://sciencefeedback.co/donate/'
+            >
+              {'Support us'}
+            </a>
             <Menu />
-            {showSignin && (
+            {false && showSignin && (
               <NavLink
                 className="button"
                 to="/signin"
               >
-                Sign in
+                {'Sign in'}
               </NavLink>
             )}
           </div>
