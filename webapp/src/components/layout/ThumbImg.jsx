@@ -39,8 +39,9 @@ _.defaultProps = {
 _.propTypes = {
   className: PropTypes.string,
   collectionName: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
   externalThumbUrl: PropTypes.string,
+  id: PropTypes.string.isRequired,
+  thumbCount: PropTypes.number.isRequired
 }
 
 

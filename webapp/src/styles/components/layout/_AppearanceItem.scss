@@ -26,6 +26,10 @@
     overflow: hidden;
     padding: 1em 1.1em;
 
+    .appearance-title {
+      color: $grey-darker;
+    }
+
     .appearance-source {
       margin-bottom: 1em;
     }

@@ -92,9 +92,9 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       role="link"
       tabIndex={id}
     >
-      <h4>
+      <h3>
         {`"${headline || claim.text}"`}
-      </h4>
+      </h3>
       <div className="verdict-editor-container">
         <Icon
           className="avatar editor-avatar"
@@ -115,7 +115,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
         ) }
       </div>
       <br />
-      <hr className="text-muted w-25" />
+      <hr />
       <br />
       <p>
         <i>

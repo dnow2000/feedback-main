@@ -5,6 +5,10 @@
     cursor: pointer;
   }
 
+  h3 {
+    color: $grey-darker;
+  }
+
   .content-item {
     padding: 0;
     border: 0;
@@ -26,6 +30,7 @@
   }
 
   hr {
+    width: 25%;
     border: none;
     border-top: 1px solid $grey-light;
   }
