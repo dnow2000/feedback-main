@@ -1,4 +1,7 @@
 import requests
+import re
+
+from datetime import datetime
 from bs4 import BeautifulSoup
 
 
@@ -45,11 +48,15 @@ def claim_review_from_url(url, session=None):
                 verdict_label = 'Inaccurate'
             conclusions.append(verdict_label.replace('_', ' '))
 
+        published_text = soup.find(text=re.compile("Published on:*"))
+        published_date = datetime.strptime(re.search('Published on: (.*) \|.*', published_text).group(1), '%d %b %Y')
+
         return {
             'claim': {
                 'text': claimshort.text,
             },
             'conclusions': conclusions,
             'reviewers': reviewers,
-            'title': title.text
+            'title': title.text,
+            'publishedDate': published_date
         }

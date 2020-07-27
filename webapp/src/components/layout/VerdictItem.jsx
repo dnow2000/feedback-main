@@ -9,12 +9,19 @@ import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
 import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppearancesByQuotedClaimId'
 import { numberShortener } from 'utils/shorteners'
+import timeAgo from 'utils/timeAgo'
 
 
 const _ = ({ asLink, className, verdict, withLinksShares }) => {
   const history = useHistory()
-  const { claimId, id, medium, title: headline, scienceFeedbackUrl: reviewUrl } = verdict
-
+  const {
+    claimId,
+    id,
+    medium,
+    title: headline,
+    scienceFeedbackPublishedDate: publishedDate,
+    scienceFeedbackUrl: reviewUrl
+  } = verdict
 
   const claim = useSelector(
     state => selectEntityByKeyAndId(state, 'claims', claimId),
@@ -101,9 +108,11 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
           {'checked it'}
           &nbsp;
         </span>
-        <strong>
-          {`${3} days ago`}
-        </strong>
+        { Date.parse(publishedDate) && (
+          <strong>
+            { timeAgo(Date.parse(publishedDate)) }
+          </strong>
+        ) }
       </div>
       <br />
       <hr className="text-muted w-25" />
@@ -145,6 +154,7 @@ _.propTypes = {
       logoUrl: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
+    scienceFeedbackPublishedDate: PropTypes.string,
     scienceFeedbackUrl: PropTypes.string,
     title: PropTypes.string,
     verdictTags: PropTypes.arrayOf(

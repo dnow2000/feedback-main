@@ -14,6 +14,7 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixi
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
+                          HasScienceFeedbackPublishedDate, \
                           HasSharesMixin, \
                           VersionedMixin
 from utils.db import db
@@ -29,11 +30,11 @@ class Content(ApiHandler,
               db.Model,
               HasExternalThumbUrlMixin,
               HasScienceFeedbackMixin,
+              HasScienceFeedbackPublishedDate,
               HasSharesMixin,
               HasThumbMixin,
               SoftDeletableMixin,
               VersionedMixin):
-
 
     archiveUrl = Column(String(512), unique=True)
 
@@ -72,7 +73,7 @@ class Content(ApiHandler,
     urlGone = Column(Boolean())
 
     urlNotFound = Column(Boolean())
-    
+
 
     def get_score(self):
         amount = 0

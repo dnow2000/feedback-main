@@ -9,14 +9,16 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 from utils.db import db
 from models.mixins import HasRatingMixin, \
-                          HasScienceFeedbackMixin
+                          HasScienceFeedbackMixin, \
+                          HasScienceFeedbackPublishedDate
 
 
 class Verdict(ApiHandler,
               db.Model,
               HasRatingMixin,
               SoftDeletableMixin,
-              HasScienceFeedbackMixin):
+              HasScienceFeedbackMixin,
+              HasScienceFeedbackPublishedDate):
 
     comment = Column(Text())
 
