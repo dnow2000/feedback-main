@@ -3,21 +3,20 @@
   border: none;
 
   .keywords-input {
+    background-color: white;
     border: none;
     border-radius: 1.25rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    height: 2rem;
-    background-color: white;
+    box-shadow: 0 1px 20px $grey-light;
     font-weight: 500;
     font-stretch: normal;
     font-style: normal;
-    line-height: 1.13;
-    letter-spacing: normal;
     font-size: 1rem;
     font-family: Apercu;
-    box-shadow: 0 1px 20px $grey-light;
     flex-grow: 1;
+    letter-spacing: normal;
+    line-height: 1.13;
+    padding-left: 1rem;
+    padding-right: 1rem;
 
     &:focus {
       box-shadow: 0 1px 25px $grey-light;
@@ -30,10 +29,20 @@
   }
 
   &.vertical {
+    align-items: center;
     flex-direction: column;
+    width: 100%;
 
     .keywords-input {
-      margin-bottom: 1rem;
+      height: 2.75rem;
+      margin-bottom: 2rem;
+      width: 40rem;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    button {
+      min-width: 13rem;
     }
   }
 
@@ -42,8 +51,16 @@
     margin-bottom: 2rem;
 
     .keywords-input {
+      height: 2rem;
       margin-right: 1rem;
     }
+  }
+
+  button {
+    @extend .box-shadow;
+    @extend .button;
+    @extend .is-primary;
+    @extend .thin;
   }
 }
 
