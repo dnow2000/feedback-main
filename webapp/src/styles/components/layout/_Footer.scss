@@ -4,11 +4,14 @@
   display: grid;
   grid-gap: 1rem;
   padding: 3.75rem 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 270px));
   justify-content: space-evenly;
 
   .logo-container {
-    padding: 0 2rem 4rem 0;
+    align-items: flex-start;
+    display: flex;
+    justify-content: center;
+    padding: 2rem;
 
     .logo-element {
       width: 100%;
@@ -17,19 +20,22 @@
   }
 
   .links-container {
+    align-items: flex-start;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    padding: 0 0 2.5rem 2.5rem;
+    padding: 2rem;
   }
 
   .link {
     color: inherit;
     font-weight: 200;
-    margin-bottom: 1.625rem;
     opacity: 1;
-    text-decoration: none;
     transition: 0.2;
+    text-decoration: none;
+
+    &:not(:last-child) {
+      margin-bottom: 1.625rem;
+    }
 
     &:hover {
       opacity: 0.8;

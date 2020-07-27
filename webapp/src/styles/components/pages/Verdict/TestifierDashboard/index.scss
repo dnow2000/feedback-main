@@ -1,7 +1,15 @@
 @import "Appearances/index.scss";
 
 .testifier-dashboard {
+  margin-top: 4rem;
+
   .verdict-item {
-    margin-bottom: 1rem;
+    border: none;
+    margin-bottom: 2rem;
+    padding: 1.25rem 0;
+
+    h3 {
+      font-size: $font-size-big;
+    }
   }
 }
