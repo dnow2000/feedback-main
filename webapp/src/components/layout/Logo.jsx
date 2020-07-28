@@ -15,7 +15,6 @@ const Logo = ({ type }) => {
   return (
     <NavLink
       className='logo'
-      isActive={false}
       to='/'
     >
       <img
