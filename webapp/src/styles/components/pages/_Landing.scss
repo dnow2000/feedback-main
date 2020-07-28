@@ -56,6 +56,12 @@
       }
     }
 
+    &.partners {
+      .anchor {
+        border-bottom: 1px solid $orange;
+      }
+    }
+
     .section-title {
       align-items: center;
       display: flex;

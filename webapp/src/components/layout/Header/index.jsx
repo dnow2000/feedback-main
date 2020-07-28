@@ -57,6 +57,8 @@ export default ({ withLinks=false }) => {
             <a
               className='support-us'
               href='https://sciencefeedback.co/donate/'
+              rel="noopener noreferrer"
+              target='_blank'
             >
               {'Support us'}
             </a>
