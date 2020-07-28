@@ -35,15 +35,15 @@
     .left-content {
       display: flex;
       height: 100%;
-      width: 50%;
       max-width: 80%;
+      width: 50%;
 
       .logo {
         padding: 0.5rem;
 
         img {
-          width: auto;
           height: 100%;
+          width: auto;
           vertical-align: middle;
         }
       }
