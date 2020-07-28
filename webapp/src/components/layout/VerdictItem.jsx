@@ -9,7 +9,7 @@ import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
 import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppearancesByQuotedClaimId'
 import { numberShortener } from 'utils/shorteners'
-import timeAgo from 'utils/timeAgo'
+import useTimeAgo from 'components/uses/useTimeAgo'
 
 
 const _ = ({ asLink, className, verdict, withLinksShares }) => {
@@ -22,6 +22,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
     scienceFeedbackPublishedDate: publishedDate,
     scienceFeedbackUrl: reviewUrl
   } = verdict
+  const timeAgo = useTimeAgo(publishedDate)
 
   const claim = useSelector(
     state => selectEntityByKeyAndId(state, 'claims', claimId),
@@ -108,9 +109,9 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
           {'checked it'}
           &nbsp;
         </span>
-        { Date.parse(publishedDate) && (
+        { !timeAgo.isNaN && (
           <strong>
-            { timeAgo(Date.parse(publishedDate)) }
+            { timeAgo }
           </strong>
         ) }
       </div>

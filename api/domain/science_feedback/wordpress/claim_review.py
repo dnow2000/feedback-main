@@ -56,7 +56,7 @@ def claim_review_from_url(url, session=None):
                 'text': claimshort.text,
             },
             'conclusions': conclusions,
+            'publishedDate': published_date,
             'reviewers': reviewers,
-            'title': title.text,
-            'publishedDate': published_date
+            'title': title.text
         }
