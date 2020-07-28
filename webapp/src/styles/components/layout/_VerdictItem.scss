@@ -5,6 +5,10 @@
     cursor: pointer;
   }
 
+  h3 {
+    color: $grey-darker;
+  }
+
   .content-item {
     padding: 0;
     border: 0;
@@ -28,6 +32,7 @@
   hr {
     border: none;
     border-top: 1px solid $grey-light;
+    width: 25%;
   }
 
   .verdict-bottom-container {

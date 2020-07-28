@@ -38,4 +38,6 @@ def claim_verdicts_from_airtable(max_verdicts=None):
             })
             verdict.verdictTags = verdict.verdictTags + [verdict_tag]
 
+        verdict.scienceFeedbackPublishedDate = claim_review['publishedDate']
+
     return verdicts

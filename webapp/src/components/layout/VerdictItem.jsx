@@ -9,12 +9,20 @@ import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
 import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppearancesByQuotedClaimId'
 import { numberShortener } from 'utils/shorteners'
+import useTimeAgo from 'components/uses/useTimeAgo'
 
 
 const _ = ({ asLink, className, verdict, withLinksShares }) => {
   const history = useHistory()
-  const { claimId, id, medium, title: headline, scienceFeedbackUrl: reviewUrl } = verdict
-
+  const {
+    claimId,
+    id,
+    medium,
+    title: headline,
+    scienceFeedbackPublishedDate: publishedDate,
+    scienceFeedbackUrl: reviewUrl
+  } = verdict
+  const timeAgo = useTimeAgo(publishedDate)
 
   const claim = useSelector(
     state => selectEntityByKeyAndId(state, 'claims', claimId),
@@ -85,9 +93,9 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       role="link"
       tabIndex={id}
     >
-      <h4>
+      <h3>
         {`"${headline || claim.text}"`}
-      </h4>
+      </h3>
       <div className="verdict-editor-container">
         <Icon
           className="avatar editor-avatar"
@@ -101,12 +109,14 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
           {'checked it'}
           &nbsp;
         </span>
-        <strong>
-          {`${3} days ago`}
-        </strong>
+        { !timeAgo.isNaN && (
+          <strong>
+            { timeAgo }
+          </strong>
+        ) }
       </div>
       <br />
-      <hr className="text-muted w-25" />
+      <hr />
       <br />
       <p>
         <i>
@@ -145,6 +155,7 @@ _.propTypes = {
       logoUrl: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
     }),
+    scienceFeedbackPublishedDate: PropTypes.string,
     scienceFeedbackUrl: PropTypes.string,
     title: PropTypes.string,
     verdictTags: PropTypes.arrayOf(

@@ -77,27 +77,56 @@ export default () => {
                   name="ico-review.svg"
                 />
               </span>
-              <h3>
+              <h2>
                 {'Recent Claims'}
-              </h3>
-              <div className="verdict-items">
-                <Items
-                  config={config}
-                  renderItem={renderItem}
-                  shouldLoadMore={showMoreStatus}
-                />
-                <div className="show-more">
-                  <button
-                    onClick={handleShowMore}
-                    type='button'
-                  >
-                    {'Show more'}
-                  </button>
-                </div>
+              </h2>
+            </div>
+
+            <div className="verdict-items">
+              <Items
+                config={config}
+                renderItem={renderItem}
+                shouldLoadMore={showMoreStatus}
+              />
+              <div className="show-more">
+                <button
+                  onClick={handleShowMore}
+                  type='button'
+                >
+                  {'Show more'}
+                </button>
               </div>
             </div>
           </div>
         </section>
+
+        <section className="partners">
+          <div className="container">
+            <div className="section-title">
+              <h2>
+                {'Partners'}
+              </h2>
+            </div>
+
+            <div className="section-content">
+              <p className="section-text">
+                {'The project is led by volunteers and staff from Science Feedback and we are looking for collaboration with other fact-checking organizations. Volunteer contributors also include Microsoft employees through the Share AI program.'}
+              </p>
+              <br />
+              <p className="section-text">
+                {'The project is supported in parts by the Google News Initiative.'}
+              </p>
+
+              <div className="partner-logos">
+                <img
+                  alt="microsoft-logo"
+                  src="/static/assets/microsoft-logo-600x269.png"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
       </Main>
       <Footer />
     </>

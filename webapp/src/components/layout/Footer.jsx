@@ -8,21 +8,23 @@ export default () => (
 
     <div className="logo-container">
       <img
-        src={`${ROOT_ASSETS_PATH}/logo_footer.png`}
-        className="logo-element"
         alt="Community"
+        className="logo-element"
+        src={`${ROOT_ASSETS_PATH}/logo_footer.png`}
       />
     </div>
 
-    <div className="links-container-big">
-      <p className="h3">Community</p>
+    <div className="links-container">
+      <p className="h3">
+        {'Community'}
+      </p>
       <a
         className="link"
         href="https://climatefeedback.org/community/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        Climate Reviewers
+        {'Climate Reviewers'}
       </a>
       <a
         className="link"
@@ -30,26 +32,29 @@ export default () => (
         rel="noopener noreferrer"
         target="_blank"
       >
-        Health Reviewers
+        {'Health Reviewers'}
       </a>
       <a
         className="link"
         href="https://sciencefeedback.co/for-scientists/"
         rel="noopener noreferrer"
-        target="_blank">
-        Apply to become a reviewer
+        target="_blank"
+      >
+        {'Apply to become a reviewer'}
       </a>
     </div>
 
-    <div className="links-container-big">
-      <p className="h3">Organization</p>
+    <div className="links-container">
+      <p className="h3">
+        {'Organization'}
+      </p>
       <a
         className="link"
         href="https://sciencefeedback.co/about/"
         rel="noopener noreferrer"
         target="_blank"
       >
-        About
+        {'About'}
       </a>
       <a
         className="link"
@@ -57,7 +62,7 @@ export default () => (
         rel="noopener noreferrer"
         target="_blank"
       >
-        Support us
+        {'Support us'}
       </a>
       <a
         className="link"
@@ -65,14 +70,19 @@ export default () => (
         rel="noopener noreferrer"
         target="_blank"
       >
-        Community standards
+        {'Community standards'}
       </a>
     </div>
 
-    <div className="links-container-small">
-      <p className="h3">Contact Us</p>
-      <NavLink className="link" to="/">
-        Press
+    <div className="links-container">
+      <p className="h3">
+        {'Contact Us'}
+      </p>
+      <NavLink
+        className="link"
+        to="/"
+      >
+        {'Press'}
       </NavLink>
       <a
         className="link"
@@ -80,7 +90,7 @@ export default () => (
         rel="noopener noreferrer"
         target="_blank"
       >
-        Contact Us
+        {'Contact Us'}
       </a>
     </div>
 

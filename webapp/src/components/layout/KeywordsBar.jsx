@@ -42,7 +42,6 @@ const _ = ({
           ref={inputRef}
         />
         <button
-          className="button is-primary thin box-shadow"
           onClick={handleKeywordsClick}
           type="button"
         >

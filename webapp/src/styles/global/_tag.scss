@@ -1,7 +1,8 @@
 .tags {
   align-items: center;
   display: flex;
-  flex-direction: horizontal;
+  flex-direction: row;
+  flex-wrap: wrap;
 
   .tag {
     background-color: $grey-light;
@@ -12,6 +13,7 @@
     height: 2rem;
     line-height: 2rem;
     padding: 0 0.7rem;
+    margin-bottom: 0.5rem;
 
     &.correct {
       background-color: lighten($green, 40%);

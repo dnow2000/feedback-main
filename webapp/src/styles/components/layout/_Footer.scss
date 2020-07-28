@@ -1,23 +1,14 @@
 .footer {
   background-color: $blue-darker;
   color: $grey-lighter;
-  height: 18.75rem;
-
-  align-items: baseline;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-
-  margin: auto;
-
-  padding: 2.5rem;
-  padding-bottom: 6.25rem;
-  padding-top: 3.75rem;
+  display: grid;
+  grid-gap: 1rem;
+  padding: 3.75rem 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 280px));
+  justify-content: space-evenly;
 
   .logo-container {
-    flex: 3;
-    padding-right: 2rem;
+    padding: 0 2rem 4rem 0;
 
     .logo-element {
       width: 100%;
@@ -25,19 +16,11 @@
     }
   }
 
-  .links-container-big {
+  .links-container {
     display: flex;
-    flex: 4;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 2.5rem;
-  }
-
-  .links-container-small {
-    display: flex;
-    flex: 2;
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0 0 2.5rem 2.5rem;
   }
 
   .link {

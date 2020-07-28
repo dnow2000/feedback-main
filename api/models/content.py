@@ -34,7 +34,6 @@ class Content(ApiHandler,
               SoftDeletableMixin,
               VersionedMixin):
 
-
     archiveUrl = Column(String(512), unique=True)
 
     authors = Column(Text())
@@ -72,7 +71,7 @@ class Content(ApiHandler,
     urlGone = Column(Boolean())
 
     urlNotFound = Column(Boolean())
-    
+
 
     def get_score(self):
         amount = 0
