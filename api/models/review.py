@@ -9,14 +9,12 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixi
 
 from utils.db import db
 from models.mixins import HasScienceFeedbackMixin, \
-                          HasScienceFeedbackPublishedDate, \
                           HasRatingMixin
 
 
 class Review(ApiHandler,
              db.Model,
              HasScienceFeedbackMixin,
-             HasScienceFeedbackPublishedDate,
              HasRatingMixin,
              SoftDeletableMixin):
 
