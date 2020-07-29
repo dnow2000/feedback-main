@@ -27,7 +27,12 @@ const _ = (date) => {
     return interval + " minutes ago"
   }
 
-  return Math.floor(seconds) + " seconds ago"
+  interval = Math.floor(seconds)
+  if (interval > 1) {
+    return interval + " seconds ago"
+  }
+
+  return "recently"
 }
 
 export default _

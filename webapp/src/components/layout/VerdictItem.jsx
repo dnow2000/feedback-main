@@ -109,7 +109,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
           {'checked it'}
           &nbsp;
         </span>
-        { !timeAgo.isNaN && (
+        { timeAgo && (
           <strong>
             { timeAgo }
           </strong>
