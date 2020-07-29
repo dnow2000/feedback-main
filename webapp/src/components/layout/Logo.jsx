@@ -15,10 +15,12 @@ const Logo = ({ type }) => {
   return (
     <NavLink
       className='logo'
-      isActive={() => false}
       to='/'
     >
-      <img src={`${ROOT_ASSETS_PATH}/${name}`} alt="Logo" />
+      <img
+        alt="Logo"
+        src={`${ROOT_ASSETS_PATH}/${name}`}
+      />
     </NavLink>
   )
 }

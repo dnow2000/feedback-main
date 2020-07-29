@@ -26,10 +26,10 @@ export default () => {
           ) : (
             <NavLink
               className="anchor"
-              id={`see-${path}`}
               external={external}
-              to={path}
+              id={`see-${path}`}
               target={target}
+              to={path}
             >
               {label}
             </NavLink>

@@ -114,7 +114,15 @@ export default () => {
               </p>
               <br />
               <p className="section-text">
-                {'The project is supported in parts by the Google News Initiative.'}
+                {'The project is supported in parts by the '}
+                <a
+                  className='anchor'
+                  href="https://www.blog.google/outreach-initiatives/google-news-initiative/covid-19-65-million-help-fight-coronavirus-misinformation/"
+                  rel="noopener noreferrer"
+                  target='_blank'
+                >
+                  {'Google News Initiative.'}
+                </a>
               </p>
 
               <div className="partner-logos">

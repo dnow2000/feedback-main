@@ -6,14 +6,7 @@
 
   section {
     height: 100%;
-
-    &:last-child {
-      margin-bottom: 6.25rem;
-    }
-
-    &:not(:last-child) {
-      margin-bottom: 4rem;
-    }
+    padding-bottom: 4rem;
 
     &.hero {
       align-items: center;
@@ -63,6 +56,12 @@
       }
     }
 
+    &.partners {
+      .anchor {
+        border-bottom: 1px solid $orange;
+      }
+    }
+
     .section-title {
       align-items: center;
       display: flex;
@@ -77,8 +76,12 @@
       }
     }
 
-    .section-text {
-      @extend .text-center;
+    .section-content {
+      width: 100%;
+
+      .section-text {
+        @extend .text-center;
+      }
     }
 
     .partner-logos {

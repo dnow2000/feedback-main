@@ -21,8 +21,9 @@
   .container {
     align-items: center;
     display: flex;
+    height: 100%;
     justify-content: space-between;
-    padding: 24px;
+    padding: 1rem;
     pointer-events: none;
     margin-left: auto;
     margin-right: auto;
@@ -32,12 +33,17 @@
     z-index: 1000;
 
     .left-content {
+      display: flex;
+      height: 100%;
+      max-width: 80%;
+      width: 50%;
+
       .logo {
+        padding: 0.5rem;
+
         img {
-          margin: 0.25em;
-          max-height: 2.25em;
-          width: 258px;
-          height: auto;
+          height: 100%;
+          width: auto;
           vertical-align: middle;
         }
       }
@@ -45,6 +51,15 @@
     .right-content {
       align-items: center;
       display: flex;
+
+      .support-us {
+        @extend .button;
+        @extend .is-outlined;
+        @extend .thin;
+
+        border-color: $orange;
+        color: $grey-darker;
+      }
     }
   }
 }
