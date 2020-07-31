@@ -6,6 +6,6 @@ from repository.science_feedback.wordpress.claim_verdicts import claim_verdicts_
 
 def sync():
     logger.info('sync science feedback wordpress data...')
-    claim_verdicts = claim_verdicts_from_airtable(max_verdicts=100)
+    claim_verdicts = claim_verdicts_from_airtable()
     ApiHandler.save(*claim_verdicts)
     logger.info('sync science feedback wordpress data...')
