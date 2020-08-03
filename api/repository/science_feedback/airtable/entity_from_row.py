@@ -259,7 +259,6 @@ def verdict_from_row(row, unused_index=None):
     if not claim:
         return None
 
-
     medium = Medium.query.filter_by(url='/'.join(row['Review url'].split('/')[0:3])).first()
 
     verdict_dict = {
@@ -269,7 +268,8 @@ def verdict_from_row(row, unused_index=None):
         'medium': medium,
         'scienceFeedbackIdentifier': row['airtableId'],
         'scienceFeedbackUrl': row['Review url'],
-        'title': row['Review headline']
+        'title': row['Review headline'],
+        'scienceFeedbackPublishedDate': row['Date of publication']
     }
 
     return Verdict.create_or_modify(verdict_dict)
