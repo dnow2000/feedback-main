@@ -1,4 +1,5 @@
 from sqlalchemy_api_handler import humanize
+from datetime import datetime
 from utils.config import COMMAND_NAME, API_URL, IS_DEVELOPMENT
 
 from models.appearance import Appearance
@@ -260,6 +261,7 @@ def verdict_from_row(row, unused_index=None):
         return None
 
     medium = Medium.query.filter_by(url='/'.join(row['Review url'].split('/')[0:3])).first()
+    published_date = datetime.strptime(row['Date of publication'], '%Y-%m-%d')
 
     verdict_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',
@@ -269,7 +271,7 @@ def verdict_from_row(row, unused_index=None):
         'scienceFeedbackIdentifier': row['airtableId'],
         'scienceFeedbackUrl': row['Review url'],
         'title': row['Review headline'],
-        'scienceFeedbackPublishedDate': row['Date of publication']
+        'scienceFeedbackPublishedDate': published_date
     }
 
     return Verdict.create_or_modify(verdict_dict)
