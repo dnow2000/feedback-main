@@ -38,9 +38,12 @@ def sync_for(name, max_records=None):
 
     entities = []
     for (index, row) in enumerate(rows):
-        entity = entity_from_row_for(name, row, index)
-        if entity:
-            entities.append(entity)
+        try:
+            entity = entity_from_row_for(name, row, index)
+            if entity:
+                entities.append(entity)
+        except KeyError:
+            logger.error('KeyError at: [{}] - {}'.format(index, row))
 
     ApiHandler.save(*entities)
 
