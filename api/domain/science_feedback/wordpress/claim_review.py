@@ -58,20 +58,20 @@ def claim_review_from_url(url, session=None):
                 verdict_label = 'Inaccurate'
             conclusions.append(verdict_label.replace('_', ' '))
 
-        locale_abbr = re.search('sciencefeedback.co/(es|fr)/', response.url)
-        locale = None
-        if locale_abbr:
-            locale = locale_abbr.group(1)
+        # locale_abbr = re.search('sciencefeedback.co/(es|fr)/', response.url)
+        # locale = None
+        # if locale_abbr:
+        #     locale = locale_abbr.group(1)
 
-        published_info_line = soup.findAll('p', class_='small')[1]
-        published_date = _localise_date(published_info_line.text, locale)
+        # published_info_line = soup.findAll('p', class_='small')[1]
+        # published_date = _localise_date(published_info_line.text, locale)
 
         return {
             'claim': {
                 'text': claimshort.text,
             },
             'conclusions': conclusions,
-            'publishedDate': published_date,
+            # 'publishedDate': published_date,
             'reviewers': reviewers,
             'title': title.text
         }

@@ -8,4 +8,4 @@ def sync():
     logger.info('sync science feedback wordpress data...')
     claim_verdicts = claim_verdicts_from_airtable()
     ApiHandler.save(*claim_verdicts)
-    logger.info('sync science feedback wordpress data...')
+    logger.info('sync science feedback wordpress data...Done.')
