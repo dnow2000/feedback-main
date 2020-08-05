@@ -82,7 +82,7 @@ def appearance_from_row(row, unused_index=None):
 
 
 def author_from_row(row, index=None):
-    chunks = row['Name'].split(' ')
+    chunks = row['Name'].split(' ') if row.get('Name') is not None else None
     first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
                  else chunks[0]
     last_name = 'Author{}'.format(index) if IS_DEVELOPMENT \
@@ -128,7 +128,7 @@ def claim_from_row(row, unused_index=None):
 
 
 def editor_from_row(row, index=None):
-    chunks = row['Name'].split(' ')
+    chunks = row.get('Name', '').split(' ')
     first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
                  else chunks[0]
     last_name = 'Editor{}'.format(index) if IS_DEVELOPMENT \

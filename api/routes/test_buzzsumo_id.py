@@ -18,6 +18,7 @@ from domain.trendings.buzzsumo import shares_from_buzzsumo_url
 # 6562839509
 # 6563481410
 
+
 @app.route('/test_buzzsumo_id/<buzzsumo_id>')
 def get_shares_from_buzzsumo_url(buzzsumo_id):
 

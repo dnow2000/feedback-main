@@ -62,11 +62,11 @@ class Content(ApiHandler,
 
     theme = Column(String(140))
 
-    title = Column(String(512))
+    title = Column(String(2048))
 
     type = Enum(ContentType)
 
-    url = Column(String(512), nullable=False, unique=True)
+    url = Column(String(2048), nullable=False, unique=True)
 
     urlGone = Column(Boolean())
 

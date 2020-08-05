@@ -31,13 +31,13 @@ def request_airtable_rows(
     headers = {'Authorization': 'Bearer {}'.format(token) }
 
     result = requests.get(url, headers=headers).json()
-    records = result['records']
+    records = result.get('records')
     offset = result.get('offset')
     while offset:
         url_with_offset = '{}&offset={}'.format(url, offset)
         result = requests.get(url_with_offset, headers=headers).json()
         offset = result.get('offset')
-        records += result['records']
+        records += result.get('records')
 
     return [
         {'airtableId': record['id'], **record['fields']}

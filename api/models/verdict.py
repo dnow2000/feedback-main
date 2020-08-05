@@ -53,7 +53,7 @@ class Verdict(ApiHandler,
                           foreign_keys=[mediumId],
                           backref='verdicts')
 
-    title = Column(String(512))
+    title = Column(String(2048))
 
     @property
     def reviews(self):
