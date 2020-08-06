@@ -7,6 +7,7 @@ from sqlalchemy_api_handler import ApiHandler, \
 
 from models.verdict import Verdict
 from repository.verdicts import keep_verdict_with_keywords
+from sqlalchemy import asc, desc
 from utils.includes import VERDICT_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
@@ -16,7 +17,7 @@ from validation.roles import check_has_role
 
 @app.route('/verdicts', methods=['GET'])
 def get_verdicts():
-    query = Verdict.query
+    query = Verdict.query.order_by(desc(Verdict.scienceFeedbackPublishedDate))
 
     content_id = request.args.get('contentId')
     keywords = request.args.get('keywords')

@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import Controls from 'components/layout/Controls'
 import Header from 'components/layout/Header'
@@ -36,6 +37,10 @@ export default () => {
     [history]
   )
 
+  const [linkCount, verdictCount] = useSelector(state =>
+    [state.data.appearances?.length, state.data.verdicts?.length]
+  ) || [14450, 2000]
+
 
   return (
     <>
@@ -45,15 +50,15 @@ export default () => {
           <div className="container">
             <p className="h1">
               <b>
-                {'2000'}
+                {verdictCount}
               </b>
-              {' articles fact-checked'}
+              {' reviews'}
               <br />
-              {'by '}
+              {'and '}
               <b>
-                {'14450'}
+                {linkCount}
               </b>
-              {' Scientists'}
+              {' content urls flagged'}
             </p>
             <Controls
               config={config}

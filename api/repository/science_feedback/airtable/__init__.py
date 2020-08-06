@@ -1,6 +1,8 @@
 # pylint: disable=C0415
 
 import os
+import sys
+import psycopg2
 from sqlalchemy_api_handler import ApiHandler, logger
 
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
@@ -42,10 +44,17 @@ def sync_for(name, max_records=None):
             entity = entity_from_row_for(name, row, index)
             if entity:
                 entities.append(entity)
-        except KeyError:
-            logger.error('KeyError at: [{}] - {}'.format(index, row))
+        except KeyError as exception:
+            logger.error('KeyError {}: at [{}] - {}'.format(exception, index, row))
+        except Exception as exception:
+            logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
 
-    ApiHandler.save(*entities)
+    try:
+        ApiHandler.save(*entities)
+    except psycopg2.Error as exception:
+        logger.error('psycopg2.Error: {}'.format(exception))
+    except Exception as exception:
+        logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
 
 
 def sync(max_records=None):
