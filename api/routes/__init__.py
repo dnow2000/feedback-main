@@ -9,6 +9,7 @@ def import_routes():
     import routes.author_contents
     import routes.claims
     import routes.contents
+    import routes.data
     import routes.graphs
     import routes.images
     import routes.organizations

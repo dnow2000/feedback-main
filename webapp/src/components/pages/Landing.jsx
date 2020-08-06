@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { requestData } from 'redux-thunk-data'
 
 import Controls from 'components/layout/Controls'
 import Header from 'components/layout/Header'
@@ -15,6 +16,7 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 
 export default () => {
+  const dispatch = useDispatch()
   const history = useHistory()
   const { search } = useLocation()
   const [showMoreStatus, setShowMoreStatus] = useState(false)
@@ -37,9 +39,18 @@ export default () => {
     [history]
   )
 
-  const [linkCount, verdictCount] = useSelector(state =>
-    [state.data.appearances?.length, state.data.verdicts?.length]
-  ) || [14450, 2000]
+  useEffect(() => {
+    dispatch(requestData({
+      apiPath: '/data'
+    }))
+  }, [dispatch])
+
+  const [linkCount, verdictCount] = useSelector(state => {
+    return [
+      state?.data?.data?.[0]?.appearanceCount,
+      state?.data?.data?.[0]?.verdictCount
+    ]
+  }) || [14450, 2000]
 
 
   return (
@@ -54,11 +65,12 @@ export default () => {
               </b>
               {' reviews'}
               <br />
-              {'and '}
+              {'and'}
+              <br />
               <b>
                 {linkCount}
               </b>
-              {' content urls flagged'}
+              {' content URLs flagged'}
             </p>
             <Controls
               config={config}
