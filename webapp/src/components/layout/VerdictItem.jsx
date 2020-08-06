@@ -94,7 +94,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       tabIndex={id}
     >
       <h3>
-        {`"${headline || claim.text}"`}
+        {`${headline || claim.text}`}
       </h3>
       <div className="verdict-editor-container">
         <Icon
