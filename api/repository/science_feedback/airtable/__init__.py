@@ -2,7 +2,8 @@
 
 import os
 import sys
-import psycopg2
+
+from psycopg2.errors import NotNullViolation
 from sqlalchemy_api_handler import ApiHandler, logger
 
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
@@ -51,8 +52,8 @@ def sync_for(name, max_records=None):
 
     try:
         ApiHandler.save(*entities)
-    except psycopg2.Error as exception:
-        logger.error('psycopg2.Error: {}'.format(exception))
+    except NotNullViolation as exception:
+        logger.error('NotNullViolation: {}'.format(exception))
     except Exception as exception:
         logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
 
