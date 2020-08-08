@@ -97,7 +97,7 @@ export default () => (
     </div>
     { IS_DEVELOPMENT &&
       <p className='app-version'>
-        {VERSION}
+        {`Version: ${VERSION}`}
       </p> }
   </>
 )
