@@ -10,6 +10,10 @@ import {
   ROOT_PATH
 } from 'utils/config'
 
+{/* eslint-disable react/jsx-max-props-per-line*/}
+{/* eslint-disable react/jsx-sort-props */}
+{/* eslint-disable react/jsx-one-expression-per-line */}
+
 
 const App = ({ children }) => (
   <>
@@ -37,12 +41,12 @@ const App = ({ children }) => (
       <link rel="apple-touch-icon" sizes="144x144" href={`${ROOT_LOGO_ICONS_PATH}/apple-icon-144x144.png`} />
       <link rel="apple-touch-icon" sizes="152x152" href={`${ROOT_LOGO_ICONS_PATH}/apple-icon-152x152.png`} />
       <link rel="apple-touch-icon" sizes="180x180" href={`${ROOT_LOGO_ICONS_PATH}/apple-icon-180x180.png`} />
-      <link rel="icon" type="image/png" sizes="192x192"  href={`${ROOT_LOGO_ICONS_PATH}/android-icon-192x192.png`} />
+      <link rel="icon" type="image/png" sizes="192x192" href={`${ROOT_LOGO_ICONS_PATH}/android-icon-192x192.png`} />
       <link rel="icon" type="image/png" sizes="32x32" href={`${ROOT_LOGO_ICONS_PATH}/favicon-32x32.png`} />
       <link rel="icon" type="image/png" sizes="96x96" href={`${ROOT_LOGO_ICONS_PATH}/favicon-96x96.png`} />
       <link rel="icon" type="image/png" sizes="16x16" href={`${ROOT_LOGO_ICONS_PATH}/favicon-16x16.png`} />
       <link rel="manifest" href={`${ROOT_PATH}/manifest.json`} />
-      <title>{capitalize(APP_NAME)} Webapp</title>
+      <title>{`Science ${capitalize(APP_NAME)}`}</title>
     </Helmet>
     {children}
   </>

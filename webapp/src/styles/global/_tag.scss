@@ -15,24 +15,37 @@
     padding: 0 0.7rem;
     margin-bottom: 0.5rem;
 
+    &.accurate,
     &.correct {
-      background-color: lighten($green, 40%);
-      border-color: lighten($green, 40%);
-      color: $green;
-    }
-
-    &.partially-correct {
-      background-color: lighten($bluegreen, 30%);
-      border-color: lighten($bluegreen, 30%);
+      background-color: $bluegreen-light;
+      border-color: $bluegreen-light;
       color: $bluegreen;
     }
 
-    &.inaccurate {
+    &.mostly-accurate,
+    &.mostly-correct {
+      background-color: lighten($green, 45%);
+      border-color: lighten($green, 45%);
+      color: $green;
+    }
+
+    &.imprecise,
+    &.lacks-context,
+    &.partially-correct {
+      background-color: lighten($yellow, 20%);
+      border-color: lighten($yellow, 20%);
+      color: darken($yellow, 20%);
+    }
+
+    &.misleading,
+    &.unsupported {
       background-color: lighten($orange, 30%);
       border-color: lighten($orange, 30%);
       color: $orange;
     }
 
+    &.flawed-reasoning,
+    &.inaccurate,
     &.incorrect {
       background-color: lighten($red, 30%);
       border-color: lighten($red, 30%);

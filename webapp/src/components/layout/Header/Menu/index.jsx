@@ -56,32 +56,32 @@ export default () => {
           tabIndex="0"
         >
           {visibleLinks.map(({ external, label, path, target }) => (
-              <div
-                className="item"
-                key={label}
-              >
-                {path === location.pathname ? (
-                  <div className="link current">
-                    {label}
-                  </div>
-                ) : (
-                  <NavLink
-                    className="block link"
-                    external={external}
-                    id={`see-${path}`}
-                    onClick={handleCloseMenu}
-                    target={target}
-                    to={path}
-                  >
-                    {label}
-                  </NavLink>
-                )}
-              </div>
-            ))}
+            <div
+              className="item"
+              key={label}
+            >
+              {path === location.pathname ? (
+                <div className="link current">
+                  {label}
+                </div>
+              ) : (
+                <NavLink
+                  className="block link"
+                  external={external}
+                  id={`see-${path}`}
+                  onClick={handleCloseMenu}
+                  target={target}
+                  to={path}
+                >
+                  {label}
+                </NavLink>
+              )}
+            </div>
+          ))}
           {currentUser && (
             <div className="item item-signout">
               <Signout>
-                Logout
+                {'Logout'}
               </Signout>
               <div className="version">
                 {`v${VERSION}`}
