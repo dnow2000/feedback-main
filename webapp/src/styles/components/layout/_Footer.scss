@@ -50,3 +50,12 @@
     margin-bottom: 1.625rem;
   }
 }
+
+.app-version {
+  @extend .text-center;
+  @extend .text-muted;
+
+  background-color: $blue-darker;
+  color: $grey-lighter;
+  display: block;
+}
