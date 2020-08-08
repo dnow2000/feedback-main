@@ -1,3 +1,7 @@
+/* eslint-disable react/jsx-max-props-per-line */
+/* eslint-disable react/jsx-sort-props */
+/* eslint-disable react/jsx-one-expression-per-line */
+
 import capitalize from 'lodash.capitalize'
 import PropTypes from 'prop-types'
 import React from 'react'
@@ -9,11 +13,6 @@ import {
   ROOT_LOGO_ICONS_PATH,
   ROOT_PATH
 } from 'utils/config'
-
-{/* eslint-disable react/jsx-max-props-per-line*/}
-{/* eslint-disable react/jsx-sort-props */}
-{/* eslint-disable react/jsx-one-expression-per-line */}
-
 
 const App = ({ children }) => (
   <>
