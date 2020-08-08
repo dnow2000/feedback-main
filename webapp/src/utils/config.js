@@ -9,7 +9,7 @@ const {
   REACT_APP_VERSION
 } = process.env
 
-export const APP_NAME = REACT_APP_NAME || 'unnamed'
+export const APP_NAME = REACT_APP_NAME || 'Science Feedback'
 export const VERSION = REACT_APP_VERSION || ''
 
 export const IS_DEBUG = true

@@ -1,7 +1,7 @@
 .appearance-item {
   @extend .anchor;
 
-  align-items: stretch;
+  align-items: center;
   border: solid 1px $grey-light;
   border-radius: $border-radius;
   display: flex;

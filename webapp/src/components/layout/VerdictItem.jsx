@@ -119,13 +119,16 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       <hr />
       <br />
       <p>
+        <b>
+          {'Claim: '}
+        </b>
         <i>
           {`"${claim.text}"`}
         </i>
       </p>
       <br />
       <div className="tags">
-        { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label || '').toLowerCase()}`}>
+        { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
           {conclusionTag.label}
         </span> }
         { links }
