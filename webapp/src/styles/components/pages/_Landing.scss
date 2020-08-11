@@ -85,14 +85,23 @@
     }
 
     .partner-logos {
+      align-items: center;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
 
-      img {
-        height: 10rem;
+      img[alt*="-logo"] {
+        height: 8rem;
         width: auto;
+      }
+
+      .logo {
+        height: 8rem;
+        font-size: 2rem;
+
+        img {
+          height: 5rem;
+        }
       }
     }
   }
@@ -115,17 +124,9 @@
   }
 
   .link {
-    color: $white;
-    font-weight: 200;
-    margin-bottom: 1.625rem;
-    opacity: 1;
-    text-decoration: none;
-    transition: 0.2;
+    @extend .anchor;
 
-    &:hover {
-      opacity: 0.8;
-      transition: 0.2;
-    }
+    border-bottom: 1px solid $orange;
   }
 
   .h1 {

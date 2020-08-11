@@ -7,15 +7,21 @@
     pointer-events: auto;
   }
 
+  background-color: $white;
   height: $header-height;
   left: 0;
   position: fixed;
   right: 0;
+  transition: filter 0.5s;
+  z-index: 1;
 
   &.is-blurred {
     filter: blur(1px);
-    opacity: 0.1;
     pointer-events: none;
+  }
+
+  &:hover {
+    filter: none;
   }
 
   .container {
@@ -28,7 +34,6 @@
     margin-left: auto;
     margin-right: auto;
     max-width: $header-and-footer-max-width;
-    transition: filter 0.5s, opacity 0.5s;
     width: 100%;
     z-index: 1000;
 
@@ -39,14 +44,7 @@
       width: 50%;
 
       .logo {
-        padding: 0.5rem;
-
-        img {
-          height: 100%;
-          width: auto;
-          vertical-align: middle;
-          display: flex;
-        }
+        @extend .logo;
       }
     }
     .right-content {

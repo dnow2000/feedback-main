@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 import Controls from 'components/layout/Controls'
 import Header from 'components/layout/Header'
@@ -13,6 +14,7 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 export default () => {
   const { search } = useLocation()
+  const isAtTop = useSelector(state => state.scroll.isAtTop)
 
   const config = useMemo(
     () => ({
@@ -43,6 +45,7 @@ export default () => {
               return (
                 <>
                   <KeywordsBar
+                    isAtTop={isAtTop}
                     onChange={handleChange}
                     selectedKeywords={keywords}
                   />

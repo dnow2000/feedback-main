@@ -9,6 +9,7 @@ import Footer from 'components/layout/Footer'
 import Icon from 'components/layout/Icon'
 import Items from 'components/layout/Items'
 import KeywordsBar from 'components/layout/KeywordsBar'
+import Logo from 'components/layout/Logo'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
 
@@ -47,10 +48,10 @@ export default () => {
 
   const [linkCount, verdictCount] = useSelector(state => {
     return [
-      state?.data?.data?.[0]?.appearanceCount,
-      state?.data?.data?.[0]?.verdictCount
+      state?.data?.data?.[0]?.appearanceCount || 2674,
+      state?.data?.data?.[0]?.verdictCount || 449
     ]
-  }) || [14450, 2000]
+  })
 
 
   return (
@@ -143,6 +144,11 @@ export default () => {
               </p>
 
               <div className="partner-logos">
+                <Logo asLink={false} />
+                <img
+                  alt="google-news-initiative-logo"
+                  src="/static/assets/google_news_initiative_logo.png"
+                />
                 <img
                   alt="microsoft-logo"
                   src="/static/assets/microsoft-logo-600x269.png"

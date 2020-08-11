@@ -1,9 +1,9 @@
 .keywords-bar {
-  display: flex;
   border: none;
+  display: flex;
+  padding: 1rem 0;
 
   .keywords-input {
-    background-color: white;
     border: none;
     border-radius: 1.25rem;
     box-shadow: 0 1px 20px $grey-light;
@@ -49,6 +49,13 @@
   &.horizontal {
     flex-direction: row;
     margin-bottom: 2rem;
+    position: sticky;
+    top: calc(#{$header-height} - 3px);
+    z-index: 1;
+
+    &.is-docked {
+      background-color: $white;
+    }
 
     .keywords-input {
       height: 2rem;

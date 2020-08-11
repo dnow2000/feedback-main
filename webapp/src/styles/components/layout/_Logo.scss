@@ -1,13 +1,15 @@
-// a.logo {
-//   color: $black;
-//   font-size: $font-size-bigger;
-//   font-weight: $font-weight-light;
-//   text-decoration: none;
+.logo {
+  align-items: center;
+  color: $grey-dark;
+  display: flex;
+  font-size: 1.5rem;
+  text-decoration: none;
 
-//   img {
-//     margin: 0.25em;
-//     max-height: 2.25em;
-//     height: 2.25em;
-//     vertical-align: middle;
-//   }
-// }
+  img {
+    flex-basis: 0;
+    height: 100%;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+    width: auto;
+  }
+}

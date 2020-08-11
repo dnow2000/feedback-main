@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
+import classnames from 'classnames'
 
 const _ = ({
+  isAtTop,
   onChange,
   selectedKeywords,
   layout = 'horizontal'
@@ -32,7 +34,7 @@ const _ = ({
 
   return (
     <>
-      <div className={`keywords-bar ${layout}`}>
+      <div className={classnames(`keywords-bar ${layout}`, { 'is-docked': !isAtTop })}>
         <input
           className="keywords-input"
           defaultValue={value}
@@ -52,11 +54,17 @@ const _ = ({
   )
 }
 
+_.defaultProps = {
+  isAtTop: true,
+  layout: 'horizontal',
+  selectedKeywords: ''
+}
 
 _.propTypes = {
+  isAtTop: PropTypes.bool,
+  layout: PropTypes.string,
   onChange: PropTypes.func.isRequired,
-  selectedKeywords: PropTypes.string,
-  layout: PropTypes.string
+  selectedKeywords: PropTypes.string
 }
 
 export default _

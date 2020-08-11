@@ -19,7 +19,7 @@ const pathnamesWithoutSignin = [
 ]
 
 
-export default ({ withLinks=false }) => {
+export default ({ withLinks=true }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const withSignin = pathnamesWithoutSignin.includes(location.pathname)
@@ -48,7 +48,10 @@ export default ({ withLinks=false }) => {
     <header className={classnames('header', { 'is-blurred': !isAtTop })}>
       <div className="container">
         <div className="left-content">
-          <Logo type="header" />
+          <Logo
+            text="Feedback News"
+            type="header"
+          />
         </div>
 
         {withLinks && (
