@@ -1,7 +1,7 @@
 from sqlalchemy_api_handler import humanize
 
 from domain.science_feedback.wordpress.feedbacks import scrap_feedbacks
-from domain.science_feedback.wordpress.reviewers import reviewer_from_url                                                    reviewer_from_url
+from domain.science_feedback.wordpress.reviewers import reviewer_from_url
 from models.user import User
 from models.review import Review
 from models.role import Role

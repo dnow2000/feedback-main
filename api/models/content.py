@@ -72,7 +72,6 @@ class Content(ApiHandler,
 
     urlNotFound = Column(Boolean())
 
-
     def get_score(self):
         amount = 0
         if self.tags and 'PeerVerified' in self.tags:

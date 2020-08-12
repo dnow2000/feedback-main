@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 
 import ThumbImg from 'components/layout/ThumbImg'
 
+import { numberShortener } from 'utils/shorteners'
+
 
 const _ = ({ appearance: { quotingContent } }) => {
-  const { title, url } = quotingContent
+  const { totalShares, title, url } = quotingContent
   const { hostname } = new URL(url)
 
   return (
@@ -32,6 +34,13 @@ const _ = ({ appearance: { quotingContent } }) => {
         <p className="appearance-url">
           {url}
         </p>
+        <div className="appearance-footer">
+          { totalShares > 0 && (
+            <span>
+              {`${numberShortener(totalShares)} shares`}
+            </span>
+          ) }
+        </div>
       </div>
     </a>
   )
@@ -42,6 +51,7 @@ _.propTypes = {
     quotingContent: PropTypes.shape({
       id: PropTypes.string,
       externalThumbUrl: PropTypes.string,
+      totalShares: PropTypes.number,
       title: PropTypes.string,
       url: PropTypes.string
     }).isRequired

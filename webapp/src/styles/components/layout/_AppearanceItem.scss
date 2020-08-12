@@ -25,6 +25,7 @@
   .appearance-data {
     overflow: hidden;
     padding: 1em 1.1em;
+    width: 100%;
 
     .appearance-title {
       color: $grey-darker;
@@ -37,6 +38,14 @@
     .appearance-url {
       color: $primary;
       font-size: 0.8em;
+    }
+
+    .appearance-footer {
+      @extend .text-muted;
+
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 1rem;
     }
   }
 }

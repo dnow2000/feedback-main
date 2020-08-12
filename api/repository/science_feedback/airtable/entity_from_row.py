@@ -11,7 +11,7 @@ from models.medium import Medium
 from models.organization import Organization
 from models.role import Role, RoleType
 from models.user import User
-from models.verdict import Verdict
+from models.verdict import Verdict, PostType
 from utils.config import APP_NAME, DEFAULT_USER_PASSWORD, TLD
 from utils.random_token import create_random_password
 
@@ -59,7 +59,6 @@ def appearance_from_row(row, unused_index=None):
         scienceFeedbackIdentifier=testifier_science_feedback_ids[0]).first()
     if not testifier:
         return None
-
 
     if IS_DEVELOPMENT:
         quoting_content.externalThumbUrl = API_URL + '/static/logo.png' if IS_DEVELOPMENT else None
@@ -270,8 +269,9 @@ def verdict_from_row(row, unused_index=None):
         'medium': medium,
         'scienceFeedbackIdentifier': row['airtableId'],
         'scienceFeedbackUrl': row['Review url'],
+        'scienceFeedbackPublishedDate': published_date,
         'title': row['Review headline'],
-        'scienceFeedbackPublishedDate': published_date
+        'type': row['Post type'].lower()
     }
 
     return Verdict.create_or_modify(verdict_dict)

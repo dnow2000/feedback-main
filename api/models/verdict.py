@@ -1,5 +1,7 @@
+import enum
 from sqlalchemy import BigInteger,\
                        Column,\
+                       Enum,\
                        ForeignKey,\
                        String,\
                        Text
@@ -10,6 +12,13 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixi
 from utils.db import db
 from models.mixins import HasRatingMixin, \
                           HasScienceFeedbackMixin
+
+
+class PostType(enum.Enum):
+    ARTICLE = 'article'
+    CLAIM = 'claim'
+    INSIGHT = 'insight'
+    VIDEO = 'video'
 
 
 class Verdict(ApiHandler,
@@ -54,6 +63,8 @@ class Verdict(ApiHandler,
                           backref='verdicts')
 
     title = Column(String(2048))
+
+    type = Enum(PostType)
 
     @property
     def reviews(self):
