@@ -10,7 +10,7 @@ const Logo = ({ asLink, text, type }) => {
     name = "logo_header.png"
   } else if (type === "footer") {
     name = "logo_footer"
-  } else if (type =='science_feedback') {
+  } else if (type === 'science_feedback') {
     name = "sciencefeedback_logo.png"
   }
 
