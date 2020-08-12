@@ -261,6 +261,7 @@ def verdict_from_row(row, unused_index=None):
 
     medium = Medium.query.filter_by(url='/'.join(row['Review url'].split('/')[0:3])).first()
     published_date = datetime.strptime(row['Date of publication'], '%Y-%m-%d')
+    post_type = row['Post type'].lower()
 
     verdict_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',
@@ -271,7 +272,7 @@ def verdict_from_row(row, unused_index=None):
         'scienceFeedbackUrl': row['Review url'],
         'scienceFeedbackPublishedDate': published_date,
         'title': row['Review headline'],
-        'type': row['Post type'].lower()
+        'type': PostType._value2member_map_[post_type]
     }
 
     return Verdict.create_or_modify(verdict_dict)

@@ -64,7 +64,7 @@ class Verdict(ApiHandler,
 
     title = Column(String(2048))
 
-    type = Enum(PostType)
+    type = Column(Enum(PostType))
 
     @property
     def reviews(self):

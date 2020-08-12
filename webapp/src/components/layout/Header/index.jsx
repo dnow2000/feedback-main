@@ -49,7 +49,7 @@ export default ({ withLinks=true }) => {
       <div className="container">
         <div className="left-content">
           <Logo
-            text="Feedback News"
+            text=""
             type="header"
           />
         </div>

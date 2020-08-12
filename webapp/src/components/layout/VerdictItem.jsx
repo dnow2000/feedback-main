@@ -20,7 +20,8 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
     medium,
     title: headline,
     scienceFeedbackPublishedDate: publishedDate,
-    scienceFeedbackUrl: reviewUrl
+    scienceFeedbackUrl: reviewUrl,
+    type
   } = verdict
   const timeAgo = useTimeAgo(publishedDate)
 
@@ -120,7 +121,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       <br />
       <p>
         <b>
-          {'Claim: '}
+          {`${type.replace(/^./, type.charAt(0).toUpperCase())}: `}
         </b>
         <i>
           {`"${claim.text}"`}
@@ -161,6 +162,7 @@ _.propTypes = {
     scienceFeedbackPublishedDate: PropTypes.string,
     scienceFeedbackUrl: PropTypes.string,
     title: PropTypes.string,
+    type: PropTypes.string,
     verdictTags: PropTypes.arrayOf(
       PropTypes.shape({
         tag: PropTypes.shape({

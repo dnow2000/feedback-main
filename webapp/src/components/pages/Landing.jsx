@@ -132,7 +132,7 @@ export default () => {
               </p>
               <br />
               <p className="section-text">
-                {'The project is supported in parts by the '}
+                {'The project is supported in part by the '}
                 <a
                   className='anchor'
                   href="https://www.blog.google/outreach-initiatives/google-news-initiative/covid-19-65-million-help-fight-coronavirus-misinformation/"
@@ -144,7 +144,10 @@ export default () => {
               </p>
 
               <div className="partner-logos">
-                <Logo asLink={false} />
+                <Logo
+                  asLink={false}
+                  type="science_feedback"
+                />
                 <img
                   alt="google-news-initiative-logo"
                   src="/static/assets/google_news_initiative_logo.png"

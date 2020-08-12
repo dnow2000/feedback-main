@@ -5,11 +5,13 @@ import { NavLink } from 'react-router-dom'
 import { ROOT_ASSETS_PATH } from 'utils/config'
 
 const Logo = ({ asLink, text, type }) => {
-  let name = "sciencefeedback_logo.png"
+  let name = "logo.svg"
   if (type === "header") {
-    name = "sciencefeedback_logo.png"
+    name = "logo_header.png"
   } else if (type === "footer") {
     name = "logo_footer"
+  } else if (type =='science_feedback') {
+    name = "sciencefeedback_logo.png"
   }
 
   return asLink ? (
@@ -18,7 +20,7 @@ const Logo = ({ asLink, text, type }) => {
       to='/'
     >
       <img
-        alt="sciencefeedback-logo"
+        alt="feedback-logo"
         src={`${ROOT_ASSETS_PATH}/${name}`}
       />
       <p>

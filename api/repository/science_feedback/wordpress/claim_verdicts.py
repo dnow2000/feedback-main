@@ -1,4 +1,4 @@
-from sqlalchemy_api_handler import humanize, logger
+from sqlalchemy_api_handler import as_dict, humanize, logger
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from psycopg2.errors import NotNullViolation
 from sqlalchemy_api_handler import ApiHandler
@@ -36,7 +36,7 @@ def claim_verdicts_from_airtable(max_verdicts=None):
                     'type': TagType.CONCLUSION
                 })
                 if tag.id is None:
-                    logger.info('Saving tag {}'.format(tag))
+                    logger.info('Saving tag {}'.format(as_dict(tag)))
                     ApiHandler.save(tag)
 
                 verdict_tag = VerdictTag.create_or_modify({
@@ -52,6 +52,5 @@ def claim_verdicts_from_airtable(max_verdicts=None):
                 logger.error('InvalidRequestError: {}, Conclusion: {}'.format(e, conclusion))
             except NotNullViolation as violation:
                 logger.error('NotNullViolation: {}, Conclusion: {}'.format(violation, conclusion))
-
 
     return verdicts

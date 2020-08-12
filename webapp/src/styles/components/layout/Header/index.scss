@@ -45,6 +45,8 @@
 
       .logo {
         @extend .logo;
+
+        padding: 0.5rem;
       }
     }
     .right-content {

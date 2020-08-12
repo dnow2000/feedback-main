@@ -7,7 +7,7 @@ from models.role import Role, RoleType
 def check_has_role(user, role_type):
     try:
         Role.query.filter_by(user=user,
-                             type=getattr(RoleType,role_type)).one()
+                             type=getattr(RoleType, role_type)).one()
         return True
     except NoResultFound:
         api_errors = ApiErrors()
