@@ -4,9 +4,8 @@ import { WebGLRenderer } from 'sigma'
 import React, { useEffect, useRef } from 'react'
 
 
-export default ({ children, graph, onNodeEnter }) => {
+export default ({ children, graph, onGraphMount }) => {
   const graphRef = useRef()
-  const tooltipRef = useRef()
 
   useEffect(() => {
     if (!graph) return
@@ -25,31 +24,24 @@ export default ({ children, graph, onNodeEnter }) => {
 
     const renderer = new WebGLRenderer(undirectedGraph, graphRef.current)
 
-    renderer.on('enterNode', ({ node: nodeId }) => {
-      const node = undirectedGraph.getNodeAttributes(nodeId)
-      tooltipRef.current.style.top = `${(graphRef.current.clientHeight/2) - node.y}px`
-      tooltipRef.current.style.left = `${(graphRef.current.clientWidth/2) + node.x}px`
-    })
-
+    const settings = forceAtlas2.inferSettings(undirectedGraph)
     forceAtlas2.assign(undirectedGraph, {
       iterations: 100,
-      settings: forceAtlas2.inferSettings(undirectedGraph),
+      settings,
     })
 
-  }, [graph, graphRef, onNodeEnter, tooltipRef])
+    if (onGraphMount) {
+      setTimeout(() => onGraphMount({ graphRef, renderer, undirectedGraph }))
+    }
 
+  }, [graph, graphRef, onGraphMount])
 
   return (
     <div
       className="graph"
       ref={graphRef}
     >
-      <div
-        className="tooltip"
-        ref={tooltipRef}
-      >
-        Hello Sigma !
-      </div>
+      {children}
     </div>
   )
 }

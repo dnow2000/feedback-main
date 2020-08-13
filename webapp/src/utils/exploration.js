@@ -3,19 +3,13 @@ import React from 'react'
 import ClaimItem from 'components/layout/ClaimItem'
 
 
-const noop = () => (
-  <div>
-    NOOP
-  </div>
-)
-
 export const componentAccessor = node => {
-  if (!node) return noop
+  if (!node) return
   const { datum, type } = node
   if (type === 'Claim') {
     return <ClaimItem claim={datum} />
   }
-  return noop
+  return
 }
 
 

@@ -12,37 +12,46 @@ import {
   widthAccessor
 } from 'utils/exploration'
 
+
 export default () => {
   const dispatch = useDispatch()
   const { collectionName, entityId } = useParams()
   const enterRef = useRef()
 
-  const [enterElement, setEnterElement] = useState()
+  const [tooltips, setTooltips] = useState(null)
 
   const graphs = useSelector(state => state.data.graphs) || []
 
 
-  const handleNodeEnter = useCallback((node, { undirectedGraph, renderer }) => {
-    if (!node) return
-    console.log({node, undirectedGraph, renderer})
-    const canvas = enterRef.current.parentElement.querySelector('.sigma-nodes')
-    const { clientHeight, clientWidth, height, width } = canvas
-    const rect = canvas.getBoundingClientRect()
-    const scaleX = canvas.width / rect.width    // relationship bitmap vs. element for X
-    const scaleY = canvas.height / rect.height
+  const handleGraphMount = useCallback(({ renderer, undirectedGraph }) => {
+    const tooltips = Object.keys(renderer.nodeDataCache)
+                           .map(nodeId => {
+      const datum = renderer.nodeDataCache[nodeId]
+      const pos = renderer.camera.graphToViewport(renderer, datum.x, datum.y)
+      const node = undirectedGraph.getNodeAttributes(nodeId)
+      //const sizeRatio = Math.pow(renderer.camera.getState().ratio, 0.5)
+      //const size = data.size / sizeRatio
 
-    console.log({scaleX, clientWidth, width}, rect.width, node.x)
+      const element = componentAccessor(node)
+      if (!element) return
 
-    enterRef.current.style.top = `${(clientHeight / 2.) - node.y}px`
-    enterRef.current.style.left = `${(clientWidth / 2.) + node.x}px`
+      const style = {
+        left: `${pos.x}px`,
+        top: `${pos.y}px`
+      }
 
-    //enterRef.current.style.top = `${(clientHeight / 2.) - node.y}px`
-    //enterRef.current.style.left = `${(clientWidth / 2.) + node.x}px`
-    //enterRef.current.style.top = `${node.y}px`
-    //enterRef.current.style.left = `${node.x}px`
-
-    setEnterElement(componentAccessor(node))
-  }, [enterRef, setEnterElement])
+      return (
+        <div
+          className='tooltip'
+          key={nodeId}
+          style={style}
+        >
+          {element}
+        </div>
+      )
+    })
+    setTooltips(tooltips)
+  }, [setTooltips])
 
 
   useEffect(() => {
@@ -61,8 +70,10 @@ export default () => {
         <div className="container">
           <Graph
             graph={graphs[0]}
-            onNodeEnter={handleNodeEnter}
-          />
+            onGraphMount={handleGraphMount}
+          >
+            {tooltips}
+          </Graph>
         </div>
       </Main>
     </>
