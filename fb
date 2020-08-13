@@ -184,7 +184,6 @@ elif [[ "$CMD" == "clock" ]]; then
     RUN='docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python clock.py"'
 
 
-# Dump database into pgdump file
 elif [[ "$CMD" == "create-db-pgdump" ]]; then
   FILE=db_$(date +"%Y_%m_%d__%H_%M_%S").pgdump
   RUN='cd $ROOT_PATH;
@@ -268,6 +267,19 @@ elif [[ "$CMD" == "rebuild" ]]; then
 elif [[ "$CMD" == "restart" ]]; then
   docker-compose -f docker-compose.$MODE.yml down --volumes $*
   ./$COMMAND_NAME -m $MODE start --force-recreate $*
+  exit
+
+
+# Restore a postgresql database from file
+elif [[ "$CMD" == restore-backup-pgsql ]]; then
+  BACKUP="$1"
+  cd $ROOT_PATH;
+  BACKUP_ID=$(echo $BACKUP | rev | cut -d"_" -f1,2 | rev)
+  tar xvfz $BACKUP.tar.gz;
+  sudo mkdir -p docker_data_$MODE/apidb/tmp/;
+  sudo mv $BACKUP.pgsql docker_data_$MODE/apidb/tmp;
+  docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASS' pg_restore -h localhost -d '$POSTGRES_DBNAME' -U '$POSTGRES_USER' -c -C -W -v -O /var/lib/postgresql/tmp/$BACKUP.pgsql;"
+  docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASS' psql -h localhost -d '$POSTGRES_DBNAME' -U '$POSTGRES_USER' -c \"\\c postgres;SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = \'${APP_NAME}_api\';DROP DATABASE ${APP_NAME}_api;ALTER DATABASE ${APP_NAME}_api_${BACKUP_ID} RENAME TO ${APP_NAME}_api;\""
   exit
 
 
