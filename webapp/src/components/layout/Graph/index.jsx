@@ -1,5 +1,5 @@
 import { UndirectedGraph } from 'graphology'
-import forceAtlas2 from "graphology-layout-forceatlas2"
+import forceAtlas2 from 'graphology-layout-forceatlas2'
 import { WebGLRenderer } from 'sigma'
 import React, { useEffect, useRef } from 'react'
 
