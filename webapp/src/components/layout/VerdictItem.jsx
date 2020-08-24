@@ -79,7 +79,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
             { numberShortener(shareCount) }
           </strong>
           <span>
-            {' Shares'}
+            {' Interactions'}
           </span>
         </span>
       ) }

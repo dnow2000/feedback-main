@@ -41,7 +41,7 @@ export default ({ appearances }) => {
   if (!appearances.length) {
     return (
       <div className='appearances empty'>
-        {'No appearances recorded for this content.'}
+        {'No appearance recorded for this content.'}
       </div>
     )
   }

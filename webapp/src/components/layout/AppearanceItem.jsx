@@ -37,7 +37,7 @@ const _ = ({ appearance: { quotingContent } }) => {
         <div className="appearance-footer">
           { totalShares > 0 && (
             <span>
-              {`${numberShortener(totalShares)} shares`}
+              {`${numberShortener(totalShares)} interactions`}
             </span>
           ) }
         </div>

@@ -23,6 +23,7 @@ def import_routes():
     import routes.users
     import routes.verdicts
     import routes.verdict_reviewers
+    import routes.webhooks
 
     import routes.health
     import routes.orcid

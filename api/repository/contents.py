@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from sqlalchemy_api_handler import ApiHandler, as_dict
+from sqlalchemy_api_handler import ApiHandler, as_dict, logger
 
 from models.content import Content
 from models.content_tag import ContentTag
@@ -89,5 +89,9 @@ def sync(from_date=None,
     if contents_max is None:
         contents_max = len(contents)
 
+    logger.info('Syncing contents from {} to {}...'.format(from_date, to_date))
     for content in contents[:contents_max]:
         sync_content(content)
+        logger.info('Synced content: {}'.format(as_dict(content)))
+
+    logger.info('Syncing contents... [Done]')

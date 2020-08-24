@@ -28,7 +28,7 @@ def request_airtable_rows(
     if max_records:
         url = '{}&maxRecords={}'.format(url, max_records)
 
-    headers = {'Authorization': 'Bearer {}'.format(token) }
+    headers = {'Authorization': 'Bearer {}'.format(token)}
 
     result = requests.get(url, headers=headers).json()
     records = result.get('records')

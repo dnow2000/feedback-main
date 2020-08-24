@@ -62,11 +62,11 @@ def appearance_from_row(row, unused_index=None):
 
     if IS_DEVELOPMENT:
         quoting_content.externalThumbUrl = API_URL + '/static/logo.png' if IS_DEVELOPMENT else None
-        quoting_content.title = "/".join(quoting_content.url\
-                                               .replace('http://', '') \
-                                               .replace('https://', '') \
-                                               .split('/')[-2:]) \
-                                               .replace('-', ' ')
+        quoting_content.title = "/".join(quoting_content.url
+                                                        .replace('http://', '') \
+                                                        .replace('https://', '') \
+                                                        .split('/')[-2:]) \
+                                   .replace('-', ' ')
 
     appearance_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',

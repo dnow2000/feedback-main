@@ -10,4 +10,3 @@ def get_data():
         'verdictCount': Verdict.query.count()
     })
     # TODO: base on the queries, add in the respective counts
-

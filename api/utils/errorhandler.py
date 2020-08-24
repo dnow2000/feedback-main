@@ -10,6 +10,7 @@ from sqlalchemy_api_handler.bases.errors import DateTimeCastError, \
                                                 ResourceNotFoundError
 from werkzeug.exceptions import NotFound
 
+
 @app.errorhandler(ApiErrors)
 def restize_api_errors(exception):
     print(json.dumps(exception.errors))
@@ -28,7 +29,7 @@ def date_time_cast_error(exception):
 @app.errorhandler(DecimalCastError)
 def decimal_cast_error(exception):
     api_errors = ApiErrors()
-    app.logger.warning(json.dumps(error.errors))
+    app.logger.warning(json.dumps(exception.errors))
     for field in exception.errors.keys():
         api_errors.add_error(field, 'Saisissez un nombre valide')
     return jsonify([api_errors.errors]), 400
