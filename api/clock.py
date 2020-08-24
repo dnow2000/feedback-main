@@ -1,5 +1,6 @@
 from flask import Flask
 import time
+import atexit
 
 from utils.setup import setup
 
@@ -12,3 +13,5 @@ if __name__ == '__main__':
     FLASK_APP.scheduler.start()
     while True:
         time.sleep(1)
+
+    atexit.register(lambda: FLASK_APP.scheduler.shutdown())
