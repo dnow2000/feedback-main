@@ -89,9 +89,9 @@ def sync(from_date=None,
     if contents_max is None:
         contents_max = len(contents)
 
-    logger.info('Syncing contents from {} to {}...'.format(from_date, to_date))
+    logger.info('Sync contents from {} to {}...'.format(from_date, to_date))
     for content in contents[:contents_max]:
         sync_content(content)
         logger.info('Synced content: {}'.format(as_dict(content)))
 
-    logger.info('Syncing contents... [Done]')
+    logger.info('Sync contents from {} to {}...Done'.format(from_date, to_date))

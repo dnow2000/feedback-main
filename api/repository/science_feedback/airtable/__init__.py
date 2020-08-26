@@ -32,10 +32,18 @@ def entity_from_row_for(name, entity_dict, index):
     return entity_from_row_function(entity_dict, index)
 
 
-def sync_for(name, max_records=None):
+def sync_outdated_rows(name, max_records=None):
+    logger.info('sync science feedback outdated airtable data...')
+    for name in NAME_TO_AIRTABLE:
+        sync_for(name, formula='FIND("Out of sync", {Sync status})>0)', max_records=max_records)
+    logger.info('sync science feedback outdated airtable data...Done.')
+
+
+def sync_for(name, formula=None, max_records=None):
     rows = request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
         NAME_TO_AIRTABLE[name],
+        filter_by_formula=formula,
         max_records=max_records
     )
 

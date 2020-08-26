@@ -224,7 +224,7 @@ def reviewer_from_row(row, index=None):
 
 
 def social_from_row(row, unused_index=None):
-    if 'url' not in row:
+    if row.get('url') is None:
         return None
 
     organization_name = row['url'].replace('https://www.', '') \
@@ -274,5 +274,7 @@ def verdict_from_row(row, unused_index=None):
         'title': row['Review headline'],
         'type': PostType._value2member_map_[post_type]
     }
+
+    print('verdict_dict is {}'.format(verdict_dict))
 
     return Verdict.create_or_modify(verdict_dict)

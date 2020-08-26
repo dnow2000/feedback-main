@@ -16,6 +16,7 @@ from utils.db import db
 user_ts_filter = create_get_filter_matching_ts_query_in_any_model(User,
                                                                   Tag)
 
+
 def create_default_user():
     default_user = User()
     default_user.set_password(DEFAULT_USER_PASSWORD)
@@ -91,6 +92,7 @@ def keep_users_with_no_role(query):
 def sync_user(user):
     if IS_DEVELOPMENT:
         store_user_thumb_from_sandbox(user)
+
 
 def sync():
     logger.info('sync users data...')

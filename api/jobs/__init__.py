@@ -7,8 +7,8 @@ def import_jobs():
     from jobs.user import JOBS as user_jobs
 
     jobs = []
-    jobs += content_jobs
-    jobs += user_jobs
+    # jobs += content_jobs
+    # jobs += user_jobs
     jobs += science_feedback_jobs
 
     return jobs
