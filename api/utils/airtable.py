@@ -1,6 +1,7 @@
-import urllib.parse
+import json
 import os
 import requests
+import urllib.parse
 
 AIRTABLE_API_URL = 'https://api.airtable.com/v0'
 AIRTABLE_TOKEN = os.environ.get('AIRTABLE_TOKEN')
@@ -43,3 +44,24 @@ def request_airtable_rows(
         {'airtableId': record['id'], **record['fields']}
         for (index, record) in enumerate(records)
     ]
+
+
+def update_airtable_rows(
+    base_id,
+    table_name,
+    records,
+    token=AIRTABLE_TOKEN
+):
+    url = '{}/{}/{}'.format(
+        AIRTABLE_API_URL,
+        base_id,
+        urllib.parse.quote(table_name, safe='')
+    )
+
+    headers = {
+        'Authorization': 'Bearer {}'.format(token),
+        'Content-Type': 'application/json'
+    }
+
+    res = requests.patch(url, headers=headers, data=json.dumps(records))
+    return res
