@@ -1,4 +1,4 @@
-from repository.science_feedback import sync_outdated_rows
+from repository.science_feedback.airtable import sync_outdated_rows
 
 
 JOBS = [{
