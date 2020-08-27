@@ -61,7 +61,7 @@ def sync_for(name, formula=None, max_records=None):
 
     try:
         ApiHandler.save(*entities)
-        records = [{'id': row['airtableId'], 'fields': {'Last synced time': datetime.now().isoformat()}} for row in rows]
+        records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
         for i in range(0, len(records), 10):
             res = update_airtable_rows(
                 SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
