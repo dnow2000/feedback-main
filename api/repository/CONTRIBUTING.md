@@ -37,3 +37,13 @@ Ils ont pour objectif de :
 ## Pour en savoir plus
 
 - http://flask-sqlalchemy.pocoo.org/2.3/queries/
+
+## Notes on tsvector functions within keywords.py file
+
+tsvector (text search vector) is a data type which consists of the following characteristics:
+
+- a sorted list (alphabetically)
+- normalized words to merge different variants of the same word
+- duplicates of same words are removed
+
+Reference: https://stackoverflow.com/questions/42388956/create-a-full-text-search-index-with-sqlalchemy-on-postgresql
