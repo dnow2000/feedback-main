@@ -7,5 +7,7 @@ CROWDTANGLE_API_KEY = os.environ.get('CROWDTANGLE_API_KEY')
 if CROWDTANGLE_API_KEY is None:
     logger.warning('CROWDTANGLE_API_KEY is not defined in the env!')
 
+EXAMPLE_URL = ''
+
 def facebook_shares_from_crowdtangle():
     return [CROWDTANGLE_API_URL, CROWDTANGLE_API_KEY]
