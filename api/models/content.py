@@ -66,7 +66,7 @@ class Content(ApiHandler,
 
     type = Enum(ContentType)
 
-    url = Column(String(2048), nullable=False, unique=True)
+    url = Column(String(2048), unique=True)
 
     urlGone = Column(Boolean())
 

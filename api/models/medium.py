@@ -25,4 +25,12 @@ class Medium(ApiHandler,
                                 foreign_keys=[organizationId],
                                 backref='media')
 
+    platformId = Column(BigInteger(),
+                        ForeignKey('platform.id'),
+                        index=True)
+
+    platform = relationship('Platform',
+                            foreign_keys=[platformId],
+                            backref='media')
+
     url = Column(String(300))

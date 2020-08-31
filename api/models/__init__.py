@@ -17,6 +17,7 @@ def import_models(with_creation=False):
     from models.image import Image
     from models.medium import Medium
     from models.organization import Organization
+    from models.platform import Platform
     from models.review import Review
     from models.review_tag import ReviewTag
     from models.role import Role
