@@ -19,11 +19,16 @@ def crowdtangle_from_url(shared_url, request_start_date):
     # first we url encode the url: 'https://www.google.com/' -> 'https%3A%2F%2Fwww.google.com%2F'
     shared_url = quote_plus(shared_url)
 
-    # TODO: clean the parameter presentation
-    url_to_request = '{}/links?token={}&link={}&startDate={}&sortBy=total_interactions'\
-        .format(CROWDTANGLE_API_URL, CROWDTANGLE_API_KEY, shared_url, request_start_date)
+    params = {
+        'token': CROWDTANGLE_API_KEY,
+        'link': shared_url,
+        'startDate': request_start_date,
+        'sortBy': 'total_interactions'
+    }
 
-    response = requests.get(url_to_request)
+    api_end_point = 'links'
+
+    response = requests.get('{}/{}'.format(CROWDTANGLE_API_URL, api_end_point), params)
     response = response.json()
 
     if 'result' not in response:
