@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react'
+import PropTypes from 'prop-types'
 
 import AppearanceItem from 'components/layout/AppearanceItem'
 import Loader from 'components/layout/LoadMore'
@@ -6,14 +7,14 @@ import Loader from 'components/layout/LoadMore'
 import { numberShortener } from 'utils/shorteners'
 
 
-export default ({ appearances }) => {
-  const linkCount = appearances?.length
+const _ = ({ appearances }) => {
+  const linkCount = appearances.length
   const shareCount = appearances
                       ?.map(appearance => appearance.quotingContent.totalShares)
                       ?.reduce((a, b) => a + b, 0)
+  const appearancesSortedByShareCount = appearances?.sort((a, b) => b.quotingContent.totalShares - a.quotingContent.totalShares)
 
   const handleTabClick = useCallback(event => {
-    if (false) return
     const tabPane = document.getElementById('verdict-tab-pane')
     Array.prototype.map.call(tabPane.children, tab => tab.classList.remove('active'))
     event.target.classList.add('active')
@@ -72,16 +73,16 @@ export default ({ appearances }) => {
               onClick={handleTabClick}
               type='button'
             >
-              {`${numberShortener(shareCount)} Shares`}
+              {`${numberShortener(shareCount)} Interactions`}
             </button>
           ) }
         </div>
       ) }
 
-      { appearances && (
+      { appearancesSortedByShareCount && (
         <Loader
           Button={showMoreButton}
-          items={appearances}
+          items={appearancesSortedByShareCount}
           loadLessText='Show less'
           loadMoreText='Show more'
           renderItem={renderItem}
@@ -90,3 +91,20 @@ export default ({ appearances }) => {
     </div>
   )
 }
+
+_.defaultProps = {
+  appearances: []
+}
+
+_.propTypes = {
+  appearances: PropTypes.arrayOf(
+    PropTypes.shape({
+      quotingContent: PropTypes.shape({
+        id: PropTypes.string,
+        totalShares: PropTypes.number
+      })
+    })
+  )
+}
+
+export default _
