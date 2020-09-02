@@ -1,4 +1,3 @@
-import json
 import requests
 
 API_URL = 'http://archive.org/wayback/available?url='
