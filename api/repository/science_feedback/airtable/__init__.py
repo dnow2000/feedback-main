@@ -12,9 +12,7 @@ from repository.science_feedback.airtable.create_or_modify_sf_organization_and_m
 from repository.science_feedback.wordpress.claim_verdicts import claim_verdicts_from_airtable
 from utils.airtable import request_airtable_rows, update_airtable_rows
 
-
 SCIENCE_FEEDBACK_AIRTABLE_BASE_ID = os.environ.get('SCIENCE_FEEDBACK_AIRTABLE_BASE_ID')
-
 
 NAME_TO_AIRTABLE = {
     'author': 'Authors',
