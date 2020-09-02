@@ -4,14 +4,9 @@ import re
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-LOCALES = {
-    'es': {
-        'Ene': 'Jan',
-        'Abr': 'Apr',
-        'Ago': 'Aug',
-        'Dic': 'Dec'
-    },
-    'fr': {}
+LABELS = {
+    'Infonde': 'Unfounded',
+    'Inexacto-300x72': 'Inaccurate'
 }
 
 
@@ -51,11 +46,8 @@ def claim_review_from_url(url, session=None):
         verdict_label = soup.find('img', class_='fact-check-card__row__verdict__img')['src']\
                             .split('HTag_')[1]\
                             .split('.')[0]
-        if verdict_label:
-            if verdict_label == 'Infonde':
-                verdict_label = 'Unfounded'
-            elif verdict_label == 'Inexacto-300x72':
-                verdict_label = 'Inaccurate'
+        if verdict_label and LABELS[verdict_label]:
+            verdict_label = LABELS[verdict_label]
             conclusions.append(verdict_label.replace('_', ' '))
 
         return {

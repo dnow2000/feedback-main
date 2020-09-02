@@ -9,6 +9,7 @@ from sqlalchemy_api_handler import ApiHandler, logger
 
 from repository.contents import sync_content
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
+from repository.science_feedback.wordpress.claim_verdicts import claim_verdicts_from_airtable
 from utils.airtable import request_airtable_rows, update_airtable_rows
 
 
@@ -61,10 +62,14 @@ def sync_for(name, formula=None, max_records=None):
             logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
 
     try:
+        # Sync verdict status from wordpress
+        if name == 'verdict' and formula is not None:
+            entities = claim_verdicts_from_airtable(verdicts_to_sync=entities)
+
         ApiHandler.save(*entities)
 
         # Sync related contents for appearances
-        if name == 'appearance':
+        if name == 'appearance' and formula is not None:
             for entity in entities:
                 sync_content(entity.quotingContent)
                 sync_content(entity.quotedContent) if entity.quotedContent else None

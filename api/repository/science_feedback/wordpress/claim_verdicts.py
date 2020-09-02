@@ -10,12 +10,15 @@ from models.verdict_tag import VerdictTag
 from utils.asynchronous import map_asynchronous
 
 
-def claim_verdicts_from_airtable(max_verdicts=None):
-    query = Verdict.query.filter(Verdict.scienceFeedbackUrl != None)
-    if max_verdicts is not None:
-        query = query.limit(max_verdicts)
+def claim_verdicts_from_airtable(verdicts_to_sync=None, max_verdicts=None):
+    if verdicts_to_sync is None:
+        query = Verdict.query.filter(Verdict.scienceFeedbackUrl != None)
+        if max_verdicts is not None:
+            query = query.limit(max_verdicts)
 
-    verdicts = query.all()
+        verdicts = query.all()
+    else:
+        verdicts = verdicts_to_sync
 
     if max_verdicts is not None:
         max_verdicts = len(verdicts)

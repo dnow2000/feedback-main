@@ -275,6 +275,4 @@ def verdict_from_row(row, unused_index=None):
         'type': PostType._value2member_map_[post_type]
     }
 
-    print('verdict_dict is {}'.format(verdict_dict))
-
     return Verdict.create_or_modify(verdict_dict)
