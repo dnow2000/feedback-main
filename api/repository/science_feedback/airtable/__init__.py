@@ -7,6 +7,7 @@ from datetime import datetime
 from psycopg2.errors import NotNullViolation
 from sqlalchemy_api_handler import ApiHandler, logger
 
+from repository.contents import sync_content
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
 from utils.airtable import request_airtable_rows, update_airtable_rows
 
@@ -61,6 +62,14 @@ def sync_for(name, formula=None, max_records=None):
 
     try:
         ApiHandler.save(*entities)
+
+        # Sync related contents for appearances
+        if name == 'appearance':
+            for entity in entities:
+                sync_content(entity.quotingContent)
+                sync_content(entity.quotedContent) if entity.quotedContent else None
+
+        # Set the time synced so that the status in airtable is "Synced"
         records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
         for i in range(0, len(records), 10):
             res = update_airtable_rows(
