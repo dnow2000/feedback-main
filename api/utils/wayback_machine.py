@@ -1,4 +1,5 @@
 import requests
+from time import sleep
 from urllib.parse import urlparse
 
 from sqlalchemy_api_handler import logger
@@ -13,20 +14,37 @@ FALLBACK_LIST = [
 ]
 
 
-def create_wayback_machine_url(url):
-    res = requests.get('{}{}'.format(SAVE_URL, url))
-    if res.status_code == 200:
-        location = res.headers['Content-Location']
-        return '{}{}'.format(BASE_URL, location)
-    else:
-        return None
+def create_wayback_machine_url(url, sleep_time=2):
+    logger.info('Saving {} to Wayback Machine...'.format(url))
+    with requests.Session() as session:
+        session.headers = {
+            'Connection': 'keep-alive',
+            'host': urlparse(BASE_URL).hostname,
+            'User-Agent': 'Science Feedback (https://sciencefeedback.co)'
+        }
+        session.allow_redirects = True
+        session.timeout = 120
+
+        res = session.get('{}{}'.format(SAVE_URL, url))
+        # wait time to ensure the page is saved
+        sleep(sleep_time)
+        if res.status_code == 200:
+            logger.info('Saving {} to Wayback Machine...Done.'.format(url))
+            location = res.headers['Content-Location']
+            return '{}{}'.format(BASE_URL, location)
+        else:
+            logger.error('Saving {} to Wayback Machine...ERROR: {}'.format(url, res.status_code))
+            return None
 
 
 def find_existing_wayback_machine_url(url):
+    logger.info('Looking for existing url: {}'.format(url))
     res = requests.get('{}{}'.format(API_URL, url)).json()
     if res['archived_snapshots'].get('closest'):
+        logger.info('Found existing url: {}'.format(url))
         return res['archived_snapshots']['closest']
     else:
+        logger.info('Couldn\'t find existing url: {}'.format(url))
         return None
 
 
@@ -42,12 +60,12 @@ def url_from_archiveis(url):
     save_url = '{}/submit/'.format(ARCHIVEIS_URL)
     headers = {
         'User-Agent': 'Science Feedback (https://sciencefeedback.co)',
-        'host': 'archive.today'
+        'host': urlparse(ARCHIVEIS_URL).hostname
     }
     get_kwargs = dict(
-        timeout=120,
         allow_redirects=True,
         headers=headers,
+        timeout=120
     )
 
     response = requests.get(ARCHIVEIS_URL + '/', **get_kwargs)
@@ -70,6 +88,7 @@ def url_from_archiveis(url):
         data.update({'submitid': unique_id})
 
     post_kwargs = dict(
+        allow_redirects=True,
         headers=headers,
         data=data,
         timeout=120
@@ -80,7 +99,7 @@ def url_from_archiveis(url):
     response.raise_for_status()
 
     if 'Refresh' in response.headers:
-        archive_url = str(response.headers['Refresh']).split(';url=')[1]
+        archive_url = str(response.headers['Refresh']).split(';url=')[1].replace('/wip', '')
         logger.info("archive_url from Refresh header: {}".format(archive_url))
         return archive_url
 
@@ -99,11 +118,11 @@ def url_from_archiveis(url):
             return archive_url
 
     # raise an exception if no url is returned at this point
-    logger.error("No archive_url returned by archive.is")
+    logger.error("No archive_url returned by archive.vn")
     logger.error("Status code: {}".format(response.status_code))
     logger.error(response.headers)
     logger.error(response.text)
-    raise Exception("No archive returned by archive.is")
+    raise Exception("No archive returned by archive.vn")
 
 
 def url_from_archive_services(url):
