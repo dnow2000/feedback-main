@@ -11,6 +11,7 @@ from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
 from domain.trendings.buzzsumo import buzzsumo_trending_from_url
 from repository.activities import filter_by_activity_date_and_verb
 from utils.screenshotmachine import capture
+from utils.wayback_machine import url_from_archive_services
 from storage.thumb import save_thumb
 
 
@@ -64,6 +65,8 @@ def sync_content(content):
     if not content.externalThumbUrl and content.thumbCount == 0:
         thumb = capture(content.url)
         save_thumb(content, thumb, 0, convert=False)
+    if not content.archiveUrl:
+        content.archiveUrl = url_from_archive_services(content.url)
     ApiHandler.save(content)
 
 
