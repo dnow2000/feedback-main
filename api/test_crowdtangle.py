@@ -1,12 +1,13 @@
 import json
+import time
 
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
 from utils.setup import setup
-from domain.crowdtangle import get_crowdtangle_data_from_url
+from domain.crowdtangle import shares_from_url
 from repository.clean import clean
-from repository.crowdtangle import save_crowdtangle_data
+from repository.crowdtangle import sync_from_content
 from models.appearance import Appearance
 from models.content import Content
 from models.medium import Medium
@@ -45,16 +46,19 @@ if __name__ == '__main__':
 
     print('There are {} contents in the database.\n'.format(Content.query.count()))
 
-    clean_response = get_crowdtangle_data_from_url(shared_url=EXAMPLE_URL, request_start_date='2019-09-01')
-    print(json.dumps(clean_response, indent=4))
+    sync_from_content(content)
+
     print()
-    print(len(clean_response['shares']))
+    print('There are {} users in the database.\n'.format(User.query.count()))
+    print('There are {} contents in the database.\n'.format(Content.query.count()))
+    print('There are {} appearances in the database.\n'.format(Appearance.query.count()))
+    print('There are {} media in the database.\n'.format(Medium.query.count()))
+    print('There are {} platform in the database.\n'.format(Platform.query.count()))
 
-    clean_response['shares'][3]['group'] = clean_response['shares'][1]['group']
+    time.sleep(60)
 
-    print(json.dumps(clean_response, indent=4))
+    sync_from_content(content)
 
-    save_crowdtangle_data(clean_response)
     print()
     print('There are {} users in the database.\n'.format(User.query.count()))
     print('There are {} contents in the database.\n'.format(Content.query.count()))
