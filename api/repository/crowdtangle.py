@@ -4,6 +4,7 @@ from sqlalchemy_api_handler import ApiHandler
 from models.appearance import Appearance
 from models.content import Content
 from models.medium import Medium
+from models.platform import Platform
 from models.user import User
 
 
@@ -13,21 +14,29 @@ def save_crowdtangle_data(response):
     content = Content.query.filter_by(url=response['link']).first()
 
     # we create a "CrowdTangle" user to testify that these Facebook posts are connected to the url
-    user_crowdtangle = User.create_or_modify({
+    crowdtangle_user = User.create_or_modify({
         '__SEARCH_BY__': 'email',
         'email': "crowdtangle@me.com",
         'password': "crowdtangle",
         'firstName': "Crowd",
         'lastName': "Tangle"
     })
-    ApiHandler.save(user_crowdtangle)
+    ApiHandler.save(crowdtangle_user)
+
+    # we create the Facebook platform so we can link our Facebook posts media to it:
+    facebook_platform = Platform.create_or_modify({
+        '__SEARCH_BY__': 'name',
+        'name': 'Facebook'
+    })
+    ApiHandler.save(facebook_platform)
 
     for share in response['shares']:
         # save the Facebook group as a medium:
         medium_group = Medium(
             name=share['group']['name'],
             url=share['group']['url'],
-            logoUrl=share['group']['logoUrl']
+            logoUrl=share['group']['logoUrl'],
+            platform=facebook_platform
         )  
         ApiHandler.save(medium_group)
 
@@ -40,6 +49,6 @@ def save_crowdtangle_data(response):
         appearance = Appearance(
             quotedContent=content,
             quotingContent=content_post,
-            testifier=user_crowdtangle
+            testifier=crowdtangle_user
         )    
         ApiHandler.save(appearance)
