@@ -16,11 +16,11 @@ from models.user import User
 # # docker exec -it feedback-api-serve-development bash
 # # PYTHONPATH=. python test_crowdtangle.py
 
-# 0 shares:
-EXAMPLE_URL = 'https://nexusnewsfeed.com/article/geopolitics/as-riots-continue-more-evidence-that-covid-19-narrative-was-fake-news'
+# # 0 shares:
+# EXAMPLE_URL = 'https://nexusnewsfeed.com/article/geopolitics/as-riots-continue-more-evidence-that-covid-19-narrative-was-fake-news'
 
-# # 4 shares:
-# EXAMPLE_URL = 'https://www.dcclothesline.com/2019/12/24/warning-what-men-need-to-know-before-eating-impossible-whoppers-from-burger-king/'
+# 4 shares:
+EXAMPLE_URL = 'https://www.dcclothesline.com/2019/12/24/warning-what-men-need-to-know-before-eating-impossible-whoppers-from-burger-king/'
 
 # # 1 share:
 # EXAMPLE_URL = 'https://twitter.com/davidicke/status/1262482651333738500'
@@ -48,14 +48,14 @@ if __name__ == '__main__':
     print()
     print(len(clean_response['shares']))
 
-    save_crowdtangle_data(clean_response, content)
+    save_crowdtangle_data(clean_response)
     print()
     print('There are {} users in the database.\n'.format(User.query.count()))
     print('There are {} contents in the database.\n'.format(Content.query.count()))
     print('There are {} appearances in the database.\n'.format(Appearance.query.count()))
     print('There are {} media in the database.\n'.format(Medium.query.count()))
 
-    save_crowdtangle_data(clean_response, content)
+    save_crowdtangle_data(clean_response)
     print()
     print('There are {} users in the database.\n'.format(User.query.count()))
     print('There are {} contents in the database.\n'.format(Content.query.count()))
