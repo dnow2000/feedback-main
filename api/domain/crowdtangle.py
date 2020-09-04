@@ -27,14 +27,14 @@ def clean_results_from_crowdtangle(result, shared_url):
             'group': {
                 'name': post['account']['name'],
                 'url': post['account']['url'],
-                'logUrl': post['account']['profileImage']
+                'logoUrl': post['account']['profileImage']
             }
         })
     
     return clean_response
 
 
-def crowdtangle_from_url(shared_url, request_start_date):
+def get_crowdtangle_data_from_url(shared_url, request_start_date):
 
     params = {
         'count': 1000,
