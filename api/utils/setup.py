@@ -7,7 +7,7 @@
 # pylint: disable=W0613
 import os
 from sqlalchemy_api_handler import ApiHandler
-from jobs import import_jobs
+from jobs import import_async_jobs, import_background_jobs
 from models import import_models
 from routes import import_routes
 from scripts import import_scripts
@@ -75,14 +75,21 @@ def setup(flask_app,
 
     if with_jobs:
         from apscheduler.schedulers.background import BackgroundScheduler
-        jobs = import_jobs()
-        scheduler = BackgroundScheduler()
-        for job in jobs:
-            scheduler.add_job(**job, replace_existing=True)
-        flask_app.scheduler = scheduler
+        from apscheduler.schedulers.asyncio import AsyncIOScheduler
+        async_jobs = import_async_jobs()
+        background_jobs = import_background_jobs()
+        async_scheduler = AsyncIOScheduler()
+        background_scheduler = BackgroundScheduler()
+        for job in async_jobs:
+            async_scheduler.add_job(**job, replace_existing=True)
+        for job in background_jobs:
+            background_scheduler.add_job(**job, replace_existing=True)
+        flask_app.async_scheduler = async_scheduler
+        flask_app.background_scheduler = background_scheduler
 
     if with_scripts_manager:
         from flask_script import Manager
+
         def create_app(env=None):
             flask_app.env = env
             return flask_app

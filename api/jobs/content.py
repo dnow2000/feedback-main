@@ -47,12 +47,15 @@ CLOCK_SYNC_CONTENT_CONFIGS = [
 ]
 
 
-JOBS = []
+JOBS = {
+    'async': [],
+    'background': []
+}
 
 for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     from_date = clock_sync_content_config['from_date']
     to_date = clock_sync_content_config['to_date']
-    JOBS.append({
+    JOBS['async'].append({
         'func': create_clock_sync_contents(from_date, to_date),
         'id': 'sync content {} {}'.format(from_date, to_date),
         'trigger': 'cron',
