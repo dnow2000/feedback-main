@@ -35,3 +35,7 @@ def import_routes():
 
     if IS_DEVELOPMENT:
         import routes.sandboxes
+
+
+def import_clock_routes():
+    import routes.jobs

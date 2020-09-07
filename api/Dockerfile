@@ -9,4 +9,4 @@ RUN pip install -r /opt/api/requirements.txt
 COPY ./utils/nltk_downloader.py /opt/api/utils/nltk_downloader.py
 RUN PYTHONPATH=/opt/api python -c "import utils.nltk_downloader"
 
-EXPOSE 5000
+EXPOSE 5000 5001
