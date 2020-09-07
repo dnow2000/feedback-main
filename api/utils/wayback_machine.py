@@ -117,12 +117,11 @@ def url_from_archiveis(url):
             logger.info("archive_url from the Location header of {} history response: {}".format(i + 1, archive_url))
             return archive_url
 
-    # raise an exception if no url is returned at this point
     logger.error("No archive_url returned by archive.vn")
     logger.error("Status code: {}".format(response.status_code))
     logger.error(response.headers)
     logger.error(response.text)
-    raise Exception("No archive returned by archive.vn")
+    return None
 
 
 def url_from_archive_services(url):

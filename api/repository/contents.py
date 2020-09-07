@@ -29,9 +29,10 @@ def content_from_url(url, **kwargs):
     if trending:
         return content.modify(trending)
 
-    newspaper = newspaper_from_url(url, **kwargs)
-    if newspaper:
-        return content.modify(newspaper)
+    if url:
+        newspaper = newspaper_from_url(url, **kwargs)
+        if newspaper:
+            return content.modify(newspaper)
 
     content.urlNotFound = True
     return content
@@ -60,14 +61,16 @@ def filter_contents_by_is_reviewable(query, is_reviewable):
     return query
 
 
-def sync_content(content):
+def sync_content(content, session=None):
     content = content_from_url(content.url)
-    if not content.externalThumbUrl and content.thumbCount == 0:
-        thumb = capture(content.url)
-        save_thumb(content, thumb, 0, convert=False)
-    if not content.archiveUrl:
-        content.archiveUrl = url_from_archive_services(content.url)
+    if content.url:
+        if not content.externalThumbUrl and content.thumbCount == 0:
+            thumb = capture(content.url)
+            save_thumb(content, thumb, 0, convert=False)
+        if not content.archiveUrl:
+            content.archiveUrl = url_from_archive_services(content.url)
     ApiHandler.save(content)
+    return content
 
 
 def sync(from_date=None,

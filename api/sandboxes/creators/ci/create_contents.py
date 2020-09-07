@@ -81,9 +81,10 @@ def create_contents(with_capture=False):
 
     if with_capture:
         for content in contents:
-            logger.info('capture screenshot for {}...'.format(content.url))
-            thumb = capture(content.url)
-            save_thumb(content, thumb, 0)
-            logger.info('capture screenshot for {}...Done.'.format(content.url))
+            if content.url:
+                logger.info('capture screenshot for {}...'.format(content.url))
+                thumb = capture(content.url)
+                save_thumb(content, thumb, 0)
+                logger.info('capture screenshot for {}...Done.'.format(content.url))
 
     logger.info('created {} contents'.format(len(contents)))
