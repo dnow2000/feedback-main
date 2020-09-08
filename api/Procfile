@@ -1,3 +1,3 @@
-web: gunicorn -w $UNICORN_N_WORKERS --timeout $UNICORN_TIMEOUT app:FLASK_APP
-clock: gunicorn -w 1 --timeout $UNICORN_TIMEOUT clock:CLOCK_APP
+web: gunicorn -w $UNICORN_N_WORKERS --timeout $UNICORN_TIMEOUT -b :5000 app:FLASK_APP
+clock: gunicorn -w 1 --timeout $UNICORN_TIMEOUT -b :5001 clock:CLOCK_APP
 postdeploy: alembic upgrade head
