@@ -1,3 +1,3 @@
-clock: python clock.py
+clock: gunicorn -w $UNICORN_N_WORKERS --timeout $UNICORN_TIMEOUT app:CLOCK_APP
 web: gunicorn -w $UNICORN_N_WORKERS --timeout $UNICORN_TIMEOUT app:FLASK_APP
 postdeploy: alembic upgrade head
