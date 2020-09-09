@@ -12,6 +12,7 @@ def import_routes():
     import routes.data
     import routes.graphs
     import routes.images
+    import routes.jobs
     import routes.organizations
     import routes.password
     import routes.reviews
@@ -35,7 +36,3 @@ def import_routes():
 
     if IS_DEVELOPMENT:
         import routes.sandboxes
-
-
-def import_clock_routes():
-    import routes.jobs

@@ -76,14 +76,17 @@ def setup(flask_app,
     if with_jobs:
         from apscheduler.schedulers.background import BackgroundScheduler
         from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
         async_jobs = import_async_jobs()
         background_jobs = import_background_jobs()
         async_scheduler = AsyncIOScheduler()
         background_scheduler = BackgroundScheduler()
+
         for job in async_jobs:
             async_scheduler.add_job(**job, replace_existing=True)
         for job in background_jobs:
             background_scheduler.add_job(**job, replace_existing=True)
+
         flask_app.async_scheduler = async_scheduler
         flask_app.background_scheduler = background_scheduler
 

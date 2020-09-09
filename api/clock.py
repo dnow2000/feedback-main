@@ -1,9 +1,8 @@
-from flask import Flask
-import time
 import atexit
+import time
+from flask import Flask
 
-from routes import import_clock_routes
-from utils.config import IS_DEVELOPMENT
+from utils.jobs import get_all_jobs, write_jobs_to_file, remove_oldest_jobs_file
 from utils.setup import setup
 
 
@@ -12,13 +11,12 @@ CLOCK_APP = Flask(__name__)
 setup(CLOCK_APP, with_jobs=True)
 
 if __name__ == '__main__':
+    atexit.register(lambda: CLOCK_APP.async_scheduler.shutdown())
     CLOCK_APP.async_scheduler.start()
     # CLOCK_APP.background_scheduler.start()
-    atexit.register(lambda: CLOCK_APP.async_scheduler.shutdown())
 
-    import_clock_routes()
-
-    CLOCK_APP.run(debug=IS_DEVELOPMENT,
-                  host='0.0.0.0',
-                  port=5001,
-                  use_reloader=True)
+    while True:
+        jobs = get_all_jobs(CLOCK_APP)
+        write_jobs_to_file(jobs)
+        remove_oldest_jobs_file()
+        time.sleep(60)

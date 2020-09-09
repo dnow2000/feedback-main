@@ -1,15 +1,22 @@
+import json
+from glob import glob
 from flask import current_app as app, jsonify
+
+from utils.tmp import TMP_PATH
 
 
 @app.route('/jobs', methods=['GET'])
 def get_all_jobs():
-    async_jobs = app.async_scheduler.get_jobs()
-    background_jobs = app.background_scheduler.get_jobs()
-    jobs = {'async': [], 'background': []}
+    jobs_files = glob(f'{TMP_PATH}/jobs/jobs_*.json')
+    if not jobs_files:
+        return jsonify({'jobs': 'no jobs active'})
 
-    for job in async_jobs:
-        jobs['async'].append({'id': job.id, 'name': job.name})
-    for job in background_jobs:
-        jobs['background'].append({'id': job.id, 'name': job.name})
+    jobs_files.sort()
+    jobs = open(jobs_files[-1], 'r')
+    jobs_str = jobs.read()
+    jobs.close()
+    if not jobs_str:
+        return jsonify({'jobs': 'jobs content is empty'})
 
-    return jsonify(jobs)
+    latest = json.loads(jobs_str)
+    return jsonify(latest)
