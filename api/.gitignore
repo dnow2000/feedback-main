@@ -99,6 +99,9 @@ secret.py
 static/object_store_data
 static/poynter_claims.csv
 
+# Tmp
+tmp/jobs
+
 # Test
 .hypothesis/
 .pytest_cache/
