@@ -33,6 +33,9 @@ def get_all_jobs(app):
 def write_jobs_to_file(jobs):
     jobs_str = json.dumps(jobs)
     current_time = datetime.now().isoformat()
+    if not os.path.exists(f'{TMP_PATH}/jobs/'):
+        os.makedirs(f'{TMP_PATH}/jobs/')
+
     job_file = open(f'{TMP_PATH}/jobs/jobs_{current_time}.json', 'w')
     job_file.write(jobs_str)
     job_file.close()
