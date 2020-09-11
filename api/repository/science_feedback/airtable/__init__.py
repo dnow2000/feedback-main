@@ -38,11 +38,16 @@ def entity_from_row_for(name, entity_dict, index):
 def sync_outdated_rows(max_records=None):
     logger.info('sync science feedback outdated airtable data...')
     for name in NAME_TO_AIRTABLE:
-        sync_for(name, formula='FIND("Out of sync", {Sync status})>0', max_records=max_records)
+        sync_for(
+            name,
+            formula='FIND("Out of sync", {Sync status})>0',
+            max_records=max_records,
+            sync_to_airtable=True
+        )
     logger.info('sync science feedback outdated airtable data...Done.')
 
 
-def sync_for(name, formula=None, max_records=None):
+def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
     rows = request_airtable_rows(
         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
         NAME_TO_AIRTABLE[name],
@@ -75,16 +80,17 @@ def sync_for(name, formula=None, max_records=None):
                 sync_content(entity.quotedContent) if entity.quotedContent else None
 
         # Set the time synced so that the status in airtable is "Synced"
-        records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
-        for i in range(0, len(records), 10):
-            res = update_airtable_rows(
-                SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
-                NAME_TO_AIRTABLE[name],
-                {'records': records[i:i + 10]}
-            )
+        if sync_to_airtable:
+            records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
+            for i in range(0, len(records), 10):
+                res = update_airtable_rows(
+                    SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+                    NAME_TO_AIRTABLE[name],
+                    {'records': records[i:i + 10]}
+                )
 
-            if res.status_code != 200:
-                logger.error('code: {}, error: {}'.format(res.status_code, res.content))
+                if res.status_code != 200:
+                    logger.error('code: {}, error: {}'.format(res.status_code, res.content))
 
     except NotNullViolation as exception:
         logger.error('NotNullViolation: {}'.format(exception))
@@ -92,11 +98,11 @@ def sync_for(name, formula=None, max_records=None):
         logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
 
 
-def sync(max_records=None):
+def sync(max_records=None, sync_to_airtable=False):
     logger.info('sync science feedback airtable data...')
 
     create_or_modify_sf_organization_and_media()
 
     for name in NAME_TO_AIRTABLE:
-        sync_for(name, max_records=max_records)
+        sync_for(name, max_records=max_records, sync_to_airtable=sync_to_airtable)
     logger.info('sync science feedback airtable data...Done.')
