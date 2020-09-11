@@ -2,12 +2,13 @@ import enum
 from sqlalchemy import BigInteger, \
                        Column, \
                        Enum, \
-                       ForeignKey, \
-                       String
+                       ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from models.mixins import HasScienceFeedbackMixin
+from models.mixins import HasCrowdtangleMixin, \
+                          HasScienceFeedbackMixin
+                          
 from utils.db import db
 
 
@@ -28,9 +29,8 @@ class StanceType(enum.Enum):
 
 class Appearance(ApiHandler,
                  db.Model,
+                 HasCrowdtangleMixin,
                  HasScienceFeedbackMixin):
-
-    crowdtangleIdentifier = Column(String(32))
 
     quotedClaimId = Column(BigInteger(),
                            ForeignKey('claim.id'),

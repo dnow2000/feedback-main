@@ -1,5 +1,4 @@
 from domain.crowdtangle import shares_from_url
-from sqlalchemy_api_handler import ApiHandler, humanize
 from models.appearance import Appearance
 from models.content import Content
 from models.medium import Medium
