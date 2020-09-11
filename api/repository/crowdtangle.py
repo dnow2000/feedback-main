@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from domain.crowdtangle import shares_from_url
 from sqlalchemy_api_handler import ApiHandler, humanize
 from models.appearance import Appearance
@@ -9,7 +7,7 @@ from models.platform import Platform
 from models.user import User
 
 
-def attach_crowdtangle_entities_from_content(content):
+def attach_crowdtangle_entities_from_content(content, request_start_date):
 
      # create a "CrowdTangle" user to testify that these Facebook posts are connected to the url
     crowdtangle_user = User.create_or_modify({
@@ -26,7 +24,7 @@ def attach_crowdtangle_entities_from_content(content):
         'name': 'Facebook'
     })
 
-    shares = shares_from_url(content.url, request_start_date='2019-09-01')
+    shares = shares_from_url(content.url, request_start_date)
 
     for share in shares:
         medium_group = Medium.create_or_modify({
@@ -43,13 +41,12 @@ def attach_crowdtangle_entities_from_content(content):
 
         crowdtangle_identifier = '{}_{}_{}'.format(content.id,
                                                    content_post.crowdtangleIdentifier,
-                                                   crowdtangle_user.email)
+                                                   crowdtangle_user.id)
 
         appearance = Appearance.create_or_modify({
             '__SEARCH_BY__': 'crowdtangleIdentifier',
             'crowdtangleIdentifier': crowdtangle_identifier,
-            'quotedContent': humanize(content.id),
+            'quotedContent': content,
             'quotingContent': content_post,
             'testifier': crowdtangle_user
         })
-        content.quotedFromAppearances = content.quotedFromAppearances + [appearance]

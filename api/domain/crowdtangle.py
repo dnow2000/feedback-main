@@ -1,5 +1,6 @@
 import os
 
+from datetime import datetime
 import requests
 from sqlalchemy_api_handler import logger
 
@@ -36,15 +37,15 @@ def shares_from_url(url, request_start_date):
         account = post['account']
         shares.append({
             'account': {
-                'crowdtangleIdentifier': account['id'],
-                'facebookIdentifier': account['platformId'],
+                'crowdtangleIdentifier': str(account['id']),
+                'facebookIdentifier': str(account['platformId']),
                 'logoUrl': account['profileImage'],
                 'name': account['name'],
                 'url': account['url']
             },
             'post': {
-                'crowdtangleIdentifier': post['id'],
-                'facebookIdentifier': post['platformId'],
+                'crowdtangleIdentifier': str(post['id']),
+                'facebookIdentifier': str(post['platformId']),
                 'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
                 'url': post['postUrl'],
             }

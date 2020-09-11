@@ -26,7 +26,8 @@ def content_from_url(url, **kwargs):
         'url': url
     })
 
-    attach_crowdtangle_entities_from_content(content)
+    attach_crowdtangle_entities_from_content(content, 
+                                             request_start_date='2019-09-01')
 
     trending = buzzsumo_trending_from_url(url, **kwargs)
     if trending:

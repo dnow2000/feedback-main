@@ -11,9 +11,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-from models.mixins.has_crowdtangle_mixin import HasCrowdtangleMixin
-from models.mixins.has_facebook_mixin import HasFacebookMixin
-from models.mixins import HasExternalThumbUrlMixin, \
+from models.mixins import HasCrowdtangleMixin, \
+                          HasExternalThumbUrlMixin, \
+                          HasFacebookMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
                           HasSharesMixin, \

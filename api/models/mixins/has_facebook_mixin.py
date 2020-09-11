@@ -4,4 +4,4 @@ from sqlalchemy import Column, \
 
 class HasFacebookMixin(object):
 
-    facebookIdentifier = Column(String(32))
+    facebookIdentifier = Column(String(64))
