@@ -26,22 +26,27 @@ def shares_from_url(url, request_start_date):
     api_endpoint = 'links'
 
     response = requests.get(
-        '{}/{}'.format(CROWDTANGLE_API_URL, api_endpoint), 
+        '{}/{}'.format(CROWDTANGLE_API_URL, api_endpoint),
         params
     )
     response = response.json()
 
     shares = []
     for post in response['result']['posts']:
+        account = post['account']
         shares.append({
-            'post': {
-                'url': post['postUrl'],
-                'publishedDate': post['date']
+            'account': {
+                'crowdtangleIdentifier': account['id'],
+                'facebookIdentifier': account['platformId'],
+                'logoUrl': account['profileImage'],
+                'name': account['name'],
+                'url': account['url']
             },
-            'group': {
-                'name': post['account']['name'],
-                'url': post['account']['url'],
-                'logoUrl': post['account']['profileImage']
+            'post': {
+                'crowdtangleIdentifier': post['id'],
+                'facebookIdentifier': post['platformId'],
+                'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
+                'url': post['postUrl'],
             }
         })
 

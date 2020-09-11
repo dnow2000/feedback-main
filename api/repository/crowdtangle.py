@@ -29,26 +29,27 @@ def attach_crowdtangle_entities_from_content(content):
     shares = shares_from_url(content.url, request_start_date='2019-09-01')
 
     for share in shares:
-        # save the Facebook group as a medium:
         medium_group = Medium.create_or_modify({
             '__SEARCH_BY__': 'name',
-            'logoUrl': share['group']['logoUrl'],
-            'name': share['group']['name'],
-            'url': share['group']['url'],
-            'platform': facebook_platform
-        })  
+            'platform': facebook_platform,
+            **share['account']
+        })
 
-        # save the Facebook post as a content:
-        content_post = Content.create_or_modify({  
+        content_post = Content.create_or_modify({
             '__SEARCH_BY__': 'url',
             'medium': medium_group,
-            'publishedDate': datetime.strptime(share['post']['publishedDate'], '%Y-%m-%d %H:%M:%S'),
-            'url': share['post']['url'],
+            **share['post']
         })
+
+        crowdtangle_identifier = '{}_{}_{}'.format(content.id,
+                                                   content_post.crowdtangleIdentifier,
+                                                   crowdtangle_user.email)
+
         appearance = Appearance.create_or_modify({
-            '__SEARCH_BY__': [  'quotedContentId',   'quotingContentId', 'testifierId'],
-            'quotedContentId': humanize(content.id),
-            'quotingContentId': humanize(content_post.id),
-            'testifierId': humanize(crowdtangle_user.id)
-        })  
+            '__SEARCH_BY__': 'crowdtangleIdentifier',
+            'crowdtangleIdentifier': crowdtangle_identifier,
+            'quotedContent': humanize(content.id),
+            'quotingContent': content_post,
+            'testifier': crowdtangle_user
+        })
         content.quotedFromAppearances = content.quotedFromAppearances + [appearance]
