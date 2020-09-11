@@ -11,7 +11,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-from models.mixins import HasExternalThumbUrlMixin, \
+from models.mixins import HasCrowdtangleMixin, \
+                          HasExternalThumbUrlMixin, \
+                          HasFacebookMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
                           HasSharesMixin, \
@@ -27,7 +29,9 @@ class ContentType(enum.Enum):
 
 class Content(ApiHandler,
               db.Model,
+              HasCrowdtangleMixin,
               HasExternalThumbUrlMixin,
+              HasFacebookMixin,
               HasScienceFeedbackMixin,
               HasSharesMixin,
               HasThumbMixin,

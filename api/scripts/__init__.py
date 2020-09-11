@@ -3,6 +3,8 @@
 
 def import_scripts():
     import scripts.clean
+    import scripts.dev
     import scripts.sandbox
     import scripts.screenshotmachine
     import scripts.sync
+    

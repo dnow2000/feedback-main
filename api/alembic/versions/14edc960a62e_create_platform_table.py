@@ -1,4 +1,4 @@
-"""add_platforms
+"""create platform table
 
 Revision ID: 14edc960a62e
 Revises: 34006d718603
@@ -17,11 +17,9 @@ depends_on = None
 
 
 def upgrade():
-    op.create_table(
-        'platform',
-        sa.Column('id', sa.Integer, primary_key=True),
-        sa.Column('name', sa.String(128), nullable=False)
-    )
+    op.create_table('platform',
+                    sa.Column('id', sa.Integer, primary_key=True),
+                    sa.Column('name', sa.String(128), nullable=False))
 
     op.alter_column('content', 'url', existing_nullable=False, nullable=True)
 

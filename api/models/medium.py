@@ -5,12 +5,16 @@ from sqlalchemy import BigInteger, \
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from models.mixins.has_science_feedback_mixin import HasScienceFeedbackMixin
+from models.mixins import HasCrowdtangleMixin, \
+                          HasFacebookMixin, \
+                          HasScienceFeedbackMixin
 from utils.db import db
 
 
 class Medium(ApiHandler,
              db.Model,
+             HasCrowdtangleMixin,
+             HasFacebookMixin,
              HasScienceFeedbackMixin):
 
     logoUrl = Column(String(512))
