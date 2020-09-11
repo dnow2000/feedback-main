@@ -71,7 +71,7 @@
     "husky": "^4.2.5",
     "license-reporter": "^1.2.2",
     "node-env-file": "^0.1.8",
-    "node-sass": "^4.9.4",
+    "node-sass": "^4.14.1",
     "prettier-eslint-cli": "^5.0.0",
     "prettier-stylelint": "^0.4.2",
     "stylelint": "^11.1.1",
