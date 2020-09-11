@@ -26,6 +26,12 @@ CLOCK_SYNC_CONTENT_CONFIGS = [
         'to_date': 100,
         'frequency': {'hour': '*/2', 'minute': '1'}
     },
+    # contents inserted since 1.7h - 7days, do it every days
+    {
+        'from_date': 1000,
+        'to_date': 100,
+        'frequency': {'day': '*/1', 'minute': '1'}
+    },
     # contents inserted since 7days - 17h, do it every 7 days
     {
         'from_date': 10000,
