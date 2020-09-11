@@ -6,7 +6,7 @@ import {
 } from '../utils/config'
 
 
-describe('Signin', () => {
+describe('signin', () => {
   it(`can signin.`, () => {
 
     cy.visit(`${ROOT_PATH}/signin`)
@@ -22,6 +22,5 @@ describe('Signin', () => {
 
     cy.url()
       .should('include', '/sources')
-
   })
 })
