@@ -75,16 +75,16 @@ def sync_for(name, formula=None, max_records=None):
                 sync_content(entity.quotedContent) if entity.quotedContent else None
 
         # Set the time synced so that the status in airtable is "Synced"
-        records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
-        for i in range(0, len(records), 10):
-            res = update_airtable_rows(
-                SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
-                NAME_TO_AIRTABLE[name],
-                {'records': records[i:i + 10]}
-            )
+        # records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
+        # for i in range(0, len(records), 10):
+        #     res = update_airtable_rows(
+        #         SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+        #         NAME_TO_AIRTABLE[name],
+        #         {'records': records[i:i + 10]}
+        #     )
 
-            if res.status_code != 200:
-                logger.error('code: {}, error: {}'.format(res.status_code, res.content))
+        #     if res.status_code != 200:
+        #         logger.error('code: {}, error: {}'.format(res.status_code, res.content))
 
     except NotNullViolation as exception:
         logger.error('NotNullViolation: {}'.format(exception))
