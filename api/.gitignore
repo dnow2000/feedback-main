@@ -106,6 +106,9 @@ tmp/jobs
 .hypothesis/
 .pytest_cache/
 
+# Test/Sandbox-generated thumbs
+sandboxes/thumbs/users/
+
 # env
 dev_env_file
 

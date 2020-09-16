@@ -8,15 +8,18 @@
   "extends": [
     "eslint:recommended",
     "plugin:react/all",
-    "plugin:jsx-a11y/strict",
+    "plugin:chai-friendly/recommended",
+    "plugin:cypress/recommended",
     "plugin:import/errors",
-    "plugin:jest/all"
+    "plugin:jest/all",
+    "plugin:jsx-a11y/strict"
   ],
   "globals": {
     "fixture": "readonly"
   },
   "parser": "babel-eslint",
   "rules": {
+    "jest/expect-expect": "off",
     "jest/no-hooks": "off",
     "jest/no-test-callback": "off",
     "jest/prefer-expect-assertions": "off",
