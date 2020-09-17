@@ -8,7 +8,7 @@ from models.user import User
 
 def attach_crowdtangle_entities_from_content(content, request_start_date):
 
-     # create a "CrowdTangle" user to testify that these Facebook posts are connected to the url
+    # create a "CrowdTangle" user to testify that these Facebook posts are connected to the url
     crowdtangle_user = User.create_or_modify({
         '__SEARCH_BY__': 'email',
         'email': "crowdtangle@me.com",

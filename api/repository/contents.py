@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from sqlalchemy_api_handler import ApiHandler, as_dict, logger
+from sqlalchemy_api_handler import ApiHandler, logger
 
 from models.content import Content
 from models.content_tag import ContentTag
@@ -26,7 +26,7 @@ def content_from_url(url, **kwargs):
         'url': url
     })
 
-    attach_crowdtangle_entities_from_content(content, 
+    attach_crowdtangle_entities_from_content(content,
                                              request_start_date='2019-09-01')
 
     trending = buzzsumo_trending_from_url(url, **kwargs)
@@ -102,6 +102,6 @@ def sync(from_date=None,
     logger.info('Sync contents from {} to {}...'.format(from_date, to_date))
     for content in contents[:contents_max]:
         sync_content(content)
-        logger.info('Synced content: {}'.format(as_dict(content)))
+        logger.info('Synced content: {}'.format(content.id))
 
     logger.info('Sync contents from {} to {}...Done'.format(from_date, to_date))

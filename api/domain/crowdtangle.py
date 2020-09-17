@@ -1,4 +1,5 @@
 import os
+from time import sleep
 
 from datetime import datetime
 import requests
@@ -16,7 +17,7 @@ def shares_from_url(url, request_start_date):
 
     params = {
         'count': 1000,
-        #'includeHistory': 'true',
+        # 'includeHistory': 'true',
         'link': url,
         'platforms': 'facebook',
         'sortBy': 'total_interactions',
@@ -29,26 +30,34 @@ def shares_from_url(url, request_start_date):
     response = requests.get(
         '{}/{}'.format(CROWDTANGLE_API_URL, api_endpoint),
         params
-    )
-    response = response.json()
+    ).json()
 
     shares = []
-    for post in response['result']['posts']:
-        account = post['account']
-        shares.append({
-            'account': {
-                'crowdtangleIdentifier': str(account['id']),
-                'facebookIdentifier': str(account['platformId']),
-                'logoUrl': account['profileImage'],
-                'name': account['name'],
-                'url': account['url']
-            },
-            'post': {
-                'crowdtangleIdentifier': str(post['id']),
-                'facebookIdentifier': str(post['platformId']),
-                'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
-                'url': post['postUrl'],
-            }
-        })
+    if response['status'] == 200:
+        if not response.get('result'):
+            logger.warning('Crowdtangle data returned is empty.')
+            return shares
 
+        for post in response['result']['posts']:
+            account = post['account']
+            shares.append({
+                'account': {
+                    'crowdtangleIdentifier': str(account['id']),
+                    'facebookIdentifier': str(account['platformId']),
+                    'logoUrl': account['profileImage'],
+                    'name': account['name'],
+                    'url': account['url']
+                },
+                'post': {
+                    'crowdtangleIdentifier': str(post['id']),
+                    'facebookIdentifier': str(post['platformId']),
+                    'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
+                    'url': post['postUrl'],
+                }
+            })
+    else:
+        logger.error(f'Error in fetching from Crowdtangle: {response.get("message", "Unknown exception.")}')
+        logger.warning('Returning empty interaction data')
+
+    sleep(30)
     return shares

@@ -7,15 +7,12 @@ import { numberShortener } from 'utils/shorteners'
 
 
 const _ = ({ appearance: { quotingContent } }) => {
-  const { totalShares, title, url } = quotingContent
+  const { archiveUrl, totalShares, title, url } = quotingContent
   const { hostname } = new URL(url)
 
   return (
-    <a
+    <div
       className="appearance-item"
-      href={url}
-      rel='noopener noreferrer'
-      target='_blank'
     >
       <ThumbImg
         className='appearance-item-img'
@@ -32,7 +29,16 @@ const _ = ({ appearance: { quotingContent } }) => {
           </small>
         </p>
         <p className="appearance-url">
-          {url}
+          { archiveUrl && (
+            <a
+              className="appearance-url"
+              href={archiveUrl}
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              {"[ Archive link ]"}
+            </a>
+          )}
         </p>
         <div className="appearance-footer">
           { totalShares > 0 && (
@@ -42,13 +48,14 @@ const _ = ({ appearance: { quotingContent } }) => {
           ) }
         </div>
       </div>
-    </a>
+    </div>
   )
 }
 
 _.propTypes = {
   appearance: PropTypes.shape({
     quotingContent: PropTypes.shape({
+      archiveUrl: PropTypes.string,
       id: PropTypes.string,
       externalThumbUrl: PropTypes.string,
       totalShares: PropTypes.number,
