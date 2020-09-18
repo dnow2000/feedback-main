@@ -61,22 +61,24 @@ export default () => {
       <Main className="landing with-header">
         <section className="hero">
           <div className="container">
-            <p className="h1">
-              <b>
-                {verdictCount}
-              </b>
-              {' reviews'}
-              <br />
-              {'and'}
-              <br />
-              <b>
-                {linkCount}
-              </b>
-              {' content URLs flagged'}
-            </p>
+            {verdictCount && linkCount && (
+              <p className="h1">
+                <b>
+                  {verdictCount}
+                </b>
+                {' reviews'}
+                <br />
+                {'and'}
+                <br />
+                <b>
+                  {linkCount}
+                </b>
+                {' content URLs flagged'}
+              </p>
+            )}
             <Controls
               config={config}
-              pathnameOnChange={'/verdicts'}
+              pathnameOnChange='/verdicts'
               render={({handleChange, locationURL}) => (
                 <KeywordsBar
                   layout='vertical'
