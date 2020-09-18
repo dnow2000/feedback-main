@@ -1,43 +1,26 @@
-import React, { useCallback } from 'react'
-import PropTypes from 'prop-types'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { Redirect, Route, Switch, useLocation, useParams } from 'react-router-dom'
 
-import AppearanceItem from 'components/layout/AppearanceItem'
-import Loader from 'components/layout/LoadMore'
+import { entityMatch } from 'components/router'
+import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
 
-import { numberShortener } from 'utils/shorteners'
+import ClaimGraph from './ClaimGraph'
+import Links from './Links'
+import Shares from './Shares'
+import Tabs from './Tabs'
 
 
-const _ = ({ appearances }) => {
-  const linkCount = appearances.length
-  const shareCount = appearances
-                      ?.map(appearance => appearance.quotingContent.totalShares)
-                      ?.reduce((a, b) => a + b, 0)
-  const appearancesSortedByShareCount = appearances?.sort((a, b) => b.quotingContent.totalShares - a.quotingContent.totalShares)
+export default () => {
+  const location = useLocation()
+  const { tab, verdictId } = useParams()
 
-  const handleTabClick = useCallback(event => {
-    const tabPane = document.getElementById('verdict-tab-pane')
-    Array.prototype.map.call(tabPane.children, tab => tab.classList.remove('active'))
-    event.target.classList.add('active')
-    // TODO: hide and show different tabs
-  }, [])
+  const appearances = useSelector(state =>
+    selectSortedAppearancesByVerdictId(state, verdictId))
 
-  const showMoreButton = useCallback(props => (
-    <div className="show-more">
-      <button
-        type='button'
-        {...props}
-      >
-        {props.text}
-      </button>
-    </div>
-  ), [])
-
-  const renderItem = useCallback(item => (
-    <AppearanceItem
-      appearance={item}
-      key={item.id}
-    />
-  ), [])
+  if (!tab) {
+    return <Redirect to={`/verdicts/${verdictId}/testimony/appearances`}/>
+  }
 
   if (!appearances.length) {
     return (
@@ -51,60 +34,24 @@ const _ = ({ appearances }) => {
   return (
     <div className="appearances">
       {/*<Add />*/}
-      { appearances &&  (
-        <div
-          className='tab-pane'
-          id='verdict-tab-pane'
-        >
-          { linkCount > 0 && (
-            <button
-              className='tab active'
-              id='links'
-              onClick={handleTabClick}
-              type='button'
-            >
-              {`${linkCount} Links`}
-            </button>
-          ) }
-          { shareCount > 0 && (
-            <button
-              className='tab'
-              id='shares'
-              onClick={handleTabClick}
-              type='button'
-            >
-              {`${numberShortener(shareCount)} Interactions`}
-            </button>
-          ) }
-        </div>
-      ) }
-
-      { appearancesSortedByShareCount && (
-        <Loader
-          Button={showMoreButton}
-          items={appearancesSortedByShareCount}
-          loadLessText='Show less'
-          loadMoreText='Show more'
-          renderItem={renderItem}
+      <Tabs />
+      <Switch location={location}>
+        <Route
+          component={Links}
+          exact
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances`}
         />
-      ) }
+        <Route
+          component={Shares}
+          exact
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
+        />
+        <Route
+          component={ClaimGraph}
+          exact
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
+        />
+      </Switch>
     </div>
   )
 }
-
-_.defaultProps = {
-  appearances: []
-}
-
-_.propTypes = {
-  appearances: PropTypes.arrayOf(
-    PropTypes.shape({
-      quotingContent: PropTypes.shape({
-        id: PropTypes.string,
-        totalShares: PropTypes.number
-      })
-    })
-  )
-}
-
-export default _

@@ -1,5 +1,9 @@
+import inflect
 from random import random, seed
-from sqlalchemy_api_handler import as_dict
+from sqlalchemy_api_handler import as_dict, humanize
+
+
+inflect_engine = inflect.engine()
 
 
 def node_type_from(entity):
@@ -26,6 +30,8 @@ def graph_from_entity(entity,
 
     if not graph:
         graph = {
+            'collectionName': inflect_engine.plural_noun(entity.__class__.__name__.lower()),
+            'entityId': humanize(entity.id),
             'nodes': [],
             'edges': []
         }
