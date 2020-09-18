@@ -1,0 +1,14 @@
+.show-more {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1em;
+
+  button {
+    @extend .button;
+    @extend .is-outlined;
+    @extend .is-primary;
+    @extend .text-primary;
+    @extend .thin;
+  }
+}
