@@ -1,22 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 import Graph from 'components/layout/Graph'
+import Node from 'components/layout/Node'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import {
-  componentAccessor,
-  heightAccessor,
-  widthAccessor
-} from 'utils/exploration'
 
 
 export default () => {
   const dispatch = useDispatch()
   const { collectionName, entityId } = useParams()
-  const enterRef = useRef()
 
   const [tooltips, setTooltips] = useState(null)
 
@@ -29,11 +24,9 @@ export default () => {
       const datum = renderer.nodeDataCache[nodeId]
       const pos = renderer.camera.graphToViewport(renderer, datum.x, datum.y)
       const node = undirectedGraph.getNodeAttributes(nodeId)
-      //const sizeRatio = Math.pow(renderer.camera.getState().ratio, 0.5)
-      //const size = data.size / sizeRatio
 
-      const element = componentAccessor(node)
-      if (!element) return
+      const nodeElement = <Node node={node} />
+      if (!nodeElement) return null
 
       const style = {
         left: `${pos.x}px`,
@@ -46,7 +39,7 @@ export default () => {
           key={nodeId}
           style={style}
         >
-          {element}
+          {nodeElement}
         </div>
       )
     })
