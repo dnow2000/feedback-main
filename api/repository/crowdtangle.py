@@ -1,6 +1,6 @@
 from domain.crowdtangle import shares_from_url
 from models.appearance import Appearance
-from models.content import Content
+from models.content import Content, ContentType
 from models.medium import Medium
 from models.platform import Platform
 from models.user import User
@@ -35,6 +35,7 @@ def attach_crowdtangle_entities_from_content(content, request_start_date):
         content_post = Content.create_or_modify({
             '__SEARCH_BY__': 'url',
             'medium': medium_group,
+            'type': ContentType.POST,
             **share['post']
         })
 
