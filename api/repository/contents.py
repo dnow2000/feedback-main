@@ -82,7 +82,7 @@ def sync(from_date=None,
          contents_max=None):
     now_date = datetime.utcnow()
     if from_date is None:
-        from_date = now_date - timedelta(minutes=100)
+        from_date = now_date - timedelta(hours=12)
     if to_date is None:
         to_date = now_date - timedelta(minutes=0)
 

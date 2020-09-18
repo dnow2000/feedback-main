@@ -7,7 +7,7 @@ JOBS = {
     'async': [
         {
             'func': sync_outdated_rows,
-            'hours': 1,
+            'hours': 12,
             'id': 'sync science_feedback',
             'next_run_time': datetime.now(),
             'trigger': 'interval'
