@@ -3,6 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
 
+import selectGraphByCollectionNameAndEntityId from 'selectors/selectGraphByCollectionNameAndEntityId'
 
 import Graph from './Graph'
 
@@ -10,7 +11,8 @@ import Graph from './Graph'
 const _ = ({ children, collectionName, entityId }) => {
   const dispatch = useDispatch()
 
-  const graphs = useSelector(state => state.data.graphs) || []
+  const graph = useSelector(state =>
+    selectGraphByCollectionNameAndEntityId(state, collectionName, entityId))
 
 
   useEffect(() => {
@@ -22,8 +24,10 @@ const _ = ({ children, collectionName, entityId }) => {
   }, [collectionName, dispatch, entityId])
 
 
+  if (!graph) return null
+
   return (
-    <Graph graph={graphs[0]}>
+    <Graph graph={graph}>
       {children}
     </Graph>
   )
