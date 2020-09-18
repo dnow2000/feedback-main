@@ -141,13 +141,13 @@ export const routes = [
   {
     component: Verdict,
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/appearances`,
+    path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(appearances|shares|graph)?`,
     title: 'Verdict',
   },
   {
     component: withRequiredLogin(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/appearances/:appearanceId${formPath}`,
+    path: `/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formPath}`,
     title: 'Verdict',
   },
   {

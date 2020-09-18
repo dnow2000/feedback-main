@@ -7,7 +7,8 @@ import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
-import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppearancesByQuotedClaimId'
+import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
+import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId'
 import { numberShortener } from 'utils/shorteners'
 import useTimeAgo from 'components/uses/useTimeAgo'
 
@@ -31,11 +32,10 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
   ) || {}
 
   const appearances = useSelector(state =>
-    selectSortedAppearancesByQuotedClaimId(state, claimId)) || {}
+    selectSortedAppearancesByVerdictId(state, id)) || []
   const linkCount = appearances?.length
-  const shareCount = appearances
-                      ?.map(appearance => appearance.quotingContent.totalShares)
-                      ?.reduce((a, b) => a + b, 0)
+  const shareCount = useSelector(state =>
+    selectSharesCountByVerdictId(state, id))
 
   const conclusionTag = useSelector(
     state => selectConclusionTagByVerdictId(state, id),
@@ -44,7 +44,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
 
   const handleClick = useCallback(() => {
     if (!asLink) return
-    history.push(`/verdicts/${id}/appearances`)
+    history.push(`/verdicts/${id}/testimony`)
   }, [asLink, history, id])
 
   const ViewReviewButton = () => {

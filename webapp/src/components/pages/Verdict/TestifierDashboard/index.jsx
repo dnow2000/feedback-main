@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
-import selectSortedAppearancesByQuotedClaimId from 'selectors/selectSortedAppearancesByQuotedClaimId'
 import { verdictNormalizer } from 'utils/normalizers'
 
 import Appearances from './Appearances'
@@ -16,9 +15,6 @@ export default () => {
 
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
-  const { claimId } = verdict || {}
-  const quotedFromAppearances = useSelector(state =>
-    selectSortedAppearancesByQuotedClaimId(state, claimId))
 
 
   useEffect(() => {
@@ -29,19 +25,16 @@ export default () => {
   }, [dispatch, verdictId])
 
 
+  if (!verdict) return null
+
   return (
     <div className='testifier-dashboard'>
-      { verdict && (
-        <VerdictItem
-          asLink={false}
-          verdict={verdict}
-          withLinksShares={false}
-        />
-      ) }
-      { quotedFromAppearances && (
-        <Appearances
-          appearances={quotedFromAppearances}
-        />) }
+      <VerdictItem
+        asLink={false}
+        verdict={verdict}
+        withLinksShares={false}
+      />
+      <Appearances />
     </div>
   )
 }

@@ -44,17 +44,17 @@ export default () => {
             <Route
               component={EditorDashboard}
               exact
-              path={`/verdicts/:verdictId${formPath}`}
+              path={`/verdicts/:verdictId${formPath}/edition`}
             />
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/appearances`}
+              path={`/verdicts/:verdictId(${entityMatch})/testimony/:tab(appearances|shares|graph)?`}
             />
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/appearances/:appearanceId${formPath}`}
+              path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formPath}`}
             />
           </Switch>
         </div>

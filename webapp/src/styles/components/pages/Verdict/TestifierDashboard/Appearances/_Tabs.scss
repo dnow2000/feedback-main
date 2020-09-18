@@ -1,0 +1,33 @@
+.tabs {
+  align-items: center;
+  display: flex;
+  flex-flow: horizontal;
+  margin-bottom: 1em;
+
+  .tab {
+    @extend .anchor;
+    
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: $grey-darker;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 0.6em 0;
+    transition: border 0.5s;
+
+    &:not(:last-child) {
+      margin-right: 1em;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &.active, &:hover {
+      border-color: $primary;
+    }
+  }
+}
