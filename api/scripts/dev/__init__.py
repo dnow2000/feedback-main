@@ -1,3 +1,5 @@
+# pylint: disable=W0122
+
 import os
 from pathlib import Path
 from flask import current_app as app
