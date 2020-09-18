@@ -34,7 +34,13 @@ export default ({ children, graph, onGraphMount }) => {
       setTimeout(() => onGraphMount({ graphRef, renderer, undirectedGraph }))
     }
 
+    return () => {
+      renderer.clear()
+    }
+
   }, [graph, graphRef, onGraphMount])
+
+
 
   return (
     <div

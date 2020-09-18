@@ -48,6 +48,7 @@ export default () => {
           className={classnames('tab', {
             active: path === tab
           })}
+          key={path}
           to={`/verdicts/${verdictId}/testimony/${path}`}
         >
           {childrenFrom({ linksCount, sharesCount })}
