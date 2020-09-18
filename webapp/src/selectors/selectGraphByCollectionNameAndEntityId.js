@@ -1,7 +1,5 @@
 import createCachedSelector from 're-reselect'
 
-import selectVerdictReviewersByVerdictId from './selectVerdictReviewersByVerdictId'
-
 
 const mapArgsToCacheKey = (state, collectionName, entityId) =>
   `${collectionName || ''} ${entityId || ''}`

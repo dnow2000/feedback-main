@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
 
 import selectGraphByCollectionNameAndEntityId from 'selectors/selectGraphByCollectionNameAndEntityId'
+import { edgeWithDecoration, nodeWithDecoration } from 'utils/graph'
 
 import Graph from './Graph'
 
@@ -15,6 +16,12 @@ const _ = ({ children, collectionName, entityId }) => {
     selectGraphByCollectionNameAndEntityId(state, collectionName, entityId))
 
 
+  const graphWithDecoration = useMemo(() => graph && ({
+    edges: graph.edges.map(edgeWithDecoration),
+    nodes: graph.nodes.map(nodeWithDecoration)
+  }), [graph])
+
+
   useEffect(() => {
     let apiPath = '/graphs'
     if (collectionName && entityId) {
@@ -24,10 +31,10 @@ const _ = ({ children, collectionName, entityId }) => {
   }, [collectionName, dispatch, entityId])
 
 
-  if (!graph) return null
+  if (!graphWithDecoration) return null
 
   return (
-    <Graph graph={graph}>
+    <Graph graph={graphWithDecoration}>
       {children}
     </Graph>
   )
