@@ -1,27 +1,47 @@
-import React from 'react'
-import {
-  ForceAtlas2,
-  RelativeSize,
-  Sigma
-} from 'react-sigma'
+import { UndirectedGraph } from 'graphology'
+import forceAtlas2 from 'graphology-layout-forceatlas2'
+import { WebGLRenderer } from 'sigma'
+import React, { useEffect, useRef } from 'react'
 
 
-import Nodes from './Nodes'
+export default ({ children, graph, onGraphMount }) => {
+  const graphRef = useRef()
 
+  useEffect(() => {
+    if (!graph) return
+    const { edges, nodes } = graph
+    const undirectedGraph = new UndirectedGraph()
 
-export default ({ graph }) => {
+    nodes.forEach(node => {
+      undirectedGraph.addNode(node.id, node)
+    })
+
+    edges.forEach(edge => {
+      undirectedGraph.addEdge(edge.source,
+                              edge.target,
+                              { color: "#ccc" })
+    })
+
+    const renderer = new WebGLRenderer(undirectedGraph, graphRef.current)
+
+    const settings = forceAtlas2.inferSettings(undirectedGraph)
+    forceAtlas2.assign(undirectedGraph, {
+      iterations: 100,
+      settings,
+    })
+
+    if (onGraphMount) {
+      setTimeout(() => onGraphMount({ graphRef, renderer, undirectedGraph }))
+    }
+
+  }, [graph, graphRef, onGraphMount])
+
   return (
-    <div className="graph">
-      {graph && (
-        <Sigma
-          graph={graph}
-          renderer="svg"
-        >
-          <Nodes />
-          <RelativeSize initialSize={10}/>
-          <ForceAtlas2/>
-        </Sigma>
-      )}
+    <div
+      className="graph"
+      ref={graphRef}
+    >
+      {children}
     </div>
   )
 }

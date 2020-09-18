@@ -1,0 +1,33 @@
+const { edit, getPaths } = require("@rescripts/utilities");
+
+const predicate = valueToTest => {
+  return valueToTest.oneOf;
+}
+
+const transform = match => ({
+  ...match,
+  oneOf: [
+    ...match.oneOf.slice(0, -1),
+    // Rewriting the "file" loader to include .glsl files in the ignore
+    {
+      loader: require.resolve('file-loader'),
+      exclude: [/\.(js|mjs|jsx|ts|tsx|glsl)$/, /\.html$/, /\.json$/],
+      options: {
+        name: 'static/media/[name].[hash:8].[ext]',
+      },
+    }
+  ]
+});
+
+function rescriptIgnoreGLSL() {
+  return config => {
+    const matchingPaths = getPaths(predicate, config);
+    return edit(transform, matchingPaths, config);
+  };
+}
+
+module.exports = [
+  [
+    rescriptIgnoreGLSL,
+  ],
+]
