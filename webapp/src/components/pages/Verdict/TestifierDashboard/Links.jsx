@@ -36,6 +36,15 @@ export default () => {
     />
   ), [])
 
+
+  if (!appearances.length) {
+    return (
+      <div className='testifier-dashboard empty'>
+        {'No appearance recorded for this content.'}
+      </div>
+    )
+  }
+
   return (
     <Loader
       Button={showMoreButton}

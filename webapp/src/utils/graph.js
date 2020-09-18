@@ -3,7 +3,8 @@ export const edgeWithDecoration = edge => edge
 
 const sizesByNodeType = {
   'Claim': 10,
-  'Content': 3
+  'Content': 3,
+  'User': 1
 }
 
 

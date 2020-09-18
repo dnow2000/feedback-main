@@ -1,4 +1,7 @@
-@import "Appearances/index.scss";
+@import 'Add/index.scss';
+@import 'Links.scss';
+@import 'Tabs.scss';
+
 
 .testifier-dashboard {
   margin-top: 4rem;
@@ -11,5 +14,11 @@
     h3 {
       font-size: $font-size-big;
     }
+  }
+
+  &.empty {
+    @extend .text-center;
+
+    padding: 2rem;
   }
 }

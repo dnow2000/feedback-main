@@ -1,17 +1,23 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Redirect, Route, Switch, useLocation, useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
+import { entityMatch } from 'components/router'
 import { verdictNormalizer } from 'utils/normalizers'
 
-import Appearances from './Appearances'
+import ClaimGraph from './ClaimGraph'
+import Links from './Links'
+import Shares from './Shares'
+import Tabs from './Tabs'
 
 
 export default () => {
   const dispatch = useDispatch()
-  const { verdictId } = useParams()
+  const location = useLocation()
+  const { tab, verdictId } = useParams()
+
 
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
@@ -24,8 +30,12 @@ export default () => {
     }))
   }, [dispatch, verdictId])
 
+  if (!tab) {
+    return <Redirect to={`/verdicts/${verdictId}/testimony/appearances`}/>
+  }
 
   if (!verdict) return null
+
 
   return (
     <div className='testifier-dashboard'>
@@ -34,7 +44,24 @@ export default () => {
         verdict={verdict}
         withLinksShares={false}
       />
-      <Appearances />
+      <Tabs />
+      <Switch location={location}>
+        <Route
+          component={Links}
+          exact
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances`}
+        />
+        <Route
+          component={Shares}
+          exact
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
+        />
+        <Route
+          component={ClaimGraph}
+          exact
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
+        />
+      </Switch>
     </div>
   )
 }
