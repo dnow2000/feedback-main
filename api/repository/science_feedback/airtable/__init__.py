@@ -38,6 +38,7 @@ def entity_from_row_for(name, entity_dict, index):
 def sync_outdated_rows(max_records=None):
     logger.info('sync science feedback outdated airtable data...')
     for name in NAME_TO_AIRTABLE:
+        logger.info(f'syncing table {NAME_TO_AIRTABLE[name]}')
         sync_for(
             name,
             formula='FIND("Out of sync", {Sync status})>0',
@@ -62,9 +63,11 @@ def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
             if entity:
                 entities.append(entity)
         except KeyError as exception:
-            logger.error('KeyError {}: at [{}] - {}'.format(exception, index, row))
+            logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
+            logger.error(f'KeyError {exception}: {row}')
         except Exception as exception:
-            logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
+            logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
+            logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]} at {row}')
 
     try:
         # Sync verdict status from wordpress
@@ -93,9 +96,11 @@ def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
                     logger.error('code: {}, error: {}'.format(res.status_code, res.content))
 
     except NotNullViolation as exception:
-        logger.error('NotNullViolation: {}'.format(exception))
+        logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
+        logger.error(f'NotNullViolation: {exception}'.format(exception))
     except Exception as exception:
-        logger.error("Unexpected error: {} - {}".format(exception, sys.exc_info()[0]))
+        logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
+        logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]}')
 
 
 def sync(max_records=None, sync_to_airtable=False):

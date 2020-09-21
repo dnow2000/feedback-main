@@ -15,7 +15,7 @@ def import_async_jobs():
 
 def import_background_jobs():
     jobs = []
-    # jobs += content_jobs['background']
+    jobs += content_jobs['background']
     # jobs += user_jobs['background']
     # jobs += science_feedback_jobs['background']
 

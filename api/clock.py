@@ -13,9 +13,10 @@ CLOCK_APP = Flask(__name__)
 setup(CLOCK_APP, with_jobs=True)
 
 if __name__ == '__main__':
-    atexit.register(lambda: CLOCK_APP.async_scheduler.shutdown())
     CLOCK_APP.async_scheduler.start()
-    # CLOCK_APP.background_scheduler.start()
+    CLOCK_APP.background_scheduler.start()
+    atexit.register(lambda: CLOCK_APP.async_scheduler.shutdown())
+    atexit.register(lambda: CLOCK_APP.background_scheduler.shutdown())
 
     try:
         asyncio.get_event_loop().run_forever()
