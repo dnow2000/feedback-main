@@ -4,7 +4,7 @@ from sqlalchemy_api_handler import ApiHandler, as_dict, logger
 from models.appearance import Appearance
 from repository.contents import sync_content
 from utils.rest import expect_json_data
-from repository.science_feedback.airtable import entity_from_row_for, NAME_TO_AIRTABLE
+from repository.science_feedback.airtable import entity_from_row_for
 
 
 @app.route('/webhooks/<entity_name>', methods=['POST'])
@@ -16,7 +16,6 @@ def create_entity_from_row(entity_name):
             ApiHandler.save(entity)
             if entity.__class__ == Appearance:
                 sync_content(entity.quotingContent)
-                sync_content(entity.quotedContent) if entity.quotedContent else None
             return jsonify(as_dict(entity)), 200
         else:
             return jsonify({"error": "couldn't save the entity"}), 500

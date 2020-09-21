@@ -38,7 +38,7 @@ class Content(ApiHandler,
               SoftDeletableMixin,
               VersionedMixin):
 
-    archiveUrl = Column(String(512), unique=True)
+    archiveUrl = Column(String(2048), unique=True)
 
     authors = Column(Text())
 

@@ -62,12 +62,19 @@ def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
             entity = entity_from_row_for(name, row, index)
             if entity:
                 entities.append(entity)
+                row['Synced time input'] = datetime.now().isoformat()
+            else:
+                row['Synced time input'] = 'ERROR'
         except KeyError as exception:
             logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
             logger.error(f'KeyError {exception}: {row}')
+            row['Synced time input'] = 'ERROR'
+            continue
         except Exception as exception:
             logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
             logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]} at {row}')
+            row['Synced time input'] = 'ERROR'
+            continue
 
     try:
         # Sync verdict status from wordpress
@@ -80,11 +87,10 @@ def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
         if name == 'appearance' and formula is not None:
             for entity in entities:
                 sync_content(entity.quotingContent)
-                sync_content(entity.quotedContent) if entity.quotedContent else None
 
         # Set the time synced so that the status in airtable is "Synced"
         if sync_to_airtable:
-            records = [{'id': row['airtableId'], 'fields': {'Synced time input': datetime.now().isoformat()}} for row in rows]
+            records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows]
             for i in range(0, len(records), 10):
                 res = update_airtable_rows(
                     SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
