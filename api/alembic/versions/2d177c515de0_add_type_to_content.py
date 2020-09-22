@@ -11,16 +11,17 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '2d177c515de0'
-down_revision = '32516908c7ac'
+down_revision = '4514d2bb0337'
 branch_labels = None
 depends_on = None
 
 
 def upgrade():
+    content_type = sa.Enum('ARTICLE', 'POST', 'VIDEO', name='contenttype')
     op.add_column('content',
                   sa.Column('type',
-                            sa.Enum('ARTICLE', 'POST', 'VIDEO',
-                                    name='ContentType')))
+                            content_type,
+                            nullable=True))
 
 
 def downgrade():
