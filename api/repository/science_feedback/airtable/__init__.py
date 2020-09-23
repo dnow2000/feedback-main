@@ -92,25 +92,25 @@ def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
             for entity in entities:
                 sync_content(entity.quotingContent)
 
-        # Set the time synced so that the status in airtable is "Synced"
-        if sync_to_airtable:
-            records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows]
-            for i in range(0, len(records), 10):
-                res = update_airtable_rows(
-                    SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
-                    NAME_TO_AIRTABLE[name],
-                    {'records': records[i:i + 10]}
-                )
-
-                if res.status_code != 200:
-                    logger.error('code: {}, error: {}'.format(res.status_code, res.content))
-
     except NotNullViolation as exception:
         logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
         logger.error(f'NotNullViolation: {exception}'.format(exception))
     except Exception as exception:
         logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
         logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]}')
+
+    # Set the time synced so that the status in airtable is "Synced"
+    if sync_to_airtable:
+        records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows]
+        for i in range(0, len(records), 10):
+            res = update_airtable_rows(
+                SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+                NAME_TO_AIRTABLE[name],
+                {'records': records[i:i + 10]}
+            )
+
+            if res.status_code != 200:
+                logger.error('code: {}, error: {}'.format(res.status_code, res.content))
 
 
 def sync(max_records=None, sync_to_airtable=False):

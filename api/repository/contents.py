@@ -96,7 +96,7 @@ def sync(from_date=None,
     if to_date is None:
         to_date = now_date - timedelta(minutes=0)
 
-    query = Content.query.filter(Content.type==None)
+    query = Content.query.filter(Content.type==None).order_by(Content.id.desc())
 
     if from_date or to_date:
         query = filter_by_activity_date_and_verb(query,
