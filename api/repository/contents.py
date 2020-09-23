@@ -20,14 +20,17 @@ CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(Content,
                                                                      Tag)
 
 
-def content_from_url(url, **kwargs):
+def content_from_url(url,
+                     sync_crowdtangle=False,
+                     **kwargs):
     content = Content.create_or_modify({
         '__SEARCH_BY__': 'url',
         'url': url
     })
 
-    attach_crowdtangle_entities_from_content(content,
-                                             request_start_date='2019-09-01')
+    if sync_crowdtangle:
+        attach_crowdtangle_entities_from_content(content,
+                                                 request_start_date='2019-09-01')
 
     trending = buzzsumo_trending_from_url(url, **kwargs)
     if trending:
@@ -65,13 +68,17 @@ def filter_contents_by_is_reviewable(query, is_reviewable):
     return query
 
 
-def sync_content(content, session=None):
-    content = content_from_url(content.url)
+def sync_content(content,
+                 sync_archive_url=False,
+                 sync_crowdtangle=False,
+                 sync_thumbs=False,
+                 session=None):
+    content = content_from_url(content.url, sync_crowdtangle=sync_crowdtangle)
     if content.url:
-        if not content.externalThumbUrl and content.thumbCount == 0:
+        if not content.externalThumbUrl and content.thumbCount == 0 and sync_thumbs:
             thumb = capture(content.url)
             save_thumb(content, thumb, 0, convert=False)
-        if not content.archiveUrl:
+        if not content.archiveUrl and sync_archive_url:
             content.archiveUrl = url_from_archive_services(content.url)
     ApiHandler.save(content)
     return content
@@ -79,6 +86,9 @@ def sync_content(content, session=None):
 
 def sync(from_date=None,
          to_date=None,
+         sync_archive_url=False,
+         sync_crowdtangle=False,
+         sync_thumbs=False,
          contents_max=None):
     now_date = datetime.utcnow()
     if from_date is None:
@@ -86,7 +96,7 @@ def sync(from_date=None,
     if to_date is None:
         to_date = now_date - timedelta(minutes=0)
 
-    query = Content.query
+    query = Content.query.filter(Content.type==None)
 
     if from_date or to_date:
         query = filter_by_activity_date_and_verb(query,
@@ -99,9 +109,14 @@ def sync(from_date=None,
     if contents_max is None:
         contents_max = len(contents)
 
-    logger.info('Sync contents from {} to {}...'.format(from_date, to_date))
+    logger.info(f'Sync contents from {from_date} to {to_date}...')
     for content in contents[:contents_max]:
-        sync_content(content)
-        logger.info('Synced content: {}'.format(content.id))
+        sync_content(
+            content,
+            sync_archive_url=sync_archive_url,
+            sync_crowdtangle=sync_crowdtangle,
+            sync_thumbs=sync_thumbs
+        )
+        logger.info(f'Synced content: {content.id}')
 
-    logger.info('Sync contents from {} to {}...Done'.format(from_date, to_date))
+    logger.info(f'Sync contents from {from_date} to {to_date}...Done')

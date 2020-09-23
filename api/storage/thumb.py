@@ -13,8 +13,8 @@ READABLE_EXTENSIONS = '(%s)' % ', '.join(map(lambda e: f'.{e}', reversed(sorted(
 
 def get_crop(form):
     if 'croppingRect[x]' in form \
-        and 'croppingRect[y]' in form \
-        and 'croppingRect[height]' in form:
+       and 'croppingRect[y]' in form \
+       and 'croppingRect[height]' in form:
         return [
             float(form['croppingRect[x]']),
             float(form['croppingRect[y]']),

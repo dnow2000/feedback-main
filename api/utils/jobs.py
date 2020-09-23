@@ -37,14 +37,14 @@ def write_jobs_to_file(jobs):
     if not os.path.exists(TMP_PATH):
         os.makedirs(TMP_PATH)
 
-    job_file = open(f'{TMP_PATH}/jobs_{current_time}.json', 'w')
+    job_file = open(f'{TMP_PATH}/jobs/jobs_{current_time}.json', 'w')
     logger.info(f'writing jobs {jobs_str} to file {job_file}')
     job_file.write(jobs_str)
     job_file.close()
 
 
 def remove_oldest_jobs_file(file_limit=5):
-    jobs_files = glob(f'{TMP_PATH}/jobs_*.json')
+    jobs_files = glob(f'{TMP_PATH}/jobs/jobs_*.json')
     jobs_files.sort()
     if len(jobs_files) > file_limit:
         os.remove(jobs_files[0])

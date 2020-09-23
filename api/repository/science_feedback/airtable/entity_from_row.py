@@ -1,6 +1,6 @@
 from sqlalchemy_api_handler import humanize
-from datetime import datetime
 from utils.config import COMMAND_NAME, API_URL, IS_DEVELOPMENT
+from utils.date import strptime
 
 from models.appearance import Appearance
 from models.author_content import AuthorContent
@@ -260,7 +260,7 @@ def verdict_from_row(row, unused_index=None):
         return None
 
     medium = Medium.query.filter_by(url='/'.join(row['Review url'].split('/')[0:3])).first()
-    published_date = datetime.strptime(row['Date of publication'], '%Y-%m-%d')
+    published_date = strptime(row['Date of publication'], '%Y-%m-%d')
     post_type = row['Post type'].lower()
 
     verdict_dict = {

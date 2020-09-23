@@ -38,7 +38,6 @@ def entity_from_row_for(name, entity_dict, index):
 def sync_outdated_rows(max_records=None):
     logger.info('sync science feedback outdated airtable data...')
     for name in NAME_TO_AIRTABLE:
-        logger.info(f'syncing table {NAME_TO_AIRTABLE[name]}')
         sync_for(
             name,
             formula='FIND("Out of sync", {Sync status})>0',
@@ -57,6 +56,11 @@ def sync_for(name, formula=None, max_records=None, sync_to_airtable=False):
     )
 
     entities = []
+    if rows:
+        logger.info(f'syncing table {NAME_TO_AIRTABLE[name]}')
+    else:
+        logger.info(f'nothing to sync for table {NAME_TO_AIRTABLE[name]}')
+
     for (index, row) in enumerate(rows):
         try:
             entity = entity_from_row_for(name, row, index)

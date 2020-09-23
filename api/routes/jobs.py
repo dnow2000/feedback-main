@@ -7,7 +7,7 @@ from utils.tmp import TMP_PATH
 
 @app.route('/jobs', methods=['GET'])
 def get_all_jobs():
-    jobs_files = glob(f'{TMP_PATH}/jobs_*.json')
+    jobs_files = glob(f'{TMP_PATH}/jobs/jobs_*.json')
     if not jobs_files:
         return jsonify({'jobs': 'no jobs active'}), 404
 

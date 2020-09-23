@@ -6,7 +6,7 @@ from models.verdict import Verdict
 @app.route('/data', methods=['GET'])
 def get_data():
     return jsonify({
-        'appearanceCount': Appearance.query.count(),
+        'appearanceCount': Appearance.query.filter(Appearance.scienceFeedbackIdentifier!=None).count(),
         'verdictCount': Verdict.query.count()
     })
     # TODO: base on the queries, add in the respective counts
