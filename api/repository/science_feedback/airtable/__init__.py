@@ -86,19 +86,27 @@ def sync_for(
             logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
             logger.error(f'KeyError {exception}: {row}')
             row['Synced time input'] = 'ERROR'
-            continue
         except Exception as exception:
             logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
             logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]} at {row}')
             row['Synced time input'] = 'ERROR'
-            continue
+
+    def _update_10_rows_from_index(i):
+        records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows[i: i + 10]]
+        res = update_airtable_rows(
+            SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+            NAME_TO_AIRTABLE[name],
+            {'records': records},
+            session=session
+        )
+
+        if res.status_code != 200:
+            logger.error(f'code: {res.status_code}, error: {res.content}')
 
     try:
         # Sync verdict status from wordpress
         if name == 'verdict' and formula is not None:
             entities = claim_verdicts_from_airtable(verdicts_to_sync=entities)
-
-        ApiHandler.save(*entities)
 
         # Sync related contents for appearances
         if name == 'appearance' and formula is not None:
@@ -107,20 +115,18 @@ def sync_for(
 
         # Set the time synced so that the status in airtable is "Synced"
         if sync_to_airtable:
-            records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows]
-            for i in range(0, len(records), 10):
-                res = update_airtable_rows(
-                    SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
-                    NAME_TO_AIRTABLE[name],
-                    {'records': records[i:i + 10]},
-                    session=session
-                )
+            for i in range(0, len(rows), 10):
+                try:
+                    ApiHandler.save(*entities[i:i + 10])
+                    _update_10_rows_from_index(i)
 
-                if res.status_code != 200:
-                    logger.error('code: {}, error: {}'.format(res.status_code, res.content))
-    except NotNullViolation as exception:
-        logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
-        logger.error(f'NotNullViolation: {exception}'.format(exception))
+                except Exception as exception:
+                    logger.warning(f'Error while trying to save 10 entities at table {NAME_TO_AIRTABLE[name]}')
+                    logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]}')
+                    for index in range(i, i + 10):
+                        rows[index]['Synced time input'] = 'BATCH ERROR'
+                    _update_10_rows_from_index(i)
+
     except Exception as exception:
         logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
         logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]}')
