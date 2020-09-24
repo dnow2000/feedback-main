@@ -9,5 +9,5 @@ def get_data():
     return jsonify({
         'contentCount': Content.query.filter(Content.type==None).count(),
         'verdictCount': Verdict.query.count()
-    })
+    }), 200
     # TODO: base on the queries, add in the respective counts

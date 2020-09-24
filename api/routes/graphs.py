@@ -19,7 +19,7 @@ def get_graphs():
         graph_from_entity(entity, shortcutted_types=SHORTCUTTED_TYPES)
         for entity in Verdict.query.all()[:2]
     ]
-    return jsonify(graphs)
+    return jsonify(graphs), 200
 
 
 @app.route('/graphs/<collection_name>/<entity_id>', methods=['GET'])
