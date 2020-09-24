@@ -2,12 +2,9 @@
 
 import os
 import sys
-import asyncio
 import requests
 
-from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
-from psycopg2.errors import NotNullViolation
 from sqlalchemy_api_handler import ApiHandler, logger
 
 from repository.contents import sync_content

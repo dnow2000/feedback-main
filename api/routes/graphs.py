@@ -1,7 +1,6 @@
 import inflect
 from flask import current_app as app, jsonify
 from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
                                    load_or_404
 
 from domain.graph import graph_from_entity

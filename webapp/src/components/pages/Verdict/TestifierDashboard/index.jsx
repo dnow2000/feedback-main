@@ -9,7 +9,7 @@ import { verdictNormalizer } from 'utils/normalizers'
 
 import ClaimGraph from './ClaimGraph'
 import Links from './Links'
-import Shares from './Shares'
+// import Shares from './Shares'
 import Tabs from './Tabs'
 
 
@@ -31,7 +31,7 @@ export default () => {
   }, [dispatch, verdictId])
 
   if (!tab) {
-    return <Redirect to={`/verdicts/${verdictId}/testimony/appearances`}/>
+    return <Redirect to={`/verdicts/${verdictId}/testimony/appearances`} />
   }
 
   if (!verdict) return null
@@ -56,11 +56,11 @@ export default () => {
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
         />*/}
-        {/*<Route
+        <Route
           component={ClaimGraph}
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
-        />*/}
+        />
       </Switch>
     </div>
   )
