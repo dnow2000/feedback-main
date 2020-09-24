@@ -51,16 +51,16 @@ export default () => {
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances`}
         />
-        <Route
+        {/*<Route
           component={Shares}
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
-        />
-        <Route
+        />*/}
+        {/*<Route
           component={ClaimGraph}
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
-        />
+        />*/}
       </Switch>
     </div>
   )

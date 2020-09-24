@@ -8,7 +8,7 @@ def import_async_jobs():
     jobs = []
     # jobs += content_jobs['async']
     # jobs += user_jobs['async']
-    jobs += science_feedback_jobs['async']
+    # jobs += science_feedback_jobs['async']
 
     return jobs
 
@@ -17,6 +17,6 @@ def import_background_jobs():
     jobs = []
     jobs += content_jobs['background']
     # jobs += user_jobs['background']
-    # jobs += science_feedback_jobs['background']
+    jobs += science_feedback_jobs['background']
 
     return jobs

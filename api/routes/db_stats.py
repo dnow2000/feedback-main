@@ -1,12 +1,13 @@
-from flask import current_app as app, jsonify, request
+from flask import current_app as app, jsonify
 from models.appearance import Appearance
+from models.content import Content
 from models.verdict import Verdict
 
 
-@app.route('/data', methods=['GET'])
+@app.route('/db_stats', methods=['GET'])
 def get_data():
     return jsonify({
-        'appearanceCount': Appearance.query.filter(Appearance.scienceFeedbackIdentifier!=None).count(),
+        'contentCount': Content.query.filter(Content.type==None).count(),
         'verdictCount': Verdict.query.count()
     })
     # TODO: base on the queries, add in the respective counts

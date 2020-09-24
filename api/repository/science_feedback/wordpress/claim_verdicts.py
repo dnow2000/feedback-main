@@ -10,7 +10,7 @@ from models.verdict_tag import VerdictTag
 from utils.asynchronous import map_asynchronous
 
 
-def claim_verdicts_from_airtable(verdicts_to_sync=None, max_verdicts=None):
+def claim_verdicts_from_airtable(verdicts_to_sync=None, max_verdicts=None, sync_async=False):
     if verdicts_to_sync is None:
         query = Verdict.query.filter(Verdict.scienceFeedbackUrl != None)
         if max_verdicts is not None:
@@ -24,7 +24,10 @@ def claim_verdicts_from_airtable(verdicts_to_sync=None, max_verdicts=None):
         max_verdicts = len(verdicts)
 
     urls = [verdict.scienceFeedbackUrl for verdict in verdicts][:max_verdicts]
-    claim_reviews = map_asynchronous(claim_review_from_url, urls)
+    if sync_async:
+        claim_reviews = map_asynchronous(claim_review_from_url, urls)
+    else:
+        claim_reviews = [claim_review_from_url(url) for url in urls]
 
     for (index, verdict) in enumerate(verdicts):
         claim_review = claim_reviews[index]

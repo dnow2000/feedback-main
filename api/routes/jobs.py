@@ -2,12 +2,12 @@ import json
 from glob import glob
 from flask import current_app as app, jsonify
 
-from utils.tmp import TMP_PATH
+from utils.jobs import JOB_PATH
 
 
 @app.route('/jobs', methods=['GET'])
 def get_all_jobs():
-    jobs_files = glob(f'{TMP_PATH}/jobs/jobs_*.json')
+    jobs_files = glob(f'{JOB_PATH}/jobs_*.json')
     if not jobs_files:
         return jsonify({'jobs': 'no jobs active'}), 404
 

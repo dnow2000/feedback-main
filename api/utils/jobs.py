@@ -1,11 +1,13 @@
 import json
 import os
+
+from pathlib import Path
 from datetime import datetime
 from glob import glob
 from sqlalchemy_api_handler import logger
 
-from utils.time import str_from_timedelta
-from utils.tmp import TMP_PATH
+JOB_PATH = Path(os.path.dirname(os.path.realpath(__file__)))\
+    / '..' / 'jobs' / 'job_files'
 
 
 def _construct_job_obj(job):
@@ -13,7 +15,7 @@ def _construct_job_obj(job):
     job_obj['id'] = job.id
     job_obj['name'] = job.name
     job_obj['next_run'] = str(job.next_run_time)
-    job_obj['trigger'] = str_from_timedelta(job.trigger.interval)
+    job_obj['trigger'] = str(job.trigger)
     return job_obj
 
 
@@ -34,17 +36,16 @@ def get_all_jobs(app):
 def write_jobs_to_file(jobs):
     jobs_str = json.dumps(jobs)
     current_time = datetime.now().isoformat()
-    if not os.path.exists(TMP_PATH):
-        os.makedirs(TMP_PATH)
+    if not os.path.exists(JOB_PATH):
+        os.makedirs(JOB_PATH)
 
-    job_file = open(f'{TMP_PATH}/jobs/jobs_{current_time}.json', 'w')
-    logger.info(f'writing jobs {jobs_str} to file {job_file}')
+    job_file = open(f'{JOB_PATH}/jobs_{current_time}.json', 'w')
     job_file.write(jobs_str)
     job_file.close()
 
 
 def remove_oldest_jobs_file(file_limit=5):
-    jobs_files = glob(f'{TMP_PATH}/jobs/jobs_*.json')
+    jobs_files = glob(f'{JOB_PATH}/jobs_*.json')
     jobs_files.sort()
     if len(jobs_files) > file_limit:
         os.remove(jobs_files[0])

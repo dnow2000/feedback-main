@@ -4,11 +4,12 @@ from apscheduler.triggers.date import DateTrigger
 from repository.contents import sync as sync_contents
 
 
-def create_clock_sync_contents(from_date_minutes, to_date_minutes):
+def create_clock_sync_contents(from_date_minutes, to_date_minutes, **kwargs):
     def clock_sync_contents():
         now_date = datetime.utcnow()
         sync_contents(now_date - timedelta(minutes=from_date_minutes),
-                      now_date - timedelta(minutes=to_date_minutes))
+                      now_date - timedelta(minutes=to_date_minutes),
+                      **kwargs)
     return clock_sync_contents
 
 
@@ -55,10 +56,31 @@ JOBS = {
 for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     from_date = clock_sync_content_config['from_date']
     to_date = clock_sync_content_config['to_date']
+
+    sync_simple = create_clock_sync_contents(from_date, to_date)
+    sync_with_thumbs = create_clock_sync_contents(from_date, to_date, sync_thumbs=True)
+    sync_with_archive_url = create_clock_sync_contents(from_date, to_date, sync_archive_url=True)
+
     JOBS['background'].append({
-        'func': create_clock_sync_contents(from_date, to_date),
-        'id': 'sync content {} {}'.format(from_date, to_date),
-        'next_run_time': datetime.now(),
+        'func': sync_simple,
+        'id': f'sync simple {from_date} {to_date}',
+        'next_run_time': datetime.now() + timedelta(hours=6),
+        'trigger': 'cron',
+        **clock_sync_content_config['frequency']
+    })
+
+    JOBS['background'].append({
+        'func': sync_with_thumbs,
+        'id': f'sync thumbs {from_date} {to_date}',
+        'next_run_time': datetime.now() + timedelta(hours=12),
+        'trigger': 'cron',
+        **clock_sync_content_config['frequency']
+    })
+
+    JOBS['background'].append({
+        'func': sync_with_archive_url,
+        'id': f'sync archive url {from_date} {to_date}',
+        'next_run_time': datetime.now() + timedelta(hours=18),
         'trigger': 'cron',
         **clock_sync_content_config['frequency']
     })

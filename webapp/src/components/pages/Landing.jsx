@@ -42,14 +42,15 @@ export default () => {
 
   useEffect(() => {
     dispatch(requestData({
-      apiPath: '/data'
+      apiPath: '/db_stats',
+      isMergingDatum: true
     }))
   }, [dispatch])
 
-  const [linkCount, verdictCount] = useSelector(state => {
+  const [linkCount, verdictCount] = useSelector(({ data }) => {
     return [
-      state?.data?.data?.[0]?.appearanceCount || 2674,
-      state?.data?.data?.[0]?.verdictCount || 449
+      data?.db_stats?.[0]?.contentCount || 2674,
+      data?.db_stats?.[0]?.verdictCount || 449
     ]
   })
 

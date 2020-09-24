@@ -12,6 +12,7 @@ def request_airtable_rows(
         table_name,
         filter_by_formula=None,
         max_records=None,
+        session=None,
         token=AIRTABLE_TOKEN
 ):
     url = '{}/{}/{}?view=Grid%20view'.format(
@@ -31,14 +32,18 @@ def request_airtable_rows(
 
     headers = {'Authorization': 'Bearer {}'.format(token)}
 
-    result = requests.get(url, headers=headers).json()
-    records = result.get('records')
-    offset = result.get('offset')
-    while offset:
-        url_with_offset = '{}&offset={}'.format(url, offset)
-        result = requests.get(url_with_offset, headers=headers).json()
+    if session is None:
+        session = requests.Session()
+
+    with session:
+        result = session.get(url, headers=headers).json()
+        records = result.get('records')
         offset = result.get('offset')
-        records += result.get('records')
+        while offset:
+            url_with_offset = '{}&offset={}'.format(url, offset)
+            result = session.get(url_with_offset, headers=headers).json()
+            offset = result.get('offset')
+            records += result.get('records')
 
     return [
         {'airtableId': record['id'], **record['fields']}
@@ -50,6 +55,7 @@ def update_airtable_rows(
     base_id,
     table_name,
     records,
+    session=None,
     token=AIRTABLE_TOKEN
 ):
     url = '{}/{}/{}'.format(
@@ -63,5 +69,7 @@ def update_airtable_rows(
         'Content-Type': 'application/json'
     }
 
-    res = requests.patch(url, headers=headers, data=json.dumps(records))
-    return res
+    if session is None:
+        session = requests.Session()
+
+    return session.patch(url, headers=headers, data=json.dumps(records))

@@ -100,7 +100,7 @@ static/object_store_data
 static/poynter_claims.csv
 
 # Tmp
-tmp/jobs
+jobs/job_files
 
 # Test
 .hypothesis/
