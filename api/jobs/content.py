@@ -58,13 +58,14 @@ for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     to_date = clock_sync_content_config['to_date']
 
     sync_simple = create_clock_sync_contents(from_date, to_date)
-    sync_with_thumbs = create_clock_sync_contents(from_date, to_date, sync_thumbs=True)
     sync_with_archive_url = create_clock_sync_contents(from_date, to_date, sync_archive_url=True)
+    sync_with_crowdtangle = create_clock_sync_contents(from_date, to_date, sync_crowdtangle=True)
+    sync_with_thumbs = create_clock_sync_contents(from_date, to_date, sync_thumbs=True)
 
     JOBS['background'].append({
         'func': sync_simple,
         'id': f'sync simple {from_date} {to_date}',
-        'next_run_time': datetime.now() + timedelta(hours=6),
+        'next_run_time': datetime.now() + timedelta(hours=3),
         'trigger': 'cron',
         **clock_sync_content_config['frequency']
     })
@@ -72,7 +73,7 @@ for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     JOBS['background'].append({
         'func': sync_with_thumbs,
         'id': f'sync thumbs {from_date} {to_date}',
-        'next_run_time': datetime.now() + timedelta(hours=12),
+        'next_run_time': datetime.now() + timedelta(hours=5),
         'trigger': 'cron',
         **clock_sync_content_config['frequency']
     })
@@ -80,7 +81,15 @@ for clock_sync_content_config in CLOCK_SYNC_CONTENT_CONFIGS:
     JOBS['background'].append({
         'func': sync_with_archive_url,
         'id': f'sync archive url {from_date} {to_date}',
-        'next_run_time': datetime.now() + timedelta(hours=18),
+        'next_run_time': datetime.now() + timedelta(hours=7),
+        'trigger': 'cron',
+        **clock_sync_content_config['frequency']
+    })
+
+    JOBS['background'].append({
+        'func': sync_with_crowdtangle,
+        'id': f'sync archive url {from_date} {to_date}',
+        'next_run_time': datetime.now() + timedelta(hours=12),
         'trigger': 'cron',
         **clock_sync_content_config['frequency']
     })

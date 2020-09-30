@@ -4,10 +4,10 @@ import os
 from pathlib import Path
 from datetime import datetime
 from glob import glob
-from sqlalchemy_api_handler import logger
+from utils.config import IS_DEVELOPMENT
 
 JOB_PATH = Path(os.path.dirname(os.path.realpath(__file__)))\
-    / '..' / 'jobs' / 'job_files'
+    / '..' / 'jobs' / 'job_files' if IS_DEVELOPMENT else '/app/tmp'
 
 
 def _construct_job_obj(job):

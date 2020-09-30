@@ -1,5 +1,4 @@
 from flask import current_app as app, jsonify
-from models.appearance import Appearance
 from models.content import Content
 from models.verdict import Verdict
 
