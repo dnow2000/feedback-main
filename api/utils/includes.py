@@ -16,6 +16,10 @@ USER_INCLUDES = [
     }
 ]
 
+APPEARANCE_INCLUDES = [
+    'quotingContent'
+]
+
 CONTENT_INCLUDES = [
     {
         'key': 'reviews',

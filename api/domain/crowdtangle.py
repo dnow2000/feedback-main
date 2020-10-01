@@ -40,6 +40,8 @@ def shares_from_url(url, request_start_date):
 
         for post in response['result']['posts']:
             account = post['account']
+            summary = post.get('message') or post.get('description')
+            title = post.get('title')
             shares.append({
                 'account': {
                     'crowdtangleIdentifier': str(account['id']),
@@ -52,8 +54,16 @@ def shares_from_url(url, request_start_date):
                     'crowdtangleIdentifier': str(post['id']),
                     'facebookIdentifier': str(post['platformId']),
                     'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
-                    'url': post['postUrl'],
-                }
+                    'summary': summary,
+                    'totalShares': sum(post['statistics']['actual'].values()),
+                    'title': title,
+                    'url': post['postUrl']
+                },
+                'interactions': {
+                    'details': post['statistics']['actual'],
+                    'total': sum(post['statistics']['actual'].values())
+                },
+                'platform': post['platform']
             })
     else:
         logger.error(f'Error in fetching from Crowdtangle: {response.get("message", "Unknown exception.")}')

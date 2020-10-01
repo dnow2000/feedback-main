@@ -4,6 +4,8 @@ from models.content import Content, ContentType
 from models.medium import Medium
 from models.platform import Platform
 from models.user import User
+from utils.config import DEFAULT_USER_PASSWORD, IS_DEVELOPMENT
+from utils.random_token import create_random_password
 
 
 def attach_crowdtangle_entities_from_content(content, request_start_date):
@@ -11,11 +13,13 @@ def attach_crowdtangle_entities_from_content(content, request_start_date):
     # create a "CrowdTangle" user to testify that these Facebook posts are connected to the url
     crowdtangle_user = User.create_or_modify({
         '__SEARCH_BY__': 'email',
-        'email': "crowdtangle@me.com",
-        'password': "crowdtangle",
+        'email': "crowdtangle@sciencefeedback.co",
         'firstName': "Crowd",
         'lastName': "Tangle"
     })
+
+    if not crowdtangle_user.id:
+        crowdtangle_user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
 
     # create the Facebook platform so we can link our Facebook posts media to it:
     facebook_platform = Platform.create_or_modify({

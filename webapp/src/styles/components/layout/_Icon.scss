@@ -1,4 +1,9 @@
 .icon {
   height: 16px;
   width: 16px;
+
+  &.medium {
+    height: 40px;
+    width: 40px;
+  }
 }

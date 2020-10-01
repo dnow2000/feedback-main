@@ -27,25 +27,39 @@
     padding: 1em 1.1em;
     width: 100%;
 
-    .appearance-title {
-      color: $grey-darker;
+    .appearance-footer {
+      @extend .text-muted;
+
+      display: flex;
+      margin-top: 1rem;
+
+      :not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      button {
+        @extend .button;
+        @extend .thin;
+        @extend .text-muted;
+
+        align-self: center;
+        font-size: 0.8rem;
+        height: 1.5rem;
+      }
     }
 
     .appearance-source {
       margin-bottom: 1em;
     }
 
+    .appearance-title {
+      color: $grey-darker;
+    }
+
     .appearance-url {
       color: $primary;
       text-decoration: none;
       font-size: 0.8em;
-    }
-
-    .appearance-footer {
-      @extend .text-muted;
-
-      display: flex;
-      margin-top: 1rem;
     }
   }
 }
