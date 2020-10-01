@@ -39,32 +39,38 @@ def shares_from_url(url, request_start_date):
             return shares
 
         for post in response['result']['posts']:
-            account = post['account']
-            summary = post.get('message') or post.get('description')
-            title = post.get('title')
-            shares.append({
-                'account': {
-                    'crowdtangleIdentifier': str(account['id']),
-                    'facebookIdentifier': str(account['platformId']),
-                    'logoUrl': account['profileImage'],
-                    'name': account['name'],
-                    'url': account['url']
-                },
-                'post': {
-                    'crowdtangleIdentifier': str(post['id']),
-                    'facebookIdentifier': str(post['platformId']),
-                    'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
-                    'summary': summary,
-                    'totalShares': sum(post['statistics']['actual'].values()),
-                    'title': title,
-                    'url': post['postUrl']
-                },
-                'interactions': {
-                    'details': post['statistics']['actual'],
-                    'total': sum(post['statistics']['actual'].values())
-                },
-                'platform': post['platform']
-            })
+            try:
+                account = post['account']
+                identifier_key = 'id' if account.get('accountType') == 'facebook_profile' else 'platformId'
+                summary = post.get('message') or post.get('description')
+                title = post.get('title')
+                shares.append({
+                    'account': {
+                        'crowdtangleIdentifier': str(account['id']),
+                        'facebookIdentifier': str(account[identifier_key]),
+                        'logoUrl': account['profileImage'],
+                        'name': account['name'],
+                        'url': account['url']
+                    },
+                    'post': {
+                        'crowdtangleIdentifier': str(post['id']),
+                        'facebookIdentifier': str(account[identifier_key]),
+                        'publishedDate': datetime.strptime(post['date'], '%Y-%m-%d %H:%M:%S'),
+                        'summary': summary,
+                        'totalInteractions': sum(post['statistics']['actual'].values()),
+                        'totalShares': post['statistics']['actual']['shareCount'],
+                        'title': title,
+                        'url': post['postUrl']
+                    },
+                    'interactions': {
+                        'details': post['statistics']['actual'],
+                        'total': sum(post['statistics']['actual'].values())
+                    },
+                    'platform': post['platform']
+                })
+            except Exception as e:
+                logger.error(f'Couldn\'t create a share: {e}')
+                logger.warning(f'Share failed to create from: {post}')
     else:
         logger.error(f'Error in fetching from Crowdtangle: {response.get("message", "Unknown exception.")}')
         logger.warning('Returning empty interaction data')

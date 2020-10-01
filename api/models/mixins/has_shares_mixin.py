@@ -8,6 +8,8 @@ class HasSharesMixin(object):
 
     redditShares = Column(BigInteger)
 
+    totalInteractions = Column(BigInteger)
+
     totalShares = Column(BigInteger)
 
     twitterShares = Column(BigInteger)

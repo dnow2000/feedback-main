@@ -123,6 +123,8 @@ def sync_for(
                     for index in range(i, i + 10):
                         rows[index]['Synced time input'] = f'Batch error: {exception}'
                     _update_10_rows_from_index(i)
+        else:
+            ApiHandler.save(*entities)
 
     except Exception as exception:
         logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')
