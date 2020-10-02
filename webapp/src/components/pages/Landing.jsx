@@ -45,9 +45,9 @@ export default () => {
   }, [dispatch])
 
   const contentsCount = (useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'collectionName', value: 'contents' }))[0] || {}).count
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
   const verdictsCount = (useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'collectionName', value: 'verdicts' }))[0] || {}).count
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Verdict' }))[0] || {}).count
 
 
   return (
