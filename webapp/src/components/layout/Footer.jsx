@@ -1,6 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { IS_DEVELOPMENT, ROOT_ASSETS_PATH, VERSION } from 'utils/config'
+import { ROOT_ASSETS_PATH, VERSION } from 'utils/config'
 
 
 export default () => (
@@ -95,5 +95,5 @@ export default () => (
     <p className='app-version'>
       {`Version: ${VERSION}`}
     </p>
-  </div>  
+  </div>
 )
