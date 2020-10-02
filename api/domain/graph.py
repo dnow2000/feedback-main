@@ -83,3 +83,39 @@ def graph_from_entity(entity,
     if not depth:
         return graph
     return graph, has_added
+
+
+def graph_from_claim(claim):
+
+    claim_node = {
+        'datum': as_dict(claim),
+        'id': node_id_from(claim),
+        'type': 'Claim'
+    }
+
+    graph = {
+        'collectionName': inflect_engine.plural_noun(claim.__class__.__name__.lower()),
+        'entityId': humanize(claim.id),
+        'nodes': [claim_node],
+        'edges': []
+    }
+
+    for appearance in claim.quotedFromAppearances:
+
+        content = appearance.quotingContent
+
+        content_node = {
+            'datum': as_dict(content),
+            'id': node_id_from(content),
+            'type': 'Content'
+        }
+        graph['nodes'].append(content_node)
+
+        edge = {
+            'id': '{}_{}'.format(claim_node['id'], content_node['id']),
+            'source': claim_node['id'],
+            'target': content_node['id']
+        }
+        graph['edges'].append(edge)
+
+    return graph
