@@ -2,11 +2,11 @@
 # pylint: disable=W0641
 # pylint: disable=R0914
 
-from flask_sqlalchemy.model import DefaultMeta
 from utils.db import db
 
 
 def import_models():
+    from models.activity import Activity
     from models.appearance import Appearance
     from models.author_content import AuthorContent
     from models.claim import Claim

@@ -7,6 +7,7 @@ from utils.config import IS_DEVELOPMENT
 def import_routes():
     import routes.appearances
     import routes.author_contents
+    import routes.checks
     import routes.claims
     import routes.contents
     import routes.graphs
@@ -28,7 +29,6 @@ def import_routes():
     import routes.webhooks
     import routes.wikidata
 
-    import routes.health
     import routes.storage
 
 
