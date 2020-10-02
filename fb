@@ -315,17 +315,23 @@ elif [[ "$CMD" == "rebuild" ]]; then
   exit_with_success
 
 
-# Restart docker-compose up with forcing recreation and unmounting volumes
+# Restart with forcing recreation and unmounting volumes
 elif [[ "$CMD" == "restart" ]]; then
   docker-compose -f docker-compose.$MODE.yml down --volumes $(containers_from_names $*)
-  export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh  --force-recreate $(containers_from_names $*)
+  export FILE=$FILE && export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh  --force-recreate $(containers_from_names $*)
   exit_with_success
 
-
 # Start docker-compose up with adapted env variables or webapps with local env
+elif [[ "$CMD" == "reup" ]]; then
+  docker-compose -f docker-compose.$MODE.yml down --volumes $(containers_from_names $*)
+  docker-compose -f docker-compose.$MODE.yml up --force-recreate $(containers_from_names $*)
+  exit_with_success
+
+# Start docker-compose up with additional commands given the mode
 elif [[ "$CMD" == "start" ]]; then
   cd $ROOT_PATH
-  export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh $(containers_from_names $*)
+  echo $(containers_from_names $*)
+  export FILE=$FILE && export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh $(containers_from_names $*)
   exit_with_success
 
 # Stop development containers
@@ -334,6 +340,10 @@ elif [[ "$CMD" == "stop" ]]; then
   docker-compose -f docker-compose.$MODE.yml stop $(containers_from_names $*)
   exit_with_success
 
+# Start docker-compose up with adapted env variables or webapps with local env
+elif [[ "$CMD" == "up" ]]; then
+  docker-compose -f docker-compose.$MODE.yml up $(containers_from_names $*);
+  exit_with_success
 
 # =============================================
 # Webapp commands

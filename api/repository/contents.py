@@ -59,8 +59,8 @@ def keep_contents_with_keywords(query, keywords):
 
 
 def keep_contents_with_minimal_datum(query):
-    return query.filter((Content.title is not None) & \
-                        ((Content.externalThumbUrl is not None) | (Content.thumbCount > 0)))
+    return query.filter((Content.title != None) & \
+                        ((Content.externalThumbUrl != None) | (Content.thumbCount > 0)))
 
 
 def filter_contents_by_is_reviewable(query, is_reviewable):
