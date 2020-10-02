@@ -49,6 +49,7 @@ export default () => {
             active: path === tab
           })}
           key={path}
+          replace
           to={`/verdicts/${verdictId}/testimony/${path}`}
         >
           {childrenFrom({ linksCount, sharesCount })}
