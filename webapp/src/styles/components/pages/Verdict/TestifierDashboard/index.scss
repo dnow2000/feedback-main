@@ -17,8 +17,7 @@
   }
 
   &.empty {
-    @extend .text-center;
-
     padding: 2rem;
+    text-align: center;
   }
 }
