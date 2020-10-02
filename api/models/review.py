@@ -48,6 +48,7 @@ class Review(ApiHandler,
 
     @property
     def verdicts(self):
+        print(dir(ApiHandler), ApiHandler.model_from_name)
         Verdict = ApiHandler.model_from_table_name('verdict')
         VerdictReviewer = ApiHandler.model_from_table_name('verdict_reviewer')
         verdict_reviewers = VerdictReviewer.query.filter_by(reviewerId=self.reviewerId)

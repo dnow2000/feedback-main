@@ -5,6 +5,7 @@ from sqlalchemy_api_handler import ApiHandler
 import sys
 
 from domain.content import newspaper_from_url
+from repository.database import create
 from utils.setup import setup
 
 
@@ -42,5 +43,10 @@ def app():
     setup(flask_app,
           with_login_manager=True,
           with_routes=True)
+
+    try:
+        create()
+    except Exception:
+        pass
 
     return flask_app

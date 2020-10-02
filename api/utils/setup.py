@@ -66,7 +66,7 @@ def setup(flask_app,
         login_manager.init_app(flask_app)
         import repository.login_manager
 
-    import utils.nltk_downloader
+    import utils.nltk
 
     if with_routes:
         import_routes()
