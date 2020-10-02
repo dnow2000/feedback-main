@@ -1,5 +1,7 @@
 export const edgeWithDecoration = edge => edge
 
+
+
 const labelDependingOnType = (node) => {
   
   let label;
@@ -7,7 +9,7 @@ const labelDependingOnType = (node) => {
   if (node.type === 'Claim') {
     label = node.datum.text
   } else if (node.type === 'Content') {
-    label = node.datum.url
+    label = (new URL(node.datum.url)).hostname 
   } else if (node.type === 'Medium') {
     label = node.datum.name
   } else if (node.type === 'Organization') {
