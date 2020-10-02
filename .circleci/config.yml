@@ -84,14 +84,13 @@ jobs:
 
 
 workflows:
-  build-and-test:
+  commit:
     filters:
       tags:
         only: /.*/
     jobs:
       - build
       - test-api:
-
           requires:
             - build
       #- test-end2end:
