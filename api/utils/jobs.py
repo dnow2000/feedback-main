@@ -4,10 +4,12 @@ import json
 import os
 from sqlalchemy_api_handler import logger
 
+from utils.config import IS_DEVELOPMENT
 from utils.tmp import TMP_PATH
 
 
-JOBS_PATH = TMP_PATH / 'jobs'
+JOBS_PATH = Path(os.path.dirname(os.path.realpath(__file__)))\
+              / '..' / 'tmp' / 'jobs' if IS_DEVELOPMENT else '/tmp/jobs'
 
 if not os.path.exists(JOBS_PATH):
     os.makedirs(JOBS_PATH)
