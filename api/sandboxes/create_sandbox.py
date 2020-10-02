@@ -1,4 +1,4 @@
-from repository.clean import clean
+from repository.database import clean
 import sandboxes.creators as creators
 
 

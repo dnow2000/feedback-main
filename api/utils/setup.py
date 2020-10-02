@@ -22,8 +22,7 @@ def setup(flask_app,
           with_jobs=False,
           with_login_manager=False,
           with_routes=False,
-          with_scripts_manager=False,
-          with_models_creation=False):
+          with_scripts_manager=False):
 
     flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
@@ -53,7 +52,7 @@ def setup(flask_app,
     flask_app.url_map.strict_slashes = False
 
     flask_app.app_context().push()
-    import_models(with_creation=with_models_creation)
+    import_models()
 
     if with_login_manager:
         from flask_login import LoginManager

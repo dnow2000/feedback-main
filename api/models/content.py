@@ -11,6 +11,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
+from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasCrowdtangleMixin, \
                           HasExternalThumbUrlMixin, \
                           HasFacebookMixin, \
@@ -81,3 +82,10 @@ class Content(ApiHandler,
         if self.tags and 'PeerVerified' in self.tags:
             amount -= 10
         return amount
+
+
+ts_indexes = [
+    ('idx_content_fts_title', Content.title),
+    ('idx_content_fts_summary', Content.summary),
+]
+(Content.__ts_vectors__, Content.__table_args__) = create_ts_vector_and_table_args(ts_indexes)
