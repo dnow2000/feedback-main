@@ -37,9 +37,9 @@ const colorsByNodeType = {
   'AuthorContent': '#009',
   'Claim': '#F00',
   'Content': '#06F',
-  'Medium': '#FF3',
-  'Organization': '#FF3',
-  'Role': '#CF6',
+  'Medium': '#CF6',
+  'Organization': '#CF6',
+  'Role': '#FF3',
   'Tag': '#F96',
   'User': '#CF6',
   'Verdict': '#900',
@@ -48,8 +48,8 @@ const colorsByNodeType = {
 
 const sizesByNodeType = {
   'Claim': 10,
-  'Content': 3,
-  'User': 7
+  'Content': 7,
+  'User': 3
 }
 
 export const nodeWithDecoration = node => {

@@ -85,37 +85,67 @@ def graph_from_entity(entity,
     return graph, has_added
 
 
+def write_node_from_entity(entity):
+    node = {
+        'datum': as_dict(entity),
+        'id': node_id_from(entity),
+        'type': node_type_from(entity)
+    }
+    return node
+
+
+def write_edge_between_nodes(source_node, target_node):
+    edge = {
+        'id': '{}_{}'.format(source_node['id'], target_node['id']),
+        'source': source_node['id'],
+        'target': target_node['id']
+    }
+    return edge
+
+
 def graph_from_claim(claim):
 
-    claim_node = {
-        'datum': as_dict(claim),
-        'id': node_id_from(claim),
-        'type': 'Claim'
-    }
-
+    node_ids = []
+    edge_ids = []
     graph = {
         'collectionName': inflect_engine.plural_noun(claim.__class__.__name__.lower()),
         'entityId': humanize(claim.id),
-        'nodes': [claim_node],
+        'nodes': [],
         'edges': []
     }
+
+    claim_node = write_node_from_entity(claim)
+    graph['nodes'].append(claim_node)
+    node_ids.append(claim_node['id'])
+
+    print(claim_node['id'])
 
     for appearance in claim.quotedFromAppearances:
 
         content = appearance.quotingContent
 
-        content_node = {
-            'datum': as_dict(content),
-            'id': node_id_from(content),
-            'type': 'Content'
-        }
-        graph['nodes'].append(content_node)
+        content_node = write_node_from_entity(content)
+        if content_node['id'] not in node_ids:
+            graph['nodes'].append(content_node)
+            node_ids.append(content_node['id'])
 
-        edge = {
-            'id': '{}_{}'.format(claim_node['id'], content_node['id']),
-            'source': claim_node['id'],
-            'target': content_node['id']
-        }
-        graph['edges'].append(edge)
+        edge = write_edge_between_nodes(claim_node, content_node)
+        if edge['id'] not in edge_ids:
+            graph['edges'].append(edge)
+            edge_ids.append(edge['id'])
+
+        for appearance in content.quotedFromAppearances:
+
+            medium = appearance.quotingContent.medium
+
+            medium_node = write_node_from_entity(medium)
+            if medium_node['id'] not in node_ids:
+                graph['nodes'].append(medium_node)
+                node_ids.append(medium_node['id'])
+
+            edge = write_edge_between_nodes(content_node, medium_node)
+            if edge['id'] not in edge_ids:
+                graph['edges'].append(edge)
+                edge_ids.append(edge['id'])          
 
     return graph
