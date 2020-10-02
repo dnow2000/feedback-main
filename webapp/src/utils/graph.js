@@ -4,21 +4,21 @@ const labelDependingOnType = (node) => {
   
   let label;
 
-  if (node.type == 'Claim') {
+  if (node.type === 'Claim') {
     label = node.datum.text
-  } else if (node.type == 'Content') {
+  } else if (node.type === 'Content') {
     label = node.datum.url
-  } else if (node.type == 'Medium') {
+  } else if (node.type === 'Medium') {
     label = node.datum.name
-  } else if (node.type == 'Organization') {
+  } else if (node.type === 'Organization') {
     label = node.datum.name
-  } else if (node.type == 'Role') {
+  } else if (node.type === 'Role') {
     label = node.datum.type
-  } else if (node.type == 'Tag') {
+  } else if (node.type === 'Tag') {
     label = node.datum.label
-  } else if (node.type == 'User') {
+  } else if (node.type === 'User') {
     label = `${node.datum.firstName} ${node.datum.lastName}`
-  } else if (node.type == 'Verdict') {
+  } else if (node.type === 'Verdict') {
     label = node.datum.title
   }  else {
     label = node.id
