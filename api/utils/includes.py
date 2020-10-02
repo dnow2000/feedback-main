@@ -17,7 +17,15 @@ USER_INCLUDES = [
 ]
 
 APPEARANCE_INCLUDES = [
-    'quotingContent'
+    {
+        'key': 'quotingContent',
+        'includes': [
+            {
+                'key': 'authorContents',
+                'includes': ['author']
+            }
+        ]
+    }
 ]
 
 CONTENT_INCLUDES = [

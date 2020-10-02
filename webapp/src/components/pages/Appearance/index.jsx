@@ -1,150 +1,114 @@
-import React, { useCallback, useEffect, useMemo } from 'react'
-import { Form } from 'react-final-form'
+import React, { useCallback, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
-import {
-  requestData,
-  selectEntityByKeyAndId,
-  selectEntitiesByKeyAndJoin
-} from 'redux-thunk-data'
-import { useFormidable } from 'with-react-formidable'
+import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
-import ClaimItem from 'components/layout/ClaimItem'
-import ContentItem from 'components/layout/ContentItem'
 import Header from 'components/layout/Header'
+import Loader from 'components/layout/LoadMore'
 import Main from 'components/layout/Main'
-import useLocationURL from 'components/uses/useLocationURL'
-import requests from 'reducers/requests'
-import { canSubmitFromFormState } from 'utils/form'
-import { scrapDecorator } from 'utils/scrap'
-
-import FormFields from './FormFields'
-import FormFooter from './FormFooter'
+import ShareItem from 'components/layout/ShareItem'
+import ThumbImg from 'components/layout/ThumbImg'
+import { verdictNormalizer } from 'utils/normalizers'
+import { numberShortener } from 'utils/shorteners'
 
 
-const ItemsByName = {
-  ContentItem,
-  ClaimItem
-}
-
-const API_PATH = '/appearances'
-
-
-export default () => {
+const _ = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
-  const location = useLocation()
-  const locationURL = useLocationURL()
-  const sourceId = locationURL.searchParams.get('sourceId')
-  const type = locationURL.searchParams.get('type')
-  const Item = ItemsByName[`${type[0].toUpperCase()}${type.slice(1)}Item`]
   const params = useParams()
   const { appearanceId } = params
-  const {
-    isCreatedEntity,
-    isModifiedEntity,
-    method
-  } = useFormidable(location, params)
+  const appearance = useSelector(
+    state => selectEntityByKeyAndId(state, 'appearances', appearanceId),
+    [appearanceId]
+  ) || {}
+  const { interactions, quotingContent } = appearance || []
+  const { archiveUrl, totalShares, title, url } = quotingContent || {}
+  // const { hostname } = new URL(url) || {}
 
+  useEffect(() => {
+    dispatch(requestData({
+      apiPath: `/appearances/${appearanceId}/interactions`,
+      isMergingDatum: true,
+      normalizer: verdictNormalizer
+    }))
+  }, [appearanceId, dispatch])
 
-  const { isPending } = useSelector(state => state.requests['/contents']) || {}
-
-  const appearance = useSelector(state =>
-    selectEntityByKeyAndId(state, 'appearances', appearanceId)) || {}
-
-
-  const trending = useSelector(state =>
-    selectEntitiesByKeyAndJoin(
-      state,
-      'trendings',
-      { key: 'id', value: sourceId }
-  )[0])
-  const itemProps = useMemo(() => ({ [type]: trending }), [trending, type])
-
-
-  const handleSubmit = useCallback(formValues => {
-    let apiPath = API_PATH
-    if (isModifiedEntity) {
-      apiPath = `${apiPath}/${appearanceId}`
-    }
-    return new Promise(resolve => {
-      dispatch(requestData({
-        apiPath,
-        body: { ...formValues },
-        handleFail: (beforeState, action) =>
-          resolve(requests(beforeState.requests, action)[API_PATH].errors),
-        handleSuccess: (state, action) => {
-          const { payload: { datum } } = action
-          resolve()
-          history.push(`/appearances/${datum.id}`)
-        },
-        method
-      }))
-    })
-  }, [appearanceId, dispatch, history, method, isModifiedEntity])
-
-  const renderForm = useCallback(formProps => {
-    const { form: { reset }, handleSubmit, validating } = formProps
-    const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...formProps })
-    return (
-      <form
-        autoComplete="off"
-        className="form"
-        disabled={isPending}
-        noValidate
-        onSubmit={handleSubmit}
+  const showMoreButton = useCallback(props => (
+    <div className="show-more">
+      <button
+        type='button'
+        {...props}
       >
-        <FormFields validating={validating} />
-        <FormFooter
-          canSubmit={canSubmit}
-          onCancel={reset}
-        />
-      </form>
-    )
-  }, [isPending])
+        {props.text}
+      </button>
+    </div>
+  ), [])
 
-
-  useEffect(() => {
-    if (isCreatedEntity) return
-    dispatch(requestData({
-      apiPath: `/appearances/${appearanceId}`
-    }))
-  }, [appearanceId, dispatch, isCreatedEntity])
-
-  useEffect(() => {
-    if (!sourceId) return
-    dispatch(requestData({
-      apiPath: `/trendings/${sourceId}?type=${type}`,
-      resolve: trending => ({ ...trending, id: trending.source.id })
-    }))
-  }, [dispatch, sourceId, type])
-
+  const renderItem = useCallback(item => {
+    return (
+      <ShareItem
+        item={item}
+        key={item.post.id}
+      />
+    )}, [])
 
   return (
     <>
       <Header />
-      <Main className="content">
+      <Main classnames="appearance">
         <div className="container">
-          <section>
-            <h2 className="subtitle">
-              FROM
-            </h2>
-            <Item {...itemProps} />
-          </section>
-
-          <section>
-            <h2 className="subtitle">
-              DETAILS
-            </h2>
-            <Form
-              decorators={[scrapDecorator]}
-              initialValues={appearance || false}
-              onSubmit={handleSubmit}
-              render={renderForm}
-            />
-          </section>
+          <div>
+            <div
+              className="appearance-item"
+            >
+              <ThumbImg
+                className='appearance-item-img'
+                collectionName='contents'
+                {...quotingContent}
+              />
+              <div className="appearance-data">
+                <h4 className='appearance-title'>
+                  {title}
+                </h4>
+                <p className="text-muted appearance-source">
+                  <small>
+                    {/*{hostname}*/}
+                  </small>
+                </p>
+                <p className="appearance-url">
+                  { archiveUrl && (
+                    <a
+                      className="appearance-url"
+                      href={archiveUrl}
+                      rel='noopener noreferrer'
+                      target='_blank'
+                    >
+                      {"[ Archive link ]"}
+                    </a>
+                  )}
+                </p>
+                <div className="appearance-footer">
+                  { totalShares > 0 && (
+                    <span>
+                      {`${numberShortener(totalShares)} interactions`}
+                    </span>
+                  ) }
+                </div>
+              </div>
+            </div>
+            <section>
+              <Loader
+                Button={showMoreButton}
+                items={interactions}
+                loadLessText='Show less'
+                loadMoreText='Show more'
+                renderItem={renderItem}
+              />
+            </section>
+          </div>
         </div>
       </Main>
     </>
   )
 }
+
+export default _

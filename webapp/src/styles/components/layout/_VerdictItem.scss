@@ -1,7 +1,15 @@
 .verdict-item {
   @extend .item;
 
+  &:focus {
+    outline: none;
+  }
+
   &.clickable {
+    &:focus {
+      outline: $blue-dark auto 1px;
+    }
+
     cursor: pointer;
   }
 

@@ -1,46 +1,52 @@
 import React, {useCallback} from 'react'
 import PropTypes from 'prop-types'
 import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 import ThumbImg from 'components/layout/ThumbImg'
 import ShareItem from 'components/layout/ShareItem'
-import Loader from 'components/layout/LoadMore'
 import { verdictNormalizer } from 'utils/normalizers'
 import { numberShortener } from 'utils/shorteners'
 
 
 const _ = ({ appearance: { id, quotingContent, interactions } }) => {
   const { archiveUrl, totalShares, title, url } = quotingContent
-  const { hostname } = new URL(url)
+  const { hostname } = new URL(url) || ''
 
   const dispatch = useDispatch()
 
   const handleGetInteractions = useCallback(() => {
     dispatch(requestData({
-      apiPath: `/appearances/${id}/interactions`,
+      apiPath: `/appearances/${id}/interactions?limit=4`,
       normalizer: verdictNormalizer
     }))
-  })
+  }, [dispatch, id])
 
-  const showMoreButton = useCallback(props => (
-    <div className="show-more">
-      <button
-        type='button'
-        {...props}
-      >
-        {props.text}
-      </button>
-    </div>
-  ), [])
-
-  const renderShareItem = useCallback(shareItem => {
-    return (
-      <ShareItem
-        item={shareItem}
-        key={shareItem.post.id}
-      />
-  )}, [])
+  let shareList
+  if (interactions) {
+    shareList = interactions.length > 0 ? (
+      <div className='share-list dropdown'>
+        { interactions.map(interaction => {
+          return (
+            <ShareItem
+              item={interaction}
+              key={interaction.post.id}
+            />
+          )
+        }) }
+        <div className="share-list-view-more text-center">
+          <Link to={`/appearances/${id}/interactions`}>
+            {'View full list'}
+          </Link>
+        </div>
+      </div>
+    ) : (
+      <div className='share-list dropdown text-center'>
+        {'No interaction details available for this link.'}
+      </div>
+    )
+  }
 
   return (
     <>
@@ -88,20 +94,9 @@ const _ = ({ appearance: { id, quotingContent, interactions } }) => {
               </>
             ) }
           </div>
-
         </div>
       </div>
-      { interactions && (
-        <div className='share-list dropdown'>
-          <Loader
-            Button={showMoreButton}
-            items={interactions}
-            loadLessText='Show less'
-            loadMoreText='Show more'
-            renderItem={renderShareItem}
-          />
-        </div>
-      ) }
+      {shareList}
     </>
   )
 }

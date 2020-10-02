@@ -8,7 +8,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasCrowdtangleMixin, \
                           HasScienceFeedbackMixin
-                          
+
 from utils.db import db
 
 
@@ -45,8 +45,8 @@ class Appearance(ApiHandler,
                              index=True)
 
     quotedContent = relationship('Content',
-                                 foreign_keys=[quotedContentId],
-                                 backref='quotedFromAppearances')
+                                 backref=db.backref('quotedFromAppearances', lazy='dynamic'),
+                                 foreign_keys=[quotedContentId])
 
     quotingClaimId = Column(BigInteger(),
                             ForeignKey('claim.id'),

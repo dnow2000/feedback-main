@@ -52,6 +52,12 @@ export const routes = [
     title: 'Appearance',
   },
   {
+    component: Appearance,
+    exact: true,
+    path: `/appearances/:appearanceId/interactions`,
+    title: 'Appearance Interactions',
+  },
+  {
     component: compose(
       withRequiredLogin,
       withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),

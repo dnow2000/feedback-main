@@ -1,12 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-// import { useHistory } from 'react-router-dom'
-// import { useSelector } from 'react-redux'
+import { numberShortener, stringShortener } from 'utils/shorteners'
 
 
 const _ = ({ item: { medium, post } }) => {
-  const title = post.summary || post.title
+  const title = stringShortener(post.summary || post.title, 240)
+  const interactions = numberShortener(post.totalInteractions)
+  const shares = numberShortener(post.totalShares)
 
   return (
     <div className='share-item'>
@@ -22,6 +23,14 @@ const _ = ({ item: { medium, post } }) => {
         <small className="share-description">
           {title || 'No description found.'}
         </small>
+        <div className="share-footer">
+          <small className="text-muted">
+            {`${shares} shares`}
+          </small>
+          <small className="text-muted">
+            {`${interactions} interactions`}
+          </small>
+        </div>
       </span>
     </div>
   )
@@ -35,7 +44,9 @@ _.propTypes = {
     }).isRequired,
     post: PropTypes.shape({
       summary: PropTypes.string,
-      title: PropTypes.string
+      title: PropTypes.string,
+      totalInteractions: PropTypes.number,
+      totalShares: PropTypes.number
     }).isRequired
   }).isRequired
 }

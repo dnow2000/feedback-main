@@ -23,7 +23,7 @@ const tabs = [
   },
   {
     childrenFrom: () => 'Graph',
-    isDisplayedFrom: () => true,
+    isDisplayedFrom: () => false,
     path: 'graph'
   }
 ]

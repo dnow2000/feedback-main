@@ -1,4 +1,4 @@
-from flask import current_app as app, jsonify
+from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiHandler, \
                                    as_dict, \
                                    load_or_404
@@ -24,7 +24,10 @@ def get_appearance(appearance_id):
 def get_appearance_shares(appearance_id):
     appearance = load_or_404(Appearance, appearance_id)
     content = appearance.quotingContent
-    sharing_apps = content.quotedFromAppearances
+    query = content.quotedFromAppearances
+    if request.args.get('limit'):
+        query = query.limit(request.args.get('limit'))
+    sharing_apps = query.all()
     sharing_contents = [app.quotingContent for app in sharing_apps]
     interactions = [{'post': as_dict(content), 'medium': as_dict(content.medium)} for content in sharing_contents]
     return jsonify({
