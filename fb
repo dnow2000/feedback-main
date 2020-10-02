@@ -172,7 +172,7 @@ if [[ "$CMD" == "alembic" ]]; then
     ./$COMMAND_NAME -e $ENV -p scalingo bash alembic $SUB_COMMANDS
     exit 0
   fi
-  
+
 
 # Connect to API container
 elif [[ "$CMD" == "bash" ]]; then
@@ -478,7 +478,7 @@ elif [[ "$CMD" == "psql" ]]; then
 elif [[ "$CMD" == "python" ]]; then
 	if [[ "$ENV" == "not-set" ]]; then
     check start api
-		docker exec -it $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py '"$CMD $*"'"
+		docker exec -it $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py $CMD $*"
 	else
 		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
 	fi
@@ -492,9 +492,9 @@ elif [[ "$CMD" == "python" ]]; then
 else
   if [[ "$ENV" == "not-set" ]]; then
     check start api
-    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py '"$CMD $*"'"
+    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py $CMD $*"
   else
-    scalingo -a "$SCALINGO_APP" run 'python scripts/manager.py '"$CMD $*"''
+    scalingo -a "$SCALINGO_APP" run "python scripts/manager.py $CMD $*"
   fi
   exit_with_success
 fi
