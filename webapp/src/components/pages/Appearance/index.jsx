@@ -21,7 +21,7 @@ const _ = () => {
     [appearanceId]
   ) || {}
   const { interactions, quotingContent } = appearance || []
-  const { archiveUrl, totalShares, title, url } = quotingContent || {}
+  const { archiveUrl, totalShares, title } = quotingContent || {}
   // const { hostname } = new URL(url) || {}
 
   useEffect(() => {
