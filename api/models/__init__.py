@@ -27,6 +27,3 @@ def import_models():
     from models.verdict import Verdict
     from models.verdict_reviewer import VerdictReviewer
     from models.verdict_tag import VerdictTag
-
-
-    return [v for v in locals().values() if type(v) == DefaultMeta]

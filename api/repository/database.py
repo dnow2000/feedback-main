@@ -1,7 +1,7 @@
+from postgresql_audit.flask import versioning_manager
+from sqlalchemy import orm
 from sqlalchemy_api_handler import logger
 
-from repository import import_keywords
-from utils.activity import import_activity
 from utils.db import db
 
 
@@ -15,10 +15,17 @@ def clean():
     logger.info('clean all the database...Done.')
 
 
+def create_activity_and_transaction_tables():
+    # based on https://github.com/kvesteri/postgresql-audit/issues/21
+    orm.configure_mappers()
+    versioning_manager.transaction_cls.__table__.create(db.session.get_bind())
+    versioning_manager.activity_cls.__table__.create(db.session.get_bind())
+    db.engine.execute("CREATE INDEX IF NOT EXISTS idx_activity_objid ON activity(cast(changed_data->>'id' AS INT));")
+
+
 def create():
     logger.info('create all the database...')
-    import_activity()
-    import_keywords()
+    create_activity_and_transaction_tables()
     db.create_all()
     db.session.commit()
     logger.info('create all the database...Done.')

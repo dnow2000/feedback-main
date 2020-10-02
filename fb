@@ -47,12 +47,33 @@ fi
 # Global Utilities
 # =============================================
 
+function check {
+  STATE=$1
+  CONTAINER=${APP_NAME}-${2}-${MODE}
+  GREP=$(docker ps | grep $CONTAINER)
+  if [[ "$GREP" ]]; then
+    if [[ "$STATE" == "stop" ]]; then
+      exit_with_error "$CONTAINER is running. You should stop it before applying your command."
+    fi
+  elif [[ "$STATE" == "start" ]]; then
+    exit_with_error "$CONTAINER is not running. You should start it before applying your command."
+  fi
+}
+
+
 function confirm {
   read -p "$1 (y/n) : " -r
   echo
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit
   fi
+}
+
+
+function containers_from_names {
+  FIELDS=("${@/#}")
+  FIELDS=("${FIELDS[@]/%/-$MODE}")
+  echo "${FIELDS[*]}"
 }
 
 
@@ -77,6 +98,13 @@ function exit_with_success {
   NO_COLOR='\033[0m'
   echo -e "${GREEN}""SUCCESS : $MESSAGE""${NO_COLOR}"
   exit 0
+}
+
+function update_branch {
+  branch="$1"
+  git fetch
+  git checkout $branch
+  git reset --hard origin/$branch || (git checkout "$CURRENT_BRANCH" && exit_with_error)
 }
 
 
@@ -113,6 +141,8 @@ shift
 # =============================================
 
 API_SERVICE=${APP_NAME}-api-$MODE
+CURRENT_BRANCH=$(git symbolic-ref -q HEAD)
+CURRENT_BRANCH=${CURRENT_BRANCH##refs/heads/}
 POSTGRES_DB=${APP_NAME}_$DATABASE
 POSTGRES_PASSWORD=${APP_NAME}_password
 POSTGRES_SERVICE=$APP_NAME-${DATABASE}db-$MODE
@@ -124,47 +154,48 @@ SCALINGO_APP=${APP_NAME}-api-$ENV
 # Local commands : use Docker
 # =============================================
 
-function check {
-  STATE=$1
-  CONTAINER=${APP_NAME}-${2}-${MODE}
-  GREP=$(docker ps | grep $CONTAINER)
-  if [[ "$GREP" ]]; then
-    if [[ "$STATE" == "stop" ]]; then
-      exit_with_error "$CONTAINER is running. You should stop it before applying your command."
-    fi
-  elif [[ "$STATE" == "start" ]]; then
-    exit_with_error "$CONTAINER is not running. You should start it before applying your command."
-  fi
-}
-
-
-function containers_from_names {
-  FIELDS=("${@/#}")
-  FIELDS=("${FIELDS[@]/%/-$MODE}")
-  echo "${FIELDS[*]}"
-}
 
 # Run alembic migration, ex ./$COMMAND_NAME alembic upgrade HEAD
 if [[ "$CMD" == "alembic" ]]; then
-  check start api
-  check start apidb
   SUB_COMMANDS=$*
-  docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. alembic $SUB_COMMANDS"
-  if [[ $SUB_COMMANDS == "revision" ]]; then
-    echo "Apply sudo chown the revisions to your $(whoami) user..."
-    sudo chown -R $(whoami) $ROOT_PATH/api/alembic/versions
-    echo "...Done."
+  if [[ "$ENV" == "not-set" ]]; then
+    check start api
+    check start apidb
+    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. alembic $SUB_COMMANDS"
+    if [[ $SUB_COMMANDS == "revision" ]]; then
+      echo "Apply sudo chown the revisions to your $(whoami) user..."
+      sudo chown -R $(whoami) $ROOT_PATH/api/alembic/versions
+      echo "...Done."
+    fi
+    exit_with_success
+  else
+    ./$COMMAND_NAME -e $ENV -p scalingo bash alembic $SUB_COMMANDS
+    exit 0
   fi
-  exit_with_success
-
+  
 
 # Connect to API container
 elif [[ "$CMD" == "bash" ]]; then
+  SUB_COMMANDS=${*:1}
 	if [[ "$ENV" == "not-set" && "$PLATFORM" == "not-set" ]]; then
     check start api
-    docker exec -it $API_SERVICE bash
+    if [ -z "$SUB_COMMANDS" ]; then
+      docker exec -it $API_SERVICE bash
+    else
+      docker exec -it $API_SERVICE bash -c "$SUB_COMMANDS"
+    fi
 	elif [ "$ENV" != "not-set" ] || [ "$PLATFORM" == "scalingo" ]; then
-		scalingo -a "$SCALINGO_APP" run "bash"
+    if [ "$FILE" == 'not-set' ]; then
+      if [ -z "$SUB_COMMANDS" ]; then
+        scalingo -a "$SCALINGO_APP" run bash
+      else
+        echo $SUB_COMMANDS > $ROOT_PATH/scalingo.sh
+        scalingo -a "$SCALINGO_APP" run --file $ROOT_PATH/scalingo.sh bash /tmp/uploads/scalingo.sh
+        rm $ROOT_PATH/scalingo.sh
+      fi
+    else
+      scalingo -a "$SCALINGO_APP" run --file "$FILE" bash
+    fi
 	fi
   exit_with_success
 
@@ -198,9 +229,9 @@ elif [[ "$CMD" == database ]]; then
     cd $ROOT_PATH;
     BACKUP_ID=$(echo $BACKUP | rev | cut -d"_" -f1,2 | rev)
     tar xvfz $BACKUP_PATH;
-    sudo mkdir -p docker_data_$MODE/${DATABASE}db/tmp/;
-    sudo mv $BACKUP.pgsql docker_data_$MODE/${DATABASE}db/tmp;
-    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASS' pg_restore -h localhost -d '$POSTGRES_DBNAME' -U '$POSTGRES_USER' -c -C -W -v -O /var/lib/postgresql/tmp/$BACKUP.pgsql;PGPASSWORD='$POSTGRES_PASS' psql -h localhost -U '$POSTGRES_USER' postgres -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='${APP_NAME}_${DATABASE}';\";PGPASSWORD=$'$POSTGRES_PASS' dropdb -h localhost -U '$POSTGRES_USER' ${APP_NAME}_${DATABASE};PGPASSWORD='$POSTGRES_PASS' psql -h localhost -U '$POSTGRES_USER' postgres -c \"ALTER DATABASE ${APP_NAME}_${DATABASE}_${BACKUP_ID} RENAME TO ${APP_NAME}_${DATABASE};\""
+    sudo mkdir -p docker_data_$MODE/${DATABASE}db;
+    sudo mv $BACKUP.pgsql docker_data_$MODE/${DATABASE}db;
+    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASS' pg_restore -h localhost -d '$POSTGRES_DBNAME' -U '$POSTGRES_USER' -c -C -W -v -O /var/lib/postgresql/$BACKUP.pgsql;PGPASSWORD='$POSTGRES_PASS' psql -h localhost -U '$POSTGRES_USER' postgres -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='${APP_NAME}_${DATABASE}';\";PGPASSWORD=$'$POSTGRES_PASS' dropdb -h localhost -U '$POSTGRES_USER' ${APP_NAME}_${DATABASE};PGPASSWORD='$POSTGRES_PASS' psql -h localhost -U '$POSTGRES_USER' postgres -c \"ALTER DATABASE ${APP_NAME}_${DATABASE}_${BACKUP_ID} RENAME TO ${APP_NAME}_${DATABASE};\""
 
   elif [[ "$SUB_CMD" == "rm" ]]; then
     check stop ${DATABASE}db
@@ -212,12 +243,12 @@ elif [[ "$CMD" == database ]]; then
   elif [[ "$SUB_CMD" == "schema" ]]; then
     check start ${DATABASE}db
     FILE=schema_init_$(date +"%Y_%m_%d__%H_%M_%S").sql
-    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASS' pg_dump -h localhost -d '$POSTGRES_DBNAME' -U '$POSTGRES_USER' --no-comments --no-owner -N function_schema --no-privileges --schema-only --exclude-table alembic_version --exclude-schema topology --username '$POSTGRES_USER' --format p > /var/lib/postgresql/tmp/$FILE"
-    sudo sed -i "s/SELECT pg_catalog.set_config('search_path', '', false);/SET search_path = public, pg_catalog;/g" $ROOT_PATH/docker_data_$MODE/${DATABASE}db/tmp/$FILE
-    sudo sed -i '/CREATE FUNCTION/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/tmp/$FILE
-    sudo sed -i '/CREATE OPERATOR/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/tmp/$FILE
+    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASS' pg_dump -h localhost -d '$POSTGRES_DBNAME' -U '$POSTGRES_USER' --no-comments --no-owner -N function_schema --no-privileges --schema-only --exclude-table alembic_version --exclude-schema topology --username '$POSTGRES_USER' --format p > /var/lib/postgresql/$FILE"
+    sudo sed -i "s/SELECT pg_catalog.set_config('search_path', '', false);/SET search_path = public, pg_catalog;/g" $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
+    sudo sed -i '/CREATE FUNCTION/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
+    sudo sed -i '/CREATE OPERATOR/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
     if [[ "$DATABASE" == "api" ]]; then
-      sudo mv docker_data_$MODE/${DATABASE}db/tmp/$FILE $ROOT_PATH/api/alembic/versions/sql/$FILE
+      sudo mv docker_data_$MODE/${DATABASE}db/$FILE $ROOT_PATH/api/alembic/versions/sql/$FILE
       confirm "Warning: remove previous schema_init.sql ?"
       rm -f $ROOT_PATH/api/alembic/versions/sql/schema_init.sql;
       mv $ROOT_PATH/api/alembic/versions/sql/$FILE $ROOT_PATH/api/alembic/versions/sql/schema_init.sql
@@ -326,16 +357,6 @@ elif [[ "$CMD" == "webapp" ]]; then
 # =============================================
 # Deploy commands
 # =============================================
-
-CURRENT_BRANCH=$(git symbolic-ref -q HEAD)
-CURRENT_BRANCH=${CURRENT_BRANCH##refs/heads/}
-
-function update_branch {
-  branch="$1"
-  git fetch
-  git checkout $branch
-  git reset --hard origin/$branch || (git checkout "$CURRENT_BRANCH" && exit_with_error)
-}
 
 
 # Tag new version using main repo

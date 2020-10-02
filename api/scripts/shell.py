@@ -5,5 +5,4 @@ from utils.setup import setup
 
 FLASK_APP = Flask(__name__)
 
-setup(FLASK_APP,
-      with_keywords=True)
+setup(FLASK_APP)
