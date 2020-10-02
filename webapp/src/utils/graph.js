@@ -4,7 +4,7 @@ export const edgeWithDecoration = edge => edge
 
 const labelDependingOnType = (node) => {
   
-  let label;
+  let label = node.id;
 
   if (node.type === 'Claim') {
     label = node.datum.text
@@ -26,11 +26,21 @@ const labelDependingOnType = (node) => {
     label = node.id
   }
 
-  if (!label) {
-    label = node.id
+  return label;
+}
+
+
+const sizeDependingOnType = (node) => {
+  
+  let size = 5;
+
+  if (node.type === 'Content') {
+    if (node.datum.totalShares) {
+      size = Math.log(node.datum.totalShares) + 5
+    }
   }
 
-  return label;
+  return size;
 }
 
 
@@ -48,19 +58,13 @@ const colorsByNodeType = {
   'VerdictTag': '#F63',
 }
 
-const sizesByNodeType = {
-  'Claim': 10,
-  'Content': 7,
-  'User': 3
-}
-
 export const nodeWithDecoration = node => {
   return {
     ...node,
     x: Math.random(),
     y: Math.random(),
     label: labelDependingOnType(node),
-    size: sizesByNodeType[node.type] || 5,
+    size: sizeDependingOnType(node),
     color: colorsByNodeType[node.type] || '#ccc',
   }
 }
