@@ -117,7 +117,6 @@ VERDICT_INCLUDES = [
     {
         'key': 'reviews',
         'includes': [
-            'evaluation',
             'reviewer'
         ]
     },

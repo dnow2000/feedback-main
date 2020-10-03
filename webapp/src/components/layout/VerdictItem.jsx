@@ -97,7 +97,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       <h3>
         {`${headline || claim.text}`}
       </h3>
-      <div className="verdict-editor-container">
+      {medium && (<div className="verdict-medium">
         <Icon
           className="avatar editor-avatar"
           path={medium.logoUrl}
@@ -115,13 +115,13 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
             { timeAgo }
           </strong>
         ) }
-      </div>
+      </div>)}
       <br />
       <hr />
       <br />
       <p>
         <b>
-          {`${type.replace(/^./, type.charAt(0).toUpperCase())}: `}
+          {`${type?.replace(/^./, type.charAt(0).toUpperCase())}: `}
         </b>
         <i>
           {`"${claim.text}"`}

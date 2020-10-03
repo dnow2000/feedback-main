@@ -1,0 +1,143 @@
+.science-feedback-verdict-item {
+  .verdict-bottom {
+    display: flex;
+    flex: 1;
+    height: 5rem;
+    justify-content: space-between;
+    margin-top: 1.25rem;
+
+    .verdict-mean {
+      height: 5rem;
+      width: 6.25rem;
+      background-color: $white;
+      display: flex;
+
+      div {
+        display: flex;
+        flex: 1 1;
+        justify-content: center;
+        align-items: center;
+        opacity: 0.65;
+        border-radius: 0.625rem;
+        font-family: Apercu;
+        font-size: 1.875rem;
+        font-stretch: normal;
+        font-style: normal;
+        font-weight: bold;
+        line-height: normal;
+        letter-spacing: normal;
+        text-align: center;
+
+        &.positive {
+          background-color: $green;
+          color: #88e749;
+        }
+        &.neutral {
+          background-color: $yellow;
+          color: #df8d16;
+        }
+        &.negative {
+          background-color: $red;
+          color: #e53c3c;
+        }
+        &.na {
+          background-color: $grey;
+          color: #f2f3f6;
+        }
+      }
+    }
+
+    .verdict-counts {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: left;
+      height: 80px;
+      max-width: 30px;
+      background-color: white;
+      margin-left: 10px;
+      margin-right: 10px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+
+      .bar {
+        height: 6px;
+        border-radius: 4px;
+        &.bar-2 {
+          background-color: #29c2c2;
+        }
+        &.bar-1 {
+          background-color: #88e749;
+        }
+        &.bar-0 {
+          background-color: #ffd452;
+        }
+        &.bar-\-1 {
+          background-color: #fc8900;
+        }
+        &.bar-\-2 {
+          background-color: #d00000;
+        }
+        &.bar-na {
+          background-color: #6d6d6d;
+        }
+      }
+    }
+
+    .verdict-users {
+      background-color: $grey-lighter;
+      border-radius: 0.625rem;
+      display: flex;
+      flex: 1;
+      font-family: Apercu;
+      font-size: 0.75rem;
+      font-weight: bold;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      padding: 1rem;
+      text-align: center;
+
+      .verdict-editor {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin-right: 1.25rem;
+
+        .editor-title {
+          font-family: Apercu;
+          font-size: 0.825rem;
+          color: $black
+        }
+      }
+
+      .verdict-reviewers {
+        display: flex;
+        flex-direction: row;
+        align-items: left;
+        justify-content: left;
+
+        .reviewer-title {
+          font-family: Apercu;
+          font-size: 0.825rem;
+          color: $black
+        }
+      }
+
+      .editor-avatar {
+        width: 2rem;
+        height: 2rem;
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .reviewer-avatar {
+        width: 2rem;
+        height: 2rem;
+        margin-left: 0;
+        margin-right: 0.25rem;
+      }
+    }
+  }
+}

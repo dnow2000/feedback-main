@@ -50,9 +50,7 @@ const _ = ({ appearance: { id, quotingContent, interactions } }) => {
 
   return (
     <>
-      <div
-        className="appearance-item"
-      >
+      <div className="appearance-item">
         <ThumbImg
           className='appearance-item-img'
           collectionName='contents'

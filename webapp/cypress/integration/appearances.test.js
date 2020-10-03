@@ -1,4 +1,4 @@
-describe('appearances page', () => {
+describe('When arriving on the verdict appearances page', () => {
   beforeEach(() => {
     cy.visit('/landing')
     cy.get('.verdict-item').first().click({force: true})
@@ -14,29 +14,31 @@ describe('appearances page', () => {
   })
 
   it('should have a links tab', () => {
-    cy.get('.tab-pane #links').contains(/.*\sLinks/)
+    cy.get('.tab.appearances').contains(/.*\sLinks/)
   })
 
   it('should have one or more appearances', () => {
-    cy.get('a.appearance-item').its('length').should('be.gte', 1)
+    cy.get('.appearance-item').its('length').should('be.gte', 1)
   })
 })
 
-describe('each appearance', () => {
+describe('When click on one appearance item', () => {
   beforeEach(() => {
     cy.visit('/landing')
     cy.get('.verdict-item').first().click({force: true})
   })
 
-  it('should be a link', () => {
-    cy.get('a.appearance-item')
+  /* TODO manage that with the sf sandbox
+  it('should have an archive link', () => {
+    cy.get('.appearance-item')
       .first()
       .invoke('attr', 'href')
       .should('not.be.empty')
   })
+  */
 
   it('should have a thumb image', () => {
-    cy.get('a.appearance-item').within(() => {
+    cy.get('.appearance-item').within(() => {
       cy.get('.appearance-item-img')
         .first()
         .should('have.attr', 'src')
@@ -44,7 +46,7 @@ describe('each appearance', () => {
   })
 
   it('should have the appearance details', () => {
-    cy.get('a.appearance-item').within(() => {
+    cy.get('.appearance-item').within(() => {
       cy.get('.appearance-title').first().should('exist')
       cy.get('.appearance-source').first().should('exist')
       cy.get('.appearance-url').first().should('exist')

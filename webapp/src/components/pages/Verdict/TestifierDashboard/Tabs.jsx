@@ -39,13 +39,10 @@ export default () => {
 
 
   return (
-    <div
-      className='tabs'
-      id='verdict-tab-pane'
-    >
+    <div className='tabs'>
       {tabs.map(({ childrenFrom, isDisplayedFrom, path }) => isDisplayedFrom({ linksCount, sharesCount }) && (
         <NavLink
-          className={classnames('tab', {
+          className={classnames('tab', path, {
             active: path === tab
           })}
           key={path}
