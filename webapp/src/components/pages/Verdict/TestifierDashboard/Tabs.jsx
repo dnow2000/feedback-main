@@ -23,7 +23,7 @@ const tabs = [
   },
   {
     childrenFrom: () => 'Graph',
-    isDisplayedFrom: () => false,
+    isDisplayedFrom: () => true,
     path: 'graph'
   }
 ]
@@ -42,7 +42,7 @@ export default () => {
     <div className='tabs'>
       {tabs.map(({ childrenFrom, isDisplayedFrom, path }) => isDisplayedFrom({ linksCount, sharesCount }) && (
         <NavLink
-          className={classnames('tab', path, {
+          className={classnames('tab', `tab-${path}`, {
             active: path === tab
           })}
           key={path}

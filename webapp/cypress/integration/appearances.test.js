@@ -14,7 +14,7 @@ describe('When arriving on the verdict appearances page', () => {
   })
 
   it('should have a links tab', () => {
-    cy.get('.tab.appearances').contains(/.*\sLinks/)
+    cy.get('.tab.tab-appearances').contains(/.*\sLinks/)
   })
 
   it('should have one or more appearances', () => {
