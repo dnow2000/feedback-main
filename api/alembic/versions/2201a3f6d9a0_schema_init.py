@@ -26,43 +26,44 @@ def upgrade():
 
 
 def downgrade():
-    op.execute('DROP TABLE image CASCADE')
-    op.execute('DROP TABLE role CASCADE')
-    role_type = sa.Enum(name='roletype')
-    role_type.drop(op.get_bind(), checkfirst=True)
-    op.execute('DROP TABLE scope CASCADE')
-    scope_type = sa.Enum(name='scopetype')
-    scope_type.drop(op.get_bind(), checkfirst=True)
-    op.execute('DROP TABLE appearance CASCADE')
-    stance_type = sa.Enum(name='stancetype')
-    stance_type.drop(op.get_bind(), checkfirst=True)
-    op.execute('DROP TABLE verdict_reviewer CASCADE')
-    op.execute('DROP TABLE verdict_tag CASCADE')
-    op.execute('DROP TABLE verdict CASCADE')
-    op.execute('DROP TABLE review_tag CASCADE')
-    op.execute('DROP TABLE review CASCADE')
-    op.execute('DROP TABLE claim CASCADE')
-    op.execute('DROP TABLE author_content CASCADE')
-    op.execute('DROP TABLE content_tag CASCADE')
-    op.execute('DROP TABLE content CASCADE')
-    content_type = sa.Enum(name='contenttype')
-    content_type.drop(op.get_bind(), checkfirst=True)
-    op.execute('DROP TABLE medium CASCADE')
-    op.execute('DROP TABLE organization CASCADE')
-    organization_type = sa.Enum(name='organizationtype')
-    organization_type.drop(op.get_bind(), checkfirst=True)
-    op.execute('DROP TABLE user_session CASCADE')
-    op.execute('DROP TABLE user_tag CASCADE')
-    op.execute('DROP TABLE "user" CASCADE')
-    op.execute('DROP TABLE tag CASCADE')
-    source_name = sa.Enum(name='sourcename')
-    source_name.drop(op.get_bind(), checkfirst=True)
-    tag_type = sa.Enum(name='tagtype')
-    tag_type.drop(op.get_bind(), checkfirst=True)
-    op.execute('DROP TABLE activity')
-    op.execute('DROP TABLE transaction')
-    op.execute('DROP FUNCTION audit_table(target_table regclass)')
-    op.execute('DROP FUNCTION audit_table(target_table regclass, ignored_cols text[])')
-    op.execute('DROP FUNCTION create_activity')
-    op.execute('DROP FUNCTION jsonb_change_key_name(data jsonb, old_key text, new_key text)')
-    op.execute('DROP FUNCTION jsonb_subtract(arg1 jsonb, arg2 jsonb) CASCADE')
+    # from https://stackoverflow.com/questions/536350/drop-all-the-tables-stored-procedures-triggers-constraints-and-all-the-depend
+    op.execute('''
+        /* Drop all non-system stored procs */
+        DECLARE @name VARCHAR(128)
+        DECLARE @SQL VARCHAR(254)
+
+        SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'P' AND category = 0 ORDER BY [name])
+
+        WHILE @name is not null
+        BEGIN
+            SELECT @SQL = 'DROP PROCEDURE [dbo].[' + RTRIM(@name) +']'
+            EXEC (@SQL)
+            PRINT 'Dropped Procedure: ' + @name
+            SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'P' AND category = 0 AND [name] > @name ORDER BY [name])
+        END
+        GO
+
+        /* Drop all views */
+        DECLARE @name VARCHAR(128)
+        DECLARE @SQL VARCHAR(254)
+
+        SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'V' AND category = 0 ORDER BY [name])
+
+        WHILE @name IS NOT NULL
+        BEGIN
+            SELECT @SQL = 'DROP VIEW [dbo].[' + RTRIM(@name) +']'
+            EXEC (@SQL)
+            PRINT 'Dropped View: ' + @name
+            SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] = 'V' AND category = 0 AND [name] > @name ORDER BY [name])
+        END
+        GO
+
+        /* Drop all functions */
+        DECLARE @name VARCHAR(128)
+        DECLARE @SQL VARCHAR(254)
+
+        SELECT @name = (SELECT TOP 1 [name] FROM sysobjects WHERE [type] IN (N'FN', N'IF', N'TF', N'FS', N'FT') AND category = 0 ORDER BY [name])
+
+        WHILE @name IS NOT NULL
+        BEGIN
+    ''')
