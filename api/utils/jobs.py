@@ -10,7 +10,7 @@ from utils.tmp import TMP_PATH
 
 
 JOBS_PATH = Path(os.path.dirname(os.path.realpath(__file__)))\
-              / '..' / 'tmp' / 'jobs' if IS_DEVELOPMENT else '/tmp/jobs'
+              / '..' / 'tmp' / 'jobs' if IS_DEVELOPMENT else '/app/tmp/jobs'
 
 if not os.path.exists(JOBS_PATH):
     os.makedirs(JOBS_PATH)
