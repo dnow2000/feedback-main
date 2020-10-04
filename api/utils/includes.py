@@ -23,7 +23,8 @@ APPEARANCE_INCLUDES = [
             {
                 'key': 'authorContents',
                 'includes': ['author']
-            }
+            },
+            'medium'
         ]
     }
 ]

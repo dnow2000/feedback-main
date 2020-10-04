@@ -111,12 +111,10 @@ def sync(from_date=None,
 
     logger.info(f'Sync contents from {from_date} to {to_date}...')
     for content in contents[:contents_max]:
-        sync_content(
-            content,
-            sync_archive_url=sync_archive_url,
-            sync_crowdtangle=sync_crowdtangle,
-            sync_thumbs=sync_thumbs
-        )
+        sync_content(content,
+                     sync_archive_url=sync_archive_url,
+                     sync_crowdtangle=sync_crowdtangle,
+                     sync_thumbs=sync_thumbs)
         logger.info(f'Synced content: {content.id}')
 
     logger.info(f'Sync contents from {from_date} to {to_date}...Done')

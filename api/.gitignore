@@ -112,9 +112,6 @@ sandboxes/thumbs/users/
 # env
 dev_env_file
 
-# alembic
-alembic/versions/sql/
-
 # scalingo
 scalingo/_dumps_backup.sh
 scalingo/_restore_backup.sh

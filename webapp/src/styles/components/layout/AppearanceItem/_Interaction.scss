@@ -1,24 +1,4 @@
-.share-list {
-  &.dropdown {
-    background-color: $grey-very-lighter;
-    border-radius: $border-radius;
-    margin-left: 5rem;
-    margin-bottom: 3rem;
-    padding: 1rem 2rem 0.5rem;
-  }
-
-  .share-list-view-more {
-    padding: 0.75rem 0;
-
-    a {
-      @extend .anchor;
-
-      color: $blue-dark;
-    }
-  }
-}
-
-.share-item {
+.interaction {
   display: flex;
   padding: 0.75rem 0;
 

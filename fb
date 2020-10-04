@@ -221,7 +221,12 @@ elif [[ "$CMD" == database ]]; then
     exit_with_error "You need to specify which database shared volume to rm (by -d api or -d geo or -d sync)"
   fi
 
-  if [[ "$SUB_CMD" == "restore" ]]; then
+
+  if [[ "$SUB_CMD" == "dump" ]]; then
+    FILE=dump_$(date +"%Y_%m_%d__%H_%M_%S").sql
+    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' --no-comments --no-owner --no-privileges --username '$POSTGRES_USER' --format p > /var/lib/postgresql/$FILE"
+  
+  elif [[ "$SUB_CMD" == "restore" ]]; then
     check start ${DATABASE}db
     BACKUP_PATH="$1"
     BACKUP=$(echo $BACKUP_PATH | rev | cut -d'/' -f1 | rev | cut -d'.' -f1)
@@ -242,7 +247,7 @@ elif [[ "$CMD" == database ]]; then
 
   elif [[ "$SUB_CMD" == "schema" ]]; then
     check start ${DATABASE}db
-    FILE=schema_init_$(date +"%Y_%m_%d__%H_%M_%S").sql
+    FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
     docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' --no-comments --no-owner -N function_schema --no-privileges --schema-only --exclude-table alembic_version --exclude-schema topology --username '$POSTGRES_USER' --format p > /var/lib/postgresql/$FILE"
     sudo sed -i "s/SELECT pg_catalog.set_config('search_path', '', false);/SET search_path = public, pg_catalog;/g" $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
     sudo sed -i '/CREATE FUNCTION/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
