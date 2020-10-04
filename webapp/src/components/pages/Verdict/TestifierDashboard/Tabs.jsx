@@ -14,7 +14,7 @@ const tabs = [
   {
     childrenFrom: ({ linksCount }) => `${linksCount} Links`,
     isDisplayedFrom: ({ linksCount }) => linksCount > 0,
-    path: 'appearances'
+    path: 'links'
   },
   {
     childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,

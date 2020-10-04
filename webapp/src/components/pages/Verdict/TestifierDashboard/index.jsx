@@ -31,7 +31,7 @@ export default () => {
   }, [dispatch, verdictId])
 
   if (!tab) {
-    return <Redirect to={`/verdicts/${verdictId}/testimony/appearances`} />
+    return <Redirect to={`/verdicts/${verdictId}/testimony/links`} />
   }
 
   if (!verdict) return null
@@ -49,7 +49,7 @@ export default () => {
         <Route
           component={Links}
           exact
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances`}
+          path={`/verdicts/:verdictId(${entityMatch})/testimony/links`}
         />
         {/*<Route
           component={Shares}

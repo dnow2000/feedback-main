@@ -29,12 +29,16 @@ export default () => {
     </div>
   ), [])
 
-  const renderItem = useCallback(item => (
-    <AppearanceItem
-      appearance={item}
-      key={item.id}
-    />
-  ), [])
+  const renderItem = useCallback(item => {
+    // TODO: waiting that item.type is in the database
+    item.type = 'link'
+    return (
+      <AppearanceItem
+        appearance={item}
+        key={item.id}
+      />
+    )
+  }, [])
 
 
   if (!appearances.length) {

@@ -3,6 +3,7 @@ from sqlalchemy import orm
 from sqlalchemy_api_handler import logger
 
 from domain.keywords import LANGUAGE
+from models.activity import Activity
 from utils.db import db
 
 
@@ -20,7 +21,7 @@ def create_activity_and_transaction_tables():
     # based on https://github.com/kvesteri/postgresql-audit/issues/21
     orm.configure_mappers()
     versioning_manager.transaction_cls.__table__.create(db.session.get_bind())
-    versioning_manager.activity_cls.__table__.create(db.session.get_bind())
+    Activity.__table__.create(db.session.get_bind())
     db.engine.execute("CREATE INDEX IF NOT EXISTS idx_activity_objid ON activity(cast(changed_data->>'id' AS INT));")
 
 

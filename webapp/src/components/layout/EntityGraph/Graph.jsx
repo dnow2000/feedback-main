@@ -12,16 +12,13 @@ export default ({ children, graph, onGraphMount }) => {
     const { edges, nodes } = graph
     const undirectedGraph = new UndirectedGraph()
 
-    nodes.forEach(node => {
-      console.log({node})
-      undirectedGraph.addNode(node.id, node)
-    })
+    nodes.forEach(node =>
+      undirectedGraph.addNode(node.id, node))
 
-    edges.forEach(edge => {
+    edges.forEach(edge =>
       undirectedGraph.addEdge(edge.source,
                               edge.target,
-                              { color: "#ccc" })
-    })
+                              { color: "#ccc" }))
 
     const renderer = new WebGLRenderer(undirectedGraph, graphRef.current)
 

@@ -147,7 +147,7 @@ export const routes = [
   {
     component: Verdict,
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(appearances|shares|graph)?`,
+    path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(links|shares|graph)?`,
     title: 'Verdict',
   },
   {

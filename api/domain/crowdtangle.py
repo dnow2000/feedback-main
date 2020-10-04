@@ -9,9 +9,6 @@ from sqlalchemy_api_handler import logger
 CROWDTANGLE_API_URL = 'https://api.crowdtangle.com'
 CROWDTANGLE_API_KEY = os.environ.get('CROWDTANGLE_API_KEY')
 
-if CROWDTANGLE_API_KEY is None:
-    logger.warning('CROWDTANGLE_API_KEY is not defined in the env!')
-
 
 def shares_from_url(url, request_start_date):
 
@@ -27,10 +24,11 @@ def shares_from_url(url, request_start_date):
 
     api_endpoint = 'links'
 
-    response = requests.get(
-        '{}/{}'.format(CROWDTANGLE_API_URL, api_endpoint),
-        params
-    ).json()
+    if CROWDTANGLE_API_KEY is None:
+        logger.warning('CROWDTANGLE_API_KEY is not defined in the env ! ')
+
+    response = requests.get('{}/{}'.format(CROWDTANGLE_API_URL, api_endpoint),
+                                           params).json()
 
     shares = []
     if response['status'] == 200:
@@ -52,6 +50,10 @@ def shares_from_url(url, request_start_date):
                         'name': account['name'],
                         'url': account['url']
                     },
+                    'interactions': {
+                        'details': post['statistics']['actual'],
+                        'total': sum(post['statistics']['actual'].values())
+                    },
                     'post': {
                         'crowdtangleIdentifier': str(post['id']),
                         'facebookIdentifier': str(account[identifier_key]),
@@ -61,10 +63,6 @@ def shares_from_url(url, request_start_date):
                         'totalShares': post['statistics']['actual']['shareCount'],
                         'title': title,
                         'url': post['postUrl']
-                    },
-                    'interactions': {
-                        'details': post['statistics']['actual'],
-                        'total': sum(post['statistics']['actual'].values())
                     },
                     'platform': post['platform']
                 })

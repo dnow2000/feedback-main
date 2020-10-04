@@ -12,6 +12,16 @@ from models.mixins import HasCrowdtangleMixin, \
 from utils.db import db
 
 
+class AppearanceType(enum.Enum):
+    INTERACTION = 'interaction'
+    LINK = 'link'
+
+
+class InteractionType(enum.Enum):
+    LIKE = 'like'
+    SHARE = 'share'
+
+
 class StanceType(enum.Enum):
     ENDORSEMENT = {
         'label': 'endorsement',
