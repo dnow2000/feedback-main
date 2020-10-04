@@ -28,6 +28,7 @@ const selectRequest = (state, config) =>
 const _ = ({
   cols,
   config,
+  limit,
   renderItem,
   shouldLoadMore
 }) => {
@@ -74,6 +75,30 @@ const _ = ({
   }, [isSuccess])
 
 
+  const itemsElement = (items || []).map(item => (
+    <div
+      className={`item-wrapper col-tablet-1of${cols}`}
+      key={item.id}
+    >
+      {renderItem(item)}
+    </div>
+  ))
+
+  if (limit) {
+    return (
+      <>
+        {itemsElement}
+        {/*Bind Show More Action*/}
+        <div className="show-more">
+          <button type='button'>
+            Show More
+         </button>
+       </div>
+      </>
+    )
+  }
+
+
   return (
     <InfiniteScroll
       className='items'
@@ -84,16 +109,7 @@ const _ = ({
       threshold={threshold}
       useWindow
     >
-      {
-        (items || []).map(item => (
-          <div
-            className={`item-wrapper col-tablet-1of${cols}`}
-            key={item.id}
-          >
-            {renderItem(item)}
-          </div>
-        ))
-      }
+      {itemsElement}
     </InfiniteScroll>
   )
 }
