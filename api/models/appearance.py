@@ -45,7 +45,7 @@ class Appearance(ApiHandler,
                              index=True)
 
     quotedContent = relationship('Content',
-                                 backref=db.backref('quotedFromAppearances', lazy='dynamic'),
+                                 backref='quotedFromAppearances',
                                  foreign_keys=[quotedContentId])
 
     quotingClaimId = Column(BigInteger(),

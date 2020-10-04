@@ -13,6 +13,7 @@ export default ({ children, graph, onGraphMount }) => {
     const undirectedGraph = new UndirectedGraph()
 
     nodes.forEach(node => {
+      console.log({node})
       undirectedGraph.addNode(node.id, node)
     })
 

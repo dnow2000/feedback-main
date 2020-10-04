@@ -1,46 +1,43 @@
 export const edgeWithDecoration = edge => edge
 
 
-
-const labelDependingOnType = (node) => {
-  
-  let label = node.id;
-
-  if (node.type === 'Claim') {
-    label = node.datum.text
-  } else if (node.type === 'Content') {
-    label = (new URL(node.datum.url)).hostname 
-  } else if (node.type === 'Medium') {
-    label = node.datum.name
-  } else if (node.type === 'Organization') {
-    label = node.datum.name
-  } else if (node.type === 'Role') {
-    label = node.datum.type
-  } else if (node.type === 'Tag') {
-    label = node.datum.label
-  } else if (node.type === 'User') {
-    label = `${node.datum.firstName} ${node.datum.lastName}`
-  } else if (node.type === 'Verdict') {
-    label = node.datum.title
-  }  else {
-    label = node.id
+const labelFromType = node => {
+  const { datum, id, type } = node
+  switch (type) {
+    case 'Claim':
+      return datum.text
+    case 'Content':
+      return (new URL(datum.url)).hostname
+    case 'Medium':
+      return datum.name
+    case 'Organization':
+      return datum.name
+    case 'Role':
+      return datum.type
+    case 'Tag':
+      return datum.label
+    case 'User':
+      return `${datum.firstName} ${datum.lastName}`
+    case 'Verdict':
+      return datum.title
+    default:
+      return id
   }
-
-  return label;
 }
 
 
-const sizeDependingOnType = (node) => {
-  
-  let size = 5;
+const sizeFromType = (node, config={}) => {
+  if (node.depth === 0) {
+    return  40
+  }
 
   if (node.type === 'Content') {
     if (node.datum.totalShares) {
-      size = Math.log(node.datum.totalShares) + 5
+      return Math.log(node.datum.totalShares) + 5
     }
   }
 
-  return size;
+  return 5
 }
 
 
@@ -61,10 +58,10 @@ const colorsByNodeType = {
 export const nodeWithDecoration = node => {
   return {
     ...node,
+    color: colorsByNodeType[node.type] || '#ccc',
     x: Math.random(),
     y: Math.random(),
-    label: labelDependingOnType(node),
-    size: sizeDependingOnType(node),
-    color: colorsByNodeType[node.type] || '#ccc',
+    label: labelFromType(node),
+    size: sizeFromType(node),
   }
 }
