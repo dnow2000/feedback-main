@@ -50,10 +50,6 @@ def shares_from_url(url, request_start_date):
                         'name': account['name'],
                         'url': account['url']
                     },
-                    'interactions': {
-                        'details': post['statistics']['actual'],
-                        'total': sum(post['statistics']['actual'].values())
-                    },
                     'post': {
                         'crowdtangleIdentifier': str(post['id']),
                         'facebookIdentifier': str(account[identifier_key]),

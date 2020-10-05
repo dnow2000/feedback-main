@@ -9,7 +9,13 @@ import AppearanceItem  from 'components/layout/AppearanceItem'
 
 
 const _ = ({ articleOrVideoContent }) => {
-  const { archiveUrl, id, totalInteractions, title, url } = articleOrVideoContent
+  const {
+    archiveUrl,
+    id,
+    title,
+    totalShares,
+    url
+  } = articleOrVideoContent
   const { hostname } = new URL(url) || ''
 
   const interactionsConfig = useMemo(() => ({
@@ -25,7 +31,7 @@ const _ = ({ articleOrVideoContent }) => {
 
   const renderInteractions = useCallback(item => {
     // TODO: waiting that type is in the database
-    item.type = 'interaction'
+    item.type = 'share'
     return (
       <AppearanceItem
         appearance={item}
@@ -65,22 +71,22 @@ const _ = ({ articleOrVideoContent }) => {
             )}
           </p>
           <div className="appearance-link-footer">
-            {totalInteractions === 0
+            {totalShares === 0
               ? (
                 <div className='share-list dropdown text-center'>
-                  {'No interaction details available for this link.'}
+                  {'No shares available for this link.'}
                 </div>
               )
               : (
                 <>
                   <span>
-                    {`${numberShortener(totalInteractions)} interactions`}
+                    {`${numberShortener(totalShares)} shares`}
                   </span>
                   <button
                     onClick={handleSetDisplayInteractions}
                     type='button'
                   >
-                    {'View Top Posts'}
+                    {'View Top Shares'}
                   </button>
                 </>
               )}
@@ -103,7 +109,7 @@ _.propTypes = {
     archiveUrl: PropTypes.string,
     id: PropTypes.string,
     externalThumbUrl: PropTypes.string,
-    totalInteractions: PropTypes.number,
+    totalShares: PropTypes.number,
     title: PropTypes.string,
     url: PropTypes.string
   }).isRequired

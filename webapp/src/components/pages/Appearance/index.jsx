@@ -29,7 +29,7 @@ const _ = () => {
 
   const renderItem = useCallback(item => {
     // TODO waiting that type is in the database
-    item.type = 'interaction'
+    item.type = 'share'
     return (
       <AppearanceItem
         item={item}

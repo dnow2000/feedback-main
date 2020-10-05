@@ -11,7 +11,7 @@ const _ = ({ postContent, profileMedium }) => {
 
 
   return (
-    <div className='interaction'>
+    <div className='share'>
       <img
         alt={`${profileMedium.name} logo`}
         className="icon medium"

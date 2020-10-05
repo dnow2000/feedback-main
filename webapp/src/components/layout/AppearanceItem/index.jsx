@@ -1,15 +1,15 @@
 import React from 'react'
 
-import Interaction from './Interaction'
 import Link from './Link'
+import Share from './Share'
 
 
 export default ({ appearance }) => {
   const { quotingContent, type } = appearance
   const { medium } = quotingContent
-  if (type === 'interaction') {
+  if (type === 'share') {
     return (
-      <Interaction
+      <Share
         postContent={quotingContent}
         profileMedium={medium}
       />
@@ -17,6 +17,7 @@ export default ({ appearance }) => {
   }
 
   if (type === 'link') {
+    console.log({appearance})
     return (
       <Link articleOrVideoContent={quotingContent} />
     )

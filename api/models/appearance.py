@@ -13,12 +13,7 @@ from utils.db import db
 
 
 class AppearanceType(enum.Enum):
-    INTERACTION = 'interaction'
     LINK = 'link'
-
-
-class InteractionType(enum.Enum):
-    LIKE = 'like'
     SHARE = 'share'
 
 
