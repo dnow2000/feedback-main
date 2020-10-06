@@ -13,10 +13,9 @@ from utils.rest import listify
 def get_appearances():
     query = Appearance.query
 
-    ### TODO optimize filter with predefined type AppearanceType.LINK or AppearanceType.INTERACTION
-    #if request.args.get('type'):
+    # TODO optimize filter with predefined type AppearanceType.LINK or AppearanceType.INTERACTION
+    # if request.args.get('type'):
     #    query = query.filter_by(type=getattr(AppearanceType, request.args.get('type')))
-
 
     if request.args.get('quotedContentId'):
         query = query.filter_by(quotedContentId=dehumanize(request.args.get('quotedContentId')))

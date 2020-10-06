@@ -87,13 +87,15 @@ const _ = ({
   if (limit) {
     return (
       <>
-        {itemsElement}
-        {/*Bind Show More Action*/}
+        <div className='items'>
+          {itemsElement}
+          {/*Bind Show More Action*/}
+        </div>
         <div className="show-more">
           <button type='button'>
             Show More
-         </button>
-       </div>
+          </button>
+        </div>
       </>
     )
   }
@@ -124,6 +126,7 @@ _.defaultProps = {
 _.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
+  limit: PropTypes.number.isRequired,
   renderItem: PropTypes.func.isRequired,
   shouldLoadMore: PropTypes.bool,
 }

@@ -101,6 +101,7 @@ export default () => {
             <div className="verdict-items">
               <Items
                 config={config}
+                limit={4}
                 renderItem={renderItem}
                 shouldLoadMore={showMoreStatus}
               />
