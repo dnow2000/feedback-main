@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
+import { requestData, selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
 import AppearanceItem from 'components/layout/AppearanceItem'
 import Header from 'components/layout/Header'
@@ -14,12 +14,31 @@ const _ = () => {
   const params = useParams()
   const { appearanceId } = params
 
-
   const appearance = useSelector(
     state => selectEntityByKeyAndId(state, 'appearances', appearanceId),
     [appearanceId]
   ) || {}
-  const { quotedContentId } = appearance
+  appearance.type = 'link'
+
+  const { quotingContent, quotingContentId } = appearance || {}
+
+  const shareAppearances = useSelector(
+    state => selectEntitiesByKeyAndJoin(
+      state,
+      'appearances',
+      { key: 'quotedContentId', value: quotingContentId }
+    ), [quotingContentId]
+  )
+
+  const renderItem = useCallback(item => {
+    // TODO waiting that type is in the database
+    item.type = 'share'
+    return (
+      <AppearanceItem
+        appearance={item}
+        key={item.id}
+      />
+    )}, [])
 
   useEffect(() => {
     dispatch(requestData({
@@ -27,27 +46,25 @@ const _ = () => {
     }))
   }, [appearanceId, dispatch])
 
-  const renderItem = useCallback(item => {
-    // TODO waiting that type is in the database
-    item.type = 'share'
-    return (
-      <AppearanceItem
-        item={item}
-        key={item.id}
-      />
-    )}, [])
+  const config = useMemo(() => ({
+    apiPath: `/appearances?quotedContentId=${quotingContentId}`
+  }), [quotingContentId])
+
+  console.log(shareAppearances)
 
   return (
     <>
       <Header />
-      <Main classnames="appearance">
+      <Main className="appearance">
         <div className="container">
-          <AppearanceItem appearance={appearance} />
+          <AppearanceItem
+            appearance={appearance}
+            articleOrVideoContent={quotingContent}
+          />
           <section>
             <Items
-              config={useMemo(() => ({
-                apiPath: `/appearances?quotedContentId=${quotedContentId}`
-              }), [quotedContentId])}
+              config={config}
+              itemsCollection={shareAppearances}
               renderItem={renderItem}
             />
           </section>

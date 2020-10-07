@@ -28,7 +28,9 @@ const selectRequest = (state, config) =>
 const _ = ({
   cols,
   config,
+  itemsCollection,
   limit,
+  loadMoreAction,
   renderItem,
   shouldLoadMore
 }) => {
@@ -41,6 +43,7 @@ const _ = ({
   const { hasMore=true } = headers || {}
 
   const items = useSelector(state => selectItems(state, config))
+  itemsCollection = itemsCollection.length > 0 ? itemsCollection : items
 
 
   const handleGetItems = useCallback(page => {
@@ -65,7 +68,6 @@ const _ = ({
     shouldLoadMore
   ])
 
-
   useEffect(() => {
     handleGetItems(0)
   }, [config, handleGetItems, shouldLoadMore])
@@ -75,7 +77,7 @@ const _ = ({
   }, [isSuccess])
 
 
-  const itemsElement = (items || []).map(item => (
+  const itemsElement = (itemsCollection || []).map(item => (
     <div
       className={`item-wrapper col-tablet-1of${cols}`}
       key={item.id}
@@ -92,7 +94,10 @@ const _ = ({
           {/*Bind Show More Action*/}
         </div>
         <div className="show-more">
-          <button type='button'>
+          <button
+            onClick={loadMoreAction}
+            type='button'
+          >
             Show More
           </button>
         </div>
@@ -119,6 +124,8 @@ const _ = ({
 
 _.defaultProps = {
   cols: 2,
+  itemsCollection: [],
+  limit: 0,
   shouldLoadMore: true
 }
 
@@ -126,7 +133,9 @@ _.defaultProps = {
 _.propTypes = {
   cols: PropTypes.number,
   config: PropTypes.shape().isRequired,
-  limit: PropTypes.number.isRequired,
+  itemsCollection: PropTypes.arrayOf(PropTypes.any),
+  limit: PropTypes.number,
+  loadMoreAction: PropTypes.func,
   renderItem: PropTypes.func.isRequired,
   shouldLoadMore: PropTypes.bool,
 }

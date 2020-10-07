@@ -14,8 +14,9 @@
     background-color: white;
     border: solid 1px $grey-lighter;
     border-radius: 0.25rem;
+    flex-grow: 1;
+    max-width: 80%;
     padding: 0.4rem 1rem;
-    width: 100%;
 
     .share-description {
       display: block;

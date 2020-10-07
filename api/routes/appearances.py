@@ -30,4 +30,4 @@ def get_appearances():
 @app.route('/appearances/<appearance_id>', methods=['GET'])
 def get_appearance(appearance_id):
     appearance = load_or_404(Appearance, appearance_id)
-    return jsonify(as_dict(appearance)), 200
+    return jsonify(as_dict(appearance, includes=APPEARANCE_INCLUDES)), 200

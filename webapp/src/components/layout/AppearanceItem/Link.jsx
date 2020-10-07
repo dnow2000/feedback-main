@@ -1,5 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
 import Items from 'components/layout/Items'
 import ThumbImg from 'components/layout/ThumbImg'
@@ -8,15 +11,21 @@ import { numberShortener } from 'utils/shorteners'
 import AppearanceItem  from 'components/layout/AppearanceItem'
 
 
-const _ = ({ articleOrVideoContent }) => {
+const _ = ({ articleOrVideoContent, appearanceId }) => {
   const {
     archiveUrl,
     id,
     title,
     totalShares,
     url
-  } = articleOrVideoContent
-  const { hostname } = new URL(url) || ''
+  } = articleOrVideoContent || {}
+  const { hostname } = url ? new URL(url) : ''
+
+  const history = useHistory()
+
+  const loadMoreAction = useCallback(() => {
+    history.push(`/appearances/${appearanceId}/interactions`)
+  }, [appearanceId, history])
 
   const interactionsConfig = useMemo(() => ({
     apiPath: `/appearances?quotedContentId=${id}&limit=4`
@@ -39,6 +48,14 @@ const _ = ({ articleOrVideoContent }) => {
       />
     )
   }, [])
+
+  const shareAppearances = useSelector(
+    state => selectEntitiesByKeyAndJoin(
+      state,
+      'appearances',
+      { key: 'quotedContentId', value: id }
+    ), [id]
+  )
 
 
   return (
@@ -96,7 +113,9 @@ const _ = ({ articleOrVideoContent }) => {
       {displayInteractions && (
         <Items
           config={interactionsConfig}
+          itemsCollection={shareAppearances}
           limit={4}
+          loadMoreAction={loadMoreAction}
           renderItem={renderInteractions}
         />
       )}
@@ -105,6 +124,7 @@ const _ = ({ articleOrVideoContent }) => {
 }
 
 _.propTypes = {
+  appearanceId: PropTypes.string.isRequired,
   articleOrVideoContent: PropTypes.shape({
     archiveUrl: PropTypes.string,
     id: PropTypes.string,

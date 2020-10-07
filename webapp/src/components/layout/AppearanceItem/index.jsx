@@ -5,8 +5,8 @@ import Share from './Share'
 
 
 export default ({ appearance }) => {
-  const { quotingContent, type } = appearance
-  const { medium } = quotingContent
+  const { id, quotingContent, type } = appearance
+  const { medium } = quotingContent || {}
   if (type === 'share') {
     return (
       <Share
@@ -17,9 +17,11 @@ export default ({ appearance }) => {
   }
 
   if (type === 'link') {
-    console.log({appearance})
     return (
-      <Link articleOrVideoContent={quotingContent} />
+      <Link
+        appearanceId={id}
+        articleOrVideoContent={quotingContent}
+      />
     )
   }
 }
