@@ -74,7 +74,8 @@ const _ = ({
   useEffect(() => {
     handleGetItems(parseInt(currentPage))
     setThreshold(REACHABLE_THRESHOLD)
-  }, [config, currentPage, handleGetItems, shouldLoadMore])
+    // eslint-disable-next-line
+  }, [config, handleGetItems, shouldLoadMore])
 
   useEffect(() => {
     if (isSuccess) {
