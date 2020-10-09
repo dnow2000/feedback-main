@@ -13,7 +13,7 @@ from models.role import Role, RoleType
 from models.user import User
 from models.verdict import Verdict, PostType
 from utils.config import APP_NAME, DEFAULT_USER_PASSWORD, TLD
-from utils.random_token import create_random_password
+from utils.password import create_random_password
 
 
 def appearance_from_row(row, unused_index=None):

@@ -38,7 +38,7 @@ def get_users():
 
     return listify(User,
                    includes=USER_INCLUDES,
-                   page=request.args.get('page'),
+                   page=request.args.get('page', 1),
                    paginate=10,
                    query=query,
                    with_total_data_count=True)

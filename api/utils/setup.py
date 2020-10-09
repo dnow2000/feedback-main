@@ -10,10 +10,10 @@ from sqlalchemy_api_handler import logger
 from jobs import import_async_jobs, import_background_jobs
 from models import import_models
 from routes import import_routes
-from scripts import import_scripts
 from utils.config import IS_DEVELOPMENT
 from utils.db import db
 from utils.encoder import EnumJSONEncoder
+from utils.nltk import import_nltk
 
 
 def setup(flask_app,
@@ -21,8 +21,7 @@ def setup(flask_app,
           with_debug=False,
           with_jobs=False,
           with_login_manager=False,
-          with_routes=False,
-          with_scripts_manager=False):
+          with_routes=False):
 
     flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
@@ -52,6 +51,7 @@ def setup(flask_app,
 
     flask_app.app_context().push()
     import_models()
+    import_nltk()
 
     if with_login_manager:
         from flask_login import LoginManager
@@ -87,12 +87,3 @@ def setup(flask_app,
 
         flask_app.async_scheduler = async_scheduler
         flask_app.background_scheduler = background_scheduler
-
-    if with_scripts_manager:
-        from flask_script import Manager
-
-        def create_app(env=None):
-            flask_app.env = env
-            return flask_app
-        flask_app.manager = Manager(create_app)
-        import_scripts()

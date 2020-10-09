@@ -7,9 +7,8 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy.exc import OperationalError
 
 from repository.checks import check_from_model
-from repository.database import clean
 from utils.setup import setup
-from utils.db import db
+from utils.db import db, clean
 
 
 SLEEP_TIME = 1

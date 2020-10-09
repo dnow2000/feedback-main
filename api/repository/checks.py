@@ -10,10 +10,10 @@ def check_from_model(model):
     try:
         model.query.limit(1).all()
         database_working = True
-        state = 'database is ok.'
+        state = 'database with {} model is ok.'.format(model.__name__.lower())
     except Exception as e:
         logger.critical(str(e))
-        state = 'database is not ok.'
+        state = 'database with {} model is not ok.'.format(model.__name__.lower())
     output = '{}{}'.format(version, state)
 
     return database_working, output
