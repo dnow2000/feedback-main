@@ -5,7 +5,7 @@ from models.medium import Medium
 from models.platform import Platform
 from models.user import User
 from utils.config import DEFAULT_USER_PASSWORD, IS_DEVELOPMENT
-from utils.random_token import create_random_password
+from utils.password import create_random_password
 
 
 def attach_crowdtangle_entities_from_content(content, request_start_date):

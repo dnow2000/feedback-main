@@ -149,11 +149,9 @@ POSTGRES_SERVICE=$APP_NAME-${DATABASE}db-$MODE
 POSTGRES_USER=${APP_NAME}_user
 SCALINGO_APP=${APP_NAME}-api-$ENV
 
-
 # =============================================
 # Local commands : use Docker
 # =============================================
-
 
 # Run alembic migration, ex ./$COMMAND_NAME alembic upgrade HEAD
 if [[ "$CMD" == "alembic" ]]; then
@@ -212,6 +210,7 @@ elif [[ "$CMD" == "clock" ]]; then
   docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python clock.py"
   exit_with_success
 
+
 # Apply sub command to the databases from tar db files
 elif [[ "$CMD" == database ]]; then
   SUB_CMD=$1
@@ -225,7 +224,7 @@ elif [[ "$CMD" == database ]]; then
   if [[ "$SUB_CMD" == "dump" ]]; then
     FILE=dump_$(date +"%Y_%m_%d__%H_%M_%S").sql
     docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' --no-comments --no-owner --no-privileges --username '$POSTGRES_USER' --format p > /var/lib/postgresql/$FILE"
-  
+
   elif [[ "$SUB_CMD" == "restore" ]]; then
     check start ${DATABASE}db
     BACKUP_PATH="$1"
@@ -272,7 +271,7 @@ elif [[ "$CMD" == database ]]; then
     if [[ "$DATABASE" == "api" ]]; then
       check start api
     fi
-    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py database --command=$SUB_CMD"
+    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python manager.py database $SUB_CMD"
   fi
   exit_with_success
 
@@ -320,17 +319,24 @@ elif [[ "$CMD" == "rebuild" ]]; then
   exit_with_success
 
 
+# Deambiguate shell command
+elif [[ "$CMD" == "shell" ]]; then
+  exit_with_error "shell command is ambiguous either choose \`$COMMAND_NAME bash\` or \`$COMMAND_NAME python\`."
+
+
 # Restart with forcing recreation and unmounting volumes
 elif [[ "$CMD" == "restart" ]]; then
   docker-compose -f docker-compose.$MODE.yml down --volumes $(containers_from_names $*)
   export FILE=$FILE && export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh  --force-recreate $(containers_from_names $*)
   exit_with_success
 
+
 # Start docker-compose up with adapted env variables or webapps with local env
 elif [[ "$CMD" == "reup" ]]; then
   docker-compose -f docker-compose.$MODE.yml down --volumes $(containers_from_names $*)
   docker-compose -f docker-compose.$MODE.yml up --force-recreate $(containers_from_names $*)
   exit_with_success
+
 
 # Start docker-compose up with additional commands given the mode
 elif [[ "$CMD" == "start" ]]; then
@@ -339,16 +345,19 @@ elif [[ "$CMD" == "start" ]]; then
   export FILE=$FILE && export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh $(containers_from_names $*)
   exit_with_success
 
+
 # Stop development containers
 elif [[ "$CMD" == "stop" ]]; then
   cd $ROOT_PATH
   docker-compose -f docker-compose.$MODE.yml stop $(containers_from_names $*)
   exit_with_success
 
+
 # Start docker-compose up with adapted env variables or webapps with local env
 elif [[ "$CMD" == "up" ]]; then
   docker-compose -f docker-compose.$MODE.yml up $(containers_from_names $*);
   exit_with_success
+
 
 # =============================================
 # Webapp commands
@@ -473,7 +482,6 @@ elif [[ "$CMD" == "symlink" ]]; then
 	cd /usr/local/bin && ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME
   exit_with_success
 
-
 # =============================================
 # Administration commands
 # =============================================
@@ -489,27 +497,22 @@ elif [[ "$CMD" == "psql" ]]; then
   fi
   exit_with_success
 
-# Open a python prompt in the specified environment
-elif [[ "$CMD" == "python" ]]; then
-	if [[ "$ENV" == "not-set" ]]; then
-    check start api
-		docker exec -it $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python -i scripts/shell.py $CMD $*"
-	else
-		scalingo -a "$SCALINGO_APP" run "python -i scripts/shell.py"
-	fi
-  exit_with_success
-
 # =============================================
 # Python Scripts commands
 # =============================================
 
 # Run python scripts from api/scripts
 else
+  INTERACTIVE_MODE=''
+  if [[ "$CMD" == "python" ]]; then
+    CMD="shell"
+    INTERACTIVE_MODE='-it'
+  fi
   if [[ "$ENV" == "not-set" ]]; then
     check start api
-    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python scripts/manager.py $CMD $*"
+    docker exec $INTERACTIVE_MODE $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python manager.py $CMD $*"
   else
-    scalingo -a "$SCALINGO_APP" run "python scripts/manager.py $CMD $*"
+    scalingo -a "$SCALINGO_APP" run "python manager.py $CMD $*"
   fi
   exit_with_success
 fi

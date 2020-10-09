@@ -1,6 +1,6 @@
 from functools import wraps
 
-from repository.database import clean
+from utils.db import db
 
 
 def with_clean(f):
