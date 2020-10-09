@@ -7,10 +7,10 @@ import VerdictItem from 'components/layout/VerdictItem'
 import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch } from 'utils/router'
 
-import ClaimGraph from './ClaimGraph'
 import Citations from './Citations'
 // import Shares from './Shares'
 import Tabs from './Tabs'
+import VerdictGraph from './VerdictGraph'
 
 
 export default () => {
@@ -57,7 +57,7 @@ export default () => {
           path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
         />*/}
         <Route
-          component={ClaimGraph}
+          component={VerdictGraph}
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
         />
