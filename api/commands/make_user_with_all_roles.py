@@ -7,7 +7,7 @@ from models.user import User
 
 
 @app.manager.add_command
-class MakeUserWithAllRoles(Command)
+class MakeUserWithAllRoles(Command):
     name = 'make_user_with_all_roles'
     capture_all_args = True
 
