@@ -1,4 +1,4 @@
-.appearance-link {
+.citation {
   @extend .anchor;
 
   align-items: center;
@@ -14,7 +14,7 @@
     margin-bottom: 1em;
   }
 
-  .appearance-link-img {
+  .citation-img {
     max-width: 20%;
     min-width: 8.125rem;
     object-fit: cover;
@@ -22,12 +22,12 @@
     width: 8.125rem;
   }
 
-  .appearance-link-data {
+  .citation-data {
     overflow: hidden;
     padding: 1em 1.1em;
     width: 100%;
 
-    .appearance-link-footer {
+    .citation-footer {
       @extend .text-muted;
 
       display: flex;
@@ -48,15 +48,15 @@
       }
     }
 
-    .appearance-link-source {
+    .citation-source {
       margin-bottom: 1em;
     }
 
-    .appearance-link-title {
+    .citation-title {
       color: $grey-darker;
     }
 
-    .appearance-link-url {
+    .citation-url {
       color: $primary;
       text-decoration: none;
       font-size: 0.8em;

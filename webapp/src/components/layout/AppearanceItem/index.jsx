@@ -1,13 +1,14 @@
 import React from 'react'
 
-import Link from './Link'
+import Citation from './Citation'
 import Share from './Share'
 
 
 export default ({ appearance }) => {
-  const { id, quotingContent, type } = appearance
-  const { medium } = quotingContent || {}
-  if (type === 'share') {
+  const { id, quotingContent } = appearance
+  const { medium, type } = quotingContent || {}
+  
+  if (type === 'post') {
     return (
       <Share
         postContent={quotingContent}
@@ -16,12 +17,14 @@ export default ({ appearance }) => {
     )
   }
 
-  if (type === 'link') {
+  if (['article', 'video'].includes(type)) {
     return (
-      <Link
+      <Citation
         appearanceId={id}
         articleOrVideoContent={quotingContent}
       />
     )
   }
+
+  return null
 }

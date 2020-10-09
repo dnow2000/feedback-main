@@ -49,7 +49,7 @@ export default () => {
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/testimony/:tab(links|shares|graph)?`}
+              path={`/verdicts/:verdictId(${entityMatch})/testimony/:tab(citations|shares|graph)?`}
             />
             <Route
               component={TestifierDashboard}

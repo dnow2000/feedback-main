@@ -6,7 +6,7 @@ from models.appearance import Appearance
 from models.author_content import AuthorContent
 from models.claim import Claim
 from models.review import Review
-from models.content import Content
+from models.content import Content, ContentType
 from models.medium import Medium
 from models.organization import Organization
 from models.role import Role, RoleType
@@ -23,6 +23,8 @@ def appearance_from_row(row, unused_index=None):
 
     quoting_content = Content.create_or_modify({
         '__SEARCH_BY__': 'url',
+        # TODO : needs a better resolution for the type
+        'type': ContentType.VIDEO if row['url'].startswith('https://www.youtube.com/watch?v') else ContentType.ARTICLE,
         'url': row['url'].strip()
     })
     medium_science_feedback_ids = row.get('Outlet')

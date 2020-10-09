@@ -38,16 +38,12 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
     setDisplayInteractions(previousDisplayInteractions => !previousDisplayInteractions),
     [setDisplayInteractions])
 
-  const renderInteractions = useCallback(item => {
-    // TODO: waiting that type is in the database
-    item.type = 'share'
-    return (
-      <AppearanceItem
-        appearance={item}
-        key={item.id}
-      />
-    )
-  }, [])
+  const renderInteractions = useCallback(item => (
+    <AppearanceItem
+      appearance={item}
+      key={item.id}
+    />
+  ), [])
 
   const shareAppearances = useSelector(
     state => selectEntitiesByKeyAndJoin(
@@ -60,25 +56,25 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
 
   return (
     <>
-      <div className="appearance-link">
+      <div className="citation">
         <ThumbImg
-          className='appearance-link-img'
+          className='citation-img'
           collectionName='contents'
           {...articleOrVideoContent}
         />
-        <div className="appearance-link-data">
-          <h4 className='appearance-link-title'>
+        <div className="citation-data">
+          <h4 className='citation-title'>
             {title}
           </h4>
-          <p className="text-muted appearance-link-source">
+          <p className="text-muted citation-source">
             <small>
               {hostname}
             </small>
           </p>
-          <p className="appearance-link-url">
+          <p className="citation-url">
             { archiveUrl && (
               <a
-                className="appearance-link-url"
+                className="citation-url"
                 href={archiveUrl}
                 rel='noopener noreferrer'
                 target='_blank'
@@ -87,7 +83,7 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
               </a>
             )}
           </p>
-          <div className="appearance-link-footer">
+          <div className="citation-footer">
             {totalShares === 0
               ? (
                 <div className='share-list dropdown text-center'>

@@ -30,15 +30,12 @@ const _ = () => {
     ), [quotingContentId]
   )
 
-  const renderItem = useCallback(item => {
-    // TODO waiting that type is in the database
-    item.type = 'share'
-    return (
-      <AppearanceItem
-        appearance={item}
-        key={item.id}
-      />
-    )}, [])
+  const renderItem = useCallback(item => (
+    <AppearanceItem
+      appearance={item}
+      key={item.id}
+    />
+  ), [])
 
   useEffect(() => {
     dispatch(requestData({

@@ -12,9 +12,9 @@ import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearance
 
 const tabs = [
   {
-    childrenFrom: ({ linksCount }) => `${linksCount} Links`,
+    childrenFrom: ({ linksCount }) => `${linksCount} Citations`,
     isDisplayedFrom: ({ linksCount }) => linksCount > 0,
-    path: 'links'
+    path: 'citations'
   },
   // {
   //   childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,
