@@ -18,7 +18,10 @@ depends_on = None
 
 
 def upgrade():
-    feature_name = sa.Enum('WITH_VERDICT_GRAPH', 'WITH_VERDICT_SHARES', name='featurename')
+    feature_name = sa.Enum('WITH_VERDICT_CITATIONS',
+                           'WITH_VERDICT_GRAPH',
+                           'WITH_VERDICT_SHARES',
+                           name='featurename')
     op.create_table('feature',
                     sa.Column('description',
                               sa.String(300),

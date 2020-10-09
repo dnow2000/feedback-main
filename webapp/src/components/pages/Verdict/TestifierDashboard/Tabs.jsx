@@ -3,11 +3,10 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
 
+import selectIsFeatureDisabledByName from 'selectors/selectIsFeatureDisabledByName'
 import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId'
 import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
-
-
-// import { numberShortener } from 'utils/shorteners'
+import { numberShortener } from 'utils/shorteners'
 
 
 const tabs = [
@@ -16,16 +15,16 @@ const tabs = [
     isDisplayedFrom: ({ linksCount }) => linksCount > 0,
     path: 'citations'
   },
-  // {
-  //   childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,
-  //   isDisplayedFrom: ({ sharesCount }) => sharesCount > 0,
-  //   path: 'shares'
-  // },
-  // {
-  //   childrenFrom: () => 'Graph',
-  //   isDisplayedFrom: () => true,
-  //   path: 'graph'
-  // }
+  {
+     childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,
+     isDisplayedFrom: ({ sharesCount }) => sharesCount > 0,
+     path: 'shares'
+   },
+   {
+     childrenFrom: () => 'Graph',
+     isDisplayedFrom: () => true,
+     path: 'graph'
+   }
 ]
 
 
@@ -40,7 +39,9 @@ export default () => {
 
   return (
     <div className='tabs'>
-      {tabs.map(({ childrenFrom, isDisplayedFrom, path }) => isDisplayedFrom({ linksCount, sharesCount }) && (
+      {tabs.map(({ childrenFrom, isDisplayedFrom, path }) =>
+        !useSelector(state => selectIsFeatureDisabledByName(state, `WITH_VERDICT_${path.toUpperCase()}`)) &&
+        isDisplayedFrom({ linksCount, sharesCount }) && (
         <NavLink
           className={classnames('tab', `tab-${path}`, {
             active: path === tab
