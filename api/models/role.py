@@ -15,6 +15,7 @@ class RoleType(enum.Enum):
     AUTHOR = 'author'
     EDITOR = 'editor'
     GUEST = 'guest'
+    INSPECTOR = 'inspector'
     REVIEWER = 'reviewer'
     TESTIFIER = 'testifier'
 
