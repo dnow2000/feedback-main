@@ -1,4 +1,4 @@
-"""add_length_to_title
+"""add length to title
 
 Revision ID: 11b537c3987e
 Revises: ac8894d49876

@@ -13,6 +13,7 @@ def import_models():
     from models.content import Content
     from models.content_tag import ContentTag
     from models.image import Image
+    from models.feature import Feature
     from models.medium import Medium
     from models.organization import Organization
     from models.platform import Platform

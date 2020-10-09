@@ -1,4 +1,4 @@
-"""add_title_to_verdict
+"""add title to verdict
 
 Revision ID: 5f6909210e52
 Revises: 3dc47ee635e3

@@ -1,4 +1,4 @@
-"""add_total_interactions_to_content
+"""add total interactions to content
 
 Revision ID: e4e1eccb6507
 Revises: 2d177c515de0

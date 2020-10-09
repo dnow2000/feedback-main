@@ -1,4 +1,4 @@
-"""Add crowdTangle and facebook identifiers
+"""Add crowdtangle and facebook identifiers
 
 Revision ID: 32516908c7ac
 Revises: 45455116256d

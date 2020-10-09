@@ -1,4 +1,4 @@
-"""add_science_feedback_published_date
+"""add science feedback published date
 
 Revision ID: ac8894d49876
 Revises: 4b7a5a2b8c7a
