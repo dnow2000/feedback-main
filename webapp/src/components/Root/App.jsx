@@ -14,7 +14,7 @@ import {
   ROOT_PATH
 } from 'utils/config'
 
-const App = ({ children }) => (
+const _ = ({ children }) => (
   <>
     <Helmet>
       <meta charset="utf-8" />
@@ -51,8 +51,8 @@ const App = ({ children }) => (
   </>
 )
 
-App.propTypes = {
+_.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default App
+export default _

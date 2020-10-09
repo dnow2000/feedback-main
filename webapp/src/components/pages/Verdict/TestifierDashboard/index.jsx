@@ -4,8 +4,8 @@ import { Redirect, Route, Switch, useLocation, useParams } from 'react-router-do
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
-import { entityMatch } from 'components/router'
 import { verdictNormalizer } from 'utils/normalizers'
+import { entityMatch } from 'utils/router'
 
 import ClaimGraph from './ClaimGraph'
 import Links from './Links'

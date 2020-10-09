@@ -22,12 +22,10 @@ import Signin from 'components/pages/Signin'
 import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
 
-
-export const entityMatch = '[A-Za-z0-9]{2,}'
-export const formPath = `(${entityMatch}|creation)/:modification(modification)?`
+import { entityMatch, formMatch } from 'utils/router'
 
 
-export const routes = [
+export default [
   {
     exact: true,
     path: '/',
@@ -48,7 +46,7 @@ export const routes = [
   {
     component: withRequiredLogin(Appearance),
     exact: true,
-    path: `/appearances/:appearanceId${formPath}`,
+    path: `/appearances/:appearanceId${formMatch}`,
     title: 'Appearance',
   },
   {
@@ -63,7 +61,7 @@ export const routes = [
       withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
     )(Content),
     exact: true,
-    path: `/contents/:contentId${formPath}`,
+    path: `/contents/:contentId${formMatch}`,
     title: 'Content',
   },
   {
@@ -84,7 +82,7 @@ export const routes = [
       withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
     )(Review),
     exact: true,
-    path: `/reviews/:reviewId${formPath}`,
+    path: `/reviews/:reviewId${formMatch}`,
     title: 'Review',
   },
   {
@@ -153,7 +151,7 @@ export const routes = [
   {
     component: withRequiredLogin(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formPath}`,
+    path: `/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formMatch}`,
     title: 'Verdict',
   },
   {
@@ -166,7 +164,7 @@ export const routes = [
       }),
     )(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId${formPath}`,
+    path: `/verdicts/:verdictId${formMatch}`,
     title: 'Verdict',
   },
   {

@@ -8,10 +8,10 @@ import {
 } from 'react-router-dom'
 
 import NotMatch from 'components/pages/NotMatch'
-import { routes } from 'components/router'
 import configureStore from 'utils/store'
 
 import App from './App'
+import routes from './routes'
 
 
 const { store, persistor } = configureStore()
