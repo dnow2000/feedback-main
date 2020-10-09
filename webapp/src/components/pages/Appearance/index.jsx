@@ -50,8 +50,6 @@ const _ = () => {
     apiPath: `/appearances?quotedContentId=${quotingContentId}`
   }), [quotingContentId])
 
-  console.log(shareAppearances)
-
   return (
     <>
       <Header />

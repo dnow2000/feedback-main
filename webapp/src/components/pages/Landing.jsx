@@ -33,11 +33,10 @@ export default () => {
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
 
-  const handleShowMore = useCallback(() => {
+  const loadMoreAction = useCallback(() => {
       setShowMoreStatus(true)
       history.push('/verdicts')
-    },
-    [history]
+    }, [history]
   )
 
   useEffect(() => {
@@ -56,7 +55,7 @@ export default () => {
       <Main className="landing with-header">
         <section className="hero">
           <div className="container">
-            {verdictsCount && contentsCount && (
+            {verdictsCount > 0 && contentsCount > 0 && (
               <p className="h1">
                 <b>
                   {verdictsCount}
@@ -102,17 +101,10 @@ export default () => {
               <Items
                 config={config}
                 limit={4}
+                loadMoreAction={loadMoreAction}
                 renderItem={renderItem}
                 shouldLoadMore={showMoreStatus}
               />
-              <div className="show-more">
-                <button
-                  onClick={handleShowMore}
-                  type='button'
-                >
-                  {'Show more'}
-                </button>
-              </div>
             </div>
           </div>
         </section>

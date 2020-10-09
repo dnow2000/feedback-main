@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
 import { requestData } from 'redux-thunk-data'
 
+import Spinner from 'components/layout/Spinner'
 import selectEntitiesByKeyAndActivityTags from 'selectors/selectEntitiesByKeyAndActivityTags'
 
 import { getItemsActivityTagFromConfig } from './Controls'
@@ -44,9 +45,11 @@ const _ = ({
 
   const items = useSelector(state => selectItems(state, config))
   itemsCollection = itemsCollection.length > 0 ? itemsCollection : items
+  if (limit) itemsCollection = itemsCollection?.slice(0, limit)
 
 
   const handleGetItems = useCallback(page => {
+    console.log(`getting items page ${page}`)
     const { apiPath } = config
     const apiPathWithPage = `${apiPath}${apiPath.includes('?') ? '&' : '?'}page=${page}`
     dispatch(requestData({
@@ -70,10 +73,15 @@ const _ = ({
 
   useEffect(() => {
     handleGetItems(0)
+    setThreshold(REACHABLE_THRESHOLD)
   }, [config, handleGetItems, shouldLoadMore])
 
   useEffect(() => {
-    if (isSuccess) setThreshold(REACHABLE_THRESHOLD)
+    if (isSuccess) {
+      setThreshold(REACHABLE_THRESHOLD)
+    } else {
+      setThreshold(UNREACHABLE_THRESHOLD)
+    }
   }, [isSuccess])
 
 
@@ -112,9 +120,9 @@ const _ = ({
       hasMore={hasMore}
       key={config.apiPath}
       loadMore={handleLoadMore}
+      loader={<Spinner key={42} />}
       pageStart={0}
       threshold={threshold}
-      useWindow
     >
       {itemsElement}
     </InfiniteScroll>
