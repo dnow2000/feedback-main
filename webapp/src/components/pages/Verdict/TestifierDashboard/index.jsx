@@ -4,11 +4,12 @@ import { Redirect, Route, Switch, useLocation, useParams } from 'react-router-do
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
+import FeaturedRoute from 'components/Root/FeaturedRoute'
 import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch } from 'utils/router'
 
 import Citations from './Citations'
-// import Shares from './Shares'
+import Shares from './Shares'
 import Tabs from './Tabs'
 import VerdictGraph from './VerdictGraph'
 
@@ -51,11 +52,12 @@ export default () => {
           exact
           path={`/verdicts/:verdictId(${entityMatch})/testimony/citations`}
         />
-        {/*<Route
+        <FeaturedRoute
           component={Shares}
           exact
+          featureName='WITH_VERDICT_SHARES'
           path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
-        />*/}
+        />
         <Route
           component={VerdictGraph}
           exact

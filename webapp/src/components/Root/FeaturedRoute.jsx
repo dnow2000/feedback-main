@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Route } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
-
+import NotMatch from 'components/pages/NotMatch'
 import selectIsFeatureDisabledByName from 'selectors/selectIsFeatureDisabledByName'
 
 
@@ -24,6 +24,7 @@ const _ = ({
   }, [featureName])
   const { path } = routeProps
 
+  console.log({featureName, isRouteDisabled})
 
   useEffect(() => {
     if (areFeaturesLoaded) {
@@ -51,12 +52,13 @@ const _ = ({
 
 
 _.defaultProps = {
-  featureName: null
+  featureName: null,
+  renderWhenDisabled: () => <NotMatch />
 }
 
 _.propTypes = {
   featureName: PropTypes.string,
-  renderWhenDisabled: PropTypes.func.isRequired,
+  renderWhenDisabled: PropTypes.func
 }
 
 export default _

@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useLocation } from 'react-router-dom'
 
 
-const _ = ({ delay, location, redirect }) => {
+const _ = ({ delay, redirect }) => {
+  const { pathname } = useLocation()
   const [timing, setTiming] = useState(delay)
 
 
   useEffect(() => {
     const timeout = 1000
     const timer = setInterval(() => {
-      setTiming(({ timing }) => ({ timing: timing - 1 }))
+      setTiming(timing => timing - 1)
     }, timeout)
 
     return () => {
@@ -24,7 +25,7 @@ const _ = ({ delay, location, redirect }) => {
   return (
     <div className="not-match">
       <h3 className="title">
-        {`404 Not found ${location.pathname}`}
+        {`404 Not found ${pathname}`}
       </h3>
       <p className="content">
         {timing > 0 && (
@@ -51,7 +52,6 @@ _.defaultProps = {
 
 _.propTypes = {
   delay: PropTypes.number,
-  location: PropTypes.object.isRequired,
   redirect: PropTypes.string,
 }
 

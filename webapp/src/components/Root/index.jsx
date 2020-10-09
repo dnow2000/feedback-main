@@ -13,7 +13,6 @@ import routes from './routes'
 
 const { store, persistor } = configureStore()
 
-const renderWhenFeatureRouteDisabled = () => <NotMatch />
 
 export default () => (
   <Provider store={store}>
@@ -28,7 +27,6 @@ export default () => (
               <FeaturedRoute
                 {...route}
                 key={route.path}
-                renderWhenDisabled={renderWhenFeatureRouteDisabled}
               />))}
             <Route component={NotMatch} />
           </Switch>
