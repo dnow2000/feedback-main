@@ -229,13 +229,12 @@ elif [[ "$CMD" == database ]]; then
     check start ${DATABASE}db
     BACKUP_PATH="$1"
     BACKUP=$(echo $BACKUP_PATH | rev | cut -d'/' -f1 | rev | cut -d'.' -f1)
-    echo $BACKUP
-    cd $ROOT_PATH;
-    BACKUP_ID=$(echo $BACKUP | rev | cut -d"_" -f1,2 | rev)
+    cd $ROOT_PATH
+    BACKUP_ID=$(echo $BACKUP_PATH | awk -F"${DATABASE}_" '{print $2}' | awk -F".tar.gz" '{print $1}')
     tar xvfz $BACKUP_PATH;
     sudo mkdir -p docker_data_$MODE/${DATABASE}db;
     sudo mv $BACKUP.pgsql docker_data_$MODE/${DATABASE}db;
-    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_restore -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' -c -C -W -v -O /var/lib/postgresql/$BACKUP.pgsql;PGPASSWORD='$POSTGRES_PASS' psql -h localhost -U '$POSTGRES_USER' postgres -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='${APP_NAME}_${DATABASE}';\";PGPASSWORD=$'$POSTGRES_PASS' dropdb -h localhost -U '$POSTGRES_USER' ${APP_NAME}_${DATABASE};PGPASSWORD='$POSTGRES_PASS' psql -h localhost -U '$POSTGRES_USER' postgres -c \"ALTER DATABASE ${APP_NAME}_${DATABASE}_${BACKUP_ID} RENAME TO ${APP_NAME}_${DATABASE};\""
+    docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_restore -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' -c -C -W -v -O /var/lib/postgresql/$BACKUP.pgsql;PGPASSWORD='$POSTGRES_PASSWORD' psql -h localhost -U '$POSTGRES_USER' postgres -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname='${APP_NAME}_${DATABASE}';\";PGPASSWORD=$'$POSTGRES_PASSWORD' dropdb -h localhost -U '$POSTGRES_USER' ${APP_NAME}_${DATABASE};PGPASSWORD='$POSTGRES_PASSWORD' psql -h localhost -U '$POSTGRES_USER' postgres -c \"ALTER DATABASE ${APP_NAME}_${DATABASE}_${BACKUP_ID} RENAME TO ${APP_NAME}_${DATABASE};\""
 
   elif [[ "$SUB_CMD" == "rm" ]]; then
     check stop ${DATABASE}db
