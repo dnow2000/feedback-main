@@ -41,7 +41,7 @@ const _ = ({
 
   const { headers, isPending, isSuccess } = useSelector(state =>
     selectRequest(state, config)) || {}
-  const { hasMore=true } = headers || {}
+  const { hasMore=true, currentPage=0 } = headers || {}
 
   const items = useSelector(state => selectItems(state, config))
   itemsCollection = itemsCollection.length > 0 ? itemsCollection : items
@@ -72,9 +72,9 @@ const _ = ({
   ])
 
   useEffect(() => {
-    handleGetItems(0)
+    handleGetItems(parseInt(currentPage))
     setThreshold(REACHABLE_THRESHOLD)
-  }, [config, handleGetItems, shouldLoadMore])
+  }, [config, currentPage, handleGetItems, shouldLoadMore])
 
   useEffect(() => {
     if (isSuccess) {
@@ -121,7 +121,7 @@ const _ = ({
       key={config.apiPath}
       loadMore={handleLoadMore}
       loader={<Spinner key={42} />}
-      pageStart={0}
+      pageStart={parseInt(currentPage)}
       threshold={threshold}
     >
       {itemsElement}

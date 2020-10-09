@@ -19,8 +19,9 @@ def listify(*args, **kwargs):
     response = jsonify(result['data'])
 
     if 'total_data_count' in result:
+        response.headers['Page'] = kwargs.get('page')
         response.headers['Total-Data-Count'] = result['total_data_count']
-        response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
+        response.headers['Access-Control-Expose-Headers'] = 'Page,Total-Data-Count'
         if 'has_more' in result:
             response.headers['Has-More'] = result['has_more']
             response.headers['Access-Control-Expose-Headers'] += ',Has-More'

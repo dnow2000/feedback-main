@@ -62,7 +62,6 @@ export default () => {
           <section>
             <Items
               config={config}
-              initialLoad={false}
               renderItem={renderItem}
             />
           </section>
