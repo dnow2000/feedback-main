@@ -1,21 +1,19 @@
 import React from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider } from 'react-redux'
-import {
-  BrowserRouter,
-  Route,
-  Switch
-} from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import NotMatch from 'components/pages/NotMatch'
 import configureStore from 'utils/store'
 
 import App from './App'
+import FeaturedRoute from './FeaturedRoute'
 import routes from './routes'
 
 
 const { store, persistor } = configureStore()
 
+const renderWhenFeatureRouteDisabled = () => <NotMatch />
 
 export default () => (
   <Provider store={store}>
@@ -27,9 +25,10 @@ export default () => (
         <App>
           <Switch>
             {routes.map(route => (
-              <Route
+              <FeaturedRoute
                 {...route}
                 key={route.path}
+                renderWhenDisabled={renderWhenFeatureRouteDisabled}
               />))}
             <Route component={NotMatch} />
           </Switch>
