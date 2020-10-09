@@ -18,8 +18,13 @@ depends_on = None
 
 def upgrade():
     op.create_table('platform',
-                    sa.Column('id', sa.Integer, primary_key=True),
-                    sa.Column('name', sa.String(128), nullable=False))
+                    sa.Column('id',
+                              sa.BigInteger(),
+                              auto_increment=True,
+                              primary_key=True),
+                    sa.Column('name',
+                              sa.String(128),
+                              nullable=False))
 
     op.alter_column('content', 'url', existing_nullable=False, nullable=True)
 
