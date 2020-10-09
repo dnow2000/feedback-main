@@ -10,6 +10,7 @@ def import_routes():
     import routes.checks
     import routes.claims
     import routes.contents
+    import routes.features
     import routes.graphs
     import routes.images
     import routes.jobs
