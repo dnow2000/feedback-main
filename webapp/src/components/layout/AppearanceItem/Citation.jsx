@@ -84,10 +84,10 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
             )}
           </p>
           <div className="citation-footer">
-            {totalShares === 0
+            {!totalShares
               ? (
                 <div className='share-list dropdown text-center'>
-                  {'No shares available for this link.'}
+                  {'No shares available for this citation.'}
                 </div>
               )
               : (

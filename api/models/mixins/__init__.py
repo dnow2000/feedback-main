@@ -1,6 +1,7 @@
 from models.mixins.has_crowdtangle_mixin import *
 from models.mixins.has_external_thumb_url_mixin import *
 from models.mixins.has_facebook_mixin import *
+from models.mixins.has_graph_mixin import *
 from models.mixins.has_qualification_mixin import *
 from models.mixins.has_rating_mixin import *
 from models.mixins.has_science_feedback_mixin import *

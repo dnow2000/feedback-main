@@ -15,6 +15,7 @@ from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasCrowdtangleMixin, \
                           HasExternalThumbUrlMixin, \
                           HasFacebookMixin, \
+                          HasGraphMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
                           HasSharesMixin, \
@@ -33,6 +34,7 @@ class Content(ApiHandler,
               HasCrowdtangleMixin,
               HasExternalThumbUrlMixin,
               HasFacebookMixin,
+              HasGraphMixin,
               HasScienceFeedbackMixin,
               HasSharesMixin,
               HasThumbMixin,

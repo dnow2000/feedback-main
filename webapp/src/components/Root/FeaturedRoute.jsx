@@ -24,8 +24,6 @@ const _ = ({
   }, [featureName])
   const { path } = routeProps
 
-  console.log({featureName, isRouteDisabled})
-
   useEffect(() => {
     if (areFeaturesLoaded) {
       return
