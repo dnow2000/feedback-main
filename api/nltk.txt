@@ -1,2 +1,2 @@
-corpora/stopwords
-tokenizers/punkt
+punkt
+stopwords

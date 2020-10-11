@@ -15,8 +15,11 @@ def import_nltk():
     if not packages:
         return
     for package in packages:
-        [lib,name] = package.split('/')
-        try:
-            nltk.data.find('{}/{}'.format(lib, name))
-        except LookupError:
-            nltk.download(name)
+        for (path, file_names, folder_names) in os.walk('/root/nltk_data'):
+            if package in file_names:
+                lib = path.replace('/root/nltk_data/', '').split('/')[0]
+                try:
+                    nltk.data.find('{}/{}'.format(lib, package))
+                except LookupError:
+                    nltk.download(name)
+                break
