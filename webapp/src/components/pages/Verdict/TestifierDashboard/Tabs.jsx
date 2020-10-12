@@ -7,7 +7,7 @@ import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId
 import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
 
 
-import { numberShortener } from 'utils/shorteners'
+// import { numberShortener } from 'utils/shorteners'
 
 
 const tabs = [
@@ -16,16 +16,16 @@ const tabs = [
     isDisplayedFrom: ({ linksCount }) => linksCount > 0,
     path: 'appearances'
   },
-  {
-    childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,
-    isDisplayedFrom: ({ sharesCount }) => sharesCount > 0,
-    path: 'shares'
-  },
-  {
-    childrenFrom: () => 'Graph',
-    isDisplayedFrom: () => true,
-    path: 'graph'
-  }
+  // {
+  //   childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,
+  //   isDisplayedFrom: ({ sharesCount }) => sharesCount > 0,
+  //   path: 'shares'
+  // },
+  // {
+  //   childrenFrom: () => 'Graph',
+  //   isDisplayedFrom: () => true,
+  //   path: 'graph'
+  // }
 ]
 
 
