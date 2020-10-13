@@ -71,9 +71,12 @@ services:
         - MODE=serve-development
       context: ./worker
     command: >
-      bash -c "ls -la /opt/worker;
-              cd /opt/worker;
-              celery -A tasks worker --loglevel=INFO;"
+      bash -c "cd /opt/worker;
+              celery --app=tasks worker \
+                     --loglevel=INFO \
+                     --uid=nobody \
+                     --gid=nogroup;"
+    container_name: ${APP_NAME}-apiworker-serve-development
     depends_on:
       - apijobs-serve-development
     env_file:
