@@ -53,6 +53,34 @@ services:
     ports:
       - 80:80
 
+  apijobs-serve-development:
+    container_name: ${APP_NAME}-apijobs-serve-development
+    env_file:
+      - ./.env
+    environment:
+      - MODE=serve-development
+    image: redis:6.0.8
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker_data_serve-development/redis:/data
+
+  apiworker-serve-development:
+    build:
+      args:
+        - MODE=serve-development
+      context: ./worker
+    command: >
+      bash -c "ls -la /opt/worker;
+              cd /opt/worker;
+              celery -A tasks worker --loglevel=INFO;"
+    depends_on:
+      - apijobs-serve-development
+    env_file:
+      - ./.env
+    volumes:
+      - ./worker:/opt/worker
+
 networks:
   db_serve-development_nw:
     driver: bridge
