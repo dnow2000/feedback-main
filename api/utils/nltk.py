@@ -1,7 +1,5 @@
 import os
 from pathlib import Path
-
-
 NLTK_PATH = Path(os.path.dirname(os.path.realpath(__file__)))\
               / '..' / 'nltk.txt'
 with open(NLTK_PATH, 'r') as nltk_file:
