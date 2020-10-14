@@ -1,7 +1,6 @@
 .DS_Store
 *.secret
 shared
-__pycache__
 
 docker_data*
 node_modules

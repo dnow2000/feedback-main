@@ -2,7 +2,7 @@ import json
 from glob import glob
 from flask import current_app as app, jsonify, url_for
 
-from worker.tasks import app as celery_app, hello_world
+from celery_worker import hello_world
 from utils.jobs import JOBS_PATH
 
 
@@ -26,9 +26,10 @@ def get_all_jobs():
 @app.route('/jobs/hello_world', methods=['POST'])
 def hello_world_job():
     try:
-        task = hello_world.delay('Quan')
-        result = task.wait()
-        return jsonify(result)
+        task = hello_world.apply_async(args=['Quan'])
+        return jsonify({}), 202, {
+            'Location': url_for('task_status', task_id=task.id)
+        }
     except Exception as e:
         return jsonify(f'Exception: {e}'), 500
 
