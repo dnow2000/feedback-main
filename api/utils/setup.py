@@ -28,6 +28,7 @@ def setup(flask_app,
     flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     if with_debug:
         flask_app.config['DEBUG'] = True
 
