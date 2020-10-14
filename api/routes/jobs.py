@@ -26,10 +26,9 @@ def get_all_jobs():
 @app.route('/jobs/hello_world', methods=['POST'])
 def hello_world_job():
     try:
-        task = hello_world.apply_async(args=['Quan'])
-        return jsonify({}), 202, {
-            'Location': url_for('task_status', task_id=task.id)
-        }
+        task = hello_world.delay('Quan')
+        result = task.wait()
+        return jsonify(result)
     except Exception as e:
         return jsonify(f'Exception: {e}'), 500
 

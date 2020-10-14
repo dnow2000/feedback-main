@@ -22,7 +22,12 @@ services:
       - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
+<<<<<<< HEAD
     image: &img api
+=======
+    links:
+      - apijobs-serve-development
+>>>>>>> f625479... wip
     networks:
       - db_serve-development_nw
       - jobs_serve-develoment_nw
@@ -70,11 +75,23 @@ services:
       - ./docker_data_serve-development/redis:/var/lib/redis/data
 
   apiworker-serve-development:
+<<<<<<< HEAD
     command: >
       bash -c "set -x;
               cd /opt/api;
               celery --app=celery_worker worker \
                      --loglevel=DEBUG \
+=======
+    build:
+      args:
+        - MODE=serve-development
+      context: ./api/worker
+      dockerfile: Dockerfile.worker
+    command: >
+      bash -c "cd /opt/api/worker;
+              celery --app=tasks.app worker \
+                     --loglevel=INFO \
+>>>>>>> f625479... wip
                      --uid=nobody \
                      --gid=nogroup;"
     container_name: ${APP_NAME}-apiworker-serve-development
@@ -83,11 +100,18 @@ services:
       - apijobs-serve-development
     env_file:
       - ./.env
+<<<<<<< HEAD
     image: *img
     networks:
       - jobs_serve-develoment_nw
     volumes:
       - ./api:/opt/api
+=======
+    links:
+      - apijobs-serve-development
+    volumes:
+      - ./api/worker:/opt/api/worker
+>>>>>>> f625479... wip
 
 networks:
   db_serve-development_nw:
