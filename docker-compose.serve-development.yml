@@ -22,10 +22,10 @@ services:
       - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
-    links:
-      - apijobs-serve-development
+    image: &img api
     networks:
       - db_serve-development_nw
+      - jobs_serve-develoment_nw
       - web_serve-development_nw
     volumes:
       - ./api:/opt/api
@@ -62,21 +62,19 @@ services:
     environment:
       - MODE=serve-development
     image: redis:6.0.8
+    networks:
+      - jobs_serve-develoment_nw
     ports:
-      - 6379:6379
+      - 6379
     volumes:
       - ./docker_data_serve-development/redis:/var/lib/redis/data
 
   apiworker-serve-development:
-    build:
-      args:
-        - MODE=serve-development
-      context: ./api/worker
-      dockerfile: Dockerfile.worker
     command: >
-      bash -c "cd /opt/api/worker;
-              celery --app=tasks.app worker \
-                     --loglevel=INFO \
+      bash -c "set -x;
+              cd /opt/api;
+              celery --app=celery_worker worker \
+                     --loglevel=DEBUG \
                      --uid=nobody \
                      --gid=nogroup;"
     container_name: ${APP_NAME}-apiworker-serve-development
@@ -85,13 +83,16 @@ services:
       - apijobs-serve-development
     env_file:
       - ./.env
-    links:
-      - apijobs-serve-development
+    image: *img
+    networks:
+      - jobs_serve-develoment_nw
     volumes:
-      - ./api/worker:/opt/api/worker
+      - ./api:/opt/api
 
 networks:
   db_serve-development_nw:
+    driver: bridge
+  jobs_serve-develoment_nw:
     driver: bridge
   web_serve-development_nw:
     driver: bridge
