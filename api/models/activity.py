@@ -1,14 +1,18 @@
 from postgresql_audit.flask import versioning_manager
 from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.mixins import ActivityMixin
 
-from utils.db import db
+from utils.database import db
 
 
 versioning_manager.init(db.Model)
 
 
-class Activity(ApiHandler,
+class Activity(ActivityMixin,
+               ApiHandler,
                versioning_manager.activity_cls):
     __table_args__ = {'extend_existing': True}
-    
+
     id = versioning_manager.activity_cls.id
+
+ApiHandler.set_activity(Activity)

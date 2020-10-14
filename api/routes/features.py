@@ -1,5 +1,5 @@
 from flask import current_app as app, jsonify
-from sqlalchemy_api_handler import as_dict
+from sqlalchemy_api_handler.serialization import as_dict
 
 from models.feature import Feature
 

@@ -1,11 +1,10 @@
 # pylint: disable=C0415
-
 import os
 import sys
 import requests
-
 from datetime import datetime
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from repository.contents import sync_content
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media

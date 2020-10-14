@@ -1,15 +1,15 @@
 import bcrypt
 from sqlalchemy import Column, LargeBinary, String
 from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.mixins import NeedsValidationMixin
 
 from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasScienceFeedbackMixin, \
-                          HasThumbMixin, \
-                          NeedsValidationMixin
+                          HasThumbMixin
 from models.role import Role
-from utils.db import db
+from utils.database import db
 
 
 class User(ApiHandler,

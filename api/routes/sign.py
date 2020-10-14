@@ -1,7 +1,8 @@
 import json
 from flask_login import current_user, login_required, logout_user, login_user
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, as_dict
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
 
 from models.user import User
 from repository.login_manager import stamp_session, discard_session

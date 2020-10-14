@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 import requests
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 from urllib.parse import urlencode
 
 from utils.date import strftime

@@ -7,7 +7,7 @@ from sqlalchemy import BigInteger,\
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import db
+from utils.database import db
 
 
 class RoleType(enum.Enum):

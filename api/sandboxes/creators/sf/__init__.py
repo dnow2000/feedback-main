@@ -1,6 +1,6 @@
 # pylint: disable=C0415
 
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 
 def create_sandbox():

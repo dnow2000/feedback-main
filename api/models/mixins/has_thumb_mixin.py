@@ -1,11 +1,11 @@
 import inflect
 from sqlalchemy import Column,\
                        Integer
-from sqlalchemy_api_handler import humanize
+from sqlalchemy_api_handler.utils import humanize
 
 from storage.object import delete_public_object, \
-                                 get_public_object_date, \
-                                 get_storage_base_url
+                           get_public_object_date, \
+                           get_storage_base_url
 
 IDEAL_THUMB_WIDTH = 600
 

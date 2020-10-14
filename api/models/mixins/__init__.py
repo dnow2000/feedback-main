@@ -7,5 +7,3 @@ from models.mixins.has_rating_mixin import *
 from models.mixins.has_science_feedback_mixin import *
 from models.mixins.has_shares_mixin import *
 from models.mixins.has_thumb_mixin import *
-from models.mixins.needs_validation_mixin import *
-from models.mixins.versioned_mixin import *

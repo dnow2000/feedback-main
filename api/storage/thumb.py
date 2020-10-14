@@ -1,6 +1,7 @@
 from typing import Callable
 import requests
-from sqlalchemy_api_handler import ApiErrors, ApiHandler, logger
+from sqlalchemy_api_handler import ApiErrors, ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from domain.thumbs import DO_NOT_CROP, standardize_image
 from storage.object import store_public_object

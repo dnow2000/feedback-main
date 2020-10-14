@@ -3,7 +3,7 @@ from time import sleep
 
 from datetime import datetime
 import requests
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 
 CROWDTANGLE_API_URL = 'https://api.crowdtangle.com'

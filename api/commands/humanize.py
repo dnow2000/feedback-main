@@ -1,6 +1,6 @@
 from flask import current_app as app
 from flask_script import Command
-from sqlalchemy_api_handler import humanize as h
+from sqlalchemy_api_handler.utils import humanize as h
 
 from utils.config import COMMAND_NAME
 

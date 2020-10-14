@@ -1,6 +1,4 @@
-from sqlalchemy_api_handler import humanize
-from utils.config import COMMAND_NAME, API_URL, IS_DEVELOPMENT
-from utils.date import strptime
+from sqlalchemy_api_handler.utils import humanize
 
 from models.appearance import Appearance
 from models.author_content import AuthorContent
@@ -12,7 +10,13 @@ from models.organization import Organization
 from models.role import Role, RoleType
 from models.user import User
 from models.verdict import Verdict, PostType
-from utils.config import APP_NAME, DEFAULT_USER_PASSWORD, TLD
+from utils.config import  API_URL, \
+                          APP_NAME, \
+                          COMMAND_NAME, \
+                          DEFAULT_USER_PASSWORD, \
+                          IS_DEVELOPMENT, \
+                          TLD
+from utils.date import strptime
 from utils.password import create_random_password
 
 

@@ -4,7 +4,7 @@ The modules in this package contain functions that implement SQL Alchemy queries
 
 ## Do
 
-These functions should only contain queries to the database that return either "primitive" data tuples (e.g. a list of e-mail addresses) or instances of SQL Alchemy models. We can also have functions which return a "subset" of queries, that is to say (private) functions that build queries which are not triggered (ie which do not have an `.all()` or `.first()`). 
+These functions should only contain queries to the database that return either "primitive" data tuples (e.g. a list of e-mail addresses) or instances of SQL Alchemy models. We can also have functions which return a "subset" of queries, that is to say (private) functions that build queries which are not triggered (ie which do not have an `.all()` or `.first()`).
 
 Type indications will be used in the function signatures to indicate what data is expected at input and output.
 
@@ -18,7 +18,7 @@ These functions must not contain:
 
 ## Testing
 
-These functions are tested in a Flask context, therefore with a connection to the database. We consider these integration tests. These tests trigger real SQL queries and require data to be present in the database. These tests use the `@clean_database` decorator which takes care of emptying each table before executing a test and insert the necessary data in their `# given` part.
+These functions are tested in a Flask context, therefore with a connection to the database. We consider these integration tests. These tests trigger real SQL queries and require data to be present in the database. These tests use the `@with_delete` decorator which takes care of emptying each table before executing a test and insert the necessary data in their `# given` part.
 
 They aim to:
 

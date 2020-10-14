@@ -1,7 +1,7 @@
 import os
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiErrors
-from sqlalchemy_api_handler.utils.get_result import paginate_obj
+from sqlalchemy_api_handler.serialization import paginate_obj
 
 from domain.trendings import find_trendings, trending_from
 from repository.trendings import keep_not_saved_trendings

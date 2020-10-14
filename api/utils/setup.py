@@ -6,12 +6,14 @@
 # pylint: disable=W0612
 # pylint: disable=W0613
 import os
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
+
 from jobs import import_async_jobs, import_background_jobs
 from models import import_models
 from routes import import_routes
 from utils.config import IS_DEVELOPMENT
-from utils.db import db
+from utils.database import db
 from utils.encoder import EnumJSONEncoder
 from utils.nltk import import_nltk
 
@@ -31,6 +33,7 @@ def setup(flask_app,
 
     db.app = flask_app
     db.init_app(flask_app)
+    ApiHandler.set_db(db)
 
     flask_app.json_encoder = EnumJSONEncoder
 

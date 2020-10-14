@@ -1,8 +1,8 @@
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
-                                   dehumanize, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import dehumanize, \
+                                         load_or_404
 
 from models.appearance import Appearance
 from utils.includes import APPEARANCE_INCLUDES

@@ -1,4 +1,4 @@
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 from sandboxes.creators.ci.create_appearances import *
 from sandboxes.creators.ci.create_author_contents import *

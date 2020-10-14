@@ -10,11 +10,11 @@ from models.user import User
 from models.verdict import Verdict
 from repository.science_feedback import sync
 from repository.tags import sync as sync_tags
-from tests.decorators import with_clean
+from tests.decorators import with_delete
 
 
 @pytest.mark.standalone
-@with_clean
+@with_delete
 def when_sync_is_a_success(app):
     # given
     sync_tags()

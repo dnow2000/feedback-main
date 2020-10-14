@@ -1,7 +1,7 @@
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 from utils.config import VERSION
-from utils.db import db
+from utils.database import db
 
 
 def check_from_model(model):

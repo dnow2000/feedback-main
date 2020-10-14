@@ -8,7 +8,7 @@ from sqlalchemy.exc import OperationalError
 
 from repository.checks import check_from_model
 from utils.setup import setup
-from utils.db import db, clean
+from utils.database import db
 
 
 SLEEP_TIME = 1

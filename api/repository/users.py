@@ -1,5 +1,6 @@
 from sqlalchemy import and_
-from sqlalchemy_api_handler import ApiErrors, ApiHandler, logger
+from sqlalchemy_api_handler import ApiErrors, ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from domain.user import store_user_thumb_from_sandbox
 from models.role import Role
@@ -9,7 +10,7 @@ from models.user_tag import UserTag
 from repository.keywords import create_filter_matching_all_keywords_in_any_model, \
                                 create_get_filter_matching_ts_query_in_any_model
 from utils.config import DEFAULT_USER_PASSWORD, IS_DEVELOPMENT
-from utils.db import db
+from utils.database import db
 
 
 user_ts_filter = create_get_filter_matching_ts_query_in_any_model(User,

@@ -1,8 +1,8 @@
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import load_or_404
 
 from models.user import User
 from repository.users import keep_users_with_roles, \

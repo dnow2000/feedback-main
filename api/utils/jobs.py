@@ -3,7 +3,7 @@ from glob import glob
 import json
 import os
 from pathlib import Path
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 from utils.config import IS_DEVELOPMENT
 from utils.tmp import TMP_PATH

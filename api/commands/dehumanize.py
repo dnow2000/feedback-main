@@ -1,6 +1,6 @@
 from flask import current_app as app
 from flask_script import Command
-from sqlalchemy_api_handler import dehumanize as dh
+from sqlalchemy_api_handler.utils import dehumanize as dh
 
 from utils.config import COMMAND_NAME
 

@@ -9,7 +9,7 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import \
     SoftDeletableMixin
 
 from domain.keywords import create_ts_vector_and_table_args
-from utils.db import db
+from utils.database import db
 
 
 class SourceName(enum.Enum):

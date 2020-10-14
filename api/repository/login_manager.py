@@ -1,7 +1,8 @@
 import uuid
 from flask import current_app as app, jsonify, session
 from flask_login import login_user
-from sqlalchemy_api_handler import ApiErrors, as_dict
+from sqlalchemy_api_handler import ApiErrors
+from sqlalchemy_api_handler.serialization import as_dict
 from typing import Iterable
 from werkzeug.local import LocalProxy
 from sqlalchemy_api_handler import ApiHandler

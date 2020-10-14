@@ -1,6 +1,7 @@
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiErrors, ApiHandler, logger
+from sqlalchemy_api_handler import ApiErrors, ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from domain.password import check_new_password_validity, \
                             check_password_strength, \

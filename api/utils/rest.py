@@ -1,7 +1,8 @@
 from functools import wraps
 from flask_login import current_user
 from flask import jsonify, request
-from sqlalchemy_api_handler import ApiErrors, get_result
+from sqlalchemy_api_handler import ApiErrors
+from sqlalchemy_api_handler.serialization import get_result
 
 
 def expect_json_data(f):
