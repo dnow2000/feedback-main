@@ -97,16 +97,15 @@ def sync(from_date=None,
     if to_date is None:
         to_date = now_date - timedelta(minutes=0)
 
-    query = Content.query.filter(Content.type==None).order_by(Content.id.desc())
-
+    query = Content.query.order_by(Content.id.desc())
     if from_date or to_date:
         query = filter_by_activity_date_and_verb(query,
                                                  from_date=from_date,
                                                  to_date=to_date,
                                                  verb='insert')
 
+
     contents = query.all()
-    print(contents)
 
     if contents_max is None:
         contents_max = len(contents)
