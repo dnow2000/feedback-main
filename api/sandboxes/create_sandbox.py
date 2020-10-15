@@ -1,10 +1,10 @@
 from sandboxes import creators
-from utils.db import clean
+from utils.database import delete
 
 
 def create_sandbox(name,
-                   with_clean=True,
+                   with_delete=True,
                    **kwargs):
-    if with_clean:
-        clean()
+    if with_delete:
+        delete()
     getattr(creators, name).create_sandbox(**kwargs)

@@ -8,8 +8,11 @@ from sqlalchemy import BigInteger, \
                        Text, \
                        String
 from sqlalchemy.orm import relationship
-from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
-from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.mixins import HasActivitiesMixin, \
+                                          SoftDeletableMixin
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import humanize
 
 from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasCrowdtangleMixin, \
@@ -18,9 +21,8 @@ from models.mixins import HasCrowdtangleMixin, \
                           HasGraphMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
-                          HasSharesMixin, \
-                          VersionedMixin
-from utils.db import db
+                          HasSharesMixin
+from utils.database import db
 
 
 class ContentType(enum.Enum):
@@ -31,6 +33,7 @@ class ContentType(enum.Enum):
 
 class Content(ApiHandler,
               db.Model,
+              HasActivitiesMixin,
               HasCrowdtangleMixin,
               HasExternalThumbUrlMixin,
               HasFacebookMixin,
@@ -38,8 +41,7 @@ class Content(ApiHandler,
               HasScienceFeedbackMixin,
               HasSharesMixin,
               HasThumbMixin,
-              SoftDeletableMixin,
-              VersionedMixin):
+              SoftDeletableMixin):
 
     archiveUrl = Column(String(2048), unique=True)
 

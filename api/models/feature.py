@@ -6,7 +6,7 @@ from sqlalchemy import Boolean, \
 from sqlalchemy.sql import expression
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import db
+from utils.database import db
 
 
 class FeatureName(enum.Enum):

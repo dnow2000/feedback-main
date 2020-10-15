@@ -2,7 +2,7 @@ import simplejson as json
 import traceback
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler import ApiErrors
-from sqlalchemy_api_handler.utils.human_ids import  NonDehumanizableId
+from sqlalchemy_api_handler.utils import NonDehumanizableId
 from sqlalchemy_api_handler.bases.errors import DateTimeCastError, \
                                                 DecimalCastError, \
                                                 ForbiddenError, \

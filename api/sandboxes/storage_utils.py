@@ -1,7 +1,8 @@
 import inflect
 import os
 from pathlib import Path
-from sqlalchemy_api_handler import ApiHandler, humanize
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import humanize
 
 from storage.object import store_public_object
 from storage.thumb import save_thumb
@@ -25,13 +26,11 @@ def store_public_object_from_sandbox_assets(folder, public_object, thumb_id, ind
 
     with open(thumb_path, mode='rb') as thumb_file:
         if folder == "thumbs":
-            save_thumb(
-                public_object,
-                thumb_file.read(),
-                index,
-                convert=False,
-                symlink_path=thumb_path
-            )
+            save_thumb(public_object,
+                       thumb_file.read(),
+                       index,
+                       convert=False,
+                       symlink_path=thumb_path)
         else:
             store_public_object(folder,
                                 plural_model_name + '/' + humanize(public_object.id),

@@ -3,7 +3,9 @@ import json
 from sqlalchemy import String
 from sqlalchemy.sql.expression import and_
 from flask import current_app as app, jsonify
-from sqlalchemy_api_handler import ApiHandler, as_dict
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+
 
 INDEXES = range(0, 10)
 
@@ -15,7 +17,8 @@ INDEXES = range(0, 10)
                               help='item that filters')
            for index in INDEXES])
 def filter(**kwargs):
-    model = ApiHandler.model_from_name(kwargs['model'].title())
+    model = ApiHandler.model_from_name(kwargs['model'].title()) \
+        if kwargs['model'] != 'activity' else ApiHandler.get_activity()
     query_filters = []
     for index in INDEXES:
         item = kwargs['item{}'.format(index)]

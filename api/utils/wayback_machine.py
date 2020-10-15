@@ -2,7 +2,8 @@ import requests
 from time import sleep
 from urllib.parse import urlparse
 
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
+
 
 API_URL = 'http://archive.org/wayback/available?url='
 BASE_URL = 'https://web.archive.org'

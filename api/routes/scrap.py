@@ -1,6 +1,7 @@
 from newspaper.article import ArticleException
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiErrors, as_dict
+from sqlalchemy_api_handler import ApiErrors
+from sqlalchemy_api_handler.serialization import as_dict
 
 from repository.contents import content_from_url
 

@@ -1,4 +1,4 @@
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 
 def create_author_contents():

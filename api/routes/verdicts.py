@@ -1,9 +1,9 @@
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
-                                   dehumanize, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import dehumanize, \
+                                         load_or_404
 
 from models.verdict import Verdict
 from repository.verdicts import keep_verdict_with_keywords

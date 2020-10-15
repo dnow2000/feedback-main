@@ -1,4 +1,5 @@
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from models.appearance import Appearance, StanceType
 from models.claim import Claim

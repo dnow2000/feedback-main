@@ -1,5 +1,5 @@
 from models.activity import Activity
-from utils.db import db
+from utils.database import db
 
 
 def filter_with_joined_activities(query):

@@ -1,12 +1,12 @@
 from functools import wraps
 
-from utils.db import db
+from utils.database import db
 
 
-def with_clean(f):
+def with_delete(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        clean()
+        delete()
         return f(*args, **kwargs)
 
     return decorated_function

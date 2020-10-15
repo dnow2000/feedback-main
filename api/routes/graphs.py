@@ -1,7 +1,7 @@
 import inflect
 from flask import current_app as app, jsonify
-from sqlalchemy_api_handler import ApiHandler, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import load_or_404
 
 from domain.graph import graph_from_entity
 from models.verdict import Verdict

@@ -1,5 +1,7 @@
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, as_dict, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import logger
 
 from models.appearance import Appearance
 from repository.contents import sync_content

@@ -1,4 +1,5 @@
-from sqlalchemy_api_handler import ApiHandler, dehumanize, humanize
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import dehumanize, humanize
 
 from models.review import Review
 from models.review_tag import ReviewTag

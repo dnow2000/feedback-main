@@ -2,9 +2,9 @@ import os
 import subprocess
 from flask_login import current_user
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import load_or_404
 
 from models.content import Content
 from repository.contents import content_from_url, \
@@ -12,13 +12,13 @@ from repository.contents import content_from_url, \
                                 get_contents_keywords_join_query, \
                                 keep_contents_with_keywords, \
                                 keep_contents_with_minimal_datum
-from validation.contents import check_content_is_not_yet_saved
-from validation.roles import check_has_role
 from utils.config import API_ROOT_PATH
 from utils.includes import CONTENT_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required
+from validation.contents import check_content_is_not_yet_saved
+from validation.roles import check_has_role
 
 
 @app.route('/contents', methods=['GET'])

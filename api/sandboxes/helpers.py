@@ -1,4 +1,4 @@
-from sqlalchemy_api_handler import as_dict
+from sqlalchemy_api_handler.serialization import as_dict
 
 from utils.config import APP_NAME, \
                          COMMAND_NAME, \

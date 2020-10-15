@@ -3,7 +3,8 @@ import mimetypes
 import requests
 from flask_login import current_user
 from flask import current_app as app, jsonify, request, send_file
-from sqlalchemy_api_handler import ApiHandler, as_dict
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
 
 from models.image import Image
 from validation.roles import check_has_role

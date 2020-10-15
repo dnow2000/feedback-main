@@ -84,6 +84,7 @@ function ensure_remote {
   fi
 }
 
+
 function exit_with_error {
   MESSAGE=${1-"end of $APP_NAME command."}
   RED='\033[0;31m'
@@ -92,6 +93,7 @@ function exit_with_error {
   exit 1
 }
 
+
 function exit_with_success {
   MESSAGE=${1-"end of $APP_NAME command."}
   GREEN='\033[0;32m'
@@ -99,6 +101,7 @@ function exit_with_success {
   echo -e "${GREEN}""SUCCESS : $MESSAGE""${NO_COLOR}"
   exit 0
 }
+
 
 function update_branch {
   branch="$1"
@@ -212,7 +215,7 @@ elif [[ "$CMD" == "clock" ]]; then
 
 
 # Apply sub command to the databases from tar db files
-elif [[ "$CMD" == database ]]; then
+elif [[ "$CMD" == "database" ]]; then
   SUB_CMD=$1
   shift
 
@@ -248,8 +251,6 @@ elif [[ "$CMD" == database ]]; then
     FILE=schema_$(date +"%Y_%m_%d__%H_%M_%S").sql
     docker exec $POSTGRES_SERVICE bash -c "PGPASSWORD='$POSTGRES_PASSWORD' pg_dump -h localhost -d '$POSTGRES_DB' -U '$POSTGRES_USER' --no-comments --no-owner -N function_schema --no-privileges --schema-only --exclude-table alembic_version --exclude-schema topology --username '$POSTGRES_USER' --format p > /var/lib/postgresql/$FILE"
     sudo sed -i "s/SELECT pg_catalog.set_config('search_path', '', false);/SET search_path = public, pg_catalog;/g" $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
-    sudo sed -i '/CREATE FUNCTION/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
-    sudo sed -i '/CREATE OPERATOR/,/;/d' $ROOT_PATH/docker_data_$MODE/${DATABASE}db/$FILE
     if [[ "$DATABASE" == "api" ]]; then
       sudo mv docker_data_$MODE/${DATABASE}db/$FILE $ROOT_PATH/api/alembic/versions/sql/$FILE
       confirm "Warning: remove previous schema_init.sql ?"
@@ -325,14 +326,14 @@ elif [[ "$CMD" == "shell" ]]; then
 
 # Restart with forcing recreation and unmounting volumes
 elif [[ "$CMD" == "restart" ]]; then
-  docker-compose -f docker-compose.$MODE.yml down --volumes $(containers_from_names $*)
+  docker-compose -f docker-compose.$MODE.yml down
   export FILE=$FILE && export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh  --force-recreate $(containers_from_names $*)
   exit_with_success
 
 
 # Start docker-compose up with adapted env variables or webapps with local env
 elif [[ "$CMD" == "reup" ]]; then
-  docker-compose -f docker-compose.$MODE.yml down --volumes $(containers_from_names $*)
+  docker-compose -f docker-compose.$MODE.yml down
   docker-compose -f docker-compose.$MODE.yml up --force-recreate $(containers_from_names $*)
   exit_with_success
 
@@ -340,7 +341,6 @@ elif [[ "$CMD" == "reup" ]]; then
 # Start docker-compose up with additional commands given the mode
 elif [[ "$CMD" == "start" ]]; then
   cd $ROOT_PATH
-  echo $(containers_from_names $*)
   export FILE=$FILE && export PLATFORM=$PLATFORM && bash scripts/start_$MODE.sh $(containers_from_names $*)
   exit_with_success
 

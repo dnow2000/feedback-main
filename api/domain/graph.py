@@ -1,5 +1,6 @@
 import inflect
-from sqlalchemy_api_handler import as_dict, humanize
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import humanize
 
 
 inflect_engine = inflect.engine()

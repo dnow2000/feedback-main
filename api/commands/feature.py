@@ -1,8 +1,8 @@
 import json
 from flask import current_app as app
 from flask_script import Command
-from sqlalchemy_api_handler import ApiHandler, as_dict
-
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
 
 from models.feature import Feature, FeatureName
 from utils.config import COMMAND_NAME

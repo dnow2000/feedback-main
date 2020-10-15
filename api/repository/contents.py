@@ -1,19 +1,20 @@
 from datetime import datetime, timedelta
-from sqlalchemy_api_handler import ApiHandler, logger
-
-from models.content import Content
-from models.content_tag import ContentTag
-from models.tag import Tag
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from domain.content import newspaper_from_url
 from domain.trendings.buzzsumo import buzzsumo_trending_from_url
+from models.content import Content
+from models.content_tag import ContentTag
+from models.tag import Tag
 from repository.activities import filter_by_activity_date_and_verb
 from repository.crowdtangle import attach_crowdtangle_entities_from_content
 from repository.keywords import create_filter_matching_all_keywords_in_any_model, \
                                 create_get_filter_matching_ts_query_in_any_model
+from storage.thumb import save_thumb
 from utils.screenshotmachine import capture
 from utils.wayback_machine import url_from_archive_services
-from storage.thumb import save_thumb
+
 
 
 CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(Content,
@@ -96,13 +97,13 @@ def sync(from_date=None,
     if to_date is None:
         to_date = now_date - timedelta(minutes=0)
 
-    query = Content.query.filter(Content.type==None).order_by(Content.id.desc())
-
+    query = Content.query.order_by(Content.id.desc())
     if from_date or to_date:
         query = filter_by_activity_date_and_verb(query,
                                                  from_date=from_date,
                                                  to_date=to_date,
                                                  verb='insert')
+
 
     contents = query.all()
 

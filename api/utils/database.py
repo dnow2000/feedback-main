@@ -1,6 +1,8 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy import orm
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from domain.keywords import LANGUAGE
 
@@ -9,26 +11,22 @@ db = SQLAlchemy(engine_options={
     'pool_size': int(os.environ.get('DATABASE_POOL_SIZE', 3)),
 })
 
-ApiHandler.set_db(db)
 
-
-def clean():
-    logger.info('clean all the database...')
+def delete():
+    logger.info('Delete all the database...')
     for table in reversed(db.metadata.sorted_tables):
-        print("Clearing table {table_name}...".format(table_name=table))
+        print("Deleting table {table_name}...".format(table_name=table))
         db.session.execute(table.delete())
-
+    ApiHandler.get_activity().query.delete()
     db.session.commit()
-    logger.info('clean all the database...Done.')
+    logger.info('Delete all the database...Done.')
 
 
 def create_activity_and_transaction_tables():
-    from models.activity import Activity
-    # based on https://github.com/kvesteri/postgresql-audit/issues/21
     orm.configure_mappers()
-    versioning_manager.transaction_cls.__table__.create(db.session.get_bind())
+    Activity = ApiHandler.get_activity()
+    Activity.transaction.mapper.class_.__table__.create(db.session.get_bind())
     Activity.__table__.create(db.session.get_bind())
-    db.engine.execute("CREATE INDEX IF NOT EXISTS idx_activity_objid ON activity(cast(changed_data->>'id' AS INT));")
 
 
 def create_text_search_configuration_if_not_exists(name, language=LANGUAGE):
@@ -43,9 +41,9 @@ def create_text_search_configuration_if_not_exists(name, language=LANGUAGE):
 
 
 def create():
-    logger.info('create all the database...')
+    logger.info('Create all the database...')
     create_activity_and_transaction_tables()
     create_text_search_configuration_if_not_exists('unaccent')
     db.create_all()
     db.session.commit()
-    logger.info('create all the database...Done.')
+    logger.info('Create all the database...Done.')

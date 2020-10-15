@@ -10,14 +10,14 @@ from sandboxes.create_sandbox import create_sandbox
                     '--name',
                     help='Sandbox name',
                     default='ci')
-@app.manager.option('-c',
-                    '--clean',
-                    help='Clean database first',
+@app.manager.option('-d',
+                    '--delete',
+                    help='Delete database first',
                     default='true')
-def sandbox(name, clean):
+def sandbox(name, delete):
     try:
-        with_clean = clean == 'true'
-        create_sandbox(name, with_clean)
+        with_delete = delete == 'true'
+        create_sandbox(name, with_delete)
     except Exception as e:
         print('ERROR: ' + str(e))
         traceback.print_tb(e.__traceback__)
