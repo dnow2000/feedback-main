@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
 
+import Spinner from 'components/layout/Spinner'
 import selectGraphByCollectionNameAndEntityId from 'selectors/selectGraphByCollectionNameAndEntityId'
 import { edgeWithDecoration, nodeWithDecoration } from 'utils/graph'
 
@@ -30,10 +31,9 @@ const _ = ({ children, collectionName, entityId }) => {
     dispatch(requestData({ apiPath }))
   }, [collectionName, dispatch, entityId])
 
-  if (!graphWithDecoration) return null
-
   return (
     <Graph graph={graphWithDecoration}>
+      {!graph && <Spinner />}
       {children}
     </Graph>
   )

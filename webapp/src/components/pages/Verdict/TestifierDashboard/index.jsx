@@ -58,12 +58,12 @@ export default () => {
           featureName='WITH_VERDICT_SHARES'
           path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
         />
-        <Route
-          component={VerdictGraph}
-          exact
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
-        />
       </Switch>
+      <Route
+        component={VerdictGraph}
+        exact
+        path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
+      />
     </div>
   )
 }

@@ -1,10 +1,11 @@
 import { UndirectedGraph } from 'graphology'
 import forceAtlas2 from 'graphology-layout-forceatlas2'
+import PropTypes from 'prop-types'
 import { WebGLRenderer } from 'sigma'
 import React, { useEffect, useRef } from 'react'
 
 
-export default ({ children, graph, onGraphMount }) => {
+const _ = ({ children, graph, onGraphMount }) => {
   const graphRef = useRef()
 
   useEffect(() => {
@@ -38,8 +39,6 @@ export default ({ children, graph, onGraphMount }) => {
 
   }, [graph, graphRef, onGraphMount])
 
-
-
   return (
     <div
       className="graph"
@@ -49,3 +48,21 @@ export default ({ children, graph, onGraphMount }) => {
     </div>
   )
 }
+
+
+_.defaultProps = {
+  children: null,
+  onGraphMount: null
+}
+
+_.propTypes = {
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node
+  ]),
+  graph: PropTypes.shape().isRequired,
+  onGraphMount: PropTypes.func
+}
+
+
+export default _
