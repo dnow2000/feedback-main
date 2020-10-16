@@ -3,7 +3,7 @@ import time
 
 from flask import Flask
 
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 from utils.jobs import get_all_jobs, \
                        remove_oldest_jobs_file, \
                        write_jobs_to_file
