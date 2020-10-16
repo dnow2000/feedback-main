@@ -478,7 +478,7 @@ elif [[ "$CMD" == "install" ]]; then
 
 # Create symlink to use "$(echo $COMMAND_NAME)" command (admin rights may be needed)
 elif [[ "$CMD" == "symlink" ]]; then
-	cd /usr/local/bin && ln -sf '"$(pwd)"'/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x '"$(pwd)"'/$COMMAND_NAME
+	cd /usr/local/bin && ln -sf $ROOT_PATH/$COMMAND_NAME $COMMAND_NAME && chmod +x $COMMAND_NAME && chmod +x $ROOT_PATH/$COMMAND_NAME
   exit_with_success
 
 # =============================================
