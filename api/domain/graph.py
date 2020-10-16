@@ -103,8 +103,6 @@ def graph_from_entity(entity,
             source_entity = entity
             validated_node_ids.append(node_id)
             graph['nodes'].append(node)
-        else:
-            source_entity = source_entity
 
         is_stopped = is_stop_node(entity, config)
         if is_stopped:

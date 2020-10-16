@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, Route, Switch, useLocation, useParams } from 'react-router-dom'
+import { Redirect, Switch, useLocation, useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
@@ -9,9 +9,16 @@ import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch } from 'utils/router'
 
 import Citations from './Citations'
+import Graph from './Graph'
 import Shares from './Shares'
 import Tabs from './Tabs'
-import VerdictGraph from './VerdictGraph'
+
+
+const componentsByTabName = {
+  citations: Citations,
+  shares: Shares,
+  graph: Graph,
+}
 
 
 export default () => {
@@ -47,23 +54,16 @@ export default () => {
       />
       <Tabs />
       <Switch location={location}>
-        <Route
-          component={Citations}
-          exact
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/citations`}
-        />
-        <FeaturedRoute
-          component={Shares}
-          exact
-          featureName='WITH_VERDICT_SHARES'
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
-        />
+        {Object.keys(componentsByTabName).map(tabName => (
+          <FeaturedRoute
+            component={componentsByTabName[tabName]}
+            exact
+            featureName={`WITH_VERDICT_${tabName.toUpperCase()}`}
+            key={tabName}
+            path={`/verdicts/:verdictId(${entityMatch})/testimony/${tabName}`}
+          />
+        ))}
       </Switch>
-      <Route
-        component={VerdictGraph}
-        exact
-        path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
-      />
     </div>
   )
 }
