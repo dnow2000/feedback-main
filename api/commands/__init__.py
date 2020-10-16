@@ -9,6 +9,7 @@ def import_commands():
     import commands.display_user_emails
     import commands.feature
     import commands.filter
+    import commands.graph
     import commands.humanize
     import commands.request
     import commands.sandbox

@@ -10,7 +10,7 @@ from models.verdict import Verdict
 @app.route('/graphs', methods=['GET'])
 def get_graphs():
     graphs = [
-        graph_from_entity(entity, shortcutted_types=SHORTCUTTED_TYPES)
+        graph_from_entity(entity)
         for entity in Verdict.query.all()[:2]
     ]
     return jsonify(graphs), 200

@@ -20,10 +20,39 @@ def print_with_indent(depth):
     return wrapped
 
 
-def default_is_stop_node(entity, config):
-    model_name = node_type_from(entity)
+def default_node_dict_from(entity):
+    node_type = node_type_from(entity)
 
-    if model_name in ['Role', 'Verdict']:
+    includes = []
+
+    if node_type == 'Claim':
+        includes = ['text']
+    elif node_type == 'Content':
+        includes = ['url']
+    elif node_type == 'Medium':
+        includes = ['name']
+    elif node_type == 'Organization':
+        includes = ['name']
+    elif node_type == 'Role':
+        includes = ['type']
+    elif node_type == 'Tag':
+        includes = ['label']
+    elif node_type == 'User':
+        includes = ['firstName', 'lastName']
+    elif node_type == 'Verdict':
+        includes = ['title']
+
+    for column_key in entity.__mapper__.columns.keys():
+        if column_key not in includes:
+            includes.append('-{}'.format(column_key))
+
+    return as_dict(entity, includes=includes)
+
+
+def default_is_stop_node(entity, config):
+    node_type = node_type_from(entity)
+
+    if node_type in ['Role', 'Verdict']:
         return True
 
     if config['key'] == 'testifier':
@@ -33,8 +62,8 @@ def default_is_stop_node(entity, config):
 
 
 def default_is_valid_node(entity, config):
-    model_name = node_type_from(entity)
-    if model_name in ['Appearance', 'AuthorContent', 'Role', 'Verdict']:
+    node_type = node_type_from(entity)
+    if node_type in ['Appearance', 'AuthorContent', 'Role', 'Verdict']:
         return False
 
     if config['key'] == 'testifier':
@@ -49,6 +78,7 @@ def graph_from_entity(entity,
                       is_valid_node=None,
                       is_stop_node=None,
                       limit=None,
+                      node_dict_from=None,
                       parent_entity=None,
                       parsed_node_ids=None,
                       relationship_key=None,
@@ -67,6 +97,9 @@ def graph_from_entity(entity,
 
     if is_stop_node is None:
         is_stop_node = default_is_stop_node
+
+    if node_dict_from is None:
+        node_dict_from = default_node_dict_from
 
     if parsed_node_ids is None:
         parsed_node_ids = []
@@ -94,7 +127,7 @@ def graph_from_entity(entity,
         is_validated = is_valid_node(entity, config)
         if is_validated:
             node = {
-                'datum': as_dict(entity),
+                'datum': node_dict_from(entity),
                 'depth': depth,
                 'id': node_id,
                 'type': node_type_from(entity)
@@ -122,6 +155,7 @@ def graph_from_entity(entity,
                                       is_valid_node=is_valid_node,
                                       is_stop_node=is_stop_node,
                                       limit=limit,
+                                      node_dict_from=node_dict_from,
                                       parent_entity=entity,
                                       parsed_node_ids=parsed_node_ids,
                                       relationship_key=key,

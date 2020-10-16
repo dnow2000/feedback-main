@@ -6,7 +6,6 @@ from flask.json import JSONEncoder
 
 
 class EnumJSONEncoder(JSONEncoder):
-
     def default(self, obj):
         try:
             if isinstance(obj, Enum):
@@ -23,3 +22,18 @@ class EnumJSONEncoder(JSONEncoder):
         else:
             return iterable
         return JSONEncoder.default(self, obj)
+
+
+
+class GraphJSONEncoder(EnumJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, dict):
+            if hasattr(obj, 'nodes') and hasattr(obj, 'edges'):
+                return {
+                    'detected': True,
+                    **obj
+                }
+        return EnumJSONEncoder.default(self, obj)
+
+
+AppJSONEncoder = GraphJSONEncoder
