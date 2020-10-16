@@ -18,6 +18,7 @@ depends_on = None
 
 def upgrade():
     post_type = sa.Enum('ARTICLE', 'CLAIM', 'INSIGHT', 'VIDEO', name='posttype')
+    post_type.create(op.get_bind())
     op.add_column('verdict',
                   sa.Column('type',
                             post_type,
