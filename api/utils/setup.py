@@ -14,7 +14,7 @@ from models import import_models
 from routes import import_routes
 from utils.config import IS_DEVELOPMENT
 from utils.database import db
-from utils.encoder import EnumJSONEncoder
+from utils.encoder import AppJSONEncoder
 from utils.nltk import import_nltk
 
 
@@ -35,7 +35,7 @@ def setup(flask_app,
     db.init_app(flask_app)
     ApiHandler.set_db(db)
 
-    flask_app.json_encoder = EnumJSONEncoder
+    flask_app.json_encoder = AppJSONEncoder
 
     @flask_app.teardown_request
     def remove_db_session(exc):

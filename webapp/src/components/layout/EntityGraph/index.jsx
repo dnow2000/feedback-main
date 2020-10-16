@@ -30,8 +30,6 @@ const _ = ({ children, collectionName, entityId }) => {
     dispatch(requestData({ apiPath }))
   }, [collectionName, dispatch, entityId])
 
-  if (!graphWithDecoration) return null
-
   return (
     <Graph graph={graphWithDecoration}>
       {children}
