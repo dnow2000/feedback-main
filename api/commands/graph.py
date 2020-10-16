@@ -1,4 +1,4 @@
-from flask import current_app as app
+from flask import current_app as app, jsonify
 from flask_script import Command
 from pprint import pprint
 from sqlalchemy_api_handler import ApiHandler
@@ -20,4 +20,4 @@ class GraphCommand(Command):
         model = ApiHandler.model_from_name(model_name.title())
         entity = model.query.get(dehumanize(entity_id))
         graph = graph_from_entity(entity)
-        pprint(graph)
+        pprint(jsonify(graph).json)

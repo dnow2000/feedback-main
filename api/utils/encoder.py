@@ -1,5 +1,5 @@
 # pylint: disable=R0903
-
+from domain.graph import Graph
 from enum import Enum
 
 from flask.json import JSONEncoder
@@ -27,12 +27,11 @@ class EnumJSONEncoder(JSONEncoder):
 
 class GraphJSONEncoder(EnumJSONEncoder):
     def default(self, obj):
-        if isinstance(obj, dict):
-            if hasattr(obj, 'nodes') and hasattr(obj, 'edges'):
-                return {
-                    'detected': True,
-                    **obj
-                }
+        if isinstance(obj, Graph):
+            return {
+                **obj.__dict__,
+                'nodes': [obj.json_from(node) for node in obj.nodes]
+            }
         return EnumJSONEncoder.default(self, obj)
 
 
