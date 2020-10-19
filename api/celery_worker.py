@@ -1,6 +1,8 @@
 import os
 import celery
 
+from tasks import import_tasks
+
 
 celery_app = celery.Celery(
     f'{os.environ.get("APP_NAME")}-jobs',
@@ -8,8 +10,4 @@ celery_app = celery.Celery(
     backend=os.environ.get('REDIS_URL')
 )
 
-
-@celery_app.task
-def hello_world(name):
-    print('Reached Hello World Task')
-    return f'Hello World, {name}!'
+import_tasks()

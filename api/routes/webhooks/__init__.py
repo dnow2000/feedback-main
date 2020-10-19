@@ -21,4 +21,7 @@ def create_entity_from_row(entity_name):
             return jsonify({"error": "couldn't save the entity"}), 500
     except Exception as e:
         logger.error(e)
-        return jsonify({"exception": "couldn't complete your request"}), 500
+        return jsonify({
+            "exception": "couldn't complete your request",
+            "details": e
+        }), 500
