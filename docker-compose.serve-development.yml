@@ -74,7 +74,7 @@ services:
       bash -c "set -x;
               cd /opt/api;
               celery --app=celery_worker worker \
-                     --loglevel=DEBUG \
+                     --loglevel=INFO \
                      --uid=nobody \
                      --gid=nogroup;"
     container_name: ${APP_NAME}-apiworker-serve-development
@@ -88,9 +88,23 @@ services:
       - jobs_serve-develoment_nw
     volumes:
       - ./api:/opt/api
+
+  jobsmonitor-serve-development:
+    command: >
+      bash -c "set -x;
+              cd /opt/api;
+              flower --app=celery_worker \
+              --broker=${REDIS_URL};"
+    container_name: ${APP_NAME}-jobsmonitor-serve-development
+    depends_on:
+      - apiworker-serve-development
+    env_file:
+      - ./.env
     image: *img
     networks:
       - jobs_serve-develoment_nw
+    ports:
+      - 5555:5555
     volumes:
       - ./api:/opt/api
 
