@@ -87,7 +87,7 @@ services:
     networks:
       - jobs_serve-develoment_nw
     volumes:
-      - ./api:/opt/api
+      - ./api/tasks:/opt/api/tasks
 
   jobsmonitor-serve-development:
     command: >
