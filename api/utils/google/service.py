@@ -13,7 +13,6 @@ SCOPES = [
 ]
 
 
-
 GOOGLE_TMP_PATH = TMP_PATH / 'google'
 if not os.path.isdir(GOOGLE_TMP_PATH):
     os.mkdir(GOOGLE_TMP_PATH)

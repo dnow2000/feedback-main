@@ -1,5 +1,5 @@
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import as_dict
+from sqlalchemy_api_handler.serialization import as_dict
 
 from tasks.science_feedback import sync_airtable_task, sync_outdated_rows_task
 
