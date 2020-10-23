@@ -2,6 +2,7 @@ import os
 import requests
 
 from flask import current_app as app, jsonify, redirect, request
+from tasks import task_as_dict
 from tasks.hello_world import hello_world
 
 
@@ -9,17 +10,7 @@ from tasks.hello_world import hello_world
 def hello_world_job():
     try:
         name = request.args.get('name', 'Feedback')
-        task = hello_world.apply_async(args=[name])
-        return jsonify({'taks_id': task.id})
-    except Exception as e:
-        return jsonify(f'Exception: {e}'), 500
-
-
-@app.route('/jobs/<full_path>')
-def jobs_monitor(full_path):
-    try:
-        flower_url = os.environ.get('FLOWER_URL')
-        url = f'{flower_url}/api/{full_path}'
-        return jsonify(requests.get(url).json())
+        task = task_as_dict(hello_world, name)
+        return jsonify(task)
     except Exception as e:
         return jsonify(f'Exception: {e}'), 500
