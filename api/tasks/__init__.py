@@ -1,6 +1,5 @@
 import celery
 
-from celery import current_task
 from celery.signals import task_postrun, task_prerun
 from datetime import datetime
 

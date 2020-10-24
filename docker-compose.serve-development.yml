@@ -89,25 +89,6 @@ services:
     volumes:
       - ./api:/opt/api
 
-  jobsmonitor-serve-development:
-    command: >
-      bash -c "set -x;
-              cd /opt/api;
-              flower --app=celery_worker \
-              --broker=${REDIS_URL};"
-    container_name: ${APP_NAME}-jobsmonitor-serve-development
-    depends_on:
-      - apiworker-serve-development
-    env_file:
-      - ./.env
-    image: *img
-    networks:
-      - jobs_serve-development_nw
-    ports:
-      - 5555:5555
-    volumes:
-      - ./api:/opt/api
-
 networks:
   db_serve-development_nw:
     driver: bridge
