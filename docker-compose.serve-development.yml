@@ -25,7 +25,7 @@ services:
     image: &img api
     networks:
       - db_serve-development_nw
-      - jobs_serve-develoment_nw
+      - jobs_serve-development_nw
       - web_serve-development_nw
     volumes:
       - ./api:/opt/api
@@ -63,7 +63,7 @@ services:
       - MODE=serve-development
     image: redis:6.0.8
     networks:
-      - jobs_serve-develoment_nw
+      - jobs_serve-development_nw
     ports:
       - 6379
     volumes:
@@ -85,7 +85,7 @@ services:
       - ./.env
     image: *img
     networks:
-      - jobs_serve-develoment_nw
+      - jobs_serve-development_nw
     volumes:
       - ./api:/opt/api
 
@@ -102,7 +102,7 @@ services:
       - ./.env
     image: *img
     networks:
-      - jobs_serve-develoment_nw
+      - jobs_serve-development_nw
     ports:
       - 5555:5555
     volumes:
@@ -111,7 +111,7 @@ services:
 networks:
   db_serve-development_nw:
     driver: bridge
-  jobs_serve-develoment_nw:
+  jobs_serve-development_nw:
     driver: bridge
   web_serve-development_nw:
     driver: bridge
