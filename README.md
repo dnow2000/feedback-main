@@ -14,19 +14,27 @@
 
     brew install coreutils
 
-  Then for everybody:
+
+## Run locally
+  Then, starting the api with postgres:
 
   ```bash
     ./fb start
+  ```
+  
+  And starting the webapp do it like: 
+  ```bash
+    ./fb webapp start
   ```
 
 
 ## Migration
 
-  For a new revision:
+  All alembic classic commands are available like so:
   ```bash
-    ./fb alembic revision
+    ./fb alembic <command>
   ```
+
 
 ## Deploy
 
@@ -40,13 +48,4 @@
 
   ```bash
     ./fb -e staging -t 3.0.1 deploy
-  ```
-
-### first deploy
-  In development mode, create the init_schema.sql that will be the first revision in your scalingo alembic stacks:
-
-  ```bash
-    ./fb create-init-schema;
-    git commit -m "created init_schema.sql";
-    git push
   ```
