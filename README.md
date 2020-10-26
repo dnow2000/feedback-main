@@ -15,7 +15,7 @@
     brew install coreutils
 
 
-## Run locally
+## Run
   Then, starting the api with postgres:
 
   ```bash
