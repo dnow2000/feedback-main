@@ -14,8 +14,7 @@ services:
       - apidb-serve-development
       - apijobs-serve-development
       - apiworker-serve-development
-    env_file:
-      - ./.env
+    env_file: .env
     environment:
       - ENV=${ENV:-development}
       - MODE=serve-development
@@ -82,8 +81,11 @@ services:
       - apidb-serve-development
       - apijobs-serve-development
     env_file: .env
+    environment:
+      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
     image: *api
     networks:
+      - db_serve-development_nw
       - jobs_serve-development_nw
     volumes:
       - ./api:/opt/api

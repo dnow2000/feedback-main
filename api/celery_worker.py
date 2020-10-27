@@ -3,7 +3,7 @@ import celery
 
 from celery.signals import task_postrun, task_prerun
 from datetime import datetime
-from flask import current_app as flask_app
+from flask import current_app as flask_app, jsonify
 from tasks import import_tasks
 
 
@@ -27,6 +27,9 @@ def init_celery(celery_app, flask_app):
         @task_postrun.connect
         def post_run(task_id, task, *args, **kwargs):
             task.duration = datetime.utcnow() - task.start_time
+
+        def __call__(self, *args, **kwargs):
+            return BaseTask.__call__(self, *args, **kwargs)
 
     celery_app.Task = FeedbackTask
 

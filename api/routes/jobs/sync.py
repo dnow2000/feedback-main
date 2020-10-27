@@ -20,5 +20,8 @@ def sync_science_feedback(sync_type):
 
 @app.route('/jobs/sync/tags', methods=['POST'])
 def sync_tags():
-    task = task_as_dict(sync_tags_task)
-    return jsonify(task)
+    try:
+        task = task_as_dict(sync_tags_task)
+        return jsonify(task)
+    except Exception as e:
+        return jsonify({'Exception': str(e)}), 500
