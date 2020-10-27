@@ -22,7 +22,7 @@ services:
       - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
-    image: &img api
+    image: &api ${APP_NAME}-api-serve-development
     networks:
       - db_serve-development_nw
       - jobs_serve-development_nw
@@ -81,13 +81,13 @@ services:
     depends_on:
       - apidb-serve-development
       - apijobs-serve-development
-    env_file:
-      - ./.env
-    image: *img
+    env_file: .env
+    image: *api
     networks:
       - jobs_serve-development_nw
     volumes:
       - ./api:/opt/api
+      - ./api/tasks:/opt/api/tasks
 
 networks:
   db_serve-development_nw:

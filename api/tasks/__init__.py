@@ -1,22 +1,7 @@
-import celery
-
-from celery.signals import task_postrun, task_prerun
-from datetime import datetime
-
-
-class TimedTask(celery.Task):
-    @task_prerun.connect
-    def pre_run(task_id, task, *args, **kwargs):
-        task.start_time = datetime.utcnow()
-
-    @task_postrun.connect
-    def post_run(task_id, task, *args, **kwargs):
-        task.duration = datetime.utcnow() - task.start_time
-
-
 def import_tasks():
     import tasks.hello_world
     import tasks.science_feedback
+    import tasks.tags
 
 
 def task_as_dict(task, *args, **kwargs):
