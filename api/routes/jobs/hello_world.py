@@ -1,7 +1,4 @@
-import os
-import requests
-
-from flask import current_app as app, jsonify, redirect, request
+from flask import current_app as app, jsonify, request
 from tasks import task_as_dict
 from tasks.hello_world import hello_world
 
