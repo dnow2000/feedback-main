@@ -3,8 +3,9 @@ import celery
 
 from celery.signals import task_postrun, task_prerun
 from datetime import datetime
-from flask import current_app as flask_app, jsonify
+from flask import Flask
 from tasks import import_tasks
+from utils.setup import setup
 
 
 celery_app = celery.Celery(
@@ -14,7 +15,7 @@ celery_app = celery.Celery(
 )
 
 
-def init_celery(celery_app, flask_app):
+def init_celery(celery_app):
     BaseTask = celery_app.Task
 
     class FeedbackTask(BaseTask):
@@ -29,10 +30,13 @@ def init_celery(celery_app, flask_app):
             task.duration = datetime.utcnow() - task.start_time
 
         def __call__(self, *args, **kwargs):
-            return BaseTask.__call__(self, *args, **kwargs)
+            flask_app = Flask(__name__)
+            setup(flask_app)
+            with flask_app.app_context():
+                return BaseTask.__call__(self, *args, **kwargs)
 
     celery_app.Task = FeedbackTask
 
 
-init_celery(celery_app, flask_app)
+init_celery(celery_app)
 import_tasks()
