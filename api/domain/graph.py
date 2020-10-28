@@ -18,7 +18,7 @@ class Graph():
         if not self.__dict__.get('edges'):
             self.edges = []
         if not self.__dict__.get('nodes'):
-            self.nodes =[]
+            self.nodes = []
 
     @staticmethod
     def node_type_from(entity):

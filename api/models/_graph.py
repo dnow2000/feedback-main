@@ -2,36 +2,36 @@ from sqlalchemy import BigInteger, \
                        Boolean, \
                        Column, \
                        ForeignKey
-from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import expression
-from sqlalchemy import Column
+from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 
+from utils.database import db
 
-class HasGraphMixin(object):
-    edges = Column(JSON())
+
+MODEL_NAMES = ['Claim', 'Content']
+
+
+class Graph(ApiHandler,
+            db.Model):
+
+    for model_name in MODEL_NAMES:
+        locals()['{}Id'.format(model_name.lower())] = Column(BigInteger(),
+                                                             ForeignKey('{}.id'.format(model_name.lower())),
+                                                             index=True)
+        locals()[model_name.lower()] = relationship(model_name,
+                                                    backref='graphs',
+                                                    foreign_keys=[locals()['{}Id'.format(model_name.lower())]])
 
     isAnonymized = Column(Boolean(),
                           default=True,
                           nullable=False,
                           server_default=expression.true())
 
-    nodes = Column(JSON())
-
-    @staticmethod
-    def set_entity_columns_and_relations(_locals, model_names):
-        for model_name in model_names:
-            _locals['{}Id'.format(model_name.lower())] = Column(BigInteger(),
-                                                                  ForeignKey('{}.id'.format(model_name.lower())),
-                                                                  index=True)
-            _locals[model_name.lower()] = relationship(model_name,
-                                                         backref='graphs',
-                                                         foreign_keys=[_locals['{}Id'.format(model_name.lower())]])
-
     @property
     def entity(self):
-        for relationship_key in self.__mapper__.relationships.keys():
+        for relationship_key in self.mappers.keys():
             relationship = getattr(self, relationship_key)
             if relationship:
                 return relationship
@@ -200,3 +200,5 @@ class HasGraphMixin(object):
         if not depth:
             return None
         return is_validated
+
+    __as_dict_includes__ = ['edges', 'nodes']
