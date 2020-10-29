@@ -11,7 +11,7 @@ from sqlalchemy_api_handler.utils import logger
 
 API_KEY = env.get('GOOGLE_CUSTOM_SEARCH_API_KEY')
 ENGINE_ID = env.get('GOOGLE_CUSTOM_SEARCH_ENGINE_ID')
-BASE_URL = f'https://www.googleapis.com/customsearch/v1?key={API_KEY}&cx={ENGINE_ID}&exactTerms=true&q=link:'
+BASE_URL = f'https://www.googleapis.com/customsearch/v1?key={API_KEY}&cx={ENGINE_ID}&exactTerms=true&q='
 
 
 def backlinks_from_url(url, count=10, page=1):
