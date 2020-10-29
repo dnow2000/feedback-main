@@ -8,6 +8,12 @@ from utils.database import db
 MODEL_NAMES = ['Claim', 'Content']
 
 
+def print_with_indent(depth):
+    def wrapped(*args, **kwargs):
+        print("".join(["    "]*depth), *args, **kwargs)
+    return wrapped
+    
+
 class Graph(ApiHandler,
             db.Model,
             HasGraphMixin):
