@@ -32,7 +32,7 @@ def _links_from_items(items):
             link = {}
             link['title'] = item['title']
             link['htmlTitle'] = item['htmlTitle']
-            link['link'] = item['link']
+            link['url'] = item['link']
             link['displayLink'] = item['displayLink']
             link['snippet'] = item['snippet']
             link['htmlSnippet'] = item['htmlSnippet']
@@ -40,8 +40,6 @@ def _links_from_items(items):
                 link['thumbImg'] = item['pagemap']['cse_thumbnail'][0]['src']
             except Exception as e:
                 logger.error(f'No thumb image found for link {item["link"]}. {e}')
-            finally:
-                link['thumbImg'] = None
 
             links.append(link)
 

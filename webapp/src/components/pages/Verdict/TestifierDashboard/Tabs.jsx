@@ -19,12 +19,17 @@ const tabs = [
      childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,
      isDisplayedFrom: ({ sharesCount }) => sharesCount > 0,
      path: 'shares'
-   },
-   {
-     childrenFrom: () => 'Graph',
-     isDisplayedFrom: () => true,
-     path: 'graph'
-   }
+  },
+  {
+    childrenFrom: () => 'Graph',
+    isDisplayedFrom: () => true,
+    path: 'graph'
+  },
+  {
+    childrenFrom: () => 'Backlinks',
+    isDisplayedFrom: () => true,
+    path: 'backlinks'
+  }
 ]
 
 

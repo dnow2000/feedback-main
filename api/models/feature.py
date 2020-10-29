@@ -13,6 +13,7 @@ class FeatureName(enum.Enum):
     WITH_VERDICT_CITATIONS = "L'application affiche la vue /verdicts/<verdict_id>/citations"
     WITH_VERDICT_GRAPH = "L'application affiche la vue /verdicts/<verdict_id>/graph"
     WITH_VERDICT_SHARES = "L'application affiche la vue /verdicts/<verdict_id>/shares"
+    WITH_VERDICT_BACKLINKS = "This feature display the view /verdicts/<verdict_id>/backlinks"
 
 
 class Feature(ApiHandler,
@@ -28,7 +29,6 @@ class Feature(ApiHandler,
     name = Column(Enum(FeatureName),
                   nullable=False,
                   unique=True)
-
 
     __as_dict_includes__ = [
         "nameKey"

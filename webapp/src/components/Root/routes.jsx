@@ -145,7 +145,7 @@ export default [
   {
     component: Verdict,
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(citations|shares|graph)?`,
+    path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(citations|shares|graph|backlinks)?`,
     title: 'Verdict',
   },
   {

@@ -7,6 +7,7 @@ from utils.config import IS_DEVELOPMENT
 def import_routes():
     import routes.appearances
     import routes.author_contents
+    import routes.backlinks
     import routes.checks
     import routes.claims
     import routes.contents

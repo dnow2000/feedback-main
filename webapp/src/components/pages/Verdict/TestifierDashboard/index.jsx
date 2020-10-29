@@ -8,6 +8,7 @@ import FeaturedRoute from 'components/Root/FeaturedRoute'
 import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch } from 'utils/router'
 
+import Backlinks from './Backlinks'
 import Citations from './Citations'
 import Graph from './Graph'
 import Shares from './Shares'
@@ -18,6 +19,7 @@ const componentsByTabName = {
   citations: Citations,
   shares: Shares,
   graph: Graph,
+  backlinks: Backlinks,
 }
 
 
