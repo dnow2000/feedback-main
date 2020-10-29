@@ -1,3 +1,4 @@
+import os
 import requests
 
 BUZZSUMO_API_KEY = os.environ.get('BUZZSUMO_API_KEY')
