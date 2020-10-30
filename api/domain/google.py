@@ -33,7 +33,6 @@ def _links_from_items(items):
     for item in items:
         if item['kind'] == 'customsearch#result':
             link = {}
-            link['id'] = item['cacheId']
             link['title'] = item['title']
             link['htmlTitle'] = item['htmlTitle']
             link['url'] = item['link']
