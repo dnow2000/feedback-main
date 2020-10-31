@@ -5,36 +5,30 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import load_or_404
 
-from models.verdict import Verdict
+from models.graph import Graph
 from repository.roles import check_user_has_role
 
 
-@app.route('/graphs/<model_name>/<entity_id>', methods=['GET'])
-def get_anonymised_graph(model_name, entity_id):
-    model = ApiHandler.model_from_name(model_name)
-    entity = load_or_404(model, entity_id)
+@login_required
+@app.route('/graphs/<id_key>/<entity_id>', methods=['GET'])
+def get_graph(id_key, entity_id):
+    is_anonymised = not check_user_has_role(current_user, 'INSPECTOR')
     graph = Graph.create_or_modify({
-        '__SEARCH_BY__' : ['entityId', 'isAnonymised', 'modelName'],
-        'entityId': entity_id,
-        'modelName': model_name,
-        'isAnonymised': True
+        '__SEARCH_BY__' : [id_key, 'isAnonymized'],
+        id_key: entity_id,
+        'isAnonymized': is_anonymised
     })
     if not graph.nodes:
         graph.parse()
     return jsonify(as_dict(graph)), 200
 
 
-@app.route('/graphs/<model_name>/<entity_id>', methods=['GET'])
-@login_required
-def get_graph(model_name, entity_id):
-    model = ApiHandler.model_from_name(model_name)
-    entity = load_or_404(model, entity_id)
-    is_anonymised = not check_user_has_role(current_user, 'INSPECTOR')
+@app.route('/graphs/<id_key>/<entity_id>/anonymised', methods=['GET'])
+def get_anonymised_graph(id_key, entity_id):
     graph = Graph.create_or_modify({
-        '__SEARCH_BY__' : ['entityId', 'isAnonymised', 'modelName'],
-        'entityId': entity_id,
-        'modelName': model_name,
-        'isAnonymised': is_anonymised
+        '__SEARCH_BY__' : [id_key, 'isAnonymized'],
+        id_key: entity_id,
+        'isAnonymized': False
     })
     if not graph.nodes:
         graph.parse()
