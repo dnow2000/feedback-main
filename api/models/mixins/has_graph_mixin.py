@@ -10,6 +10,12 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 
 
+def print_with_indent(depth):
+    def wrapped(*args, **kwargs):
+        print("".join(["    "]*depth), *args, **kwargs)
+    return wrapped
+
+
 class HasGraphMixin(object):
     edges = Column(JSON())
 
@@ -56,11 +62,21 @@ class HasGraphMixin(object):
         return as_dict(entity)
 
     @classmethod
-    def is_stop_node(cls, entity, config):
+    def is_stop_node(cls,
+                     entity,
+                     depth=None,
+                     key=None,
+                     parent_entity=None,
+                     source_entity=None):
         return False
 
     @classmethod
-    def is_valid_node(cls, entity, config):
+    def is_valid_node(cls,
+                      entity,
+                      depth=None,
+                      key=None,
+                      parent_entity=None,
+                      source_entity=None):
         return True
 
     def json_from(self, node):
@@ -110,7 +126,12 @@ class HasGraphMixin(object):
         if validated_node_ids is None:
             validated_node_ids = []
 
-        is_validated = False
+        is_validated = self.is_valid_node(entity,
+                                          depth=depth,
+                                          key=relationship_key,
+                                          parent_entity=parent_entity,
+                                          source_entity=source_entity)
+
         if limit and len(validated_node_ids) > limit:
             if not depth:
                 return None
@@ -119,14 +140,6 @@ class HasGraphMixin(object):
         node_id = self.node_id_from(entity)
         if node_id not in parsed_node_ids:
             parsed_node_ids.append(node_id)
-            config = {
-                'depth': depth,
-                'key': relationship_key,
-                'parent': parent_entity,
-                'source': source_entity
-            }
-
-            is_validated = self.is_valid_node(entity, config)
             if is_validated:
                 node = {
                     'datum': self.node_dict_from(entity),
@@ -139,7 +152,11 @@ class HasGraphMixin(object):
                 validated_node_ids.append(node_id)
                 nodes.append(node)
 
-            is_stopped = self.is_stop_node(entity, config)
+            is_stopped = self.is_stop_node(entity,
+                                           depth=depth,
+                                           key=relationship_key,
+                                           parent_entity=parent_entity,
+                                           source_entity=source_entity)
             if is_stopped:
                 return is_validated
 

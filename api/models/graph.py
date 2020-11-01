@@ -8,11 +8,6 @@ from utils.database import db
 MODEL_NAMES = ['Claim', 'Content', 'Review', 'Verdict', 'User']
 
 
-def print_with_indent(depth):
-    def wrapped(*args, **kwargs):
-        print("".join(["    "]*depth), *args, **kwargs)
-    return wrapped
-
 
 class Graph(ApiHandler,
             db.Model,
@@ -29,10 +24,12 @@ class Graph(ApiHandler,
         if node_type == 'Claim':
             includes = ['text']
         elif node_type == 'Content':
-            includes = ['url']
+            includes = ['title', 'url']
         elif node_type == 'Medium':
             includes = ['name']
         elif node_type == 'Organization':
+            includes = ['name']
+        elif node_type == 'Platform':
             includes = ['name']
         elif node_type == 'Role':
             includes = ['type']
@@ -50,29 +47,42 @@ class Graph(ApiHandler,
         return as_dict(entity, includes=includes)
 
     @classmethod
-    def is_stop_node(cls, entity, config):
+    def is_stop_node(cls,
+                     entity,
+                     depth=None,
+                     key=None,
+                     parent_entity=None,
+                     source_entity=None):
         node_type = cls.node_type_from(entity)
 
-        if config['depth'] == 0:
+        if depth == 0:
             return False
 
         if node_type in [
-            'Plaform',
+            'Platform',
             'Role',
             'Verdict'
         ]:
             return True
 
-        if config['key'] == 'testifier':
+        if node_type == 'User' and key != 'author':
+            return True
+
+        if node_type == 'Medium' and entity.name in ['Climate Feedback', 'Health Feedback', 'Science Feedback']:
             return True
 
         return False
 
     @classmethod
-    def is_valid_node(cls, entity, config):
+    def is_valid_node(cls,
+                      entity,
+                      depth=None,
+                      key=None,
+                      parent_entity=None,
+                      source_entity=None):
         node_type = cls.node_type_from(entity)
 
-        if config['depth'] == 0:
+        if depth == 0:
             return True
 
         if node_type in [
@@ -86,7 +96,7 @@ class Graph(ApiHandler,
         ]:
             return False
 
-        if config['key'] == 'testifier':
+        if node_type == 'User' and key != 'author':
             return False
 
         return True
