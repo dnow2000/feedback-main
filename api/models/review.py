@@ -1,6 +1,6 @@
-from sqlalchemy import BigInteger,\
-                       Column,\
-                       ForeignKey,\
+from sqlalchemy import BigInteger, \
+                       Column, \
+                       ForeignKey, \
                        Text
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import InstrumentedList

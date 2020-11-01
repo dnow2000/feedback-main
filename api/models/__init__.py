@@ -12,6 +12,7 @@ def import_models():
     from models.claim import Claim
     from models.content import Content
     from models.content_tag import ContentTag
+    from models.graph import Graph
     from models.image import Image
     from models.feature import Feature
     from models.medium import Medium

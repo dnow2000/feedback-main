@@ -1,20 +1,20 @@
 import PropTypes from 'prop-types'
 import React, { useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { requestData } from 'redux-thunk-data'
+import { requestData, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
-import selectGraphByCollectionNameAndEntityId from 'selectors/selectGraphByCollectionNameAndEntityId'
 import { edgeWithDecoration, nodeWithDecoration } from 'utils/graph'
 
 import Graph from './Graph'
 
 
-const _ = ({ children, collectionName, entityId }) => {
+const _ = ({ children, isAnonymized, entityId, modelName }) => {
   const dispatch = useDispatch()
+  const idKey = `${modelName.toLowerCase()}Id`
 
   const graph = useSelector(state =>
-    selectGraphByCollectionNameAndEntityId(state, collectionName, entityId))
-
+    selectEntitiesByKeyAndJoin(state, 'graphs', { [idKey]: entityId })
+      .find(graph => graph.isAnonymized === isAnonymized))
 
   const graphWithDecoration = useMemo(() => graph && ({
     edges: graph.edges.map(edgeWithDecoration),
@@ -23,12 +23,13 @@ const _ = ({ children, collectionName, entityId }) => {
 
 
   useEffect(() => {
-    let apiPath = '/graphs'
-    if (collectionName && entityId) {
-      apiPath = `${apiPath}/${collectionName}/${entityId}`
+    let apiPath = `/graphs/${idKey}/${entityId}`
+    if (isAnonymized) {
+      apiPath = `${apiPath}/anonymized`
     }
+
     dispatch(requestData({ apiPath }))
-  }, [collectionName, dispatch, entityId])
+  }, [dispatch, entityId, idKey, isAnonymized])
 
   return (
     <Graph graph={graphWithDecoration}>
@@ -39,8 +40,7 @@ const _ = ({ children, collectionName, entityId }) => {
 
 _.defaultProps = {
   children: null,
-  collectionName: null,
-  entityId: null
+  isAnonymised: true,
 }
 
 _.propTypes = {
@@ -48,8 +48,9 @@ _.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node
   ]),
-  collectionName: PropTypes.string,
-  entityId: PropTypes.string
+  entityId: PropTypes.string.isRequired,
+  isAnonymised: PropTypes.bool,
+  modelName: PropTypes.string.isRequired,
 }
 
 export default _
