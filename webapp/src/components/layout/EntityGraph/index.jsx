@@ -8,13 +8,13 @@ import { edgeWithDecoration, nodeWithDecoration } from 'utils/graph'
 import Graph from './Graph'
 
 
-const _ = ({ children, isAnonymised, entityId, modelName }) => {
+const _ = ({ children, isAnonymized, entityId, modelName }) => {
   const dispatch = useDispatch()
   const idKey = `${modelName.toLowerCase()}Id`
 
   const graph = useSelector(state =>
     selectEntitiesByKeyAndJoin(state, 'graphs', { [idKey]: entityId })
-      .find(graph => graph.isAnonymised === isAnonymised))
+      .find(graph => graph.isAnonymized === isAnonymized))
 
   const graphWithDecoration = useMemo(() => graph && ({
     edges: graph.edges.map(edgeWithDecoration),
@@ -24,12 +24,12 @@ const _ = ({ children, isAnonymised, entityId, modelName }) => {
 
   useEffect(() => {
     let apiPath = `/graphs/${idKey}/${entityId}`
-    if (isAnonymised) {
-      apiPath = `${apiPath}/anonymised`
+    if (isAnonymized) {
+      apiPath = `${apiPath}/anonymized`
     }
 
     dispatch(requestData({ apiPath }))
-  }, [dispatch, entityId, idKey, isAnonymised])
+  }, [dispatch, entityId, idKey, isAnonymized])
 
   return (
     <Graph graph={graphWithDecoration}>

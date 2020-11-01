@@ -10,7 +10,7 @@ export default () => {
   return (
     <EntityGraph
       entityId={verdictId}
-      isAnonymised
+      isAnonymized
       modelName="Verdict"
     />
   )

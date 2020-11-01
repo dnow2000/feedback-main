@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import expression
 from sqlalchemy import Column
+from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 
 
@@ -35,6 +36,12 @@ class HasGraphMixin(object):
             relationship = getattr(self, relationship_key)
             if relationship:
                 return relationship
+            id_key = '{}Id'.format(relationship_key)
+            entity_id = getattr(self, id_key)
+            if entity_id:
+                return ApiHandler.model_from_name(relationship_key.title()) \
+                                 .query \
+                                 .get(entity_id)
 
     @staticmethod
     def node_type_from(entity):
@@ -46,54 +53,14 @@ class HasGraphMixin(object):
 
     @classmethod
     def node_dict_from(cls, entity):
-        node_type = cls.node_type_from(entity)
-
-        includes = []
-
-        if node_type == 'Claim':
-            includes = ['text']
-        elif node_type == 'Content':
-            includes = ['url']
-        elif node_type == 'Medium':
-            includes = ['name']
-        elif node_type == 'Organization':
-            includes = ['name']
-        elif node_type == 'Role':
-            includes = ['type']
-        elif node_type == 'Tag':
-            includes = ['label']
-        elif node_type == 'User':
-            includes = ['firstName', 'lastName']
-        elif node_type == 'Verdict':
-            includes = ['title']
-
-        for column_key in entity.__mapper__.columns.keys():
-            if column_key not in includes:
-                includes.append('-{}'.format(column_key))
-
-        return as_dict(entity, includes=includes)
+        return as_dict(entity)
 
     @classmethod
     def is_stop_node(cls, entity, config):
-        node_type = cls.node_type_from(entity)
-
-        if node_type in ['Plaform', 'Role', 'Verdict']:
-            return True
-
-        if config['key'] == 'testifier':
-            return True
-
         return False
 
     @classmethod
     def is_valid_node(cls, entity, config):
-        node_type = cls.node_type_from(entity)
-        if node_type in ['Appearance', 'AuthorContent', 'Role', 'Verdict']:
-            return False
-
-        if config['key'] == 'testifier':
-            return False
-
         return True
 
     def json_from(self, node):
@@ -122,7 +89,9 @@ class HasGraphMixin(object):
     def parse(self,
               entity=None,
               depth=0,
+              edges=None,
               limit=1000,
+              nodes=None,
               parent_entity=None,
               parsed_node_ids=None,
               relationship_key=None,
@@ -130,8 +99,8 @@ class HasGraphMixin(object):
               validated_node_ids=None):
 
         if depth == 0:
-            self.edges = []
-            self.nodes = []
+            edges = []
+            nodes = []
             if entity is None:
                 entity = self.entity
 
@@ -142,7 +111,7 @@ class HasGraphMixin(object):
             validated_node_ids = []
 
         is_validated = False
-        if limit and len(validated_node_ids) >= limit:
+        if limit and len(validated_node_ids) > limit:
             if not depth:
                 return None
             return is_validated
@@ -168,7 +137,7 @@ class HasGraphMixin(object):
 
                 source_entity = entity
                 validated_node_ids.append(node_id)
-                self.nodes.append(node)
+                nodes.append(node)
 
             is_stopped = self.is_stop_node(entity, config)
             if is_stopped:
@@ -181,7 +150,9 @@ class HasGraphMixin(object):
                 for sub_entity in sub_entities:
                     is_sub_node_validated = self.parse(sub_entity,
                                                        depth=depth + 1,
+                                                       edges=edges,
                                                        limit=limit,
+                                                       nodes=nodes,
                                                        parent_entity=entity,
                                                        parsed_node_ids=parsed_node_ids,
                                                        relationship_key=key,
@@ -195,8 +166,11 @@ class HasGraphMixin(object):
                             'source': source,
                             'target': sub_node_id
                         }
-                        self.edges.append(edge)
+                        edges.append(edge)
 
         if not depth:
+            self.edges = edges
+            self.nodes = nodes
             return None
+
         return is_validated
