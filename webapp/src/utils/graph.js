@@ -7,7 +7,7 @@ const labelFromNode = node => {
     case 'Claim':
       return datum.text
     case 'Content':
-      return `${datum.url.slice(0, Math.min(50, datum.url?.length))} ${datum.title}`
+      return `${datum?.url?.slice(0, Math.min(50, datum.url?.length)) || '***'} ${datum.title || '***'}`
     case 'Medium':
       return datum.name || '***'
     case 'Organization':
@@ -49,7 +49,9 @@ const colorFromNode = node => {
     case 'Claim':
       return '#F00'
     case 'Content':
-      return '#06F'
+      return node.datum.type === 'post'
+             ? '#06F'
+             : '#F6F'
     case 'Medium':
       return '#CF6'
     case 'Organization':

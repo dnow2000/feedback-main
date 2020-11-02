@@ -79,3 +79,11 @@ class Appearance(ApiHandler,
     testifier = relationship('User',
                              foreign_keys=[testifierId],
                              backref='appearances')
+
+    @property
+    def subType(self):
+        quoting_content_type = self.quotingContent.type.value
+        if quoting_content_type in ['article', 'video']:
+            return 'QUOTATION'
+        if quoting_content_type == 'post':
+            return 'SHARE'

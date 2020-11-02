@@ -23,7 +23,10 @@ class Graph(ApiHandler,
         if node_type == 'Claim':
             includes = ['text']
         elif node_type == 'Content':
-            includes = ['title', 'url']
+            if not self.isAnonymized:
+                includes = ['title', 'type', 'url']
+            else:
+                includes = ['type']
         elif node_type == 'Medium':
             if not self.isAnonymized:
                 includes = ['name']
@@ -55,9 +58,6 @@ class Graph(ApiHandler,
                      source_entity=None):
         node_type = self.node_type_from(entity)
 
-        if depth == 0:
-            return False
-
         if node_type in [
             'Platform',
             'Role',
@@ -81,18 +81,19 @@ class Graph(ApiHandler,
                       source_entity=None):
         node_type = self.node_type_from(entity)
 
-        if depth == 0:
-            return True
-
         if node_type in [
             'Appearance',
             'AuthorContent',
             'Graph',
+            'Platform',
             'Role',
             'Tag',
             'Verdict',
             'VerdictTag'
         ]:
+            return False
+
+        if node_type == 'Content' and entity.type.value == 'post':
             return False
 
         if node_type == 'User' and key != 'author':

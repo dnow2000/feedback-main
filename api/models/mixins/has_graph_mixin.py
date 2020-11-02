@@ -78,6 +78,7 @@ class HasGraphMixin(object):
               entity=None,
               depth=0,
               edges=None,
+              leaves=None,
               limit=1000,
               nodes=None,
               parent_entity=None,
@@ -87,79 +88,91 @@ class HasGraphMixin(object):
               validated_node_ids=None):
 
         if depth == 0:
-            edges = []
-            nodes = []
             if entity is None:
                 entity = self.entity
-
-        if parsed_node_ids is None:
-            parsed_node_ids = []
-
-        if validated_node_ids is None:
-            validated_node_ids = []
-
-        is_validated = self.is_valid_node(entity,
-                                          depth=depth,
-                                          key=relationship_key,
-                                          parent_entity=parent_entity,
-                                          source_entity=source_entity)
-
-        if limit and len(validated_node_ids) > limit:
-            if not depth:
-                return None
-            return is_validated
-
-        node_id = self.node_id_from(entity)
-        if node_id not in parsed_node_ids:
-            parsed_node_ids.append(node_id)
-            if is_validated:
-                node = {
-                    'datum': self.node_dict_from(entity),
-                    'depth': depth,
-                    'id': node_id,
-                    'type': self.node_type_from(entity)
-                }
-
+            if source_entity is None:
                 source_entity = entity
-                validated_node_ids.append(node_id)
-                nodes.append(node)
+            node_id = self.node_id_from(entity)
+            node = {
+                'datum': self.node_dict_from(entity),
+                'depth': 0,
+                'id': node_id,
+                'type': self.node_type_from(entity)
+            }
+            edges = []
+            nodes = [node]
 
-            is_stopped = self.is_stop_node(entity,
-                                           depth=depth,
-                                           key=relationship_key,
-                                           parent_entity=parent_entity,
-                                           source_entity=source_entity)
-            if is_stopped:
-                return is_validated
+            if parsed_node_ids is None:
+                parsed_node_ids = [node_id]
 
-            for key in entity.__mapper__.relationships.keys():
-                sub_entities = getattr(entity, key)
-                if not isinstance(sub_entities, list):
-                    sub_entities = [sub_entities] if sub_entities is not None else []
-                for sub_entity in sub_entities:
-                    is_sub_node_validated = self.parse(sub_entity,
-                                                       depth=depth + 1,
-                                                       edges=edges,
-                                                       limit=limit,
-                                                       nodes=nodes,
-                                                       parent_entity=entity,
-                                                       parsed_node_ids=parsed_node_ids,
-                                                       relationship_key=key,
-                                                       source_entity=source_entity,
-                                                       validated_node_ids=validated_node_ids)
-                    if is_sub_node_validated:
-                        sub_node_id = self.node_id_from(sub_entity)
-                        source = node_id if is_validated else self.node_id_from(source_entity)
-                        edge = {
-                            'id': '{}_{}'.format(source, sub_node_id),
-                            'source': source,
-                            'target': sub_node_id
+            if validated_node_ids is None:
+                validated_node_ids = [node_id]
+
+            leaves = []
+
+        source = self.node_id_from(source_entity)
+
+        sub_depth = depth + 1
+        for key in entity.__mapper__.relationships.keys():
+            sub_entities = getattr(entity, key)
+            if not isinstance(sub_entities, list):
+                sub_entities = [sub_entities] if sub_entities is not None else []
+            for sub_entity in sub_entities:
+                sub_node_id = self.node_id_from(sub_entity)
+
+                is_validated = self.is_valid_node(sub_entity,
+                                                  depth=sub_depth,
+                                                  key=key,
+                                                  parent_entity=entity,
+                                                  source_entity=source_entity)
+                if limit and len(validated_node_ids) >= limit:
+                    continue
+
+                if is_validated:
+                    if sub_node_id not in validated_node_ids:
+                        node = {
+                            'datum': self.node_dict_from(sub_entity),
+                            'depth': sub_depth,
+                            'id': sub_node_id,
+                            'type': self.node_type_from(sub_entity)
                         }
-                        edges.append(edge)
+                        validated_node_ids.append(sub_node_id)
+                        nodes.append(node)
 
-        if not depth:
+                    edge = {
+                        'id': '{}_{}'.format(source, sub_node_id),
+                        'source': source,
+                        'target': sub_node_id
+                    }
+                    edges.append(edge)
+
+                if sub_node_id in parsed_node_ids:
+                    continue
+                parsed_node_ids.append(sub_node_id)
+
+                is_stopped = self.is_stop_node(sub_entity,
+                                               depth=sub_depth,
+                                               key=key,
+                                               parent_entity=entity,
+                                               source_entity=source_entity)
+                if is_stopped:
+                    continue
+
+                self.parse(sub_entity,
+                           depth=sub_depth,
+                           edges=edges,
+                           leaves=leaves,
+                           limit=limit,
+                           nodes=nodes,
+                           parent_entity=sub_entity,
+                           parsed_node_ids=parsed_node_ids,
+                           relationship_key=key,
+                           source_entity=sub_entity if is_validated else source_entity,
+                           validated_node_ids=validated_node_ids)
+
+
+        if depth == 0:
             self.edges = edges
             self.nodes = nodes
-            return None
 
-        return is_validated
+        return leaves
