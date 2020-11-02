@@ -9,7 +9,7 @@ const labelFromNode = node => {
     case 'Content':
       return `${datum.url.slice(0, Math.min(50, datum.url?.length))} ${datum.title}`
     case 'Medium':
-      return datum.name || 'XXX'
+      return datum.name || '***'
     case 'Organization':
       return datum.name
     case 'Platform':
@@ -19,7 +19,7 @@ const labelFromNode = node => {
     case 'Tag':
       return datum.label
     case 'User':
-      return `${datum.firstName || 'XXX'} ${datum.lastName || 'XXX'}`
+      return `${datum.firstName || '***'} ${datum.lastName || '***'}`
     case 'Verdict':
       return datum.title
     default:
