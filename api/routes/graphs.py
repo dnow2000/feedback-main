@@ -31,7 +31,7 @@ def get_anonymized_graph(id_key, entity_id):
         id_key: entity_id,
         'isAnonymized': True
     })
-    #if not graph.nodes:
-    graph.parse()
-    ApiHandler.save(graph)
+    if not graph.nodes:
+        graph.parse()
+        ApiHandler.save(graph)
     return jsonify(as_dict(graph)), 200
