@@ -15,9 +15,8 @@ class Graph(ApiHandler,
 
     HasGraphMixin.set_entity_columns_and_relations(locals(), MODEL_NAMES)
 
-    @classmethod
-    def node_dict_from(cls, entity):
-        node_type = cls.node_type_from(entity)
+    def node_dict_from(self, entity):
+        node_type = self.node_type_from(entity)
 
         includes = []
 
@@ -26,7 +25,8 @@ class Graph(ApiHandler,
         elif node_type == 'Content':
             includes = ['title', 'url']
         elif node_type == 'Medium':
-            includes = ['name']
+            if not self.isAnonymized:
+                includes = ['name']
         elif node_type == 'Organization':
             includes = ['name']
         elif node_type == 'Platform':
@@ -36,7 +36,8 @@ class Graph(ApiHandler,
         elif node_type == 'Tag':
             includes = ['label']
         elif node_type == 'User':
-            includes = ['firstName', 'lastName']
+            if not self.isAnonymized:
+                includes = ['firstName', 'lastName']
         elif node_type == 'Verdict':
             includes = ['title']
 
@@ -46,14 +47,13 @@ class Graph(ApiHandler,
 
         return as_dict(entity, includes=includes)
 
-    @classmethod
-    def is_stop_node(cls,
+    def is_stop_node(self,
                      entity,
                      depth=None,
                      key=None,
                      parent_entity=None,
                      source_entity=None):
-        node_type = cls.node_type_from(entity)
+        node_type = self.node_type_from(entity)
 
         if depth == 0:
             return False
@@ -73,14 +73,13 @@ class Graph(ApiHandler,
 
         return False
 
-    @classmethod
-    def is_valid_node(cls,
+    def is_valid_node(self,
                       entity,
                       depth=None,
                       key=None,
                       parent_entity=None,
                       source_entity=None):
-        node_type = cls.node_type_from(entity)
+        node_type = self.node_type_from(entity)
 
         if depth == 0:
             return True
@@ -100,26 +99,3 @@ class Graph(ApiHandler,
             return False
 
         return True
-
-    def json_from(self, node):
-        json = node
-        if self.isAnonymised:
-            if node['type'] == 'Medium':
-                json = {
-                    **node,
-                    'datum': {
-                        **node['datum'],
-                        'name': 'XXX'
-                    }
-                }
-            if node['type'] == 'User':
-                json = {
-                    **node,
-                    'datum': {
-                        **node['datum'],
-                        'email': 'XXX',
-                        'firstName': 'XXX',
-                        'lastName': 'XXX'
-                    }
-                }
-        return json

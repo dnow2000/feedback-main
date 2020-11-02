@@ -49,20 +49,16 @@ class HasGraphMixin(object):
                                  .query \
                                  .get(entity_id)
 
-    @staticmethod
-    def node_type_from(entity):
+    def node_type_from(self, entity):
         return entity.__class__.__name__
 
-    @classmethod
-    def node_id_from(cls, entity):
-        return '{}_{}'.format(cls.node_type_from(entity), entity.id)
+    def node_id_from(self, entity):
+        return '{}_{}'.format(self.node_type_from(entity), entity.id)
 
-    @classmethod
-    def node_dict_from(cls, entity):
+    def node_dict_from(self, entity):
         return as_dict(entity)
 
-    @classmethod
-    def is_stop_node(cls,
+    def is_stop_node(self,
                      entity,
                      depth=None,
                      key=None,
@@ -70,37 +66,13 @@ class HasGraphMixin(object):
                      source_entity=None):
         return False
 
-    @classmethod
-    def is_valid_node(cls,
+    def is_valid_node(self,
                       entity,
                       depth=None,
                       key=None,
                       parent_entity=None,
                       source_entity=None):
         return True
-
-    def json_from(self, node):
-        json = node
-        if self.isAnonymised:
-            if node['type'] == 'Medium':
-                json = {
-                    **node,
-                    'datum': {
-                        **node['datum'],
-                        'name': 'XXX'
-                    }
-                }
-            if node['type'] == 'User':
-                json = {
-                    **node,
-                    'datum': {
-                        **node['datum'],
-                        'email': 'XXX',
-                        'firstName': 'XXX',
-                        'lastName': 'XXX'
-                    }
-                }
-        return json
 
     def parse(self,
               entity=None,
