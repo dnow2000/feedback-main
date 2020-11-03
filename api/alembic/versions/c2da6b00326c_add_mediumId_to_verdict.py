@@ -1,4 +1,4 @@
-"""add medium id to verdict
+"""add mediumId to verdict
 
 Revision ID: c2da6b00326c
 Revises: fa48fec93e5f

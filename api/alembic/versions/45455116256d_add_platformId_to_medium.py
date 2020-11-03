@@ -1,4 +1,4 @@
-"""add platform id to medium
+"""add platformId to medium
 
 Revision ID: 45455116256d
 Revises: 14edc960a62e

@@ -1,4 +1,4 @@
-"""add logo url to medium
+"""add logoUrl to medium
 
 Revision ID: 3dc47ee635e3
 Revises: c2da6b00326c

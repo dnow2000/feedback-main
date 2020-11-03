@@ -1,4 +1,4 @@
-"""alter buzzsumo identifier to big integer
+"""alter buzzsumoIdentifier to big integer
 
 Revision ID: 37897e6db38a
 Revises: 31cc2a5f0933

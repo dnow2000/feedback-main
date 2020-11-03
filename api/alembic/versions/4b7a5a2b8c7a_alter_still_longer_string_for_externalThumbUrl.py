@@ -1,4 +1,4 @@
-"""fix still longer string for external thumb url
+"""alter still longer string for externalThumbUrl
 
 Revision ID: 4b7a5a2b8c7a
 Revises: fc35809c2b8d
