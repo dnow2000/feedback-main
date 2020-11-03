@@ -1,9 +1,8 @@
 from newspaper import ArticleException, Article as NewspaperArticle
 
 
-def newspaper_from_url(url: str, **kwargs):
-    newspaper = NewspaperArticle(url,
-                                 language=kwargs.get('language', 'en'))
+def article_from_url(url: str, language='en'):
+    newspaper = NewspaperArticle(url, language=language)
     newspaper.download()
     try:
         newspaper.parse()

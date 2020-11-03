@@ -2,8 +2,8 @@ from datetime import datetime, timedelta
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.utils import logger
 
-from domain.content import newspaper_from_url
-from domain.trendings.buzzsumo import buzzsumo_trending_from_url
+from domain.newspaper import article_from_url
+from domain.trendings.buzzsumo import trending_from_url as buzzsumo_trending_from_url
 from models.content import Content
 from models.content_tag import ContentTag
 from models.tag import Tag
@@ -38,7 +38,7 @@ def content_from_url(url,
         return content.modify(trending)
 
     if url:
-        newspaper = newspaper_from_url(url, **kwargs)
+        newspaper = newspaper_article_from_url(url, **kwargs)
         if newspaper:
             return content.modify(newspaper)
 

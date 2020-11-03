@@ -12,19 +12,20 @@ services:
     container_name: ${APP_NAME}-api-serve-development
     depends_on:
       - apidb-serve-development
-      - apijobs-serve-development
+      - apitasksdb-serve-development
       - apiworker-serve-development
     env_file: .env
     environment:
       - ENV=${ENV:-development}
       - MODE=serve-development
       - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
+      - REDIS_URL=redis://apitasksdb-serve-development:6379/0
       - SCREEN_SHOT_MACHINE_KEY=$SCREEN_SHOT_MACHINE_KEY
       - TLD=$TLD
     image: &api ${APP_NAME}-api-serve-development
     networks:
       - db_serve-development_nw
-      - jobs_serve-development_nw
+      - tasks_serve-development_nw
       - web_serve-development_nw
     volumes:
       - ./api:/opt/api
@@ -42,6 +43,59 @@ services:
     volumes:
       - "./docker_data_serve-development/apidb:/var/lib/postgresql"
 
+  apitasksdb-serve-development:
+    container_name: ${APP_NAME}-apitasksdb-serve-development
+    environment:
+      - MODE=serve-development
+    image: redis:6.0.8
+    networks:
+      - tasks_serve-development_nw
+    ports:
+      - 6379
+    volumes:
+      - ./docker_data_serve-development/apitasksdb:/var/lib/redis/data
+
+  apischeduler-serve-development:
+    command: >
+      bash -c "set -x;
+              cd /opt/api;
+              celery --app=tasks beat \
+                     --loglevel=INFO;"
+    container_name: ${APP_NAME}-apischedule-serve-development
+    depends_on:
+      - apiworker-serve-development
+    env_file: .env
+    image: *api
+    networks:
+      - db_serve-development_nw
+    volumes:
+      - ./api:/opt/api
+
+  apiworker-serve-development:
+    command: >
+      bash -c "set -x;
+              cd /opt/api;
+              celery --app=tasks worker \
+                     --loglevel=INFO \
+                     --uid=nobody \
+                     --gid=nogroup;"
+    container_name: ${APP_NAME}-apiworker-serve-development
+    depends_on:
+      - apidb-serve-development
+      - apitasksdb-serve-development
+    env_file: .env
+    environment:
+      - IS_WORKER=true
+      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
+      - REDIS_URL=redis://apitasksdb-serve-development:6379/0
+    image: *api
+    networks:
+      - db_serve-development_nw
+      - tasks_serve-development_nw
+    volumes:
+      - ./api:/opt/api
+      - ./api/tasks:/opt/api/tasks
+
   nginx-serve-development:
     build:
       args:
@@ -56,61 +110,10 @@ services:
     ports:
       - 80:80
 
-  apijobs-serve-development:
-    container_name: ${APP_NAME}-apijobs-serve-development
-    environment:
-      - MODE=serve-development
-    image: redis:6.0.8
-    networks:
-      - jobs_serve-development_nw
-    ports:
-      - 6379
-    volumes:
-      - ./docker_data_serve-development/redis:/var/lib/redis/data
-
-  apiworker-serve-development:
-    command: >
-      bash -c "set -x;
-              cd /opt/api;
-              celery --app=celery_worker worker \
-                     --loglevel=INFO \
-                     --uid=nobody \
-                     --gid=nogroup;"
-    container_name: ${APP_NAME}-apiworker-serve-development
-    depends_on:
-      - apidb-serve-development
-      - apijobs-serve-development
-    env_file: .env
-    environment:
-      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
-    image: *api
-    networks:
-      - db_serve-development_nw
-      - jobs_serve-development_nw
-    volumes:
-      - ./api:/opt/api
-      - ./api/tasks:/opt/api/tasks
-
-  apischedule-serve-development:
-    command: >
-      bash -c "set -x;
-              cd /opt/api;
-              celery --app=celery_worker beat \
-                     --loglevel=INFO;"
-    container_name: ${APP_NAME}-apischedule-serve-development
-    depends_on:
-      - apiworker-serve-development
-    env_file: .env
-    image: *api
-    networks:
-      - jobs_serve-development_nw
-    volumes:
-      - ./api:/opt/api
-
 networks:
   db_serve-development_nw:
     driver: bridge
-  jobs_serve-development_nw:
+  tasks_serve-development_nw:
     driver: bridge
   web_serve-development_nw:
     driver: bridge

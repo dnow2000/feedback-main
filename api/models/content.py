@@ -7,6 +7,7 @@ from sqlalchemy import BigInteger, \
                        ForeignKey, \
                        Text, \
                        String
+from sqlalchemy.event import listens_for
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins import HasActivitiesMixin, \
@@ -21,6 +22,9 @@ from models.mixins import HasCrowdtangleMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
                           HasSharesMixin
+import tasks.buzzsumo
+import tasks.crowdtangle
+import tasks.newspaper
 from utils.database import db
 
 
@@ -98,3 +102,15 @@ ts_indexes = [
     ('idx_content_fts_summary', Content.summary),
 ]
 (Content.__ts_vectors__, Content.__table_args__) = create_ts_vector_and_table_args(ts_indexes)
+
+@listens_for(Content, 'after_insert')
+def after_insert(mapper, connect, self):
+    if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
+        result = tasks.buzzsumo.sync_with_trending.delay(self.id)
+        #result.wait()
+        #print('HELLO')
+    #    if self.type == ContentType.ARTICLE:
+    #        tasks.newspaper.sync_with_article.delay(self)
+
+    #if self.type == ContentType.POST:
+    #    tasks.crowdtangle.sync_with_shares(self)

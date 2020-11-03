@@ -1,9 +1,9 @@
 from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler.serialization import as_dict
 
-from tasks import task_as_dict
 from tasks.science_feedback import sync_airtable_task, sync_outdated_rows_task
 from tasks.tags import sync_tags_task
+from utils.celery import task_as_dict
 
 
 @app.route('/jobs/sync/science_feedback/<sync_type>', methods=['POST'])

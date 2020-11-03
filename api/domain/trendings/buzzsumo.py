@@ -104,7 +104,7 @@ def buzzsumo_url_from(api_name, url_query):
 def buzzsumo_trending_from_identifier(identifier):
     if IS_DEVELOPMENT:
         for trending in DEVELOPMENT_TRENDINGS:
-            buzzsumo_trending = buzzsumo_trending_from_result(trending)
+            buzzsumo_trending = trending_from_result(trending)
             if buzzsumo_trending['buzzsumoIdentifier'] == identifier:
                 return buzzsumo_trending
     #
@@ -120,7 +120,7 @@ def topic_from(theme):
     return None
 
 
-def buzzsumo_trending_from_result(result):
+def trending_from_result(result):
     return {
         'buzzsumoIdentifier': int(result['id']),
         'externalThumbUrl': result['thumbnail'],
@@ -132,7 +132,7 @@ def buzzsumo_trending_from_result(result):
     }
 
 
-def buzzsumo_trending_from_url(url: str):
+def trending_from_url(url: str):
     url = buzzsumo_url_from('articles', {'q': url})
     response = requests.get(url)
 
@@ -145,7 +145,7 @@ def buzzsumo_trending_from_url(url: str):
     if not len(results) == 1:
         return None
 
-    return buzzsumo_trending_from_result(results[0])
+    return trending_from_result(results[0])
 
 
 def shares_from_buzzsumo_url(buzzsumo_id):
@@ -202,7 +202,7 @@ def find_buzzsumo_trendings(days=1,
         results = response['results']
 
     for result in results:
-        trending = buzzsumo_trending_from_result(result)
+        trending = trending_from_result(result)
 
         if trending['totalShares'] < min_shares:
             continue

@@ -10,7 +10,8 @@ CROWDTANGLE_API_URL = 'https://api.crowdtangle.com'
 CROWDTANGLE_API_KEY = os.environ.get('CROWDTANGLE_API_KEY')
 
 
-def shares_from_url(url, request_start_date):
+def shares_from_url(url,
+                    request_start_date='2019-09-01'):
 
     params = {
         'count': 1000,
@@ -69,5 +70,4 @@ def shares_from_url(url, request_start_date):
         logger.error(f'Error in fetching from Crowdtangle: {response.get("message", "Unknown exception.")}')
         logger.warning('Returning empty interaction data')
 
-    sleep(30)
     return shares

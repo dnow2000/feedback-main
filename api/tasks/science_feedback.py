@@ -1,5 +1,5 @@
-from celery_worker import celery_app
 from repository.science_feedback.airtable import sync, sync_outdated_rows
+from tasks import celery_app
 
 
 # Get all data from airtable

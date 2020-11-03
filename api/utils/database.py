@@ -15,7 +15,7 @@ db = SQLAlchemy(engine_options={
 def delete():
     logger.info('Delete all the database...')
     for table in reversed(db.metadata.sorted_tables):
-        print("Deleting table {table_name}...".format(table_name=table))
+        print('Deleting table {}...'.format(table))
         db.session.execute(table.delete())
     ApiHandler.get_activity().query.delete()
     db.session.commit()
@@ -30,11 +30,11 @@ def create_activity_and_transaction_tables():
 
 
 def create_text_search_configuration_if_not_exists(name, language=LANGUAGE):
-    db.engine.execute("CREATE EXTENSION IF NOT EXISTS {};".format(name))
+    db.engine.execute('CREATE EXTENSION IF NOT EXISTS {};'.format(name))
     configuration_query = db.engine.execute(
         "SELECT * FROM pg_ts_config WHERE cfgname='{}_{}';".format(language, name))
     if configuration_query.fetchone() is None:
-        db.engine.execute("CREATE TEXT SEARCH CONFIGURATION {}_{} ( COPY = {} );".format(language, name, language))
+        db.engine.execute('CREATE TEXT SEARCH CONFIGURATION {}_{} ( COPY = {} );'.format(language, name, language))
         db.engine.execute(
             "ALTER TEXT SEARCH CONFIGURATION {}_{} "
             "ALTER MAPPING FOR hword, hword_part, word WITH {}, {}_stem;".format(language, name, name, language, language))

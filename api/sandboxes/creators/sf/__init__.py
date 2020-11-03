@@ -15,5 +15,5 @@ def create_sandbox():
     sync_tags()
     sync_science_feedback()
     sync_users()
-    sync_contents(sync_crowdtangle=True)
+    #sync_contents(sync_crowdtangle=True)
     logger.info('create_sf_sandbox...Done.')

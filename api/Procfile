@@ -1,4 +1,4 @@
+scheduler: celery --app=tasks beat --loglevel=INFO
 web: gunicorn -w $UNICORN_N_WORKERS --timeout $UNICORN_TIMEOUT app:FLASK_APP
-worker: celery --app=celery_worker worker --loglevel=INFO
-scheduler: celery --app=celery_worker beat --loglevel=INFO
+worker: celery --app=tasks worker --loglevel=INFO
 postdeploy: alembic upgrade head

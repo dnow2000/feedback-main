@@ -1,6 +1,6 @@
 from flask import current_app as app, jsonify, request
 
-from celery_worker import celery_app
+from tasks import celery_app
 
 
 @app.route('/jobs/info/<info_type>')
