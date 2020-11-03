@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
-import AppearanceItem from 'components/layout/AppearanceItem'
+import LinkItem from 'components/layout/LinkItem'
 import Loader from 'components/layout/LoadMore'
 import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
@@ -13,16 +13,21 @@ export default () => {
   const dispatch = useDispatch()
   const { verdictId } = useParams()
 
+<<<<<<< HEAD:webapp/src/components/pages/Verdict/TestifierDashboard/Quotations.jsx
 
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
   const { claimId, contentId } = verdict || {}
+=======
+  const { claimId } = useSelector(state =>
+    selectEntityByKeyAndId(state, 'verdicts', verdictId)) || {}
+>>>>>>> 43c7b85 (prepared front for link):webapp/src/components/pages/Verdict/TestifierDashboard/Citations.jsx
 
   const appearances = useSelector(state =>
     selectSortedAppearancesByVerdictId(state, verdictId))
   const appearancesSortedByShareCount = useMemo(() =>
     appearances?.sort((a, b) =>
-      b.quotingContent.totalShares - a.quotingContent.totalShares)
+      b.linkingContent.totalShares - a.linkingContent.totalShares)
     , [appearances])
 
   const areDataAnonymized = useSelector(selectDataAreAnonymized)
@@ -40,7 +45,7 @@ export default () => {
   ), [])
 
   const renderItem = useCallback(item => (
-    <AppearanceItem
+    <LinkItem
       appearance={item}
       key={item.id}
     />
@@ -48,6 +53,7 @@ export default () => {
 
 
   useEffect(() => {
+<<<<<<< HEAD:webapp/src/components/pages/Verdict/TestifierDashboard/Quotations.jsx
     let apiPath = `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
     if (claimId) {
       apiPath = `${apiPath}&quotedClaimId=${claimId}`
@@ -58,6 +64,12 @@ export default () => {
       apiPath: apiPath
     }))
   }, [areDataAnonymized, claimId, contentId, dispatch, verdictId])
+=======
+    dispatch(requestData({
+      apiPath: `/links?linkedClaimId${claimId}&type=appearance`
+    }))
+  }, [claimId, dispatch])
+>>>>>>> 43c7b85 (prepared front for link):webapp/src/components/pages/Verdict/TestifierDashboard/Citations.jsx
 
 
   if (!appearances.length) {

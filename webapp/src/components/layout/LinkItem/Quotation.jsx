@@ -9,7 +9,7 @@ import ThumbImg from 'components/layout/ThumbImg'
 import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { numberShortener } from 'utils/shorteners'
 
-import AppearanceItem  from 'components/layout/AppearanceItem'
+import LinkItem  from 'components/layout/LinkItem'
 
 
 const _ = ({ articleOrVideoContent, appearanceId }) => {
@@ -44,7 +44,7 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
     [setDisplayInteractions])
 
   const renderInteractions = useCallback(item => (
-    <AppearanceItem
+    <LinkItem
       appearance={item}
       key={item.id}
     />

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestData, selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
-import AppearanceItem from 'components/layout/AppearanceItem'
+import LinkItem from 'components/layout/LinkItem'
 import Header from 'components/layout/Header'
 import Items from 'components/layout/Items'
 import Main from 'components/layout/Main'
@@ -13,27 +13,27 @@ import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 const _ = () => {
   const dispatch = useDispatch()
   const params = useParams()
-  const { appearanceId } = params
+  const { linkId } = params
 
   const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
-  const appearance = useSelector(state =>
-    selectEntityByKeyAndId(state, 'appearances', appearanceId), [appearanceId]) || {}
-  appearance.type = 'link'
-  const { quotingContent, quotingContentId } = appearance || {}
+  const link = useSelector(state =>
+    selectEntityByKeyAndId(state, 'links', linkId), [linkId]) || {}
+  link.type = 'link'
+  const { linkingContent, linkingContentId } = link || {}
   const config = useMemo(() => ({
-    apiPath: `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARRANCE&subType=SHARE&quotedContentId=${quotingContentId}`
-  }), [areDataAnonymized, quotingContentId])
+    apiPath: `/links${areDataAnonymized ? '/anonymized' : ''}?type=APPEARRANCE&subType=SHARE&linkedContentId=${linkingContentId}`
+  }), [areDataAnonymized, linkingContentId])
 
   const shareAppearances = useSelector(state =>
     selectEntitiesByKeyAndJoin(state,
-                               'appearances',
-                               { key: 'quotedContentId', value: quotingContentId }), [quotingContentId])
+                               'links',
+                               { key: 'linkedContentId', value: linkingContentId }), [linkingContentId])
 
 
   const renderItem = useCallback(item => (
-    <AppearanceItem
-      appearance={item}
+    <LinkItem
+      link={item}
       key={item.id}
     />
   ), [])
@@ -41,19 +41,19 @@ const _ = () => {
 
   useEffect(() => {
     dispatch(requestData({
-      apiPath: `/appearances/${appearanceId}${areDataAnonymized ? '/anonymized' : ''}`
+      apiPath: `/links/${linkId}${areDataAnonymized ? '/anonymized' : ''}`
     }))
-  }, [areDataAnonymized, appearanceId, dispatch])
+  }, [areDataAnonymized, dispatch, linkId])
 
 
   return (
     <>
       <Header />
-      <Main className="appearance">
+      <Main className="link">
         <div className="container">
-          <AppearanceItem
-            appearance={appearance}
-            articleOrVideoContent={quotingContent}
+          <LinkItem
+            link={link}
+            articleOrVideoContent={linkingContent}
           />
           <section>
             <Items

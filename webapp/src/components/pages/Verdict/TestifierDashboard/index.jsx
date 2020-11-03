@@ -26,7 +26,6 @@ export default () => {
   const location = useLocation()
   const { tab, verdictId } = useParams()
 
-
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
 

@@ -10,16 +10,16 @@ export default createCachedSelector(
   selectCurrentUser,
   (state, verdictId) => selectEntitiesByKeyAndJoin(
     state,
-    'appearances',
-    { key: 'quotedClaimId', value: selectEntityByKeyAndId(state, 'verdicts', verdictId)?.claimId }),
-  (currentUser, appearances) => {
-    if (!appearances) return
-    appearances.sort((a1, a2) => a1.id > a2.id ? -1 : 1)
+    'links',
+    { key: 'linkedClaimId', value: selectEntityByKeyAndId(state, 'verdicts', verdictId)?.claimId }),
+  (currentUser, links) => {
+    if (!links) return
+    links.sort((l1, l2) => l1.id > l2.id ? -1 : 1)
     if (currentUser) {
-      appearances.sort((a1,a2) =>
-        a1.testifierId === currentUser.id &&
-        a2.testifierId !== currentUser.id
+      links.sort((l1,l2) =>
+        l1.testifierId === currentUser.id &&
+        l2.testifierId !== currentUser.id
         ? -1 : 1)
     }
-    return appearances
+    return links
   })(mapArgsToCacheKey)

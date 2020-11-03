@@ -165,12 +165,6 @@ export default [
     title: 'Verdict',
   },
   {
-    component: withRequiredLogin(Verdict),
-    exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formMatch}`,
-    title: 'Verdict',
-  },
-  {
     component: compose(withRequiredLogin,
                        withRoles({
                          accessRoleTypes: ['editor'],

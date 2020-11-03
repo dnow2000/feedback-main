@@ -16,11 +16,11 @@ export default () => {
 
   const appearancesSortedByShareCount = useMemo(() =>
     appearances?.sort((a, b) =>
-      b.quotingContent.totalShares - a.quotingContent.totalShares)
+      b.linkingContent.totalShares - a.linkingContent.totalShares)
     , [appearances])
 
   const topAppearance = appearancesSortedByShareCount[0]
-  const url = topAppearance?.quotingContent?.url
+  const url = topAppearance?.linkingContent?.url
 
   useEffect(() => {
     dispatch(requestData({

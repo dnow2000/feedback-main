@@ -157,13 +157,6 @@ _.propTypes = {
     scienceFeedbackUrl: PropTypes.string,
     title: PropTypes.string,
     type: PropTypes.string,
-    verdictTags: PropTypes.arrayOf(
-      PropTypes.shape({
-        tag: PropTypes.shape({
-          label: PropTypes.string,
-        }),
-      })
-    ),
   }).isRequired,
   withQuotationsAndShares: PropTypes.bool
 }
