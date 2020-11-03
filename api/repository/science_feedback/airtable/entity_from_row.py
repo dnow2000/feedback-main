@@ -1,10 +1,10 @@
 from sqlalchemy_api_handler.utils import humanize
 
-from models.appearance import Appearance
 from models.author_content import AuthorContent
 from models.claim import Claim
 from models.review import Review
 from models.content import Content, ContentType
+from models.link import Link, LinkSubType, LinkType
 from models.medium import Medium
 from models.organization import Organization
 from models.role import Role, RoleType
@@ -20,12 +20,12 @@ from utils.date import strptime
 from utils.password import create_random_password
 
 
-def appearance_from_row(row, unused_index=None):
+def link_from_row(row, unused_index=None):
     reviewed_items = row.get('Item reviewed')
     if not reviewed_items:
         return None
 
-    quoting_content = Content.create_or_modify({
+    linking_content = Content.create_or_modify({
         '__SEARCH_BY__': 'url',
         # TODO : needs a better resolution for the type
         'type': ContentType.VIDEO if row['url'].startswith('https://www.youtube.com/watch?v') else ContentType.ARTICLE,
@@ -35,7 +35,7 @@ def appearance_from_row(row, unused_index=None):
     if medium_science_feedback_ids:
         medium = Medium.query.filter_by(
             scienceFeedbackIdentifier=medium_science_feedback_ids[0]).first()
-        quoting_content.mediumId = medium.id
+        linking_content.mediumId = medium.id
 
     author_science_feedback_ids = row.get('Authors')
     if author_science_feedback_ids:
@@ -45,17 +45,17 @@ def appearance_from_row(row, unused_index=None):
             author_content = AuthorContent.create_or_modify({
                 '__SEARCH_BY__': ['authorId', 'contentId'],
                 'authorId': humanize(author.id),
-                'contentId': humanize(quoting_content.id)
+                'contentId': humanize(linking_content.id)
             })
-            quoting_content.authorContents = quoting_content.authorContents + [author_content]
+            linking_content.authorContents = linking_content.authorContents + [author_content]
 
-    quoted_claim = Claim.query.filter_by(
+    linked_claim = Claim.query.filter_by(
         scienceFeedbackIdentifier=reviewed_items[0]).first()
-    quoted_content = None
-    if not quoted_claim:
-        quoted_content = Content.query.filter_by(
+    linked_content = None
+    if not linked_claim:
+        linked_content = Content.query.filter_by(
             scienceFeedbackIdentifier=reviewed_items[0]).first()
-    if not quoted_claim and not quoted_content:
+    if not linked_claim and not linked_content:
         return None
 
     testifier_science_feedback_ids = row.get('Verified by')
@@ -67,23 +67,23 @@ def appearance_from_row(row, unused_index=None):
         return None
 
     if IS_DEVELOPMENT:
-        quoting_content.externalThumbUrl = API_URL + '/static/logo.png' if IS_DEVELOPMENT else None
-        quoting_content.title = "/".join(quoting_content.url
+        linking_content.externalThumbUrl = API_URL + '/static/logo.png' if IS_DEVELOPMENT else None
+        linking_content.title = "/".join(linking_content.url
                                                         .replace('http://', '') \
                                                         .replace('https://', '') \
                                                         .split('/')[-2:]) \
                                    .replace('-', ' ')
 
-    appearance_dict = {
+    return Link.create_or_modify({
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',
-        'quotedClaim': quoted_claim,
-        'quotedContent': quoted_content,
-        'quotingContent': quoting_content,
+        'linkedClaim': linked_claim,
+        'linkedContent': linked_content,
+        'linkingContent': linking_content,
         'scienceFeedbackIdentifier': row['airtableId'],
-        'testifier': testifier
-    }
-
-    return Appearance.create_or_modify(appearance_dict)
+        'subType': LinkSubType.QUOTATION,
+        'testifier': testifier,
+        'type': LinkType.APPEARANCE,
+    })
 
 
 def author_from_row(row, index=None):

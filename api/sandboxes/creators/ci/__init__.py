@@ -1,16 +1,16 @@
 from sqlalchemy_api_handler.utils import logger
 
-from sandboxes.creators.ci.create_appearances import *
 from sandboxes.creators.ci.create_author_contents import *
 from sandboxes.creators.ci.create_claims import *
+from sandboxes.creators.ci.create_contents import *
+from sandboxes.creators.ci.create_content_tags import *
 from sandboxes.creators.ci.create_features import *
-from sandboxes.creators.ci.create_tags import *
+from sandboxes.creators.ci.create_links import *
 from sandboxes.creators.ci.create_review_tags import *
 from sandboxes.creators.ci.create_reviews import *
 from sandboxes.creators.ci.create_roles import *
-from sandboxes.creators.ci.create_contents import *
-from sandboxes.creators.ci.create_content_tags import *
 from sandboxes.creators.ci.create_scopes import *
+from sandboxes.creators.ci.create_tags import *
 from sandboxes.creators.ci.create_user_tags import *
 from sandboxes.creators.ci.create_users import *
 from sandboxes.creators.ci.create_verdicts import *
@@ -30,7 +30,7 @@ def create_sandbox(with_capture=False):
     create_contents(with_capture=with_capture)
     create_content_tags()
     create_author_contents()
-    create_appearances()
+    create_links()
     create_reviews()
     create_review_tags()
     create_verdicts()

@@ -22,7 +22,7 @@ NAME_TO_AIRTABLE = {
     'claim': 'Items for review / reviewed',
     'social': 'Social Media Influent.',
     'outlet': 'Outlets',
-    'appearance': 'Appearances',
+    'link': 'Appearance',
     'verdict': 'Reviews / Fact-checks',
 }
 
@@ -46,23 +46,19 @@ def sync_outdated_rows(max_records=None):
     logger.info('sync science feedback outdated airtable data...Done.')
 
 
-def sync_for(
-    name,
-    formula=None,
-    max_records=None,
-    session=None,
-    sync_to_airtable=False
-):
+def sync_for(name,
+             formula=None,
+             max_records=None,
+             session=None,
+             sync_to_airtable=False):
     if session is None:
         session = requests.Session()
 
-    rows = request_airtable_rows(
-        SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
-        NAME_TO_AIRTABLE[name],
-        filter_by_formula=formula,
-        max_records=max_records,
-        session=session
-    )
+    rows = request_airtable_rows(SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+                                 NAME_TO_AIRTABLE[name],
+                                 filter_by_formula=formula,
+                                 max_records=max_records,
+                                 session=session)
 
     entities = []
     if rows:
@@ -88,13 +84,14 @@ def sync_for(
             row['Synced time input'] = f'Unexpected error: {exception}'
 
     def _update_10_rows_from_index(i):
-        records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows[i: i + 10]]
-        res = update_airtable_rows(
-            SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
-            NAME_TO_AIRTABLE[name],
-            {'records': records},
-            session=session
-        )
+        records = [{
+            'id': row['airtableId'],
+            'fields': {'Synced time input': row['Synced time input']}
+        } for row in rows[i: i + 10]]
+        res = update_airtable_rows(SCIENCE_FEEDBACK_AIRTABLE_BASE_ID,
+                                   NAME_TO_AIRTABLE[name],
+                                   {'records': records},
+                                   session=session)
 
         if res.status_code != 200:
             logger.error(f'code: {res.status_code}, error: {res.content}')
@@ -105,9 +102,9 @@ def sync_for(
             entities = claim_verdicts_from_airtable(verdicts_to_sync=entities)
 
         # Sync related contents for appearances
-        if name == 'appearance' and formula is not None:
+        if name == 'link' and formula is not None:
             for entity in entities:
-                sync_content(entity.quotingContent)
+                sync_content(entity.linkingContent)
 
         # Set the time synced so that the status in airtable is "Synced"
         if sync_to_airtable:
@@ -136,5 +133,7 @@ def sync(max_records=None, sync_to_airtable=False):
     create_or_modify_sf_organization_and_media()
 
     for name in NAME_TO_AIRTABLE:
-        sync_for(name, max_records=max_records, sync_to_airtable=sync_to_airtable)
+        sync_for(name,
+                 max_records=max_records,
+                 sync_to_airtable=sync_to_airtable)
     logger.info('sync science feedback airtable data...Done.')

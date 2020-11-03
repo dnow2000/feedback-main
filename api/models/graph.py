@@ -83,9 +83,9 @@ class Graph(ApiHandler,
         node_type = self.node_type_from(entity)
 
         if node_type in [
-            'Appearance',
             'AuthorContent',
             'Graph',
+            'Link',
             'Platform',
             'Role',
             'Tag',

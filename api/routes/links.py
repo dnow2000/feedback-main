@@ -5,19 +5,19 @@ from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import dehumanize, \
                                          load_or_404
 
-from models.appearance import Appearance
+from models.link import Link, LinkType
 from repository.roles import are_data_anonymized_from
 from utils.rest import listify
 
 
-def appearance_includes_from(user, sub_type=None):
+def link_includes_from(user, sub_type=None):
     are_data_anonymized = are_data_anonymized_from(user)
     return [
         'id',
-        'quotedClaimId',
-        'quotedContentId',
+        'linkedClaimId',
+        'linkedContentId',
         {
-            'key': 'quotingContent',
+            'key': 'linkingContent',
             'includes': [
                 'archiveUrl',
                 {
@@ -49,27 +49,26 @@ def appearance_includes_from(user, sub_type=None):
                 'url'
             ]
         },
-        'quotingContentId',
-        #'subType',
+        'linkingContentId',
+        'subType',
         'stance',
         'testifierId'
-        #'type',
+        'type',
     ]
 
 
-def appearances_from(user):
-    query = Appearance.query
+def links_from(user):
+    query = Link.query
 
-    # TODO optimize filter with predefined type AppearanceType.LINK or AppearanceType.INTERACTION
-    # if request.args.get('type'):
-    #    query = query.filter_by(type=getattr(AppearanceType, request.args.get('type')))
+    if request.args.get('type'):
+        query = query.filter_by(type=getattr(LinkType, request.args.get('type')))
 
-    for key in ['quotedClaimId', 'quotedContentId']:
+    for key in ['linkedClaimId', 'linkedContentId']:
         if request.args.get(key):
             query = query.filter_by(**{key: dehumanize(request.args.get(key))})
 
-    return listify(Appearance,
-                   includes=appearance_includes_from(user, request.args.get('subType')),
+    return listify(Link,
+                   includes=link_includes_from(user, request.args.get('subType')),
                    mode='only-includes',
                    page=request.args.get('page', 1),
                    paginate=int(request.args.get('limit', 10)),
@@ -77,29 +76,29 @@ def appearances_from(user):
 
 
 @login_required
-@app.route('/appearances', methods=['GET'])
-def get_appearances():
-    return appearances_from(current_user)
+@app.route('/links', methods=['GET'])
+def get_links():
+    return links_from(current_user)
 
 
-@app.route('/appearances/anonymized', methods=['GET'])
-def get_anonymized_appearances():
-    return appearances_from(None)
+@app.route('/links/anonymized', methods=['GET'])
+def get_anonymized_links():
+    return links_from(None)
 
 
-def appearance_from(user, appearance_id):
-    appearance = load_or_404(Appearance, appearance_id)
-    return jsonify(as_dict(appearance,
-                           includes=appearance_includes_from(user, request.args.get('subType')),
+def link_from(user, link_id):
+    link = load_or_404(Link, link_id)
+    return jsonify(as_dict(link,
+                           includes=link_includes_from(user, request.args.get('subType')),
                            mode='only-includes')), 200
 
 
-@app.route('/appearances/<appearance_id>', methods=['GET'])
-def get_appearance(appearance_id):
-    return appearance_from(None, appearance_id)
+@app.route('/links/<link_id>', methods=['GET'])
+def get_link(link_id):
+    return link_from(None, link_id)
 
 
 @login_required
-@app.route('/appearances/<appearance_id>/anonymized', methods=['GET'])
-def get_anonymized_appearance(appearance_id):
-    return appearance_from(current_user, appearance_id)
+@app.route('/links/<link_id>/anonymized', methods=['GET'])
+def get_anonymized_link(link_id):
+    return link_from(current_user, link_id)

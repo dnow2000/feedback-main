@@ -16,6 +16,21 @@ USER_INCLUDES = [
     }
 ]
 
+<<<<<<< HEAD
+=======
+LINK_INCLUDES = [
+    {
+        'key': 'linkingContent',
+        'includes': [
+            {
+                'key': 'authorContents',
+                'includes': ['author']
+            },
+            'medium'
+        ]
+    }
+]
+>>>>>>> 0f7a121 (rename appearance table into link)
 
 CONTENT_INCLUDES = [
     {
@@ -76,10 +91,10 @@ AUTHOR_CONTENT_INCLUDES = [
 
 CLAIM_INCLUDES = [
     {
-        'key': 'quotedFromAppearances',
+        'key': 'whereItIsLinkedLinks',
         'includes': [
             {
-                'key': 'quotingContent',
+                'key': 'linkingContent',
                 'includes': [
                     {
                         'key': 'authorContents',
@@ -91,3 +106,40 @@ CLAIM_INCLUDES = [
         ]
     }
 ]
+<<<<<<< HEAD
+=======
+
+VERDICT_INCLUDES = [
+    'content',
+    {
+        'key': 'editor',
+        'includes': USER_INCLUDES
+    },
+    'claim',
+    'medium',
+    {
+        'key': 'reviews',
+        'includes': [
+            'reviewer'
+        ]
+    },
+    {
+        'key': 'verdictTags',
+        'includes': [
+            {
+                'key': 'tag',
+                'includes': TAG_INCLUDES
+            }
+        ]
+    },
+    {
+        'key': 'verdictReviewers',
+        'includes': [
+            {
+                'key': 'reviewer',
+                'includes': USER_INCLUDES
+            }
+        ]
+    }
+]
+>>>>>>> 0f7a121 (rename appearance table into link)

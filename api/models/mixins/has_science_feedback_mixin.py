@@ -3,9 +3,9 @@ from sqlalchemy.ext.declarative import declared_attr
 
 
 PUBLISHABLES = [
-    'appearance',
-    'content',
     'claim',
+    'content',
+    'link,'
     'review',
     'verdict'
 ]

@@ -7,7 +7,6 @@ from utils.database import db
 
 def import_models():
     from models.activity import Activity
-    from models.appearance import Appearance
     from models.author_content import AuthorContent
     from models.claim import Claim
     from models.content import Content
@@ -15,6 +14,7 @@ def import_models():
     from models.graph import Graph
     from models.image import Image
     from models.feature import Feature
+    from models.link import Link
     from models.medium import Medium
     from models.organization import Organization
     from models.platform import Platform

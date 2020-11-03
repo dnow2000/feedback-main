@@ -5,7 +5,6 @@ from utils.config import IS_DEVELOPMENT
 
 
 def import_routes():
-    import routes.appearances
     import routes.author_contents
     import routes.backlinks
     import routes.checks
@@ -15,6 +14,7 @@ def import_routes():
     import routes.graphs
     import routes.images
     import routes.jobs
+    import routes.links
     import routes.organizations
     import routes.password
     import routes.orcid
