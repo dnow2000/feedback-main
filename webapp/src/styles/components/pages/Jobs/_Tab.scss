@@ -1,0 +1,25 @@
+.jobs {
+  .tab-bar {
+    border-bottom: 1px solid $grey-lighter;
+    margin-bottom: 3rem;
+    padding: 0.5rem 0;
+
+    .tab {
+      @extend .anchor;
+      @extend .text-muted;
+
+      border-bottom: 2px solid transparent;
+      font-size: 1.25rem;
+      padding: 0.5rem 1rem;
+
+      &.active {
+        border-bottom: 2px solid $primary;
+        color: $grey-darker !important;
+      }
+
+      &:not(:last-child) {
+        margin-right: 0;
+      }
+    }
+  }
+}

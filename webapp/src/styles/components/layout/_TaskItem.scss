@@ -1,0 +1,45 @@
+.jobs {
+  .task-item {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: 0.5rem;
+    }
+
+    .task-interactions {
+      align-items: center;
+      display: flex;
+      justify-content: space-evenly;
+      min-width: 50%;
+
+      .task-buttons{
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+
+        button {
+          &.task-button-start {
+            @extend .button;
+            @extend .is-primary;
+            @extend .thin;
+
+            &.active {
+              @extend .is-primary;
+            }
+          }
+        }
+      }
+
+      .task-status {
+        text-align: center;
+        width: 40%;
+      }
+    }
+
+    .task-name {
+      font-size: 1.2rem;
+    }
+  }
+}
