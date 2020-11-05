@@ -75,7 +75,12 @@ services:
     command: >
       bash -c "set -x;
               cd /opt/api;
+              watchmedo auto-restart --directory=./ \
+                                     --pattern=*.py \
+                                     --recursive \
+                                     -- \
               celery --app=tasks worker \
+                     --concurrency=1 \
                      --loglevel=INFO \
                      --uid=nobody \
                      --gid=nogroup;"
