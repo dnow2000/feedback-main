@@ -19,4 +19,3 @@ def import_commands():
 
     import commands.sandbox
     import commands.screenshotmachine
-    import commands.sync

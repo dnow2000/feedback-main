@@ -16,6 +16,7 @@ from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import humanize
 
 from domain.keywords import create_ts_vector_and_table_args
+from domain.tasks import planified_dates_for
 from models.mixins import HasCrowdtangleMixin, \
                           HasExternalThumbUrlMixin, \
                           HasFacebookMixin, \
@@ -114,11 +115,21 @@ def after_insert(mapper, connect, self):
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
         result = tasks.buzzsumo.sync_with_trending.delay(self.id)
         result.wait()
-        if not self.buzzsumoIdentifier and self.type == ContentType.ARTICLE:
+        if self.buzzsumoIdentifier:
+            for eta in planified_dates_for('buzzsumo.sync_with_trending'):
+                tasks.buzzsumo.sync_with_trending.apply_async(self.id, eta=eta)
+        elif self.type == ContentType.ARTICLE:
             tasks.newspaper.sync_with_article.delay(self.id)
+            if not self.urlNotFound:
+                for eta in planified_dates_for('newspaper.sync_with_article'):
+                    tasks.newspaper.sync_with_article.apply_async(self.id, eta=eta)
             if not self.externalThumbUrl and self.thumbCount == 0:
                 tasks.screenshotmachine.sync_with_capture(self.id)
+
     if self.type == ContentType.POST:
         tasks.crowdtangle.sync_with_shares.delay(self.id)
+        for eta in planified_dates_for('crowdtangle.sync_with_shares'):
+            tasks.crowdtangle.sync_with_shares.apply_async(self.id, eta=eta)
+
     if not self.archiveUrl:
         tasks.waybackmachine.sync_with_archive(self.id)
