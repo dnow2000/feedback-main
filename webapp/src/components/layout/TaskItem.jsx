@@ -15,6 +15,12 @@ export default ({ handleStartJob, task }) => (
         >
           {'Start'}
         </button>
+        <button
+          disabled
+          type='button'
+        >
+          {'Revoke'}
+        </button>
       </div>
       <div className='task-status'>
         {task.status || 'STATUS UNKNOWN'}

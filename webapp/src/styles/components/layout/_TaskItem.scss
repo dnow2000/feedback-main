@@ -17,17 +17,16 @@
       .task-buttons{
         align-items: center;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
 
         button {
-          &.task-button-start {
-            @extend .button;
-            @extend .is-primary;
-            @extend .thin;
+          @extend .button;
+          @extend .thin;
 
-            &.active {
-              @extend .is-primary;
-            }
+          margin: 0 0.2rem;
+
+          &.task-button-start {
+            @extend .is-primary;
           }
         }
       }

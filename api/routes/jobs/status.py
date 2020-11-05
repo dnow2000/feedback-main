@@ -29,15 +29,39 @@ def list_tasks(tasks_type):
         ):
             return jsonify(tasks)
         elif tasks_type == 'registered':
-            formatted_tasks = _format_task_lists(list(tasks.values()), tasks_type)
-            return jsonify(formatted_tasks)
+            return jsonify(_format_registered_task_list(list(tasks.values()), tasks_type))
         else:
             return jsonify({'Error': f'Could not find the tasks of type: "{tasks_type}"'}), 404
     except Exception as e:
         return jsonify({'Exception': str(e)}), 500
 
+# Sample return from '/jobs/list/active' => TODO: process this return to get active tasks' statuses
+# {
+#   "celery@1f50b4a32a3c": [
+#     {
+#       "acknowledged": true,
+#       "args": [],
+#       "delivery_info": {
+#         "exchange": "",
+#         "priority": 0,
+#         "redelivered": null,
+#         "routing_key": "celery"
+#       },
+#       "hostname": "celery@1f50b4a32a3c",
+#       "id": "b4145d4c-9dc1-4af9-8e11-c5935890a499",
+#       "kwargs": {
+#         "sync_to_airtable": false
+#       },
+#       "name": "sync-science_feedback/airtable",
+#       "time_start": 1604584917.2405272,
+#       "type": "sync-science_feedback/airtable",
+#       "worker_pid": 15
+#     }
+#   ],
+# }
 
-def _format_task_lists(task_lists, tasks_type):
+
+def _format_registered_task_list(task_lists, tasks_type):
     formatted_tasks = {tasks_type: {}}
     for task_list in task_lists:
         task_group = {}
