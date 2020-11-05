@@ -1,8 +1,10 @@
 import enum
 from sqlalchemy import BigInteger, \
+                       Boolean, \
                        Column, \
                        Enum, \
-                       ForeignKey
+                       ForeignKey, \
+                       String
 from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
@@ -15,6 +17,15 @@ from utils.database import db
 class AppearanceType(enum.Enum):
     LINK = 'link'
     SHARE = 'share'
+
+
+class FlagType(enum.Enum):
+    FALSE = 'false'
+    FALSE_HEADLINE = 'false headline'
+    MISLEADING = 'misleading'
+    MISSING_CONTEXT = 'missing context'
+    PARTLY_FALSE = 'partly false'
+    TRUE = 'true'
 
 
 class StanceType(enum.Enum):
@@ -36,6 +47,12 @@ class Appearance(ApiHandler,
                  db.Model,
                  HasCrowdtangleMixin,
                  HasScienceFeedbackMixin):
+
+    facebookFlag = Column(Enum(FlagType))
+
+    facebookFlagComment = Column(String(2048))
+
+    facebookSubmitted = Column(Boolean())
 
     quotedClaimId = Column(BigInteger(),
                            ForeignKey('claim.id'),
