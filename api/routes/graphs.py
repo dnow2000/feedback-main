@@ -1,7 +1,6 @@
 import inflect
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify
-from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import load_or_404
 
@@ -18,7 +17,7 @@ def get_graph(id_key, entity_id):
         id_key: entity_id,
         'isAnonymized': are_data_anonymized
     })
-    if not graph.nodes:
+    if not graph.id:
         graph.parse()
         ApiHandler.save(graph)
     return jsonify(as_dict(graph)), 200
@@ -31,7 +30,7 @@ def get_anonymized_graph(id_key, entity_id):
         id_key: entity_id,
         'isAnonymized': True
     })
-    if not graph.nodes:
+    if not graph.id:
         graph.parse()
         ApiHandler.save(graph)
     return jsonify(as_dict(graph)), 200

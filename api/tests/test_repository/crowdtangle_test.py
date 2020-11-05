@@ -4,14 +4,14 @@ import pytest
 from sqlalchemy_api_handler import ApiHandler
 
 from models.content import Content
-from repository.crowdtangle import attach_crowdtangle_entities_from_content
+from repository.crowdtangle import share_appearances_from_content
 from tests.decorators import with_delete
 
 
 def crowdtangle_test(url):
     content = Content(url=url)
     ApiHandler.save(content)
-    attach_crowdtangle_entities_from_content(content,
+    share_appearances_from_content(content,
                                              request_start_date='2019-09-01')
     return content
 

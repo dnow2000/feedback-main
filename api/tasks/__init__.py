@@ -35,6 +35,8 @@ celery_app.Task = AppTask
 
 
 if os.environ.get('IS_WORKER'):
-    import tasks.hello_world
+    import tasks.buzzsumo
+    import tasks.crowdtangle
+    import tasks.graph
     import tasks.science_feedback
     import tasks.tags

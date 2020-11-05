@@ -8,7 +8,7 @@ from models.content import Content
 from models.content_tag import ContentTag
 from models.tag import Tag
 from repository.activities import filter_by_activity_date_and_verb
-from repository.crowdtangle import attach_crowdtangle_entities_from_content
+from repository.crowdtangle import share_appearances_from_content
 from repository.keywords import create_filter_matching_all_keywords_in_any_model, \
                                 create_get_filter_matching_ts_query_in_any_model
 from storage.thumb import save_thumb
@@ -30,7 +30,7 @@ def content_from_url(url,
     })
 
     if sync_crowdtangle:
-        attach_crowdtangle_entities_from_content(content,
+        share_appearances_from_content(content,
                                                  request_start_date='2019-09-01')
 
     trending = buzzsumo_trending_from_url(url, **kwargs)

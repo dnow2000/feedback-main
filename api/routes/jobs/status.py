@@ -5,8 +5,8 @@ from flask import current_app as app, jsonify
 from re import split
 from sqlalchemy_api_handler.serialization import as_dict
 
-from celery_worker import celery_app
-from tasks import result_formatted
+from tasks import celery_app
+from utils.celery import result_formatted
 
 
 @app.route('/jobs/status/<uuid:task_id>')

@@ -97,20 +97,21 @@ class Content(ApiHandler,
 
 
 
+Content.ContentType = ContentType
+
+
 ts_indexes = [
     ('idx_content_fts_title', Content.title),
     ('idx_content_fts_summary', Content.summary),
 ]
 (Content.__ts_vectors__, Content.__table_args__) = create_ts_vector_and_table_args(ts_indexes)
 
+
 @listens_for(Content, 'after_insert')
 def after_insert(mapper, connect, self):
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
         result = tasks.buzzsumo.sync_with_trending.delay(self.id)
-        #result.wait()
-        #print('HELLO')
-    #    if self.type == ContentType.ARTICLE:
-    #        tasks.newspaper.sync_with_article.delay(self)
-
-    #if self.type == ContentType.POST:
-    #    tasks.crowdtangle.sync_with_shares(self)
+        if self.type == ContentType.ARTICLE:
+            tasks.newspaper.sync_with_article.delay(self.id)
+    if self.type == ContentType.POST:
+        tasks.crowdtangle.sync_with_shares.delay(self.id)

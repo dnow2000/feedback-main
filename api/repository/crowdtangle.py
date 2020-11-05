@@ -1,14 +1,15 @@
 from domain.crowdtangle import shares_from_url
-from models.content import Content, ContentType
-from models.link import Link, LinkSubType, LinkType
-from models.medium import Medium
-from models.platform import Platform
-from models.user import User
 from utils.config import DEFAULT_USER_PASSWORD, IS_DEVELOPMENT
 from utils.password import create_random_password
 
 
-def attach_crowdtangle_entities_from_content(content, request_start_date):
+def share_appearances_from_content(content, request_start_date):
+    Appearance = ApiHandler.model_from_name('Appearance')
+    Content = ApiHandler.model_from_name('Content')
+    ContentType = Content.ContentType
+    Medium = ApiHandler.model_from_name('Medium')
+    Platform = ApiHandler.model_from_name('Platform')
+    User = ApiHandler.model_from_name('User')
 
     # create a "CrowdTangle" user to testify that these Facebook posts are connected to the url
     crowdtangle_user = User.create_or_modify({
@@ -29,6 +30,7 @@ def attach_crowdtangle_entities_from_content(content, request_start_date):
 
     shares = shares_from_url(content.url, request_start_date)
 
+    links = []
     for share in shares:
         medium_group = Medium.create_or_modify({
             '__SEARCH_BY__': 'name',
@@ -47,7 +49,7 @@ def attach_crowdtangle_entities_from_content(content, request_start_date):
                                                    content_post.crowdtangleIdentifier,
                                                    crowdtangle_user.id)
 
-        link = Link.create_or_modify({
+        links.append(Link.create_or_modify({
             '__SEARCH_BY__': 'crowdtangleIdentifier',
             'crowdtangleIdentifier': crowdtangle_identifier,
             'linkedContent': content,
@@ -55,4 +57,6 @@ def attach_crowdtangle_entities_from_content(content, request_start_date):
             'subType': LinkSubType.SHARE,
             'testifier': crowdtangle_user,
             'type': LinkType.APPEARANCE
-        })
+        }))
+
+    return links

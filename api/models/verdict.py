@@ -5,6 +5,7 @@ from sqlalchemy import BigInteger,\
                        ForeignKey,\
                        String,\
                        Text
+from sqlalchemy.event import listens_for
 from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
@@ -13,6 +14,7 @@ from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixi
 from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasRatingMixin, \
                           HasScienceFeedbackMixin
+import tasks.graph
 from utils.database import db
 
 
@@ -85,3 +87,13 @@ ts_indexes = [
     ('idx_verdict_fts_summary', Verdict.title),
 ]
 (Verdict.__ts_vectors__, Verdict.__table_args__) = create_ts_vector_and_table_args(ts_indexes)
+
+
+@listens_for(Verdict, 'after_insert')
+def after_insert(mapper, connect, self):
+    tasks.graph.sync_with_parsing.delay('verdictId',
+                                        self.id,
+                                        is_anonymised=False)
+    tasks.graph.sync_with_parsing.delay('verdictId',
+                                        self.id,
+                                        is_anonymised=True)
