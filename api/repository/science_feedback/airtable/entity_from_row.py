@@ -24,6 +24,8 @@ def appearance_from_row(row, unused_index=None):
     reviewed_items = row.get('Item reviewed')
     if not reviewed_items:
         return None
+    facebook_flag = row.get('Flag as')
+    facebook_submitted = True if row.get('Fb flagged') == 'done' else False
 
     quoting_content = Content.create_or_modify({
         '__SEARCH_BY__': 'url',
@@ -76,6 +78,8 @@ def appearance_from_row(row, unused_index=None):
 
     appearance_dict = {
         '__SEARCH_BY__': 'scienceFeedbackIdentifier',
+        'facebookFlag': facebook_flag,
+        'facebookSubmitted': facebook_submitted,
         'quotedClaim': quoted_claim,
         'quotedContent': quoted_content,
         'quotingContent': quoting_content,

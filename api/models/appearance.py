@@ -20,12 +20,12 @@ class AppearanceType(enum.Enum):
 
 
 class FlagType(enum.Enum):
-    FALSE = 'false'
-    FALSE_HEADLINE = 'false headline'
-    MISLEADING = 'misleading'
-    MISSING_CONTEXT = 'missing context'
-    PARTLY_FALSE = 'partly false'
-    TRUE = 'true'
+    FALSE = 'False'
+    FALSE_HEADLINE = 'False headline'
+    MISLEADING = 'Misleading'
+    MISSING_CONTEXT = 'Missing context'
+    PARTLY_FALSE = 'Partly false'
+    TRUE = 'True'
 
 
 class StanceType(enum.Enum):
