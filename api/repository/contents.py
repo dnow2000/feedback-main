@@ -9,9 +9,7 @@ from repository.activities import filter_by_activity_date_and_verb
 from repository.crowdtangle import share_appearances_from_content
 from repository.keywords import create_filter_matching_all_keywords_in_any_model, \
                                 create_get_filter_matching_ts_query_in_any_model
-from storage.thumb import save_thumb
-from utils.screenshotmachine import capture
-from utils.wayback_machine import url_from_archive_services
+
 
 
 CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(Content,
@@ -38,55 +36,3 @@ def keep_contents_with_minimal_datum(query):
 def filter_contents_by_is_reviewable(query, is_reviewable):
     query = query.filter_by(isReviewable=is_reviewable)
     return query
-
-
-def sync_content(content,
-                 sync_archive_url=False,
-                 sync_crowdtangle=False,
-                 sync_thumbs=False,
-                 session=None):
-    content = content_from_url(content.url, sync_crowdtangle=sync_crowdtangle)
-    if content.url:
-        if not content.externalThumbUrl and content.thumbCount == 0 and sync_thumbs:
-            thumb = capture(content.url)
-            save_thumb(content, thumb, 0, convert=False)
-        if not content.archiveUrl and sync_archive_url:
-            content.archiveUrl = url_from_archive_services(content.url)
-    ApiHandler.save(content)
-    return content
-
-
-def sync(from_date=None,
-         to_date=None,
-         sync_archive_url=False,
-         sync_crowdtangle=False,
-         sync_thumbs=False,
-         contents_max=None):
-    now_date = datetime.utcnow()
-    if from_date is None:
-        from_date = now_date - timedelta(hours=12)
-    if to_date is None:
-        to_date = now_date - timedelta(minutes=0)
-
-    query = Content.query.order_by(Content.id.desc())
-    if from_date or to_date:
-        query = filter_by_activity_date_and_verb(query,
-                                                 from_date=from_date,
-                                                 to_date=to_date,
-                                                 verb='insert')
-
-
-    contents = query.all()
-
-    if contents_max is None:
-        contents_max = len(contents)
-
-    logger.info(f'Sync contents from {from_date} to {to_date}...')
-    for content in contents[:contents_max]:
-        sync_content(content,
-                     sync_archive_url=sync_archive_url,
-                     sync_crowdtangle=sync_crowdtangle,
-                     sync_thumbs=sync_thumbs)
-        logger.info(f'Synced content: {content.id}')
-
-    logger.info(f'Sync contents from {from_date} to {to_date}...Done')

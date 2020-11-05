@@ -15,7 +15,7 @@ FALLBACK_LIST = [
 ]
 
 
-def create_wayback_machine_url(url, sleep_time=2):
+def create_waybackmachine_url(url, sleep_time=2):
     logger.info('Saving {} to Wayback Machine...'.format(url))
     with requests.Session() as session:
         session.headers = {

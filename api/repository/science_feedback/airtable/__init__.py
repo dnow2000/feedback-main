@@ -6,7 +6,6 @@ from datetime import datetime
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.utils import logger
 
-from repository.contents import sync_content
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
 from repository.science_feedback.wordpress.claim_verdicts import claim_verdicts_from_airtable
 from utils.airtable import request_airtable_rows, update_airtable_rows
@@ -37,12 +36,10 @@ def entity_from_row_for(name, entity_dict, index):
 def sync_outdated_rows(max_records=None):
     logger.info('sync science feedback outdated airtable data...')
     for name in NAME_TO_AIRTABLE:
-        sync_for(
-            name,
-            formula='FIND("Out of sync", {Sync status})>0',
-            max_records=max_records,
-            sync_to_airtable=True
-        )
+        sync_for(name,
+                 formula='FIND("Out of sync", {Sync status})>0',
+                 max_records=max_records,
+                 sync_to_airtable=True)
     logger.info('sync science feedback outdated airtable data...Done.')
 
 
@@ -100,11 +97,6 @@ def sync_for(name,
         # Sync verdict status from wordpress
         if name == 'verdict' and formula is not None:
             entities = claim_verdicts_from_airtable(verdicts_to_sync=entities)
-
-        # Sync related contents for links
-        if name == 'link' and formula is not None:
-            for entity in entities:
-                sync_content(entity.linkingContent)
 
         # Set the time synced so that the status in airtable is "Synced"
         if sync_to_airtable:

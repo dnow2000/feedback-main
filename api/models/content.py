@@ -25,6 +25,8 @@ from models.mixins import HasCrowdtangleMixin, \
 import tasks.buzzsumo
 import tasks.crowdtangle
 import tasks.newspaper
+import tasks.screenshotmachine
+import tasks.waybackmachine
 from utils.database import db
 
 
@@ -111,7 +113,12 @@ ts_indexes = [
 def after_insert(mapper, connect, self):
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
         result = tasks.buzzsumo.sync_with_trending.delay(self.id)
-        if self.type == ContentType.ARTICLE:
+        result.wait()
+        if not self.buzzsumoIdentifier and self.type == ContentType.ARTICLE:
             tasks.newspaper.sync_with_article.delay(self.id)
+            if not self.externalThumbUrl and self.thumbCount == 0:
+                tasks.screenshotmachine.sync_with_capture(self.id)
     if self.type == ContentType.POST:
         tasks.crowdtangle.sync_with_shares.delay(self.id)
+    if not self.archiveUrl:
+        tasks.waybackmachine.sync_with_archive(self.id)

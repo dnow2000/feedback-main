@@ -1,6 +1,7 @@
 import bcrypt
 from sqlalchemy import Column, LargeBinary, String
 from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy.event import listens_for
 from sqlalchemy_api_handler.mixins import NeedsValidationMixin
 
 from domain.keywords import create_ts_vector_and_table_args
@@ -8,6 +9,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasScienceFeedbackMixin, \
                           HasThumbMixin
+import tasks.sandbox
 from utils.database import db
 
 
@@ -95,3 +97,9 @@ ts_indexes = [
     ('idx_user_fts_last_name', User.lastName),
 ]
 (User.__ts_vectors__, User.__table_args__) = create_ts_vector_and_table_args(ts_indexes)
+
+
+@listens_for(User, 'after_insert')
+def after_insert(mapper, connect, self):
+    if IS_DEVELOPMENT:
+        tasks.sandbox.sync_with_thumb(self.id)

@@ -1,7 +1,16 @@
-from repository.tags import sync as sync_tags
+from sqlalchemy_api_handler import ApiHandler
+
+from domain.tags import TAGS
 from tasks import celery_app
 
 
-@celery_app.task(name='sync-tags')
-def sync_tags_task():
-    sync_tags()
+@celery_app.task(bind=True, name='sync_tags')
+def sync_tags(self):
+    Tag = ApiHandler.model_from_name('Tag')
+    for tag_dict in TAGS:
+        tag = Tag.create_or_modify({
+            '__SEARCH_BY__': ['label', 'type'],
+            **tag_dict
+        })
+        tags.append(tag)
+    ApiHandler.save(*tags)

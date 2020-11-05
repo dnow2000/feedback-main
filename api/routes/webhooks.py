@@ -4,7 +4,6 @@ from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import logger
 
 from models.link import Link
-from repository.contents import sync_content
 from utils.rest import expect_json_data
 from repository.science_feedback.airtable import entity_from_row_for
 
@@ -13,11 +12,12 @@ from repository.science_feedback.airtable import entity_from_row_for
 @expect_json_data
 def create_entity_from_row(entity_name):
     try:
-        entity = entity_from_row_for(entity_name, request.json, request.json.get('index', request.json.get('airtableId')))
+        entity = entity_from_row_for(entity_name,
+                                     request.json,
+                                     request.json.get('index',
+                                                      request.json.get('airtableId')))
         if entity:
             ApiHandler.save(entity)
-            if entity.__class__ == Link:
-                sync_content(entity.linkingContent)
             return jsonify(as_dict(entity)), 200
         else:
             return jsonify({"error": "couldn't save the entity"}), 500

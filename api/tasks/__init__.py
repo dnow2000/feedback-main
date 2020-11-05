@@ -38,5 +38,8 @@ if os.environ.get('IS_WORKER'):
     import tasks.buzzsumo
     import tasks.crowdtangle
     import tasks.graph
+    import tasks.sandbox
     import tasks.science_feedback
+    import tasks.screenshotmachine
     import tasks.tags
+    import tasks.waybackmachine

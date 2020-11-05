@@ -2,7 +2,6 @@ from sqlalchemy import and_
 from sqlalchemy_api_handler import ApiErrors, ApiHandler
 from sqlalchemy_api_handler.utils import logger
 
-from domain.user import store_user_thumb_from_sandbox
 from models.role import Role
 from models.tag import Tag
 from models.user import User
@@ -87,15 +86,3 @@ def keep_users_with_roles(query, roles):
 def keep_users_with_no_role(query):
     query = query.filter(~User.roles.any())
     return query
-
-
-def sync_user(user):
-    if IS_DEVELOPMENT:
-        store_user_thumb_from_sandbox(user)
-
-
-def sync():
-    logger.info('sync users data...')
-    for user in User.query.all():
-        sync_user(user)
-    logger.info('sync users data...Done.')
