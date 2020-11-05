@@ -2,8 +2,6 @@ from datetime import datetime, timedelta
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.utils import logger
 
-from domain.newspaper import article_from_url
-from domain.trendings.buzzsumo import trending_from_url as buzzsumo_trending_from_url
 from models.content import Content
 from models.content_tag import ContentTag
 from models.tag import Tag
@@ -16,35 +14,8 @@ from utils.screenshotmachine import capture
 from utils.wayback_machine import url_from_archive_services
 
 
-
 CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(Content,
                                                                      Tag)
-
-
-def content_from_url(url,
-                     sync_crowdtangle=False,
-                     **kwargs):
-    content = Content.create_or_modify({
-        '__SEARCH_BY__': 'url',
-        'url': url
-    })
-
-    if sync_crowdtangle:
-        share_appearances_from_content(content,
-                                                 request_start_date='2019-09-01')
-
-    trending = buzzsumo_trending_from_url(url, **kwargs)
-    if trending:
-        return content.modify(trending)
-
-    if url:
-        newspaper = newspaper_article_from_url(url, **kwargs)
-        if newspaper:
-            return content.modify(newspaper)
-
-    content.urlNotFound = True
-    return content
-
 
 def get_contents_keywords_join_query(query):
     query = query.outerjoin(ContentTag)\
