@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Field } from 'react-final-form'
 
 import Radios from './Radios'
@@ -14,39 +14,50 @@ export const _ = ({
   readOnly,
   required,
   ...inputProps
-}) => (
-  <Field
-    name={name}
-    render={({ input, meta }) => (
-      <div
-        className={classnames(
+}) => {
+  const renderFields = useCallback(({ input, meta }) => (
+    <div
+      className={
+        classnames(
           "radios-field",
-          { readonly: readOnly })
-        }
+          { readonly: readOnly }
+        )
+      }
+    >
+      <label
+        className="field-label"
+        htmlFor={name}
       >
-        <label
-          className="field-label"
-          htmlFor={name}
-        >
-          <span>{label}</span>
-          {required && !readOnly && <span className="field-asterisk">{"*"}</span>}
-        </label>
-        <div className="field-control">
-          <div className="field-inner">
-            <Radios
-              {...inputProps}
-              disabled={disabled}
-              options={options}
-              readOnly={readOnly}
-              {...input}
-            />
-          </div>
+        <span>
+          {label}
+        </span>
+        { required && !readOnly && (
+          <span className="field-asterisk">
+            {"*"}
+          </span>
+        ) }
+      </label>
+      <div className="field-control">
+        <div className="field-inner">
+          <Radios
+            {...inputProps}
+            disabled={disabled}
+            options={options}
+            readOnly={readOnly}
+            {...input}
+          />
         </div>
-        <FieldError meta={meta} />
       </div>
-    )}
-  />
-)
+      <FieldError meta={meta} />
+    </div>
+  ), [disabled, inputProps, label, name, options, readOnly, required])
+
+  return (
+    <Field
+      name={name}
+      render={renderFields}
+    />
+)}
 
 _.defaultProps = {
   disabled: false,

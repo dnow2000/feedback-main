@@ -2,7 +2,7 @@
   react/jsx-one-expression-per-line: 0 */
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useCallback } from 'react'
 import Textarea from 'react-autosize-textarea'
 import { Field } from 'react-final-form'
 
@@ -26,58 +26,65 @@ const _ = ({
   required,
   rows,
   validate,
-}) => (
-  <Field
-    name={name}
-    validate={composeValidators(validate, getRequiredValidate(required))}
-    render={({ input, meta }) => {
+}) => {
+  const renderField = useCallback(({ input, meta }) => {
 
-      const valueLength = input.value.length
-      const value =
-        valueLength > maxLength - 1
-          ? input.value.slice(0, maxLength - 1)
-          : input.value
+    const valueLength = input.value.length
+    const value =
+      valueLength > maxLength - 1
+        ? input.value.slice(0, maxLength - 1)
+        : input.value
 
-      return (
-        <div className={classnames("textarea-field", { readonly: readOnly })}>
-          <label htmlFor={name} className={classnames("field-label", { "empty": !label })}>
-            {label && (
-              <span>
-                <span>{label}</span>
-                {required && !readOnly && <span className="field-asterisk">*</span>}
-                {!readOnly && (
-                  <span className="fs12">
-                    {' '}
-                    ({valueLength} / {maxLength}){' '}
-                  </span>
-                )}
-              </span>
-            )}
-          </label>
-          <div className="field-control">
-            <div className="field-value">
-              <span className="field-inner">
-                <Textarea
-                  {...input}
-                  autoComplete={autoComplete ? 'on' : 'off'}
-                  className="field-textarea"
-                  disabled={disabled || readOnly}
-                  id={name}
-                  placeholder={readOnly ? '' : placeholder}
-                  readOnly={readOnly}
-                  rows={rows}
-                  required={!!required} // cast to boolean
-                  value={value}
-                />
-              </span>
-            </div>
+    return (
+      <div className={classnames("textarea-field", { readonly: readOnly })}>
+        <label
+          className={classnames("field-label", { "empty": !label })}
+          htmlFor={name}
+        >
+          {label && (
+            <span>
+              <span>{label}</span>
+              {required && !readOnly && <span className="field-asterisk">*</span>}
+              {!readOnly && (
+                <span className="fs12">
+                  {' '}
+                  ({valueLength} / {maxLength}){' '}
+                </span>
+              )}
+            </span>
+          )}
+        </label>
+        <div className="field-control">
+          <div className="field-value">
+            <span className="field-inner">
+              <Textarea
+                {...input}
+                autoComplete={autoComplete ? 'on' : 'off'}
+                className="field-textarea"
+                disabled={disabled || readOnly}
+                id={name}
+                placeholder={readOnly ? '' : placeholder}
+                readOnly={readOnly}
+                required={!!required} // cast to boolean
+                rows={rows}
+                value={value}
+              />
+            </span>
           </div>
-          <FieldError meta={meta} />
         </div>
-      )
-    }}
-  />
-)
+        <FieldError meta={meta} />
+      </div>
+    )
+  }, [autoComplete, disabled, label, maxLength, name, placeholder, readOnly, required, rows])
+
+  return (
+    <Field
+      name={name}
+      render={renderField}
+      validate={composeValidators(validate, getRequiredValidate(required))}
+    />
+  )
+}
 
 _.defaultProps = {
   autoComplete: false,

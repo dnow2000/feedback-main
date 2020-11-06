@@ -1,0 +1,33 @@
+.backlink {
+  .backlink-menu {
+    padding: 1rem 1.1rem;
+    width: 100%;
+
+    h4 {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .backlink-menu-buttons {
+      align-items: center;
+      display: flex;
+      justify-content:center;
+
+      button {
+        @extend .button;
+        @extend .thin;
+
+        margin: 0 0.5rem;
+
+        &.yes {
+          @extend .is-primary;
+        }
+
+        &.no {
+          background-color: $red;
+          color: $white;
+        }
+      }
+    }
+  }
+}
