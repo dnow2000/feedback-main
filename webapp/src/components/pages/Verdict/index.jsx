@@ -32,7 +32,6 @@ export default () => {
     if (isCreatedEntity) return
     dispatch(requestData({
       apiPath: `/verdicts/${verdictId}${isAnonymized ? '/anonymized' : ''}`,
-      isMergingDatum: true,
       normalizer: verdictNormalizer,
     }))
   }, [dispatch, isAnonymized, isCreatedEntity, verdictId])

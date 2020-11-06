@@ -15,7 +15,9 @@ from storage.thumb import save_thumb
 
 @app.route('/images', methods=['GET'])
 def get_image_from_url():
-    url = request.args['url']
+    url = request.args.get('url')
+    if not request.args.get('url') or url == 'null':
+        return 'url is missing or is not valid', 400
     result = requests.get(url)
     mem = io.BytesIO()
     mem.write(result.content)

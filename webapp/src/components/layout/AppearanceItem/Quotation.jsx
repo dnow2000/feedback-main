@@ -6,6 +6,7 @@ import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
 import Items from 'components/layout/Items'
 import ThumbImg from 'components/layout/ThumbImg'
+import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
 import { numberShortener } from 'utils/shorteners'
 
 import AppearanceItem  from 'components/layout/AppearanceItem'
@@ -22,13 +23,19 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
 
   const history = useHistory()
 
+
+  const isAnonymized = useSelector(state =>
+    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+
+
   const loadMoreAction = useCallback(() => {
     history.push(`/appearances/${appearanceId}/interactions`)
   }, [appearanceId, history])
 
+
   const interactionsConfig = useMemo(() => ({
-    apiPath: `/appearances?quotedContentId=${id}&limit=4`
-  }), [id])
+    apiPath: `/appearances${isAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=SHARE&quotedContentId=${id}&limit=4`
+  }), [id, isAnonymized])
 
 
   const [displayInteractions, setDisplayInteractions] = useState(false)
@@ -44,13 +51,10 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
     />
   ), [])
 
-  const shareAppearances = useSelector(
-    state => selectEntitiesByKeyAndJoin(
-      state,
-      'appearances',
-      { key: 'quotedContentId', value: id }
-    ), [id]
-  )
+  const shareAppearances = useSelector(state =>
+    selectEntitiesByKeyAndJoin(state,
+                               'appearances',
+                               { key: 'quotedContentId', value: id }), [id])
 
 
   return (

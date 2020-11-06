@@ -16,9 +16,9 @@ from utils.rest import expect_json_data, \
 
 
 
-def verdict_includes_from(user):
+def verdict_includes_from(user, context=None):
     is_anonymized = user_has_role(user, 'INSPECTOR')
-    return [
+    includes = [
         {
              'key': 'claim',
              'includes': [
@@ -37,13 +37,6 @@ def verdict_includes_from(user):
              ],
         },
         'contentId',
-        {
-            'key': 'editor',
-            'includes': [
-                 'id',
-             ] + (['firstName', 'lastName'] if not is_anonymized else [])
-        },
-        'editorId',
         'id',
         {
              'key': 'medium',
@@ -51,12 +44,6 @@ def verdict_includes_from(user):
                  'id',
                  'logoUrl',
                  'name'
-             ]
-        },
-        {
-            'key': 'reviews',
-            'includes': [
-                'id'
              ]
         },
         'scienceFeedbackPublishedDate',
@@ -79,19 +66,41 @@ def verdict_includes_from(user):
                 'verdictId'
             ]
         },
-        {
-            'key': 'verdictReviewers',
-            'includes': [
-                'id',
-                {
-                    'key': 'reviewer',
-                    'includes': [
-                         'id'
-                     ] + (['firstName', 'lastName'] if not is_anonymized else [])
-                }
-            ]
-        }
     ]
+
+    if context == 'editor-dashboard':
+        includes += [
+            {
+                'key': 'editor',
+                'includes': [
+                    'firstName',
+                    'id',
+                    'lastName'
+                ]
+            },
+            'editorId',
+            {
+                'key': 'reviews',
+                'includes': [
+                    'id'
+                 ]
+            },
+            {
+                'key': 'verdictReviewers',
+                'includes': [
+                    'id',
+                    {
+                        'key': 'reviewer',
+                        'includes': [
+                            'firstName',
+                            'lastName',
+                            'id'
+                         ]
+                    }
+                ]
+            }
+        ]
+    return includes
 
 
 def verdicts_from(user=None):
@@ -107,7 +116,8 @@ def verdicts_from(user=None):
         query = keep_verdict_with_keywords(query, keywords)
 
     return listify(Verdict,
-                   includes=verdict_includes_from(user),
+                   includes=verdict_includes_from(user,
+                                                  request.args.get('context')),
                    mode='only-includes',
                    page=request.args.get('page', 1),
                    paginate=6,
@@ -128,7 +138,8 @@ def get_anonymized_verdicts():
 def verdict_from(user, verdict_id):
     verdict = load_or_404(Verdict, verdict_id)
     return jsonify(as_dict(verdict,
-                           includes=verdict_includes_from(user),
+                           includes=verdict_includes_from(user,
+                                                          request.args.get('context')),
                            mode='only-includes')), 200
 
 

@@ -121,9 +121,11 @@ const _ = ({ asLink, className, verdict, withQuotationsAndShares }) => {
       </p>
       <br />
       <div className="tags">
-        { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
-          {conclusionTag.label}
-        </span> }
+        { conclusionTag.label && (
+          <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
+            {conclusionTag.label}
+          </span>
+        )}
         { quotations }
       </div>
     </div>

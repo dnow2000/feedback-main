@@ -41,6 +41,7 @@ def appearance_includes_from(user):
                     ]
                 },
                 'title',
+                'thumbCount',
                 'totalShares',
                 'type',
                 'url'

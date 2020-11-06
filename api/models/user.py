@@ -83,6 +83,10 @@ class User(ApiHandler,
         self.password = bcrypt.hashpw(newpass.encode('utf-8'),
                                       bcrypt.gensalt())
 
+    __as_dict_includes__ = [
+        '-password'
+    ]
+
 
 
 ts_indexes = [

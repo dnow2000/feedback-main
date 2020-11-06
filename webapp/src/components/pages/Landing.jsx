@@ -28,7 +28,7 @@ export default () => {
     selectHasCurrentRoleByType(state, 'INSPECTOR'))
   const config = useMemo(() => ({
     apiPath: `/verdicts${isAnonymized ? '/anonymized' : ''}${search}`,
-    normalizer: verdictNormalizer,
+    normalizer: verdictNormalizer
   }), [isAnonymized, search])
 
   const contentsCount = (useSelector(state =>

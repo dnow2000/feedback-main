@@ -22,8 +22,9 @@ class MakeUserWithAllRoles(Command):
         roles = []
         for role_type in RoleType:
             roles.append(Role.create_or_modify({
+                '__SEARCH_BY__': ['type', 'userId'],
                 'type': role_type,
-                'user': user
+                'userId': humanize(user.id)
             }))
 
-ApiHandler.save(*roles)
+        ApiHandler.save(*roles)

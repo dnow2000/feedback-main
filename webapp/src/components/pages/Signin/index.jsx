@@ -54,12 +54,12 @@ export default () => {
             onSubmit={handleSubmit}
             render={Form}
           />
-          <NavLink
+          {false && (<NavLink
             className="button is-secondary"
             to="/signup"
           >
             Register ?
-          </NavLink>
+          </NavLink>)}
         </section>
       </Main>
     </>
