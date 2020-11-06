@@ -1,19 +1,28 @@
 import React, { useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Form } from 'react-final-form'
+import { requestData } from 'redux-thunk-data'
 
 import RadiosField from 'components/layout/form/fields/RadiosField'
 import TextareaField from 'components/layout/form/fields/TextareaField'
 
-export default () => {
+export default ({ quotingContent }) => {
+  const dispatch = useDispatch()
   const params = useParams()
   const { verdictId } = params
   const { isPending } = useSelector(state => state.requests[`/verdicts/${verdictId}/appearances`])
 
   const handleSubmit = useCallback(formValues => {
-    console.log({ ...formValues })
-  }, [])
+    const body = { ...formValues, quotingContent }
+
+    dispatch(requestData({
+      apiPath: `/verdicts/${verdictId}/appearances`,
+      body: body,
+      isMergingDatum: true,
+      method: 'post'
+    }))
+  }, [dispatch, verdictId])
 
   const flags = ['True', 'False', 'Partly false', 'False headline', 'Misleading', 'Missing context']
   const options = Object.keys(flags).map(key => {
