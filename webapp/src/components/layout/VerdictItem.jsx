@@ -7,8 +7,6 @@ import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
-import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
-import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId'
 import { numberShortener } from 'utils/shorteners'
 import useTimeAgo from 'components/uses/useTimeAgo'
 
@@ -26,20 +24,13 @@ const _ = ({ asLink, className, verdict, withQuotationsAndShares }) => {
   } = verdict
   const timeAgo = useTimeAgo(publishedDate)
 
-  const claim = useSelector(
-    state => selectEntityByKeyAndId(state, 'claims', claimId),
-    [claimId]
-  ) || {}
 
-  const appearances = useSelector(state =>
-    selectSortedAppearancesByVerdictId(state, id)) || []
-  const quotationsCount = appearances?.length
-  
-  const sharesCount = useSelector(state =>
-    selectSharesCountByVerdictId(state, id))
+  const claim = useSelector(state =>
+    selectEntityByKeyAndId(state, 'claims', claimId)) || {}
+  const { linksCount, sharesCount } = claim
 
   const conclusionTag = useSelector(state =>
-    selectConclusionTagByVerdictId(state, id), [id]) || {}
+    selectConclusionTagByVerdictId(state, id)) || {}
 
 
   const handlePushToTestimony = useCallback(() => {
@@ -63,10 +54,10 @@ const _ = ({ asLink, className, verdict, withQuotationsAndShares }) => {
 
   const quotations = withQuotationsAndShares ? (
     <>
-      { quotationsCount > 0 && (
+      { linksCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
-            { quotationsCount }
+            { linksCount }
           </strong>
           <span>
             {' Links'}

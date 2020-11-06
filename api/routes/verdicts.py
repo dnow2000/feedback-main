@@ -23,6 +23,8 @@ def verdict_includes_from(user):
              'key': 'claim',
              'includes': [
                   'id',
+                  'linksCount',
+                  'sharesCount',
                   'text'
               ]
         },

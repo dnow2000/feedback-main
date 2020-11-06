@@ -2,16 +2,15 @@ import classnames from 'classnames'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import selectIsFeatureDisabledByName from 'selectors/selectIsFeatureDisabledByName'
-import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId'
-import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
 import { numberShortener } from 'utils/shorteners'
 
 
 const tabs = [
   {
-    childrenFrom: ({ linksCount }) => `${linksCount} Citations`,
+    childrenFrom: ({ linksCount }) => `${linksCount} Links`,
     isDisplayedFrom: ({ linksCount }) => linksCount > 0,
     path: 'quotations'
   },
@@ -35,12 +34,11 @@ const tabs = [
 
 export default () => {
   const { tab, verdictId } = useParams()
+  const { claimId } = useSelector(state =>
+    selectEntityByKeyAndId(state, 'verdicts', verdictId)) || {}
 
-  const linksCount = (useSelector(state =>
-    selectSortedAppearancesByVerdictId(state, verdictId)) || []).length
-  const sharesCount = useSelector(state =>
-    selectSharesCountByVerdictId(state, verdictId))
-
+  const { linksCount, sharesCount } = useSelector(state =>
+    selectEntityByKeyAndId(state, 'claims', claimId)) || {}
 
   return (
     <div className='tabs'>

@@ -14,12 +14,11 @@ import AppearanceItem  from 'components/layout/AppearanceItem'
 const _ = ({ articleOrVideoContent, appearanceId }) => {
   const {
     archiveUrl,
+    hostname,
     id,
     title,
-    totalShares,
-    url
+    totalShares
   } = articleOrVideoContent || {}
-  const { hostname } = url ? new URL(url) : ''
 
   const history = useHistory()
 

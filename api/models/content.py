@@ -85,6 +85,13 @@ class Content(ApiHandler,
             amount -= 10
         return amount
 
+    @property
+    def hostname(self):
+        if self.url:
+            return self.url.split('/')[2]
+
+
+
 
 ts_indexes = [
     ('idx_content_fts_title', Content.title),

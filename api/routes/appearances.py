@@ -19,6 +19,7 @@ def appearance_includes_from(user):
         {
             'key': 'quotingContent',
             'includes': [
+                'archiveUrl',
                 {
                     'key': 'authorContents',
                     'includes': [
@@ -31,6 +32,7 @@ def appearance_includes_from(user):
                         'id'
                     ]
                 },
+                'hostname',
                 'id',
                 {
                     'key': 'medium',
@@ -40,7 +42,8 @@ def appearance_includes_from(user):
                 },
                 'title',
                 'totalShares',
-                'type'
+                'type',
+                'url'
             ]
         },
         'quotingContentId',

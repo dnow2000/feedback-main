@@ -12,3 +12,14 @@ class Claim(ApiHandler,
     poynterIdentifier = Column(String(8))
 
     text = Column(Text())
+
+    @property
+    def linksCount(self):
+        return len(self.quotedFromAppearances)
+
+    @property
+    def sharesCount(self):
+        return sum([
+            appearance.quotingContent.totalShares or 0
+            for appearance in self.quotedFromAppearances
+        ])
