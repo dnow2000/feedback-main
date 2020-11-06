@@ -6,6 +6,8 @@ from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import dehumanize, \
                                          load_or_404
 
+from models.appearance import Appearance
+from models.content import Content
 from models.verdict import Verdict
 from repository.roles import check_user_has_role
 from repository.verdicts import keep_verdict_with_keywords
@@ -15,31 +17,31 @@ from utils.rest import expect_json_data, \
 
 GET_VERDICT_INCLUDES = [
     {
-         'key': 'claim',
-         'includes': [
-              'id',
-              'linksCount',
-              'sharesCount',
-              'text'
-          ]
+        'key': 'claim',
+        'includes': [
+            'id',
+            'linksCount',
+            'sharesCount',
+            'text'
+        ]
     },
     'claimId',
     {
-         'key': 'content',
-         'includes': [
-             'id',
-             'title'
-         ],
+        'key': 'content',
+        'includes': [
+            'id',
+            'title'
+        ],
     },
     'contentId',
     'id',
     {
-         'key': 'medium',
-         'includes': [
-             'id',
-             'logoUrl',
-             'name'
-         ]
+        'key': 'medium',
+        'includes': [
+            'id',
+            'logoUrl',
+            'name'
+        ]
     },
     'scienceFeedbackPublishedDate',
     'scienceFeedbackUrl',
@@ -51,10 +53,10 @@ GET_VERDICT_INCLUDES = [
             {
                 'key': 'tag',
                 'includes': [
-                     'id',
-                     'info',
-                     'label',
-                     'type'
+                    'id',
+                    'info',
+                    'label',
+                    'type'
                 ]
             },
             'tagId',
@@ -91,6 +93,24 @@ def get_verdict(verdict_id):
     return jsonify(as_dict(verdict,
                            includes=GET_VERDICT_INCLUDES,
                            mode='only-includes')), 200
+
+
+@app.route('/verdicts/<verdict_id>/appearances', methods=['POST'])
+def post_verdict_appearances(verdict_id):
+    verdict = load_or_404(Verdict, verdict_id)
+    claim = verdict.claim
+    quoting_content = Content.create_or_modify({
+        '__SEARCH_BY__': 'url',
+        **request.json.get('quotingContent')
+    })
+    appearance_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
+        **request.json.get('appearance'),
+        'quotedClaim': claim,
+        'quotingContent': quoting_content
+    }
+    appearance = Appearance.create_or_modify(appearance_dict)
+    return jsonify(as_dict(appearance))
 
 
 @app.route('/verdicts', methods=['POST'])

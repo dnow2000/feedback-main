@@ -7,9 +7,17 @@ import BacklinkReviewForm from 'components/layout/BacklinkReviewForm'
 import ThumbImg from 'components/layout/ThumbImg'
 
 
-const _ = ({ id, link: { displayLink, htmlSnippet, thumbImg, title }}) => {
+const _ = ({ id, link: { displayLink, htmlSnippet, snippet, thumbImg, title }}) => {
   const [linkReviewMenuVisible, setLinkReviewMenuVisible] = useState(false)
   const [linkReviewFormVisible, setLinkReviewFormVisible] = useState(false)
+
+  const quotingContent = {
+    externalThumbUrl: thumbImg,
+    summary: snippet,
+    title,
+    type: 'backlink',
+    url: displayLink,
+  }
 
   const handleHideAll = useCallback(() => {
     setLinkReviewFormVisible(false)
@@ -68,7 +76,7 @@ const _ = ({ id, link: { displayLink, htmlSnippet, thumbImg, title }}) => {
         />
       ) }
       { linkReviewFormVisible && (
-        <BacklinkReviewForm />
+        <BacklinkReviewForm quotingContent={quotingContent} />
       ) }
     </div>
   )
