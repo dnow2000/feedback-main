@@ -22,7 +22,7 @@ export default ({ quotingContent }) => {
       isMergingDatum: true,
       method: 'post'
     }))
-  }, [dispatch, verdictId])
+  }, [dispatch, quotingContent, verdictId])
 
   const flags = ['True', 'False', 'Partly false', 'False headline', 'Misleading', 'Missing context']
   const options = Object.keys(flags).map(key => {
