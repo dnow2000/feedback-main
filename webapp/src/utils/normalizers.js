@@ -17,7 +17,7 @@ export const userConfig = {
 
 
 export const appearanceNormalizer = {
-  claim: 'claimes',
+  claim: 'claims',
   content: 'contents',
   testifier: userConfig,
 }
@@ -77,9 +77,9 @@ export const verdictNormalizer = {
   content: 'contents',
   claim: {
     normalizer: {
-      quotedFromAppearances: "appearances",
+      quotedFromAppearances: 'appearances',
     },
-    stateKey: "claims",
+    stateKey: 'claims',
   },
   reviews: {
     normalizer: {

@@ -21,10 +21,8 @@ export default () => {
   const { isCreatedEntity } = useFormidable(location, params)
   const { verdictId } = params
 
-
   const isAnonymized = useSelector(state =>
     selectHasCurrentRoleByType(state, 'INSPECTOR'))
-  console.log({isAnonymized})
 
   useEffect(() => {
     dispatch(requestData({ apiPath: '/tags?type=EVALUATION' }))
@@ -33,11 +31,11 @@ export default () => {
   useEffect(() => {
     if (isCreatedEntity) return
     dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}`,
+      apiPath: `/verdicts/${verdictId}${isAnonymized ? '/anonymized' : ''}`,
       isMergingDatum: true,
       normalizer: verdictNormalizer,
     }))
-  }, [dispatch, isCreatedEntity, verdictId])
+  }, [dispatch, isAnonymized, isCreatedEntity, verdictId])
 
 
   return (

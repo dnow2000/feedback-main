@@ -20,42 +20,41 @@ export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { search } = useLocation()
+
   const [showMoreStatus, setShowMoreStatus] = useState(false)
+
 
   const isAnonymized = useSelector(state =>
     selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  const config = useMemo(() => ({
+    apiPath: `/verdicts${isAnonymized ? '/anonymized' : ''}${search}`,
+    normalizer: verdictNormalizer,
+  }), [isAnonymized, search])
 
-  const config = useMemo(
-    () => ({
-      apiPath: `${isAnonymized ? '/anonymized' : ''}/verdicts${search}`,
-      normalizer: verdictNormalizer,
-    }),
-    [isAnonymized, search]
-  )
+  const contentsCount = (useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
+
+  const verdictsCount = (useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Verdict' }))[0] || {}).count
 
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
 
   const loadMoreAction = useCallback(() => {
-      setShowMoreStatus(true)
-      history.push('/verdicts')
-    }, [history]
-  )
+    setShowMoreStatus(true)
+    history.push('/verdicts')
+  }, [history])
 
   const renderControls = useCallback(({ handleChange }) => (
     <KeywordsBar
       layout="vertical"
       onChange={handleChange}
-    />))
+    />), [])
+
 
   useEffect(() => {
     dispatch(requestData({ apiPath: '/statistics' }))
   }, [dispatch])
-
-  const contentsCount = (useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
-  const verdictsCount = (useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Verdict' }))[0] || {}).count
 
 
   return (

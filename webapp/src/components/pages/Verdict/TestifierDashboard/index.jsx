@@ -1,11 +1,10 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { useSelector } from 'react-redux'
 import { Redirect, Switch, useLocation, useParams } from 'react-router-dom'
-import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
+import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
 import FeaturedRoute from 'components/Root/FeaturedRoute'
-import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch } from 'utils/router'
 
 import Backlinks from './Backlinks'
@@ -24,7 +23,6 @@ const componentsByTabName = {
 
 
 export default () => {
-  const dispatch = useDispatch()
   const location = useLocation()
   const { tab, verdictId } = useParams()
 
@@ -32,13 +30,6 @@ export default () => {
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
 
-
-  useEffect(() => {
-    dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}/appearances`,
-      normalizer: verdictNormalizer
-    }))
-  }, [dispatch, verdictId])
 
   if (!tab) {
     return <Redirect to={`/verdicts/${verdictId}/testimony/citations`} />
