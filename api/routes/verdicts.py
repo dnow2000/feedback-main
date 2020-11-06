@@ -39,7 +39,7 @@ def verdict_includes_from(user):
             'key': 'editor',
             'includes': [
                  'id',
-             ] + (['firstName', 'lastName'] if is_anonymized else [])
+             ] + (['firstName', 'lastName'] if not is_anonymized else [])
         },
         'editorId',
         'id',
@@ -68,9 +68,13 @@ def verdict_includes_from(user):
                     'key': 'tag',
                     'includes': [
                          'id',
-                         'label'
+                         'info',
+                         'label',
+                         'type'
                     ]
-                }
+                },
+                'tagId',
+                'verdictId'
             ]
         },
         {
@@ -81,7 +85,7 @@ def verdict_includes_from(user):
                     'key': 'reviewer',
                     'includes': [
                          'id'
-                     ] + (['firstName', 'lastName'] if is_anonymized else [])
+                     ] + (['firstName', 'lastName'] if not is_anonymized else [])
                 }
             ]
         }
@@ -108,16 +112,15 @@ def verdicts_from(user=None):
                    query=query)
 
 
-@app.route('/verdicts/anonymized', methods=['GET'])
-def get_anonymized_verdicts():
-    return verdicts_from(None)
-
-
 @login_required
 @app.route('/verdicts', methods=['GET'])
 def get_verdicts():
     return verdicts_from_user(current_user)
 
+
+@app.route('/verdicts/anonymized', methods=['GET'])
+def get_anonymized_verdicts():
+    return verdicts_from(None)
 
 
 def verdict_from(user, verdict_id):
@@ -126,10 +129,6 @@ def verdict_from(user, verdict_id):
                            includes=verdict_includes_from(user),
                            mode='only-includes')), 200
 
-@app.route('/verdicts/<verdict_id>/anonymized', methods=['GET'])
-def get_anonymized_verdict(verdict_id):
-    return verdict_from(None, verdict_id)
-
 
 @login_required
 @app.route('/verdicts/<verdict_id>', methods=['GET'])
@@ -137,6 +136,9 @@ def get_verdict(verdict_id):
     return verdict_from(current_user, verdict_id)
 
 
+@app.route('/verdicts/<verdict_id>/anonymized', methods=['GET'])
+def get_anonymized_verdict(verdict_id):
+    return verdict_from(None, verdict_id)
 
 
 @app.route('/verdicts', methods=['POST'])

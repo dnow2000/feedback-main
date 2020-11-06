@@ -56,25 +56,25 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
 
   return (
     <>
-      <div className="citation">
+      <div className="quotation">
         <ThumbImg
-          className='citation-img'
+          className='quotation-img'
           collectionName='contents'
           {...articleOrVideoContent}
         />
-        <div className="citation-data">
-          <h4 className='citation-title'>
+        <div className="quotation-data">
+          <h4 className='quotation-title'>
             {title}
           </h4>
-          <p className="text-muted citation-source">
+          <p className="text-muted quotation-source">
             <small>
               {hostname}
             </small>
           </p>
-          <p className="citation-url">
+          <p className="quotation-url">
             { archiveUrl && (
               <a
-                className="citation-url"
+                className="quotation-url"
                 href={archiveUrl}
                 rel='noopener noreferrer'
                 target='_blank'
@@ -83,11 +83,11 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
               </a>
             )}
           </p>
-          <div className="citation-footer">
+          <div className="quotation-footer">
             {!totalShares
               ? (
                 <div className='share-list dropdown text-center'>
-                  {'No shares available for this citation.'}
+                  {'No shares available for this quotation.'}
                 </div>
               )
               : (

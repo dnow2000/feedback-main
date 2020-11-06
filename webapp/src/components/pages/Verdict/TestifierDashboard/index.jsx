@@ -8,14 +8,14 @@ import FeaturedRoute from 'components/Root/FeaturedRoute'
 import { entityMatch } from 'utils/router'
 
 import Backlinks from './Backlinks'
-import Citations from './Citations'
 import Graph from './Graph'
+import Quotations from './Quotations'
 import Shares from './Shares'
 import Tabs from './Tabs'
 
 
 const componentsByTabName = {
-  citations: Citations,
+  quotations: Quotations,
   shares: Shares,
   graph: Graph,
   backlinks: Backlinks,
@@ -32,7 +32,7 @@ export default () => {
 
 
   if (!tab) {
-    return <Redirect to={`/verdicts/${verdictId}/testimony/citations`} />
+    return <Redirect to={`/verdicts/${verdictId}/testimony/quotations`} />
   }
 
   if (!verdict) return null
@@ -43,7 +43,7 @@ export default () => {
       <VerdictItem
         asLink={false}
         verdict={verdict}
-        withCitationsAndShares={false}
+        withQuotationsAndShares={false}
       />
       <Tabs />
       <Switch location={location}>

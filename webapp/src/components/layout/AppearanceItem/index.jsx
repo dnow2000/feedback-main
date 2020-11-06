@@ -1,13 +1,15 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 
-import Citation from './Citation'
+import Quotation from './Quotation'
 import Share from './Share'
 
 
-export default ({ appearance }) => {
+ const _ = ({ appearance }) => {
   const { id, quotingContent } = appearance
   const { medium, type } = quotingContent || {}
-  
+
+
   if (type === 'post') {
     return (
       <Share
@@ -19,7 +21,7 @@ export default ({ appearance }) => {
 
   if (['article', 'video'].includes(type)) {
     return (
-      <Citation
+      <Quotation
         appearanceId={id}
         articleOrVideoContent={quotingContent}
       />
@@ -28,3 +30,16 @@ export default ({ appearance }) => {
 
   return null
 }
+
+
+_.propTypes = {
+  appearance: PropTypes.shape({
+    id: PropTypes.string,
+    quotingContent: PropTypes.shape({
+      medium: PropTypes.shape(),
+      type: PropTypes.string
+    })
+  }).isRequired
+}
+
+export default _

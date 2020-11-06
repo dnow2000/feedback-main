@@ -13,7 +13,7 @@ import { numberShortener } from 'utils/shorteners'
 import useTimeAgo from 'components/uses/useTimeAgo'
 
 
-const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
+const _ = ({ asLink, className, verdict, withQuotationsAndShares }) => {
   const history = useHistory()
   const {
     claimId,
@@ -33,14 +33,14 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
 
   const appearances = useSelector(state =>
     selectSortedAppearancesByVerdictId(state, id)) || []
-  const citationsCount = appearances?.length
+  const quotationsCount = appearances?.length
+  
   const sharesCount = useSelector(state =>
     selectSharesCountByVerdictId(state, id))
 
-  const conclusionTag = useSelector(
-    state => selectConclusionTagByVerdictId(state, id),
-    [id]
-  ) || {}
+  const conclusionTag = useSelector(state =>
+    selectConclusionTagByVerdictId(state, id), [id]) || {}
+
 
   const handlePushToTestimony = useCallback(() => {
     if (!asLink) return
@@ -61,12 +61,12 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
     }
   }
 
-  const citations = withCitationsAndShares ? (
+  const quotations = withQuotationsAndShares ? (
     <>
-      { citationsCount > 0 && (
+      { quotationsCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
-            { citationsCount }
+            { quotationsCount }
           </strong>
           <span>
             {' Links'}
@@ -133,7 +133,7 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
         { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
           {conclusionTag.label}
         </span> }
-        { citations }
+        { quotations }
       </div>
     </div>
   )
@@ -143,7 +143,7 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
 _.defaultProps = {
   asLink: true,
   className: null,
-  withCitationsAndShares: true
+  withQuotationsAndShares: true
 }
 
 
@@ -172,7 +172,7 @@ _.propTypes = {
       })
     ),
   }).isRequired,
-  withCitationsAndShares: PropTypes.bool
+  withQuotationsAndShares: PropTypes.bool
 }
 
 export default _

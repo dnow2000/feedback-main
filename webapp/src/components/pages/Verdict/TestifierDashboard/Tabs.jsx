@@ -13,7 +13,7 @@ const tabs = [
   {
     childrenFrom: ({ linksCount }) => `${linksCount} Citations`,
     isDisplayedFrom: ({ linksCount }) => linksCount > 0,
-    path: 'citations'
+    path: 'quotations'
   },
   {
      childrenFrom: ({ sharesCount }) => `${numberShortener(sharesCount)} Interactions`,

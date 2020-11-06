@@ -49,7 +49,7 @@ export default () => {
 
 
   useEffect(() => {
-    let apiPath = `/appearances${isAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=CITATION`
+    let apiPath = `/appearances${isAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
     if (claimId) {
       apiPath = `${apiPath}&quotedClaimId=${claimId}`
     } else if (contentId) {
