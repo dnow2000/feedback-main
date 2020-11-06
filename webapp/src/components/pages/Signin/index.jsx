@@ -3,7 +3,7 @@ import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
-import { resolveCurrentUser } from 'with-react-redux-login'
+import { processCurrentUser } from 'with-react-redux-login'
 import { NavLink } from 'react-router-dom'
 
 import Header from 'components/layout/Header'
@@ -38,7 +38,7 @@ export default () => {
           resolve()
         },
         method: 'POST',
-        resolve: resolveCurrentUser
+        resolve: processCurrentUser
       }))
     }),
     [dispatch, history, locationURL]

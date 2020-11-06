@@ -14,7 +14,6 @@ import Navigations from './Navigations'
 
 
 const pathnamesWithoutSignin = [
-  '/landing',
   '/signin',
   '/signup'
 ]

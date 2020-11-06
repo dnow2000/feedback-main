@@ -2,6 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { compose } from 'redux'
 
+import withOptionalLogin from 'components/hocs/withOptionalLogin'
 import withRedirectWhenLoggedIn from 'components/hocs/withRedirectWhenLoggedIn'
 import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
@@ -78,7 +79,7 @@ export default [
     title: 'Jobs'
   },
   {
-    component: Landing,
+    component: withOptionalLogin(Landing),
     exact: true,
     path: '/landing',
     title: 'Landing'
@@ -150,7 +151,7 @@ export default [
     title: 'Users',
   },
   {
-    component: Verdict,
+    component: withOptionalLogin(Verdict),
     exact: true,
     path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(quotations|shares|graph|backlinks)?`,
     title: 'Verdict',

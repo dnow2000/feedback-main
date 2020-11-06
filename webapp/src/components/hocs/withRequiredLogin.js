@@ -3,6 +3,7 @@ import withLogin from 'with-react-redux-login'
 
 import { userNormalizer } from 'utils/normalizers'
 
+
 export default withLogin({
   handleFail: (state, action, ownProps) => {
     const { history, location: { pathname, search} } = ownProps
