@@ -1,0 +1,26 @@
+.jobs {
+  ul {
+    display: flex;
+    margin-bottom: 3rem;
+
+    button {
+      &.info-type {
+        @extend .button;
+        @extend .thin;
+
+        &.active {
+          @extend .is-primary;
+        }
+
+        &:not(:last-child) {
+          margin-right: 1rem;
+        }
+      }
+    }
+  }
+
+  pre {
+    background-color: $grey-lighter;
+    padding: 2rem;
+  }
+}

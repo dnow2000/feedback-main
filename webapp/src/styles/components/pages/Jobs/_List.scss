@@ -1,0 +1,17 @@
+.jobs {
+  ul {
+    display: flex;
+    margin-bottom: 3rem;
+
+    button {
+      &.tasks-type {
+        @extend .info-type
+      }
+    }
+  }
+
+  pre {
+    background-color: $grey-lighter;
+    padding: 2rem;
+  }
+}

@@ -10,6 +10,7 @@ import Account from 'components/pages/Account'
 import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
 import Exploration from 'components/pages/Exploration'
+import Jobs from 'components/pages/Jobs'
 import Landing from 'components/pages/Landing'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
@@ -69,6 +70,12 @@ export default [
     exact: true,
     path: '/exploration/:collectionName?/:entityId([A-Za-z0-9]{2,})?',
     title: 'Exploration'
+  },
+  {
+    component: Jobs,
+    exact: true,
+    path: '/jobs/:tab(info|list|sync)',
+    title: 'Jobs'
   },
   {
     component: Landing,

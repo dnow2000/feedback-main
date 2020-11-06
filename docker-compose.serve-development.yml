@@ -91,6 +91,22 @@ services:
       - ./api:/opt/api
       - ./api/tasks:/opt/api/tasks
 
+  apischedule-serve-development:
+    command: >
+      bash -c "set -x;
+              cd /opt/api;
+              celery --app=celery_worker beat \
+                     --loglevel=INFO;"
+    container_name: ${APP_NAME}-apischedule-serve-development
+    depends_on:
+      - apiworker-serve-development
+    env_file: .env
+    image: *api
+    networks:
+      - jobs_serve-development_nw
+    volumes:
+      - ./api:/opt/api
+
 networks:
   db_serve-development_nw:
     driver: bridge
