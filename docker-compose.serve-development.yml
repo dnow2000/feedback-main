@@ -25,7 +25,6 @@ services:
     image: &api ${APP_NAME}-api-serve-development
     networks:
       - db_serve-development_nw
-      - tasks_serve-development_nw
       - web_serve-development_nw
     volumes:
       - ./api:/opt/api
@@ -49,7 +48,7 @@ services:
       - MODE=serve-development
     image: redis:6.0.8
     networks:
-      - tasks_serve-development_nw
+      - db_serve-development_nw
     ports:
       - 6379
     volumes:
@@ -96,10 +95,8 @@ services:
     image: *api
     networks:
       - db_serve-development_nw
-      - tasks_serve-development_nw
     volumes:
       - ./api:/opt/api
-      - ./api/tasks:/opt/api/tasks
 
   nginx-serve-development:
     build:

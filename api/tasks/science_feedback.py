@@ -1,14 +1,12 @@
-from repository.science_feedback.airtable import sync, sync_outdated_rows
+import repository.science_feedback.airtable
 from tasks import celery_app
 
 
-# Get all data from airtable
-@celery_app.task(name='sync-science_feedback/airtable')
-def sync_airtable_task(sync_to_airtable=False):
-    sync(sync_to_airtable=sync_to_airtable)
+@celery_app.task
+def sync_airtable(sync_to_airtable=False):
+    repository.science_feedback.airtable.sync(sync_to_airtable=sync_to_airtable)
 
 
-# Get updated data from airtable
-@celery_app.task(name='sync-science_feedback/outdated_rows')
-def sync_outdated_rows_task():
-    sync_outdated_rows()
+@celery_app.task
+def sync_outdated_rows():
+    repository.science_feedback.airtable.sync_outdated_rows()

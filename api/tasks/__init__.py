@@ -34,12 +34,16 @@ class AppTask(BaseTask):
 celery_app.Task = AppTask
 
 
-if os.environ.get('IS_WORKER'):
+def import_tasks():
     import tasks.buzzsumo
     import tasks.crowdtangle
     import tasks.graph
+    import tasks.newspaper
     import tasks.sandbox
     import tasks.science_feedback
     import tasks.screenshotmachine
     import tasks.tags
     import tasks.waybackmachine
+
+if os.environ.get('IS_WORKER'):
+    import_tasks()

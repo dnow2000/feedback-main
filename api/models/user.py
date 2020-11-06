@@ -10,6 +10,7 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           HasScienceFeedbackMixin, \
                           HasThumbMixin
 import tasks.sandbox
+from utils.config import IS_DEVELOPMENT
 from utils.database import db
 
 
@@ -102,4 +103,4 @@ ts_indexes = [
 @listens_for(User, 'after_insert')
 def after_insert(mapper, connect, self):
     if IS_DEVELOPMENT:
-        tasks.sandbox.sync_with_thumb(self.id)
+        tasks.sandbox.sync_with_thumb.delay(self.id)

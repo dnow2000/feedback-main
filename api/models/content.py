@@ -113,23 +113,27 @@ ts_indexes = [
 @listens_for(Content, 'after_insert')
 def after_insert(mapper, connect, self):
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
-        result = tasks.buzzsumo.sync_with_trending.delay(self.id)
-        result.wait()
+        #tasks.buzzsumo.sync_with_trending.delay(self.id).wait()
         if self.buzzsumoIdentifier:
             for eta in planified_dates_for('buzzsumo.sync_with_trending'):
-                tasks.buzzsumo.sync_with_trending.apply_async(self.id, eta=eta)
+                #tasks.buzzsumo.sync_with_trending.apply_async(self.id, eta=eta)
+                pass
         elif self.type == ContentType.ARTICLE:
             tasks.newspaper.sync_with_article.delay(self.id)
             if not self.urlNotFound:
                 for eta in planified_dates_for('newspaper.sync_with_article'):
-                    tasks.newspaper.sync_with_article.apply_async(self.id, eta=eta)
+                    #tasks.newspaper.sync_with_article.apply_async(self.id, eta=eta)
+                    pass
             if not self.externalThumbUrl and self.thumbCount == 0:
-                tasks.screenshotmachine.sync_with_capture(self.id)
+                #tasks.screenshotmachine.sync_with_capture(self.id)
+                pass
 
     if self.type == ContentType.POST:
-        tasks.crowdtangle.sync_with_shares.delay(self.id)
+        #tasks.crowdtangle.sync_with_shares.delay(self.id)
         for eta in planified_dates_for('crowdtangle.sync_with_shares'):
-            tasks.crowdtangle.sync_with_shares.apply_async(self.id, eta=eta)
+            #tasks.crowdtangle.sync_with_shares.apply_async(self.id, eta=eta)
+            pass
 
     if not self.archiveUrl:
-        tasks.waybackmachine.sync_with_archive(self.id)
+        #tasks.waybackmachine.sync_with_archive(self.id)
+        pass
