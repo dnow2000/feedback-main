@@ -22,7 +22,7 @@ class Radios extends PureComponent {
     this.setState({ value }, callback)
   }
 
-  onRadioClick = event => {
+  handleRadioClick = event => {
     const { onChange } = this.props
     const { target: { value } } = event
 
@@ -44,18 +44,22 @@ class Radios extends PureComponent {
     const { value: stateValue } = this.state
 
     return (
-      <div className='radios'>
+      <div className={`radios ${className}`}>
         {options && options.map(({ id, label, title, value }) => {
           const checked = stateValue === value
+          const klass = value.toLowerCase().split(' ').join('-')
           return (
-            <div
+            <button
               className={classnames(
-                `radio radio-${id}`,
+                `radio radio-${id} ${klass}`,
                 { checked }
               )}
               id={`radio-${id}`}
               key={value}
+              onClick={this.handleRadioClick}
               title={title}
+              type='button'
+              value={value}
             >
               <input
                 {...inputProps}
@@ -65,17 +69,9 @@ class Radios extends PureComponent {
                 readOnly={readOnly}
                 type="radio"
                 value={value}
-                onChange={this.onRadioClick}
               />
-              <span>
-                {label}
-              </span>
-              <span className="auto">
-              </span>
-              <span>
-                {id}
-              </span>
-            </div>
+              {label}
+            </button>
           )}
         )}
       </div>
