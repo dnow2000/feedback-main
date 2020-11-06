@@ -42,7 +42,7 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
     [id]
   ) || {}
 
-  const handleClick = useCallback(() => {
+  const handlePushToTestimony = useCallback(() => {
     if (!asLink) return
     history.push(`/verdicts/${id}/testimony`)
   }, [asLink, history, id])
@@ -73,7 +73,7 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
           </span>
         </span>
       ) }
-      {  sharesCount > 0 && (
+      { sharesCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(sharesCount) }
@@ -90,7 +90,8 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
   return (
     <div
       className={classnames('verdict-item', className, { 'clickable': asLink })}
-      onClick={handleClick}
+      onClick={handlePushToTestimony}
+      onKeyPress={handlePushToTestimony}
       role="link"
       tabIndex={id}
     >

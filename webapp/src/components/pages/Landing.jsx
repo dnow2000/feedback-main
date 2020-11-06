@@ -12,7 +12,7 @@ import KeywordsBar from 'components/layout/KeywordsBar'
 import Logo from 'components/layout/Logo'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
-
+import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
 import { verdictNormalizer } from 'utils/normalizers'
 
 
@@ -22,12 +22,15 @@ export default () => {
   const { search } = useLocation()
   const [showMoreStatus, setShowMoreStatus] = useState(false)
 
+  const isAnonymized = useSelector(state =>
+    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+
   const config = useMemo(
     () => ({
-      apiPath: `/verdicts${search}`,
+      apiPath: `${isAnonymized ? '/anonymized' : ''}/verdicts${search}`,
       normalizer: verdictNormalizer,
     }),
-    [search]
+    [isAnonymized, search]
   )
 
 
@@ -38,6 +41,12 @@ export default () => {
       history.push('/verdicts')
     }, [history]
   )
+
+  const renderControls = useCallback(({ handleChange }) => (
+    <KeywordsBar
+      layout="vertical"
+      onChange={handleChange}
+    />))
 
   useEffect(() => {
     dispatch(requestData({ apiPath: '/statistics' }))
@@ -73,12 +82,7 @@ export default () => {
             <Controls
               config={config}
               pathnameOnChange="/verdicts"
-              render={({handleChange, locationURL}) => (
-                <KeywordsBar
-                  layout="vertical"
-                  onChange={handleChange}
-                />
-              )}
+              render={renderControls}
             />
           </div>
         </section>

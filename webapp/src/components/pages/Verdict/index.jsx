@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, useLocation, useParams } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
+import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
 import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch, formMatch } from 'utils/router'
 
@@ -20,6 +21,10 @@ export default () => {
   const { isCreatedEntity } = useFormidable(location, params)
   const { verdictId } = params
 
+
+  const isAnonymized = useSelector(state =>
+    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  console.log({isAnonymized})
 
   useEffect(() => {
     dispatch(requestData({ apiPath: '/tags?type=EVALUATION' }))

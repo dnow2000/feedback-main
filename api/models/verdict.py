@@ -16,13 +16,6 @@ from models.mixins import HasRatingMixin, \
                           HasScienceFeedbackMixin
 
 
-class PostType(enum.Enum):
-    ARTICLE = 'article'
-    CLAIM = 'claim'
-    INSIGHT = 'insight'
-    VIDEO = 'video'
-
-
 class Verdict(ApiHandler,
               db.Model,
               HasRatingMixin,
@@ -66,7 +59,6 @@ class Verdict(ApiHandler,
 
     title = Column(String(2048))
 
-    type = Column(Enum(PostType))
 
     @property
     def reviews(self):
@@ -82,6 +74,11 @@ class Verdict(ApiHandler,
 
         return InstrumentedList(reviews)
 
+    @property
+    def type(self):
+        if self.content:
+            return self.content.type
+        return 'CLAIM'
 
 ts_indexes = [
     ('idx_verdict_fts_comment', Verdict.comment),
