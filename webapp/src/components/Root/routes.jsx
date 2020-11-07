@@ -52,7 +52,7 @@ export default [
     title: 'Appearance',
   },
   {
-    component: Appearance,
+    component: withOptionalLogin(Appearance),
     exact: true,
     path: `/appearances/:appearanceId/interactions`,
     title: 'Appearance Interactions',

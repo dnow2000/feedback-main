@@ -37,11 +37,15 @@ def appearance_includes_from(user):
                 {
                     'key': 'medium',
                     'includes': [
-                        'id'
+                        'id',
+                        'logoUrl',
+                        'name'
                     ]
                 },
+                'summary',
                 'title',
                 'thumbCount',
+                'totalInteractions',
                 'totalShares',
                 'type',
                 'url'
@@ -88,7 +92,7 @@ def get_anonymized_appearances():
 def appearance_from(user, appearance_id):
     appearance = load_or_404(Appearance, appearance_id)
     return jsonify(as_dict(appearance,
-                           includes=appearances_from(user),
+                           includes=appearance_includes_from(user),
                            mode='only-includes')), 200
 
 
