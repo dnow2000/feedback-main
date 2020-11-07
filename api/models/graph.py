@@ -29,7 +29,9 @@ class Graph(ApiHandler,
                 includes = ['type']
         elif node_type == 'Medium':
             if not self.isAnonymized:
-                includes = ['name']
+                includes = ['name', 'type']
+            else:
+                includes = ['type']
         elif node_type == 'Organization':
             includes = ['name']
         elif node_type == 'Platform':
@@ -45,12 +47,8 @@ class Graph(ApiHandler,
             includes = ['title']
 
         includes = exclusive_includes_from(entity, includes)
-        '''
-        for column_key in entity.__mapper__.columns.keys():
-            if column_key not in includes:
-                includes.append('-{}'.format(column_key))
-        '''
-        
+
+
         return as_dict(entity, includes=includes)
 
     def is_stop_node(self,

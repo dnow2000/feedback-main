@@ -56,7 +56,10 @@ export default [
     title: 'Appearance',
   },
   {
-    component: withOptionalLogin(Appearance),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['inspector']})
+                       )(Appearance),
     exact: true,
     path: `/appearances/:appearanceId/interactions`,
     title: 'Appearance Interactions',

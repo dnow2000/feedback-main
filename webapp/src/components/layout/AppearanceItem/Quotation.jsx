@@ -97,12 +97,14 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
                   <span>
                     {`${numberShortener(totalShares)} shares`}
                   </span>
-                  <button
-                    onClick={handleSetDisplayInteractions}
-                    type='button'
-                  >
-                    {'View Top Shares'}
-                  </button>
+                  {!areDataAnonymized && (
+                    <button
+                      onClick={handleSetDisplayInteractions}
+                      type='button'
+                    >
+                      {'View Top Shares'}
+                    </button>
+                  )}
                 </>
               )}
           </div>

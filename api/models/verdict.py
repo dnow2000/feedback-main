@@ -78,7 +78,7 @@ class Verdict(ApiHandler,
     def type(self):
         if self.content:
             return self.content.type
-        return 'CLAIM'
+        return 'claim'
 
 ts_indexes = [
     ('idx_verdict_fts_comment', Verdict.comment),

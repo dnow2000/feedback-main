@@ -7,9 +7,16 @@ const labelFromNode = node => {
     case 'Claim':
       return datum.text
     case 'Content':
-      return `${datum?.url?.slice(0, Math.min(50, datum.url?.length)) || '***'} ${datum.title || '***'}`
+      let label = datum.type
+      if (datum.url) {
+        label = datum?.url?.slice(0, Math.min(50, datum.url?.length))
+      }
+      if (datum.title) {
+        label = `${label} ${datum.title}`
+      }
+      return label
     case 'Medium':
-      return datum.name || '***'
+      return datum.type || datum.name || '***'
     case 'Organization':
       return datum.name
     case 'Platform':
@@ -28,7 +35,7 @@ const labelFromNode = node => {
 }
 
 
-const sizeFromNode = (node, config={}) => {
+const sizeFromNode = node => {
   if (node.type === 'Content') {
     if (node.datum.totalShares) {
       return Math.log(node.datum.totalShares) + 5
@@ -77,7 +84,7 @@ export const nodeWithDecoration = node => {
     color: colorFromNode(node),
     x: Math.random(),
     y: Math.random(),
-    label: `${node.type} : ${labelFromNode(node)}`,
+    label: labelFromNode(node),
     size: sizeFromNode(node),
   }
 }

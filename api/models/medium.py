@@ -38,3 +38,9 @@ class Medium(ApiHandler,
                             backref='media')
 
     url = Column(String(300))
+
+    @property
+    def type(self):
+        if self.facebookIdentifier:
+            return 'Facebook Account'
+        return 'Website'
