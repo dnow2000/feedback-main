@@ -7,7 +7,8 @@ from sqlalchemy_api_handler.utils import dehumanize, \
                                          load_or_404
 
 from models.verdict import Verdict
-from repository.roles import check_user_has_role, \
+from repository.roles import are_data_anonymized_from, \
+                             check_user_has_role, \
                              user_has_role
 from repository.verdicts import keep_verdict_with_keywords
 from utils.rest import expect_json_data, \
@@ -17,7 +18,7 @@ from utils.rest import expect_json_data, \
 
 
 def verdict_includes_from(user, context=None):
-    is_anonymized = user_has_role(user, 'INSPECTOR')
+    are_data_anonymized = are_data_anonymized_from(user)
     includes = [
         {
              'key': 'claim',
@@ -68,15 +69,13 @@ def verdict_includes_from(user, context=None):
         },
     ]
 
-    if context == 'editor-dashboard':
+    if context == 'science-feedback':
         includes += [
             {
                 'key': 'editor',
                 'includes': [
-                    'firstName',
-                    'id',
-                    'lastName'
-                ]
+                    'id'
+                ] + (['firstName', 'lastName'] if (user_has_role(user, 'EDITOR') or not are_data_anonymized) else [])
             },
             'editorId',
             {
@@ -92,10 +91,8 @@ def verdict_includes_from(user, context=None):
                     {
                         'key': 'reviewer',
                         'includes': [
-                            'firstName',
-                            'lastName',
                             'id'
-                         ]
+                         ] + (['firstName', 'lastName'] if (user_has_role(user, 'EDITOR') or not are_data_anonymized) else [])
                     }
                 ]
             }

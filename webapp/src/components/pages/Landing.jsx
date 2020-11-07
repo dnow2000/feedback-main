@@ -12,7 +12,7 @@ import KeywordsBar from 'components/layout/KeywordsBar'
 import Logo from 'components/layout/Logo'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
-import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { verdictNormalizer } from 'utils/normalizers'
 
 
@@ -24,12 +24,11 @@ export default () => {
   const [showMoreStatus, setShowMoreStatus] = useState(false)
 
 
-  const isAnonymized = useSelector(state =>
-    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
   const config = useMemo(() => ({
-    apiPath: `/verdicts${isAnonymized ? '/anonymized' : ''}${search}`,
+    apiPath: `/verdicts${areDataAnonymized ? '/anonymized' : ''}${search}`,
     normalizer: verdictNormalizer
-  }), [isAnonymized, search])
+  }), [areDataAnonymized, search])
 
   const contentsCount = (useSelector(state =>
     selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count

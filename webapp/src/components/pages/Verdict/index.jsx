@@ -6,7 +6,7 @@ import { useFormidable } from 'with-react-formidable'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch, formMatch } from 'utils/router'
 
@@ -21,8 +21,8 @@ export default () => {
   const { isCreatedEntity } = useFormidable(location, params)
   const { verdictId } = params
 
-  const isAnonymized = useSelector(state =>
-    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
   useEffect(() => {
     dispatch(requestData({ apiPath: '/tags?type=EVALUATION' }))
@@ -31,10 +31,10 @@ export default () => {
   useEffect(() => {
     if (isCreatedEntity) return
     dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}${isAnonymized ? '/anonymized' : ''}`,
+      apiPath: `/verdicts/${verdictId}${areDataAnonymized ? '/anonymized' : ''}`,
       normalizer: verdictNormalizer,
     }))
-  }, [dispatch, isAnonymized, isCreatedEntity, verdictId])
+  }, [areDataAnonymized, dispatch, isCreatedEntity, verdictId])
 
 
   return (

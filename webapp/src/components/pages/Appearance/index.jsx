@@ -7,7 +7,7 @@ import AppearanceItem from 'components/layout/AppearanceItem'
 import Header from 'components/layout/Header'
 import Items from 'components/layout/Items'
 import Main from 'components/layout/Main'
-import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 
 
 const _ = () => {
@@ -15,16 +15,15 @@ const _ = () => {
   const params = useParams()
   const { appearanceId } = params
 
-  const isAnonymized = useSelector(state =>
-    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
   const appearance = useSelector(state =>
     selectEntityByKeyAndId(state, 'appearances', appearanceId), [appearanceId]) || {}
   appearance.type = 'link'
   const { quotingContent, quotingContentId } = appearance || {}
   const config = useMemo(() => ({
-    apiPath: `/appearances${isAnonymized ? '/anonymized' : ''}?type=APPEARRANCE&subType=SHARE&quotedContentId=${quotingContentId}`
-  }), [isAnonymized, quotingContentId])
+    apiPath: `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARRANCE&subType=SHARE&quotedContentId=${quotingContentId}`
+  }), [areDataAnonymized, quotingContentId])
 
   const shareAppearances = useSelector(state =>
     selectEntitiesByKeyAndJoin(state,
@@ -42,9 +41,9 @@ const _ = () => {
 
   useEffect(() => {
     dispatch(requestData({
-      apiPath: `/appearances/${appearanceId}`
+      apiPath: `/appearances/${appearanceId}${areDataAnonymized ? '/anonymized' : ''}`
     }))
-  }, [appearanceId, dispatch])
+  }, [areDataAnonymized, appearanceId, dispatch])
 
 
   return (

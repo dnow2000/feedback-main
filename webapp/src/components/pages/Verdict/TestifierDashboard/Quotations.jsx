@@ -5,7 +5,7 @@ import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import AppearanceItem from 'components/layout/AppearanceItem'
 import Loader from 'components/layout/LoadMore'
-import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
 
 
@@ -25,8 +25,7 @@ export default () => {
       b.quotingContent.totalShares - a.quotingContent.totalShares)
     , [appearances])
 
-  const isAnonymized = useSelector(state =>
-    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
 
   const showMoreButton = useCallback(props => (
@@ -49,7 +48,7 @@ export default () => {
 
 
   useEffect(() => {
-    let apiPath = `/appearances${isAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
+    let apiPath = `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
     if (claimId) {
       apiPath = `${apiPath}&quotedClaimId=${claimId}`
     } else if (contentId) {
@@ -58,7 +57,7 @@ export default () => {
     dispatch(requestData({
       apiPath: apiPath
     }))
-  }, [claimId, contentId, dispatch, isAnonymized, verdictId])
+  }, [areDataAnonymized, claimId, contentId, dispatch, verdictId])
 
 
   if (!appearances.length) {

@@ -6,12 +6,13 @@ from sqlalchemy_api_handler.utils import dehumanize, \
                                          load_or_404
 
 from models.appearance import Appearance
-from repository.roles import user_has_role
+from repository.roles import are_data_anonymized_from
 from utils.rest import listify
 
 
-def appearance_includes_from(user):
-    is_anonymized = user_has_role(user, 'INSPECTOR')
+def appearance_includes_from(user, sub_type=None):
+    are_data_anonymized = are_data_anonymized_from(user)
+    print(are_data_anonymized)
     return [
         'id',
         'quotedClaimId',
@@ -27,7 +28,7 @@ def appearance_includes_from(user):
                             'key': 'author',
                             'includes': [
                                 'id'
-                            ] + (['firstName', 'lastName'] if not is_anonymized else [])
+                            ] + (['firstName', 'lastName'] if not are_data_anonymized else [])
                         },
                         'id'
                     ]
@@ -37,10 +38,8 @@ def appearance_includes_from(user):
                 {
                     'key': 'medium',
                     'includes': [
-                        'id',
-                        'logoUrl',
-                        'name'
-                    ]
+                        'id'
+                    ] + (['logoUrl', 'name'] if sub_type == 'QUOTATION' or not are_data_anonymized else [])
                 },
                 'summary',
                 'title',
@@ -71,7 +70,7 @@ def appearances_from(user):
             query = query.filter_by(**{key: dehumanize(request.args.get(key))})
 
     return listify(Appearance,
-                   includes=appearance_includes_from(user),
+                   includes=appearance_includes_from(user, request.args.get('subType')),
                    mode='only-includes',
                    page=request.args.get('page', 1),
                    paginate=int(request.args.get('limit', 10)),
@@ -92,7 +91,7 @@ def get_anonymized_appearances():
 def appearance_from(user, appearance_id):
     appearance = load_or_404(Appearance, appearance_id)
     return jsonify(as_dict(appearance,
-                           includes=appearance_includes_from(user),
+                           includes=appearance_includes_from(user, request.args.get('subType')),
                            mode='only-includes')), 200
 
 

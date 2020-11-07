@@ -6,7 +6,7 @@ import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
 import Items from 'components/layout/Items'
 import ThumbImg from 'components/layout/ThumbImg'
-import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { numberShortener } from 'utils/shorteners'
 
 import AppearanceItem  from 'components/layout/AppearanceItem'
@@ -24,8 +24,7 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
   const history = useHistory()
 
 
-  const isAnonymized = useSelector(state =>
-    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
 
   const loadMoreAction = useCallback(() => {
@@ -34,8 +33,8 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
 
 
   const interactionsConfig = useMemo(() => ({
-    apiPath: `/appearances${isAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=SHARE&quotedContentId=${id}&limit=4`
-  }), [id, isAnonymized])
+    apiPath: `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=SHARE&quotedContentId=${id}&limit=4`
+  }), [areDataAnonymized, id])
 
 
   const [displayInteractions, setDisplayInteractions] = useState(false)

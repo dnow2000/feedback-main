@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import EntityGraph from 'components/layout/EntityGraph'
-import selectHasCurrentRoleByType from 'selectors/selectHasCurrentRoleByType'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 
 
 export default () => {
@@ -15,13 +15,12 @@ export default () => {
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
   const { claimId } = verdict || {}
 
-  const isAnonymized = useSelector(state =>
-    selectHasCurrentRoleByType(state, 'INSPECTOR'))
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
   return (
     <EntityGraph
       entityId={claimId}
-      isAnonymized={isAnonymized}
+      isAnonymized={areDataAnonymized}
       modelName="Claim"
     />
   )
