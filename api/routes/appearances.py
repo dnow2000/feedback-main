@@ -13,6 +13,8 @@ from utils.rest import listify
 def appearance_includes_from(user, sub_type=None):
     are_data_anonymized = are_data_anonymized_from(user)
     print(are_data_anonymized)
+    if user:
+        print(user.roles)
     return [
         'id',
         'quotedClaimId',

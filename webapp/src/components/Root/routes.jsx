@@ -46,7 +46,11 @@ export default [
     title: 'Account',
   },
   {
-    component: withRequiredLogin(Appearance),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         creationRoleTypes: ['testifier'],
+                         modificationRoleTypes: ['testifier']})
+                       )(Appearance),
     exact: true,
     path: `/appearances/:appearanceId${formMatch}`,
     title: 'Appearance',
@@ -58,10 +62,11 @@ export default [
     title: 'Appearance Interactions',
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({ creationRoleTypes: ['editor'], modificationRoleTypes: ['editor'] }),
-    )(Content),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         creationRoleTypes: ['editor'],
+                         modificationRoleTypes: ['editor']}),
+                       )(Content),
     exact: true,
     path: `/contents/:contentId${formMatch}`,
     title: 'Content',
@@ -85,19 +90,21 @@ export default [
     title: 'Landing'
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({ creationRoleTypes: ['reviewer'], modificationRoleTypes: ['reviewer'] }),
-    )(Review),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['editor', 'reviewer'],
+                         creationRoleTypes: ['reviewer'],
+                         modificationRoleTypes: ['reviewer']}),
+                       )(Review),
     exact: true,
     path: `/reviews/:reviewId${formMatch}`,
     title: 'Review',
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({ accessRoleTypes: ['editor'] }),
-    )(Reviews),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['editor'] })
+                       )(Reviews),
     exact: true,
     path: '/reviews',
     title: 'Reviews',
@@ -121,31 +128,29 @@ export default [
     title: 'Sources',
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({ accessRoleTypes: ['editor'] })
-    )(Trendings),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['editor']})
+                       )(Trendings),
     exact: true,
     path: '/trendings',
     title: 'Trendings',
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({ accessRoleTypes: ['admin', 'editor'] }),
-    )(User),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['admin', 'editor', 'inspector']})
+                       )(User),
     exact: true,
     path: '/users/:userId',
     title: 'User',
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({
-        creationRoleTypes: ['editor'],
-        modificationRoleTypes: ['editor']
-      })
-    )(Users),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         creationRoleTypes: ['admin', 'editor', 'inspector'],
+                         modificationRoleTypes: ['admin', 'editor', 'inspector']})
+                       )(Users),
     exact: true,
     path: '/users',
     title: 'Users',
@@ -153,7 +158,7 @@ export default [
   {
     component: withOptionalLogin(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/(edition|testimony)/:tab(quotations|shares|graph|backlinks)?`,
+    path: `/verdicts/:verdictId(${entityMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`,
     title: 'Verdict',
   },
   {
@@ -163,20 +168,18 @@ export default [
     title: 'Verdict',
   },
   {
-    component: compose(
-      withRequiredLogin,
-      withRoles({
-        accessRoleTypes: ['editor'],
-        creationRoleTypes: ['editor'],
-        modificationRoleTypes: ['editor']
-      }),
-    )(Verdict),
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['editor'],
+                         creationRoleTypes: ['editor'],
+                         modificationRoleTypes: ['editor']})
+                      )(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId${formMatch}`,
+    path: `/verdicts/:verdictId${formMatch}/edition`,
     title: 'Verdict',
   },
   {
-    component: Verdicts,
+    component: withOptionalLogin(Verdicts),
     exact: true,
     path: '/verdicts',
     title: 'Verdicts',

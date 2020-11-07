@@ -48,4 +48,4 @@ def delete_role(role_id):
 
     db.session.commit()
 
-    return jsonify({"id": role_id}), 201
+    return jsonify({'id': role_id}), 201

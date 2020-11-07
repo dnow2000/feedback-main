@@ -6,8 +6,10 @@ from models.role import Role, RoleType
 def user_has_role(user, role_type):
     if not user:
         return False
-    return Role.query.filter_by(user=user,
-                                type=getattr(RoleType, role_type)).exists()
+    if Role.query.filter_by(user=user,
+                            type=getattr(RoleType, role_type)).first():
+        return True
+    return False
 
 def check_user_has_role(user, role_type):
     if not user_has_role(user, role_type):

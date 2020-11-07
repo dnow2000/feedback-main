@@ -9,6 +9,6 @@ export default createCachedSelector(
   state => state.data.roles,
   selectCurrentUser,
   (state, type) => type,
-  (roles, currentUser, type) => !!!((type && currentUser && roles) || [])
+  (roles, currentUser, type) => !!((type && currentUser && roles) || [])
     .find(role => role.userId === currentUser.id && type === role.type)
 )(mapArgsToCacheKey)

@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Route, Switch, useLocation, useParams } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 import { useFormidable } from 'with-react-formidable'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
-import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { verdictNormalizer } from 'utils/normalizers'
 import { entityMatch, formMatch } from 'utils/router'
 
@@ -21,9 +20,6 @@ export default () => {
   const { isCreatedEntity } = useFormidable(location, params)
   const { verdictId } = params
 
-
-  const areDataAnonymized = useSelector(selectDataAreAnonymized)
-
   useEffect(() => {
     dispatch(requestData({ apiPath: '/tags?type=EVALUATION' }))
   }, [dispatch])
@@ -31,10 +27,10 @@ export default () => {
   useEffect(() => {
     if (isCreatedEntity) return
     dispatch(requestData({
-      apiPath: `/verdicts/${verdictId}${areDataAnonymized ? '/anonymized' : ''}`,
+      apiPath: `/verdicts/${verdictId}`,
       normalizer: verdictNormalizer,
     }))
-  }, [areDataAnonymized, dispatch, isCreatedEntity, verdictId])
+  }, [dispatch, isCreatedEntity, verdictId])
 
 
   return (
@@ -46,7 +42,7 @@ export default () => {
             <Route
               component={EditorDashboard}
               exact
-              path={`/verdicts/:verdictId${formMatch}/edition`}
+              path={`/verdicts/:verdictId(${formMatch})/edition`}
             />
             <Route
               component={TestifierDashboard}

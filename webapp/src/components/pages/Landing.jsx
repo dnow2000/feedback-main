@@ -12,7 +12,6 @@ import KeywordsBar from 'components/layout/KeywordsBar'
 import Logo from 'components/layout/Logo'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
-import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { verdictNormalizer } from 'utils/normalizers'
 
 
@@ -23,12 +22,10 @@ export default () => {
 
   const [showMoreStatus, setShowMoreStatus] = useState(false)
 
-
-  const areDataAnonymized = useSelector(selectDataAreAnonymized)
   const config = useMemo(() => ({
-    apiPath: `/verdicts${areDataAnonymized ? '/anonymized' : ''}${search}`,
+    apiPath: `/verdicts${search}`,
     normalizer: verdictNormalizer
-  }), [areDataAnonymized, search])
+  }), [search])
 
   const contentsCount = (useSelector(state =>
     selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
