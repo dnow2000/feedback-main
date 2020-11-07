@@ -11,6 +11,7 @@ def create_features():
         features.append(Feature.create_or_modify({
             '__SEARCH_BY__': 'name',
             'description': feature_name.value,
+            'isActive': False if feature_name.name == 'WITH_VERDICT_SHARES' else True,
             'name': feature_name
         }))
     ApiHandler.save(*features)

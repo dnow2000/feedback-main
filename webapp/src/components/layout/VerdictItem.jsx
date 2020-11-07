@@ -7,13 +7,11 @@ import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import Icon from 'components/layout/Icon'
 import selectConclusionTagByVerdictId from 'selectors/selectConclusionTagByVerdictId'
-import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
-import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId'
 import { numberShortener } from 'utils/shorteners'
 import useTimeAgo from 'components/uses/useTimeAgo'
 
 
-const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
+const _ = ({ asLink, className, verdict, withQuotationsAndShares }) => {
   const history = useHistory()
   const {
     claimId,
@@ -26,23 +24,16 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
   } = verdict
   const timeAgo = useTimeAgo(publishedDate)
 
-  const claim = useSelector(
-    state => selectEntityByKeyAndId(state, 'claims', claimId),
-    [claimId]
-  ) || {}
 
-  const appearances = useSelector(state =>
-    selectSortedAppearancesByVerdictId(state, id)) || []
-  const citationsCount = appearances?.length
-  const sharesCount = useSelector(state =>
-    selectSharesCountByVerdictId(state, id))
+  const claim = useSelector(state =>
+    selectEntityByKeyAndId(state, 'claims', claimId)) || {}
+  const { linksCount, sharesCount } = claim
 
-  const conclusionTag = useSelector(
-    state => selectConclusionTagByVerdictId(state, id),
-    [id]
-  ) || {}
+  const conclusionTag = useSelector(state =>
+    selectConclusionTagByVerdictId(state, id)) || {}
 
-  const handleClick = useCallback(() => {
+
+  const handlePushToTestimony = useCallback(() => {
     if (!asLink) return
     history.push(`/verdicts/${id}/testimony`)
   }, [asLink, history, id])
@@ -61,19 +52,19 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
     }
   }
 
-  const citations = withCitationsAndShares ? (
+  const quotations = withQuotationsAndShares ? (
     <>
-      { citationsCount > 0 && (
+      { linksCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
-            { citationsCount }
+            { linksCount }
           </strong>
           <span>
             {' Links'}
           </span>
         </span>
       ) }
-      {  sharesCount > 0 && (
+      { sharesCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
             { numberShortener(sharesCount) }
@@ -90,7 +81,8 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
   return (
     <div
       className={classnames('verdict-item', className, { 'clickable': asLink })}
-      onClick={handleClick}
+      onClick={handlePushToTestimony}
+      onKeyPress={handlePushToTestimony}
       role="link"
       tabIndex={id}
     >
@@ -129,10 +121,12 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
       </p>
       <br />
       <div className="tags">
-        { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
-          {conclusionTag.label}
-        </span> }
-        { citations }
+        { conclusionTag.label && (
+          <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
+            {conclusionTag.label}
+          </span>
+        )}
+        { quotations }
       </div>
     </div>
   )
@@ -142,7 +136,7 @@ const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
 _.defaultProps = {
   asLink: true,
   className: null,
-  withCitationsAndShares: true
+  withQuotationsAndShares: true
 }
 
 
@@ -171,7 +165,7 @@ _.propTypes = {
       })
     ),
   }).isRequired,
-  withCitationsAndShares: PropTypes.bool
+  withQuotationsAndShares: PropTypes.bool
 }
 
 export default _

@@ -12,7 +12,6 @@ import KeywordsBar from 'components/layout/KeywordsBar'
 import Logo from 'components/layout/Logo'
 import Main from 'components/layout/Main'
 import VerdictItem from 'components/layout/VerdictItem'
-
 import { verdictNormalizer } from 'utils/normalizers'
 
 
@@ -20,33 +19,38 @@ export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const { search } = useLocation()
+
   const [showMoreStatus, setShowMoreStatus] = useState(false)
 
-  const config = useMemo(
-    () => ({
-      apiPath: `/verdicts${search}`,
-      normalizer: verdictNormalizer,
-    }),
-    [search]
-  )
+  const config = useMemo(() => ({
+    apiPath: `/verdicts${search}`,
+    normalizer: verdictNormalizer
+  }), [search])
+
+  const contentsCount = (useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
+
+  const verdictsCount = (useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Verdict' }))[0] || {}).count
 
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
 
   const loadMoreAction = useCallback(() => {
-      setShowMoreStatus(true)
-      history.push('/verdicts')
-    }, [history]
-  )
+    setShowMoreStatus(true)
+    history.push('/verdicts')
+  }, [history])
+
+  const renderControls = useCallback(({ handleChange }) => (
+    <KeywordsBar
+      layout="vertical"
+      onChange={handleChange}
+    />), [])
+
 
   useEffect(() => {
     dispatch(requestData({ apiPath: '/statistics' }))
   }, [dispatch])
-
-  const contentsCount = (useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
-  const verdictsCount = (useSelector(state =>
-    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Verdict' }))[0] || {}).count
 
 
   return (
@@ -73,12 +77,7 @@ export default () => {
             <Controls
               config={config}
               pathnameOnChange="/verdicts"
-              render={({handleChange, locationURL}) => (
-                <KeywordsBar
-                  layout="vertical"
-                  onChange={handleChange}
-                />
-              )}
+              render={renderControls}
             />
           </div>
         </section>

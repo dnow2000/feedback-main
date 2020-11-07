@@ -1,4 +1,4 @@
-.citation {
+.quotation {
   @extend .anchor;
 
   align-items: center;
@@ -14,7 +14,7 @@
     margin-bottom: 1em;
   }
 
-  .citation-img {
+  .quotation-img {
     max-width: 20%;
     min-width: 8.125rem;
     object-fit: cover;
@@ -22,12 +22,12 @@
     width: 8.125rem;
   }
 
-  .citation-data {
+  .quotation-data {
     overflow: hidden;
     padding: 1em 1.1em;
     width: 100%;
 
-    .citation-footer {
+    .quotation-footer {
       @extend .text-muted;
 
       display: flex;
@@ -48,15 +48,15 @@
       }
     }
 
-    .citation-source {
+    .quotation-source {
       margin-bottom: 1em;
     }
 
-    .citation-title {
+    .quotation-title {
       color: $grey-darker;
     }
 
-    .citation-url {
+    .quotation-url {
       color: $primary;
       text-decoration: none;
       font-size: 0.8em;

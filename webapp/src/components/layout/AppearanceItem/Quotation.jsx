@@ -6,6 +6,7 @@ import { selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
 import Items from 'components/layout/Items'
 import ThumbImg from 'components/layout/ThumbImg'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { numberShortener } from 'utils/shorteners'
 
 import AppearanceItem  from 'components/layout/AppearanceItem'
@@ -14,22 +15,26 @@ import AppearanceItem  from 'components/layout/AppearanceItem'
 const _ = ({ articleOrVideoContent, appearanceId }) => {
   const {
     archiveUrl,
+    hostname,
     id,
     title,
-    totalShares,
-    url
+    totalShares
   } = articleOrVideoContent || {}
-  const { hostname } = url ? new URL(url) : ''
 
   const history = useHistory()
+
+
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
+
 
   const loadMoreAction = useCallback(() => {
     history.push(`/appearances/${appearanceId}/interactions`)
   }, [appearanceId, history])
 
+
   const interactionsConfig = useMemo(() => ({
-    apiPath: `/appearances?quotedContentId=${id}&limit=4`
-  }), [id])
+    apiPath: `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=SHARE&quotedContentId=${id}&limit=4`
+  }), [areDataAnonymized, id])
 
 
   const [displayInteractions, setDisplayInteractions] = useState(false)
@@ -45,36 +50,33 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
     />
   ), [])
 
-  const shareAppearances = useSelector(
-    state => selectEntitiesByKeyAndJoin(
-      state,
-      'appearances',
-      { key: 'quotedContentId', value: id }
-    ), [id]
-  )
+  const shareAppearances = useSelector(state =>
+    selectEntitiesByKeyAndJoin(state,
+                               'appearances',
+                               { key: 'quotedContentId', value: id }), [id])
 
 
   return (
     <>
-      <div className="citation">
+      <div className="quotation">
         <ThumbImg
-          className='citation-img'
+          className='quotation-img'
           collectionName='contents'
           {...articleOrVideoContent}
         />
-        <div className="citation-data">
-          <h4 className='citation-title'>
+        <div className="quotation-data">
+          <h4 className='quotation-title'>
             {title}
           </h4>
-          <p className="text-muted citation-source">
+          <p className="text-muted quotation-source">
             <small>
               {hostname}
             </small>
           </p>
-          <p className="citation-url">
+          <p className="quotation-url">
             { archiveUrl && (
               <a
-                className="citation-url"
+                className="quotation-url"
                 href={archiveUrl}
                 rel='noopener noreferrer'
                 target='_blank'
@@ -83,11 +85,11 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
               </a>
             )}
           </p>
-          <div className="citation-footer">
+          <div className="quotation-footer">
             {!totalShares
               ? (
                 <div className='share-list dropdown text-center'>
-                  {'No shares available for this citation.'}
+                  {'No shares available for this quotation.'}
                 </div>
               )
               : (
@@ -95,12 +97,14 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
                   <span>
                     {`${numberShortener(totalShares)} shares`}
                   </span>
-                  <button
-                    onClick={handleSetDisplayInteractions}
-                    type='button'
-                  >
-                    {'View Top Shares'}
-                  </button>
+                  {!areDataAnonymized && (
+                    <button
+                      onClick={handleSetDisplayInteractions}
+                      type='button'
+                    >
+                      {'View Top Shares'}
+                    </button>
+                  )}
                 </>
               )}
           </div>

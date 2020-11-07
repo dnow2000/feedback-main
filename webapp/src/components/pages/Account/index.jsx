@@ -2,7 +2,7 @@ import React, { useCallback } from 'react'
 import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { requestData } from 'redux-thunk-data'
-import { resolveCurrentUser, selectCurrentUser } from 'with-react-redux-login'
+import { processCurrentUser, selectCurrentUser } from 'with-react-redux-login'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
@@ -31,7 +31,7 @@ export default () => {
     body.append('croppingRect[y]', croppingRect.y)
     body.append('croppingRect[height]', croppingRect.height)
     Object.keys(formValues).forEach(key => {
-      if (key === 'thumb' || key === 'croppingRect') {
+      if ( key === 'thumb' || key === 'croppingRect' ){
         return
       }
       body.append(key, formValues[key])
@@ -44,7 +44,7 @@ export default () => {
         handleFail: (beforeState, action) =>
           resolve(requests(beforeState.requests, action)[API_PATH].errors),
         method: 'POST',
-        resolve: resolveCurrentUser
+        process: processCurrentUser
       }))
     })
   }, [dispatch])

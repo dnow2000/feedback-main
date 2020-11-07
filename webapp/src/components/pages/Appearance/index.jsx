@@ -7,6 +7,7 @@ import AppearanceItem from 'components/layout/AppearanceItem'
 import Header from 'components/layout/Header'
 import Items from 'components/layout/Items'
 import Main from 'components/layout/Main'
+import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 
 
 const _ = () => {
@@ -14,21 +15,21 @@ const _ = () => {
   const params = useParams()
   const { appearanceId } = params
 
-  const appearance = useSelector(
-    state => selectEntityByKeyAndId(state, 'appearances', appearanceId),
-    [appearanceId]
-  ) || {}
+  const areDataAnonymized = useSelector(selectDataAreAnonymized)
+
+  const appearance = useSelector(state =>
+    selectEntityByKeyAndId(state, 'appearances', appearanceId), [appearanceId]) || {}
   appearance.type = 'link'
-
   const { quotingContent, quotingContentId } = appearance || {}
+  const config = useMemo(() => ({
+    apiPath: `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARRANCE&subType=SHARE&quotedContentId=${quotingContentId}`
+  }), [areDataAnonymized, quotingContentId])
 
-  const shareAppearances = useSelector(
-    state => selectEntitiesByKeyAndJoin(
-      state,
-      'appearances',
-      { key: 'quotedContentId', value: quotingContentId }
-    ), [quotingContentId]
-  )
+  const shareAppearances = useSelector(state =>
+    selectEntitiesByKeyAndJoin(state,
+                               'appearances',
+                               { key: 'quotedContentId', value: quotingContentId }), [quotingContentId])
+
 
   const renderItem = useCallback(item => (
     <AppearanceItem
@@ -37,15 +38,13 @@ const _ = () => {
     />
   ), [])
 
+
   useEffect(() => {
     dispatch(requestData({
-      apiPath: `/appearances/${appearanceId}`
+      apiPath: `/appearances/${appearanceId}${areDataAnonymized ? '/anonymized' : ''}`
     }))
-  }, [appearanceId, dispatch])
+  }, [areDataAnonymized, appearanceId, dispatch])
 
-  const config = useMemo(() => ({
-    apiPath: `/appearances?quotedContentId=${quotingContentId}`
-  }), [quotingContentId])
 
   return (
     <>

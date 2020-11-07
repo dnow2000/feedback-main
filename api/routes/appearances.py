@@ -1,33 +1,105 @@
 from flask import current_app as app, jsonify, request
+from flask_login import current_user, login_required
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import dehumanize, \
                                          load_or_404
 
 from models.appearance import Appearance
-from utils.includes import APPEARANCE_INCLUDES
+from repository.roles import are_data_anonymized_from
 from utils.rest import listify
 
 
-@app.route('/appearances', methods=['GET'])
-def get_appearances():
+def appearance_includes_from(user, sub_type=None):
+    are_data_anonymized = are_data_anonymized_from(user)
+    return [
+        'id',
+        'quotedClaimId',
+        'quotedContentId',
+        {
+            'key': 'quotingContent',
+            'includes': [
+                'archiveUrl',
+                {
+                    'key': 'authorContents',
+                    'includes': [
+                        {
+                            'key': 'author',
+                            'includes': [
+                                'id'
+                            ] + (['firstName', 'lastName'] if not are_data_anonymized else [])
+                        },
+                        'id'
+                    ]
+                },
+                'hostname',
+                'id',
+                {
+                    'key': 'medium',
+                    'includes': [
+                        'id'
+                    ] + (['logoUrl', 'name'] if sub_type == 'QUOTATION' or not are_data_anonymized else [])
+                },
+                'summary',
+                'title',
+                'thumbCount',
+                'totalInteractions',
+                'totalShares',
+                'type',
+                'url'
+            ]
+        },
+        'quotingContentId',
+        #'subType',
+        'stance',
+        'testifierId'
+        #'type',
+    ]
+
+
+def appearances_from(user):
     query = Appearance.query
 
     # TODO optimize filter with predefined type AppearanceType.LINK or AppearanceType.INTERACTION
     # if request.args.get('type'):
     #    query = query.filter_by(type=getattr(AppearanceType, request.args.get('type')))
 
-    if request.args.get('quotedContentId'):
-        query = query.filter_by(quotedContentId=dehumanize(request.args.get('quotedContentId')))
+    for key in ['quotedClaimId', 'quotedContentId']:
+        if request.args.get(key):
+            query = query.filter_by(**{key: dehumanize(request.args.get(key))})
 
     return listify(Appearance,
-                   includes=APPEARANCE_INCLUDES,
+                   includes=appearance_includes_from(user, request.args.get('subType')),
+                   mode='only-includes',
                    page=request.args.get('page', 1),
                    paginate=int(request.args.get('limit', 10)),
                    query=query)
 
 
+@login_required
+@app.route('/appearances', methods=['GET'])
+def get_appearances():
+    return appearances_from(current_user)
+
+
+@app.route('/appearances/anonymized', methods=['GET'])
+def get_anonymized_appearances():
+    return appearances_from(None)
+
+
+def appearance_from(user, appearance_id):
+    appearance = load_or_404(Appearance, appearance_id)
+    return jsonify(as_dict(appearance,
+                           includes=appearance_includes_from(user, request.args.get('subType')),
+                           mode='only-includes')), 200
+
+
 @app.route('/appearances/<appearance_id>', methods=['GET'])
 def get_appearance(appearance_id):
-    appearance = load_or_404(Appearance, appearance_id)
-    return jsonify(as_dict(appearance, includes=APPEARANCE_INCLUDES)), 200
+    return appearance_from(None, appearance_id)
+
+
+@login_required
+@app.route('/appearances/<appearance_id>/anonymized', methods=['GET'])
+def get_anonymized_appearance(appearance_id):
+    return appearance_from(current_user, appearance_id)

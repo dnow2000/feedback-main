@@ -16,18 +16,6 @@ USER_INCLUDES = [
     }
 ]
 
-APPEARANCE_INCLUDES = [
-    {
-        'key': 'quotingContent',
-        'includes': [
-            {
-                'key': 'authorContents',
-                'includes': ['author']
-            },
-            'medium'
-        ]
-    }
-]
 
 CONTENT_INCLUDES = [
     {
@@ -100,43 +88,6 @@ CLAIM_INCLUDES = [
                 ]
             },
             'stance'
-        ]
-    }
-]
-
-VERDICT_INCLUDES = [
-    'content',
-    {
-        'key': 'editor',
-        'includes': USER_INCLUDES
-    },
-    {
-        'key': 'claim',
-        'includes': CLAIM_INCLUDES
-    },
-    'medium',
-    {
-        'key': 'reviews',
-        'includes': [
-            'reviewer'
-        ]
-    },
-    {
-        'key': 'verdictTags',
-        'includes': [
-            {
-                'key': 'tag',
-                'includes': TAG_INCLUDES
-            }
-        ]
-    },
-    {
-        'key': 'verdictReviewers',
-        'includes': [
-            {
-                'key': 'reviewer',
-                'includes': USER_INCLUDES
-            }
         ]
     }
 ]

@@ -2,6 +2,7 @@
 # pylint: disable=W0611
 
 def import_commands():
+    import commands.create_all_roles_for_user
     import commands.create_features
     import commands.database
     import commands.dehumanize

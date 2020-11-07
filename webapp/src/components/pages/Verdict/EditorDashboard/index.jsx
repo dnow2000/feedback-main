@@ -37,11 +37,9 @@ export default () => {
   }
 
   const trending = useSelector(state =>
-    selectEntitiesByKeyAndJoin(
-      state,
-      'trendings',
-      { key: 'sourceId', value: sourceId }
-  )[0])
+    selectEntitiesByKeyAndJoin(state,
+                               'trendings',
+                               { key: 'sourceId', value: sourceId })[0])
 
   const verdict = useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
@@ -86,6 +84,10 @@ export default () => {
     })
   }, [currentUserVerdictPatch, dispatch, history, method])
 
+
+  useEffect(() => {
+    dispatch(requestData({ apiPath: `/verdictReviewers?verdictId=${verdictId}`}))
+  }, [dispatch, verdictId])
 
   useEffect(() => {
     if (!sourceId) return

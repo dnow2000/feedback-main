@@ -1,5 +1,5 @@
 from sqlalchemy_api_handler import ApiHandler
-from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.serialization import as_dict, exclusive_includes_from
 
 from models.mixins.has_graph_mixin import HasGraphMixin
 from utils.database import db
@@ -24,12 +24,14 @@ class Graph(ApiHandler,
             includes = ['text']
         elif node_type == 'Content':
             if not self.isAnonymized:
-                includes = ['title', 'type', 'url']
+                includes = ['hostname', 'title', 'type']
             else:
                 includes = ['type']
         elif node_type == 'Medium':
             if not self.isAnonymized:
-                includes = ['name']
+                includes = ['name', 'type']
+            else:
+                includes = ['type']
         elif node_type == 'Organization':
             includes = ['name']
         elif node_type == 'Platform':
@@ -44,9 +46,8 @@ class Graph(ApiHandler,
         elif node_type == 'Verdict':
             includes = ['title']
 
-        for column_key in entity.__mapper__.columns.keys():
-            if column_key not in includes:
-                includes.append('-{}'.format(column_key))
+        includes = exclusive_includes_from(entity, includes)
+
 
         return as_dict(entity, includes=includes)
 

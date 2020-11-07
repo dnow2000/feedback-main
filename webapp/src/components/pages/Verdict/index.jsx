@@ -20,7 +20,6 @@ export default () => {
   const { isCreatedEntity } = useFormidable(location, params)
   const { verdictId } = params
 
-
   useEffect(() => {
     dispatch(requestData({ apiPath: '/tags?type=EVALUATION' }))
   }, [dispatch])
@@ -29,7 +28,6 @@ export default () => {
     if (isCreatedEntity) return
     dispatch(requestData({
       apiPath: `/verdicts/${verdictId}`,
-      isMergingDatum: true,
       normalizer: verdictNormalizer,
     }))
   }, [dispatch, isCreatedEntity, verdictId])
@@ -44,12 +42,12 @@ export default () => {
             <Route
               component={EditorDashboard}
               exact
-              path={`/verdicts/:verdictId${formMatch}/edition`}
+              path={`/verdicts/:verdictId(${formMatch})/edition`}
             />
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/testimony/:tab(citations|shares|graph|backlinks)?`}
+              path={`/verdicts/:verdictId(${entityMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`}
             />
             <Route
               component={TestifierDashboard}

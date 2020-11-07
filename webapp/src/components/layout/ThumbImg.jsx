@@ -17,7 +17,7 @@ const _ = ({
   const thumbUrl = thumbCount > 0
     ? `${API_THUMBS_URL}/contents/${id}`
     : externalThumbUrl
-  const proxyThumbUrl = `${API_URL}/images?url=${encodeURIComponent(thumbUrl)}`
+  const proxyThumbUrl = thumbUrl && `${API_URL}/images?url=${encodeURIComponent(thumbUrl)}`
 
 
   return (

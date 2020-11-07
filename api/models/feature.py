@@ -10,10 +10,10 @@ from utils.database import db
 
 
 class FeatureName(enum.Enum):
-    WITH_VERDICT_CITATIONS = "L'application affiche la vue /verdicts/<verdict_id>/citations"
-    WITH_VERDICT_GRAPH = "L'application affiche la vue /verdicts/<verdict_id>/graph"
-    WITH_VERDICT_SHARES = "L'application affiche la vue /verdicts/<verdict_id>/shares"
-    WITH_VERDICT_BACKLINKS = "This feature display the view /verdicts/<verdict_id>/backlinks"
+    WITH_VERDICT_QUOTATIONS = "Webapp displays the page /verdicts/<verdict_id>/quotations"
+    WITH_VERDICT_GRAPH = "Webapp displays the page /verdicts/<verdict_id>/graph"
+    WITH_VERDICT_SHARES = "Webapp displays the page /verdicts/<verdict_id>/shares"
+    WITH_VERDICT_BACKLINKS = "Webapp displays the view /verdicts/<verdict_id>/backlinks"
 
 
 class Feature(ApiHandler,

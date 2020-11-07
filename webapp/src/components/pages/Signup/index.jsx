@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, Route, Switch, useLocation } from 'react-router-dom'
 import { TransitionGroup, CSSTransition } from 'react-transition-group'
 import { requestData } from 'redux-thunk-data'
-import { resolveCurrentUser } from 'with-react-redux-login'
+import { processCurrentUser } from 'with-react-redux-login'
 
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
@@ -51,7 +51,7 @@ export default () => {
         handleFail: (beforeState, action) =>
           resolve(requests(beforeState.requests, action)[API_PATH].errors),
         method: 'POST',
-        resolve: resolveCurrentUser
+        resolve: processCurrentUser
       }))
     })
   }, [dispatch])

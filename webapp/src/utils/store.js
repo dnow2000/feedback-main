@@ -11,12 +11,11 @@ import {
 } from './config'
 
 
-
 const buildStoreEnhancer = (middlewares = []) => {
   const enhancers = []
 
   const useDevTools = (IS_DEVELOPMENT || IS_TESTING) &&
-                      typeof window !== 'undefined' && 
+                      typeof window !== 'undefined' &&
                       window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   if (useDevTools) {
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__

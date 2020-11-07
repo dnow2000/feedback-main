@@ -1,4 +1,5 @@
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useLocation } from 'react-router-dom'
@@ -13,13 +14,12 @@ import Navigations from './Navigations'
 
 
 const pathnamesWithoutSignin = [
-  '/landing',
   '/signin',
   '/signup'
 ]
 
 
-export default ({ withLinks=true }) => {
+const _ = ({ withLinks }) => {
   const dispatch = useDispatch()
   const location = useLocation()
   const withSignin = pathnamesWithoutSignin.includes(location.pathname)
@@ -66,7 +66,7 @@ export default ({ withLinks=true }) => {
               {'Support us'}
             </a>
             <Menu />
-            {false && showSignin && (
+            {showSignin && (
               <NavLink
                 className="button"
                 to="/signin"
@@ -80,3 +80,15 @@ export default ({ withLinks=true }) => {
     </header>
   )
 }
+
+
+_.defaultProps = {
+  withLinks: true
+}
+
+
+_.propTypes = {
+  withLinks: PropTypes.bool
+}
+
+export default _
