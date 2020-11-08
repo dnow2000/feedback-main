@@ -11,9 +11,9 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
 from domain.keywords import create_ts_vector_and_table_args
-from utils.database import db
 from models.mixins import HasRatingMixin, \
                           HasScienceFeedbackMixin
+from utils.database import db
 
 
 class Verdict(ApiHandler,

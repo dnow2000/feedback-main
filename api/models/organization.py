@@ -4,7 +4,7 @@ from sqlalchemy import Column, \
                        String
 from sqlalchemy_api_handler import ApiHandler
 
-from models.mixins.has_science_feedback_mixin import HasScienceFeedbackMixin
+from models.mixins import HasScienceFeedbackMixin
 from utils.database import db
 
 

@@ -8,7 +8,6 @@ from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasScienceFeedbackMixin, \
                           HasThumbMixin
-from models.role import Role
 from utils.database import db
 
 
@@ -49,6 +48,7 @@ class User(ApiHandler,
         return str(self.id)
 
     def has_rights(self, roleType):
+        Role = ApiHandler.model_from_name('Role')
         return Role.query\
                    .filter((Role.userId == self.id) &
                            (Role.type == roleType))\
