@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '04f018ad7776'
-down_revision = '714cff361432'
+down_revision = '52abc76a7f5c'
 branch_labels = None
 depends_on = None
 
@@ -21,13 +21,13 @@ TABLE_NAMES = ['claim', 'content']
 
 def upgrade():
     for table_name in TABLE_NAMES:
-        op.drop_column(table_name, 'anonymizedGraph')
+        op.drop_column(table_name, 'anonymisedGraph')
         op.drop_column(table_name, 'graph')
 
 
 def downgrade():
     for table_name in TABLE_NAMES:
         op.add_column(table_name,
-                      sa.Column('anonymizedGraph', sa.JSON()))
+                      sa.Column('anonymisedGraph', sa.JSON()))
         op.add_column(table_name,
                       sa.Column('graph', sa.JSON()))
