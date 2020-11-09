@@ -140,11 +140,11 @@ def editor_from_row(row, index=None):
                 else ' '.join(chunks[1:]).replace('\'', '')
     user_dict = {
         '__SEARCH_BY__': 'email',
-        'email': '{}.{}@{}.{}'.format(
-            first_name.lower(),
-            last_name.lower(),
-            APP_NAME,
-            TLD),
+        'email': row.get('Email',
+                         '{}.{}@{}.{}'.format(first_name.lower(),
+                                              last_name.lower(),
+                                              APP_NAME,
+                                              TLD),
         'firstName': first_name,
         'lastName': last_name,
         'scienceFeedbackIdentifier': row['airtableId']
@@ -202,14 +202,13 @@ def reviewer_from_row(row, index=None):
     first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
                  else row['First name']
     last_name = 'Reviewer{}'.format(index) if IS_DEVELOPMENT \
-                else row['Last name']
+                 else row['Last name']
     user_dict = {
         '__SEARCH_BY__': 'email',
-        'email': '{}.{}@{}.{}'.format(
-            first_name.lower(),
-            last_name.lower(),
-            APP_NAME,
-            TLD) if IS_DEVELOPMENT else row['Email'],
+        'email': '{}.{}@{}.{}'.format(first_name.lower(),
+                                      last_name.lower(),
+                                      APP_NAME,
+                                      TLD) if IS_DEVELOPMENT else row['Email'],
         'firstName': first_name,
         'lastName': last_name,
         'scienceFeedbackIdentifier': row['airtableId']
