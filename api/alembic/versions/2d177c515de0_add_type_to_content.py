@@ -1,4 +1,4 @@
-"""Add the type enum column to the content table.
+"""add type to content
 
 Revision ID: 2d177c515de0
 Revises: 32516908c7ac

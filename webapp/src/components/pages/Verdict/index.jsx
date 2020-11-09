@@ -52,7 +52,7 @@ export default () => {
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formMatch}`}
+              path={`/verdicts/:verdictId(${entityMatch})/testimony/links/:linkId${formMatch}`}
             />
           </Switch>
         </div>

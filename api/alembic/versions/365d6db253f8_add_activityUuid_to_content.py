@@ -1,4 +1,4 @@
-"""add activity uuid to content
+"""add activityUuid to content
 
 Revision ID: 365d6db253f8
 Revises: 5093315dbbed

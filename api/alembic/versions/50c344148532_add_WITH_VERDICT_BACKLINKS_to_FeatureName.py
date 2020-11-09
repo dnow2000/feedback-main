@@ -1,4 +1,4 @@
-"""add_backlinks_to_features
+"""add WITH_VERDICT_BACKLINKS to FeatureName
 
 Revision ID: 50c344148532
 Revises: 365d6db253f8

@@ -112,7 +112,7 @@ export default () => (
                 <b>
                   {'Appearances.'}
                 </b>
-                {' A url where a Claim or an Article reviewed has been published originally or repeated. Here it is required to distinguish the Stance of the item with respect to the Claim (the item can explicitly or implicitly endorse the Claim as being true or it can refute the claim)'}
+                {' An url where a Claim or an Article reviewed has been published originally or repeated. Here it is required to distinguish the Stance of the item with respect to the Claim (the item can explicitly or implicitly endorse the Claim as being true or it can refute the claim)'}
               </li>
               <li>
                 <b>

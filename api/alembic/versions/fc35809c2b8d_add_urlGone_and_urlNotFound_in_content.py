@@ -1,4 +1,4 @@
-"""add url gone and url not found in content
+"""add urlGone and urlNotFound in content
 
 Revision ID: fc35809c2b8d
 Revises: 37897e6db38a

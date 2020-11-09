@@ -1,4 +1,4 @@
-"""add has graph mixin
+"""add HasGraphMixin
 
 Revision ID: 1794d909cdc4
 Revises: d2aae16942c5

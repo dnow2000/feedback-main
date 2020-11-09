@@ -73,21 +73,3 @@ REVIEW_INCLUDES = [
 AUTHOR_CONTENT_INCLUDES = [
     'content'
 ]
-
-CLAIM_INCLUDES = [
-    {
-        'key': 'quotedFromAppearances',
-        'includes': [
-            {
-                'key': 'quotingContent',
-                'includes': [
-                    {
-                        'key': 'authorContents',
-                        'includes': ['author']
-                    }
-                ]
-            },
-            'stance'
-        ]
-    }
-]

@@ -7,16 +7,16 @@ const labelFromNode = node => {
     case 'Claim':
       return datum.text
     case 'Content':
-      let label = datum.type
+      let label = `${datum.type[0].toUpperCase()}${datum.type.slice(1)}`
       if (datum.url) {
         label = datum?.url?.slice(0, Math.min(50, datum.url?.length))
       }
       if (datum.title) {
-        label = `${label} ${datum.title}`
+        label = `${label}: ${datum.title}`
       }
       return label
     case 'Medium':
-      return datum.type || datum.name || '***'
+      return `${datum.type}: ${datum.name || '***'}`
     case 'Organization':
       return datum.name
     case 'Platform':
@@ -49,8 +49,6 @@ const sizeFromNode = node => {
 const colorFromNode = node => {
   const { type } = node
   switch (type) {
-    case 'Appearance':
-      return '#96F'
     case 'AuthorContent':
       return '#009'
     case 'Claim':
@@ -59,6 +57,8 @@ const colorFromNode = node => {
       return node.datum.type === 'post'
              ? '#06F'
              : '#F6F'
+    case 'Link':
+      return '#96F'
     case 'Medium':
       return '#CF6'
     case 'Organization':

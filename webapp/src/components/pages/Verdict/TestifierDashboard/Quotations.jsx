@@ -3,27 +3,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
-import AppearanceItem from 'components/layout/AppearanceItem'
+import LinkItem from 'components/layout/LinkItem'
 import Loader from 'components/layout/LoadMore'
 import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
-import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
+import selectSortedLinksByVerdictId from 'selectors/selectSortedLinksByVerdictId'
 
 
 export default () => {
   const dispatch = useDispatch()
   const { verdictId } = useParams()
 
-
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
   const { claimId, contentId } = verdict || {}
 
-  const appearances = useSelector(state =>
-    selectSortedAppearancesByVerdictId(state, verdictId))
-  const appearancesSortedByShareCount = useMemo(() =>
-    appearances?.sort((a, b) =>
-      b.quotingContent.totalShares - a.quotingContent.totalShares)
-    , [appearances])
+
+  const links = useSelector(state =>
+    selectSortedLinksByVerdictId(state, verdictId))
+  const linksSortedByShareCount = useMemo(() =>
+    links?.sort((a, b) =>
+      b.linkingContent.totalShares - a.linkingContent.totalShares)
+    , [links])
 
   const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
@@ -40,30 +40,29 @@ export default () => {
   ), [])
 
   const renderItem = useCallback(item => (
-    <AppearanceItem
-      appearance={item}
+    <LinkItem
+      link={item}
       key={item.id}
     />
   ), [])
 
 
   useEffect(() => {
-    let apiPath = `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
+    let apiPath = `/links${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
     if (claimId) {
-      apiPath = `${apiPath}&quotedClaimId=${claimId}`
+      apiPath = `${apiPath}&linkedClaimId=${claimId}`
     } else if (contentId) {
-      apiPath = `${apiPath}&quotedContentId=${contentId}`
+      apiPath = `${apiPath}&linkedContentId=${contentId}`
     }
     dispatch(requestData({
       apiPath: apiPath
     }))
   }, [areDataAnonymized, claimId, contentId, dispatch, verdictId])
 
-
-  if (!appearances.length) {
+  if (!links.length) {
     return (
       <div className='testifier-dashboard empty'>
-        {'No appearance recorded for this content.'}
+        {'No link recorded for this content.'}
       </div>
     )
   }
@@ -71,7 +70,7 @@ export default () => {
   return (
     <Loader
       Button={showMoreButton}
-      items={appearancesSortedByShareCount}
+      items={linksSortedByShareCount}
       loadLessText='Show less'
       loadMoreText='Show more'
       renderItem={renderItem}

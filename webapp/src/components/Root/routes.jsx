@@ -8,11 +8,11 @@ import withRequiredLogin from 'components/hocs/withRequiredLogin'
 import withRoles from 'components/hocs/withRoles'
 import About from 'components/pages/About'
 import Account from 'components/pages/Account'
-import Appearance from 'components/pages/Appearance'
 import Content from 'components/pages/Content'
 import Exploration from 'components/pages/Exploration'
 import Jobs from 'components/pages/Jobs'
 import Landing from 'components/pages/Landing'
+import Link from 'components/pages/Link'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
 import Sources from 'components/pages/Sources'
@@ -50,19 +50,19 @@ export default [
                        withRoles({
                          creationRoleTypes: ['testifier'],
                          modificationRoleTypes: ['testifier']})
-                       )(Appearance),
+                       )(Link),
     exact: true,
-    path: `/appearances/:appearanceId${formMatch}`,
-    title: 'Appearance',
+    path: `/links/:linkId${formMatch}`,
+    title: 'Link',
   },
   {
     component: compose(withRequiredLogin,
                        withRoles({
                          accessRoleTypes: ['inspector']})
-                       )(Appearance),
+                       )(Link),
     exact: true,
-    path: `/appearances/:appearanceId/interactions`,
-    title: 'Appearance Interactions',
+    path: `/links/:linkId/interactions`,
+    title: 'Link Interactions',
   },
   {
     component: compose(withRequiredLogin,
@@ -162,12 +162,6 @@ export default [
     component: withOptionalLogin(Verdict),
     exact: true,
     path: `/verdicts/:verdictId(${entityMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`,
-    title: 'Verdict',
-  },
-  {
-    component: withRequiredLogin(Verdict),
-    exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/testimony/appearances/:appearanceId${formMatch}`,
     title: 'Verdict',
   },
   {

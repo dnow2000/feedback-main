@@ -4,23 +4,23 @@ import { useParams } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 import BacklinkItem from 'components/layout/BacklinkItem'
-import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
+import selectSortedLinksByVerdictId from 'selectors/selectSortedLinksByVerdictId'
 
 
 export default () => {
   const dispatch = useDispatch()
   const { verdictId } = useParams()
-  const appearances = useSelector(state =>
-    selectSortedAppearancesByVerdictId(state, verdictId))
+  const links = useSelector(state =>
+    selectSortedLinksByVerdictId(state, verdictId))
   const [currentPage, setPage] = useState(1)
 
-  const appearancesSortedByShareCount = useMemo(() =>
-    appearances?.sort((a, b) =>
-      b.quotingContent.totalShares - a.quotingContent.totalShares)
-    , [appearances])
+  const linksSortedByShareCount = useMemo(() =>
+    links?.sort((a, b) =>
+      b.linkingContent.totalShares - a.linkingContent.totalShares)
+    , [links])
 
-  const topAppearance = appearancesSortedByShareCount[0]
-  const url = topAppearance?.quotingContent?.url
+  const topLink = linksSortedByShareCount[0]
+  const url = topLink?.linkingContent?.url
 
   useEffect(() => {
     dispatch(requestData({

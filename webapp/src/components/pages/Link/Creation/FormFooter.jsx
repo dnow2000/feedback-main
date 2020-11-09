@@ -80,7 +80,7 @@ export default ({
           id="submit-appearance"
           type="submit"
         >
-          Save Appearance
+          Save Link
         </button>
       )}
     </div>

@@ -16,7 +16,7 @@ export const userConfig = {
 }
 
 
-export const appearanceNormalizer = {
+export const linkNormalizer = {
   claim: 'claims',
   content: 'contents',
   testifier: userConfig,
@@ -77,7 +77,7 @@ export const verdictNormalizer = {
   content: 'contents',
   claim: {
     normalizer: {
-      quotedFromAppearances: 'appearances',
+      whereItIsLinkedLinks: 'links',
     },
     stateKey: 'claims',
   },

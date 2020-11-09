@@ -9,10 +9,10 @@ import ThumbImg from 'components/layout/ThumbImg'
 import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
 import { numberShortener } from 'utils/shorteners'
 
-import AppearanceItem  from 'components/layout/AppearanceItem'
+import LinkItem  from 'components/layout/LinkItem'
 
 
-const _ = ({ articleOrVideoContent, appearanceId }) => {
+const _ = ({ articleOrVideoContent, linkId }) => {
   const {
     archiveUrl,
     hostname,
@@ -28,12 +28,12 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
 
 
   const loadMoreAction = useCallback(() => {
-    history.push(`/appearances/${appearanceId}/interactions`)
-  }, [appearanceId, history])
+    history.push(`/links/${linkId}/interactions`)
+  }, [linkId, history])
 
 
   const interactionsConfig = useMemo(() => ({
-    apiPath: `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=SHARE&quotedContentId=${id}&limit=4`
+    apiPath: `/links${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=SHARE&quotedContentId=${id}&limit=4`
   }), [areDataAnonymized, id])
 
 
@@ -44,15 +44,15 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
     [setDisplayInteractions])
 
   const renderInteractions = useCallback(item => (
-    <AppearanceItem
-      appearance={item}
+    <LinkItem
+      link={item}
       key={item.id}
     />
   ), [])
 
-  const shareAppearances = useSelector(state =>
+  const shareLinks = useSelector(state =>
     selectEntitiesByKeyAndJoin(state,
-                               'appearances',
+                               'links',
                                { key: 'quotedContentId', value: id }), [id])
 
 
@@ -113,7 +113,7 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
       {displayInteractions && (
         <Items
           config={interactionsConfig}
-          itemsCollection={shareAppearances}
+          itemsCollection={shareLinks}
           limit={4}
           loadMoreAction={loadMoreAction}
           renderItem={renderInteractions}
@@ -124,7 +124,7 @@ const _ = ({ articleOrVideoContent, appearanceId }) => {
 }
 
 _.propTypes = {
-  appearanceId: PropTypes.string.isRequired,
+  linkId: PropTypes.string.isRequired,
   articleOrVideoContent: PropTypes.shape({
     archiveUrl: PropTypes.string,
     id: PropTypes.string,
