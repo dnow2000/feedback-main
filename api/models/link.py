@@ -16,6 +16,11 @@ class LinkType(enum.Enum):
     BACKLINK = 'backlink'
 
 
+class LinkSubType(enum.Enum):
+    QUOTATION = 'quotation'
+    SHARE = 'share'
+
+
 class StanceType(enum.Enum):
     ENDORSEMENT = {
         'label': 'endorsement',
@@ -30,10 +35,6 @@ class StanceType(enum.Enum):
         'value': -1
     }
 
-
-class LinkSubType(enum.Enum):
-    QUOTATION = 'quotation'
-    SHARE = 'share'
 
 
 class Link(ApiHandler,
