@@ -8,7 +8,7 @@ import ClaimItem from 'components/layout/ClaimItem'
 import ContentItem from 'components/layout/ContentItem'
 import useLocationURL from 'components/uses/useLocationURL'
 import selectCurrentUserReviewByContentId from 'selectors/selectCurrentUserReviewByContentId'
-import selectCurrentUserAppearanceByClaimId from 'selectors/selectCurrentUserAppearanceByClaimId'
+import selectCurrentUserLinkByClaimId from 'selectors/selectCurrentUserLinkByClaimId'
 import selectRoleByUserIdAndType from 'selectors/selectRoleByUserIdAndType'
 
 
@@ -47,8 +47,8 @@ export default ({ source }) => {
   const { id: currentUserReviewId } = useSelector(state =>
     selectCurrentUserReviewByContentId(state, id)) || {}
 
-    const { id: currentUserAppearanceId } = useSelector(state =>
-      selectCurrentUserAppearanceByClaimId(state, id)) || {}
+    const { id: currentUserLinkId } = useSelector(state =>
+      selectCurrentUserLinkByClaimId(state, id)) || {}
 
   const sourceJoin = { key: `${type}Id`, value: id }
   const { id: verdictId } = useSelector(state =>
@@ -91,12 +91,12 @@ export default ({ source }) => {
       {canTestify && (
         <NavLink
           to={
-            currentUserAppearanceId
-              ? `/appearances/${currentUserAppearanceId}`
-              : `/appearance/creation?${type}Id=${id}`
+            currentUserLinkId
+              ? `/links/${currentUserLinkId}`
+              : `/links/creation?${type}Id=${id}`
           }
         >
-          {currentUserAppearanceId ? 'See your' : 'Write an'} appearance
+          {currentUserLinkId ? 'See your' : 'Write an'} link
         </NavLink>
       )}
     </Item>

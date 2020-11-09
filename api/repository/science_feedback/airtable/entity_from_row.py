@@ -9,7 +9,7 @@ from models.medium import Medium
 from models.organization import Organization
 from models.role import Role, RoleType
 from models.user import User
-from models.verdict import Verdict, PostType
+from models.verdict import Verdict
 from utils.config import  API_URL, \
                           APP_NAME, \
                           COMMAND_NAME, \
@@ -20,6 +20,84 @@ from utils.date import strptime
 from utils.password import create_random_password
 
 
+def author_from_row(row, index=None):
+    chunks = row.get('Name', '').split(' ')
+    first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
+                 else chunks[0]
+    last_name = 'Author{}'.format(index) if IS_DEVELOPMENT \
+                else ' '.join(chunks[1:]).replace('\'', '')
+    user_dict = {
+        '__SEARCH_BY__': 'email',
+        'email': '{}.{}@{}.{}'.format(first_name.lower(),
+                                      last_name.lower(),
+                                      APP_NAME,
+                                      TLD),
+        'firstName': first_name,
+        'lastName': last_name,
+        'scienceFeedbackIdentifier': row['airtableId']
+    }
+
+    user = User.create_or_modify(user_dict)
+    if not user.id:
+        user.set_password(DEFAULT_USER_PASSWORD \
+        if IS_DEVELOPMENT else create_random_password())
+
+    role = Role.create_or_modify({
+        '__SEARCH_BY__': ['type', 'userId'],
+        'type': RoleType.AUTHOR,
+        'userId': humanize(user.id)
+    })
+    user.roles = user.roles + [role]
+
+    return user
+
+
+def claim_from_row(row, unused_index=None):
+    text = row.get('Claim checked (or Headline if no main claim)')
+    if not text:
+        return None
+
+    claim_dict = {
+        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
+        'scienceFeedbackIdentifier': row['airtableId'],
+        'text': text
+    }
+
+    return Claim.create_or_modify(claim_dict)
+
+
+def editor_from_row(row, index=None):
+    chunks = row.get('Name', '').split(' ')
+    first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
+                 else chunks[0]
+    last_name = 'Editor{}'.format(index) if IS_DEVELOPMENT \
+                else ' '.join(chunks[1:]).replace('\'', '')
+    user_dict = {
+        '__SEARCH_BY__': 'email',
+        'email': row.get('Email',
+                         '{}.{}@{}.{}'.format(first_name.lower(),
+                                              last_name.lower(),
+                                              APP_NAME,
+                                              TLD)),
+        'firstName': first_name,
+        'lastName': last_name,
+        'scienceFeedbackIdentifier': row['airtableId']
+    }
+
+    user = User.create_or_modify(user_dict)
+    if not user.id:
+        user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
+
+    role = Role.create_or_modify({
+        '__SEARCH_BY__': ['type', 'userId'],
+        'type': RoleType.EDITOR,
+        'userId': humanize(user.id)
+    })
+    user.roles = user.roles + [role]
+
+    return user
+
+
 def link_from_row(row, unused_index=None):
     reviewed_items = row.get('Item reviewed')
     if not reviewed_items:
@@ -28,7 +106,9 @@ def link_from_row(row, unused_index=None):
     linking_content = Content.create_or_modify({
         '__SEARCH_BY__': 'url',
         # TODO : needs a better resolution for the type
-        'type': ContentType.VIDEO if row['url'].startswith('https://www.youtube.com/watch?v') else ContentType.ARTICLE,
+        'type': ContentType.VIDEO
+                if row['url'].startswith('https://www.youtube.com/watch?v') \
+                else ContentType.ARTICLE,
         'url': row['url'].strip()
     })
     medium_science_feedback_ids = row.get('Outlet')
@@ -84,84 +164,6 @@ def link_from_row(row, unused_index=None):
         'testifier': testifier,
         'type': LinkType.APPEARANCE,
     })
-
-
-def author_from_row(row, index=None):
-    chunks = row.get('Name', '').split(' ')
-    first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
-                 else chunks[0]
-    last_name = 'Author{}'.format(index) if IS_DEVELOPMENT \
-                else ' '.join(chunks[1:]).replace('\'', '')
-    user_dict = {
-        '__SEARCH_BY__': 'email',
-        'email': '{}.{}@{}.{}'.format(
-            first_name.lower(),
-            last_name.lower(),
-            APP_NAME,
-            TLD),
-        'firstName': first_name,
-        'lastName': last_name,
-        'scienceFeedbackIdentifier': row['airtableId']
-    }
-
-    user = User.create_or_modify(user_dict)
-    if not user.id:
-        user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
-
-    role = Role.create_or_modify({
-        '__SEARCH_BY__': ['type', 'userId'],
-        'type': RoleType.AUTHOR,
-        'userId': humanize(user.id)
-    })
-    user.roles = user.roles + [role]
-
-    return user
-
-
-def claim_from_row(row, unused_index=None):
-    text = row.get('Claim checked (or Headline if no main claim)')
-    if not text:
-        return None
-
-    claim_dict = {
-        '__SEARCH_BY__': 'scienceFeedbackIdentifier',
-        'scienceFeedbackIdentifier': row['airtableId'],
-        'text': text
-    }
-
-    return Claim.create_or_modify(claim_dict)
-
-
-def editor_from_row(row, index=None):
-    chunks = row.get('Name', '').split(' ')
-    first_name = '{}test'.format(COMMAND_NAME).title() if IS_DEVELOPMENT \
-                 else chunks[0]
-    last_name = 'Editor{}'.format(index) if IS_DEVELOPMENT \
-                else ' '.join(chunks[1:]).replace('\'', '')
-    user_dict = {
-        '__SEARCH_BY__': 'email',
-        'email': row.get('Email',
-                         '{}.{}@{}.{}'.format(first_name.lower(),
-                                              last_name.lower(),
-                                              APP_NAME,
-                                              TLD),
-        'firstName': first_name,
-        'lastName': last_name,
-        'scienceFeedbackIdentifier': row['airtableId']
-    }
-
-    user = User.create_or_modify(user_dict)
-    if not user.id:
-        user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
-
-    role = Role.create_or_modify({
-        '__SEARCH_BY__': ['type', 'userId'],
-        'type': RoleType.EDITOR,
-        'userId': humanize(user.id)
-    })
-    user.roles = user.roles + [role]
-
-    return user
 
 
 def outlet_from_row(row, unused_index=None):

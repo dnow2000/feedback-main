@@ -101,7 +101,7 @@ def sync_for(name,
         if name == 'verdict' and formula is not None:
             entities = claim_verdicts_from_airtable(verdicts_to_sync=entities)
 
-        # Sync related contents for appearances
+        # Sync related contents for links
         if name == 'link' and formula is not None:
             for entity in entities:
                 sync_content(entity.linkingContent)

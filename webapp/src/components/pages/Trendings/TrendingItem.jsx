@@ -73,9 +73,9 @@ export default ({ trending }) => {
       </button>
       {testifierRole && (<NavLink
         className="button is-primary thin"
-        to={`/appearances/creation?type=${type}&sourceId=${sourceId}`}
+        to={`/links/creation?type=${type}&sourceId=${sourceId}`}
       >
-        Look for appearances
+        Look for links
       </NavLink>)}
       {editorRole && (<NavLink
         className="button is-primary thin"

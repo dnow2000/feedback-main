@@ -6,7 +6,7 @@ import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 import LinkItem from 'components/layout/LinkItem'
 import Loader from 'components/layout/LoadMore'
 import selectDataAreAnonymized from 'selectors/selectDataAreAnonymized'
-import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
+import selectSortedLinksByVerdictId from 'selectors/selectSortedLinksByVerdictId'
 
 
 export default () => {
@@ -18,12 +18,12 @@ export default () => {
   const { claimId, contentId } = verdict || {}
 
 
-  const appearances = useSelector(state =>
-    selectSortedAppearancesByVerdictId(state, verdictId))
-  const appearancesSortedByShareCount = useMemo(() =>
-    appearances?.sort((a, b) =>
+  const links = useSelector(state =>
+    selectSortedLinksByVerdictId(state, verdictId))
+  const linksSortedByShareCount = useMemo(() =>
+    links?.sort((a, b) =>
       b.linkingContent.totalShares - a.linkingContent.totalShares)
-    , [appearances])
+    , [links])
 
   const areDataAnonymized = useSelector(selectDataAreAnonymized)
 
@@ -41,14 +41,14 @@ export default () => {
 
   const renderItem = useCallback(item => (
     <LinkItem
-      appearance={item}
+      link={item}
       key={item.id}
     />
   ), [])
 
 
   useEffect(() => {
-    let apiPath = `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
+    let apiPath = `/links${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
     if (claimId) {
       apiPath = `${apiPath}&linkedClaimId=${claimId}`
     } else if (contentId) {
@@ -59,10 +59,10 @@ export default () => {
     }))
   }, [areDataAnonymized, claimId, contentId, dispatch, verdictId])
 
-  if (!appearances.length) {
+  if (!links.length) {
     return (
       <div className='testifier-dashboard empty'>
-        {'No appearance recorded for this content.'}
+        {'No link recorded for this content.'}
       </div>
     )
   }
@@ -70,7 +70,7 @@ export default () => {
   return (
     <Loader
       Button={showMoreButton}
-      items={appearancesSortedByShareCount}
+      items={linksSortedByShareCount}
       loadLessText='Show less'
       loadMoreText='Show more'
       renderItem={renderItem}

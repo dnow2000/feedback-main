@@ -25,7 +25,7 @@ const _ = () => {
     apiPath: `/links${areDataAnonymized ? '/anonymized' : ''}?type=APPEARRANCE&subType=SHARE&linkedContentId=${linkingContentId}`
   }), [areDataAnonymized, linkingContentId])
 
-  const shareAppearances = useSelector(state =>
+  const shareLinks = useSelector(state =>
     selectEntitiesByKeyAndJoin(state,
                                'links',
                                { key: 'linkedContentId', value: linkingContentId }), [linkingContentId])
@@ -58,7 +58,7 @@ const _ = () => {
           <section>
             <Items
               config={config}
-              itemsCollection={shareAppearances}
+              itemsCollection={shareLinks}
               renderItem={renderItem}
             />
           </section>

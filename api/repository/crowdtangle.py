@@ -52,7 +52,7 @@ def attach_crowdtangle_entities_from_content(content, request_start_date):
             'crowdtangleIdentifier': crowdtangle_identifier,
             'linkedContent': content,
             'linkingContent': content_post,
-            'subType': LinkType.SHARE,
+            'subType': LinkSubType.SHARE,
             'testifier': crowdtangle_user,
             'type': LinkType.APPEARANCE
         })

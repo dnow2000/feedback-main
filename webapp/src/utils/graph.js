@@ -49,8 +49,6 @@ const sizeFromNode = node => {
 const colorFromNode = node => {
   const { type } = node
   switch (type) {
-    case 'Appearance':
-      return '#96F'
     case 'AuthorContent':
       return '#009'
     case 'Claim':
@@ -59,6 +57,8 @@ const colorFromNode = node => {
       return node.datum.type === 'post'
              ? '#06F'
              : '#F6F'
+    case 'Link':
+      return '#96F'
     case 'Medium':
       return '#CF6'
     case 'Organization':

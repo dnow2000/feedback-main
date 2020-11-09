@@ -14,13 +14,13 @@ export default props => {
   const history = useHistory()
   const { verdictId } = useParams()
 
-  const { isPending } = useSelector(state => state.requests['/appearances']) || {}
+  const { isPending } = useSelector(state => state.requests['/links']) || {}
 
   const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...getState() })
 
 
   const handleCancel = useCallback(() => {
-    history.push(`/verdicts/${verdictId}/appearances`)
+    history.push(`/verdicts/${verdictId}/links`)
     dispatch(closeModal('main'))
   }, [dispatch, history, verdictId])
 

@@ -1,11 +1,11 @@
-describe('When arriving on the verdict appearances page', () => {
+describe('when arriving on the verdict links page', () => {
   beforeEach(() => {
     cy.visit('/landing')
     cy.get('.verdict-item').first().click({force: true})
   })
 
-  it('should be able navigate to verdict-item/appearances page', () => {
-    cy.url().should('include', '/appearances')
+  it('should be able navigate to verdict-item/links page', () => {
+    cy.url().should('include', '/links')
   })
 
   it('should have a verdict-item with details', () => {
@@ -14,15 +14,15 @@ describe('When arriving on the verdict appearances page', () => {
   })
 
   it('should have a links tab', () => {
-    cy.get('.tab.tab-appearances').contains(/.*\sLinks/)
+    cy.get('.tab.tab-links').contains(/.*\sLinks/)
   })
 
-  it('should have one or more appearances', () => {
-    cy.get('.appearance-item').its('length').should('be.gte', 1)
+  it('should have one or more links', () => {
+    cy.get('.link-item').its('length').should('be.gte', 1)
   })
 })
 
-describe('When click on one appearance item', () => {
+describe('when click on one link item', () => {
   beforeEach(() => {
     cy.visit('/landing')
     cy.get('.verdict-item').first().click({force: true})
@@ -30,7 +30,7 @@ describe('When click on one appearance item', () => {
 
   /* TODO manage that with the sf sandbox
   it('should have an archive link', () => {
-    cy.get('.appearance-item')
+    cy.get('.link-item')
       .first()
       .invoke('attr', 'href')
       .should('not.be.empty')
@@ -38,18 +38,18 @@ describe('When click on one appearance item', () => {
   */
 
   it('should have a thumb image', () => {
-    cy.get('.appearance-item').within(() => {
-      cy.get('.appearance-item-img')
+    cy.get('.link-item').within(() => {
+      cy.get('.link-item-img')
         .first()
         .should('have.attr', 'src')
     })
   })
 
-  it('should have the appearance details', () => {
-    cy.get('.appearance-item').within(() => {
-      cy.get('.appearance-title').first().should('exist')
-      cy.get('.appearance-source').first().should('exist')
-      cy.get('.appearance-url').first().should('exist')
+  it('should have the link details', () => {
+    cy.get('.link-item').within(() => {
+      cy.get('.link-title').first().should('exist')
+      cy.get('.link-source').first().should('exist')
+      cy.get('.link-url').first().should('exist')
     })
   })
 })

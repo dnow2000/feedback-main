@@ -8,7 +8,7 @@ import Fields from './Fields'
 export default ({ handleSubmit }) => {
 
   const { isPending } = useSelector(state =>
-    state.requests['/appearances']) || {}
+    state.requests['/links']) || {}
 
   const handleSubmitWithPreventDefault = useCallback(event => {
     event.preventDefault()
@@ -24,7 +24,7 @@ export default ({ handleSubmit }) => {
       onSubmit={handleSubmitWithPreventDefault}
     >
       <div className="title">
-        Declare the new appearance:
+        Declare the new link:
       </div>
       <Fields />
       <Controls />

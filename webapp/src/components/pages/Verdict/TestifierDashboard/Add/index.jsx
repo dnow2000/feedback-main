@@ -25,20 +25,20 @@ export default () => {
   const handleFormSubmit = useCallback(formValues =>
     new Promise(resolve =>
       dispatch(requestData({
-        apiPath: '/appearances',
+        apiPath: '/links',
         body: formValues,
         handleFail: (beforeState, action) =>
-          resolve(requests(beforeState.requests, action)['/appearances'].errors),
+          resolve(requests(beforeState.requests, action)['/links'].errors),
         handleSuccess: () => {
           resolve()
           dispatch(closeModal('main'))
-          history.push(`/verdicts/${verdictId}/appearances`)
+          history.push(`/verdicts/${verdictId}/links`)
         },
         method: 'POST'
       }))), [dispatch, history, verdictId])
 
   useEffect(() => {
-    if (appearanceId === 'creation') {
+    if (linkId === 'creation') {
       dispatch(showModal(
         'main',
         <ReactFinalForm
@@ -48,15 +48,15 @@ export default () => {
         />, { isUnclosable: true }))
         return
     }
-  }, [appearanceId, dispatch, handleFormSubmit, initialValues])
+  }, [dispatch, handleFormSubmit, initialValues, linkId])
 
   return (
     <NavLink
       className="add"
       type="button"
-      to={`/verdicts/${verdictId}/appearances/creation`}
+      to={`/verdicts/${verdictId}/links/creation`}
     >
-      + Add a new appearance
+      + Add a new link
     </NavLink>*
   )
 }

@@ -27,7 +27,7 @@ const ItemsByName = {
   ClaimItem
 }
 
-const API_PATH = '/appearances'
+const API_PATH = '/links'
 
 
 export default () => {
@@ -39,7 +39,7 @@ export default () => {
   const type = locationURL.searchParams.get('type')
   const Item = ItemsByName[`${type[0].toUpperCase()}${type.slice(1)}Item`]
   const params = useParams()
-  const { appearanceId } = params
+  const { linkId } = params
   const {
     isCreatedEntity,
     isModifiedEntity,
@@ -49,23 +49,21 @@ export default () => {
 
   const { isPending } = useSelector(state => state.requests['/contents']) || {}
 
-  const appearance = useSelector(state =>
-    selectEntityByKeyAndId(state, 'appearances', appearanceId)) || {}
+  const link = useSelector(state =>
+    selectEntityByKeyAndId(state, 'links', linkId)) || {}
 
 
   const trending = useSelector(state =>
-    selectEntitiesByKeyAndJoin(
-      state,
-      'trendings',
-      { key: 'id', value: sourceId }
-  )[0])
+    selectEntitiesByKeyAndJoin(state,
+                               'trendings',
+                               { key: 'id', value: sourceId })[0])
   const itemProps = useMemo(() => ({ [type]: trending }), [trending, type])
 
 
   const handleSubmit = useCallback(formValues => {
     let apiPath = API_PATH
     if (isModifiedEntity) {
-      apiPath = `${apiPath}/${appearanceId}`
+      apiPath = `${apiPath}/${linkId}`
     }
     return new Promise(resolve => {
       dispatch(requestData({
@@ -76,12 +74,12 @@ export default () => {
         handleSuccess: (state, action) => {
           const { payload: { datum } } = action
           resolve()
-          history.push(`/appearances/${datum.id}`)
+          history.push(`/links/${datum.id}`)
         },
         method
       }))
     })
-  }, [appearanceId, dispatch, history, method, isModifiedEntity])
+  }, [linkId, dispatch, history, method, isModifiedEntity])
 
   const renderForm = useCallback(formProps => {
     const { form: { reset }, handleSubmit, validating } = formProps
@@ -107,9 +105,9 @@ export default () => {
   useEffect(() => {
     if (isCreatedEntity) return
     dispatch(requestData({
-      apiPath: `/appearances/${appearanceId}`
+      apiPath: `/links/${linkId}`
     }))
-  }, [appearanceId, dispatch, isCreatedEntity])
+  }, [linkId, dispatch, isCreatedEntity])
 
   useEffect(() => {
     if (!sourceId) return
@@ -138,7 +136,7 @@ export default () => {
             </h2>
             <Form
               decorators={[scrapDecorator]}
-              initialValues={appearance || false}
+              initialValues={link || false}
               onSubmit={handleSubmit}
               render={renderForm}
             />
