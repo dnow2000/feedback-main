@@ -49,7 +49,7 @@ const _ = () => {
                 replace
                 to={tab.location}
               >
-                { capitalizeAll(tab.name, "-") }
+                { capitalizeAll(tab.name) }
               </NavLink>
             ))}
           </div>

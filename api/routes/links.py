@@ -52,8 +52,8 @@ def link_includes_from(user, sub_type=None):
         'linkingContentId',
         'subType',
         'stance',
-        'testifierId'
-        'type',
+        'testifierId',
+        'type'
     ]
 
 

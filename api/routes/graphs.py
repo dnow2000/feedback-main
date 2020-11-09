@@ -6,17 +6,17 @@ from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import load_or_404
 
 from models.graph import Graph
-from repository.roles import check_user_has_role
+from repository.roles import are_data_anonymized_from
 
 
 @login_required
 @app.route('/graphs/<id_key>/<entity_id>', methods=['GET'])
 def get_graph(id_key, entity_id):
-    is_anonymised = not check_user_has_role(current_user, 'INSPECTOR')
+    are_data_anonymized = are_data_anonymized_from(current_user)
     graph = Graph.create_or_modify({
         '__SEARCH_BY__' : [id_key, 'isAnonymized'],
         id_key: entity_id,
-        'isAnonymized': is_anonymised
+        'isAnonymized': are_data_anonymized
     })
     if not graph.nodes:
         graph.parse()
