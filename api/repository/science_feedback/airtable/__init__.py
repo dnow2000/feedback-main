@@ -22,7 +22,7 @@ NAME_TO_AIRTABLE = {
     'claim': 'Items for review / reviewed',
     'social': 'Social Media Influent.',
     'outlet': 'Outlets',
-    'link': 'Appearance',
+    'link': 'Appearances',
     'verdict': 'Reviews / Fact-checks',
 }
 

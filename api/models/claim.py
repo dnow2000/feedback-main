@@ -15,11 +15,11 @@ class Claim(ApiHandler,
 
     @property
     def linksCount(self):
-        return len(self.quotedFromAppearances)
+        return len(self.whereItIsLinkedLinks)
 
     @property
     def sharesCount(self):
         return sum([
-            appearance.quotingContent.totalShares or 0
-            for appearance in self.quotedFromAppearances
+            link.linkingContent.totalShares or 0
+            for link in self.whereItIsLinkedLinks
         ])

@@ -77,11 +77,7 @@ export const verdictNormalizer = {
   content: 'contents',
   claim: {
     normalizer: {
-<<<<<<< HEAD
-      quotedFromAppearances: 'appearances',
-=======
-      whereItIsLinkedLinks: 'appearances',
->>>>>>> 43c7b85 (prepared front for link)
+      whereItIsLinkedLinks: 'links',
     },
     stateKey: 'claims',
   },

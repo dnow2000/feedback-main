@@ -13,15 +13,10 @@ export default () => {
   const dispatch = useDispatch()
   const { verdictId } = useParams()
 
-<<<<<<< HEAD:webapp/src/components/pages/Verdict/TestifierDashboard/Quotations.jsx
-
   const verdict =  useSelector(state =>
     selectEntityByKeyAndId(state, 'verdicts', verdictId))
   const { claimId, contentId } = verdict || {}
-=======
-  const { claimId } = useSelector(state =>
-    selectEntityByKeyAndId(state, 'verdicts', verdictId)) || {}
->>>>>>> 43c7b85 (prepared front for link):webapp/src/components/pages/Verdict/TestifierDashboard/Citations.jsx
+
 
   const appearances = useSelector(state =>
     selectSortedAppearancesByVerdictId(state, verdictId))
@@ -53,24 +48,16 @@ export default () => {
 
 
   useEffect(() => {
-<<<<<<< HEAD:webapp/src/components/pages/Verdict/TestifierDashboard/Quotations.jsx
     let apiPath = `/appearances${areDataAnonymized ? '/anonymized' : ''}?type=APPEARANCE&subType=QUOTATION`
     if (claimId) {
-      apiPath = `${apiPath}&quotedClaimId=${claimId}`
+      apiPath = `${apiPath}&linkedClaimId=${claimId}`
     } else if (contentId) {
-      apiPath = `${apiPath}&quotedContentId=${contentId}`
+      apiPath = `${apiPath}&linkedContentId=${contentId}`
     }
     dispatch(requestData({
       apiPath: apiPath
     }))
   }, [areDataAnonymized, claimId, contentId, dispatch, verdictId])
-=======
-    dispatch(requestData({
-      apiPath: `/links?linkedClaimId${claimId}&type=appearance`
-    }))
-  }, [claimId, dispatch])
->>>>>>> 43c7b85 (prepared front for link):webapp/src/components/pages/Verdict/TestifierDashboard/Citations.jsx
-
 
   if (!appearances.length) {
     return (
