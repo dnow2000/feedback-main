@@ -60,7 +60,7 @@ services:
               cd /opt/api;
               celery --app=tasks beat \
                      --loglevel=INFO;"
-    container_name: ${APP_NAME}-apischedule-serve-development
+    container_name: ${APP_NAME}-apischeduler-serve-development
     depends_on:
       - apiworker-serve-development
     env_file: .env
@@ -80,9 +80,10 @@ services:
                                      -- \
               celery --app=tasks worker \
                      --concurrency=1 \
+                     --gid=nogroup \
                      --loglevel=INFO \
-                     --uid=nobody \
-                     --gid=nogroup;"
+                     -Q try \
+                     --uid=nobody;"
     container_name: ${APP_NAME}-apiworker-serve-development
     depends_on:
       - apidb-serve-development

@@ -16,7 +16,6 @@ def import_commands():
     import commands.graph
     import commands.humanize
     import commands.request
-
     import commands.sandbox
     import commands.screenshotmachine
-    import commands.tasks
+    import commands.task

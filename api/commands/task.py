@@ -5,6 +5,7 @@ from flask import current_app as app
 from flask_script import Command
 
 from tasks import celery_app, import_tasks
+from utils.celery import tasks_from
 from utils.config import COMMAND_NAME
 
 
@@ -17,10 +18,16 @@ class TaskCommand(Command):
 
     def run(self, args):
         import_tasks()
+
         if not args:
             task_names = [key for key in celery_app.tasks.keys() if not key.startswith('celery.')]
-            print('You need to choose a task name among: {}'.format(', '.join(task_names)))
+            print('You need to choose a task name among: \n {}'.format(',\n '.join(task_names)))
             return
+
+        if args[0] == 'list':
+            print('III')
+            print(tasks_from(celery_app))
+
 
         for (task_name, task) in celery_app.tasks.items():
             if task_name == args[0]:
@@ -28,3 +35,6 @@ class TaskCommand(Command):
                     getattr(task, args[1])(*args[2:])
                 else:
                     print('You selected the {}'.format(task))
+                return
+
+        print('Did not found a task with that clue.')

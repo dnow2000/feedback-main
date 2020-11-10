@@ -24,6 +24,7 @@ def import_routes():
     import routes.sign
     import routes.statistics
     import routes.tags
+    import routes.tasks
     import routes.trendings
     import routes.users
     import routes.verdicts

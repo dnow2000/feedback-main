@@ -4,13 +4,14 @@ from celery.signals import task_postrun, task_prerun
 from datetime import datetime
 from flask import Flask
 
+import tasks.celeryconfig
 from utils.setup import setup
 
 
-celery_app = celery.Celery('{}-jobs'.format(os.environ.get('APP_NAME')),
-                           backend=os.environ.get('REDIS_URL'),
-                           broker=os.environ.get('REDIS_URL'))
-
+celery_app = celery.Celery('{}-tasks'.format(os.environ.get('APP_NAME')))
+                           #backend=os.environ.get('REDIS_URL'),
+                           #broker=os.environ.get('REDIS_URL'))
+celery_app.config_from_object(tasks.celeryconfig)
 BaseTask = celery_app.Task
 
 class AppTask(BaseTask):
@@ -37,6 +38,7 @@ celery_app.Task = AppTask
 def import_tasks():
     import tasks.buzzsumo
     import tasks.crowdtangle
+    import tasks.hello
     import tasks.graph
     import tasks.newspaper
     import tasks.sandbox

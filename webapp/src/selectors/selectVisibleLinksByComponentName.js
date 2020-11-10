@@ -55,6 +55,12 @@ export const links = [
     visible: (currentRoles, currentUser) => currentUser
   }
   */
+  {
+    componentNames: ['Menu'],
+    label: () => 'Tasks',
+    path: '/tasks',
+    visible: visibleFor(['admin'])
+  }
 ]
 
 

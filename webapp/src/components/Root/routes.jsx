@@ -16,6 +16,7 @@ import Link from 'components/pages/Link'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
 import Sources from 'components/pages/Sources'
+import Tasks from 'components/pages/Tasks'
 import User from 'components/pages/User'
 import Users from 'components/pages/Users'
 import Verdict from 'components/pages/Verdict'
@@ -81,7 +82,12 @@ export default [
     title: 'Exploration'
   },
   {
-    component: Jobs,
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['admin'],
+                         creationRoleTypes: ['admin'],
+                         modificationRoleTypes: ['admin']})
+                       )(Jobs),
     exact: true,
     path: '/jobs/:tab(info|list|sync)',
     title: 'Jobs'
@@ -129,6 +135,17 @@ export default [
     exact: true,
     path: '/sources',
     title: 'Sources',
+  },
+  {
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['admin'],
+                         creationRoleTypes: ['admin'],
+                         modificationRoleTypes: ['admin']})
+                       )(Tasks),
+    exact: true,
+    path: '/tasks',
+    title: 'Tasks',
   },
   {
     component: compose(withRequiredLogin,
