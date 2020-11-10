@@ -1,7 +1,7 @@
 """drop HasGraphMixin
 
 Revision ID: 04f018ad7776
-Revises: 94bb38cf4a37
+Revises: 52abc76a7f5c
 Create Date: 2020-11-03 22:01:55.838339
 
 """

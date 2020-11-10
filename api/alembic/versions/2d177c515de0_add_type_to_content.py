@@ -1,7 +1,7 @@
 """add type to content
 
 Revision ID: 2d177c515de0
-Revises: 32516908c7ac
+Revises: 4514d2bb0337
 Create Date: 2020-09-18 13:02:44.140192
 
 """

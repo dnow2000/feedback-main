@@ -1,7 +1,7 @@
 """rename appearance to link table
 
 Revision ID: 94bb38cf4a37
-Revises: 714cff361432
+Revises: 04f018ad7776
 Create Date: 2020-11-03 21:59:30.106668
 
 """

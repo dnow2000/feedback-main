@@ -1,7 +1,7 @@
 """create graph table
 
 Revision ID: 714cff361432
-Revises: 365d6db253f8
+Revises: 50c344148532
 Create Date: 2020-10-28 23:04:22.946360
 
 """
