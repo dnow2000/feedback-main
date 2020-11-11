@@ -15,7 +15,7 @@ const _ = ({ handleSubmit }) => {
       autoComplete="off"
       disabled={isPending}
       noValidate
-      onSubmi={handleSubmit}
+      onSubmit={handleSubmit}
     >
       <Fields />
       <Footer />

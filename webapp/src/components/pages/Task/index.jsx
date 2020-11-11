@@ -2,13 +2,14 @@ import React, { useCallback, useEffect } from 'react'
 import { Form as ReactFinalForm } from 'react-final-form'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
-import { requestData, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
+import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import requests from 'reducers/requests'
 
 import Form from './Form'
+import Status from './Status'
 
 const API_PATH = '/tasks'
 
@@ -17,12 +18,10 @@ export default () => {
   const dispatch = useDispatch()
   const history = useHistory()
   const params = useParams()
-  const { taskUuid } = params
+  const { taskId } = params
 
   const task = useSelector(state =>
-    selectEntitiesByKeyAndJoin(state,
-                               'tasks',
-                               { key: 'uuid', value: taskUuid }))[0] || {}
+    selectEntityByKeyAndId(state, 'tasks', taskId))
 
   const handleSubmit = useCallback(formValues => {
     let apiPath = API_PATH
@@ -47,15 +46,25 @@ export default () => {
 
   useEffect(() => {
     dispatch(requestData({
-      apiPath: `/tasks/${taskUuid}`
+      apiPath: `/tasks/${taskId}`
     }))
-  },  [dispatch, taskUuid])
+  },  [dispatch, taskId])
+
+
+  useEffect(() => {
+    dispatch(requestData({ apiPath: '/taskNameOptions' }))
+  }, [dispatch])
+
 
   return (
     <>
       <Header withLinks />
       <Main className="task">
         <div className="container">
+          <h1 className="title">
+            TASK
+          </h1>
+          <Status task={task} />
           <ReactFinalForm
             initialValues={task}
             onSubmit={handleSubmit}

@@ -26,11 +26,7 @@ import Signin from 'components/pages/Signin'
 import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
 
-import {
-  idFormMatch,
-  idMatch,
-  uuidFormMatch
-} from 'utils/router'
+import { idFormMatch, idMatch } from 'utils/router'
 
 
 export default [
@@ -141,7 +137,7 @@ export default [
     */
     component: Task,
     exact: true,
-    path: `/tasks/:taskUuid${uuidFormMatch}`,
+    path: `/tasks/:taskId${idFormMatch}`,
     title: 'Task',
   },
   {

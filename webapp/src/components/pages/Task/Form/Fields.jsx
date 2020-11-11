@@ -1,17 +1,31 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { useLocation, useParams } from 'react-router-dom'
+import { useFormidable } from 'with-react-formidable'
 
-import SelectField from 'components/layout/form/fields/TexteditorField'
+
+import SelectField from 'components/layout/form/fields/SelectField'
 
 
 export default () => {
-  const taskTypes = useSelector(state => state.data.taskTypes)
+  const location = useLocation()
+  const params = useParams()
+  const {
+    readOnly
+  } = useFormidable(location, params)
+  const taskNameOptions = useSelector(state =>
+    state.data.taskNameOptions)
+
+
+
 
   return (
     <div className="fields">
       <SelectField
-        name="type"
-        options={taskTypes}
+        label="name"
+        name="name"
+        options={taskNameOptions}
+        readOnly={readOnly}
         required
       />
     </div>

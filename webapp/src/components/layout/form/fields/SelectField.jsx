@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 import PropTypes from 'prop-types'
-import React, { useMemo } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { Field } from 'react-final-form'
 
 import {
@@ -12,7 +12,6 @@ import FieldError from '../FieldError'
 
 
 const _ = ({
-  className,
   disabled,
   label,
   name,
@@ -25,49 +24,52 @@ const _ = ({
   const optionsWithPlaceholder = useMemo(() =>
     [{ label: placeholder, value: '' }].concat(options), [options, placeholder])
 
+  if (!options) return null
+
+  const renderSelect = useCallback(({ input, meta }) => (
+    <div className={classnames('select-field', { readonly: readOnly })}>
+      <label htmlFor={name} className={classnames('field-label', { empty: !label })}>
+        {label && (
+          <span>
+            <span>{label}</span>
+            {required && !readOnly && <span className="field-asterisk">*</span>}
+          </span>
+        )}
+      </label>
+      <div className="field-control">
+        <div className="field-value">
+          <div className="field-inner">
+            <select
+              {...input}
+              disabled={disabled || readOnly}
+              id={name}
+              placeholder={placeholder}
+              readOnly={readOnly}
+              required={!!required}
+            >
+              {optionsWithPlaceholder.map((option, index) => (
+                <option
+                  disabled={index === 0}
+                  id={option.value}
+                  key={option.value}
+                  value={option.value}
+                >
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+      <FieldError meta={meta} />
+    </div>
+  ))
 
   return (
     <Field
       name={name}
+      render={renderSelect}
       validate={composeValidators(validate, getRequiredValidate(required))}
-      render={({ input, meta }) => (
-        <div className={classnames('select-field', { readonly: readOnly })}>
-          <label htmlFor={name} className={classnames('field-label', { empty: !label })}>
-            {label && (
-              <span>
-                <span>{label}</span>
-                {required && !readOnly && <span className="field-asterisk">*</span>}
-              </span>
-            )}
-          </label>
-          <div className="field-control">
-            <div className="field-value">
-              <div className="field-inner">
-                <select
-                  {...input}
-                  disabled={disabled || readOnly}
-                  id={name}
-                  placeholder={placeholder}
-                  readOnly={readOnly}
-                  required={!!required}
-                >
-                  {optionsWithPlaceholder.map((option, index) => (
-                    <option
-                      disabled={index === 0}
-                      id={option.value}
-                      key={option.value}
-                      value={option.value}
-                    >
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-          </div>
-          <FieldError meta={meta} />
-        </div>
-      )}
     />
   )
 }
