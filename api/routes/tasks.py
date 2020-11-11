@@ -11,9 +11,9 @@ from utils.celery import as_dict, \
 TASKS_PAGINATION = 10
 
 
-@app.route('/tasks/<uuid:task_id>')
-def get_task(task_id):
-    result = AsyncResult(str(task_id), app=celery_app)
+@app.route('/tasks/<task_uuid>')
+def get_task(task_uuid):
+    result = AsyncResult(str(task_uuid), app=celery_app)
     result.get()
     return jsonify(as_dict(result))
 

@@ -5,7 +5,7 @@ import { selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
 import FeaturedRoute from 'components/Root/FeaturedRoute'
-import { entityMatch } from 'utils/router'
+import { idMatch } from 'utils/router'
 
 import Backlinks from './Backlinks'
 import Graph from './Graph'
@@ -52,7 +52,7 @@ export default () => {
             exact
             featureName={`WITH_VERDICT_${tabName.toUpperCase()}`}
             key={tabName}
-            path={`/verdicts/:verdictId(${entityMatch})/testimony/${tabName}`}
+            path={`/verdicts/:verdictId(${idMatch})/testimony/${tabName}`}
           />
         ))}
       </Switch>

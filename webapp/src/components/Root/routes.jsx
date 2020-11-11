@@ -16,6 +16,7 @@ import Link from 'components/pages/Link'
 import Review from 'components/pages/Review'
 import Reviews from 'components/pages/Reviews'
 import Sources from 'components/pages/Sources'
+import Task from 'components/pages/Task'
 import Tasks from 'components/pages/Tasks'
 import User from 'components/pages/User'
 import Users from 'components/pages/Users'
@@ -25,7 +26,11 @@ import Signin from 'components/pages/Signin'
 import Signup from 'components/pages/Signup'
 import Trendings from 'components/pages/Trendings'
 
-import { entityMatch, formMatch } from 'utils/router'
+import {
+  idFormMatch,
+  idMatch,
+  uuidFormMatch
+} from 'utils/router'
 
 
 export default [
@@ -53,7 +58,7 @@ export default [
                          modificationRoleTypes: ['testifier']})
                        )(Link),
     exact: true,
-    path: `/links/:linkId${formMatch}`,
+    path: `/links/:linkId${idFormMatch}`,
     title: 'Link',
   },
   {
@@ -72,7 +77,7 @@ export default [
                          modificationRoleTypes: ['editor']}),
                        )(Content),
     exact: true,
-    path: `/contents/:contentId${formMatch}`,
+    path: `/contents/:contentId${idFormMatch}`,
     title: 'Content',
   },
   {
@@ -95,7 +100,7 @@ export default [
                          modificationRoleTypes: ['reviewer']}),
                        )(Review),
     exact: true,
-    path: `/reviews/:reviewId${formMatch}`,
+    path: `/reviews/:reviewId${idFormMatch}`,
     title: 'Review',
   },
   {
@@ -124,6 +129,20 @@ export default [
     exact: true,
     path: '/sources',
     title: 'Sources',
+  },
+  {
+    /*
+    component: compose(withRequiredLogin,
+                       withRoles({
+                         accessRoleTypes: ['admin'],
+                         creationRoleTypes: ['admin'],
+                         modificationRoleTypes: ['admin']})
+                       )(Tasks),
+    */
+    component: Task,
+    exact: true,
+    path: `/tasks/:taskUuid${uuidFormMatch}`,
+    title: 'Task',
   },
   {
     /*
@@ -170,7 +189,7 @@ export default [
   {
     component: withOptionalLogin(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId(${entityMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`,
+    path: `/verdicts/:verdictId(${idMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`,
     title: 'Verdict',
   },
   {
@@ -181,7 +200,7 @@ export default [
                          modificationRoleTypes: ['editor']})
                       )(Verdict),
     exact: true,
-    path: `/verdicts/:verdictId${formMatch}/edition`,
+    path: `/verdicts/:verdictId${idFormMatch}/edition`,
     title: 'Verdict',
   },
   {

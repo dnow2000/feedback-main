@@ -7,7 +7,7 @@ import { useFormidable } from 'with-react-formidable'
 import Header from 'components/layout/Header'
 import Main from 'components/layout/Main'
 import { verdictNormalizer } from 'utils/normalizers'
-import { entityMatch, formMatch } from 'utils/router'
+import { idMatch, idFormMatch } from 'utils/router'
 
 import EditorDashboard from './EditorDashboard'
 import TestifierDashboard from './TestifierDashboard'
@@ -42,17 +42,17 @@ export default () => {
             <Route
               component={EditorDashboard}
               exact
-              path={`/verdicts/:verdictId(${formMatch})/edition`}
+              path={`/verdicts/:verdictId(${idFormMatch})/edition`}
             />
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`}
+              path={`/verdicts/:verdictId(${idMatch})/testimony/:tab(quotations|shares|graph|backlinks)?`}
             />
             <Route
               component={TestifierDashboard}
               exact
-              path={`/verdicts/:verdictId(${entityMatch})/testimony/links/:linkId${formMatch}`}
+              path={`/verdicts/:verdictId(${idMatch})/testimony/links/:linkId${idFormMatch}`}
             />
           </Switch>
         </div>

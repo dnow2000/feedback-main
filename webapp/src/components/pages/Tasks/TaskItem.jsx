@@ -1,22 +1,32 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { useHistory } from 'react-router-dom'
 
 
 const _ = ({ task }) => {
   const {
     args,
-    id,
     hostname,
     kwargs,
     name,
     queue,
     state,
-    time
+    time,
+    uuid
   } = task
+  const history = useHistory()
+
+
+  const handlePushToTask = useCallback(() => {
+    history.push(`/tasks/${uuid}`)
+  }, [history, uuid])
 
   return (
-    <div className="task-item">
+    <div
+      className="task-item"
+      onClick={handlePushToTask}
+    >
       <div className="task-identifier">
-        {name} <span className="task-id"> {id} </span>
+        {name} <span className="task-uuid"> {uuid} </span>
       </div>
       <div className="task-state">
         {state}

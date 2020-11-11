@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
 
 
@@ -74,11 +75,11 @@ export default () => {
                     selectedType={locationURL.searchParams.get('state')}
                   />
                   <div className="right">
-                    <button
-                      type="button"
+                    <NavLink
+                      to="/tasks/creation"
                     >
                       Create Task
-                    </button>
+                    </NavLink>
                   </div>
                 </div>
               </>

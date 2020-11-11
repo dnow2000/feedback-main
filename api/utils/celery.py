@@ -62,7 +62,7 @@ def tasks_from(celery_app,
                 task['hostname'] = t['hostname']
                 if hostname and hostname != task['hostname']:
                     continue
-                task['id'] = t['id']
+                task['uuid'] = t['id']
                 task['kwargs'] = t['kwargs']
                 if kwargs and kwargs != task['kwargs']:
                     continue

@@ -15,13 +15,13 @@ const _ = ({
 
   const handleOnChange = useCallback(event =>
     onChange(searchKey, event.target.value)
-  , [onChange])
+  , [onChange, searchKey])
 
   return (
     <select
       className={`types types-${searchKey}`}
       defaultValue={selectedType}
-      onChange={handleOnChange}
+      onBlur={handleOnChange}
     >
       {optionsWithPlaceholder.map(({ label, value }, index) => (
         <option
@@ -38,6 +38,7 @@ const _ = ({
 
 
 _.defaultProps = {
+  placeholder: null,
   searchKey: 'type',
   selectedType: null
 }
@@ -48,6 +49,7 @@ _.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string
   })).isRequired,
+  placeholder: PropTypes.string,
   searchKey: PropTypes.string,
   selectedType: PropTypes.string
 }

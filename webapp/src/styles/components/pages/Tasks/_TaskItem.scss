@@ -3,13 +3,18 @@
   display: flex;
   justify-content: space-around;
 
+  &:hover {
+    background-color: $grey-light;
+    cursor: pointer;
+  }
+
   div {
     @extend .col-tablet-1of5;
     text-align: center;
 
     &.task-identifier {
       text-align: left;
-      .task-id {
+      .task-uuid {
         font-size: 0.5rem;
       }
     }
