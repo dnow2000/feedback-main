@@ -19,6 +19,7 @@ export default () => {
 
 
   const config = useMemo(() => ({
+    activityTag: 'source-items',
     apiPath: `/${collectionName}${search}`,
     normalizer: contentNormalizer
   }), [collectionName, search])

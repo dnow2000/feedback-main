@@ -6,6 +6,7 @@ from sqlalchemy import Column, \
 from sqlalchemy.dialects.postgresql import JSON, UUID
 from sqlalchemy_api_handler import ApiHandler
 
+from domain.keywords import create_ts_vector_and_table_args
 from utils.database import db
 
 
@@ -46,3 +47,10 @@ class Task(ApiHandler,
                        nullable=False)
 
     stopTime = Column(DateTime())
+
+
+ts_indexes = [
+    ('idx_task_fts_args', Task.args),
+    ('idx_task_fts_kwargs', Task.kwargs)
+]
+(Task.__ts_vectors__, Task.__table_args__) = create_ts_vector_and_table_args(ts_indexes)

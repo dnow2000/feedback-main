@@ -31,3 +31,11 @@ def create_filter_matching_all_keywords_in_any_model(get_filter_matching_ts_quer
         for ts_query in ts_queries
     ]
     return and_(*ts_filters)
+
+
+def keywords_filter_from(models, keywords):
+    if not isinstance(models, list):
+        models = [models]
+    return create_filter_matching_all_keywords_in_any_model(
+        create_get_filter_matching_ts_query_in_any_model(*models),
+        keywords)

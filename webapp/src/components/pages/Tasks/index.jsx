@@ -20,6 +20,7 @@ export default () => {
   const locationURL = useLocationURL()
 
   const config = useMemo(() => ({
+    activityTag: '/tasks-items',
     apiPath: `/tasks${locationURL.search}`,
   }), [locationURL])
 
@@ -28,6 +29,37 @@ export default () => {
 
   const taskStateOptions = useSelector(state => state.data.taskStateOptions)
 
+
+  const renderControls = useCallback(({handleChange, locationURL}) => (
+    <>
+      <KeywordsBar
+        onChange={handleChange}
+        selectedKeywords={locationURL.searchParams.get('keywords')}
+      />
+      <div className="search-spacing" />
+      <div className="controls">
+        <Selector
+          onChange={handleChange}
+          options={taskNameOptions}
+          searchKey='name'
+          selectedValue={locationURL.searchParams.get('name')}
+        />
+        <Selector
+          onChange={handleChange}
+          options={taskStateOptions}
+          searchKey='state'
+          selectedValue={locationURL.searchParams.get('state')}
+        />
+        <div className="right">
+          <NavLink
+            to="/tasks/creation"
+          >
+            Create Task
+          </NavLink>
+        </div>
+      </div>
+    </>
+  ), [taskNameOptions, taskStateOptions])
 
   const renderItem = useCallback(item =>
     <TaskItem task={item} />, [])
@@ -46,38 +78,7 @@ export default () => {
         <div className="container">
           <Controls
             config={config}
-            render={({handleChange, locationURL}) => (
-              <>
-                <KeywordsBar
-                  onChange={handleChange}
-                  selectedKeywords={locationURL.searchParams.get('keywords')}
-                />
-                <div className="search-spacing" />
-                <div className="controls">
-                  <Selector
-                    onChange={handleChange}
-                    options={taskNameOptions}
-                    placeholder='Select a task name'
-                    searchKey='name'
-                    selectedValue={locationURL.searchParams.get('name')}
-                  />
-                  <Selector
-                    onChange={handleChange}
-                    options={taskStateOptions}
-                    placeholder='Select a state'
-                    searchKey='state'
-                    selectedValue={locationURL.searchParams.get('state')}
-                  />
-                  <div className="right">
-                    <NavLink
-                      to="/tasks/creation"
-                    >
-                      Create Task
-                    </NavLink>
-                  </div>
-                </div>
-              </>
-            )}
+            render={renderControls}
           />
           <Items
             cols={1}

@@ -15,6 +15,7 @@ export default () => {
 
 
   const config = useMemo(() => ({
+    activityTag: '/trendings-items',
     apiPath: `/trendings${locationURL.search}`,
     resolve: trending => ({ ...trending, id: trending.buzzsumoIdentifier })
   }), [locationURL])

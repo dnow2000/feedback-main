@@ -104,7 +104,7 @@ const _ = ({ task }) => {
 
 _.propTypes = {
   task: PropTypes.shape({
-    args: PropTypes.arrayOf(),
+    args: PropTypes.array,
     celeryUuid: PropTypes.string,
     id: PropTypes.string,
     hostname: PropTypes.string,

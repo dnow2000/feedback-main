@@ -6,4 +6,16 @@
     outline:0px !important;
     -webkit-appearance:none;
   }
+
+  &.empty {
+    color: $grey-dark;
+  }
+
+  option {
+    color: $black;
+
+    &.placeholder {
+      color: $grey-dark;
+    }
+  }
 }

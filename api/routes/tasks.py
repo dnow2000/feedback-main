@@ -8,7 +8,8 @@ from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import load_or_404
 
 from models.task import Task, TaskState
-from tasks import celery_app
+from repository.keywords import keywords_filter_from
+from tasks import celery_app, import_tasks
 from utils.rest import listify
 
 
@@ -16,6 +17,7 @@ from utils.rest import listify
 @app.route('/taskNameOptions')
 def get_task_name_options():
     #check_user_has_role(current_user, 'ADMIN')
+    import_tasks()
     task_name_options = sorted([
         { 'label': task.name.replace('tasks.', ''), 'value': task.name }
         for task in celery_app.tasks.values()
@@ -28,7 +30,7 @@ def get_task_name_options():
 def get_task_state_options():
     #check_user_has_role(current_user, 'ADMIN')
     task_state_options = sorted([
-        { 'label': task_state.value, 'value': task_state.name }
+        { 'label': task_state.value.upper(), 'value': task_state.name }
         for task_state in TaskState
     ], key=lambda option: option['label'])
     return jsonify(task_state_options)
@@ -42,6 +44,13 @@ def get_tasks():
     kwargs = {**request.args}
     if 'page' in kwargs:
         del kwargs['page']
+
+    keywords = request.args.get('keywords')
+    if keywords is not None:
+        query = query.filter(keywords_filter_from(Task, keywords))
+        del kwargs['keywords']
+
+    query = query.filter_by(**kwargs)
 
     query = query.order_by(desc(Task.id))
 

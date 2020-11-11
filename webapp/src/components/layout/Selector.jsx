@@ -1,3 +1,4 @@
+import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import React, { useCallback, useMemo } from 'react'
 
@@ -11,7 +12,11 @@ const _ = ({
 }) => {
 
   const optionsWithPlaceholder = useMemo(() =>
-    [{ className: 'placeholder', label: placeholder, value: '' }].concat(options), [options, placeholder])
+    [{
+      className: 'placeholder',
+      label: placeholder || searchKey,
+      value: ''
+    }].concat(options), [options, placeholder, searchKey])
 
   const handleOnChange = useCallback(event =>
     onChange(searchKey, event.target.value)
@@ -20,15 +25,18 @@ const _ = ({
 
   if (!options) return null
 
+
   return (
     <select
-      className={`selector selector-${searchKey}`}
+      className={classnames(`selector selector-${searchKey}`, {
+        'empty': !selectedValue
+      })}
       defaultValue={selectedValue}
-      onBlur={handleOnChange}
+      onChange={handleOnChange}
     >
-      {optionsWithPlaceholder.map(({ label, value }, index) => (
+      {optionsWithPlaceholder.map(({ className, label, value }) => (
         <option
-          disabled={index === 0}
+          className={className}
           key={value}
           value={value}
         >
@@ -41,8 +49,8 @@ const _ = ({
 
 
 _.defaultProps = {
+  options: null,
   placeholder: null,
-  searchKey: 'type',
   selectedValue: null
 }
 
@@ -51,9 +59,9 @@ _.propTypes = {
   options: PropTypes.arrayOf(PropTypes.shape({
     label: PropTypes.string,
     value: PropTypes.string
-  })).isRequired,
+  })),
   placeholder: PropTypes.string,
-  searchKey: PropTypes.string,
+  searchKey: PropTypes.string.isRequired,
   selectedValue: PropTypes.string
 }
 
