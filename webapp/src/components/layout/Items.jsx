@@ -25,7 +25,6 @@ const selectItems = (state, config) =>
 const selectRequest = (state, config) =>
   state.requests[getItemsActivityTagFromConfig(config)]
 
-
 const _ = ({
   cols,
   config,
@@ -36,12 +35,13 @@ const _ = ({
   shouldLoadMore
 }) => {
   const dispatch = useDispatch()
+  const [isEmpty, setIsEmpty] = useState()
 
   const [threshold, setThreshold] = useState(REACHABLE_THRESHOLD)
 
-  const { headers, isPending, isSuccess } = useSelector(state =>
+  const { headers, isPending=true, isSuccess } = useSelector(state =>
     selectRequest(state, config)) || {}
-  const { hasMore=true, currentPage=0 } = headers || {}
+  const { hasMore=true, currentPage=1 } = headers || {}
 
   const items = useSelector(state => selectItems(state, config))
   itemsCollection = itemsCollection.length > 0 ? itemsCollection : items
@@ -49,15 +49,16 @@ const _ = ({
 
 
   const handleGetItems = useCallback(page => {
-    console.log(`getting items page ${page}`)
     const { apiPath } = config
     const apiPathWithPage = `${apiPath}${apiPath.includes('?') ? '&' : '?'}page=${page}`
     dispatch(requestData({
       ...config,
       activityTag: getItemsActivityTagFromConfig(config),
       apiPath: apiPathWithPage,
+      handleSuccess: (state, action) =>
+        setIsEmpty(!action.payload.data.length)
     }))
-  }, [config, dispatch])
+  }, [config, dispatch, setIsEmpty])
 
   const handleLoadMore = useCallback(page => {
     if (isPending || !hasMore || !shouldLoadMore) return
@@ -110,6 +111,14 @@ const _ = ({
             Show More
           </button>
         </div>
+      </>
+    )
+  }
+
+  if (isEmpty) {
+    return (
+      <>
+        No items
       </>
     )
   }

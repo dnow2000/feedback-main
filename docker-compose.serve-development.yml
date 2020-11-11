@@ -42,13 +42,25 @@ services:
     volumes:
       - "./docker_data_serve-development/apidb:/var/lib/postgresql"
 
+  apiflower-serve-development:
+    image: mher/flower:0.9.5
+    depends_on:
+      - apitasksdb-serve-development
+    environment:
+      - CELERY_BROKER_URL=redis://apitasksdb-serve-development:6379/0
+      - FLOWER_PORT=8888
+    networks:
+      - tasksdb_serve-development_nw
+    ports:
+      - 8888:8888
+
   apitasksdb-serve-development:
     container_name: ${APP_NAME}-apitasksdb-serve-development
     environment:
       - MODE=serve-development
     image: redis:6.0.8
     networks:
-      - db_serve-development_nw
+      - tasksdb_serve-development_nw
     ports:
       - 6379
     volumes:
@@ -58,6 +70,10 @@ services:
     command: >
       bash -c "set -x;
               cd /opt/api;
+              watchmedo auto-restart --directory=./ \
+                                     --pattern=*.py \
+                                     --recursive \
+                                     -- \
               celery --app=tasks beat \
                      --loglevel=INFO;"
     container_name: ${APP_NAME}-apischeduler-serve-development
@@ -66,7 +82,7 @@ services:
     env_file: .env
     image: *api
     networks:
-      - db_serve-development_nw
+      - tasksdb_serve-development_nw
     volumes:
       - ./api:/opt/api
 
@@ -74,7 +90,7 @@ services:
     command: >
       bash -c "set -x;
               cd /opt/api;
-              watchmedo auto-restart --directory=./ \
+              watchmedo auto-restart --directory=./tasks \
                                      --pattern=*.py \
                                      --recursive \
                                      -- \
@@ -82,7 +98,7 @@ services:
                      --concurrency=1 \
                      --gid=nogroup \
                      --loglevel=INFO \
-                     -Q try \
+                     -Q default \
                      --uid=nobody;"
     container_name: ${APP_NAME}-apiworker-serve-development
     depends_on:
@@ -95,7 +111,7 @@ services:
       - REDIS_URL=redis://apitasksdb-serve-development:6379/0
     image: *api
     networks:
-      - db_serve-development_nw
+      - tasksdb_serve-development_nw
     volumes:
       - ./api:/opt/api
 
@@ -116,7 +132,7 @@ services:
 networks:
   db_serve-development_nw:
     driver: bridge
-  tasks_serve-development_nw:
+  tasksdb_serve-development_nw:
     driver: bridge
   web_serve-development_nw:
     driver: bridge

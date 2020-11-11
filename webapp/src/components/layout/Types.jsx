@@ -2,15 +2,10 @@ import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
 
 
-export const options = [
-  { label: 'Claim', value: 'claim' },
-  { label: 'Content', value: 'content' }
-]
-
-
 const _ = ({
-  selectedType='article',
-  onChange
+  selectedType,
+  onChange,
+  options
 }) => {
 
   const handleOnChange = useCallback(event =>
@@ -35,8 +30,17 @@ const _ = ({
   )
 }
 
+
+_.defaultProps = {
+  selectedType: null
+}
+
 _.propTypes = {
   onChange: PropTypes.func.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string,
+    value: PropTypes.string
+  })).isRequired,
   selectedType: PropTypes.string
 }
 

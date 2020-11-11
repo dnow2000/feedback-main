@@ -8,6 +8,12 @@ import Themes from './Themes'
 import Types from './Types'
 
 
+export const typeOptions = [
+  { label: 'Claim', value: 'claim' },
+  { label: 'Content', value: 'content' }
+]
+
+
 export default ({ config, renderItem }) => (
   <>
     <Controls
@@ -27,7 +33,8 @@ export default ({ config, renderItem }) => (
             <div className="right">
               <Types
                 onChange={handleChange}
-                selectedType={locationURL.searchParams.get('type')}
+                option={typeOptions}
+                selectedType={locationURL.searchParams.get('type') || 'article'}
               />
               <Days
                 onChange={handleChange}

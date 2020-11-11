@@ -1,11 +1,12 @@
+from celery.app.control import Inspect
+from datetime import datetime
 import base64
 import json
 
 
-TASK_TYPES = [
+TASK_STATES = [
     'active',
     'reserved',
-    'registered',
     'revoked',
     'scheduled'
 ]
@@ -33,41 +34,58 @@ def result_formatted(result):
     }
 
 
-def active_queue_names_from(celery_app):
-    insp = celery_app.control.inspect()
-    active_queues_by_name_and_hash = insp.active_queues()
-    print(active_queues_by_name_and_hash)
-    if active_queues_by_name_and_hash:
-        for queue in active_queues_by_name_and_hash.values():
-            print(queue)
-        '''
-        return [
-            queue['name']
-            for queue in active_queues_by_name_and_hash.values()
-        ]
-        '''
+def task_types_from(celery_app):
+    return [
+        { 'label': task.name.replace('tasks.', ''), 'value': task.name }
+        for task in celery_app.tasks.values()
+        if task.name.startswith('tasks.')
+    ]
 
 
 def tasks_from(celery_app,
-               queue_name='celery@7082a6f0503c',
+               name=None,
+               args=None,
+               hostname=None,
+               kwargs=None,
+               queue=None,
+               state=None,
+               time=None,
                type=None):
-    """
+
+    insp = celery_app.control.inspect()
+
     tasks = []
-    for task_type in TASK_TYPES:
-        if type and type != task_type:
+    for task_state in TASK_STATES:
+        if state and state != task_state:
             continue
-        insp = celery_app.control.inspect()
-        tasks.append(getattr(insp, task_type)())
-    """
-    print(active_queue_names_from(celery_app))
-
-
-    with celery_app.pool.acquire(block=True) as conn:
-        tasks = conn.default_channel.client.lrange(queue_name, 0, -1)
-        tasks = []
-
-    for task in tasks:
-        j = json.loads(task)
-        body = json.loads(base64.b64decode(j['body']))
-        tasks.append(body)
+        tasks_by_worker_name = getattr(insp, task_state)()
+        if not tasks_by_worker_name:
+            continue
+        for ts in tasks_by_worker_name.values():
+            task = {}
+            for t in ts:
+                task['args'] = t['args']
+                if args and set(args) != set(task['args']):
+                    continue
+                task['hostname'] = t['hostname']
+                if hostname and hostname != task['hostname']:
+                    continue
+                task['id'] = t['id']
+                task['kwargs'] = t['kwargs']
+                if kwargs and kwargs != task['kwargs']:
+                    continue
+                task['name'] = t['name']
+                if name and name != task['name']:
+                    continue
+                task['queue'] = t['delivery_info']['routing_key']
+                if queue and queue != task['queue']:
+                    continue
+                task['state'] = task_state
+                if state and state != task['state']:
+                    continue
+                task['time'] = datetime.fromtimestamp(t['time_start']) \
+                               if t.get('time_start') else None
+                if time and time != task['time']:
+                    continue
+                tasks.append(task)
     return tasks

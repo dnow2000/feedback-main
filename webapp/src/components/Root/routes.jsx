@@ -137,12 +137,15 @@ export default [
     title: 'Sources',
   },
   {
+    /*
     component: compose(withRequiredLogin,
                        withRoles({
                          accessRoleTypes: ['admin'],
                          creationRoleTypes: ['admin'],
                          modificationRoleTypes: ['admin']})
                        )(Tasks),
+    */
+    component: Tasks,
     exact: true,
     path: '/tasks',
     title: 'Tasks',

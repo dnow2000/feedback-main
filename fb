@@ -207,6 +207,23 @@ elif [[ "$CMD" == "build" ]]; then
   exit_with_success
 
 
+# Run celery, ex ./$COMMAND_NAME celery upgrade HEAD
+elif [[ "$CMD" == "celery" ]]; then
+  SUB_COMMANDS=$*
+  if [[ "$ENV" == "not-set" ]]; then
+    check start api
+    check start apidb
+    check start apischeduler
+    check start apitasksdb
+    check start apiworker
+    docker exec ${APP_NAME}-apiworker-$MODE bash -c "cd /opt/api && celery $SUB_COMMANDS"
+    exit_with_success
+  else
+    ./$COMMAND_NAME -e $ENV -p scalingo bash celery $SUB_COMMANDS
+    exit 0
+  fi
+
+
 # Launch the python clock process locally
 elif [[ "$CMD" == "clock" ]]; then
   check start api

@@ -3,11 +3,13 @@ import types
 import sys
 from flask import current_app as app
 from flask_script import Command
+from pprint import pprint
 
 from tasks import celery_app, import_tasks
 from utils.celery import tasks_from
 from utils.config import COMMAND_NAME
 
+import time
 
 @app.manager.add_command
 class TaskCommand(Command):
@@ -19,14 +21,20 @@ class TaskCommand(Command):
     def run(self, args):
         import_tasks()
 
+        for i in range(0, 10):
+            time.sleep(3)
+            print(i)
+            #print(celery_app.tasks['tasks.hello.hello_bar'].delay(i))
+            print(celery_app.tasks['tasks.hello.hello_foo'].delay(100))
+        """
         if not args:
             task_names = [key for key in celery_app.tasks.keys() if not key.startswith('celery.')]
             print('You need to choose a task name among: \n {}'.format(',\n '.join(task_names)))
             return
 
+
         if args[0] == 'list':
-            print('III')
-            print(tasks_from(celery_app))
+            pprint(tasks_from(celery_app))
 
 
         for (task_name, task) in celery_app.tasks.items():
@@ -38,3 +46,4 @@ class TaskCommand(Command):
                 return
 
         print('Did not found a task with that clue.')
+        """

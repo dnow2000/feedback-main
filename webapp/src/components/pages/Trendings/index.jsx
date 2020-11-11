@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect,  useMemo } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 import Feeds from 'components/layout/Feeds'
 import Header from 'components/layout/Header'
@@ -11,14 +11,13 @@ import TrendingItem from './TrendingItem'
 
 export default () => {
   const history = useHistory()
-  const { search } = useLocation()
   const locationURL = useLocationURL()
 
 
   const config = useMemo(() => ({
-    apiPath: `/trendings${search}`,
+    apiPath: `/trendings${locationURL.search}`,
     resolve: trending => ({ ...trending, id: trending.buzzsumoIdentifier })
-  }), [search])
+  }), [locationURL])
 
 
   const renderItem = useCallback(item =>
