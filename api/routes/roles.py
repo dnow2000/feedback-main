@@ -45,7 +45,6 @@ def delete_role(role_id):
     role = load_or_404(Role, role_id)
 
     ApiHandler.delete(role)
-
     db.session.commit()
 
     return jsonify({'id': role_id}), 201

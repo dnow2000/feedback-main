@@ -21,11 +21,11 @@ class TaskCommand(Command):
     def run(self, args):
         import_tasks()
 
-        for i in range(0, 10):
+        for i in range(0, 1):
             time.sleep(3)
             print(i)
             #print(celery_app.tasks['tasks.hello.hello_bar'].delay(i))
-            print(celery_app.tasks['tasks.hello.hello_foo'].delay(100))
+            celery_app.tasks['tasks.hello.hello_foo'].delay(10)
         """
         if not args:
             task_names = [key for key in celery_app.tasks.keys() if not key.startswith('celery.')]

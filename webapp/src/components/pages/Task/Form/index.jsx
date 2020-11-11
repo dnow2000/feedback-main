@@ -1,20 +1,21 @@
 import PropTypes from 'prop-types'
-import React, { handleSubmit } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 
 import Fields from './Fields'
 import Footer from './Footer'
 
 
- const _ = ({ handleSubmit }) => {
-  const { isPending } = useSelector(state => state.requests['/reviews']) || {}
+const _ = ({ handleSubmit }) => {
+  const { isPending } = useSelector(state =>
+    state.requests['/reviews']) || {}
 
   return (
     <form
       autoComplete="off"
       disabled={isPending}
       noValidate
-      onSubmit={handleSubmit}
+      onSubmi={handleSubmit}
     >
       <Fields />
       <Footer />

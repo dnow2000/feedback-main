@@ -22,6 +22,7 @@ def import_models():
     from models.review_tag import ReviewTag
     from models.role import Role
     from models.scope import Scope
+    from models.task import Task
     from models.tag import Tag
     from models.user import User
     from models.user_session import UserSession

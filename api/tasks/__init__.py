@@ -1,9 +1,20 @@
 import os
 import celery
-from celery.signals import task_postrun, task_prerun
+from celery.signals import after_task_publish, \
+                           before_task_publish, \
+                           task_failure, \
+                           task_internal_error, \
+                           task_postrun, \
+                           task_prerun, \
+                           task_received, \
+                           task_retry, \
+                           task_revoked, \
+                           task_success
 from datetime import datetime
 from flask import Flask
+from sqlalchemy_api_handler import ApiHandler
 
+from models.task import Task, TaskState
 from utils.setup import setup
 
 
@@ -12,23 +23,62 @@ celery_app = celery.Celery('{}-tasks'.format(os.environ.get('APP_NAME')),
                            broker=os.environ.get('REDIS_URL'))
 BaseTask = celery_app.Task
 
+
 class AppTask(BaseTask):
     abstract = True
 
+    @before_task_publish.connect
+    def create_task(body, headers, routing_key, **kwargs):
+        task = Task(args=body[0],
+                    celeryUuid=headers['id'],
+                    kwargs=body[1],
+                    name=headers['task'],
+                    queue=routing_key,
+                    startTime=datetime.utcnow(),
+                    state=TaskState.CREATED)
+        ApiHandler.save(task)
+
+    @after_task_publish.connect
+    def modify_task_to_published_state(headers, **kwargs):
+        task = Task.query.filter_by(celeryUuid=headers['id']).one()
+        task.state = TaskState.PUBLISHED
+        ApiHandler.save(task)
+
+    @task_received.connect
+    def modify_task_to_received_state(request, sender, **kwargs):
+        task = Task.query.filter_by(celeryUuid=request.id).one()
+        task.hostname = sender.hostname
+        task.state = TaskState.RECEIVED
+        ApiHandler.save(task)
+
     @task_prerun.connect
-    def pre_run(task_id, task, *args, **kwargs):
-        task.start_time = datetime.utcnow()
+    def modify_task_to_started_state(task_id, task, **kwargs):
+        task = Task.query.filter_by(celeryUuid=task_id).one()
+        task.startTime = datetime.utcnow()
+        task.state = TaskState.STARTED
+        ApiHandler.save(task)
+
+    @task_failure.connect
+    def modify_task_to_failure_state(sender, result, **kwargs):
+        task = Task.query.filter_by(celeryUuid=sender.request.id).one()
+        task.result = result
+        task.state = TaskState.FAILURE
+        ApiHandler.save(task)
+
+    @task_success.connect
+    def modify_task_to_success_state(sender, result, **kwargs):
+        task = Task.query.filter_by(celeryUuid=sender.request.id).one()
+        task.result = result
+        task.state = TaskState.SUCCESS
+        ApiHandler.save(task)
 
     @task_postrun.connect
-    def post_run(task_id, task, *args, **kwargs):
-        task.duration = datetime.utcnow() - task.start_time
-
-    def __call__(self, *args, **kwargs):
-        flask_app = Flask(__name__)
-        setup(flask_app)
-        with flask_app.app_context():
-            return BaseTask.__call__(self, *args, **kwargs)
-
+    def modify_task_to_stopped_state(task_id, **kwargs):
+        task = Task.query.filter_by(celeryUuid=task_id).one()
+        task.stopTime = datetime.utcnow()
+        if task.state not in [TaskState.FAILURE, TaskState.SUCCESS]:
+            task.state = TaskState.STOPPED
+        ApiHandler.save(task)
 
 celery_app.Task = AppTask
 
@@ -45,5 +95,8 @@ def import_tasks():
     import tasks.tags
     import tasks.waybackmachine
 
+
 if os.environ.get('IS_WORKER'):
+    flask_app = Flask(__name__)
+    setup(flask_app)
     import_tasks()

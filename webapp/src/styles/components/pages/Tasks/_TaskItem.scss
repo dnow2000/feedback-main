@@ -1,4 +1,6 @@
 .task-item {
+  @extend .item;
+
   align-items: center;
   display: flex;
   justify-content: space-around;
@@ -10,6 +12,7 @@
 
   div {
     @extend .col-tablet-1of5;
+
     text-align: center;
 
     &.task-identifier {
@@ -19,18 +22,26 @@
       }
     }
 
-    &.task-state, &.task-params {
-      @extend .col-tablet-1of10;
-      text-align: center;
+    &.task-times {
+      font-size: 0.75rem;
     }
 
-    &.task-control {
-      button {
-        @extend .button;
-        @extend .is-secondary;
+    &.task-params {
+      @extend .col-tablet-1of10;
 
-        margin: 0;
-      }
+      text-align: center;
+    }
+  }
+
+  button {
+    @extend .col-tablet-1of10;
+    @extend .button;
+    @extend .is-secondary;
+
+    text-align: center;
+
+    &.task-stop {
+      @extend .is-primary;
     }
   }
 }
