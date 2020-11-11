@@ -1,4 +1,5 @@
-import React from 'react'
+import PropTypes from 'prop-types'
+import React, { useCallback } from 'react'
 
 import Controls from './Controls'
 import Days from './Days'
@@ -14,40 +15,53 @@ export const typeOptions = [
 ]
 
 
-export default ({ config, renderItem }) => (
-  <>
-    <Controls
-      config={config}
-      render={({handleChange, locationURL}) => (
-        <>
-          <KeywordsBar
+const _ = ({ config, renderItem }) => {
+  const renderControls = useCallback(({handleChange, locationURL}) => (
+    <>
+      <KeywordsBar
+        onChange={handleChange}
+        selectedKeywords={locationURL.searchParams.get('keywords')}
+      />
+      <div className="search-spacing" />
+      <div className="controls">
+        <Themes
+          onChange={handleChange}
+          selectedTheme={locationURL.searchParams.get('theme')}
+        />
+        <div className="right">
+          <Types
             onChange={handleChange}
-            selectedKeywords={locationURL.searchParams.get('keywords')}
+            option={typeOptions}
+            selectedType={locationURL.searchParams.get('type') || 'article'}
           />
-          <div className="search-spacing" />
-          <div className="controls">
-            <Themes
-              onChange={handleChange}
-              selectedTheme={locationURL.searchParams.get('theme')}
-            />
-            <div className="right">
-              <Types
-                onChange={handleChange}
-                option={typeOptions}
-                selectedType={locationURL.searchParams.get('type') || 'article'}
-              />
-              <Days
-                onChange={handleChange}
-                selectedDays={locationURL.searchParams.get('days')}
-              />
-            </div>
-          </div>
-        </>
-      )}
-    />
-    <Items
-      config={config}
-      renderItem={renderItem}
-    />
-  </>
-)
+          <Days
+            onChange={handleChange}
+            selectedDays={locationURL.searchParams.get('days')}
+          />
+        </div>
+      </div>
+    </>
+  ), [])
+  return (
+    <>
+      <Controls
+        config={config}
+        render={renderControls}
+      />
+      <Items
+        config={config}
+        renderItem={renderItem}
+      />
+    </>
+  )
+}
+
+
+_.propTypes = {
+  config: PropTypes.shape({
+    apiPath: PropTypes.string
+  }).isRequired,
+  renderItem: PropTypes.func.isRequired
+}
+
+export default _

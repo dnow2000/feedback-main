@@ -9,10 +9,23 @@
 
     &.task-identifier {
       text-align: left;
+      .task-id {
+        font-size: 0.5rem;
+      }
     }
 
-    .task-id {
-      font-size: 0.5rem;
+    &.task-state, &.task-params {
+      @extend .col-tablet-1of10;
+      text-align: center;
+    }
+
+    &.task-control {
+      button {
+        @extend .button;
+        @extend .is-secondary;
+
+        margin: 0;
+      }
     }
   }
 }

@@ -1,8 +1,16 @@
 @import "TaskItem.scss";
 
 .tasks {
+  .search-spacing {
+    margin-bottom: 1rem;
+  }
+
   .controls {
-    select {
+    .types-state {
+      background-position: 95% 50%;
+      width: 9rem;
+    }
+    .types-type {
       background-position: 95% 50%;
       width: 23rem;
     }

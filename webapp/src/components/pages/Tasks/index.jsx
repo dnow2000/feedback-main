@@ -13,6 +13,13 @@ import useLocationURL from 'components/uses/useLocationURL'
 
 import TaskItem from './TaskItem'
 
+const taskStates = [
+  { label: 'active', value: 'active' },
+  { label: 'reserved', value: 'reserved' },
+  { label: 'revoked', value: 'revoked' },
+]
+
+
 
 export default () => {
   const dispatch = useDispatch()
@@ -53,12 +60,25 @@ export default () => {
                 />
                 <div className="search-spacing" />
                 <div className="controls">
+                  <Types
+                    onChange={handleChange}
+                    options={taskTypes}
+                    placeholder='Select a task type'
+                    selectedType={locationURL.searchParams.get('type')}
+                  />
+                  <Types
+                    onChange={handleChange}
+                    options={taskStates}
+                    placeholder='Select a state'
+                    searchKey='state'
+                    selectedType={locationURL.searchParams.get('state')}
+                  />
                   <div className="right">
-                    <Types
-                      onChange={handleChange}
-                      options={taskTypes}
-                      selectedType={locationURL.searchParams.get('type')}
-                    />
+                    <button
+                      type="button"
+                    >
+                      Create Task
+                    </button>
                   </div>
                 </div>
               </>

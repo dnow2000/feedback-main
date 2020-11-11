@@ -1,25 +1,31 @@
 import PropTypes from 'prop-types'
-import React, { useCallback } from 'react'
+import React, { useCallback, useMemo } from 'react'
 
 
 const _ = ({
+  searchKey,
   selectedType,
   onChange,
-  options
+  options,
+  placeholder
 }) => {
 
+  const optionsWithPlaceholder = useMemo(() =>
+    [{ className: 'placeholder', label: placeholder, value: '' }].concat(options), [options, placeholder])
+
   const handleOnChange = useCallback(event =>
-    onChange('type', event.target.value)
+    onChange(searchKey, event.target.value)
   , [onChange])
 
   return (
     <select
-      className="types"
+      className={`types types-${searchKey}`}
       defaultValue={selectedType}
       onChange={handleOnChange}
     >
-      {options.map(({ label, value }) => (
+      {optionsWithPlaceholder.map(({ label, value }, index) => (
         <option
+          disabled={index === 0}
           key={value}
           value={value}
         >
@@ -32,6 +38,7 @@ const _ = ({
 
 
 _.defaultProps = {
+  searchKey: 'type',
   selectedType: null
 }
 
@@ -41,6 +48,7 @@ _.propTypes = {
     label: PropTypes.string,
     value: PropTypes.string
   })).isRequired,
+  searchKey: PropTypes.string,
   selectedType: PropTypes.string
 }
 

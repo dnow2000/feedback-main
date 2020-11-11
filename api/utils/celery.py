@@ -1,7 +1,5 @@
 from celery.app.control import Inspect
 from datetime import datetime
-import base64
-import json
 
 
 TASK_STATES = [
@@ -12,13 +10,7 @@ TASK_STATES = [
 ]
 
 
-def task_as_dict(task, *args, **kwargs):
-    result = task.apply_async(args=args, kwargs=kwargs)
-    result.get()
-    return result_formatted(result)
-
-
-def result_formatted(result):
+def as_dict(result):
     return {
         'args': result.args,
         'date_done': result.date_done,
@@ -35,11 +27,11 @@ def result_formatted(result):
 
 
 def task_types_from(celery_app):
-    return [
+    return sorted([
         { 'label': task.name.replace('tasks.', ''), 'value': task.name }
         for task in celery_app.tasks.values()
         if task.name.startswith('tasks.')
-    ]
+    ], key=lambda task_type: task_type['label'])
 
 
 def tasks_from(celery_app,

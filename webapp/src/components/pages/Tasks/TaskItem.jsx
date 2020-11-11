@@ -18,10 +18,10 @@ const _ = ({ task }) => {
       <div className="task-identifier">
         {name} <span className="task-id"> {id} </span>
       </div>
-      <div>
+      <div className="task-state">
         {state}
       </div>
-      <div>
+      <div className="task-params">
         {JSON.stringify(args)},
         {JSON.stringify(kwargs)}
       </div>
@@ -30,6 +30,14 @@ const _ = ({ task }) => {
       </div>
       <div>
         {hostname} {queue}
+      </div>
+      <div className="task-control">
+        <button
+          onClick={() => {}}
+          type="button"
+        >
+          Cancel
+        </button>
       </div>
     </div>
   )

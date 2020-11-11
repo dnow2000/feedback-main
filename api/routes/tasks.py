@@ -3,7 +3,9 @@ from flask import current_app as app, jsonify, request
 from sqlalchemy_api_handler.serialization import paginate_obj
 
 from tasks import celery_app
-from utils.celery import tasks_from, task_types_from
+from utils.celery import as_dict, \
+                         tasks_from, \
+                         task_types_from
 
 
 TASKS_PAGINATION = 10
@@ -13,7 +15,7 @@ TASKS_PAGINATION = 10
 def get_task(task_id):
     result = AsyncResult(str(task_id), app=celery_app)
     result.get()
-    return jsonify(result_formatted(result))
+    return jsonify(as_dict(result))
 
 
 @app.route('/taskTypes')
@@ -24,26 +26,19 @@ def get_task_types():
 @app.route('/tasks')
 def get_tasks():
     page = int(request.args.get('page', 1))
+    kwargs = {**request.args}
+    if 'page' in kwargs:
+        del kwargs['page']
 
-
-    tasks = tasks_from(celery_app,
-                       state=request.args.get('state'),
-                       #queue=request.args.get('queue')
-                       )
-
-    print('TASKS', tasks, page)
-    #paginated_tasks = [as_dict(task) for task in tasks]
+    tasks = tasks_from(celery_app, **kwargs)
     paginated_tasks = paginate_obj(tasks,
                                    page,
                                    TASKS_PAGINATION).items
 
     total_data_count = len(tasks)
-    print('PAGINATES', paginated_tasks)
-
     response = jsonify(paginated_tasks)
     response.headers['Total-Data-Count'] = total_data_count
     response.headers['Access-Control-Expose-Headers'] = 'Total-Data-Count'
-
     if page:
         response.headers['Has-More'] = total_data_count > page * TASKS_PAGINATION
         response.headers['Access-Control-Expose-Headers'] += ',Has-More'

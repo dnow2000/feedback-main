@@ -13,7 +13,6 @@ def import_routes():
     import routes.features
     import routes.graphs
     import routes.images
-    import routes.jobs
     import routes.links
     import routes.organizations
     import routes.password

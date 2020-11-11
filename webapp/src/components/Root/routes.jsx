@@ -1,3 +1,4 @@
+
 import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { compose } from 'redux'
@@ -10,7 +11,6 @@ import About from 'components/pages/About'
 import Account from 'components/pages/Account'
 import Content from 'components/pages/Content'
 import Exploration from 'components/pages/Exploration'
-import Jobs from 'components/pages/Jobs'
 import Landing from 'components/pages/Landing'
 import Link from 'components/pages/Link'
 import Review from 'components/pages/Review'
@@ -80,17 +80,6 @@ export default [
     exact: true,
     path: '/exploration/:collectionName?/:entityId([A-Za-z0-9]{2,})?',
     title: 'Exploration'
-  },
-  {
-    component: compose(withRequiredLogin,
-                       withRoles({
-                         accessRoleTypes: ['admin'],
-                         creationRoleTypes: ['admin'],
-                         modificationRoleTypes: ['admin']})
-                       )(Jobs),
-    exact: true,
-    path: '/jobs/:tab(info|list|sync)',
-    title: 'Jobs'
   },
   {
     component: withOptionalLogin(Landing),
