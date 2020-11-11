@@ -6,13 +6,14 @@
   }
 
   .controls {
-    .types-state {
-      background-position: 95% 50%;
-      width: 9rem;
-    }
-    .types-type {
+    .selector-name {
       background-position: 95% 50%;
       width: 23rem;
+    }
+
+    .selector-state {
+      background-position: 95% 50%;
+      width: 9rem;
     }
   }
 }

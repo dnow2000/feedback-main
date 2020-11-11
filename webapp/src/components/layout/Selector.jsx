@@ -4,7 +4,7 @@ import React, { useCallback, useMemo } from 'react'
 
 const _ = ({
   searchKey,
-  selectedType,
+  selectedValue,
   onChange,
   options,
   placeholder
@@ -17,10 +17,13 @@ const _ = ({
     onChange(searchKey, event.target.value)
   , [onChange, searchKey])
 
+
+  if (!options) return null
+
   return (
     <select
-      className={`types types-${searchKey}`}
-      defaultValue={selectedType}
+      className={`selector selector-${searchKey}`}
+      defaultValue={selectedValue}
       onBlur={handleOnChange}
     >
       {optionsWithPlaceholder.map(({ label, value }, index) => (
@@ -40,7 +43,7 @@ const _ = ({
 _.defaultProps = {
   placeholder: null,
   searchKey: 'type',
-  selectedType: null
+  selectedValue: null
 }
 
 _.propTypes = {
@@ -51,7 +54,7 @@ _.propTypes = {
   })).isRequired,
   placeholder: PropTypes.string,
   searchKey: PropTypes.string,
-  selectedType: PropTypes.string
+  selectedValue: PropTypes.string
 }
 
 export default _

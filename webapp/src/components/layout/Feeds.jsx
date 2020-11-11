@@ -5,8 +5,8 @@ import Controls from './Controls'
 import Days from './Days'
 import Items from './Items'
 import KeywordsBar from './KeywordsBar'
+import Selector from './Selector'
 import Themes from './Themes'
-import Types from './Types'
 
 
 export const typeOptions = [
@@ -29,10 +29,11 @@ const _ = ({ config, renderItem }) => {
           selectedTheme={locationURL.searchParams.get('theme')}
         />
         <div className="right">
-          <Types
+          <Selector
             onChange={handleChange}
             option={typeOptions}
-            selectedType={locationURL.searchParams.get('type') || 'article'}
+            searchKey='type'
+            selectedValue={locationURL.searchParams.get('type') || 'article'}
           />
           <Days
             onChange={handleChange}

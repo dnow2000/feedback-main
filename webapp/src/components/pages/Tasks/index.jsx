@@ -9,17 +9,10 @@ import KeywordsBar from 'components/layout/KeywordsBar'
 import Header from 'components/layout/Header'
 import Items from 'components/layout/Items'
 import Main from 'components/layout/Main'
-import Types from 'components/layout/Types'
+import Selector from 'components/layout/Selector'
 import useLocationURL from 'components/uses/useLocationURL'
 
 import TaskItem from './TaskItem'
-
-const taskStates = [
-  { label: 'active', value: 'active' },
-  { label: 'reserved', value: 'reserved' },
-  { label: 'revoked', value: 'revoked' },
-]
-
 
 
 export default () => {
@@ -30,20 +23,20 @@ export default () => {
     apiPath: `/tasks${locationURL.search}`,
   }), [locationURL])
 
-  const taskTypes = useSelector(state => state.data.taskTypes)
+
+  const taskNameOptions = useSelector(state => state.data.taskNameOptions)
+
+  const taskStateOptions = useSelector(state => state.data.taskStateOptions)
+
 
   const renderItem = useCallback(item =>
     <TaskItem task={item} />, [])
 
 
   useEffect(() => {
-    dispatch(requestData({
-      apiPath: '/taskTypes'
-    }))
+    dispatch(requestData({ apiPath: '/taskNameOptions' }))
+    dispatch(requestData({ apiPath: '/taskStateOptions' }))
   }, [dispatch])
-
-
-  if (!taskTypes) return null
 
 
   return (
@@ -61,18 +54,19 @@ export default () => {
                 />
                 <div className="search-spacing" />
                 <div className="controls">
-                  <Types
+                  <Selector
                     onChange={handleChange}
-                    options={taskTypes}
-                    placeholder='Select a task type'
-                    selectedType={locationURL.searchParams.get('type')}
+                    options={taskNameOptions}
+                    placeholder='Select a task name'
+                    searchKey='name'
+                    selectedValue={locationURL.searchParams.get('name')}
                   />
-                  <Types
+                  <Selector
                     onChange={handleChange}
-                    options={taskStates}
+                    options={taskStateOptions}
                     placeholder='Select a state'
                     searchKey='state'
-                    selectedType={locationURL.searchParams.get('state')}
+                    selectedValue={locationURL.searchParams.get('state')}
                   />
                   <div className="right">
                     <NavLink

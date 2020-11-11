@@ -7,17 +7,31 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import load_or_404
 
-from models.task import Task
+from models.task import Task, TaskState
 from tasks import celery_app
-from utils.celery import task_types_from
 from utils.rest import listify
 
 
 #@login_required
-@app.route('/taskTypes')
-def get_task_types():
+@app.route('/taskNameOptions')
+def get_task_name_options():
     #check_user_has_role(current_user, 'ADMIN')
-    return jsonify(task_types_from(celery_app))
+    task_name_options = sorted([
+        { 'label': task.name.replace('tasks.', ''), 'value': task.name }
+        for task in celery_app.tasks.values()
+        if task.name.startswith('tasks.')
+    ], key=lambda option: option['label'])
+    return jsonify(task_name_options)
+
+#@login_required
+@app.route('/taskStateOptions')
+def get_task_state_options():
+    #check_user_has_role(current_user, 'ADMIN')
+    task_state_options = sorted([
+        { 'label': task_state.value, 'value': task_state.name }
+        for task_state in TaskState
+    ], key=lambda option: option['label'])
+    return jsonify(task_state_options)
 
 #@login_required
 @app.route('/tasks')
