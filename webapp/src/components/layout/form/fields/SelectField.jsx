@@ -24,7 +24,6 @@ const _ = ({
   const optionsWithPlaceholder = useMemo(() =>
     [{ label: placeholder, value: '' }].concat(options), [options, placeholder])
 
-  if (!options) return null
 
   const renderSelect = useCallback(({ input, meta }) => (
     <div className={classnames('select-field', { readonly: readOnly })}>
@@ -64,6 +63,9 @@ const _ = ({
       <FieldError meta={meta} />
     </div>
   ))
+
+
+  if (!options) return null
 
   return (
     <Field
