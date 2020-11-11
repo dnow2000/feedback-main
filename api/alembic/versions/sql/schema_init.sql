@@ -403,7 +403,7 @@ CREATE TABLE public.appearance (
     "quotedClaimId" bigint,
     "quotedContentId" bigint,
     "quotingClaimId" bigint,
-    "linkingContentId" bigint,
+    "quotingContentId" bigint,
     stance public.stancetype,
     "testifierId" bigint NOT NULL
 );
@@ -1441,10 +1441,10 @@ CREATE INDEX "ix_appearance_quotingClaimId" ON public.appearance USING btree ("q
 
 
 --
--- Name: ix_appearance_linkingContentId; Type: INDEX; Schema: public; Owner: -
+-- Name: ix_appearance_quotingContentId; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX "ix_appearance_linkingContentId" ON public.appearance USING btree ("linkingContentId");
+CREATE INDEX "ix_appearance_quotingContentId" ON public.appearance USING btree ("quotingContentId");
 
 
 --
@@ -1578,11 +1578,11 @@ ALTER TABLE ONLY public.appearance
 
 
 --
--- Name: appearance appearance_linkingContentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: appearance appearance_quotingContentId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.appearance
-    ADD CONSTRAINT "appearance_linkingContentId_fkey" FOREIGN KEY ("linkingContentId") REFERENCES public.content(id);
+    ADD CONSTRAINT "appearance_quotingContentId_fkey" FOREIGN KEY ("quotingContentId") REFERENCES public.content(id);
 
 
 --

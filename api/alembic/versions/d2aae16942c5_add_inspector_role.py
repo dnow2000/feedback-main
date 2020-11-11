@@ -25,6 +25,7 @@ previous_enum = sa.Enum(*previous_values, name=enum_name)
 new_enum = sa.Enum(*new_values, name=enum_name)
 temporary_enum = sa.Enum(*new_values, name='tmp_{}'.format(enum_name))
 
+
 def upgrade():
     temporary_enum.create(op.get_bind(), checkfirst=False)
     op.execute('ALTER TABLE {} ALTER COLUMN {} TYPE tmp_{}'
