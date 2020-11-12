@@ -16,29 +16,31 @@
     text-align: center;
 
     &.task-identifier {
-      text-align: left;
+      @extend .col-tablet-2of5;
+
       .task-uuid {
-        font-size: 0.5rem;
+        font-size: 0.75rem;
       }
     }
 
-    &.task-times {
-      font-size: 0.75rem;
+    &.task-process {
+      .task-machine, .task-time {
+        font-size: 0.75rem;
+      }
     }
 
     &.task-params {
-      @extend .col-tablet-1of10;
-
       text-align: center;
     }
   }
 
   button {
-    @extend .col-tablet-1of10;
+    @extend .col-tablet-1of5;
     @extend .button;
     @extend .is-secondary;
 
     text-align: center;
+    z-index: 1;
 
     &.task-stop {
       @extend .is-primary;

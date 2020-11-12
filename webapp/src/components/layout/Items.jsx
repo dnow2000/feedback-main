@@ -3,10 +3,9 @@ import PropTypes from 'prop-types'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import InfiniteScroll from 'react-infinite-scroller'
-import { requestData } from 'redux-thunk-data'
+import { requestData, selectEntitiesByKeyAndActivityTagsAndStrictness } from 'redux-thunk-data'
 
 import Spinner from 'components/layout/Spinner'
-import selectEntitiesByKeyAndActivityTags from 'selectors/selectEntitiesByKeyAndActivityTags'
 
 import { getItemsActivityTagFromConfig } from './Controls'
 
@@ -16,10 +15,11 @@ const UNREACHABLE_THRESHOLD = -10000
 
 
 const selectItems = (state, config) =>
-  selectEntitiesByKeyAndActivityTags(
+  selectEntitiesByKeyAndActivityTagsAndStrictness(
     state,
     getStateKeyFromConfig(config),
-    [getItemsActivityTagFromConfig(config)]
+    [getItemsActivityTagFromConfig(config)],
+    'includes'
   )
 
 const selectRequest = (state, config) =>
@@ -144,6 +144,7 @@ _.defaultProps = {
   cols: 2,
   itemsCollection: [],
   limit: 0,
+  loadMoreAction: () => {},
   shouldLoadMore: true
 }
 

@@ -5493,10 +5493,10 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-normalize-data@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.11.0.tgz#8a02baecd84462f843f7b59c17d532716650c8f9"
-  integrity sha512-WxhwDll2ccKOaxUm7dp8aNRZ9Qk99XhAjkaXlVqgtGx36waZQltult1XCboAr5PVlcIhGhY5ZGN4P09vonwbSg==
+fetch-normalize-data@1.13.3:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/fetch-normalize-data/-/fetch-normalize-data-1.13.3.tgz#f5ef826141b4ca174a1333efc90901e47d2962f2"
+  integrity sha512-tn9VKeFvVkwY3A23HB0sSfvH4FJgiQysVUUux/BQ9py2KMm6Vjrk6r/qQSN278KBrhMkX0DKLmhVgEKtD5zC2w==
   dependencies:
     lodash.uniq "^4.5.0"
     lodash.uniqby "^4.7.0"
@@ -11640,12 +11640,12 @@ redux-react-modals@1.3.1:
     react-router-dom "^5.0.0"
     redux "^4.0.4"
 
-redux-thunk-data@1.11.0:
-  version "1.11.0"
-  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.11.0.tgz#9f21c5e396827ccdea09cb355ba9f0aba78c5d44"
-  integrity sha512-j7TSDIoDaxDu1JP2tqa+x9DiRtcWw6fooJQiFj4Q68hSniU02Z5ejFAbCKKB0lDvP4R4ZP06YAQGhozCzeNGeg==
+redux-thunk-data@1.13.3:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/redux-thunk-data/-/redux-thunk-data-1.13.3.tgz#73cd2a39a86a80149b538638bd7c9c61c8fd4ada"
+  integrity sha512-K1AYTLKFco7s7xjfTUBNZZUBqccK2LI2ws+ej/9m/ayTqKQJuDosVa3E0xCw9dEpaZmsIGrNo5wpfj/Q8apOEg==
   dependencies:
-    fetch-normalize-data "1.11.0"
+    fetch-normalize-data "1.13.3"
 
 redux-thunk@^2.3.0:
   version "2.3.0"
@@ -14462,13 +14462,13 @@ with-react-formidable@2.1.5:
     react "^16.9.0"
     react-dom "^16.9.0"
 
-with-react-redux-login@1.15.3:
-  version "1.15.3"
-  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.15.3.tgz#17e729f703955f7480fac027bbd471f22b4ec8a2"
-  integrity sha512-U/m2Dcsq+AKOyaZtF3MxGjDRhTgfDgQTi9exH1AJnbXkZkp5z7MuVM2mC1CgNT/GQ1rNuJYg9q3YpjBrNR8Vpw==
+with-react-redux-login@1.16.5:
+  version "1.16.5"
+  resolved "https://registry.yarnpkg.com/with-react-redux-login/-/with-react-redux-login-1.16.5.tgz#9279dec17528a62ffd9186e8bc56f85826cdbf3f"
+  integrity sha512-DnFz+mI78IqwuIGRKfvXXeZ7SdIXDpRRIIztM+j0Fxmq9ww9GEnbr91q0e3ryyXbwoQ/GqRzokkCrZqfNJVbvg==
   dependencies:
     classnames "2.2.5"
-    fetch-normalize-data "1.11.0"
+    fetch-normalize-data "1.13.3"
     lodash.uniq "^4.5.0"
     prop-types "^15.7.2"
     react "^16.10.1"

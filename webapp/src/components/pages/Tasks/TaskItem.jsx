@@ -14,6 +14,9 @@ const niceDurationFrom = seconds => {
 }
 
 
+const DELETE_STATES = ['failure', 'stopped', 'success']
+
+
 const _ = ({ task }) => {
   const {
     args,
@@ -27,6 +30,7 @@ const _ = ({ task }) => {
     stopTime,
     startTime
   } = task
+  const canDelete = DELETE_STATES.includes(state)
   const startDate = new Date(startTime)
   const duration = stopTime
     ? niceDurationFrom(new Date(stopTime) - startDate)
@@ -34,23 +38,23 @@ const _ = ({ task }) => {
   const dispatch = useDispatch()
   const history = useHistory()
 
-  const handleStop = useCallback(() =>
-    requestData(dispatch({
+  const handleCancelOrDelete = useCallback(event => {
+    event.stopPropagation()
+    dispatch(requestData({
       apiPath: `/tasks/${id}`,
-      body: {
-        state: 'STOPPED'
-      },
-      method: 'PUT'
-    })), [dispatch, id])
-
-  const handleDelete = useCallback(() =>
-    requestData(dispatch({
-      apiPath: `/tasks/${id}`,
-      method: 'DELETE'
-    })), [dispatch, id])
+      body: canDelete
+        ? null
+        : { state: 'REVOKED' },
+      method: canDelete
+        ? 'DELETE'
+        : 'PUT'
+    }))
+  }, [canDelete, dispatch, id])
 
   const handlePushToTask = useCallback(() =>
     history.push(`/tasks/${id}`), [history, id])
+
+
 
   return (
     <div
@@ -68,35 +72,37 @@ const _ = ({ task }) => {
         </span>
       </div>
       <div className="task-process">
-        {queue}
+        <span className="task-machine">
+          {queue}
+        </span>
         <br />
-        {hostname}
+        <span className="task-machine">
+          {hostname}
+        </span>
         <br />
         {state.toUpperCase()}
+        <br />
+        <span className="task-time">
+          {startTime.split('.')[0]}
+        </span>
+        <br />
+        <span className="task-time">
+          {duration}
+        </span>
       </div>
       <div className="task-params">
         {JSON.stringify(args)}
         <br />
         {JSON.stringify(kwargs)}
       </div>
-      <div className="task-times">
-        {startTime.split('.')[0]}
-        <br />
-        {duration}
-      </div>
       <button
-        className="task-stop"
-        onClick={handleStop}
+        className="task-cancel"
+        onClick={handleCancelOrDelete}
         type="button"
       >
-        Stop
-      </button>
-      <button
-        className="task-delete"
-        onClick={handleDelete}
-        type="button"
-      >
-        Delete
+        {canDelete
+            ? 'Delete'
+            : 'Cancel'}
       </button>
     </div>
   )

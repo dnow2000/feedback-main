@@ -10,6 +10,7 @@ from sqlalchemy_api_handler.utils import load_or_404
 from models.task import Task, TaskState
 from repository.keywords import keywords_filter_from
 from tasks import celery_app, import_tasks
+from utils.database import db
 from utils.rest import listify
 
 
@@ -66,6 +67,8 @@ def get_tasks():
 def get_task(task_id):
     #check_user_has_role(current_user, 'ADMIN')
     task = load_or_404(Task, task_id)
+    celery_task = AsyncResult(str(task.celeryUuid), app=celery_app)
+    print('lll', celery_task.state, task.state)
     return jsonify(as_dict(task))
 
 
@@ -82,11 +85,25 @@ def create_task():
 
 
 #@login_required
+@app.route('/tasks/<task_id>', methods=['PUT'])
+def modify_task(task_id):
+    #check_user_has_role(current_user, 'ADMIN')
+    task = load_or_404(Task, task_id)
+    #celery_task = AsyncResult(str(task.celeryUuid), app=celery_app)
+    #celery_task.get()
+    r = celery_app.control.revoke(task.celeryUuid)
+    #print(celery_task)
+    print(request.json, r, task)
+    # TODO delete
+    return jsonify(as_dict(task))
+
+
+#@login_required
 @app.route('/tasks/<task_id>', methods=['DELETE'])
 def delete_task(task_id):
     #check_user_has_role(current_user, 'ADMIN')
     task = load_or_404(Task, task_id)
-    celery_task = AsyncResult(str(task.celeryUuid), app=celery_app)
-    celery_task.get()
-    # TODO delete
+    celery_app.control.terminate(task.celeryUuid)
+    ApiHandler.delete(task)
+    db.session.commit()
     return jsonify({ 'id': task_id })

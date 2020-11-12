@@ -60,8 +60,10 @@ class AppTask(BaseTask):
 
     @task_failure.connect
     def modify_task_to_failure_state(sender, result, **kwargs):
+        print('FAILURE')
         task = Task.query.filter_by(celeryUuid=sender.request.id).one()
         task.result = result
+        task.stopTime = datetime.utcnow()
         task.state = TaskState.FAILURE
         ApiHandler.save(task)
 
@@ -72,12 +74,23 @@ class AppTask(BaseTask):
         task.state = TaskState.SUCCESS
         ApiHandler.save(task)
 
+    """
     @task_postrun.connect
     def modify_task_to_stopped_state(task_id, **kwargs):
+        print('ICI')
         task = Task.query.filter_by(celeryUuid=task_id).one()
-        task.stopTime = datetime.utcnow()
         if task.state not in [TaskState.FAILURE, TaskState.SUCCESS]:
+            task.stopTime = datetime.utcnow()
             task.state = TaskState.STOPPED
+        ApiHandler.save(task)
+    """
+
+    @task_revoked.connect
+    def modify_task_to_revoked_state(request, **kwargs):
+        print('REVOKED')
+        task = Task.query.filter_by(celeryUuid=request.id).one()
+        task.stopTime = datetime.utcnow()
+        task.state = TaskState.STOPPED
         ApiHandler.save(task)
 
 celery_app.Task = AppTask

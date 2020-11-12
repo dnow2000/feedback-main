@@ -62,7 +62,7 @@ const _ = ({
       </div>
       <FieldError meta={meta} />
     </div>
-  ))
+  ), [disabled, label, name, optionsWithPlaceholder, placeholder, readOnly, required])
 
 
   if (!options) return null
