@@ -2,7 +2,8 @@ import enum
 from sqlalchemy import Column, \
                        DateTime, \
                        Enum, \
-                       String
+                       String, \
+                       Text
 from sqlalchemy.dialects.postgresql import JSON, UUID
 from sqlalchemy_api_handler import ApiHandler
 
@@ -47,6 +48,8 @@ class Task(ApiHandler,
                        nullable=False)
 
     stopTime = Column(DateTime())
+
+    traceback = Column(Text())
 
 
 ts_indexes = [

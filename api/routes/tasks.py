@@ -69,7 +69,11 @@ def get_task(task_id):
     task = load_or_404(Task, task_id)
     celery_task = AsyncResult(str(task.celeryUuid), app=celery_app)
     print('lll', celery_task.state, task.state)
-    return jsonify(as_dict(task))
+    #print(celery_task.traceback)
+    print('m', task.traceback)
+    d = as_dict(task)
+    #d['traceback'] = '{0!r}'.format(celery_task.traceback)
+    return jsonify(d)
 
 
 #@login_required

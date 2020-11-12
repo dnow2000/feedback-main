@@ -55,7 +55,9 @@ def upgrade():
                               sa.DateTime(),
                               nullable=False),
                     sa.Column('stopTime',
-                              sa.DateTime()))
+                              sa.DateTime()),
+                    sa.Column('traceback',
+                              sa.Text()))
 
 def downgrade():
     op.drop_table('task')

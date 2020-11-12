@@ -1,4 +1,6 @@
 import os
+import sys
+from traceback import format_exception
 import celery
 from celery.signals import after_task_publish, \
                            before_task_publish, \
@@ -59,10 +61,12 @@ class AppTask(BaseTask):
         ApiHandler.save(task)
 
     @task_failure.connect
-    def modify_task_to_failure_state(sender, result, **kwargs):
-        print('FAILURE')
+    def modify_task_to_failure_state(sender, traceback, **kwargs):
         task = Task.query.filter_by(celeryUuid=sender.request.id).one()
-        task.result = result
+        exc_type, exc_value, exc_traceback = sys.exc_info()
+        task.traceback = ' '.join(format_exception(exc_type,
+                                                   exc_value,
+                                                   traceback))
         task.stopTime = datetime.utcnow()
         task.state = TaskState.FAILURE
         ApiHandler.save(task)
@@ -71,6 +75,7 @@ class AppTask(BaseTask):
     def modify_task_to_success_state(sender, result, **kwargs):
         task = Task.query.filter_by(celeryUuid=sender.request.id).one()
         task.result = result
+        task.stopTime = datetime.utcnow()
         task.state = TaskState.SUCCESS
         ApiHandler.save(task)
 

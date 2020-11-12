@@ -16,21 +16,36 @@ const _ = () => {
     celeryUuid,
     hostname,
     queue,
-    state
+    state,
+    traceback
   } = task
 
   return (
     <div className="status">
-      <div>
-        {celeryUuid}
+      <div className="machine">
+        <div>
+          {celeryUuid}
+        </div>
+        <div className="task-process">
+          {queue}
+          <br />
+          {hostname}
+          <br />
+          {state.toUpperCase()}
+        </div>
       </div>
-      <div className="task-process">
-        {queue}
-        <br />
-        {hostname}
-        <br />
-        {state.toUpperCase()}
-      </div>
+      {state === 'failure' && (
+        <div className="failure">
+          {traceback.split(', line').map((line, index) => (
+            <div
+              className="line"
+              key={line}
+            >
+              {index ? 'line' : ''}
+              {line}
+            </div>
+          ))}
+        </div>)}
     </div>
   )
 }
