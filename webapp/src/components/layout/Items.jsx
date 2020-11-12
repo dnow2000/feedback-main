@@ -41,7 +41,7 @@ const _ = ({
 
   const { headers, isPending=true, isSuccess } = useSelector(state =>
     selectRequest(state, config)) || {}
-  const { hasMore=true, currentPage=1 } = headers || {}
+  const { hasMore=true, page=1 } = headers || {}
 
   const items = useSelector(state => selectItems(state, config))
   itemsCollection = itemsCollection.length > 0 ? itemsCollection : items
@@ -73,7 +73,7 @@ const _ = ({
   ])
 
   useEffect(() => {
-    handleGetItems(parseInt(currentPage))
+    handleGetItems(parseInt(page))
     setThreshold(REACHABLE_THRESHOLD)
     // eslint-disable-next-line
   }, [config, handleGetItems, shouldLoadMore])
@@ -131,7 +131,7 @@ const _ = ({
       key={config.apiPath}
       loadMore={handleLoadMore}
       loader={<Spinner key={42} />}
-      pageStart={parseInt(currentPage)}
+      pageStart={parseInt(page)}
       threshold={threshold}
     >
       {itemsElement}
