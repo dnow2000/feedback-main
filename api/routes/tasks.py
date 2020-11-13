@@ -53,7 +53,7 @@ def get_tasks():
 
     query = query.filter_by(**kwargs)
 
-    query = query.order_by(desc(Task.id))
+    query = query.order_by(desc(Task.creationTime))
 
     return listify(Task,
                    query=query,

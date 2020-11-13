@@ -6,7 +6,7 @@ from tasks import celery_app
 
 @celery_app.task
 def hello_foo(time):
-    sleep(int(time))
+    sleep(time)
     return { 'text': f'Hello Foo {time}!' }
 
 @celery_app.task

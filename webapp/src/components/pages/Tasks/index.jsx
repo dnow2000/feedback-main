@@ -41,13 +41,13 @@ export default () => {
         <Selector
           onChange={handleChange}
           options={taskNameOptions}
-          searchKey='name'
+          searchKey="name"
           selectedValue={locationURL.searchParams.get('name')}
         />
         <Selector
           onChange={handleChange}
           options={taskStateOptions}
-          searchKey='state'
+          searchKey="state"
           selectedValue={locationURL.searchParams.get('state')}
         />
         <div className="right">

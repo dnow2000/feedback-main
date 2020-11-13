@@ -1,3 +1,4 @@
+from datetime import datetime
 import enum
 from sqlalchemy import Column, \
                        DateTime, \
@@ -5,6 +6,7 @@ from sqlalchemy import Column, \
                        String, \
                        Text
 from sqlalchemy.dialects.postgresql import JSON, UUID
+from sqlalchemy.sql import func
 from sqlalchemy_api_handler import ApiHandler
 
 from domain.keywords import create_ts_vector_and_table_args
@@ -29,6 +31,10 @@ class Task(ApiHandler,
     celeryUuid = Column(UUID(as_uuid=True),
                             index=True,
                             nullable=False)
+
+    creationTime = Column(DateTime(),
+                          nullable=False,
+                          server_default=func.now())
 
     hostname = Column(String(64))
 

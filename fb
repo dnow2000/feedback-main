@@ -143,7 +143,7 @@ shift
 # Set variables for env
 # =============================================
 
-API_SERVICE=${APP_NAME}-api-$MODE
+API_CONTAINER=${APP_NAME}-api-$MODE
 CURRENT_BRANCH=$(git symbolic-ref -q HEAD)
 CURRENT_BRANCH=${CURRENT_BRANCH##refs/heads/}
 POSTGRES_DB=${APP_NAME}_$DATABASE
@@ -151,6 +151,7 @@ POSTGRES_PASSWORD=${APP_NAME}_password
 POSTGRES_SERVICE=$APP_NAME-${DATABASE}db-$MODE
 POSTGRES_USER=${APP_NAME}_user
 SCALINGO_APP=${APP_NAME}-api-$ENV
+SERVICE_CONTAINER=${APP_NAME}-${SERVICE}-$MODE
 
 # =============================================
 # Local commands : use Docker
@@ -162,7 +163,7 @@ if [[ "$CMD" == "alembic" ]]; then
   if [[ "$ENV" == "not-set" ]]; then
     check start api
     check start apidb
-    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. alembic $SUB_COMMANDS"
+    docker exec $API_CONTAINER bash -c "cd /opt/api && PYTHONPATH=. alembic $SUB_COMMANDS"
     if [[ $SUB_COMMANDS == "revision" ]]; then
       echo "Apply sudo chown the revisions to your $(whoami) user..."
       sudo chown -R $(whoami) $ROOT_PATH/api/alembic/versions
@@ -179,11 +180,14 @@ if [[ "$CMD" == "alembic" ]]; then
 elif [[ "$CMD" == "bash" ]]; then
   SUB_COMMANDS=${*:1}
 	if [[ "$ENV" == "not-set" && "$PLATFORM" == "not-set" ]]; then
-    check start api
+    if [[ "$SERVICE" == "not-set" ]]; then
+      exit_with_error "You need to specify a service with option -s."
+    fi
+    check start $SERVICE
     if [ -z "$SUB_COMMANDS" ]; then
-      docker exec -it $API_SERVICE bash
+      docker exec -it $SERVICE_CONTAINER bash
     else
-      docker exec -it $API_SERVICE bash -c "$SUB_COMMANDS"
+      docker exec -it $SERVICE_CONTAINER bash -c "$SUB_COMMANDS"
     fi
 	elif [ "$ENV" != "not-set" ] || [ "$PLATFORM" == "scalingo" ]; then
     if [ "$FILE" == 'not-set' ]; then
@@ -222,13 +226,6 @@ elif [[ "$CMD" == "celery" ]]; then
     ./$COMMAND_NAME -e $ENV -p scalingo bash celery $SUB_COMMANDS
     exit 0
   fi
-
-
-# Launch the python clock process locally
-elif [[ "$CMD" == "clock" ]]; then
-  check start api
-  docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python clock.py"
-  exit_with_success
 
 
 # Apply sub command to the databases from tar db files
@@ -282,13 +279,13 @@ elif [[ "$CMD" == "database" ]]; then
     confirm "Did you first deleted the database ? (else do a $APP_NAME -d api database rm)"
     check start apidb
     check start api
-    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. alembic stamp base && PYTHONPATH=. alembic upgrade head;"
+    docker exec $API_CONTAINER bash -c "cd /opt/api && PYTHONPATH=. alembic stamp base && PYTHONPATH=. alembic upgrade head;"
   else
     check start ${DATABASE}db
     if [[ "$DATABASE" == "api" ]]; then
       check start api
     fi
-    docker exec $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python manager.py database $SUB_CMD"
+    docker exec $API_CONTAINER bash -c "cd /opt/api && PYTHONPATH=. python manager.py database $SUB_CMD"
   fi
   exit_with_success
 
@@ -526,7 +523,7 @@ else
   fi
   if [[ "$ENV" == "not-set" ]]; then
     check start api
-    docker exec $INTERACTIVE_MODE $API_SERVICE bash -c "cd /opt/api && PYTHONPATH=. python manager.py $CMD $*"
+    docker exec $INTERACTIVE_MODE $API_CONTAINER bash -c "cd /opt/api && PYTHONPATH=. python manager.py $CMD $*"
   else
     scalingo -a "$SCALINGO_APP" run "python manager.py $CMD $*"
   fi

@@ -21,6 +21,7 @@ const _ = ({ task }) => {
   const {
     args,
     celeryUuid,
+    creationTime,
     id,
     hostname,
     kwargs,
@@ -73,22 +74,40 @@ const _ = ({ task }) => {
       </div>
       <div className="task-process">
         <span className="task-machine">
+          {'queue '}
           {queue}
         </span>
-        <br />
-        <span className="task-machine">
-          {hostname}
-        </span>
+        {hostname && (
+          <>
+            <br />
+            <span className="task-machine">
+              {hostname}
+            </span>
+          </>
+        )}
         <br />
         {state.toUpperCase()}
         <br />
         <span className="task-time">
-          {startTime.split('.')[0]}
+          {'created '}
+          {creationTime.split('.')[0]}
         </span>
-        <br />
-        <span className="task-time">
-          {duration}
-        </span>
+        {startTime && (
+          <>
+            <br />
+            <span className="task-time">
+              {'started '}
+              {startTime.split('.')[0]}
+            </span>
+          </>)}
+        {duration && (
+          <>
+            <br />
+            <span className="task-time">
+              {'duration '}
+              {duration}
+            </span>
+          </>)}
       </div>
       <div className="task-params">
         {JSON.stringify(args)}
@@ -112,6 +131,7 @@ _.propTypes = {
   task: PropTypes.shape({
     args: PropTypes.array,
     celeryUuid: PropTypes.string,
+    creationTime: PropTypes.string,
     id: PropTypes.string,
     hostname: PropTypes.string,
     kwargs: PropTypes.shape(),

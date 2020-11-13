@@ -22,9 +22,12 @@ from utils.database import db
 from utils.setup import setup
 
 
+
 celery_app = celery.Celery('{}-tasks'.format(os.environ.get('APP_NAME')),
                            backend=os.environ.get('REDIS_URL'),
                            broker=os.environ.get('REDIS_URL'))
+celery_app.conf.task_default_queue = 'default'
+
 BaseTask = celery_app.Task
 
 
@@ -33,8 +36,6 @@ task_db_session = SQLAlchemy().session
 
 class AppTask(BaseTask):
     abstract = True
-
-    queue = 'default'
 
     @before_task_publish.connect
     def create_task(body, headers, routing_key, **kwargs):

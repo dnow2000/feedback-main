@@ -8,6 +8,7 @@ Create Date: 2020-11-11 13:05:50.185324
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.sql import func
 
 
 # revision identifiers, used by Alembic.
@@ -33,6 +34,10 @@ def upgrade():
                               UUID(as_uuid=True),
                               index=True,
                               nullable=False),
+                    sa.Column('creationTime',
+                              sa.DateTime(),
+                              nullable=False,
+                              server_default=func.now()),
                     sa.Column('hostname',
                               sa.String(64)),
                     sa.Column('kwargs',
