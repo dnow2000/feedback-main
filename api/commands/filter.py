@@ -34,13 +34,33 @@ def query_filter_from(**kwargs):
     return query
 
 
+def includes_from_strincludes(strincludes):
+    includes = []
+    pseudo_includes = strincludes.split(',') \
+                      if ',' in strincludes \
+                      else [strincludes]
+    for pseudo_include in pseudo_includes:
+        if '.' in pseudo_include:
+            chunks = pseudo_include.split('.')
+            key = chunks[0]
+            child_pseudo_include = '.'.join(chunks[1:])
+            child_includes = includes_from_strincludes(child_pseudo_include)
+            for include in includes:
+                if 'key' in include and include['key'] == key:
+                    child_includes += include['includes']
+            includes.append({
+                'key': key,
+                'includes': child_includes
+            })
+            continue
+        includes.append(pseudo_include)
+    return includes
+
+
 def includes_from(entity, **kwargs):
-    includes = kwargs.get('includes')
-    if includes:
-        if ',' in includes:
-            return exclusive_includes_from(entity,
-                                           includes.split(','))
-        return includes
+    strincludes = kwargs.get('includes')
+    if strincludes:
+        return includes_from_strincludes(strincludes)
     if hasattr(entity, '__as_dict_includes__'):
         return entity.__as_dict_includes__
     return None

@@ -4,11 +4,11 @@ from tasks import celery_app
 
 
 
-@celery_app.task(queue='default')
+@celery_app.task
 def hello_foo(time):
-    sleep(time)
+    sleep(int(time))
     return { 'text': f'Hello Foo {time}!' }
 
-@celery_app.task(queue='default')
+@celery_app.task
 def hello_bar(name):
     return { 'text': f'Hello Bar, {name}!' }

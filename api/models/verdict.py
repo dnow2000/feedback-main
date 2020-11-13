@@ -91,6 +91,7 @@ ts_indexes = [
 
 @listens_for(Verdict, 'after_insert')
 def after_insert(mapper, connect, self):
+    return
     tasks.graph.sync_with_parsing.delay('verdictId',
                                         self.id,
                                         is_anonymised=False)

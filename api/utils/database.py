@@ -7,9 +7,10 @@ from sqlalchemy_api_handler.utils import logger
 from domain.keywords import LANGUAGE
 
 
-db = SQLAlchemy(engine_options={
-    'pool_size': int(os.environ.get('DATABASE_POOL_SIZE', 3)),
-})
+POOL_SIZE = int(os.environ.get('DATABASE_POOL_SIZE', 3))
+if os.environ.get('IS_WORKER'):
+    POOL_SIZE = 1
+db = SQLAlchemy(engine_options={ 'pool_size': POOL_SIZE })
 
 
 def delete():

@@ -103,4 +103,5 @@ ts_indexes = [
 @listens_for(User, 'after_insert')
 def after_insert(mapper, connect, self):
     if IS_DEVELOPMENT:
-        tasks.sandbox.sync_with_thumb.delay(self.id)
+        #tasks.sandbox.sync_with_thumb.delay(self.id)
+        pass

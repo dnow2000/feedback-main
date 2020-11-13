@@ -1,5 +1,6 @@
 import os
 import sys
+from flask_sqlalchemy import SQLAlchemy
 from traceback import format_exception
 import celery
 from celery.signals import after_task_publish, \
@@ -17,6 +18,7 @@ from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
 from models.task import Task, TaskState
+from utils.database import db
 from utils.setup import setup
 
 
@@ -26,8 +28,13 @@ celery_app = celery.Celery('{}-tasks'.format(os.environ.get('APP_NAME')),
 BaseTask = celery_app.Task
 
 
+task_db_session = SQLAlchemy().session
+
+
 class AppTask(BaseTask):
     abstract = True
+
+    queue = 'default'
 
     @before_task_publish.connect
     def create_task(body, headers, routing_key, **kwargs):
@@ -38,65 +45,78 @@ class AppTask(BaseTask):
                     queue=routing_key,
                     startTime=datetime.utcnow(),
                     state=TaskState.CREATED)
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
 
     @after_task_publish.connect
     def modify_task_to_published_state(headers, **kwargs):
-        task = Task.query.filter_by(celeryUuid=headers['id']).one()
+        task = task_db_session.query(Task) \
+                              .filter_by(celeryUuid=headers['id']) \
+                              .one()
         task.state = TaskState.PUBLISHED
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
 
     @task_received.connect
     def modify_task_to_received_state(request, sender, **kwargs):
-        task = Task.query.filter_by(celeryUuid=request.id).one()
+        task = task_db_session.query(Task) \
+                              .filter_by(celeryUuid=request.id) \
+                              .one()
         task.hostname = sender.hostname
         task.state = TaskState.RECEIVED
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
 
     @task_prerun.connect
     def modify_task_to_started_state(task_id, task, **kwargs):
-        task = Task.query.filter_by(celeryUuid=task_id).one()
+        task = task_db_session.query(Task) \
+                              .filter_by(celeryUuid=task_id) \
+                              .one()
         task.startTime = datetime.utcnow()
         task.state = TaskState.STARTED
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
 
     @task_failure.connect
     def modify_task_to_failure_state(sender, traceback, **kwargs):
-        task = Task.query.filter_by(celeryUuid=sender.request.id).one()
+        task = task_db_session.query(Task) \
+                              .filter_by(celeryUuid=sender.request.id) \
+                              .one()
         exc_type, exc_value, exc_traceback = sys.exc_info()
         task.traceback = ' '.join(format_exception(exc_type,
                                                    exc_value,
                                                    traceback))
         task.stopTime = datetime.utcnow()
         task.state = TaskState.FAILURE
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
 
     @task_success.connect
     def modify_task_to_success_state(sender, result, **kwargs):
-        task = Task.query.filter_by(celeryUuid=sender.request.id).one()
+        task = task_db_session.query(Task) \
+                              .filter_by(celeryUuid=sender.request.id) \
+                              .one()
         task.result = result
         task.stopTime = datetime.utcnow()
         task.state = TaskState.SUCCESS
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
 
-    """
     @task_postrun.connect
-    def modify_task_to_stopped_state(task_id, **kwargs):
-        print('ICI')
-        task = Task.query.filter_by(celeryUuid=task_id).one()
-        if task.state not in [TaskState.FAILURE, TaskState.SUCCESS]:
-            task.stopTime = datetime.utcnow()
-            task.state = TaskState.STOPPED
-        ApiHandler.save(task)
-    """
+    def remove_session(*args, **kwargs):
+        task_db_session.remove()
+        db.session.remove()
 
     @task_revoked.connect
     def modify_task_to_revoked_state(request, **kwargs):
-        print('REVOKED')
-        task = Task.query.filter_by(celeryUuid=request.id).one()
+        task = task_db_session.query(Task) \
+                              .filter_by(celeryUuid=request.id) \
+                              .one()
         task.stopTime = datetime.utcnow()
         task.state = TaskState.STOPPED
-        ApiHandler.save(task)
+        task_db_session.add(task)
+        task_db_session.commit()
+
 
 celery_app.Task = AppTask
 
