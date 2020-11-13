@@ -16,7 +16,7 @@ def planified_dates_for(task_name):
         for index in range(0, 3):
             dates.append(dates[-1] + timedelta(days=10))
         for index in range(0, 6):
-            dates.append(dates[-1] + timedelta(months=1))
+            dates.append(dates[-1] + timedelta(days=30))
 
     elif task_name == 'newspaper.sync_with_article':
         dates = [datetime.now() + timedelta(days=15)]

@@ -15,3 +15,5 @@ def sync_with_article(content_id=None):
     if newspaper:
         content.modify(newspaper)
         ApiHandler.save(content)
+        return newspaper
+    return { 'urlNotFound': 'No newspaper article for {}'.format(content.url) }
