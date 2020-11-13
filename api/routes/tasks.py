@@ -67,13 +67,8 @@ def get_tasks():
 def get_task(task_id):
     #check_user_has_role(current_user, 'ADMIN')
     task = load_or_404(Task, task_id)
-    celery_task = AsyncResult(str(task.celeryUuid), app=celery_app)
-    print('lll', celery_task.state, task.state)
-    #print(celery_task.traceback)
-    print('m', task.traceback)
-    d = as_dict(task)
-    #d['traceback'] = '{0!r}'.format(celery_task.traceback)
-    return jsonify(d)
+    #celery_task = AsyncResult(str(task.celeryUuid), app=celery_app)
+    return jsonify(as_dict(task))
 
 
 #@login_required
@@ -97,7 +92,7 @@ def modify_task(task_id):
     #celery_task.get()
     r = celery_app.control.revoke(task.celeryUuid)
     #print(celery_task)
-    print(request.json, r, task)
+    #print(request.json, r, task)
     # TODO delete
     return jsonify(as_dict(task))
 
