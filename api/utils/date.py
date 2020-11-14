@@ -11,7 +11,7 @@ def strptime(date, date_format=DATE_ISO_FORMAT):
     return datetime.strptime(date, date_format)
 
 
-def strftime(date, date_format=DATE_ISO_FORMAT):
-    if not date:
+def strftime(date_string, date_format=DATE_ISO_FORMAT):
+    if not date_string:
         return None
-    return date.strftime(date_format)
+    return date_string.strftime(date_format)

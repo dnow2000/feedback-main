@@ -1,4 +1,5 @@
 import enum
+from celery import chain, group
 from sqlalchemy import BigInteger, \
                        Boolean, \
                        Column, \
@@ -118,9 +119,12 @@ def after_insert(mapper, connect, self):
         return
 
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
-        chain = tasks.buzzsumo.sync_with_trending.si(content_id=self.id)
-        chain |= tasks.newspaper.sync_with_article.si(content_id=self.id)
-        chain.delay()
+        chain(*map(lambda task: task.si(content_id=self.id),
+                   [
+                       tasks.buzzsumo.sync_with_trending,
+                       tasks.buzzsumo.planify_sync_with_trending,
+                       #tasks.newspaper.sync_with_article
+                   ])).delay()
         """
         if self.buzzsumoIdentifier:
             pass
@@ -135,7 +139,7 @@ def after_insert(mapper, connect, self):
             #if not content.externalThumbUrl and content.thumbCount == 0:
             #    chain = chain | tasks.screenshotmachine.sync_with_capture.s(self.id)
         """
-        
+
         #if not self.archiveUrl:
         #    chain = chain | tasks.waybackmachine.sync_with_archive(self.id)
 
@@ -143,5 +147,3 @@ def after_insert(mapper, connect, self):
     #    chain = tasks.crowdtangle.sync_with_shares.delay(self.id)
     #    for eta in planified_dates_for('crowdtangle.sync_with_shares'):
     #        chain = chain | tasks.crowdtangle.sync_with_shares.s(self.id).apply_async(eta=eta)
-
-    chain.delay()

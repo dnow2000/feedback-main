@@ -70,7 +70,6 @@ const _ = ({ task }) => {
     >
       <div className="task-identifier">
         {name}
-        <br />
         <span className="task-uuid">
           {celeryUuid}
         </span>

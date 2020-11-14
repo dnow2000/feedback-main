@@ -7,7 +7,10 @@
   }
 
   .task-identifier {
-    text-align: left;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
 
     .task-uuid {
       font-size: 0.75rem;
@@ -39,7 +42,7 @@
 
   .task-params {
     @extend .col-tablet-2of5;
-    
+
     font-size: 0.75rem;
   }
 
