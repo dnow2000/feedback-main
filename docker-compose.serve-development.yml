@@ -42,19 +42,6 @@ services:
     volumes:
       - "./docker_data_serve-development/apidb:/var/lib/postgresql"
 
-  apiflower-serve-development:
-    container_name: ${APP_NAME}-apiflower-serve-development
-    image: mher/flower:0.9.5
-    depends_on:
-      - apitasksdb-serve-development
-    environment:
-      - CELERY_BROKER_URL=redis://apitasksdb-serve-development:6379/0
-      - FLOWER_PORT=8888
-    networks:
-      - tasksdb_serve-development_nw
-    ports:
-      - 8888:8888
-
   apitasksdb-serve-development:
     container_name: ${APP_NAME}-apitasksdb-serve-development
     environment:
