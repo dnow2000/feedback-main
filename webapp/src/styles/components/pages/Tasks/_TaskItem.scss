@@ -1,42 +1,49 @@
 .task-item {
   @extend .item;
 
-  align-items: center;
-  display: flex;
-  justify-content: space-around;
-
   &:hover {
     background-color: $grey-light;
     cursor: pointer;
   }
 
-  div {
-    @extend .col-tablet-1of5;
+  .task-identifier {
+    text-align: left;
 
-    text-align: center;
+    .task-uuid {
+      font-size: 0.75rem;
+    }
+  }
 
-    &.task-identifier {
+  .task-status {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+
+    .task-process {
       @extend .col-tablet-2of5;
 
-      .task-uuid {
-        font-size: 0.75rem;
-      }
-    }
-
-    &.task-process {
+      align-items: center;
+      display: flex;
       text-align: left;
 
       .task-machine, .task-time {
         font-size: 0.75rem;
       }
-    }
 
-    &.task-params {
-      text-align: center;
+      .task-state {
+        flex: auto;
+        text-align: center;
+      }
     }
   }
 
-  button {
+  .task-params {
+    @extend .col-tablet-2of5;
+    
+    font-size: 0.75rem;
+  }
+
+  .task-cancel {
     @extend .col-tablet-1of5;
     @extend .button;
     @extend .is-secondary;

@@ -13,3 +13,4 @@ def sync_with_trending(content_id=None):
     if trending:
         content.modify(trending)
         ApiHandler.save(content)
+    return trending

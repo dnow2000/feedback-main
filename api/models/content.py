@@ -119,6 +119,9 @@ def after_insert(mapper, connect, self):
 
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
         chain = tasks.buzzsumo.sync_with_trending.si(content_id=self.id)
+        chain |= tasks.newspaper.sync_with_article.si(content_id=self.id)
+        chain.delay()
+        """
         if self.buzzsumoIdentifier:
             pass
             #for eta in planified_dates_for('buzzsumo.sync_with_trending'):
@@ -131,7 +134,8 @@ def after_insert(mapper, connect, self):
             #        pass
             #if not content.externalThumbUrl and content.thumbCount == 0:
             #    chain = chain | tasks.screenshotmachine.sync_with_capture.s(self.id)
-
+        """
+        
         #if not self.archiveUrl:
         #    chain = chain | tasks.waybackmachine.sync_with_archive(self.id)
 

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import React, { useCallback } from 'react'
+import Dotdotdot from 'react-dotdotdot'
 import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { requestData } from 'redux-thunk-data'
@@ -27,9 +28,11 @@ const _ = ({ task }) => {
     kwargs,
     name,
     queue,
+    result,
     state,
     stopTime,
-    startTime
+    startTime,
+    traceback
   } = task
   const canDelete = DELETE_STATES.includes(state)
   const startDate = new Date(startTime)
@@ -72,57 +75,84 @@ const _ = ({ task }) => {
           {celeryUuid}
         </span>
       </div>
-      <div className="task-process">
-        <span className="task-machine">
-          {'queue '}
-          {queue}
-        </span>
-        {hostname && (
-          <>
-            <br />
+      <div className="task-status">
+
+        <div className="task-process">
+          <div>
             <span className="task-machine">
-              {hostname}
+              {'queue '}
+              {queue}
             </span>
-          </>
-        )}
-        <br />
-        {state.toUpperCase()}
-        <br />
-        <span className="task-time">
-          {'created '}
-          {creationTime.split('.')[0]}
-        </span>
-        {startTime && (
-          <>
+            {hostname && (
+              <>
+                <br />
+                <span className="task-machine">
+                  {hostname}
+                </span>
+              </>
+            )}
             <br />
             <span className="task-time">
-              {'started '}
-              {startTime.split('.')[0]}
+              {'created '}
+              {creationTime.split('.')[0]}
             </span>
-          </>)}
-        {duration && (
-          <>
-            <br />
-            <span className="task-time">
-              {'duration '}
-              {duration}
-            </span>
-          </>)}
+            {startTime && (
+              <>
+                <br />
+                <span className="task-time">
+                  {'started '}
+                  {startTime.split('.')[0]}
+                </span>
+              </>)}
+            {duration && (
+              <>
+                <br />
+                <span className="task-time">
+                  {'duration '}
+                  {duration}
+                </span>
+              </>)}
+          </div>
+          <div className="task-state">
+            {state.toUpperCase()}
+          </div>
+        </div>
+
+
+        <div className="task-params">
+          {'args: '}
+          {JSON.stringify(args)}
+          <br />
+          {'kwargs: '}
+          {JSON.stringify(kwargs)}
+          {result && (
+            <>
+              <br />
+              <Dotdotdot clamp={2}>
+                {'result: '}
+                {JSON.stringify(result)}
+              </Dotdotdot>
+            </>
+          )}
+          {traceback && (
+            <>
+              <br />
+              <Dotdotdot clamp={2}>
+                {'traceback: '}
+                {JSON.stringify(traceback)}
+              </Dotdotdot>
+            </>)}
+        </div>
+        <button
+          className="task-cancel"
+          onClick={handleCancelOrDelete}
+          type="button"
+        >
+          {canDelete
+              ? 'Delete'
+              : 'Cancel'}
+        </button>
       </div>
-      <div className="task-params">
-        {JSON.stringify(args)}
-        <br />
-        {JSON.stringify(kwargs)}
-      </div>
-      <button
-        className="task-cancel"
-        onClick={handleCancelOrDelete}
-        type="button"
-      >
-        {canDelete
-            ? 'Delete'
-            : 'Cancel'}
-      </button>
     </div>
   )
 }
@@ -136,12 +166,23 @@ _.propTypes = {
     hostname: PropTypes.string,
     kwargs: PropTypes.shape(),
     name: PropTypes.string,
+    result: PropTypes.string,
     queue: PropTypes.string,
     state: PropTypes.string,
     stopTime: PropTypes.string,
-    startTime: PropTypes.string
+    startTime: PropTypes.string,
+    traceback: PropTypes.string,
   }).isRequired
 }
 
+/*
+
+
+
+  </div>
+  <div className="task-state">
+    {state.toUpperCase()}
+  </div>
+*/
 
 export default _

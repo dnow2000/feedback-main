@@ -9,6 +9,7 @@ with open(NLTK_PATH, 'r') as nltk_file:
     if '\n' in package_ids:
         package_ids = package_ids[:package_ids.rfind('\n')].split('\n')
 
+# Use a not permission denied folder, like /usr/lib/nltk_data
 NLTK_DATA_PATH = '/usr/lib/nltk_data'
 
 
