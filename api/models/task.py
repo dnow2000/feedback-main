@@ -45,6 +45,8 @@ class Task(ApiHandler,
 
     queue = Column(String(64))
 
+    planificationTime = Column(DateTime())
+
     result = Column(JSON())
 
     state = Column(Enum(TaskState),

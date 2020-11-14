@@ -19,6 +19,7 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.task import Task, TaskState
 from utils.database import db
+from utils.date import strptime
 from utils.setup import setup
 
 
@@ -43,6 +44,8 @@ class AppTask(BaseTask):
                     celeryUuid=headers['id'],
                     kwargs=body[1],
                     name=headers['task'],
+                    planificationTime=strptime('{}Z'.format(headers['eta'])) \
+                                      if headers.get('eta') else None,
                     queue=routing_key,
                     startTime=datetime.utcnow(),
                     state=TaskState.CREATED)

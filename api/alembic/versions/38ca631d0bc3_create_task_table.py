@@ -49,6 +49,8 @@ def upgrade():
                     sa.Column('name',
                               sa.String(256),
                               nullable=False),
+                    sa.Column('planificationTime',
+                              sa.DateTime()),
                     sa.Column('queue',
                               sa.String(64)),
                     sa.Column('result',

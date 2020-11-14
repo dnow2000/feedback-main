@@ -27,6 +27,7 @@ const _ = ({ task }) => {
     hostname,
     kwargs,
     name,
+    planificationTime,
     queue,
     result,
     state,
@@ -69,37 +70,57 @@ const _ = ({ task }) => {
       tabIndex="0"
     >
       <div className="task-identifier">
-        {name}
+        <span className="task-name">
+          {name}
+        </span>
         <span className="task-uuid">
           {celeryUuid}
         </span>
       </div>
       <div className="task-status">
-
         <div className="task-process">
           <div>
             <span className="task-machine">
-              {'queue '}
+              <span className="task-label">
+                {'queue: '}
+              </span>
               {queue}
             </span>
             {hostname && (
               <>
                 <br />
                 <span className="task-machine">
+                  <span className="task-label">
+                    {'worker: '}
+                  </span>
                   {hostname}
                 </span>
               </>
             )}
             <br />
             <span className="task-time">
-              {'created '}
+              <span className="task-label">
+                {'created: '}
+              </span>
               {creationTime.split('.')[0]}
             </span>
+            {planificationTime && (
+              <>
+                <br />
+                <span className="task-time">
+                  <span className="task-label">
+                    {'planified: '}
+                  </span>
+                  {planificationTime.split('.')[0]}
+                </span>
+              </>)}
             {startTime && (
               <>
                 <br />
                 <span className="task-time">
-                  {'started '}
+                  <span className="task-label">
+                    {'started: '}
+                  </span>
                   {startTime.split('.')[0]}
                 </span>
               </>)}
@@ -107,28 +128,36 @@ const _ = ({ task }) => {
               <>
                 <br />
                 <span className="task-time">
-                  {'duration '}
+                  <span className="task-label">
+                    {'duration: '}
+                  </span>
                   {duration}
                 </span>
               </>)}
           </div>
-          <div className="task-state">
+          <div className={`task-state task-${state}`}>
             {state.toUpperCase()}
           </div>
         </div>
 
 
         <div className="task-params">
-          {'args: '}
+          <span className="task-label">
+            {'args: '}
+          </span>
           {JSON.stringify(args)}
           <br />
-          {'kwargs: '}
+          <span className="task-label">
+            {'kwargs: '}
+          </span>
           {JSON.stringify(kwargs)}
           {result && (
             <>
               <br />
               <Dotdotdot clamp={2}>
-                {'result: '}
+                <span className="task-label">
+                  {'result: '}
+                </span>
                 {JSON.stringify(result)}
               </Dotdotdot>
             </>
@@ -137,7 +166,9 @@ const _ = ({ task }) => {
             <>
               <br />
               <Dotdotdot clamp={2}>
-                {'traceback: '}
+                <span className="task-label">
+                  {'traceback: '}
+                </span>
                 {JSON.stringify(traceback)}
               </Dotdotdot>
             </>)}
@@ -165,6 +196,7 @@ _.propTypes = {
     hostname: PropTypes.string,
     kwargs: PropTypes.shape(),
     name: PropTypes.string,
+    planificationTime: PropTypes.string,
     result: PropTypes.string,
     queue: PropTypes.string,
     state: PropTypes.string,
@@ -174,14 +206,5 @@ _.propTypes = {
   }).isRequired
 }
 
-/*
-
-
-
-  </div>
-  <div className="task-state">
-    {state.toUpperCase()}
-  </div>
-*/
 
 export default _

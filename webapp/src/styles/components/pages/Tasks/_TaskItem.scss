@@ -12,8 +12,15 @@
     justify-content: space-between;
     margin-bottom: 0.5rem;
 
+    .task-name {
+      color: $black;
+      font-size: 1.125rem;
+      font-weight: $font-weight-semibold;
+    }
+
     .task-uuid {
       font-size: 0.75rem;
+      font-style: italic;
     }
   }
 
@@ -21,6 +28,14 @@
     align-items: center;
     display: flex;
     justify-content: space-around;
+
+
+    .task-label {
+      color: $black;
+      font-size: 0.825rem;
+      font-style: italic;
+    }
+
 
     .task-process {
       @extend .col-tablet-2of5;
@@ -36,26 +51,45 @@
       .task-state {
         flex: auto;
         text-align: center;
+
+        &.task-received {
+          color: $blue;
+        }
+
+        &.task-failure {
+          color: $red;
+        }
+
+        &.task-started {
+          color: $orange;
+        }
+
+        &.task-success {
+          color: $green;
+        }
+      }
+    }
+
+    .task-params {
+      @extend .col-tablet-2of5;
+
+      display: table;
+      font-size: 0.75rem;
+    }
+
+    .task-cancel {
+      @extend .col-tablet-1of5;
+      @extend .button;
+      @extend .is-secondary;
+
+      text-align: center;
+      z-index: 1;
+
+      &.task-stop {
+        @extend .is-primary;
       }
     }
   }
 
-  .task-params {
-    @extend .col-tablet-2of5;
 
-    font-size: 0.75rem;
-  }
-
-  .task-cancel {
-    @extend .col-tablet-1of5;
-    @extend .button;
-    @extend .is-secondary;
-
-    text-align: center;
-    z-index: 1;
-
-    &.task-stop {
-      @extend .is-primary;
-    }
-  }
 }
