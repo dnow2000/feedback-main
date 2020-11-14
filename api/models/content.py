@@ -25,7 +25,10 @@ from models.mixins import HasCrowdtangleMixin, \
                           HasSharesMixin
 import tasks.buzzsumo
 import tasks.crowdtangle
+import tasks.newspaper
+import tasks.screenshotmachine
 import tasks.waybackmachine
+
 from utils.database import db
 
 
@@ -110,15 +113,31 @@ ts_indexes = [
 
 @listens_for(Content, 'after_insert')
 def after_insert(mapper, connect, self):
+
+    if self.url != 'https://www.breitbart.com/big-government/2017/03/20/delingpole-great-barrier-reef-still-not-dying-whatever-washington-post-says':
+        return
+
     if self.type in [ContentType.ARTICLE, ContentType.VIDEO]:
-        tasks.buzzsumo.sync_with_trending.delay(self.id)
+        chain = tasks.buzzsumo.sync_with_trending.si(content_id=self.id)
+        if self.buzzsumoIdentifier:
+            pass
+            #for eta in planified_dates_for('buzzsumo.sync_with_trending'):
+            #    chain = chain | tasks.buzzsumo.sync_with_trending.si(content_id).apply_async(eta=eta)
+        elif self.type == ContentType.ARTICLE:
+            chain |= tasks.newspaper.sync_with_article.si(content_id=self.id)
+            #if not content.urlNotFound:
+            #    for eta in planified_dates_for('newspaper.sync_with_article'):
+            #        chain = chain | tasks.newspaper.sync_with_article.s(self.id).apply_async(eta=eta)
+            #        pass
+            #if not content.externalThumbUrl and content.thumbCount == 0:
+            #    chain = chain | tasks.screenshotmachine.sync_with_capture.s(self.id)
 
         #if not self.archiveUrl:
-        #    tasks.waybackmachine.sync_with_archive(self.id)
-        #    pass
+        #    chain = chain | tasks.waybackmachine.sync_with_archive(self.id)
 
-    if self.type == ContentType.POST:
-        tasks.crowdtangle.sync_with_shares.delay(self.id)
-        for eta in planified_dates_for('crowdtangle.sync_with_shares'):
-            #tasks.crowdtangle.sync_with_shares.apply_async(self.id, eta=eta)
-            pass
+    #if self.type == ContentType.POST:
+    #    chain = tasks.crowdtangle.sync_with_shares.delay(self.id)
+    #    for eta in planified_dates_for('crowdtangle.sync_with_shares'):
+    #        chain = chain | tasks.crowdtangle.sync_with_shares.s(self.id).apply_async(eta=eta)
+
+    chain.delay()
