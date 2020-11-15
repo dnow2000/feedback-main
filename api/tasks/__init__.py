@@ -44,7 +44,7 @@ class AppTask(BaseTask):
                     celeryUuid=headers['id'],
                     kwargs=body[1],
                     name=headers['task'],
-                    planificationTime=strptime('{}Z'.format(headers['eta'])) \
+                    planificationTime=strptime('{}Z'.format(headers['eta']).replace('+00:00', '')) \
                                       if headers.get('eta') else None,
                     queue=routing_key,
                     startTime=datetime.utcnow(),

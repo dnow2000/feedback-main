@@ -77,6 +77,9 @@ services:
       - ./api:/opt/api
 
   apiworker-serve-development:
+    build:
+      args:
+        - USER=celery
     command: >
       bash -c "set -x;
               cd /opt/api;

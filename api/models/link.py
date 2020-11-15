@@ -88,3 +88,7 @@ class Link(ApiHandler,
                              backref='links')
 
     type = Column(Enum(LinkType), nullable=False)
+
+
+Link.LinkType = LinkType
+Link.LinkSubType = LinkSubType

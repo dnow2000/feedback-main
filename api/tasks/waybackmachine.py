@@ -8,5 +8,11 @@ from utils.waybackmachine import url_from_archive_services
 def sync_with_archive(content_id):
     content = ApiHandler.model_from_name('Content') \
                         .query.get(content_id)
-    content.archiveUrl = url_from_archive_services(content.url)
-    ApiHandler.save(content)
+    if not self.archiveUrl:
+        if self.type.value == 'article':
+            content.archiveUrl = url_from_archive_services(content.url)
+            ApiHandler.save(content)
+            return { 'archiveUrl': content.archiveUrl }
+        else:
+            return { 'type': 'Content is not an article so no need to archive.' }
+    return { 'archiveUrl': 'Exists so no need to archive' }

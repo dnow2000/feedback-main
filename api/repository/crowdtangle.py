@@ -1,12 +1,13 @@
+from sqlalchemy_api_handler import ApiHandler
+
 from domain.crowdtangle import shares_from_url
 from utils.config import DEFAULT_USER_PASSWORD, IS_DEVELOPMENT
 from utils.password import create_random_password
 
 
-def share_appearances_from_content(content, request_start_date):
-    Appearance = ApiHandler.model_from_name('Appearance')
+def share_appearances_from_content(content, request_start_date=None):
     Content = ApiHandler.model_from_name('Content')
-    ContentType = Content.ContentType
+    Link = ApiHandler.model_from_name('Link')
     Medium = ApiHandler.model_from_name('Medium')
     Platform = ApiHandler.model_from_name('Platform')
     User = ApiHandler.model_from_name('User')
@@ -20,7 +21,8 @@ def share_appearances_from_content(content, request_start_date):
     })
 
     if not crowdtangle_user.id:
-        crowdtangle_user.set_password(DEFAULT_USER_PASSWORD if IS_DEVELOPMENT else create_random_password())
+        crowdtangle_user.set_password(DEFAULT_USER_PASSWORD \
+                                      if IS_DEVELOPMENT else create_random_password())
 
     # create the Facebook platform so we can link our Facebook posts media to it:
     facebook_platform = Platform.create_or_modify({
@@ -28,7 +30,7 @@ def share_appearances_from_content(content, request_start_date):
         'name': 'Facebook'
     })
 
-    shares = shares_from_url(content.url, request_start_date)
+    shares = shares_from_url(content.url, request_start_date=request_start_date)
 
     links = []
     for share in shares:
@@ -41,7 +43,7 @@ def share_appearances_from_content(content, request_start_date):
         content_post = Content.create_or_modify({
             '__SEARCH_BY__': 'url',
             'medium': medium_group,
-            'type': ContentType.POST,
+            'type': Content.ContentType.POST,
             **share['post']
         })
 
@@ -54,9 +56,9 @@ def share_appearances_from_content(content, request_start_date):
             'crowdtangleIdentifier': crowdtangle_identifier,
             'linkedContent': content,
             'linkingContent': content_post,
-            'subType': LinkSubType.SHARE,
+            'subType': Link.LinkSubType.SHARE,
             'testifier': crowdtangle_user,
-            'type': LinkType.APPEARANCE
+            'type': Link.LinkType.APPEARANCE
         }))
 
     return links
