@@ -4,7 +4,8 @@ from sqlalchemy_api_handler import ApiErrors, ApiHandler
 from sqlalchemy_api_handler.utils import logger
 
 from domain.thumbs import DO_NOT_CROP, standardize_image
-from storage.object import store_public_object
+from utils.ovh.object import store_public_object
+
 
 ALLOWED_EXTENSIONS = {'jpg', 'png', 'jpeg', 'gif'}
 BLACK = b'\x00\x00\x00'

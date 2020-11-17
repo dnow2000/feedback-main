@@ -4,8 +4,8 @@ from pathlib import Path
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.utils import humanize
 
-from storage.object import store_public_object
-from storage.thumb import save_thumb
+from utils.ovh.object import store_public_object
+from utils.ovh.thumb import save_thumb
 
 
 inflect_engine = inflect.engine()

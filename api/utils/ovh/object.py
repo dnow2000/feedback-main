@@ -28,7 +28,7 @@ def swift_con():
 
 
 STORAGE_DIR = Path(os.path.dirname(os.path.realpath(__file__)))\
-              / '..' / 'static' / 'object_store_data'
+              / '..' / '..' / 'tmp' / 'object_store_data'
 
 
 def local_dir(bucket, object_id):

@@ -1,7 +1,7 @@
 from sqlalchemy_api_handler import ApiHandler
 
-from storage.thumb import save_thumb
 from tasks import celery_app
+from utils.ovh.thumb import save_thumb
 from utils.screenshotmachine import capture
 
 

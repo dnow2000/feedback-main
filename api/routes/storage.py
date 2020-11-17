@@ -1,7 +1,7 @@
 import os.path
 from flask import current_app as app, send_file
 
-from storage.object import local_path
+from utils.ovh.object import local_path
 
 print('LOCAL DEV MODE: Using disk based object storage')
 

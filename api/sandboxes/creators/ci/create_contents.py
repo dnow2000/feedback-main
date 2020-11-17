@@ -3,8 +3,8 @@ from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.utils import logger
 
 from models.content import Content, ContentType
-from storage.thumb import save_thumb
 from utils.date import strftime, TODAY
+from utils.ovh.thumb import save_thumb
 from utils.screenshotmachine import capture
 
 

@@ -12,7 +12,7 @@ COPY ./utils/nltk.py /opt/api/utils/nltk.py
 RUN PYTHONPATH=/opt/api python -c "from utils.nltk import import_nltk; import_nltk();"
 
 RUN mkdir -p /tmp/.newspaper_scraper/article_resources
-COPY ./static /opt/api/static
-RUN chown -R nobody:nogroup /opt/api/static
+COPY ./tmp /opt/api/tmp
+RUN chown -R nobody:nogroup /opt/api/tmp
 
 EXPOSE 5000

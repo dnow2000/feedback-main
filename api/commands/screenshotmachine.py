@@ -4,8 +4,8 @@ import traceback
 from flask import current_app as app
 
 from models.content import Content
+from utils.ovh.thumb import save_thumb
 from utils.screenshotmachine import capture
-from storage.thumb import save_thumb
 
 
 @app.manager.option('-u',

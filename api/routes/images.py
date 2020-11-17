@@ -9,8 +9,8 @@ from sqlalchemy_api_handler.serialization import as_dict
 from models.image import Image
 from repository.roles import check_user_has_role
 from validation.thumbs import check_and_read_files_thumb
+from utils.ovh.thumb import save_thumb
 from utils.rest import login_or_api_key_required
-from storage.thumb import save_thumb
 
 
 @app.route('/images', methods=['GET'])
