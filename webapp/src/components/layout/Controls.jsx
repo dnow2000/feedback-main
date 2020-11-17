@@ -27,8 +27,8 @@ const _ = ({ config, pathnameOnChange, render }) => {
       locationURL.searchParams.set(key, value)
     }
     if (locationURL.search === search) return
-    const activityTags = [getItemsActivityTagFromConfig(config)]
-    dispatch(deleteData(null, { activityTags }))
+    const tags = [getItemsActivityTagFromConfig(config)]
+    dispatch(deleteData(null, { tags }))
     setTimeout(() =>
       history.push(`${pathnameOnChange || locationURL.pathname}${locationURL.search}`))
   }, [config, dispatch, history, locationURL, pathnameOnChange, search])
@@ -45,7 +45,7 @@ _.defaultProps = {
 
 _.propTypes = {
   config: PropTypes.shape({
-    activityTag: PropTypes.string.isRequired
+    tag: PropTypes.string.isRequired
   }).isRequired,
   pathnameOnChange: PropTypes.string,
   render: PropTypes.func.isRequired,

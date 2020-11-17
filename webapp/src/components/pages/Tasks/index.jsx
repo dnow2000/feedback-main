@@ -20,7 +20,7 @@ export default () => {
   const locationURL = useLocationURL()
 
   const config = useMemo(() => ({
-    activityTag: '/tasks-items',
+    tag: '/tasks-items',
     apiPath: `/tasks${locationURL.search}`,
   }), [locationURL])
 

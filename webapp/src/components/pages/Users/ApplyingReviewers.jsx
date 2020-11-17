@@ -10,7 +10,7 @@ export default () => {
   const config = useMemo(() => ({
     ...userConfig,
     apiPath: "/users?applyingReviewers=true",
-    activityTag: "applying-reviewers"
+    tag: "applying-reviewers"
   }), [])
 
   const renderItem = useCallback(item => <UserItem user={item} />, [])

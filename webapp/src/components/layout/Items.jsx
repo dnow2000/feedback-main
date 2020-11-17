@@ -53,7 +53,7 @@ const _ = ({
     const apiPathWithPage = `${apiPath}${apiPath.includes('?') ? '&' : '?'}page=${page}`
     dispatch(requestData({
       ...config,
-      activityTag: getItemsActivityTagFromConfig(config),
+      tag: getItemsActivityTagFromConfig(config),
       apiPath: apiPathWithPage,
       handleSuccess: (state, action) =>
         setIsEmpty(!action.payload.data.length)
