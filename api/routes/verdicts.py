@@ -18,7 +18,9 @@ from utils.rest import expect_json_data, \
 
 @app.route('/verdicts', methods=['GET'])
 def get_verdicts():
-    query = Verdict.query.order_by(desc(Verdict.scienceFeedbackPublishedDate))
+    query = Verdict.query \
+                   .filter(Verdict.scienceFeedbackPublishedDate!=None) \
+                   .order_by(desc(Verdict.scienceFeedbackPublishedDate))
 
     content_id = request.args.get('contentId')
     keywords = request.args.get('keywords')
