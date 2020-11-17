@@ -1,3 +1,4 @@
 web: gunicorn -w $UNICORN_N_WORKERS --timeout $UNICORN_TIMEOUT app:FLASK_APP
 worker: celery --app=celery_worker worker --loglevel=INFO
+clock: python clock.py
 postdeploy: alembic upgrade head
