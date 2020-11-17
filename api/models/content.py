@@ -121,7 +121,7 @@ def after_insert(mapper, connect, self):
                               [
                                   #tasks.buzzsumo.sync_with_trending,
                                   #tasks.buzzsumo.planify_sync_with_trending,
-                                  #tasks.newspaper.sync_with_article,
+                                  tasks.newspaper.sync_with_article,
                                   #tasks.newspaper.planify_sync_with_article,
                                   tasks.screenshotmachine.sync_with_capture
                               ]))

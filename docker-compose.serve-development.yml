@@ -28,6 +28,7 @@ services:
       - web_serve-development_nw
     volumes:
       - ./api:/opt/api
+      - /opt/api/static
 
   apidb-serve-development:
     command: postgres -c logging_collector=on -c log_destination=stderr -c log_min_duration_statement=0 -c log_statement=all -c log_duration=on
@@ -75,11 +76,9 @@ services:
       - tasksdb_serve-development_nw
     volumes:
       - ./api:/opt/api
+      - /opt/api/static
 
   apiworker-serve-development:
-    build:
-      args:
-        - USER=celery
     command: >
       bash -c "set -x;
               cd /opt/api;
@@ -108,6 +107,7 @@ services:
       - tasksdb_serve-development_nw
     volumes:
       - ./api:/opt/api
+      - /opt/api/static
 
   nginx-serve-development:
     build:
