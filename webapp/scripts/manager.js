@@ -34,8 +34,8 @@ const { end2end, symlink, unsymlink } = program
 
 if (end2end) {
   const { task } = program
-  const { APP_NAME, COMMAND_NAME, TLD } = config
-  const envOption = `APP_NAME=${APP_NAME},COMMAND_NAME=${COMMAND_NAME},TLD=${TLD}`
+  const { APP_NAME, COMMAND_NAME, DEFAULT_USER_PASSWORD, TLD } = config
+  const envOption = `APP_NAME=${APP_NAME},COMMAND_NAME=${COMMAND_NAME},DEFAULT_USER_PASSWORD=${DEFAULT_USER_PASSWORD},TLD=${TLD}`
   const command = `NODE_ENV=development ./node_modules/.bin/cypress ${task} --env=${envOption}`
   childProcess.execSync(command, { stdio: [0, 1, 2] })
 }

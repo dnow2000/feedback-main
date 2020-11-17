@@ -1,11 +1,12 @@
-from sqlalchemy_api_handler import ApiHandler, dehumanize, humanize
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import dehumanize, humanize
 
-from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
-                            create_get_filter_matching_ts_query_in_any_model
 from models.review import Review
 from models.review_tag import ReviewTag
 from models.tag import Tag
 from models.user import User
+from repository.keywords import create_filter_matching_all_keywords_in_any_model, \
+                                create_get_filter_matching_ts_query_in_any_model
 
 review_ts_filter = create_get_filter_matching_ts_query_in_any_model(
     Review,

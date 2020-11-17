@@ -1,4 +1,4 @@
-"""add_char_limit_to_archiveUrl
+"""add char limit to archive url
 
 Revision ID: 4514d2bb0337
 Revises: 32516908c7ac

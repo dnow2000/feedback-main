@@ -6,14 +6,16 @@
 # pylint: disable=W0612
 # pylint: disable=W0613
 import os
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
+
 from jobs import import_async_jobs, import_background_jobs
 from models import import_models
 from routes import import_routes
-from scripts import import_scripts
 from utils.config import IS_DEVELOPMENT
-from utils.db import db
-from utils.encoder import EnumJSONEncoder
+from utils.database import db
+from utils.encoder import AppJSONEncoder
+from utils.nltk import import_nltk
 
 
 def setup(flask_app,
@@ -21,13 +23,12 @@ def setup(flask_app,
           with_debug=False,
           with_jobs=False,
           with_login_manager=False,
-          with_routes=False,
-          with_scripts_manager=False,
-          with_models_creation=False):
+          with_routes=False):
 
     flask_app.secret_key = os.environ.get('FLASK_SECRET', '+%+5Q83!abR+-Dp@')
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('POSTGRES_URL')
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
     if with_debug:
         flask_app.config['DEBUG'] = True
 
@@ -35,7 +36,7 @@ def setup(flask_app,
     db.init_app(flask_app)
     ApiHandler.set_db(db)
 
-    flask_app.json_encoder = EnumJSONEncoder
+    flask_app.json_encoder = AppJSONEncoder
 
     @flask_app.teardown_request
     def remove_db_session(exc):
@@ -53,7 +54,8 @@ def setup(flask_app,
     flask_app.url_map.strict_slashes = False
 
     flask_app.app_context().push()
-    import_models(with_creation=with_models_creation)
+    import_models()
+    import_nltk()
 
     if with_login_manager:
         from flask_login import LoginManager
@@ -68,7 +70,7 @@ def setup(flask_app,
         login_manager.init_app(flask_app)
         import repository.login_manager
 
-    import utils.nltk_downloader
+    import utils.nltk
 
     if with_routes:
         import_routes()
@@ -89,12 +91,3 @@ def setup(flask_app,
 
         flask_app.async_scheduler = async_scheduler
         flask_app.background_scheduler = background_scheduler
-
-    if with_scripts_manager:
-        from flask_script import Manager
-
-        def create_app(env=None):
-            flask_app.env = env
-            return flask_app
-        flask_app.manager = Manager(create_app)
-        import_scripts()

@@ -1,4 +1,4 @@
-"""fix_longer_string_for_external_thumb_url
+"""fix longer string for external thumb url
 
 Revision ID: 31cc2a5f0933
 Revises: 5f6909210e52

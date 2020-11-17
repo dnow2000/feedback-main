@@ -4,7 +4,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasThumbMixin
-from utils.db import db
+from utils.database import db
 
 
 class Image(ApiHandler,

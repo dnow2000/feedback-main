@@ -43,7 +43,11 @@ def local_path(bucket, object_id):
     return local_dir(bucket, object_id) / PurePath(object_id).name
 
 
-def store_public_object(bucket, object_id, blob, content_type, symlink_path=None):
+def store_public_object(bucket,
+                        object_id,
+                        blob,
+                        content_type,
+                        symlink_path=None):
     if IS_DEVELOPMENT:
         os.makedirs(local_dir(bucket, object_id), exist_ok=True)
 
@@ -52,12 +56,14 @@ def store_public_object(bucket, object_id, blob, content_type, symlink_path=None
         new_type_file = open(str(file_local_path) + ".type", "w")
         new_type_file.write(content_type)
 
-        if symlink_path and not os.path.isfile(file_local_path) and not os.path.islink(file_local_path):
+        if symlink_path:
+            if os.path.isfile(file_local_path):
+                os.remove(file_local_path)
             os.symlink(symlink_path, file_local_path)
             return
 
-        new_file = open(file_local_path, "wb")
-        new_file.write(blob)
+        with open(file_local_path, "wb") as new_file:
+            new_file.write(blob)
     else:
         container_name = os.environ.get('OVH_BUCKET_NAME')
         storage_path = 'thumbs/' + object_id

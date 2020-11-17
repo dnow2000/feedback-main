@@ -4,7 +4,7 @@ import string
 from datetime import datetime, timedelta
 from sqlalchemy_api_handler import ApiErrors
 
-from utils.random_token import create_random_token
+from utils.token import create_random_token
 
 RESET_PASSWORD_TOKEN_LENGTH = 10
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState, useEffect } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { requestData } from 'redux-thunk-data'
+import { selectEntitiesByKeyAndJoin, requestData } from 'redux-thunk-data'
 
 import Controls from 'components/layout/Controls'
 import Header from 'components/layout/Header'
@@ -33,26 +33,20 @@ export default () => {
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
 
-  const handleShowMore = useCallback(() => {
+  const loadMoreAction = useCallback(() => {
       setShowMoreStatus(true)
       history.push('/verdicts')
-    },
-    [history]
+    }, [history]
   )
 
   useEffect(() => {
-    dispatch(requestData({
-      apiPath: '/db_stats',
-      isMergingDatum: true
-    }))
+    dispatch(requestData({ apiPath: '/statistics' }))
   }, [dispatch])
 
-  const [linkCount, verdictCount] = useSelector(({ data }) => {
-    return [
-      data?.db_stats?.[0]?.contentCount || 2674,
-      data?.db_stats?.[0]?.verdictCount || 449
-    ]
-  })
+  const contentsCount = (useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Content' }))[0] || {}).count
+  const verdictsCount = (useSelector(state =>
+    selectEntitiesByKeyAndJoin(state, 'statistics', { key: 'modelName', value: 'Verdict' }))[0] || {}).count
 
 
   return (
@@ -61,27 +55,27 @@ export default () => {
       <Main className="landing with-header">
         <section className="hero">
           <div className="container">
-            {verdictCount && linkCount && (
+            {verdictsCount > 0 && contentsCount > 0 && (
               <p className="h1">
                 <b>
-                  {verdictCount}
+                  {verdictsCount}
                 </b>
                 {' reviews'}
                 <br />
                 {'and'}
                 <br />
                 <b>
-                  {linkCount}
+                  {contentsCount}
                 </b>
                 {' content URLs flagged'}
               </p>
             )}
             <Controls
               config={config}
-              pathnameOnChange='/verdicts'
+              pathnameOnChange="/verdicts"
               render={({handleChange, locationURL}) => (
                 <KeywordsBar
-                  layout='vertical'
+                  layout="vertical"
                   onChange={handleChange}
                 />
               )}
@@ -106,17 +100,11 @@ export default () => {
             <div className="verdict-items">
               <Items
                 config={config}
+                limit={4}
+                loadMoreAction={loadMoreAction}
                 renderItem={renderItem}
                 shouldLoadMore={showMoreStatus}
               />
-              <div className="show-more">
-                <button
-                  onClick={handleShowMore}
-                  type='button'
-                >
-                  {'Show more'}
-                </button>
-              </div>
             </div>
           </div>
         </section>

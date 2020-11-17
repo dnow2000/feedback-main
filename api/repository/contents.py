@@ -1,19 +1,20 @@
 from datetime import datetime, timedelta
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
+from domain.content import newspaper_from_url
+from domain.trendings.buzzsumo import buzzsumo_trending_from_url
 from models.content import Content
 from models.content_tag import ContentTag
 from models.tag import Tag
-
-from domain.content import newspaper_from_url
-from domain.keywords import create_filter_matching_all_keywords_in_any_model, \
-                            create_get_filter_matching_ts_query_in_any_model
-from domain.trendings.buzzsumo import buzzsumo_trending_from_url
 from repository.activities import filter_by_activity_date_and_verb
 from repository.crowdtangle import attach_crowdtangle_entities_from_content
+from repository.keywords import create_filter_matching_all_keywords_in_any_model, \
+                                create_get_filter_matching_ts_query_in_any_model
+from storage.thumb import save_thumb
 from utils.screenshotmachine import capture
 from utils.wayback_machine import url_from_archive_services
-from storage.thumb import save_thumb
+
 
 
 CONTENT_TS_FILTER = create_get_filter_matching_ts_query_in_any_model(Content,
@@ -59,8 +60,8 @@ def keep_contents_with_keywords(query, keywords):
 
 
 def keep_contents_with_minimal_datum(query):
-    return query.filter((Content.title is not None) & \
-                        ((Content.externalThumbUrl is not None) | (Content.thumbCount > 0)))
+    return query.filter((Content.title != None) & \
+                        ((Content.externalThumbUrl != None) | (Content.thumbCount > 0)))
 
 
 def filter_contents_by_is_reviewable(query, is_reviewable):
@@ -96,13 +97,13 @@ def sync(from_date=None,
     if to_date is None:
         to_date = now_date - timedelta(minutes=0)
 
-    query = Content.query.filter(Content.type==None).order_by(Content.id.desc())
-
+    query = Content.query.order_by(Content.id.desc())
     if from_date or to_date:
         query = filter_by_activity_date_and_verb(query,
                                                  from_date=from_date,
                                                  to_date=to_date,
                                                  verb='insert')
+
 
     contents = query.all()
 
@@ -111,12 +112,10 @@ def sync(from_date=None,
 
     logger.info(f'Sync contents from {from_date} to {to_date}...')
     for content in contents[:contents_max]:
-        sync_content(
-            content,
-            sync_archive_url=sync_archive_url,
-            sync_crowdtangle=sync_crowdtangle,
-            sync_thumbs=sync_thumbs
-        )
+        sync_content(content,
+                     sync_archive_url=sync_archive_url,
+                     sync_crowdtangle=sync_crowdtangle,
+                     sync_thumbs=sync_thumbs)
         logger.info(f'Synced content: {content.id}')
 
     logger.info(f'Sync contents from {from_date} to {to_date}...Done')

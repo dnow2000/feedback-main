@@ -8,10 +8,10 @@ const mapArgsToCacheKey = (state, verdictId) => verdictId || ''
 
 export default createCachedSelector(
   selectCurrentUser,
-  (state, verdictId) => selectEntitiesByKeyAndJoin(
+  (state, verdictId, stateKey='verdicts') => selectEntitiesByKeyAndJoin(
     state,
     'appearances',
-    { key: 'quotedClaimId', value: selectEntityByKeyAndId(state, 'verdicts', verdictId)?.claimId }),
+    { key: 'quotedClaimId', value: selectEntityByKeyAndId(state, stateKey, verdictId)?.claimId }),
   (currentUser, appearances) => {
     if (!appearances) return
     appearances.sort((a1, a2) => a1.id > a2.id ? -1 : 1)

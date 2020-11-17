@@ -1,14 +1,15 @@
 import bcrypt
 from sqlalchemy import Column, LargeBinary, String
 from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.mixins import NeedsValidationMixin
 
+from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasExternalThumbUrlMixin, \
                           HasQualificationMixin, \
                           HasScienceFeedbackMixin, \
-                          HasThumbMixin, \
-                          NeedsValidationMixin
+                          HasThumbMixin
 from models.role import Role
-from utils.db import db
+from utils.database import db
 
 
 class User(ApiHandler,
@@ -81,3 +82,12 @@ class User(ApiHandler,
         self.clearTextPassword = newpass
         self.password = bcrypt.hashpw(newpass.encode('utf-8'),
                                       bcrypt.gensalt())
+
+
+
+ts_indexes = [
+    ('idx_user_fts_comment', User.email),
+    ('idx_user_fts_first_name', User.firstName),
+    ('idx_user_fts_last_name', User.lastName),
+]
+(User.__ts_vectors__, User.__table_args__) = create_ts_vector_and_table_args(ts_indexes)

@@ -1,5 +1,6 @@
 from flask import current_app as app, jsonify
-from sqlalchemy_api_handler import as_dict, dehumanize
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import dehumanize
 
 from models.author_content import AuthorContent
 from utils.rest import login_or_api_key_required

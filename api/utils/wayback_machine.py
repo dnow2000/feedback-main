@@ -2,7 +2,8 @@ import requests
 from time import sleep
 from urllib.parse import urlparse
 
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
+
 
 API_URL = 'http://archive.org/wayback/available?url='
 BASE_URL = 'https://web.archive.org'
@@ -30,7 +31,10 @@ def create_wayback_machine_url(url, sleep_time=2):
         sleep(sleep_time)
         if res.status_code == 200:
             logger.info('Saving {} to Wayback Machine...Done.'.format(url))
-            location = res.headers['Content-Location']
+            location = res.headers.get('Content-Location')
+            if not location:
+                logger.error('Failed to save {url} to Wayback Machine: {res.headers}')
+                return None
             return '{}{}'.format(BASE_URL, location)
         else:
             logger.error('Saving {} to Wayback Machine...ERROR: {}'.format(url, res.status_code))
@@ -126,6 +130,11 @@ def url_from_archiveis(url):
 
 def url_from_archive_services(url):
     hostname = urlparse(url).hostname
+
     if hostname in FALLBACK_LIST:
         return url_from_archiveis(url)
-    return url_from_wayback_machine(url)
+    archive_url = url_from_wayback_machine(url)
+
+    if not archive_url:
+        return url_from_archiveis(url)
+    return archive_url

@@ -1,8 +1,9 @@
 @import 'form/index.scss';
 
-@import 'AppearanceItem.scss';
+@import 'AppearanceItem/index.scss';
 @import 'Authors.scss';
 @import 'Avatar.scss';
+@import 'BacklinkItem.scss';
 @import 'ClaimItem.scss';
 @import 'ContentItem.scss';
 @import 'Ctas.scss';
@@ -16,6 +17,7 @@
 @import 'Main.scss';
 @import 'Modal.scss';
 @import 'PublicationItem.scss';
+@import 'ScienceFeedbackVerdictItem.scss';
 @import 'Spinner.scss';
 @import 'Sizes.scss';
 @import 'UserItem.scss';

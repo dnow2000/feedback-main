@@ -60,19 +60,19 @@ const _ = ({ verdict }) => {
 
 
   return (
-    <div className="verdict-item">
+    <div className="science-feedback-verdict-item">
       {content && (
         <ContentItem
           content={content}
           withShares={false}
         />)}
-      <div className="verdict-bottom-container">
-        <div className="mean-container">
-          <div className={classnames("mean", colorClassName)}>
+      <div className="verdict-bottom">
+        <div className="verdict-mean">
+          <div className={colorClassName}>
             {meanRating}
           </div>
         </div>
-        <div className="counts-container">
+        <div className="verdict-counts">
           {RATING_VALUES.map(value => {
             const width = round(barSizeByValue[value], 2)
             return (
@@ -84,8 +84,8 @@ const _ = ({ verdict }) => {
             )
           })}
         </div>
-        <div className="users-container">
-          <div className="editor-container">
+        <div className="verdict-users">
+          <div className="verdict-editor">
             <p className="editor-title">
               {'Editor'}
             </p>
@@ -94,7 +94,7 @@ const _ = ({ verdict }) => {
               user={editor}
             />
           </div>
-          <div className="reviewers-container">
+          <div className="verdict-reviewers">
             <p className="reviewer-title">
               {'Reviewers'}
             </p>

@@ -7,7 +7,8 @@ from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
 
-from utils.db import db
+from domain.keywords import create_ts_vector_and_table_args
+from utils.database import db
 from models.mixins import HasScienceFeedbackMixin, \
                           HasRatingMixin
 
@@ -53,3 +54,8 @@ class Review(ApiHandler,
         verdict_ids = [verdict_reviewer.verdict.id for verdict_reviewer in verdict_reviewers]
         verdicts = Verdict.query.filter(Verdict.id.in_(verdict_ids)).all()
         return InstrumentedList(verdicts)
+
+ts_indexes = [
+    ('idx_tag_fts_comment', Review.comment),
+]
+(Review.__ts_vectors__, Review.__table_args__) = create_ts_vector_and_table_args(ts_indexes)

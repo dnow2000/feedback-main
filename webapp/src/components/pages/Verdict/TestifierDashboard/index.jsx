@@ -1,16 +1,26 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Redirect, Route, Switch, useLocation, useParams } from 'react-router-dom'
+import { Redirect, Switch, useLocation, useParams } from 'react-router-dom'
 import { requestData, selectEntityByKeyAndId } from 'redux-thunk-data'
 
 import VerdictItem from 'components/layout/VerdictItem'
-import { entityMatch } from 'components/router'
+import FeaturedRoute from 'components/Root/FeaturedRoute'
 import { verdictNormalizer } from 'utils/normalizers'
+import { entityMatch } from 'utils/router'
 
-import ClaimGraph from './ClaimGraph'
-import Links from './Links'
-// import Shares from './Shares'
+import Backlinks from './Backlinks'
+import Citations from './Citations'
+import Graph from './Graph'
+import Shares from './Shares'
 import Tabs from './Tabs'
+
+
+const componentsByTabName = {
+  citations: Citations,
+  shares: Shares,
+  graph: Graph,
+  backlinks: Backlinks,
+}
 
 
 export default () => {
@@ -31,7 +41,7 @@ export default () => {
   }, [dispatch, verdictId])
 
   if (!tab) {
-    return <Redirect to={`/verdicts/${verdictId}/testimony/appearances`} />
+    return <Redirect to={`/verdicts/${verdictId}/testimony/citations`} />
   }
 
   if (!verdict) return null
@@ -42,25 +52,19 @@ export default () => {
       <VerdictItem
         asLink={false}
         verdict={verdict}
-        withLinksShares={false}
+        withCitationsAndShares={false}
       />
       <Tabs />
       <Switch location={location}>
-        <Route
-          component={Links}
-          exact
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/appearances`}
-        />
-        {/*<Route
-          component={Shares}
-          exact
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/shares`}
-        />*/}
-        <Route
-          component={ClaimGraph}
-          exact
-          path={`/verdicts/:verdictId(${entityMatch})/testimony/graph`}
-        />
+        {Object.keys(componentsByTabName).map(tabName => (
+          <FeaturedRoute
+            component={componentsByTabName[tabName]}
+            exact
+            featureName={`WITH_VERDICT_${tabName.toUpperCase()}`}
+            key={tabName}
+            path={`/verdicts/:verdictId(${entityMatch})/testimony/${tabName}`}
+          />
+        ))}
       </Switch>
     </div>
   )

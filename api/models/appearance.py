@@ -8,8 +8,13 @@ from sqlalchemy_api_handler import ApiHandler
 
 from models.mixins import HasCrowdtangleMixin, \
                           HasScienceFeedbackMixin
-                          
-from utils.db import db
+
+from utils.database import db
+
+
+class AppearanceType(enum.Enum):
+    LINK = 'link'
+    SHARE = 'share'
 
 
 class StanceType(enum.Enum):
@@ -45,8 +50,8 @@ class Appearance(ApiHandler,
                              index=True)
 
     quotedContent = relationship('Content',
-                                 foreign_keys=[quotedContentId],
-                                 backref='quotedFromAppearances')
+                                 backref='quotedFromAppearances',
+                                 foreign_keys=[quotedContentId])
 
     quotingClaimId = Column(BigInteger(),
                             ForeignKey('claim.id'),

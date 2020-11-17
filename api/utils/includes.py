@@ -16,6 +16,19 @@ USER_INCLUDES = [
     }
 ]
 
+APPEARANCE_INCLUDES = [
+    {
+        'key': 'quotingContent',
+        'includes': [
+            {
+                'key': 'authorContents',
+                'includes': ['author']
+            },
+            'medium'
+        ]
+    }
+]
+
 CONTENT_INCLUDES = [
     {
         'key': 'reviews',
@@ -105,7 +118,6 @@ VERDICT_INCLUDES = [
     {
         'key': 'reviews',
         'includes': [
-            'evaluation',
             'reviewer'
         ]
     },

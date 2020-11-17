@@ -1,4 +1,4 @@
-"""add_type_to_verdict
+"""add type to verdict
 
 Revision ID: 34006d718603
 Revises: 11b537c3987e
@@ -26,6 +26,6 @@ def upgrade():
 
 
 def downgrade():
+    op.drop_column('verdict', 'type')
     post_type = sa.Enum(name='posttype')
     post_type.drop(op.get_bind())
-    op.drop_column('verdict', 'type')

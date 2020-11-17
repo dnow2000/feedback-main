@@ -1,4 +1,5 @@
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from models.role import RoleType
 from models.user import User
@@ -7,7 +8,7 @@ from sandboxes.storage_utils import store_public_object_from_sandbox_assets
 from sandboxes.helpers import get_sandbox_role_email, pick_one
 
 
-USERS_BY_TYPE_COUNT = 3
+USERS_BY_TYPE_COUNT = 6
 
 AFFILIATIONS = [
     'Princeton University',

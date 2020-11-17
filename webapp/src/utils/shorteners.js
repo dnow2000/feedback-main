@@ -15,4 +15,8 @@ export const numberShortener = (value) => {
     return newValue
 }
 
-// TODO: textShortener to shorten long strings of claims text/headline
+export const stringShortener = (string, lengthLimit=80) => {
+    if (!string || string.length <= lengthLimit) return string
+
+    return (`${string.slice(0, lengthLimit)}...`)
+}

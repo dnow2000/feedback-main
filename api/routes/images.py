@@ -3,10 +3,11 @@ import mimetypes
 import requests
 from flask_login import current_user
 from flask import current_app as app, jsonify, request, send_file
-from sqlalchemy_api_handler import ApiHandler, as_dict
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
 
 from models.image import Image
-from validation.roles import check_has_role
+from repository.roles import check_user_has_role
 from validation.thumbs import check_and_read_files_thumb
 from utils.rest import login_or_api_key_required
 from storage.thumb import save_thumb
@@ -27,7 +28,7 @@ def get_image_from_url():
 @login_or_api_key_required
 def create_image_from_files():
 
-    check_has_role(current_user, 'REVIEWER')
+    check_user_has_role(current_user, 'REVIEWER')
 
     thumb = check_and_read_files_thumb(request.files)
 

@@ -1,12 +1,7 @@
 import pytest
 from flask import Flask
-from flask_login import LoginManager
-from sqlalchemy_api_handler import ApiHandler
-
 import sys
-print(dir(sys), sys.path)
 
-from domain.content import newspaper_from_url
 from utils.setup import setup
 
 

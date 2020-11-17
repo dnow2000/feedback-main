@@ -9,7 +9,9 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.orm.collections import InstrumentedList
 from sqlalchemy_api_handler import ApiHandler
 from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
-from utils.db import db
+
+from domain.keywords import create_ts_vector_and_table_args
+from utils.database import db
 from models.mixins import HasRatingMixin, \
                           HasScienceFeedbackMixin
 
@@ -79,3 +81,10 @@ class Verdict(ApiHandler,
         ).all()
 
         return InstrumentedList(reviews)
+
+
+ts_indexes = [
+    ('idx_verdict_fts_comment', Verdict.comment),
+    ('idx_verdict_fts_summary', Verdict.title),
+]
+(Verdict.__ts_vectors__, Verdict.__table_args__) = create_ts_vector_and_table_args(ts_indexes)

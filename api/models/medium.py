@@ -8,7 +8,7 @@ from sqlalchemy_api_handler import ApiHandler
 from models.mixins import HasCrowdtangleMixin, \
                           HasFacebookMixin, \
                           HasScienceFeedbackMixin
-from utils.db import db
+from utils.database import db
 
 
 class Medium(ApiHandler,

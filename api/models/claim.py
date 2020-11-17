@@ -1,12 +1,14 @@
 from sqlalchemy import Column, String, Text
 from sqlalchemy_api_handler import ApiHandler
 
-from models.mixins import HasScienceFeedbackMixin
-from utils.db import db
+from models.mixins import HasGraphMixin, \
+                          HasScienceFeedbackMixin
+from utils.database import db
 
 
 class Claim(ApiHandler,
             db.Model,
+            HasGraphMixin,
             HasScienceFeedbackMixin):
 
     poynterIdentifier = Column(String(8))

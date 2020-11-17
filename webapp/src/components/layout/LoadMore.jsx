@@ -26,7 +26,6 @@ const _ = ({
     }
   }, [currentVisible, buttonText, loadLessText, loadMoreText, items.length, visible])
 
-
   return(
     <>
       { items.slice(0, currentVisible).map(item => renderItem(item)) }

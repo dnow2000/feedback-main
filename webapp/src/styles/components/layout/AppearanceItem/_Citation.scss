@@ -1,0 +1,65 @@
+.citation {
+  @extend .anchor;
+
+  align-items: center;
+  border: solid 1px $grey-light;
+  border-radius: $border-radius;
+  display: flex;
+  min-height: 8rem;
+  text-align: left;
+  overflow: hidden;
+
+
+  &:not(:last-child) {
+    margin-bottom: 1em;
+  }
+
+  .citation-img {
+    max-width: 20%;
+    min-width: 8.125rem;
+    object-fit: cover;
+    object-position: center center;
+    width: 8.125rem;
+  }
+
+  .citation-data {
+    overflow: hidden;
+    padding: 1em 1.1em;
+    width: 100%;
+
+    .citation-footer {
+      @extend .text-muted;
+
+      display: flex;
+      margin-top: 1rem;
+
+      :not(:last-child) {
+        margin-right: 1rem;
+      }
+
+      button {
+        @extend .button;
+        @extend .thin;
+        @extend .text-muted;
+
+        align-self: center;
+        font-size: 0.8rem;
+        height: 1.5rem;
+      }
+    }
+
+    .citation-source {
+      margin-bottom: 1em;
+    }
+
+    .citation-title {
+      color: $grey-darker;
+    }
+
+    .citation-url {
+      color: $primary;
+      text-decoration: none;
+      font-size: 0.8em;
+    }
+  }
+}

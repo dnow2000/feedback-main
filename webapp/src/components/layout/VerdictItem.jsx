@@ -13,7 +13,7 @@ import { numberShortener } from 'utils/shorteners'
 import useTimeAgo from 'components/uses/useTimeAgo'
 
 
-const _ = ({ asLink, className, verdict, withLinksShares }) => {
+const _ = ({ asLink, className, verdict, withCitationsAndShares }) => {
   const history = useHistory()
   const {
     claimId,
@@ -33,8 +33,8 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
 
   const appearances = useSelector(state =>
     selectSortedAppearancesByVerdictId(state, id)) || []
-  const linkCount = appearances?.length
-  const shareCount = useSelector(state =>
+  const citationsCount = appearances?.length
+  const sharesCount = useSelector(state =>
     selectSharesCountByVerdictId(state, id))
 
   const conclusionTag = useSelector(
@@ -61,22 +61,22 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
     }
   }
 
-  const links = withLinksShares ? (
+  const citations = withCitationsAndShares ? (
     <>
-      { linkCount > 0 && (
+      { citationsCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
-            { linkCount }
+            { citationsCount }
           </strong>
           <span>
             {' Links'}
           </span>
         </span>
       ) }
-      {  shareCount > 0 && (
+      {  sharesCount > 0 && (
         <span className="tag text-center social-tag">
           <strong className="text-primary">
-            { numberShortener(shareCount) }
+            { numberShortener(sharesCount) }
           </strong>
           <span>
             {' Interactions'}
@@ -97,7 +97,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
       <h3>
         {`${headline || claim.text}`}
       </h3>
-      <div className="verdict-editor-container">
+      {medium && (<div className="verdict-medium">
         <Icon
           className="avatar editor-avatar"
           path={medium.logoUrl}
@@ -115,13 +115,13 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
             { timeAgo }
           </strong>
         ) }
-      </div>
+      </div>)}
       <br />
       <hr />
       <br />
       <p>
         <b>
-          {`${type.replace(/^./, type.charAt(0).toUpperCase())}: `}
+          {`${type?.replace(/^./, type.charAt(0).toUpperCase())}: `}
         </b>
         <i>
           {`"${claim.text}"`}
@@ -132,7 +132,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
         { conclusionTag.label && <span className={`tag text-center ${(conclusionTag.label.split(' ').join('-') || '').toLowerCase()}`}>
           {conclusionTag.label}
         </span> }
-        { links }
+        { citations }
       </div>
     </div>
   )
@@ -142,7 +142,7 @@ const _ = ({ asLink, className, verdict, withLinksShares }) => {
 _.defaultProps = {
   asLink: true,
   className: null,
-  withLinksShares: true
+  withCitationsAndShares: true
 }
 
 
@@ -171,7 +171,7 @@ _.propTypes = {
       })
     ),
   }).isRequired,
-  withLinksShares: PropTypes.bool
+  withCitationsAndShares: PropTypes.bool
 }
 
 export default _

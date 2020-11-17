@@ -1,11 +1,10 @@
 # pylint: disable=C0415
-
 import os
 import sys
 import requests
-
 from datetime import datetime
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from repository.contents import sync_content
 from repository.science_feedback.airtable.create_or_modify_sf_organization_and_media import create_or_modify_sf_organization_and_media
@@ -78,15 +77,15 @@ def sync_for(
                 entities.append(entity)
                 row['Synced time input'] = datetime.now().isoformat()
             else:
-                row['Synced time input'] = 'ERROR'
+                row['Synced time input'] = f'Could not create {name} from row'
         except KeyError as exception:
             logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
             logger.error(f'KeyError {exception}: {row}')
-            row['Synced time input'] = 'ERROR'
+            row['Synced time input'] = f'KeyError {exception}'
         except Exception as exception:
             logger.warning(f'Error while trying to create entity from row at table {NAME_TO_AIRTABLE[name]}')
             logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]} at {row}')
-            row['Synced time input'] = 'ERROR'
+            row['Synced time input'] = f'Unexpected error: {exception}'
 
     def _update_10_rows_from_index(i):
         records = [{'id': row['airtableId'], 'fields': {'Synced time input': row['Synced time input']}} for row in rows[i: i + 10]]
@@ -121,8 +120,10 @@ def sync_for(
                     logger.warning(f'Error while trying to save 10 entities at table {NAME_TO_AIRTABLE[name]}')
                     logger.error(f'Unexpected error: {exception} - {sys.exc_info()[0]}')
                     for index in range(i, i + 10):
-                        rows[index]['Synced time input'] = 'BATCH ERROR'
+                        rows[index]['Synced time input'] = f'Batch error: {exception}'
                     _update_10_rows_from_index(i)
+        else:
+            ApiHandler.save(*entities)
 
     except Exception as exception:
         logger.warning(f'Error while trying to save entities at table {NAME_TO_AIRTABLE[name]}')

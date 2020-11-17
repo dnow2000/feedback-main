@@ -1,4 +1,5 @@
-from sqlalchemy_api_handler import as_dict, humanize, logger
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import humanize, logger
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from psycopg2.errors import NotNullViolation
 from sqlalchemy_api_handler import ApiHandler

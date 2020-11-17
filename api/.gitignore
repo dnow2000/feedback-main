@@ -100,20 +100,14 @@ static/object_store_data
 static/poynter_claims.csv
 
 # Tmp
-jobs/job_files
+tmp/jobs
 
 # Test
 .hypothesis/
 .pytest_cache/
 
-# Test/Sandbox-generated thumbs
-sandboxes/thumbs/users/
-
 # env
 dev_env_file
-
-# alembic
-alembic/versions/sql/
 
 # scalingo
 scalingo/_dumps_backup.sh

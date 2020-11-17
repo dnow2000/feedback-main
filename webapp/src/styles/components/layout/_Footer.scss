@@ -6,6 +6,7 @@
   padding: 3.75rem 1.5rem;
   grid-template-columns: repeat(auto-fill, minmax(200px, 270px));
   justify-content: space-evenly;
+  position: relative;
 
   .logo-container {
     align-items: flex-start;
@@ -49,12 +50,12 @@
     font-weight: 700;
     margin-bottom: 1.625rem;
   }
-}
 
-.app-version {
-  @extend .text-center;
-  @extend .text-muted;
-
-  background-color: $blue-darker;
-  color: $grey-lighter;
+  .app-version {
+    background-color: $blue-darker;
+    bottom: 0.5rem;
+    color: $grey;
+    position: absolute;
+    right: 1rem;
+  }
 }

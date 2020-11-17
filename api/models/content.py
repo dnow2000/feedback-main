@@ -8,17 +8,21 @@ from sqlalchemy import BigInteger, \
                        Text, \
                        String
 from sqlalchemy.orm import relationship
-from sqlalchemy_api_handler import ApiHandler, as_dict, humanize
-from sqlalchemy_api_handler.mixins.soft_deletable_mixin import SoftDeletableMixin
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.mixins import HasActivitiesMixin, \
+                                          SoftDeletableMixin
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import humanize
 
+from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasCrowdtangleMixin, \
                           HasExternalThumbUrlMixin, \
                           HasFacebookMixin, \
+                          HasGraphMixin, \
                           HasThumbMixin, \
                           HasScienceFeedbackMixin, \
-                          HasSharesMixin, \
-                          VersionedMixin
-from utils.db import db
+                          HasSharesMixin
+from utils.database import db
 
 
 class ContentType(enum.Enum):
@@ -29,14 +33,15 @@ class ContentType(enum.Enum):
 
 class Content(ApiHandler,
               db.Model,
+              HasActivitiesMixin,
               HasCrowdtangleMixin,
               HasExternalThumbUrlMixin,
               HasFacebookMixin,
+              HasGraphMixin,
               HasScienceFeedbackMixin,
               HasSharesMixin,
               HasThumbMixin,
-              SoftDeletableMixin,
-              VersionedMixin):
+              SoftDeletableMixin):
 
     archiveUrl = Column(String(2048), unique=True)
 
@@ -81,3 +86,10 @@ class Content(ApiHandler,
         if self.tags and 'PeerVerified' in self.tags:
             amount -= 10
         return amount
+
+
+ts_indexes = [
+    ('idx_content_fts_title', Content.title),
+    ('idx_content_fts_summary', Content.summary),
+]
+(Content.__ts_vectors__, Content.__table_args__) = create_ts_vector_and_table_args(ts_indexes)

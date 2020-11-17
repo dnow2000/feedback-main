@@ -1,6 +1,7 @@
 import {
   APP_NAME,
   COMMAND_NAME,
+  DEFAULT_USER_PASSWORD,
   ROOT_PATH,
   TLD
 } from '../utils/config'
@@ -15,7 +16,7 @@ describe('signin', () => {
       .type(`${COMMAND_NAME}test.editor0@${APP_NAME}.${TLD}`)
 
     cy.get('input[name="password"]')
-      .type('user@AZERTY123')
+      .type(DEFAULT_USER_PASSWORD)
 
     cy.get('button[type="submit"]')
       .click()

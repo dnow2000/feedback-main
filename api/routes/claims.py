@@ -1,7 +1,7 @@
 from flask import current_app as app, jsonify
-from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import load_or_404
 
 from models.claim import Claim
 from utils.rest import listify

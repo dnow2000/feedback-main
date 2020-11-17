@@ -1,18 +1,19 @@
 from flask_login import current_user, login_required
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import ApiHandler, \
-                                   as_dict, \
-                                   load_or_404
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.serialization import as_dict
+from sqlalchemy_api_handler.utils import load_or_404
 
 from models.user import User
 from repository.users import keep_users_with_roles, \
                              get_users_join_query, \
                              get_users_query_with_keywords
+from repository.roles import check_user_has_role
 from utils.includes import USER_INCLUDES
 from utils.rest import expect_json_data, \
                        listify, \
                        login_or_api_key_required
-from validation.roles import check_has_role
+
 
 
 def make_user_query():
@@ -23,7 +24,7 @@ def make_user_query():
 @app.route("/users", methods=["GET"])
 @login_required
 def get_users():
-    check_has_role(current_user, 'ADMIN')
+    check_user_has_role(current_user, 'ADMIN')
 
     query = User.query
 
@@ -38,7 +39,7 @@ def get_users():
 
     return listify(User,
                    includes=USER_INCLUDES,
-                   page=request.args.get('page'),
+                   page=request.args.get('page', 1),
                    paginate=10,
                    query=query,
                    with_total_data_count=True)
@@ -47,7 +48,7 @@ def get_users():
 @app.route("/users/<user_id>", methods=["GET"])
 @login_required
 def get_user(user_id):
-    check_has_role(current_user, 'ADMIN')
+    check_user_has_role(current_user, 'ADMIN')
 
     user = load_or_404(User, user_id)
     return jsonify(as_dict(user, includes=USER_INCLUDES)), 200

@@ -50,8 +50,9 @@
           @extend .button;
           @extend .is-outlined;
           @extend .is-primary;
-          @extend .text-primary;
           @extend .thin;
+
+          color: $primary;
         }
       }
     }
@@ -80,7 +81,7 @@
       width: 100%;
 
       .section-text {
-        @extend .text-center;
+        text-align: center !important;
       }
     }
 

@@ -1,4 +1,5 @@
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from models.tag import Tag
 from models.user import User

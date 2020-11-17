@@ -1,5 +1,5 @@
 from flask import current_app as app, jsonify, request
-from sqlalchemy_api_handler import as_dict
+from sqlalchemy_api_handler.serialization import as_dict
 
 from models.tag import Tag
 from repository.tags import keep_tags_with_scopes, \

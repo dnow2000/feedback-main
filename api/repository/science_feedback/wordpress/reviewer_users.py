@@ -1,4 +1,4 @@
-from sqlalchemy_api_handler import humanize
+from sqlalchemy_api_handler.utils import humanize
 
 from domain.science_feedback import scrap_reviewers
 from models.author_content import AuthorContent

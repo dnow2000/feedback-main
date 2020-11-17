@@ -1,5 +1,6 @@
 from datetime import timedelta
-from sqlalchemy_api_handler import ApiHandler, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import logger
 
 from models.content import Content
 from storage.thumb import save_thumb

@@ -1,5 +1,6 @@
 from sqlalchemy import and_
-from sqlalchemy_api_handler import ApiHandler, humanize, logger
+from sqlalchemy_api_handler import ApiHandler
+from sqlalchemy_api_handler.utils import humanize, logger
 
 from models.scope import Scope, ScopeType
 from domain.tags import TAGS

@@ -85,11 +85,14 @@ jobs:
 
 workflows:
   commit:
+    filters:
+      tags:
+        only: /.*/
     jobs:
       - build
-      #- test-api:
-      #    requires:
-      #      - build
+      - test-api:
+          requires:
+            - build
       #- test-end2end:
       #    requires:
       #      - build

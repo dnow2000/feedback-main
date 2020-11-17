@@ -1,10 +1,8 @@
-from postgresql_audit.flask import versioning_manager
-
-from utils.db import db
+from models.activity import Activity
+from utils.database import db
 
 
 def filter_with_joined_activities(query):
-    Activity = versioning_manager.activity_cls
     model = query._bind_mapper().class_
     is_on_table = Activity.table_name == model.__tablename__
     activity_data_id_matches_id = Activity.data['id']\
@@ -18,7 +16,6 @@ def filter_by_activity_date_and_verb(query,
                                      from_date=None,
                                      to_date=None,
                                      verb=None):
-    Activity = versioning_manager.activity_cls
     query = filter_with_joined_activities(query)
 
     if from_date:

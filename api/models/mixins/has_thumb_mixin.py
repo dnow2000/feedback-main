@@ -1,14 +1,16 @@
 import inflect
 from sqlalchemy import Column,\
                        Integer
-from sqlalchemy_api_handler import humanize
+from sqlalchemy_api_handler.utils import humanize
 
 from storage.object import delete_public_object, \
-                                 get_public_object_date, \
-                                 get_storage_base_url
-from utils.string_processing import get_model_plural_name
+                           get_public_object_date, \
+                           get_storage_base_url
 
 IDEAL_THUMB_WIDTH = 600
+
+inflect_engine = inflect.engine()
+
 
 class HasThumbMixin(object):
     thumbCount = Column(Integer(), nullable=False, default=0)
@@ -30,4 +32,6 @@ class HasThumbMixin(object):
     def thumbUrl(self):
         base_url = get_storage_base_url()
         thumb_url = base_url + "/thumbs"
-        return '{}/{}/{}'.format(thumb_url, get_model_plural_name(self), humanize(self.id))
+        return '{}/{}/{}'.format(thumb_url,
+                                 inflect_engine.plural(self.__class__.__name__.lower()),
+                                 humanize(self.id))

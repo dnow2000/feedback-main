@@ -1,146 +1,66 @@
 import React, { useCallback, useEffect, useMemo } from 'react'
-import { Form } from 'react-final-form'
+import { useParams } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useHistory, useLocation, useParams } from 'react-router-dom'
-import {
-  requestData,
-  selectEntityByKeyAndId,
-  selectEntitiesByKeyAndJoin
-} from 'redux-thunk-data'
-import { useFormidable } from 'with-react-formidable'
+import { requestData, selectEntityByKeyAndId, selectEntitiesByKeyAndJoin } from 'redux-thunk-data'
 
-import ClaimItem from 'components/layout/ClaimItem'
-import ContentItem from 'components/layout/ContentItem'
+import AppearanceItem from 'components/layout/AppearanceItem'
 import Header from 'components/layout/Header'
+import Items from 'components/layout/Items'
 import Main from 'components/layout/Main'
-import useLocationURL from 'components/uses/useLocationURL'
-import requests from 'reducers/requests'
-import { canSubmitFromFormState } from 'utils/form'
-import { scrapDecorator } from 'utils/scrap'
-
-import FormFields from './FormFields'
-import FormFooter from './FormFooter'
 
 
-const ItemsByName = {
-  ContentItem,
-  ClaimItem
-}
-
-const API_PATH = '/appearances'
-
-
-export default () => {
+const _ = () => {
   const dispatch = useDispatch()
-  const history = useHistory()
-  const location = useLocation()
-  const locationURL = useLocationURL()
-  const sourceId = locationURL.searchParams.get('sourceId')
-  const type = locationURL.searchParams.get('type')
-  const Item = ItemsByName[`${type[0].toUpperCase()}${type.slice(1)}Item`]
   const params = useParams()
   const { appearanceId } = params
-  const {
-    isCreatedEntity,
-    isModifiedEntity,
-    method
-  } = useFormidable(location, params)
 
+  const appearance = useSelector(
+    state => selectEntityByKeyAndId(state, 'appearances', appearanceId),
+    [appearanceId]
+  ) || {}
+  appearance.type = 'link'
 
-  const { isPending } = useSelector(state => state.requests['/contents']) || {}
+  const { quotingContent, quotingContentId } = appearance || {}
 
-  const appearance = useSelector(state =>
-    selectEntityByKeyAndId(state, 'appearances', appearanceId)) || {}
-
-
-  const trending = useSelector(state =>
-    selectEntitiesByKeyAndJoin(
+  const shareAppearances = useSelector(
+    state => selectEntitiesByKeyAndJoin(
       state,
-      'trendings',
-      { key: 'id', value: sourceId }
-  )[0])
-  const itemProps = useMemo(() => ({ [type]: trending }), [trending, type])
+      'appearances',
+      { key: 'quotedContentId', value: quotingContentId }
+    ), [quotingContentId]
+  )
 
-
-  const handleSubmit = useCallback(formValues => {
-    let apiPath = API_PATH
-    if (isModifiedEntity) {
-      apiPath = `${apiPath}/${appearanceId}`
-    }
-    return new Promise(resolve => {
-      dispatch(requestData({
-        apiPath,
-        body: { ...formValues },
-        handleFail: (beforeState, action) =>
-          resolve(requests(beforeState.requests, action)[API_PATH].errors),
-        handleSuccess: (state, action) => {
-          const { payload: { datum } } = action
-          resolve()
-          history.push(`/appearances/${datum.id}`)
-        },
-        method
-      }))
-    })
-  }, [appearanceId, dispatch, history, method, isModifiedEntity])
-
-  const renderForm = useCallback(formProps => {
-    const { form: { reset }, handleSubmit, validating } = formProps
-    const canSubmit = canSubmitFromFormState({ isLoading: isPending, ...formProps })
-    return (
-      <form
-        autoComplete="off"
-        className="form"
-        disabled={isPending}
-        noValidate
-        onSubmit={handleSubmit}
-      >
-        <FormFields validating={validating} />
-        <FormFooter
-          canSubmit={canSubmit}
-          onCancel={reset}
-        />
-      </form>
-    )
-  }, [isPending])
-
+  const renderItem = useCallback(item => (
+    <AppearanceItem
+      appearance={item}
+      key={item.id}
+    />
+  ), [])
 
   useEffect(() => {
-    if (isCreatedEntity) return
     dispatch(requestData({
       apiPath: `/appearances/${appearanceId}`
     }))
-  }, [appearanceId, dispatch, isCreatedEntity])
+  }, [appearanceId, dispatch])
 
-  useEffect(() => {
-    if (!sourceId) return
-    dispatch(requestData({
-      apiPath: `/trendings/${sourceId}?type=${type}`,
-      resolve: trending => ({ ...trending, id: trending.source.id })
-    }))
-  }, [dispatch, sourceId, type])
-
+  const config = useMemo(() => ({
+    apiPath: `/appearances?quotedContentId=${quotingContentId}`
+  }), [quotingContentId])
 
   return (
     <>
       <Header />
-      <Main className="content">
+      <Main className="appearance">
         <div className="container">
+          <AppearanceItem
+            appearance={appearance}
+            articleOrVideoContent={quotingContent}
+          />
           <section>
-            <h2 className="subtitle">
-              FROM
-            </h2>
-            <Item {...itemProps} />
-          </section>
-
-          <section>
-            <h2 className="subtitle">
-              DETAILS
-            </h2>
-            <Form
-              decorators={[scrapDecorator]}
-              initialValues={appearance || false}
-              onSubmit={handleSubmit}
-              render={renderForm}
+            <Items
+              config={config}
+              itemsCollection={shareAppearances}
+              renderItem={renderItem}
             />
           </section>
         </div>
@@ -148,3 +68,5 @@ export default () => {
     </>
   )
 }
+
+export default _

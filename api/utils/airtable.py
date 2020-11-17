@@ -7,14 +7,12 @@ AIRTABLE_API_URL = 'https://api.airtable.com/v0'
 AIRTABLE_TOKEN = os.environ.get('AIRTABLE_TOKEN')
 
 
-def request_airtable_rows(
-        base_id,
-        table_name,
-        filter_by_formula=None,
-        max_records=None,
-        session=None,
-        token=AIRTABLE_TOKEN
-):
+def request_airtable_rows(base_id,
+                          table_name,
+                          filter_by_formula=None,
+                          max_records=None,
+                          session=None,
+                          token=AIRTABLE_TOKEN):
     url = '{}/{}/{}?view=Grid%20view'.format(
         AIRTABLE_API_URL,
         base_id,
@@ -51,13 +49,11 @@ def request_airtable_rows(
     ]
 
 
-def update_airtable_rows(
-    base_id,
-    table_name,
-    records,
-    session=None,
-    token=AIRTABLE_TOKEN
-):
+def update_airtable_rows(base_id,
+                         table_name,
+                         records,
+                         session=None,
+                         token=AIRTABLE_TOKEN):
     url = '{}/{}/{}'.format(
         AIRTABLE_API_URL,
         base_id,

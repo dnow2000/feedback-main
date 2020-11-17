@@ -2,7 +2,7 @@ from sqlalchemy import Column, \
                        String
 from sqlalchemy_api_handler import ApiHandler
 
-from utils.db import db
+from utils.database import db
 
 
 class Platform(ApiHandler,
