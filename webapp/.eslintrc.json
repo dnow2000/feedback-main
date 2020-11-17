@@ -20,6 +20,7 @@
   "parser": "babel-eslint",
   "rules": {
     "chai-friendly/no-unused-expressions": "off",
+    "import/no-unresolved": "off",
     "jest/expect-expect": "off",
     "jest/no-hooks": "off",
     "jest/no-test-callback": "off",

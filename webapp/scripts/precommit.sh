@@ -27,6 +27,6 @@ done
 echo "$jsfiles" | xargs ./node_modules/.bin/prettier-eslint --eslint-config-path ./.eslintrc.json --config ./.prettierrc.json --list-different --write
 
 # Add back the modified/prettified files to staging
-echo "$jsfiles" | xargs git add
+echo "$jsfiles" | sed 's/webapp\///g' | xargs git add
 
 exit 0
