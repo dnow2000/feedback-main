@@ -2,20 +2,26 @@ from sqlalchemy_api_handler import humanize
 
 from domain.science_feedback.wordpress.feedbacks import scrap_feedbacks
 from domain.science_feedback.wordpress.reviewers import reviewer_from_url
-from models.user import User
-from models.review import Review
-from models.role import Role
-from models.verdict import Verdict
-from models.verdict_user import VerdictUser
-from repository.contents import content_from_url
+
+
 
 
 def content_verdicts_from_scrap(verdicts_max=3):
+    from models.content import Content
+    from models.user import User
+    from models.review import Review
+    from models.role import Role
+    from models.verdict import Verdict
+    from models.verdict_user import VerdictUser
+
     feedbacks = scrap_feedbacks(feedbacks_max=verdicts_max)
     verdicts = []
     for feedback in feedbacks:
         verdict = Verdict.create_or_modify(feedback)
-        content = content_from_url(feedback['article']['url'])
+        content = Content.create_or_modify({
+            '__SEARCH_BY__': 'url',
+            'url': feedback['article']['url']
+        })
         for reviewer in verdict['reviewer']:
             reviewer = reviewer_from_url(reviewer['url'])
             user = User.create_or_modify({

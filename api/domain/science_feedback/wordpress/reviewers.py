@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 import requests
-from sqlalchemy_api_handler import logger
+from sqlalchemy_api_handler.utils import logger
 
 from utils.config import APP_NAME, TLD
 

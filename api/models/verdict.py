@@ -1,4 +1,6 @@
+from datetime import datetime
 import enum
+from celery import chain, group
 from sqlalchemy import BigInteger,\
                        Column,\
                        Enum,\
@@ -15,6 +17,7 @@ from domain.keywords import create_ts_vector_and_table_args
 from models.mixins import HasRatingMixin, \
                           HasScienceFeedbackMixin
 import tasks.graph
+import tasks.science_feedback
 from utils.database import db
 
 
@@ -91,10 +94,14 @@ ts_indexes = [
 
 @listens_for(Verdict, 'after_insert')
 def after_insert(mapper, connect, self):
-    return
-    tasks.graph.sync_with_parsing.delay('verdictId',
-                                        self.id,
-                                        is_anonymised=False)
-    tasks.graph.sync_with_parsing.delay('verdictId',
-                                        self.id,
-                                        is_anonymised=True)
+    group(
+        tasks.graph.sync_with_parsing.si(entity_id=self.id,
+                                         id_key='verdictId',
+                                         is_anonymised=False),
+        tasks.graph.sync_with_parsing.si(entity_id=self.id,
+                                         id_key='verdictId',
+                                         is_anonymised=True),
+        tasks.science_feedback.sync_with_claim_review.si(verdict_id=self.id),
+        tasks.science_feedback.sync_to_airtable.si(rows=[{'airtableId': self.scienceFeedbackIdentifier,
+                                                          'Synced time input': datetime.now().isoformat()}])
+    ).delay()
