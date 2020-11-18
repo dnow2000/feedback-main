@@ -1,0 +1,87 @@
+.backlink {
+  .backlink-form {
+    padding: 1rem 1.1rem;
+    width: 100%;
+
+    .radios {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      .radio {
+        @extend .button;
+        @extend .thin;
+        @extend .is-outlined;
+
+        border: 1px solid $grey-lighter;
+        border-radius: 1rem;
+        font-size: 0.7rem;
+        margin-bottom: 0.25rem;
+
+        &.true {
+          border-color: $bluegreen;
+          color: $bluegreen;
+          &.checked {
+            background-color: $bluegreen;
+            color: $white;
+          }
+        }
+
+        &.false {
+          border-color: $red;
+          color: $red;
+          &.checked {
+            background-color: $red;
+            color: $white;
+          }
+        }
+
+        &.partly-false {
+          border-color: $orange;
+          color: $orange;
+          &.checked {
+            background-color: $orange;
+            color: $white;
+          }
+        }
+
+        &.false-headline {
+          border-color: $yellow;
+          color: $yellow;
+          &.checked {
+            background-color: $yellow;
+            color: $white;
+          }
+        }
+
+        &.misleading {
+          border-color: $orange;
+          color: $orange;
+          &.checked {
+            background-color: $orange;
+            color: $white;
+          }
+        }
+
+        &.missing-context {
+          border-color: $grey-darker;
+          color: $grey-darker;
+          &.checked {
+            background-color: $grey-darker;
+            color: $white;
+          }
+        }
+
+        input {
+          display: none;
+        }
+      }
+    }
+
+    .backlink-submit-button {
+      @extend .button;
+      @extend .is-primary;
+      @extend .thin;
+    }
+  }
+}

@@ -15,31 +15,31 @@ from utils.rest import expect_json_data, \
 
 GET_VERDICT_INCLUDES = [
     {
-         'key': 'claim',
-         'includes': [
-              'id',
-              'linksCount',
-              'sharesCount',
-              'text'
-          ]
+        'key': 'claim',
+        'includes': [
+            'id',
+            'linksCount',
+            'sharesCount',
+            'text'
+        ]
     },
     'claimId',
     {
-         'key': 'content',
-         'includes': [
-             'id',
-             'title'
-         ],
+        'key': 'content',
+        'includes': [
+            'id',
+            'title'
+        ],
     },
     'contentId',
     'id',
     {
-         'key': 'medium',
-         'includes': [
-             'id',
-             'logoUrl',
-             'name'
-         ]
+        'key': 'medium',
+        'includes': [
+            'id',
+            'logoUrl',
+            'name'
+        ]
     },
     'scienceFeedbackPublishedDate',
     'scienceFeedbackUrl',
@@ -51,10 +51,10 @@ GET_VERDICT_INCLUDES = [
             {
                 'key': 'tag',
                 'includes': [
-                     'id',
-                     'info',
-                     'label',
-                     'type'
+                    'id',
+                    'info',
+                    'label',
+                    'type'
                 ]
             },
             'tagId',
