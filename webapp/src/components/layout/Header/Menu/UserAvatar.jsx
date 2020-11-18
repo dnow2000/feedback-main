@@ -24,7 +24,7 @@ export default () => {
       // instead we capture clicks via dismiss overlay
       dispatch(closeMenu())
     }
-  })
+  }, [dispatch, isMenuActive])
 
 
 
