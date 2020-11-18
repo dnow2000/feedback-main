@@ -1,7 +1,6 @@
+from datetime import datetime
 import os
 import sys
-from flask_sqlalchemy import SQLAlchemy
-from traceback import format_exception
 import celery
 from celery.signals import after_task_publish, \
                            before_task_publish, \
@@ -13,29 +12,27 @@ from celery.signals import after_task_publish, \
                            task_retry, \
                            task_revoked, \
                            task_success
-from datetime import datetime
+from flask_sqlalchemy import SQLAlchemy
+from traceback import format_exception
 from flask import Flask
 from sqlalchemy_api_handler import ApiHandler
 
 from models.task import Task, TaskState
+from tasks.scheduler import setup_scheduler_from
 from utils.database import db
 from utils.date import strptime
 from utils.setup import setup
-
 
 
 celery_app = celery.Celery('{}-tasks'.format(os.environ.get('APP_NAME')),
                            backend=os.environ.get('REDIS_URL'),
                            broker=os.environ.get('REDIS_URL'))
 celery_app.conf.task_default_queue = 'default'
-
-BaseTask = celery_app.Task
-
+setup_scheduler_from(celery_app)
 
 task_db_session = SQLAlchemy().session
 
-
-class AppTask(BaseTask):
+class AppTask(celery_app.Task):
     abstract = True
 
     @before_task_publish.connect
@@ -138,7 +135,7 @@ def import_tasks():
     import tasks.waybackmachine
 
 
-if os.environ.get('IS_WORKER'):
+if os.environ.get('IS_WORKER_OR_SCHEDULER'):
     flask_app = Flask(__name__)
     setup(flask_app)
     import_tasks()

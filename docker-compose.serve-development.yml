@@ -70,6 +70,10 @@ services:
       - apidb-serve-development
       - apitasksdb-serve-development
     env_file: .env
+    environment:
+      - IS_WORKER_OR_SCHEDULER=true
+      - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
+      - REDIS_URL=redis://apitasksdb-serve-development:6379/0
     image: *api
     networks:
       - db_serve-development_nw
@@ -98,7 +102,7 @@ services:
       - apitasksdb-serve-development
     env_file: .env
     environment:
-      - IS_WORKER=true
+      - IS_WORKER_OR_SCHEDULER=true
       - POSTGRES_URL=postgresql://${APP_NAME}_user:${APP_NAME}_password@apidb-serve-development/${APP_NAME}_api
       - REDIS_URL=redis://apitasksdb-serve-development:6379/0
     image: *api
