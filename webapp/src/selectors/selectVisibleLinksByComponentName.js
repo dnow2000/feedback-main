@@ -1,7 +1,7 @@
 import createCachedSelector from 're-reselect'
 import { selectCurrentUser } from 'with-react-redux-login'
 
-import selectCurrentRolesByTypes from './selectCurrentRolesByTypes'
+import selectCurrentRolesByTypes from 'selectors/selectCurrentRolesByTypes'
 
 
 const visibleFor = roleTypes =>
@@ -13,6 +13,8 @@ const visibleFor = roleTypes =>
     (currentRoles || []).map(cr => cr.type).includes(roleType))
   }
 
+// const isFeatureDisabled = useCallback(featureName => useSelector(state =>selectIsFeatureDisabledByName(state,featureName)))
+
 
 export const links = [
   {
@@ -23,6 +25,7 @@ export const links = [
   },
   {
     componentNames: ['Menu', 'Navigations'],
+    featureName: 'WITH_NAVBAR_TRENDINGS',
     label: () => 'Trending news',
     path: '/trendings',
     visible: visibleFor(['editor'])
@@ -63,13 +66,15 @@ export const links = [
 
 
 export default createCachedSelector(
+  state => (state.features || []).filter(feature => feature.isActive),
   selectCurrentUser,
   state => selectCurrentRolesByTypes(state, ['admin', 'editor', 'reviewer']),
   (state, componentName) => componentName,
-  (currentUser, currentRoles, componentName) =>
+  (activeFeatures, currentUser, currentRoles, componentName) =>
     links.filter(
-      ({ componentNames, disabled, visible }) => !disabled &&
+      ({ componentNames, disabled, featureName, visible }) => !disabled &&
                                                  componentNames.includes(componentName) &&
+                                                 (activeFeatures.includes(featureName) || !featureName) &&
                                                  visible(currentRoles, currentUser))
           .map(link => ({...link, label: link.label(currentRoles, currentUser)}))
 )(mapArgsToCacheKey)
