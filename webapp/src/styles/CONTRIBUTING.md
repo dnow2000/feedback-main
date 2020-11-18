@@ -78,3 +78,44 @@ Il comprend notamment:
   - un fichier `src/styles/global/_frame.scss` contient des règles pour les éléments html: `*, body, html, h1` etc…
 
   - un autre ficher `src/styles/global/_helpers.scss` qui contient des classes utilisées en extend, avec souvent une syntaxe .is-machin
+
+
+## Syntaxe CSS
+
+Some rules need to be followed, some ot them are tagged with AP (Anytime Possible) :
+   - write properties in alphabetical order,
+   - (AP) use rem instead of pixels anytime it is possible,
+   - (AP) use rem values that are a division by 2 : ie 1rem, 0.5rem, 0.25rem, 0.125rem... are authorized but not 0.128rem,
+   - let one jumped line between the extend block and the properties block,
+   - let one jumped line between the properties block and the media query block,
+   - (AP) use the media-query min-width, i.e. : declare by default what is should be for mobile case,
+   - use the breakpoint variables in the media-query,
+   - first declare the same-level class blocks (&.<className>),
+   - then declare nested the child level class blocks (.<className>)
+ 
+Like : 
+```
+.foo {
+    @extend .bar;
+      
+    align-items: center;
+    display: flex;
+    margin-bottom: 1rem; 
+  
+    @media(min-width: $tablet-with-breakpoint) {
+        margin-bottom: 0;
+    }
+    
+    &.disabled {
+       color: grey;
+    }
+
+    .child {
+       font-size: 0.5rem;
+    }
+
+}
+
+```
+
+
