@@ -25,6 +25,23 @@ export default () => {
   )
 
   const renderItem = useCallback(item => <VerdictItem verdict={item} />, [])
+  const renderKeywordsBar = useCallback(({ handleChange, locationURL }) => {
+    const keywords = locationURL.searchParams.get('keywords')
+    return (
+      <>
+        <KeywordsBar
+          isAtTop={isAtTop}
+          onChange={handleChange}
+          selectedKeywords={keywords}
+        />
+        { keywords !== null && keywords !== 'undefined' && (
+          <h3 className="keywords">
+            {`Search results for "${keywords}"`}
+          </h3>
+        )}
+      </>
+    )
+  }, [isAtTop])
 
 
   return (
@@ -40,23 +57,7 @@ export default () => {
 
           <Controls
             config={config}
-            render={({ handleChange, locationURL }) => {
-              const keywords = locationURL.searchParams.get('keywords')
-              return (
-                <>
-                  <KeywordsBar
-                    isAtTop={isAtTop}
-                    onChange={handleChange}
-                    selectedKeywords={keywords}
-                  />
-                  { keywords !== null && keywords !== 'undefined' && (
-                    <h3 className="keywords">
-                      {`Search results for "${keywords}"`}
-                    </h3>
-                  )}
-                </>
-              )
-            }}
+            render={renderKeywordsBar}
           />
 
           <section>
