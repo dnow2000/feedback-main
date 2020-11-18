@@ -13,8 +13,6 @@ const visibleFor = roleTypes =>
     (currentRoles || []).map(cr => cr.type).includes(roleType))
   }
 
-// const isFeatureDisabled = useCallback(featureName => useSelector(state =>selectIsFeatureDisabledByName(state,featureName)))
-
 
 export const links = [
   {
