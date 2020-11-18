@@ -21,13 +21,14 @@ export const links = [
     path: '/about',
     visible: () => true
   },
+
   {
     componentNames: ['Menu', 'Navigations'],
     label: () => 'Trending news',
     path: '/trendings',
-    visible: visibleFor(['editor'])
+    visible: () => false
   },
-  /*
+/*
   {
     componentNames: ['Menu', 'Navigations'],
     label: () => 'Sources',

@@ -7,9 +7,10 @@
   section {
     height: 100%;
     padding-bottom: 4rem;
-
+    z-index: 1000;
+    background-color: #fff;
+    margin: auto;
     &.hero {
-      align-items: center;
       background-image: url("/static/assets/hero-img.jpg");
       background-repeat: no-repeat;
       background-position: center;
@@ -22,40 +23,49 @@
 
 
     &.verdicts {
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      width: 90vw;
+      margin-top: -30vh;
+      margin-bottom: 15px;
       .items {
         display: flex;
-
         .item-container {
           @extend .col-tablet-50;
           max-width: inherit;
         }
       }
     }
-
-    .container {
-      align-items: center;
+    .heroContent{
+      height: calc(100vh - #{$header-height} - 30vh);
+      width: 90vw;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      max-width: 64rem;
-      margin: auto;
-
-      .show-more {
+      justify-content: space-around;
+      .container {
         align-items: center;
         display: flex;
-        justify-content: center;
-        margin: 1rem 0;
+        flex-direction: column;
+        justify-content: space-around;
+        max-width: 64rem;
+        margin: auto;
 
-        button {
-          @extend .button;
-          @extend .is-outlined;
-          @extend .is-primary;
-          @extend .thin;
+        .show-more {
+          align-items: center;
+          display: flex;
+          justify-content: center;
+          margin: 1rem 0;
 
-          color: $primary;
+          button {
+            @extend .button;
+            @extend .is-outlined;
+            @extend .is-primary;
+            @extend .thin;
+
+            color: $primary;
+          }
         }
       }
-    }
+    }  
 
     &.partners {
       .anchor {
@@ -74,6 +84,7 @@
 
       h2 {
         color: $grey-darker;
+        font-size: 1.563rem;
       }
     }
 
@@ -133,26 +144,25 @@
 
   .h1 {
     color: $white;
-    font-size: 2.5rem;
+    font-size: 2.441rem;
     font-weight: 200;
-    margin-bottom: 6.25rem;
     text-align: center;
   }
 
   .h2 {
     color: $black;
-    font-size: 2.75rem;
+    font-size: 1.953rem;
     font-weight: 800;
-    margin-top: 1.875rem;
-    margin-bottom: 4.375rem;
+    margin-top: 1.953rem;
+    margin-bottom: 3.052rem;
     text-align: center;
   }
 
   .h3 {
     color: $white;
-    font-size: 1.5rem;
+    font-size: 1.563rem;
     font-weight: 700;
-    margin-bottom: 1.625rem;
+    margin-bottom: 1.563rem;
   }
 
   .p {
@@ -168,5 +178,25 @@
 
   .image {
     width: 100%;
+  }
+}
+
+
+@media only screen and (max-width: 400px) {
+  .landing
+  .h1 {
+    color: $white;
+    font-size: 1.563rem;
+    font-weight: 200;
+    text-align: center;
+  }
+  .landing 
+  section
+  .section-title {
+    padding-bottom: 0.8rem;
+    padding-top: 0.8rem;
+    h2 {
+      font-size: 1rem;
+    }
   }
 }

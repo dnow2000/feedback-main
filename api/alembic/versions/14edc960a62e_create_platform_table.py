@@ -20,7 +20,6 @@ def upgrade():
     op.create_table('platform',
                     sa.Column('id',
                               sa.BigInteger(),
-                              auto_increment=True,
                               primary_key=True),
                     sa.Column('name',
                               sa.String(128),

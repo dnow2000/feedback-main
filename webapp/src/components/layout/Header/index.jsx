@@ -45,7 +45,7 @@ const _ = ({ withLinks }) => {
 
 
   return (
-    <header className={classnames('header', { 'is-blurred': !isAtTop })}>
+    <header className={classnames('header')}>
       <div className="container">
         <div className="left-content">
           <Logo

@@ -5,4 +5,11 @@
   margin-right: auto;
   max-height: 40px;
   width: 40px;
+  margin:  1rem;
+}
+
+@media only screen and (max-width: 400px) {
+  .avatar{
+    margin:  0.64rem;
+  }
 }

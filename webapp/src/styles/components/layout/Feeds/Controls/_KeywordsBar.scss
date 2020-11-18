@@ -11,33 +11,38 @@
     font-stretch: normal;
     font-style: normal;
     font-size: 1rem;
+    color: #202438;
     font-family: Apercu;
     flex-grow: 1;
     letter-spacing: normal;
     line-height: 1.13;
     padding-left: 1rem;
     padding-right: 1rem;
+    text-align: left;
 
     &:focus {
       box-shadow: 0 1px 25px $grey-light;
       outline: none !important;
       -webkit-appearance:none;
+      text-align: left;
     }
     &::placeholder {
-      color: $grey-light
+      color: #202438;
+      opacity: 0.5;
+      text-align: left;
     }
   }
 
   &.vertical {
     align-items: center;
     flex-direction: column;
-    width: 100%;
+    width: 90vw;
 
     .keywords-input {
       height: 2.75rem;
       margin-bottom: 2rem;
       max-width: 90%;
-      text-align: center;
+      text-align: left;
       width: 40rem;
     }
 
@@ -73,4 +78,15 @@
 
 .search-spacing {
   margin-bottom: 5em;
+}
+
+@media only screen and (max-width: 400px) {
+  .keywords-bar.vertical .keywords-input {
+    font-size: 0.8rem;
+    height: 1.953rem;
+    margin-bottom: 2rem;
+    max-width: 90%;
+    text-align: left;
+    width: 40rem;
+}
 }

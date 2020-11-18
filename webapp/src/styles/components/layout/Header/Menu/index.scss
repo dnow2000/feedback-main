@@ -33,7 +33,7 @@
     position: absolute;
     right: 0.25rem;
     top: 3.125rem;
-    z-index: 100;
+    z-index: 1000;
     width: calc(100% - 1rem);
 
     // arrow
@@ -103,7 +103,7 @@
         align-items: center;
         display: flex;
         justify-content: space-between;
-        
+
         .version {
           color: $grey-dark;
           font-size: $font-size-small;

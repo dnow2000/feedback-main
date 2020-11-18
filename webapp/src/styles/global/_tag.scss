@@ -72,3 +72,22 @@
     margin-bottom: 0.5rem;
   }
 }
+
+
+@media only screen and (max-width: 400px) {
+  .tags{
+  justify-content:center;
+    .tag {
+      background-color: $grey-light;
+      border-radius: 18px;
+      border: 1px solid $grey-light;
+      color: $white;
+      font-weight: 500;
+      height: 1rem;
+      line-height: 1rem;
+      padding: 0 0.64rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.64rem;
+    }
+  }
+}

@@ -117,3 +117,35 @@
     font-weight: $font-weight-normal;
   }
 }
+
+@media only screen and (max-width: 400px) {
+  .button {
+  border-radius: 1.5rem;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 0.64rem;
+  letter-spacing: 0.5;
+  min-width: 1.563rem;
+  font-kerning: auto;
+  padding: 0.64rem;
+  display: block;
+  font-family: apercu;
+  text-align: center;
+  text-decoration: none;
+  &.thin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.64rem;
+    min-width: 4em;
+    height: 1.563rem;
+    padding: 0rem;
+    padding-left: 0.64rem;
+    padding-right: 0.64rem;
+    }
+  }
+  }
+

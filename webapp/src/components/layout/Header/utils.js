@@ -14,12 +14,13 @@ export const links = [
     path: '/about',
     visible: () => true
   },
+
   {
     label: () => 'Trending news',
     path: '/trendings',
     visible: visibleFor(['editor'])
   },
-  /*
+/*
   {
     label: () => 'Sources',
     path: '/sources',

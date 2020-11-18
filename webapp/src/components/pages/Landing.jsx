@@ -58,27 +58,31 @@ export default () => {
       <Header withLinks />
       <Main className="landing with-header">
         <section className="hero">
-          <div className="container">
-            {verdictsCount > 0 && contentsCount > 0 && (
-              <p className="h1">
-                <b>
-                  {verdictsCount}
-                </b>
-                {' reviews'}
-                <br />
-                {'and'}
-                <br />
-                <b>
-                  {contentsCount}
-                </b>
-                {' content URLs flagged'}
-              </p>
-            )}
-            <Controls
-              config={config}
-              pathnameOnChange="/verdicts"
-              render={renderControls}
-            />
+          <div className="heroContent">
+            <div className="container">
+              <div>
+                {verdictsCount > 0 && contentsCount > 0 && (
+                  <p className="h1">
+                    <b>
+                      {verdictsCount}
+                    </b>
+                    {' reviews'}
+                    <br />
+                    <b>
+                      {contentsCount}
+                    </b>
+                    {' content URLs flagged'}
+                  </p>
+                )}
+              </div>
+              <div>
+                <Controls
+                  config={config}
+                  pathnameOnChange="/verdicts"
+                  render={renderControls}
+                />
+              </div>
+            </div>
           </div>
         </section>
 
