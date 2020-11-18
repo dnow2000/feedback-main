@@ -48,7 +48,7 @@ Dans `src/styles/components`, chaque composant a son fichier de style. Par exemp
 
 ```
 const Venue = ({ withFooter }) => (
-  <main id="venue" className={classnames({ "with-footer": withFooter })} >
+  <main className={classnames('venue', { "with-footer": withFooter })} >
      <div className="controls" />
   </main>
 )
@@ -57,7 +57,7 @@ const Venue = ({ withFooter }) => (
 On a un `src/styles/components/pages/_Venue.scss` qui encapsule les classes des éléments enfants et les classes activables pour le même niveau que `#venue` de cette façon :
 
 ```
-#venue {
+.venue {
 
  &.with-footer {
   @extend .fs32;
