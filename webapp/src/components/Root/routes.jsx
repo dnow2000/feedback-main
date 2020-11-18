@@ -137,7 +137,7 @@ export default [
                          accessRoleTypes: ['editor']})
                        )(Trendings),
     exact: true,
-    featureName: 'WITH_NAVBAR_TRENDINGS',
+    featureName: 'WITH_TRENDINGS',
     path: '/trendings',
     title: 'Trendings',
   },

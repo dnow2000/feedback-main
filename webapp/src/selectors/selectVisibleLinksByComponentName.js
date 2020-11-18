@@ -23,7 +23,7 @@ export const links = [
   },
   {
     componentNames: ['Menu', 'Navigations'],
-    featureName: 'WITH_NAVBAR_TRENDINGS',
+    featureName: 'WITH_TRENDINGS',
     label: () => 'Trending news',
     path: '/trendings',
     visible: visibleFor(['editor'])
