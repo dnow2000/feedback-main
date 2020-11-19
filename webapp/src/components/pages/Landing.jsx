@@ -58,7 +58,7 @@ export default () => {
       <Header withLinks />
       <Main className="landing with-header">
         <section className="hero">
-          <div className="heroContent">
+          <div className="hero-content">
             <div className="container">
               <div>
                 {verdictsCount > 0 && contentsCount > 0 && (

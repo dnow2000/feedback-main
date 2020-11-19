@@ -76,7 +76,7 @@ $breakpointsByKey: (
     width: 100%;
 
     @media (min-width: $breakpoint) {
-      $size: 66.66%;
+      $size: 80%;
 
       flex: 1;
       width: $size;

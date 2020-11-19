@@ -4,13 +4,13 @@
   border-style: solid;
   border-color: transparent;
   cursor: pointer;
-  font-weight: 400;
-  font-size: 1rem;
-  letter-spacing: 0.5;
-  min-width: 4em;
-  font-kerning: auto;
-  padding: 1rem;
   display: block;
+  font-weight: 400;
+  font-size: 0.64rem;
+  letter-spacing: 0.5;
+  min-width: 1.563em;
+  font-kerning: auto;
+  padding: 0.64rem;
   font-family: apercu;
   text-align: center;
   text-decoration: none;
@@ -27,12 +27,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1rem;
+    font-size: 0.64rem;
     min-width: 4em;
-    height: 2rem;
+    height: 1.563rem;
     padding: 0rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.64rem;
+    padding-right: 0.64rem;
   }
 
   &.is-disabled {
@@ -70,7 +70,7 @@
     color: $white;
 
     &.box-shadow {
-      box-shadow: 0 1px 20px $primary;
+      box-shadow: 0 1px 10px $primary;
     }
   }
 
@@ -96,17 +96,18 @@
   }
 
   &.is-inner-input {
-    display: flex;
+    align-items: center;
     background-color: transparent;
-    padding-left: 0;
-    padding-right: 0;
+    display: flex;
     min-width: 30px;
     min-height: 30px;
     height: 30px !important;
-    width: 30px !important;;
-    align-items: center;
     justify-content: center;
     padding: 0;
+    padding-left: 0;
+    padding-right: 0;
+    width: 30px !important;;
+
   }
 
   &.is-undressed {
@@ -118,34 +119,20 @@
   }
 }
 
-@media only screen and (max-width: 400px) {
+@media only screen and (min-width: 400px) {
   .button {
-  border-radius: 1.5rem;
-  border-width: 1px;
-  border-style: solid;
-  border-color: transparent;
-  cursor: pointer;
-  font-weight: 400;
-  font-size: 0.64rem;
-  letter-spacing: 0.5;
-  min-width: 1.563rem;
-  font-kerning: auto;
-  padding: 0.64rem;
-  display: block;
-  font-family: apercu;
-  text-align: center;
-  text-decoration: none;
+  font-size: 1rem;
+  min-width: 4rem;
+  padding: 1rem;
+
   &.thin {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.64rem;
+    font-size: 1rem;
+    height: 2rem;
     min-width: 4em;
-    height: 1.563rem;
     padding: 0rem;
-    padding-left: 0.64rem;
-    padding-right: 0.64rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     }
   }
-  }
+}
 

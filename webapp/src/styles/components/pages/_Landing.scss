@@ -10,6 +10,7 @@
     z-index: 1000;
     background-color: #fff;
     margin: auto;
+
     &.hero {
       background-image: url("/static/assets/hero-img.jpg");
       background-repeat: no-repeat;
@@ -24,23 +25,27 @@
 
     &.verdicts {
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
-      width: 90vw;
-      margin-top: -30vh;
+      margin-top: -20vh;
       margin-bottom: 15px;
+      width: 90vw;
+
       .items {
         display: flex;
+
         .item-container {
           @extend .col-tablet-50;
           max-width: inherit;
         }
       }
     }
-    .heroContent{
-      height: calc(100vh - #{$header-height} - 30vh);
-      width: 90vw;
+    .hero-content {
       display: flex;
       flex-direction: column;
+      height: calc(100vh - #{$header-height} - 20vh);
       justify-content: space-around;
+      width: 90vw;
+
+
       .container {
         align-items: center;
         display: flex;
@@ -78,13 +83,13 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      padding-bottom: 2.25rem;
-      padding-top: 3.125rem;
+      padding-bottom: 0.8rem;
+      padding-top: 0.8rem;
       width: 100%;
 
       h2 {
         color: $grey-darker;
-        font-size: 1.563rem;
+        font-size: 1rem;
       }
     }
 
@@ -128,8 +133,8 @@
     }
 
     background-color: $turquoise;
-    color: $white;
     border-radius: 1.5em;
+    color: $white;
     font-size: 1.125rem;
     padding: 0.75em;
     padding-left: 1.875rem;
@@ -144,14 +149,14 @@
 
   .h1 {
     color: $white;
-    font-size: 2.441rem;
+    font-size: 1.563rem;
     font-weight: 200;
     text-align: center;
   }
 
   .h2 {
     color: $black;
-    font-size: 1.953rem;
+    font-size: 1.563rem;
     font-weight: 800;
     margin-top: 1.953rem;
     margin-bottom: 3.052rem;
@@ -167,7 +172,7 @@
 
   .p {
     color: $black;
-    font-size: 1.25rem;
+    font-size: 0.8rem;
     font-weight: 300;
     max-width: 50rem;
     margin-top: 3.75rem;
@@ -182,21 +187,23 @@
 }
 
 
-@media only screen and (max-width: 400px) {
+@media only screen and (min-width: 400px) {
   .landing
   .h1 {
-    color: $white;
-    font-size: 1.563rem;
-    font-weight: 200;
-    text-align: center;
+    font-size: 2.5rem;
   }
   .landing 
   section
   .section-title {
-    padding-bottom: 0.8rem;
-    padding-top: 0.8rem;
+    padding-bottom: 2.25rem;
+    padding-top: 2.25rem;
+    
     h2 {
-      font-size: 1rem;
+      font-size: 1.953rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
     }
   }
 }

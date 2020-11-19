@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content:center;
 
   .tag {
     background-color: $grey-light;
@@ -10,9 +11,11 @@
     border: 1px solid $grey-light;
     color: $white;
     font-weight: 500;
-    height: 2rem;
-    line-height: 2rem;
-    padding: 0 0.7rem;
+    font-size: 0.64rem;
+    height: 1.563rem;
+    line-height: 1.563rem;
+    padding-right: 0.64rem;
+    padding-left: 0.64rem;
     margin-bottom: 0.5rem;
 
     &.accurate,
@@ -74,20 +77,15 @@
 }
 
 
-@media only screen and (max-width: 400px) {
+@media only screen and (min-width: 400px) {
   .tags{
-  justify-content:center;
+  justify-content:left;
     .tag {
-      background-color: $grey-light;
-      border-radius: 18px;
-      border: 1px solid $grey-light;
-      color: $white;
-      font-weight: 500;
-      height: 1rem;
-      line-height: 1rem;
-      padding: 0 0.64rem;
+      height: 2rem;
+      line-height: 2rem;
+      padding: 0 0.8rem;
       margin-bottom: 0.5rem;
-      font-size: 0.64rem;
+      font-size: 1rem;
     }
   }
 }
