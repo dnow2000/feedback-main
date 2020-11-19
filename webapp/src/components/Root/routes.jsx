@@ -121,6 +121,7 @@ export default [
   {
     component: withRedirectWhenLoggedIn(Signup),
     exact: true,
+    featureName: 'WITH_SIGNUP',
     path: '/signup/(apply)?/:roleType(reviewer|editor)?',
     title: 'Signup',
   },
@@ -136,6 +137,7 @@ export default [
                          accessRoleTypes: ['editor']})
                        )(Trendings),
     exact: true,
+    featureName: 'WITH_TRENDINGS',
     path: '/trendings',
     title: 'Trendings',
   },

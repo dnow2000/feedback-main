@@ -9,10 +9,7 @@ const _ = ({
   layout = 'horizontal'
 }) => {
   const inputRef = useRef()
-
-
   const [value, setValue] = useState(selectedKeywords)
-
 
   const handleKeywordsClick = useCallback(() =>
     onChange('keywords', value), [onChange, value])
@@ -24,6 +21,8 @@ const _ = ({
     }
   }, [handleKeywordsClick])
 
+  const handleKeywordsInputChange = useCallback(event => setValue(event.target.value), [])
+
 
   useEffect(() => {
     const inputElement = inputRef.current
@@ -33,24 +32,22 @@ const _ = ({
 
 
   return (
-    <>
-      <div className={classnames(`keywords-bar ${layout}`, { 'is-docked': !isAtTop })}>
-        <input
-          className="keywords-input"
-          defaultValue={value}
-          name="keywords"
-          onChange={event => setValue(event.target.value)}
-          placeholder="Type your search"
-          ref={inputRef}
-        />
-        <button
-          onClick={handleKeywordsClick}
-          type="button"
-        >
-          {'Search'}
-        </button>
-      </div>
-    </>
+    <div className={classnames(`keywords-bar ${layout}`, { 'is-docked': !isAtTop })}>
+      <input
+        className="keywords-input"
+        defaultValue={value}
+        name="keywords"
+        onChange={handleKeywordsInputChange}
+        placeholder="Type your search"
+        ref={inputRef}
+      />
+      <button
+        onClick={handleKeywordsClick}
+        type="button"
+      >
+        {'Search'}
+      </button>
+    </div>
   )
 }
 

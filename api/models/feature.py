@@ -10,6 +10,8 @@ from utils.database import db
 
 
 class FeatureName(enum.Enum):
+    WITH_SIGNUP = "Webapp displays the page /signup"
+    WITH_TRENDINGS = "Webapp displays the page /trendings"
     WITH_VERDICT_QUOTATIONS = "Webapp displays the page /verdicts/<verdict_id>/quotations"
     WITH_VERDICT_GRAPH = "Webapp displays the page /verdicts/<verdict_id>/graph"
     WITH_VERDICT_SHARES = "Webapp displays the page /verdicts/<verdict_id>/shares"
