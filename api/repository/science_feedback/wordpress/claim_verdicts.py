@@ -1,5 +1,6 @@
 from sqlalchemy_api_handler.serialization import as_dict
 from sqlalchemy_api_handler.utils import humanize, logger
+from sqlalchemy import desc
 from sqlalchemy.exc import IntegrityError, InvalidRequestError
 from psycopg2.errors import NotNullViolation
 from sqlalchemy_api_handler import ApiHandler
@@ -13,7 +14,9 @@ from utils.asynchronous import map_asynchronous
 
 def claim_verdicts_from_airtable(verdicts_to_sync=None, max_verdicts=None, sync_async=False):
     if verdicts_to_sync is None:
-        query = Verdict.query.filter(Verdict.scienceFeedbackUrl != None)
+        query = Verdict.query \
+                       .filter(Verdict.scienceFeedbackUrl != None) \
+                       .order_by(desc(Verdict.scienceFeedbackPublishedDate))
         if max_verdicts is not None:
             query = query.limit(max_verdicts)
 

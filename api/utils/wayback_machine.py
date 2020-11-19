@@ -33,7 +33,7 @@ def create_wayback_machine_url(url, sleep_time=2):
             logger.info('Saving {} to Wayback Machine...Done.'.format(url))
             location = res.headers.get('Content-Location')
             if not location:
-                logger.error('Failed to save {url} to Wayback Machine: {res.headers}')
+                logger.error(f'Failed to save {url} to Wayback Machine: {res.headers}')
                 return None
             return '{}{}'.format(BASE_URL, location)
         else:
