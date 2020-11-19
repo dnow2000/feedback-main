@@ -55,5 +55,5 @@ def scrap_feedbacks(feedbacks_max=None):
 
     return [
         feedback_from_row(row)
-        for row in row[:feedbacks_max]
+        for row in rows[:feedbacks_max]
     ]

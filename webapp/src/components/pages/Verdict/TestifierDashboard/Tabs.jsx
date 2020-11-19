@@ -6,6 +6,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import selectIsFeatureDisabledByName from 'selectors/selectIsFeatureDisabledByName'
 import selectSharesCountByVerdictId from 'selectors/selectSharesCountByVerdictId'
 import selectSortedAppearancesByVerdictId from 'selectors/selectSortedAppearancesByVerdictId'
+import { numberShortener } from 'utils/shorteners'
 
 
 const tabs = [
@@ -19,16 +20,16 @@ const tabs = [
      isDisplayedFrom: ({ sharesCount }) => sharesCount > 0,
      path: 'shares'
   },
-  {
-    childrenFrom: () => 'Graph',
-    isDisplayedFrom: () => true,
-    path: 'graph'
-  },
-  {
-    childrenFrom: () => 'Backlinks',
-    isDisplayedFrom: () => true,
-    path: 'backlinks'
-  }
+  // {
+  //   childrenFrom: () => 'Graph',
+  //   isDisplayedFrom: () => true,
+  //   path: 'graph'
+  // },
+  // {
+  //   childrenFrom: () => 'Backlinks',
+  //   isDisplayedFrom: () => true,
+  //   path: 'backlinks'
+  // }
 ]
 
 
